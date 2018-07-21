@@ -9,9 +9,9 @@ namespace LivestreamService
         {
             var rc = HostFactory.Run(x =>
             {
-                x.Service<Bootstrapper>(s =>
+                x.Service<LivestreamService>(s =>
                 {
-                    s.ConstructUsing(name => new Bootstrapper());
+                    s.ConstructUsing(name => new LivestreamService());
                     s.WhenStarted(ls => ls.Start());
                     s.WhenStopped(ls => ls.Stop());
                 });

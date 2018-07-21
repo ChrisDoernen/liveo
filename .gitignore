@@ -1,5 +1,5 @@
 /Misc
-/LivestreamService/LivestreamService/bin
-/LivestreamService/LivestreamService/obj
-/LivestreamService/.vs
-/LivestreamService/packages
+**/bin
+**/obj
+**/.vs
+**/packages
