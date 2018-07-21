@@ -1,7 +1,7 @@
 ﻿using System.Web.Http.Routing;
 using System.Web.Http.SelfHost;
 
-namespace WebApi.Server
+namespace Api.Server
 {
     public class HttpServer : IHttpServer
     {

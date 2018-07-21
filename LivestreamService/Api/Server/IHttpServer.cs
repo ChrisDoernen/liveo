@@ -1,4 +1,4 @@
-﻿namespace WebApi.Server
+﻿namespace Api.Server
 {
     public interface IHttpServer
     {

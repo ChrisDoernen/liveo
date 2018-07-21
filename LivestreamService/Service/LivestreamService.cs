@@ -1,4 +1,4 @@
-﻿using WebApi.Server;
+﻿using Api.Server;
 
 namespace LivestreamService
 {
