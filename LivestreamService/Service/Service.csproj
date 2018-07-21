@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2757CD13-FA34-40B4-B75C-2DF29ECD53E8}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>LivestreamService</RootNamespace>
-    <AssemblyName>LivestreamService</AssemblyName>
+    <RootNamespace>Service</RootNamespace>
+    <AssemblyName>Service</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -56,9 +56,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WebApi\WebApi.csproj">
+    <ProjectReference Include="..\WebApi\Api.csproj">
       <Project>{5ed7c0d3-cdfe-44fe-91f2-449f45567c0a}</Project>
-      <Name>WebApi</Name>
+      <Name>Api</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
