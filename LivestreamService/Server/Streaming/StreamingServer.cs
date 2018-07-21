@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Server.Streaming
 {
-    class StreamingServer : IStreamingServer
+    public class StreamingServer : IStreamingServer
     {
         private ConfigurationManager configurationManager;
 
