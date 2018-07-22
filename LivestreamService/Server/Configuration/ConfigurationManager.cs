@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Server.Configuration
 {
-    public class ConfigurationManager
+    public class ConfigurationManager : IConfigurationManager
     {
         public IEnumerable<LiveStream> GetLiveStreamsFromConfig()
         {

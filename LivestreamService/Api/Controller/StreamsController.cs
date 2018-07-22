@@ -1,5 +1,8 @@
-﻿using Server.Streaming;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using Ninject;
+using Server.Streaming;
+using System.Linq;
+using System.Reflection;
 using System.Web.Http;
 
 namespace WebApi.Controller
@@ -10,15 +13,17 @@ namespace WebApi.Controller
 
         public StreamsController()
         {
-            this.StreamingServer = new StreamingServer();
+            var kernel = new StandardKernel();
+            kernel.Load(Assembly.GetExecutingAssembly());
+            this.StreamingServer = kernel.Get<IStreamingServer>();
         }
 
         // GET api/<controller>
-        public IEnumerable<string> GetStreams()
+        public string GetStreams()
         {
-            var streams = this.StreamingServer.GetStreams();
-
-            return new string[] { "value1", "value2" };
+            var streams = this.StreamingServer.GetStreams().ToList();
+            var response = JsonConvert.SerializeObject(streams);
+            return response;
         }
     }
 }

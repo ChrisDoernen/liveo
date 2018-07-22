@@ -5,16 +5,16 @@ namespace Server.Streaming
 {
     public class StreamingServer : IStreamingServer
     {
-        private ConfigurationManager configurationManager;
+        private readonly IConfigurationManager ConfigurationManager;
 
-        public StreamingServer()
+        public StreamingServer(IConfigurationManager configurationManager)
         {
-            this.configurationManager = new ConfigurationManager();
+            this.ConfigurationManager = configurationManager;
         }
 
         public IEnumerable<LiveStream> GetStreams()
         {
-            return configurationManager.GetLiveStreamsFromConfig();
+            return ConfigurationManager.GetLiveStreamsFromConfig();
         }
 
         public void StartStreaming()

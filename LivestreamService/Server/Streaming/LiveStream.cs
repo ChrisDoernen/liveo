@@ -2,10 +2,10 @@
 {
     public class LiveStream
     {
-        private readonly string Id;
-        private readonly string Description;
-        private readonly string CountryCode;
-        private readonly string AudioInput;
+        public readonly string Id;
+        public readonly string Description;
+        public readonly string CountryCode;
+        public readonly string AudioInput;
 
         public LiveStream(string id, string description, string countryCode, string audioInput)
         {

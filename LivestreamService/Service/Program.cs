@@ -1,7 +1,8 @@
+using Service.Startup;
 using System;
 using Topshelf;
 
-namespace LivestreamService
+namespace Service
 {
     class Program
     {
