@@ -6,7 +6,7 @@ namespace Service.Startup
     public class LivestreamService
     {
         private IHttpServer ApiServer;
-        private Logger logger;
+        private ILogger logger;
 
         public LivestreamService(IHttpServer httpServer)
         {
@@ -21,6 +21,7 @@ namespace Service.Startup
         }
 
         public void Stop() {
+            ApiServer.Stop();
             logger.Info("LivestreamService stopped.");
         }
     }
