@@ -1,4 +1,5 @@
-﻿using Server.Configuration;
+﻿using NLog;
+using Server.Configuration;
 using System.Collections.Generic;
 
 namespace Server.Streaming
@@ -6,10 +7,12 @@ namespace Server.Streaming
     public class StreamingServer : IStreamingServer
     {
         private readonly IConfigurationManager ConfigurationManager;
+        private readonly ILogger logger;
 
         public StreamingServer(IConfigurationManager configurationManager)
         {
             this.ConfigurationManager = configurationManager;
+            logger = LogManager.GetCurrentClassLogger();
         }
 
         public IEnumerable<LiveStream> GetStreams()
@@ -17,9 +20,14 @@ namespace Server.Streaming
             return ConfigurationManager.GetLiveStreamsFromConfig();
         }
 
-        public void StartStreaming()
+        public void Start()
         {
-            throw new System.NotImplementedException();
+            logger.Info("StreamingServer started.");
+        }
+
+        public void Stop()
+        {
+            logger.Info("StreamingServer stopped.");
         }
     }
 }

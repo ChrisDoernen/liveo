@@ -1,27 +1,32 @@
 ﻿using Api.Server;
 using NLog;
+using Server.Streaming;
 
 namespace Service.Startup
 {
     public class LivestreamService
     {
-        private IHttpServer ApiServer;
-        private ILogger logger;
+        private readonly IStreamingServer StreamingServer;
+        private readonly IHttpServer HttpServer;
+        private readonly ILogger logger;
 
-        public LivestreamService(IHttpServer httpServer)
+        public LivestreamService(IStreamingServer streamingServer, IHttpServer httpServer)
         {
-            this.ApiServer = httpServer;
+            this.StreamingServer = streamingServer;
+            this.HttpServer = httpServer;
             logger = LogManager.GetCurrentClassLogger();
         }
 
         public void Start()
         {
-            ApiServer.Start();
+            this.StreamingServer.Start();
+            this.HttpServer.Start();
             logger.Info("LivestreamService started.");
         }
 
         public void Stop() {
-            ApiServer.Stop();
+            this.StreamingServer.Stop();
+            this.HttpServer.Stop();
             logger.Info("LivestreamService stopped.");
         }
     }

@@ -103,7 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Server\Server.csproj">
-      <Project>{2AA291C7-562D-4A91-8A9C-767B4BACE957}</Project>
+      <Project>{2aa291c7-562d-4a91-8a9c-767b4bace957}</Project>
       <Name>Server</Name>
     </ProjectReference>
   </ItemGroup>

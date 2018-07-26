@@ -7,7 +7,7 @@ namespace Api.Server
     public class HttpServer : IHttpServer
     {
         private ILogger logger;
-
+        
         public HttpServer()
         {
             logger = LogManager.GetCurrentClassLogger();
