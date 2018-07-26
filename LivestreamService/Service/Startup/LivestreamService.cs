@@ -8,9 +8,9 @@ namespace Service.Startup
         private IHttpServer ApiServer;
         private Logger logger;
 
-        public LivestreamService()
+        public LivestreamService(IHttpServer httpServer)
         {
-            this.ApiServer = new HttpServer();
+            this.ApiServer = httpServer;
             logger = LogManager.GetCurrentClassLogger();
         }
 

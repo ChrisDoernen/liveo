@@ -1,5 +1,7 @@
+using Ninject;
 using Service.Startup;
 using System;
+using System.Reflection;
 using Topshelf;
 
 namespace Service
@@ -8,11 +10,16 @@ namespace Service
     {
         public static void Main()
         {
+            IKernel kernel = new StandardKernel();
+            kernel.Load(Assembly.GetExecutingAssembly());
+            var livestreamService = kernel.Get<LivestreamService>();
+
+
             var rc = HostFactory.Run(x =>
             {
                 x.Service<LivestreamService>(s =>
                 {
-                    s.ConstructUsing(name => new LivestreamService());
+                    s.ConstructUsing(name => livestreamService);
                     s.WhenStarted(ls => ls.Start());
                     s.WhenStopped(ls => ls.Stop());
                 });
