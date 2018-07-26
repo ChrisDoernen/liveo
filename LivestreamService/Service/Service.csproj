@@ -77,7 +77,7 @@
       <Name>Api</Name>
     </ProjectReference>
     <ProjectReference Include="..\Server\Server.csproj">
-      <Project>{AAAAEBF3-F6F7-46E2-87D3-65C9FC5F638D}</Project>
+      <Project>{2AA291C7-562D-4A91-8A9C-767B4BACE957}</Project>
       <Name>Server</Name>
     </ProjectReference>
   </ItemGroup>
