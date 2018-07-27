@@ -1,4 +1,4 @@
-﻿namespace Server.Streaming
+﻿namespace Service.Entities
 {
     public class LiveStream
     {

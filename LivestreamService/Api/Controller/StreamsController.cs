@@ -1,15 +1,13 @@
 ﻿using Newtonsoft.Json;
 using NLog;
-using Server.Configuration;
 using Server.Streaming;
-using System.Linq;
 using System.Web.Http;
 
 namespace WebApi.Controller
 {
     public class StreamsController : ApiController
     {
-        private readonly IStreamingServer StreamingServer = new StreamingServer(new ConfigurationManager());
+        private readonly IStreamingServer StreamingServer = new StreamingServer();
         private readonly ILogger logger;
 
         public StreamsController()
@@ -20,8 +18,7 @@ namespace WebApi.Controller
         // GET api/<controller>
         public string GetStreams()
         {
-            var streams = this.StreamingServer.GetStreams().ToList();
-            var response = JsonConvert.SerializeObject(streams);
+            var response = JsonConvert.SerializeObject("");
             logger.Info("GetStreams was invoked.");
             return response;
         }

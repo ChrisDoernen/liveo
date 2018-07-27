@@ -1,33 +1,27 @@
-﻿using NLog;
-using Server.Configuration;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Server.Streaming
 {
     public class StreamingServer : IStreamingServer
     {
-        private readonly IConfigurationManager ConfigurationManager;
-        private readonly ILogger logger;
-
-        public StreamingServer(IConfigurationManager configurationManager)
+        public void Initialize(IEnumerable<AudioInput> inputs)
         {
-            this.ConfigurationManager = configurationManager;
-            logger = LogManager.GetCurrentClassLogger();
+            throw new System.NotImplementedException();
         }
 
-        public IEnumerable<LiveStream> GetStreams()
+        public void Shutdown()
         {
-            return ConfigurationManager.GetLiveStreamsFromConfig();
+            throw new System.NotImplementedException();
         }
 
-        public void Start()
+        public void StartStream(AudioInput input)
         {
-            logger.Info("StreamingServer started.");
+            throw new System.NotImplementedException();
         }
 
-        public void Stop()
+        public void StopStream(AudioInput input)
         {
-            logger.Info("StreamingServer stopped.");
+            throw new System.NotImplementedException();
         }
     }
 }

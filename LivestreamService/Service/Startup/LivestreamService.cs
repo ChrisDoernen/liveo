@@ -1,6 +1,9 @@
 ﻿using Api.Server;
 using NLog;
 using Server.Streaming;
+using Service.Configuration;
+using Service.Entities;
+using System.Collections.Generic;
 
 namespace Service.Startup
 {
@@ -19,15 +22,21 @@ namespace Service.Startup
 
         public void Start()
         {
-            this.StreamingServer.Start();
+            var availableLiveStreams = GetAvailableLiveStreams();
+            
             this.HttpServer.Start();
             logger.Info("LivestreamService started.");
         }
 
         public void Stop() {
-            this.StreamingServer.Stop();
             this.HttpServer.Stop();
             logger.Info("LivestreamService stopped.");
+        }
+
+        private IEnumerable<LiveStream> GetAvailableLiveStreams()
+        {
+            var liveStreamManager = new LiveStreamManager();
+            return liveStreamManager.GetAvailableStreamsFromConfig();
         }
     }
 }

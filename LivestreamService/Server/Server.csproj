@@ -44,11 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\ConfigurationManager.cs" />
-    <Compile Include="Configuration\IConfigurationManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Streaming\IStreamingServer.cs" />
-    <Compile Include="Streaming\LiveStream.cs" />
+    <Compile Include="Streaming\AudioInput.cs" />
     <Compile Include="Streaming\StreamingServer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
