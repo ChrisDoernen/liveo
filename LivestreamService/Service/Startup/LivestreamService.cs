@@ -3,7 +3,6 @@ using NLog;
 using Server.Streaming;
 using Service.Configuration;
 using Service.Entities;
-using System.Collections.Generic;
 
 namespace Service.Startup
 {
@@ -33,7 +32,7 @@ namespace Service.Startup
             logger.Info("LivestreamService stopped.");
         }
 
-        private IEnumerable<LiveStream> GetAvailableLiveStreams()
+        private LiveStreams GetAvailableLiveStreams()
         {
             var liveStreamManager = new LiveStreamManager();
             return liveStreamManager.GetAvailableStreamsFromConfig();
