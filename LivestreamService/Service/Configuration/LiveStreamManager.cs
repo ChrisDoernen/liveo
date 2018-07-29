@@ -20,7 +20,7 @@ namespace Service.Configuration
             logger = LogManager.GetCurrentClassLogger();
         }
 
-        public LiveStreams GetAvailableStreamsFromConfig()
+        public LiveStreams GetAvailableStreams()
         {
             var liveStreamsConfigFile = ConfigurationManager.AppSettings[XmlFileAppConfigAppSettingsKey];
             var liveStreamsConfigXsd = ConfigurationManager.AppSettings[XsdFileAppConfigAppSettingsKey];

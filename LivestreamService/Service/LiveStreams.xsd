@@ -10,6 +10,8 @@
               <xs:element type="xs:string" name="CountryCode" />
               <xs:element type="xs:string" name="Description" />
               <xs:element type="xs:string" name="AudioInput" />
+              <xs:element type="xs:int" name="Port" />
+              <xs:element type="xs:boolean" name="StartOnServiceStartup" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

@@ -23,7 +23,10 @@ namespace Service.Startup
         {
             var availableLiveStreams = GetAvailableLiveStreams();
             
+
+
             this.HttpServer.Start();
+            
             logger.Info("LivestreamService started.");
         }
 
@@ -35,7 +38,7 @@ namespace Service.Startup
         private LiveStreams GetAvailableLiveStreams()
         {
             var liveStreamManager = new LiveStreamManager();
-            return liveStreamManager.GetAvailableStreamsFromConfig();
+            return liveStreamManager.GetAvailableStreams();
         }
     }
 }
