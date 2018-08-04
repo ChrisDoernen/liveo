@@ -15,8 +15,6 @@ namespace Service.Startup
             this.streamingServerHost = StreamingServerHost.GetInstance();
             this.apiServer = apiServer;
             this.logger = LogManager.GetCurrentClassLogger();
-
-            logger.Info("LiveStreamService instantiated.");
         }
 
         public void Start()
