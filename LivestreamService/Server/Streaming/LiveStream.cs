@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace Service.Entities
+namespace Server
 {
     public class LiveStream
     {

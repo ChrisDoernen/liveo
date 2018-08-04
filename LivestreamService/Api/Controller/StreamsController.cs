@@ -7,7 +7,7 @@ namespace WebApi.Controller
 {
     public class StreamsController : ApiController
     {
-        private readonly IStreamingServer StreamingServer = new StreamingServer();
+        private readonly StreamingServerHost streamingServer = StreamingServerHost.GetInstance();
         private readonly ILogger logger;
 
         public StreamsController()
@@ -18,7 +18,8 @@ namespace WebApi.Controller
         // GET api/<controller>
         public string GetStreams()
         {
-            var response = JsonConvert.SerializeObject("");
+            var liveStreams = this.streamingServer.GetLiveStreams();
+            var response = JsonConvert.SerializeObject(liveStreams);
             logger.Info("GetStreams was invoked.");
             return response;
         }

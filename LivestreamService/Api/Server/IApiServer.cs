@@ -1,6 +1,6 @@
 ﻿namespace Api.Server
 {
-    public interface IHttpServer
+    public interface IApiServer
     {
         void Start();
         void Stop();

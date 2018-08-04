@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace Service.Entities
+namespace Server
 {
     [XmlRoot(Namespace = "LiveStreamsConfigXsd", ElementName = "LiveStreams")]
     public class LiveStreams

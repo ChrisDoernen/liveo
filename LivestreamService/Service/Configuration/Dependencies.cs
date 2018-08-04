@@ -9,9 +9,9 @@ namespace Api.Configuration
     {
         public override void Load()
         {
-            Bind<IHttpServer>().To<HttpServer>();
+            Bind<IApiServer>().To<ApiServer>();
             Bind<LivestreamService>().To<LivestreamService>();
-            Bind<IStreamingServer>().To<StreamingServer>();
+            Bind<StreamingServerHost>().To<StreamingServerHost>();
         }
     }
 }

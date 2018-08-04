@@ -1,34 +1,29 @@
 ﻿using NLog;
-using Service.Entities;
 using System;
-using System.Configuration;
 using System.IO;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace Service.Configuration
+namespace Server.Configuration
 {
-    class LiveStreamManager
+    class LiveStreamsConfigurationManager
     {
         private readonly ILogger logger;
-        private readonly string XmlFileAppConfigAppSettingsKey = "LiveStreamsConfigFile";
-        private readonly string XsdFileAppConfigAppSettingsKey = "LiveStreamsConfigXsd";
+        private readonly string LiveStreamsConfig = "LiveStreams.config";
+        private readonly string LiveStreamsXsd = "LiveStreams.xsd";
 
-        public LiveStreamManager()
+        public LiveStreamsConfigurationManager()
         {
             logger = LogManager.GetCurrentClassLogger();
         }
 
         public LiveStreams GetAvailableStreams()
         {
-            var liveStreamsConfigFile = ConfigurationManager.AppSettings[XmlFileAppConfigAppSettingsKey];
-            var liveStreamsConfigXsd = ConfigurationManager.AppSettings[XsdFileAppConfigAppSettingsKey];
+            TryValidateConfigFilesExistance(this.LiveStreamsConfig, this.LiveStreamsXsd);
+            TryValidateLiveStreamsConfigFile(this.LiveStreamsConfig, this.LiveStreamsXsd);
 
-            TryValidateConfigFilesExistance(liveStreamsConfigFile, liveStreamsConfigXsd);
-            TryValidateLiveStreamsConfigFile(liveStreamsConfigFile, liveStreamsConfigXsd);
-
-            LiveStreams liveStreams = TryDeserializeLiveStreams(liveStreamsConfigFile);
+            var liveStreams = TryDeserializeLiveStreams(this.LiveStreamsConfig);
 
             return liveStreams;
         }
@@ -54,7 +49,7 @@ namespace Service.Configuration
             var liveStreams = (LiveStreams)deserializer.Deserialize(reader);
             reader.Close();
 
-            logger.Info($"Deserialisazion of Live streams from {liveStreamsConfigFile} successful. Got {liveStreams.liveStreams.Count} available streams.");
+            logger.Info($"Deserialisazion of Live streams from {liveStreamsConfigFile} successful ({liveStreams.liveStreams.Count}).");
             return liveStreams;
         }
 
@@ -72,15 +67,21 @@ namespace Service.Configuration
             }
         }
 
-        private void ValidateConfigFilesExistance(string liveStreamsConfigXsd, string liveStreamsConfigFile)
+        private void ValidateConfigFilesExistance(string liveStreamsXsd, string liveStreamsConfig)
         {
-            if (liveStreamsConfigXsd == null) throw new ArgumentException($"The path to the xsd file file could not be found in App.config. Key: {XsdFileAppConfigAppSettingsKey}");
-            if (liveStreamsConfigFile == null) throw new ArgumentException($"The path to the config file for live streams could not be found in App.config. Key: {XmlFileAppConfigAppSettingsKey}");
+            if (liveStreamsXsd == null)
+                throw new ArgumentException($"The LiveStreams.config could not be found.");
 
-            if (!File.Exists(liveStreamsConfigXsd)) throw new ArgumentException($"The {liveStreamsConfigXsd} file given in App.config does not exist. Key: {XsdFileAppConfigAppSettingsKey}");
-            if (!File.Exists(liveStreamsConfigFile)) throw new ArgumentException($"The {liveStreamsConfigFile} file given in App.config does not exist. Key: {XmlFileAppConfigAppSettingsKey}");
+            if (liveStreamsConfig == null)
+                throw new ArgumentException($"The LiveStreams.xsd could not be found.");
 
-            logger.Info("Xsd and config file are given in App.config and do exist.");
+            if (!File.Exists(liveStreamsXsd))
+                throw new ArgumentException($"The LiveStreams.config could not be found.");
+
+            if (!File.Exists(liveStreamsConfig))
+                throw new ArgumentException($"The LiveStreams.xsd could not be found.");
+
+            logger.Info("LiveStreams.xsd and LiveStreams.config exist.");
         }
 
         private void TryValidateLiveStreamsConfigFile(string liveStreamsConfigFile, string liveStreamsConfigXsd)
@@ -100,7 +101,6 @@ namespace Service.Configuration
 
         private void ValidateLiveStreamsConfigFile(string xsdFile, string xmlFile)
         {
-
             logger.Info($"Starting validation of {xmlFile} against {xsdFile}.");
 
             var liveStreamsConfig = new XmlDocument();

@@ -1,44 +1,36 @@
 ﻿using Api.Server;
 using NLog;
 using Server.Streaming;
-using Service.Configuration;
-using Service.Entities;
 
 namespace Service.Startup
 {
     public class LivestreamService
     {
-        private readonly IStreamingServer StreamingServer;
-        private readonly IHttpServer HttpServer;
+        private readonly StreamingServerHost streamingServerHost;
+        private readonly IApiServer apiServer;
         private readonly ILogger logger;
 
-        public LivestreamService(IStreamingServer streamingServer, IHttpServer httpServer)
+        public LivestreamService(IApiServer apiServer)
         {
-            this.StreamingServer = streamingServer;
-            this.HttpServer = httpServer;
-            logger = LogManager.GetCurrentClassLogger();
+            this.streamingServerHost = StreamingServerHost.GetInstance();
+            this.apiServer = apiServer;
+            this.logger = LogManager.GetCurrentClassLogger();
+
+            logger.Info("LiveStreamService instantiated.");
         }
 
         public void Start()
         {
-            var availableLiveStreams = GetAvailableLiveStreams();
-            
-
-
-            this.HttpServer.Start();
+            this.streamingServerHost.Initialize();
+            this.apiServer.Start();
             
             logger.Info("LivestreamService started.");
         }
 
         public void Stop() {
-            this.HttpServer.Stop();
-            logger.Info("LivestreamService stopped.");
-        }
+            this.apiServer.Stop();
 
-        private LiveStreams GetAvailableLiveStreams()
-        {
-            var liveStreamManager = new LiveStreamManager();
-            return liveStreamManager.GetAvailableStreams();
+            logger.Info("LivestreamService stopped.");
         }
     }
 }
