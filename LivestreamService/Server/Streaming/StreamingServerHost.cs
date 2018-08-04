@@ -1,6 +1,7 @@
 ﻿using NLog;
 using Server.Configuration;
 using System;
+using System.Collections.Generic;
 
 namespace Server.Streaming
 {
@@ -27,17 +28,19 @@ namespace Server.Streaming
             return instance;
         }
 
-        public LiveStreams GetLiveStreams()
+        public List<LiveStream> GetStartedLiveStreams()
         {
             if (this.livestreams == null)
-                throw new ArgumentException("StreamingServerHost is not initialized.");
+                throw new ArgumentException("StreamingServerHost was not initialized.");
 
-            return livestreams;
+            return livestreams.GetStartedStreams();
         }
 
         public void Initialize()
         {
             this.livestreams = this.configurationManager.GetAvailableStreams();
+            this.livestreams.Initialize();
+
             logger.Info("StreamingServerHost initialized.");
         }
 
@@ -46,12 +49,12 @@ namespace Server.Streaming
             throw new System.NotImplementedException();
         }
 
-        public void StartStream()
+        public void StartStreams()
         {
-            throw new System.NotImplementedException();
+            this.livestreams.StartStreams();
         }
 
-        public void StartStreams()
+        public void StartStream()
         {
             throw new System.NotImplementedException();
         }

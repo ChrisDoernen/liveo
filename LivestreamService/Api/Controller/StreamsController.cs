@@ -16,11 +16,13 @@ namespace WebApi.Controller
         }
 
         // GET api/<controller>
-        public string GetStreams()
+        public string GetStartedStreams()
         {
-            var liveStreams = this.streamingServer.GetLiveStreams();
+            var liveStreams = this.streamingServer.GetStartedLiveStreams();
             var response = JsonConvert.SerializeObject(liveStreams);
-            logger.Info("GetStreams was invoked.");
+
+            logger.Info($"GetStartedStreams was invoked, returned {liveStreams.Count} streams.");
+
             return response;
         }
     }

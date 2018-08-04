@@ -1,4 +1,5 @@
 using Ninject;
+using NLog;
 using Service.Startup;
 using System;
 using System.Reflection;
@@ -10,11 +11,13 @@ namespace Service
     {
         public static void Main()
         {
+            var logger = LogManager.GetCurrentClassLogger();
+            logger.Info("Beginning startup...");
+
             IKernel kernel = new StandardKernel();
             kernel.Load(Assembly.GetExecutingAssembly());
             var livestreamService = kernel.Get<LivestreamService>();
-
-
+            
             var rc = HostFactory.Run(x =>
             {
                 x.Service<LivestreamService>(s =>

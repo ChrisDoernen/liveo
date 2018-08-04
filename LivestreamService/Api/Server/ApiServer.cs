@@ -42,11 +42,9 @@ namespace Api.Server
 
             if (port == null)
                 throw new ArgumentException("Port is not defined in app.config");
-
+            
+            var route = new HttpRoute("api/{controller}/{action}");
             var config = new HttpSelfHostConfiguration($"http://localhost:{port}");
-
-            IHttpRoute route = new HttpRoute("api/{controller}/{action}");
-
             config.Routes.Add("API", route);
 
             var selfHostServer = new HttpSelfHostServer(config);

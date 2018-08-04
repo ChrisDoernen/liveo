@@ -22,6 +22,7 @@ namespace Service.Startup
         public void Start()
         {
             this.streamingServerHost.Initialize();
+            this.streamingServerHost.StartStreams();
             this.apiServer.Start();
             
             logger.Info("LivestreamService started.");

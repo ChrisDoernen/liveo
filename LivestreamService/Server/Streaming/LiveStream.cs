@@ -1,4 +1,6 @@
-﻿using System.Xml.Serialization;
+﻿using NLog;
+using Server.Streaming;
+using System.Xml.Serialization;
 
 namespace Server
 {
@@ -13,5 +15,35 @@ namespace Server
 
         [XmlIgnore]
         public bool IsStarted { get; private set; } = false;
+
+        [XmlIgnore]
+        private StreamingServer streamingServer;
+
+        [XmlIgnore]
+        private ILogger logger;
+
+        public void Initialize()
+        {
+            this.logger = LogManager.GetCurrentClassLogger();
+            this.streamingServer = new StreamingServer(this.AudioInput, this.Port);
+
+            logger.Info($"Initialized livestream {this.Id}");
+        }
+
+        public void Start()
+        {
+            this.streamingServer.Start();
+            this.IsStarted = true;
+
+            logger.Info($"Started livestream {this.Id}");
+        }
+
+        public void Stop()
+        {
+            this.streamingServer.Stop();
+            this.IsStarted = false;
+
+            logger.Info($"Stopped livestream {this.Id}");
+        }
     }
 }
