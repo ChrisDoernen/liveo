@@ -7,7 +7,7 @@ namespace WebApi.Controller
 {
     public class StreamsController : ApiController
     {
-        private readonly StreamingServerHost streamingServer = StreamingServerHost.GetInstance();
+        private readonly StreamingServer streamingServer = StreamingServer.GetInstance();
         private readonly ILogger logger;
 
         public StreamsController()

@@ -1,59 +1,70 @@
 ﻿using NLog;
-using System.Diagnostics;
+using Server.Configuration;
+using System;
+using System.Collections.Generic;
 
 namespace Server.Streaming
 {
-    internal class StreamingServer
+    public class StreamingServer
     {
-        private readonly string audioInput;
-        private readonly int port;
+        private static StreamingServer instance;
+        private readonly LiveStreamsConfiguration liveStreamsConfiguration;
+        private readonly AudioInputConfiguration audioInputConfiguration;
         private readonly ILogger logger;
-        private readonly string command;
-        private Process process;
-        private bool isProcessRunning;
+        private LiveStreams livestreams;
+        private List<AudioInput> audioInputs;
 
-        public StreamingServer(string audioInput, int port)
+        public StreamingServer()
         {
+            this.liveStreamsConfiguration = new LiveStreamsConfiguration();
+            this.audioInputConfiguration = new AudioInputConfiguration();
             this.logger = LogManager.GetCurrentClassLogger();
-            this.audioInput = audioInput;
-            this.port = port;
-            this.command = $@"ffmpeg -y -f dshow -i audio=""{audioInput}"" -rtbufsize 64 -probesize 64 -acodec libmp3lame -ab 320k -ac 1 -reservoir 0 -f mp3 -fflags +nobuffer - | node NodeStreamingServer.js -port {port} -type mp3 -burstsize 0.1";
-        }
-        
-        public void Start()
-        {
-            var processInfo = new ProcessStartInfo("cmd.exe", "/c " + this.command)
-            {
-                CreateNoWindow = false,
-                UseShellExecute = false,
-                RedirectStandardError = true,
-                RedirectStandardOutput = true
-            };
-
-            var process = Process.Start(processInfo);
-
-            // ffmpeg sends all output to error output
-            process.ErrorDataReceived += this.DataRecievedHandler;
-            process.BeginErrorReadLine();
-            
-            this.process = process;
-            this.isProcessRunning = true;
         }
 
-        public void Stop()
+        public static StreamingServer GetInstance()
         {
-            this.process.Kill();
-            this.process.Close();
-            this.isProcessRunning = false;
+            if (instance == null)
+                instance = new StreamingServer();
+
+            return instance;
         }
 
-        private void DataRecievedHandler (object sender, DataReceivedEventArgs e)
+        public List<LiveStream> GetStartedLiveStreams()
         {
+            if (this.livestreams == null)
+                throw new ArgumentException("StreamingServerHost was not initialized.");
+
+            return livestreams.GetStartedStreams();
         }
 
-        public bool IsAlive()
+        public void Initialize()
         {
-            return this.isProcessRunning && this.process.Responding;
+            this.audioInputs = this.audioInputConfiguration.GetAudioInputs();
+            this.livestreams = this.liveStreamsConfiguration.GetAvailableStreams();
+            this.livestreams.Validate(this.audioInputs);
+            this.livestreams.Initialize();
+
+            logger.Info("StreamingServerHost initialized.");
+        }
+
+        public void Shutdown()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void StartStreams()
+        {
+            this.livestreams.StartStreams();
+        }
+
+        public void StartStream()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void StopStream()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

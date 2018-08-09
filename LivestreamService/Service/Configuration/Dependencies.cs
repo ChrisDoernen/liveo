@@ -11,7 +11,7 @@ namespace Api.Configuration
         {
             Bind<IApiServer>().To<ApiServer>();
             Bind<LivestreamService>().To<LivestreamService>();
-            Bind<StreamingServerHost>().To<StreamingServerHost>();
+            Bind<StreamingServer>().To<StreamingServer>();
         }
     }
 }

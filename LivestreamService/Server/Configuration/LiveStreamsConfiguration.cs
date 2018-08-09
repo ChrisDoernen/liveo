@@ -7,13 +7,13 @@ using System.Xml.Serialization;
 
 namespace Server.Configuration
 {
-    class LiveStreamsConfigurationManager
+    class LiveStreamsConfiguration
     {
         private readonly ILogger logger;
         private readonly string LiveStreamsConfig = "LiveStreams.config";
         private readonly string LiveStreamsXsd = "LiveStreams.xsd";
 
-        public LiveStreamsConfigurationManager()
+        public LiveStreamsConfiguration()
         {
             logger = LogManager.GetCurrentClassLogger();
         }

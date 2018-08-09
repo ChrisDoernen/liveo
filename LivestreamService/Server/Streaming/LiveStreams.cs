@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Server.Streaming;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 
@@ -18,6 +19,14 @@ namespace Server
         public List<LiveStream> GetAvailableStreams()
         {
             return liveStreams;
+        }
+
+        public void Validate(List<AudioInput> validAudioInputs)
+        {
+            foreach (var stream in liveStreams)
+            {
+                stream.Validate(validAudioInputs);
+            }
         }
 
         public void Initialize()
