@@ -92,7 +92,6 @@ namespace Server.Configuration
             }
             catch (Exception ex)
             {
-
                 logger.Info($"Validation of {liveStreamsConfigFile} failed.");
                 logger.Error(ex.Message + ex.StackTrace);
                 throw ex;
