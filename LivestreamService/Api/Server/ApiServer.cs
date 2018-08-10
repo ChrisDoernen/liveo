@@ -2,6 +2,7 @@
 using System;
 using System.Configuration;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Routing;
 using System.Web.Http.SelfHost;
 
@@ -9,18 +10,18 @@ namespace Api.Server
 {
     public class ApiServer : IApiServer
     {
-        private ILogger logger;
+        private readonly ILogger _logger;
         
         public ApiServer()
         {
-            logger = LogManager.GetCurrentClassLogger();
+            _logger = LogManager.GetCurrentClassLogger();
         }
 
         public void Start()
         {
             TryStartApiServer();
 
-            logger.Info("ApiWebServer started.");
+            _logger.Info("ApiWebServer started.");
         }
 
         private void TryStartApiServer()
@@ -31,8 +32,8 @@ namespace Api.Server
             }
             catch (Exception ex)
             {
-                logger.Info("Starting ApiServer failed.");
-                logger.Error(ex.Message + ex.StackTrace);
+                _logger.Info("Starting ApiServer failed.");
+                _logger.Error(ex.Message + ex.StackTrace);
                 throw ex;
             }
         }
@@ -46,7 +47,9 @@ namespace Api.Server
             
             var route = new HttpRoute("api/{controller}/{action}");
             var config = new HttpSelfHostConfiguration($"http://localhost:{port}");
-            config.EnableCors();
+            const string origin = "http://localhost:4200";
+            var cors = new EnableCorsAttribute(origin, "*", "GET");
+            config.EnableCors(cors);
             config.Routes.Add("API", route);
 
             var selfHostServer = new HttpSelfHostServer(config);
@@ -55,7 +58,7 @@ namespace Api.Server
 
         public void Stop()
         {
-            logger.Info("ApiWebServer stopped.");
+            _logger.Info("ApiWebServer stopped.");
         }
     }
 }

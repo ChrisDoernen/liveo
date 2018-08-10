@@ -6,30 +6,30 @@ namespace Service.Startup
 {
     public class LivestreamService
     {
-        private readonly StreamingServer streamingServerHost;
-        private readonly IApiServer apiServer;
-        private readonly ILogger logger;
+        private readonly StreamingServer _streamingServerHost;
+        private readonly IApiServer _apiServer;
+        private readonly ILogger _logger;
 
         public LivestreamService(IApiServer apiServer)
         {
-            this.streamingServerHost = StreamingServer.GetInstance();
-            this.apiServer = apiServer;
-            this.logger = LogManager.GetCurrentClassLogger();
+            this._streamingServerHost = StreamingServer.GetInstance();
+            this._apiServer = apiServer;
+            this._logger = LogManager.GetCurrentClassLogger();
         }
 
         public void Start()
         {
-            this.streamingServerHost.Initialize();
-            this.streamingServerHost.StartStreams();
-            this.apiServer.Start();
+            this._streamingServerHost.Initialize();
+            this._streamingServerHost.StartStreams();
+            this._apiServer.Start();
             
-            logger.Info("LivestreamService started.");
+            _logger.Info("LivestreamService started.");
         }
 
         public void Stop() {
-            this.apiServer.Stop();
+            this._apiServer.Stop();
 
-            logger.Info("LivestreamService stopped.");
+            _logger.Info("LivestreamService stopped.");
         }
     }
 }
