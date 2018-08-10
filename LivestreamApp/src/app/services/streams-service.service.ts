@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from '../../../node_modules/rxjs';
+import { LiveStream } from '../entities/live-stream.entity';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -8,10 +10,17 @@ import { Observable } from '../../../node_modules/rxjs';
 export class StreamsService {
 
   private apiUrl: string = "http://localhost:8080/api";
+  private getLiveStreamsEndpoint = "/streams/getstartedstreams"
 
   constructor(private httpClient: HttpClient) { }
 
-  public getAvailableLiveStreams(): Observable<any> {
-    return this.httpClient.get(this.apiUrl + '/streams/getstartedstreams');
+  public getAvailableLiveStreams(): Observable<LiveStream[]> {
+    const uri = this.apiUrl + this.getLiveStreamsEndpoint;
+     return this.httpClient.get(uri)
+     .pipe(map((response: string) => {
+       return JSON.parse(response).map((item) => {
+         return LiveStream.deserialize(item);
+       })
+     }))
   }
 }

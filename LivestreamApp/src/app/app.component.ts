@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { StreamsService } from './services/streams-service.service';
+import { LiveStream } from './entities/live-stream.entity';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,7 @@ import { StreamsService } from './services/streams-service.service';
 })
 export class AppComponent {
   private title = 'Livestream app';
-  private availableLiveSteams: any;
+  private availableLiveSteams: LiveStream[];
 
   constructor(private streamsService: StreamsService){}
 
@@ -18,15 +19,10 @@ export class AppComponent {
   }
   
   private getAvailableLiveStreams() {
-    debugger;
-    try {
-      const as = this.streamsService.getAvailableLiveStreams()
-       as.subscribe(
-         (as) => {console.log(as)},
-         (error) => console.log(error),
-         () => console.log("completed")) 
-    } catch (e) {
-      console.log(e);
-    }
+    this.streamsService.getAvailableLiveStreams()
+    .subscribe((streams) => {
+      this.availableLiveSteams = streams;
+      debugger;
+    })
   }
 }
