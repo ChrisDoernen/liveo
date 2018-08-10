@@ -3,15 +3,13 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { StreamsComponent } from './streams.component';
-import { StreamComponent } from './components/stream/stream.component';
 import { StreamsService } from './services/streams-service.service';
+import { SelectStreamsComponent } from './components/select-streams/select-streams.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    StreamsComponent,
-    StreamComponent,
+    SelectStreamsComponent,
   ],
   imports: [
     BrowserModule,
