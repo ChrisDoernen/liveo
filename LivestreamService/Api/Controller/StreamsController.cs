@@ -2,9 +2,11 @@
 using NLog;
 using Server.Streaming;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
-namespace WebApi.Controller
+namespace Api.Controller
 {
+    [EnableCors("http://localhost:4200", "*", "*")]
     public class StreamsController : ApiController
     {
         private readonly StreamingServer streamingServer = StreamingServer.GetInstance();

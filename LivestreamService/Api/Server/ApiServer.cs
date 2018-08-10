@@ -1,6 +1,7 @@
 ﻿using NLog;
 using System;
 using System.Configuration;
+using System.Web.Http;
 using System.Web.Http.Routing;
 using System.Web.Http.SelfHost;
 
@@ -45,6 +46,7 @@ namespace Api.Server
             
             var route = new HttpRoute("api/{controller}/{action}");
             var config = new HttpSelfHostConfiguration($"http://localhost:{port}");
+            config.EnableCors();
             config.Routes.Add("API", route);
 
             var selfHostServer = new HttpSelfHostServer(config);
