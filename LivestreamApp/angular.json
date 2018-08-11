@@ -24,7 +24,8 @@
             ],
             "styles": [
               "src/styles.css",
-              "../node_modules/lato-font/css/lato-font.min.css"
+              "node_modules/lato-font/css/lato-font.min.css",
+              "src/assets/semantic-ui/semantic.css"
             ],
             "scripts": []
           },
