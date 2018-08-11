@@ -4,10 +4,10 @@ import { StreamsService } from '../../services/streams-service.service';
 
 @Component({
   selector: 'select-streams',
-  templateUrl: './select-streams.component.html',
-  styleUrls: ['./select-streams.component.css']
+  templateUrl: './select-stream.component.html',
+  styleUrls: ['./select-stream.component.css']
 })
-export class SelectStreamsComponent implements OnInit {
+export class SelectStreamComponent implements OnInit {
 
   title = 'Verfügbare Streams';
   availableLiveSteams: LiveStream[];

@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { SelectStreamsComponent } from './select-streams.component';
+import { SelectStreamComponent } from './select-stream.component';
 
 describe('SelectStreamsComponent', () => {
-  let component: SelectStreamsComponent;
-  let fixture: ComponentFixture<SelectStreamsComponent>;
+  let component: SelectStreamComponent;
+  let fixture: ComponentFixture<SelectStreamComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SelectStreamsComponent ]
+      declarations: [ SelectStreamComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SelectStreamsComponent);
+    fixture = TestBed.createComponent(SelectStreamComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
