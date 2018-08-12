@@ -1,3 +1,4 @@
-<div *ngFor="let stream of availableLiveSteams">
-    <stream [stream]="stream"></stream>
+<div class="select-streams">
+    <div *ngIf="connectionError">Can not connect to server</div>
+    <stream *ngFor="let stream of availableLiveSteams" [stream]="stream"></stream>
 </div>

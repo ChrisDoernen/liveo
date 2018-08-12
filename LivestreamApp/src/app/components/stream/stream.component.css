@@ -1,0 +1,21 @@
+.stream {
+    margin: 10px;
+    padding: 20px;
+    background-color: white;
+    font-size: 16px
+}
+
+.stream__id {
+    font-weight: 800;
+}
+
+.stream__description {
+    margin: 0 10px;
+}
+
+i.flag:not(.icon):before {
+    border-radius: 50%;
+    width: 11px;
+    height: 11px;
+    transform: scale(1.25);
+}

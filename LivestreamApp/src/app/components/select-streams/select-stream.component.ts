@@ -11,6 +11,7 @@ export class SelectStreamComponent implements OnInit {
 
   title = 'Verfügbare Streams';
   availableLiveSteams: LiveStream[];
+  connectionError: boolean = false ;
 
   constructor(private streamsService: StreamsService) {
   }
@@ -23,6 +24,8 @@ export class SelectStreamComponent implements OnInit {
     this.streamsService.getAvailableLiveStreams()
     .subscribe((streams) => {
       this.availableLiveSteams = streams;
-    })
-  }
+    }, (error) => {
+      this.connectionError = true;
+    }
+  )}
 }
