@@ -7,12 +7,14 @@ import { StreamsService } from './services/streams-service.service';
 import { SelectLanguageComponent } from './components/select-language/select-language.component';
 import { StreamComponent } from './components/stream/stream.component';
 import { AppRoutingModule } from './app-routing.module';
+import { PlayerComponent } from './components/player/player.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SelectLanguageComponent,
-    StreamComponent
+    StreamComponent,
+    PlayerComponent
   ],
   imports: [
     BrowserModule,

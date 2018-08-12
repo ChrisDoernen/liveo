@@ -5,7 +5,9 @@
     font-size: 16px;
     border: 1px solid whitesmoke;
     border-radius: 5px;
-    text-align: center;
+    text-align: center;    
+    display: block;
+    color: inherit;
 }
 
 .stream__id {
