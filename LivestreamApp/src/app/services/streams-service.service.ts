@@ -9,18 +9,25 @@ import { map } from 'rxjs/operators';
 })
 export class StreamsService {
 
-  private apiUrl: string = "http://localhost:8080/api";
-  private getLiveStreamsEndpoint = "/streams/getstartedstreams"
+  private apiUrl: string = "http://localhost:8080/api/streams"
 
   constructor(private httpClient: HttpClient) { }
 
   public getAvailableLiveStreams(): Observable<LiveStream[]> {
-    const uri = this.apiUrl + this.getLiveStreamsEndpoint;
+    const uri = this.apiUrl;
      return this.httpClient.get(uri)
      .pipe(map((response: string) => {
        return JSON.parse(response).map((item) => {
          return LiveStream.deserialize(item);
        })
+     }))
+  }
+
+  public getLiveStream(id: string): Observable<LiveStream> {
+    const uri = this.apiUrl + "/" + id;
+     return this.httpClient.get(uri)
+     .pipe(map((response: string) => {
+         return LiveStream.deserialize(JSON.parse(response));
      }))
   }
 }

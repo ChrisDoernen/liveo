@@ -1,14 +1,14 @@
 ﻿using NLog;
-using Server.Streaming;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 
-namespace Server
+namespace Server.Streaming
 {
     public class LiveStream
     {
         public string Id { get; set; }
+        public string Title { get; set; }
         public string Description { get; set; }
         public string CountryCode { get; set; }
         public string AudioInput { get; set; }
@@ -25,10 +25,10 @@ namespace Server
         public bool IsInitialized { get; private set; }
 
         [XmlIgnore]
-        private StreamingServerProcess streamingServer;
+        private StreamingServerProcess _streamingServer;
 
         [XmlIgnore]
-        private ILogger logger;
+        private ILogger _logger;
 
         public void Validate(List<AudioInput> validAudioInputs)
         {
@@ -38,18 +38,18 @@ namespace Server
 
         public void Initialize()
         {
-            this.logger = LogManager.GetCurrentClassLogger();
+            this._logger = LogManager.GetCurrentClassLogger();
 
             if (!this.HasValidAudioInput)
             {
-                logger.Warn($"Livestream \"{this.Id}\" has no valid audio input.");
+                _logger.Warn($"Livestream \"{this.Id}\" has no valid audio input.");
                 return;
             }
 
-            this.streamingServer = new StreamingServerProcess(this.AudioInput, this.Port);
+            this._streamingServer = new StreamingServerProcess(this.AudioInput, this.Port);
             this.IsInitialized = true;
 
-            logger.Info($"Initialized livestream \"{this.Id}\"");
+            _logger.Info($"Initialized livestream \"{this.Id}\"");
         }
 
         public void Start()
@@ -57,10 +57,10 @@ namespace Server
             if (!this.IsInitialized)
                 return;
 
-            this.streamingServer.Start();
+            this._streamingServer.Start();
             this.IsStarted = true;
 
-            logger.Info($"Started livestream {this.Id}");
+            _logger.Info($"Started livestream {this.Id}");
         }
 
         public void Stop()
@@ -68,10 +68,10 @@ namespace Server
             if (!IsStarted)
                 return;
 
-            this.streamingServer.Stop();
+            this._streamingServer.Stop();
             this.IsStarted = false;
 
-            logger.Info($"Stopped livestream {this.Id}");
+            _logger.Info($"Stopped livestream {this.Id}");
         }
     }
 }

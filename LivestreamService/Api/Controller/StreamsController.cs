@@ -29,7 +29,7 @@ namespace Api.Controller
         public string Get(string id)
         {
             var liveStream = _streamingServer.GetStartedLiveStreams()
-                .Where(ls => ls.Id == id);
+                .First(ls => ls.Id == id);
             
             var response = JsonConvert.SerializeObject(liveStream);
             _logger.Info($"Get stream was invoked, returned stream {id}.");
