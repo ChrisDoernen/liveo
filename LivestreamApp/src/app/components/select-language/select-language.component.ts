@@ -3,17 +3,15 @@ import { LiveStream } from '../../entities/live-stream.entity';
 import { StreamsService } from '../../services/streams-service.service';
 
 @Component({
-  selector: 'select-streams',
-  templateUrl: './select-stream.component.html',
-  styleUrls: ['./select-stream.component.css']
+  selector: 'select-language',
+  templateUrl: './select-language.component.html',
+  styleUrls: ['./select-language.component.css']
 })
-export class SelectStreamComponent implements OnInit {
+export class SelectLanguageComponent implements OnInit {
 
-  title = 'Verfügbare Streams';
   availableLiveSteams: LiveStream[];
   isLoading: boolean = true;
   connectionError: boolean = false ;
-
 
   constructor(private streamsService: StreamsService) {
   }

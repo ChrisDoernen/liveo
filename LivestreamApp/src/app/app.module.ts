@@ -4,18 +4,20 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { StreamsService } from './services/streams-service.service';
-import { SelectStreamComponent } from './components/select-streams/select-stream.component';
+import { SelectLanguageComponent } from './components/select-language/select-language.component';
 import { StreamComponent } from './components/stream/stream.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SelectStreamComponent,
+    SelectLanguageComponent,
     StreamComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [
     StreamsService
