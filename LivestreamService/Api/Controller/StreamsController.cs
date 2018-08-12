@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using NLog;
 using Server.Streaming;
+using System.Linq;
 using System.Web.Http;
 
 namespace Api.Controller
@@ -14,15 +15,24 @@ namespace Api.Controller
         {
             _logger = LogManager.GetCurrentClassLogger();
         }
-
-        // GET api/<controller>
-        public string GetStartedStreams()
+        
+        public string Get()
         {
             var liveStreams = _streamingServer.GetStartedLiveStreams();
             var response = JsonConvert.SerializeObject(liveStreams);
 
-            _logger.Info($"GetStartedStreams was invoked, returned {liveStreams.Count} streams.");
+            _logger.Info($"Get streams was invoked, returned {liveStreams.Count} stream(s).");
 
+            return response;
+        }
+
+        public string Get(string id)
+        {
+            var liveStream = _streamingServer.GetStartedLiveStreams()
+                .Where(ls => ls.Id == id);
+            
+            var response = JsonConvert.SerializeObject(liveStream);
+            _logger.Info($"Get stream was invoked, returned stream {id}.");
             return response;
         }
     }

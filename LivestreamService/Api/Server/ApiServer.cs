@@ -11,7 +11,7 @@ namespace Api.Server
     public class ApiServer : IApiServer
     {
         private readonly ILogger _logger;
-        
+
         public ApiServer()
         {
             _logger = LogManager.GetCurrentClassLogger();
@@ -44,8 +44,9 @@ namespace Api.Server
 
             if (port == null)
                 throw new ArgumentException("Port is not defined in app.config");
-            
-            var route = new HttpRoute("api/{controller}/{action}");
+
+            var defaults = new HttpRouteValueDictionary(new { id = RouteParameter.Optional });
+            var route = new HttpRoute("api/{controller}/{id}", defaults);
             var config = new HttpSelfHostConfiguration($"http://localhost:{port}");
             const string origin = "http://localhost:4200";
             var cors = new EnableCorsAttribute(origin, "*", "GET");

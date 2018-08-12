@@ -6,7 +6,14 @@
         <xs:element name="LiveStream" maxOccurs="unbounded" minOccurs="0">
           <xs:complexType>
             <xs:sequence>
-              <xs:element type="xs:string" name="Id" />
+              <xs:element name="Id">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:pattern value="[a-z]*"></xs:pattern>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element type="xs:string" name="Title" />
               <xs:element name="CountryCode">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
@@ -26,6 +33,10 @@
     <xs:unique name="uniqueAudioInput">
       <xs:selector xpath="ls:LiveStream"/>
       <xs:field xpath="ls:AudioInput"/>
+    </xs:unique>
+    <xs:unique name="uniqueId">
+      <xs:selector xpath="ls:LiveStream"/>
+      <xs:field xpath="ls:Id"/>
     </xs:unique>
   </xs:element>
 </xs:schema>
