@@ -1,4 +1,5 @@
 ﻿using NLog;
+using Server.Streaming;
 using System;
 using System.IO;
 using System.Xml;
@@ -7,23 +8,23 @@ using System.Xml.Serialization;
 
 namespace Server.Configuration
 {
-    class LiveStreamsConfiguration
+    public class LiveStreamsConfiguration
     {
-        private readonly ILogger logger;
-        private readonly string LiveStreamsConfig = "LiveStreams.config";
-        private readonly string LiveStreamsXsd = "LiveStreams.xsd";
+        private readonly ILogger _logger;
+        private const string LiveStreamsConfig = "LiveStreams.config";
+        private const string LiveStreamsXsd = "LiveStreams.xsd";
 
         public LiveStreamsConfiguration()
         {
-            logger = LogManager.GetCurrentClassLogger();
+            _logger = LogManager.GetCurrentClassLogger();
         }
 
         public LiveStreams GetAvailableStreams()
         {
-            TryValidateConfigFilesExistance(this.LiveStreamsConfig, this.LiveStreamsXsd);
-            TryValidateLiveStreamsConfigFile(this.LiveStreamsConfig, this.LiveStreamsXsd);
+            TryValidateConfigFilesExistance(LiveStreamsConfig, LiveStreamsXsd);
+            TryValidateLiveStreamsConfigFile(LiveStreamsConfig, LiveStreamsXsd);
 
-            var liveStreams = TryDeserializeLiveStreams(this.LiveStreamsConfig);
+            var liveStreams = TryDeserializeLiveStreams(LiveStreamsConfig);
 
             return liveStreams;
         }
@@ -36,8 +37,8 @@ namespace Server.Configuration
             }
             catch (Exception ex)
             {
-                logger.Info("Deserialisazion of {liveStreamsConfigFile} failed.");
-                logger.Error(ex.Message + ex.StackTrace);
+                _logger.Info("Deserialisazion of {liveStreamsConfigFile} failed.");
+                _logger.Error(ex.Message + ex.StackTrace);
                 throw ex;
             }
         }
@@ -49,7 +50,7 @@ namespace Server.Configuration
             var liveStreams = (LiveStreams)deserializer.Deserialize(reader);
             reader.Close();
 
-            logger.Info($"Deserialisazion of Live streams from {liveStreamsConfigFile} successful ({liveStreams.liveStreams.Count}).");
+            _logger.Info($"Deserialisazion of Live streams from {liveStreamsConfigFile} successful ({liveStreams.Streams.Count}).");
             return liveStreams;
         }
 
@@ -61,8 +62,8 @@ namespace Server.Configuration
             }
             catch (Exception ex)
             {
-                logger.Info($"{liveStreamsConfigXsd} and {liveStreamsConfigFile} validation failed.");
-                logger.Error(ex.Message + ex.StackTrace);
+                _logger.Info($"{liveStreamsConfigXsd} and {liveStreamsConfigFile} validation failed.");
+                _logger.Error(ex.Message + ex.StackTrace);
                 throw ex;
             }
         }
@@ -81,7 +82,7 @@ namespace Server.Configuration
             if (!File.Exists(liveStreamsConfig))
                 throw new ArgumentException($"The LiveStreams.xsd could not be found.");
 
-            logger.Info("LiveStreams.xsd and LiveStreams.config exist.");
+            _logger.Info("LiveStreams.xsd and LiveStreams.config exist.");
         }
 
         private void TryValidateLiveStreamsConfigFile(string liveStreamsConfigFile, string liveStreamsConfigXsd)
@@ -92,15 +93,15 @@ namespace Server.Configuration
             }
             catch (Exception ex)
             {
-                logger.Info($"Validation of {liveStreamsConfigFile} failed.");
-                logger.Error(ex.Message + ex.StackTrace);
+                _logger.Info($"Validation of {liveStreamsConfigFile} failed.");
+                _logger.Error(ex.Message + ex.StackTrace);
                 throw ex;
             }
         }
 
         private void ValidateLiveStreamsConfigFile(string xsdFile, string xmlFile)
         {
-            logger.Info($"Starting validation of {xmlFile} against {xsdFile}.");
+            _logger.Info($"Starting validation of {xmlFile} against {xsdFile}.");
 
             var liveStreamsConfig = new XmlDocument();
             var schemaReader = new XmlTextReader(xsdFile);
@@ -111,14 +112,14 @@ namespace Server.Configuration
 
             liveStreamsConfig.Validate(ValidationEventHandler);
 
-            logger.Info($"Validation of {xmlFile} successful.");
+            _logger.Info($"Validation of {xmlFile} successful.");
         }
 
         private void ValidationEventHandler(object sender, ValidationEventArgs e)
         {
             if (e.Severity == XmlSeverityType.Warning)
             {
-                logger.Info($"StreamsConfigValidation Warning: {e.Message}");
+                _logger.Info($"StreamsConfigValidation Warning: {e.Message}");
 
             }
             else if (e.Severity == XmlSeverityType.Error)

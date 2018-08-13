@@ -7,44 +7,44 @@ namespace Server.Streaming
 {
     public class StreamingServer
     {
-        private static StreamingServer instance;
-        private readonly LiveStreamsConfiguration liveStreamsConfiguration;
-        private readonly AudioInputConfiguration audioInputConfiguration;
-        private readonly ILogger logger;
-        private LiveStreams livestreams;
-        private List<AudioInput> audioInputs;
+        private static StreamingServer _instance;
+        private readonly LiveStreamsConfiguration _liveStreamsConfiguration;
+        private readonly AudioInputConfiguration _audioInputConfiguration;
+        private readonly ILogger _logger;
+        private LiveStreams _livestreams;
+        private List<AudioInput> _audioInputs;
 
         public StreamingServer()
         {
-            this.liveStreamsConfiguration = new LiveStreamsConfiguration();
-            this.audioInputConfiguration = new AudioInputConfiguration();
-            this.logger = LogManager.GetCurrentClassLogger();
+            _liveStreamsConfiguration = new LiveStreamsConfiguration();
+            _audioInputConfiguration = new AudioInputConfiguration();
+            _logger = LogManager.GetCurrentClassLogger();
         }
 
         public static StreamingServer GetInstance()
         {
-            if (instance == null)
-                instance = new StreamingServer();
+            if (_instance == null)
+                _instance = new StreamingServer();
 
-            return instance;
+            return _instance;
         }
 
         public List<LiveStream> GetStartedLiveStreams()
         {
-            if (this.livestreams == null)
+            if (_livestreams == null)
                 throw new ArgumentException("StreamingServerHost was not initialized.");
 
-            return livestreams.GetStartedStreams();
+            return _livestreams.GetStartedStreams();
         }
 
         public void Initialize()
         {
-            this.audioInputs = this.audioInputConfiguration.GetAudioInputs();
-            this.livestreams = this.liveStreamsConfiguration.GetAvailableStreams();
-            this.livestreams.Validate(this.audioInputs);
-            this.livestreams.Initialize();
+            _audioInputs = _audioInputConfiguration.GetAudioInputs();
+            _livestreams = _liveStreamsConfiguration.GetAvailableStreams();
+            _livestreams.Validate(_audioInputs);
+            _livestreams.Initialize();
 
-            logger.Info("StreamingServerHost initialized.");
+            _logger.Info("StreamingServerHost initialized.");
         }
 
         public void Shutdown()
@@ -54,7 +54,7 @@ namespace Server.Streaming
 
         public void StartStreams()
         {
-            this.livestreams.StartStreams();
+            _livestreams.StartStreams();
         }
 
         public void StartStream()

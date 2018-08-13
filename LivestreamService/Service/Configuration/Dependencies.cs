@@ -3,7 +3,7 @@ using Ninject.Modules;
 using Server.Streaming;
 using Service.Startup;
 
-namespace Api.Configuration
+namespace Service.Configuration
 {
     public class Dependencies : NinjectModule
     {

@@ -7,7 +7,7 @@ using Topshelf;
 
 namespace Service
 {
-    class Program
+    internal class Program
     {
         public static void Main()
         {

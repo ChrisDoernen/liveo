@@ -6,7 +6,7 @@
 
         public AudioInput(string id)
         {
-            this.Id = id;
+            Id = id;
         }
     }
 }

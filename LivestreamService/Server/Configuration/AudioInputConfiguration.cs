@@ -8,9 +8,9 @@ namespace Server.Configuration
 {
     public class AudioInputConfiguration
     {
-        private readonly string listDevicesCommand = $@"ffmpeg -list_devices true -f dshow -i dummy -hide_banner";
+        private readonly string _listDevicesCommand = $@"ffmpeg -list_devices true -f dshow -i dummy -hide_banner";
 
-        private readonly List<string> listDevicesCommandProcessOutput = new List<string>();
+        private readonly List<string> _listDevicesCommandProcessOutput = new List<string>();
 
         public List<AudioInput> GetAudioInputs()
         {
@@ -23,7 +23,7 @@ namespace Server.Configuration
 
         private void StartListDevicesCommandProcess()
         {
-            var processInfo = new ProcessStartInfo("cmd.exe", "/c " + this.listDevicesCommand)
+            var processInfo = new ProcessStartInfo("cmd.exe", "/c " + _listDevicesCommand)
             {
                 CreateNoWindow = false,
                 UseShellExecute = false,
@@ -34,7 +34,7 @@ namespace Server.Configuration
             var process = Process.Start(processInfo);
 
             // ffmpeg sends all output to error output for some reason
-            process.ErrorDataReceived += this.DataRecievedHandler;
+            process.ErrorDataReceived += DataRecievedHandler;
             process.BeginErrorReadLine();
 
             process.WaitForExit();
@@ -44,7 +44,7 @@ namespace Server.Configuration
         {
             var audioInputs = new List<AudioInput>();
 
-            foreach (var line in this.listDevicesCommandProcessOutput.ToList())
+            foreach (var line in _listDevicesCommandProcessOutput.ToList())
             {
                 if (line == null || !(line.Contains("(") && line.Contains(")") && line.Contains("\"")))
                     continue;
@@ -60,7 +60,7 @@ namespace Server.Configuration
 
         private void DataRecievedHandler(object sender, DataReceivedEventArgs e)
         {
-            this.listDevicesCommandProcessOutput.Add(e.Data);
+            _listDevicesCommandProcessOutput.Add(e.Data);
         }
     }
 }

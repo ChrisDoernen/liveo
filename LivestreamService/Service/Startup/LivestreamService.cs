@@ -12,22 +12,22 @@ namespace Service.Startup
 
         public LivestreamService(IApiServer apiServer)
         {
-            this._streamingServerHost = StreamingServer.GetInstance();
-            this._apiServer = apiServer;
-            this._logger = LogManager.GetCurrentClassLogger();
+            _streamingServerHost = StreamingServer.GetInstance();
+            _apiServer = apiServer;
+            _logger = LogManager.GetCurrentClassLogger();
         }
 
         public void Start()
         {
-            this._streamingServerHost.Initialize();
-            this._streamingServerHost.StartStreams();
-            this._apiServer.Start();
+            _streamingServerHost.Initialize();
+            _streamingServerHost.StartStreams();
+            _apiServer.Start();
             
             _logger.Info("LivestreamService started.");
         }
 
         public void Stop() {
-            this._apiServer.Stop();
+            _apiServer.Stop();
 
             _logger.Info("LivestreamService stopped.");
         }

@@ -5,24 +5,24 @@ namespace Server.Streaming
 {
     internal class StreamingServerProcess
     {
-        private readonly string audioInput;
-        private readonly int port;
-        private readonly ILogger logger;
-        private readonly string command;
-        private Process process;
-        private bool isProcessRunning;
+        private readonly string _audioInput;
+        private readonly int _port;
+        private readonly ILogger _logger;
+        private readonly string _command;
+        private Process _process;
+        private bool _isProcessRunning;
 
         public StreamingServerProcess(string audioInput, int port)
         {
-            this.logger = LogManager.GetCurrentClassLogger();
-            this.audioInput = audioInput;
-            this.port = port;
-            this.command = $@"ffmpeg -y -f dshow -i audio=""{audioInput}"" -rtbufsize 64 -probesize 64 -acodec libmp3lame -ab 320k -ac 1 -reservoir 0 -f mp3 -hide_banner -fflags +nobuffer - | node NodeStreamingServer.js -port {port} -type mp3 -burstsize 0.1";
+            _logger = LogManager.GetCurrentClassLogger();
+            this._audioInput = audioInput;
+            this._port = port;
+            _command = $@"ffmpeg -y -f dshow -i audio=""{audioInput}"" -rtbufsize 64 -probesize 64 -acodec libmp3lame -ab 320k -ac 1 -reservoir 0 -f mp3 -hide_banner -fflags +nobuffer - | node NodeStreamingServer.js -port {port} -type mp3 -burstsize 0.1";
         }
         
         public void Start()
         {
-            var processInfo = new ProcessStartInfo("cmd.exe", "/c " + this.command)
+            var processInfo = new ProcessStartInfo("cmd.exe", "/c " + _command)
             {
                 CreateNoWindow = false,
                 UseShellExecute = false,
@@ -33,18 +33,18 @@ namespace Server.Streaming
             var process = Process.Start(processInfo);
 
             // ffmpeg sends all output to error output
-            process.ErrorDataReceived += this.DataRecievedHandler;
+            process.ErrorDataReceived += DataRecievedHandler;
             process.BeginErrorReadLine();
-            
-            this.process = process;
-            this.isProcessRunning = true;
+
+            _process = process;
+            _isProcessRunning = true;
         }
 
         public void Stop()
         {
-            this.process.Kill();
-            this.process.Close();
-            this.isProcessRunning = false;
+            _process.Kill();
+            _process.Close();
+            _isProcessRunning = false;
         }
 
         private void DataRecievedHandler (object sender, DataReceivedEventArgs e)
@@ -53,7 +53,7 @@ namespace Server.Streaming
 
         public bool IsRunning()
         {
-            return this.isProcessRunning && this.process.Responding;
+            return _isProcessRunning && _process.Responding;
         }
     }
 }

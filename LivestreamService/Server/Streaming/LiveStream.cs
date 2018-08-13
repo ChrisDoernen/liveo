@@ -32,35 +32,35 @@ namespace Server.Streaming
 
         public void Validate(List<AudioInput> validAudioInputs)
         {
-            if (validAudioInputs.Any(i => i.Id == this.AudioInput))
-                this.HasValidAudioInput = true;
+            if (validAudioInputs.Any(i => i.Id == AudioInput))
+                HasValidAudioInput = true;
         }
 
         public void Initialize()
         {
-            this._logger = LogManager.GetCurrentClassLogger();
+            _logger = LogManager.GetCurrentClassLogger();
 
-            if (!this.HasValidAudioInput)
+            if (!HasValidAudioInput)
             {
-                _logger.Warn($"Livestream \"{this.Id}\" has no valid audio input.");
+                _logger.Warn($"Livestream \"{Id}\" has no valid audio input.");
                 return;
             }
 
-            this._streamingServer = new StreamingServerProcess(this.AudioInput, this.Port);
-            this.IsInitialized = true;
+            _streamingServer = new StreamingServerProcess(AudioInput, Port);
+            IsInitialized = true;
 
-            _logger.Info($"Initialized livestream \"{this.Id}\"");
+            _logger.Info($"Initialized livestream \"{Id}\"");
         }
 
         public void Start()
         {
-            if (!this.IsInitialized)
+            if (!IsInitialized)
                 return;
 
-            this._streamingServer.Start();
-            this.IsStarted = true;
+            _streamingServer.Start();
+            IsStarted = true;
 
-            _logger.Info($"Started livestream {this.Id}");
+            _logger.Info($"Started livestream {Id}");
         }
 
         public void Stop()
@@ -68,10 +68,10 @@ namespace Server.Streaming
             if (!IsStarted)
                 return;
 
-            this._streamingServer.Stop();
-            this.IsStarted = false;
+            _streamingServer.Stop();
+            IsStarted = false;
 
-            _logger.Info($"Stopped livestream {this.Id}");
+            _logger.Info($"Stopped livestream {Id}");
         }
     }
 }
