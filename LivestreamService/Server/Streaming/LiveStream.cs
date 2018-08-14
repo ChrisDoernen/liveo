@@ -56,6 +56,7 @@ namespace Server.Streaming
         {
             if (!IsInitialized)
                 return;
+            
 
             _streamingServer.Start();
             IsStarted = true;

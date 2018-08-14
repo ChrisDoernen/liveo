@@ -23,10 +23,7 @@ namespace Server.Streaming
 
         public static StreamingServer GetInstance()
         {
-            if (_instance == null)
-                _instance = new StreamingServer();
-
-            return _instance;
+            return _instance ?? (_instance = new StreamingServer());
         }
 
         public List<LiveStream> GetStartedLiveStreams()
@@ -49,7 +46,7 @@ namespace Server.Streaming
 
         public void Shutdown()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void StartStreams()
@@ -59,12 +56,12 @@ namespace Server.Streaming
 
         public void StartStream()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void StopStream()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }
