@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { StreamsService } from './services/streams-service/streams-service';
@@ -8,6 +7,11 @@ import { SelectLanguageComponent } from './components/select-language/select-lan
 import { StreamComponent } from './components/stream/stream.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PlayerComponent } from './components/player/player.component';
+import { ConfigurationService } from './services/configuration-service/configuration.service';
+
+export function initializeApp(ConfigurationService: ConfigurationService) {
+  return () => ConfigurationService.load();
+}
 
 @NgModule({
   declarations: [
@@ -22,7 +26,11 @@ import { PlayerComponent } from './components/player/player.component';
     AppRoutingModule
   ],
   providers: [
-    StreamsService
+    StreamsService,
+    ConfigurationService,
+    { provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      deps: [ConfigurationService], multi: true }
   ],
   bootstrap: [AppComponent]
 })

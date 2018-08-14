@@ -1,0 +1,8 @@
+{
+    "env": {
+        "name": "DEV"
+     },
+     "apiServer": {
+         "ip": "localhost"
+     }
+}

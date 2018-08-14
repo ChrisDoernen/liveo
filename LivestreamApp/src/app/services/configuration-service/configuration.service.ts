@@ -1,20 +1,26 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '../../../../node_modules/@angular/core';
+import { IAppConfig } from '../../entities/app-config.entity';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '../../../../node_modules/@angular/common/http';
 
-function _window(): any {
-  // Global native browser window object
-  return _window;
-}
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ConfigurationService {
 
-  private get config(): any {
-    return _window().__env;
-  }
+    static settings: IAppConfig;
 
-  public get apiServer(): string {
-    return this.config.configuration.apiServer;
-  }
+    constructor(private httpCLient: HttpClient) {}
+
+    load() {
+        const jsonFile = `assets/config/app-config.${environment.name}.json`;
+        return new Promise<any>((resolve, reject) => {
+            this.httpCLient.get(jsonFile)
+            .toPromise()
+            .then((config: IAppConfig) => {
+                ConfigurationService.settings = config;
+                resolve();
+            }).catch((response: any) => {
+                reject(`Could not load file '${jsonFile}': ${JSON.stringify(response)}`);
+            });
+        });
+    }
 }
