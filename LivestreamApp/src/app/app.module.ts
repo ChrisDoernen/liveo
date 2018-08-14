@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { StreamsService } from './services/streams-service.service';
+import { StreamsService } from './services/streams-service/streams-service';
 import { SelectLanguageComponent } from './components/select-language/select-language.component';
 import { StreamComponent } from './components/stream/stream.component';
 import { AppRoutingModule } from './app-routing.module';

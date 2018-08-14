@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LiveStream } from '../../entities/live-stream.entity';
-import { StreamsService } from '../../services/streams-service.service';
+import { StreamsService } from '../../services/streams-service/streams-service';
 
 @Component({
   selector: 'select-language',

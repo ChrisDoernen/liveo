@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { LiveStream } from '../entities/live-stream.entity';
+import { LiveStream } from '../../entities/live-stream.entity';
 import { map } from 'rxjs/operators';
 
 @Injectable({

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { StreamsService } from '../../services/streams-service.service';
+import { StreamsService } from '../../services/streams-service/streams-service';
 import { LiveStream } from '../../entities/live-stream.entity';
-import { ActivatedRoute } from '../../../../node_modules/@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { ConfigurationService } from '../../services/configuration-service/configuration.service';
 
 @Component({
   selector: 'app-player',
@@ -15,7 +16,8 @@ export class PlayerComponent implements OnInit {
   private connectionError: boolean = false ;
 
   constructor(private route: ActivatedRoute,
-    private streamsService: StreamsService) { }
+    private streamsService: StreamsService,
+  private configurationService: ConfigurationService) { }
 
   ngOnInit() {
     this.GetLiveStream();
@@ -32,6 +34,15 @@ export class PlayerComponent implements OnInit {
         this.isLoading = false;
       }, () => {
         this.isLoading = false;
+        this.InitializePlayer();
       })
+    }
+
+    private InitializePlayer(): void {
+      
+    }
+
+    private onPlay(): void {
+      debugger;
     }
 }

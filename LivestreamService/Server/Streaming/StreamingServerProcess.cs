@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using NLog;
+using System.Diagnostics;
 
 namespace Server.Streaming
 {
@@ -42,6 +43,8 @@ namespace Server.Streaming
 
         private void DataRecievedHandler (object sender, DataReceivedEventArgs e)
         {
+            var logger = LogManager.GetCurrentClassLogger();
+            logger.Warn(e.Data);
         }
 
         public bool IsRunning()
