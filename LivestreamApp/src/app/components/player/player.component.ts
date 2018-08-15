@@ -14,16 +14,10 @@ export class PlayerComponent implements OnInit {
   private liveStream: LiveStream;
   private isLoading: boolean = true;
   private connectionError: boolean = false ;
-  private apiServer: string = ConfigurationService.settings.apiServer.ip
 
-  private formats = new Array(
-    {"MIME": "audio/mpeg", "PORT": 9601}, // Mp3 is prefered
-    {"MIME": "audio/wav", "PORT": 9602} // Wav is fallback
-  );
-
-  constructor(private route: ActivatedRoute,
-    private streamsService: StreamsService,
-    private configurationService: ConfigurationService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private streamsService: StreamsService) { }
 
   ngOnInit() {
     this.GetLiveStream();

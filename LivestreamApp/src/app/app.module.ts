@@ -8,6 +8,7 @@ import { StreamComponent } from './components/stream/stream.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PlayerComponent } from './components/player/player.component';
 import { ConfigurationService } from './services/configuration-service/configuration.service';
+import { EndpointService } from './services/endpoint-service/endpoint.service';
 
 export function initializeApp(ConfigurationService: ConfigurationService) {
   return () => ConfigurationService.load();
@@ -26,6 +27,7 @@ export function initializeApp(ConfigurationService: ConfigurationService) {
     AppRoutingModule
   ],
   providers: [
+    EndpointService,
     StreamsService,
     ConfigurationService,
     { provide: APP_INITIALIZER,

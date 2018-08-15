@@ -3,19 +3,18 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LiveStream } from '../../entities/live-stream.entity';
 import { map } from 'rxjs/operators';
+import { EndpointService } from '../endpoint-service/endpoint.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StreamsService {
 
-  private apiUrl: string = "http://localhost:8080/api/streams"
-
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, 
+    private endpointService: EndpointService) { }
 
   public getAvailableLiveStreams(): Observable<LiveStream[]> {
-    const uri = this.apiUrl;
-     return this.httpClient.get(uri)
+     return this.httpClient.get(this.endpointService.getEndpoint("streams"))
      .pipe(map((response: string) => {
        return JSON.parse(response).map((item) => {
          return LiveStream.deserialize(item);
@@ -24,8 +23,7 @@ export class StreamsService {
   }
 
   public getLiveStream(id: string): Observable<LiveStream> {
-    const uri = this.apiUrl + "/" + id;
-     return this.httpClient.get(uri)
+     return this.httpClient.get(this.endpointService.getEndpoint("streams/" + id))
      .pipe(map((response: string) => {
          return LiveStream.deserialize(JSON.parse(response));
      }))

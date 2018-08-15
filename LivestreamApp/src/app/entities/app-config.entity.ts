@@ -4,5 +4,6 @@ export interface IAppConfig {
     };
     apiServer: {
         ip: string;
+        port: number;
     };
 }
