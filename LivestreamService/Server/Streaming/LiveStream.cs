@@ -16,6 +16,9 @@ namespace Server.Streaming
         public WebsocketConfig WebsocketConfig { get; set; }
 
         [XmlIgnore]
+        public string Ip { get; set; }
+
+        [XmlIgnore]
         public bool IsStarted { get; private set; }
 
         [XmlIgnore]

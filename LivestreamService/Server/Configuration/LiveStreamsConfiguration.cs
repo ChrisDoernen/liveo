@@ -50,6 +50,9 @@ namespace Server.Configuration
             var liveStreams = (LiveStreams)deserializer.Deserialize(reader);
             reader.Close();
 
+            var ip = SystemConfiguration.GetLocalIPAddress();
+            liveStreams.SetIPAdress(ip);
+
             _logger.Info($"Deserialisazion of Live streams from {liveStreamsConfigFile} successful ({liveStreams.Streams.Count}).");
             return liveStreams;
         }
@@ -71,16 +74,16 @@ namespace Server.Configuration
         private void ValidateConfigFilesExistance(string liveStreamsXsd, string liveStreamsConfig)
         {
             if (liveStreamsXsd == null)
-                throw new ArgumentException($"The LiveStreams.config could not be found.");
+                throw new ArgumentException("The LiveStreams.config could not be found.");
 
             if (liveStreamsConfig == null)
-                throw new ArgumentException($"The LiveStreams.xsd could not be found.");
+                throw new ArgumentException("The LiveStreams.xsd could not be found.");
 
             if (!File.Exists(liveStreamsXsd))
-                throw new ArgumentException($"The LiveStreams.config could not be found.");
+                throw new ArgumentException("The LiveStreams.config could not be found.");
 
             if (!File.Exists(liveStreamsConfig))
-                throw new ArgumentException($"The LiveStreams.xsd could not be found.");
+                throw new ArgumentException("The LiveStreams.xsd could not be found.");
 
             _logger.Info("LiveStreams.xsd and LiveStreams.config exist.");
         }

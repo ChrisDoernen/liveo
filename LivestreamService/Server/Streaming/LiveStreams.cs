@@ -43,5 +43,13 @@ namespace Server.Streaming
                 stream.Start();
             }
         }
+
+        public void SetIPAdress(string ipAdress)
+        {
+            foreach (var stream in Streams)
+            {
+                stream.Ip = ipAdress;
+            }
+        }
     }
 }
