@@ -12,8 +12,8 @@ namespace Server.Streaming
         public string Description { get; set; }
         public string CountryCode { get; set; }
         public string AudioInput { get; set; }
-        public int Port { get; set; }
         public bool StartOnServiceStartup { get; set; }
+        public WebsocketConfig WebsocketConfig { get; set; }
 
         [XmlIgnore]
         public bool IsStarted { get; private set; }
@@ -46,7 +46,7 @@ namespace Server.Streaming
                 return;
             }
 
-            _streamingServer = new StreamingServerProcess(AudioInput, Port);
+            _streamingServer = new StreamingServerProcess(AudioInput, WebsocketConfig);
             IsInitialized = true;
 
             _logger.Info($"Initialized livestream \"{Id}\"");
