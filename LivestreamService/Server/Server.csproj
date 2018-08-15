@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Configuration\AudioInputConfiguration.cs" />
     <Compile Include="Configuration\LiveStreamsConfiguration.cs" />
+    <Compile Include="Configuration\SystemConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Streaming\AudioInput.cs" />
     <Compile Include="Streaming\LiveStream.cs" />

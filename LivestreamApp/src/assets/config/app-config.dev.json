@@ -1,8 +1,9 @@
 {
     "env": {
         "name": "DEV"
-     },
-     "apiServer": {
-         "ip": "localhost"
-     }
+    },
+    "apiServer": {
+        "ip": "localhost",
+        "port": "8080"
+    }
 }

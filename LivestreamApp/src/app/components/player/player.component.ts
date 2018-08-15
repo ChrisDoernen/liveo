@@ -44,7 +44,8 @@ export class PlayerComponent implements OnInit {
   }
 
   private InitializePlayer(): void {
-    //const playerControls = new HTMLPlayerControls("playercontrols");
+    debugger;
+    const playerControls = new HTMLPlayerControls("playercontrols");
     debugger;
   }
 
