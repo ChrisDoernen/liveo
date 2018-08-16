@@ -26,6 +26,7 @@ export class PlayerComponent implements OnInit {
   private socketClient: WebSocketClient;
 
   private isWebsocketConnected: boolean = false;
+  private isPlaying: boolean = false;
   private packetModCounter: number = 0;
 
   constructor(private route: ActivatedRoute,
