@@ -5,4 +5,8 @@ declare class HTMLPlayerControls {
     public ToggleActivityLight(): void;
 
     public SetPlayState(state: boolean): void;
+
+    public OnPlayClick(): void;
+
+    public OnVolumeChange(): void;
 }

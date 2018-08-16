@@ -16,7 +16,7 @@ export class LiveStream {
         const title = input.Title;
         const description = input.Description;
         const countryCode = input.CountryCode;
-        const websocketConfig = input.WebsocketConfig;
+        const websocketConfig = WebsocketConfig.deserialize(input.WebsocketConfig);
         const ip = input.Ip;
 
         return new LiveStream(id, title, description, countryCode, websocketConfig, ip);
