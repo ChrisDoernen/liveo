@@ -3,7 +3,7 @@
 	https://github.com/JoJoBond/3LAS
 */
 
-function AudioFormatReader_MPEG(ErrorCallback, DataReadyCallback)
+function AudioFormatReader_MPEG(UserAgentInfo, ErrorCallback, DataReadyCallback)
 {
     AudioFormatReader.call(this, ErrorCallback, DataReadyCallback);
 
@@ -40,7 +40,29 @@ function AudioFormatReader_MPEG(ErrorCallback, DataReadyCallback)
 	this._FrameSamples = 0;
 	this._FrameSampleRate = 0;
 	
-	this._TimeBudget = 0;
+    this._TimeBudget = 0;
+    
+    // Number of frames to decode together (keyword: byte-reservoir)
+    // For live streaming this means that you can push the minimum number of frames
+    // on connection to the client to reduce waiting time without effecting the latency.
+    if (UserAgentInfo.isAndroid && UserAgentInfo.isFirefox)
+        AudioFormatReader_MPEG.prototype._WindowSize = 50;
+    else if (UserAgentInfo.isAndroid && UserAgentInfo.isNativeChrome)
+        AudioFormatReader_MPEG.prototype._WindowSize = 30;
+    else if (UserAgentInfo.isAndroid)
+        AudioFormatReader_MPEG.prototype._WindowSize = 30;
+    else
+        AudioFormatReader_MPEG.prototype._WindowSize = 25;
+
+    // Number of frames to use from one decoded window
+    if (UserAgentInfo.isAndroid && UserAgentInfo.isFirefox)
+        AudioFormatReader_MPEG.prototype._UseFrames = 40;
+    else if (UserAgentInfo.isAndroid && UserAgentInfo.isNativeChrome)
+        AudioFormatReader_MPEG.prototype._UseFrames = 20;
+    else if (UserAgentInfo.isAndroid)
+        AudioFormatReader_MPEG.prototype._UseFrames = 5;
+    else
+        AudioFormatReader_MPEG.prototype._UseFrames = 2;
 }
 
 
@@ -49,29 +71,6 @@ function AudioFormatReader_MPEG(ErrorCallback, DataReadyCallback)
 
 // Adds a minimal ID3v2 tag to each frame
 AudioFormatReader_MPEG.prototype._AddID3Tag = true;
-
-// Number of frames to decode together (keyword: byte-reservoir)
-// For live streaming this means that you can push the minimum number of frames
-// on connection to the client to reduce waiting time without effecting the latency.
-if (isAndroid && isFirefox)
-    AudioFormatReader_MPEG.prototype._WindowSize = 50;
-else if (isAndroid && isNativeChrome)
-    AudioFormatReader_MPEG.prototype._WindowSize = 30;
-else if (isAndroid)
-    AudioFormatReader_MPEG.prototype._WindowSize = 30;
-else
-    AudioFormatReader_MPEG.prototype._WindowSize = 25;
-
-// Number of frames to use from one decoded window
-if (isAndroid && isFirefox)
-    AudioFormatReader_MPEG.prototype._UseFrames = 40;
-else if (isAndroid && isNativeChrome)
-    AudioFormatReader_MPEG.prototype._UseFrames = 20;
-else if (isAndroid)
-    AudioFormatReader_MPEG.prototype._UseFrames = 5;
-else
-    AudioFormatReader_MPEG.prototype._UseFrames = 2;
-
 
 // Constants:
 // ==========

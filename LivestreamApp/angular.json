@@ -28,7 +28,11 @@
               "src/assets/semantic-ui/semantic.css"
             ],
             "scripts": [
-              "src/assets/3las/player_controls.js"
+              "src/assets/3las/player_controls.js",
+              "src/assets/3las/audio_player.js",
+              "src/assets/3las/socket_client.js",
+              "src/assets/3las/format_reader.js",
+              "src/assets/3las/formats/mpeg.js"
             ]
           },
           "configurations": {

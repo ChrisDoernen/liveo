@@ -54,7 +54,7 @@ function CanDecodeTypes(MIMETypes) {
 }
 
 
-function CreateAudioFormatReader(MIME, ErrorCallback, DataReadyCallback) {
+function CreateAudioFormatReader(UserAgentInfo, MIME, ErrorCallback, DataReadyCallback) {
     if (typeof MIME !== "string")
         throw new Error('CreateAudioFormatReader: Invalid MIME-Type, must be string');
 
@@ -67,7 +67,7 @@ function CreateAudioFormatReader(MIME, ErrorCallback, DataReadyCallback) {
             if (!CanDecodeTypes(new Array("audio/mpeg", "audio/MPA", "audio/mpa-robust")))
                 throw new Error('CreateAudioFormatReader: Browser can not decode specified MIME-Type (' + MIME + ')');
 
-            return new AudioFormatReader_MPEG(ErrorCallback, DataReadyCallback);
+            return new AudioFormatReader_MPEG(UserAgentInfo, ErrorCallback, DataReadyCallback);
             break;
 
 
@@ -80,7 +80,7 @@ function CreateAudioFormatReader(MIME, ErrorCallback, DataReadyCallback) {
             if (!CanDecodeTypes(new Array("audio/ogg; codecs=vorbis", "audio/vorbis")))
                 throw new Error('CreateAudioFormatReader: Browser can not decode specified MIME-Type (' + MIME + ')');
 
-            return new AudioFormatReader_OGG(ErrorCallback, DataReadyCallback);
+            return new AudioFormatReader_OGG(UserAgentInfo, ErrorCallback, DataReadyCallback);
             break;
         
         // Ogg Opus
@@ -89,7 +89,7 @@ function CreateAudioFormatReader(MIME, ErrorCallback, DataReadyCallback) {
             if (!CanDecodeTypes(new Array("audio/ogg; codecs=opus", "audio/opus")))
                 throw new Error('CreateAudioFormatReader: Browser can not decode specified MIME-Type (' + MIME + ')');
 
-            return new AudioFormatReader_OGG(ErrorCallback, DataReadyCallback);
+            return new AudioFormatReader_OGG(UserAgentInfo, ErrorCallback, DataReadyCallback);
             break;
         
 		/*
@@ -107,7 +107,7 @@ function CreateAudioFormatReader(MIME, ErrorCallback, DataReadyCallback) {
 			if (!CanDecodeTypes(new Array("audio/mp4", "audio/aac", "audio/mpeg4-generic", "audio/3gpp", "audio/MP4A-LATM")))
 				throw new Error('AudioFormatReader: Browser can not decode specified MIMI-Type (' + MIME + ')');
 			
-			MIMEReader = new AudioFormatReader_AAC(DataReadyCallback);
+			MIMEReader = new AudioFormatReader_AAC(UserAgentInfo, DataReadyCallback);
 			break;
 		*/
         
@@ -119,7 +119,7 @@ function CreateAudioFormatReader(MIME, ErrorCallback, DataReadyCallback) {
             if (!CanDecodeTypes(new Array("audio/wav", "audio/wave")))
                 throw new Error('CreateAudioFormatReader: Browser can not decode specified MIME-Type (' + MIME + ')');
 
-            return new AudioFormatReader_WAV(ErrorCallback, DataReadyCallback);
+            return new AudioFormatReader_WAV(UserAgentInfo, ErrorCallback, DataReadyCallback);
             break;
 
         // Codecs below are not (yet) implemented

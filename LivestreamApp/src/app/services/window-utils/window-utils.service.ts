@@ -61,7 +61,8 @@ export class WindowUtilsService {
     else
         OSName = "Unknown";
 
-    return new UserAgentInfo(OSName, BrowserName);
+    return new UserAgentInfo(OSName, BrowserName, isAndroid, isIOS, isWindows, isLinux, isBSD, isMacOSX,
+        isInternetExplorer, isSafari, isOpera, isChrome, isFirefox, isNativeChrome);
   }
 
   public isWebsocketSupported(): boolean {
