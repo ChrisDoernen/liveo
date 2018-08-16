@@ -27,6 +27,8 @@ export class PlayerComponent implements OnInit {
 
   private isWebsocketConnected: boolean = false;
   private isPlaying: boolean = false;
+  private currentVolume: number;
+  private maxVolume: number = 1;
   private packetModCounter: number = 0;
 
   constructor(private route: ActivatedRoute,
@@ -116,13 +118,33 @@ export class PlayerComponent implements OnInit {
     console.log(line);
   }
 
-  private onPlay(): void {
-    this.audioPlayer.MobileUnmute();
+  private onPlayToggle(): void {
+    if (!this.isWebsocketConnected) {
+      this.audioPlayer.MobileUnmute();
+      this.currentVolume = this.audioPlayer.GetVolume();
+      this.connectToWebsocket();
+      return;
+    }
+    else {
+      if (this.isPlaying) {
+        this.currentVolume = this.audioPlayer.GetVolume();
+        this.audioPlayer.SetVolume(0);
+        this.isPlaying = false;
+      } 
+      else {
+        this.audioPlayer.SetVolume(this.currentVolume);
+        this.isPlaying = true;
+      }
+    }
+  }
+
+  private connectToWebsocket(): void {
     try {
       this.socketClient = new WebSocketClient('ws://' + this.liveStream.ip + ':' + this.liveStream.websocketConfig.port.toString(), 
-      this.onSocketError.bind(this), this.onSocketConnect.bind(this), this.onSocketDataReady.bind(this), this.onSocketDisconnect.bind(this));
+        this.onSocketError.bind(this), this.onSocketConnect.bind(this), this.onSocketDataReady.bind(this), this.onSocketDisconnect.bind(this));
       this.log("Init of WebSocketClient succeeded");
       this.log("Trying to connect to server.");
+      this.isPlaying = true;
     }
     catch (e) {
       this.log("Init of WebSocketClient failed: " + e);
