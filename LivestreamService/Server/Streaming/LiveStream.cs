@@ -28,7 +28,7 @@ namespace Server.Streaming
         public bool IsInitialized { get; private set; }
 
         [XmlIgnore]
-        private StreamingServerProcess _streamingServer;
+        private StreamingServerProcess _streamingServerProcess;
 
         [XmlIgnore]
         private ILogger _logger;
@@ -49,7 +49,7 @@ namespace Server.Streaming
                 return;
             }
 
-            _streamingServer = new StreamingServerProcess(AudioInput, WebsocketConfig);
+            _streamingServerProcess = new StreamingServerProcess(AudioInput, WebsocketConfig);
             IsInitialized = true;
 
             _logger.Info($"Initialized livestream \"{Id}\"");
@@ -61,7 +61,7 @@ namespace Server.Streaming
                 return;
             
 
-            _streamingServer.Start();
+            _streamingServerProcess.Start();
             IsStarted = true;
 
             _logger.Info($"Started livestream {Id}");
@@ -72,7 +72,7 @@ namespace Server.Streaming
             if (!IsStarted)
                 return;
 
-            _streamingServer.Stop();
+            _streamingServerProcess.Stop();
             IsStarted = false;
 
             _logger.Info($"Stopped livestream {Id}");

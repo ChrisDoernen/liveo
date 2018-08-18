@@ -51,7 +51,7 @@ namespace Server.Configuration
             reader.Close();
 
             var ip = SystemConfiguration.GetLocalIPAddress();
-            liveStreams.SetIPAdress(ip);
+            liveStreams.SetIpAdress(ip);
 
             _logger.Info($"Deserialisazion of Live streams from {liveStreamsConfigFile} successful ({liveStreams.Streams.Count}).");
             return liveStreams;
