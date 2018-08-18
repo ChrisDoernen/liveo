@@ -24,7 +24,7 @@
                 <li>@Html.ActionLink("Dashboard", "Index", "Home")</li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li>@Html.ActionLink("System", "Shutdown", "System", null, new { onclick = "return confirm('This operation will stop all streams and shutdown the server. Do you want to continue?');" })</li>
+                <li>@Html.ActionLink("Shutdown server", "Shutdown", "System", null, new { onclick = "return confirm('This operation will stop all streams and shutdown the server. Do you want to continue?');" })</li>
             </ul>
         </div>
     </div>

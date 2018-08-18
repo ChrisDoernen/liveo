@@ -8,6 +8,13 @@ namespace LivestreamBackend.Controllers
         // GET: System
         public ActionResult Shutdown()
         {
+            ShutdownThisComputer();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        private static void ShutdownThisComputer()
+        {
             ManagementBaseObject mboShutdown = null;
             ManagementClass mcWin32 = new ManagementClass("Win32_OperatingSystem");
             mcWin32.Get();
@@ -25,8 +32,6 @@ namespace LivestreamBackend.Controllers
                 mboShutdown = manObj.InvokeMethod("Win32Shutdown",
                     mboShutdownParams, null);
             }
-
-            return RedirectToAction("Index", "Home");
         }
     }
 }
