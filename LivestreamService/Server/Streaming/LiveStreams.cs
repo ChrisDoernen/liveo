@@ -44,7 +44,27 @@ namespace Server.Streaming
             }
         }
 
-        public void SetIPAdress(string ipAdress)
+        public void StartStream(string id)
+        {
+            Streams.First(s => s.Id == id).Start();
+        }
+
+
+        public void StopStreams()
+        {
+            foreach (var stream in Streams)
+            {
+                stream.Stop();
+            }
+        }
+
+        public void StopStream(string id)
+        {
+            Streams.First(s => s.Id == id).Stop();
+        }
+
+
+        public void SetIpAdress(string ipAdress)
         {
             foreach (var stream in Streams)
             {

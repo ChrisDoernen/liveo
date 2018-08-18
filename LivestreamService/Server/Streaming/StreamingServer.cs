@@ -46,7 +46,7 @@ namespace Server.Streaming
 
         public void Shutdown()
         {
-            throw new NotImplementedException();
+            _livestreams.StopStreams();
         }
 
         public void StartStreams()
@@ -54,14 +54,14 @@ namespace Server.Streaming
             _livestreams.StartStreams();
         }
 
-        public void StartStream()
+        public void StartStream(string id)
         {
-            throw new NotImplementedException();
+            _livestreams.StartStream(id);
         }
 
-        public void StopStream()
+        public void StopStream(string id)
         {
-            throw new NotImplementedException();
+            _livestreams.StopStream(id);
         }
     }
 }
