@@ -12,7 +12,7 @@ import { UserAgentInfo } from '../../entities/user-agent-info.entity';
 })
 export class PlayerComponent implements OnInit {
 
-  private liveStream: LiveStream;
+  public liveStream: LiveStream;
   private logStack: string[] = [];
   private isLoading: boolean = true;
 
@@ -25,8 +25,8 @@ export class PlayerComponent implements OnInit {
   private formatReader: AudioFormatReader;
   private socketClient: WebSocketClient;
 
-  private isWebsocketConnected: boolean = false;
-  private isPlaying: boolean = false;
+  public isWebsocketConnected: boolean = false;
+  public isPlaying: boolean = false;
   private currentVolume: number;
   private maxVolume: number = 1;
   private packetModCounter: number = 0;
@@ -118,7 +118,7 @@ export class PlayerComponent implements OnInit {
     console.log(line);
   }
 
-  private onPlayToggle(): void {
+  public onPlayToggle(): void {
     if (!this.isWebsocketConnected) {
       this.audioPlayer.MobileUnmute();
       this.currentVolume = this.audioPlayer.GetVolume();

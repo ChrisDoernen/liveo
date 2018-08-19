@@ -9,9 +9,9 @@ import { StreamsService } from '../../services/streams-service/streams-service';
 })
 export class SelectLanguageComponent implements OnInit {
 
-  private availableLiveSteams: LiveStream[];
-  private isLoading: boolean = true;
-  private connectionError: boolean = false ;
+  public availableLiveSteams: LiveStream[];
+  public isLoading: boolean = true;
+  public connectionError: boolean = false ;
 
   constructor(private streamsService: StreamsService) {
   }
