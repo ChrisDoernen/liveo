@@ -11,7 +11,7 @@ namespace Server.Streaming
 
         public StreamingServerProcess(string audioInput, WebsocketConfig websocket)
         {
-            _command = $@"ffmpeg -y -f dshow -i audio=""{audioInput}"" -rtbufsize 64 -probesize 64 -acodec libmp3lame -ab 320k -ac 1 -reservoir 0 -f {websocket.Type} -hide_banner -fflags +nobuffer - | node NodeStreamingServer.js -port {websocket.Port} -type {websocket.Type} -burstsize 0.1";
+            _command = $@"ffmpeg -y -f dshow -i audio=""{audioInput}"" -rtbufsize 64 -probesize 64 -acodec libmp3lame -ab 320k -ac 1 -reservoir 0 -f {websocket.Type} -hide_banner -fflags +nobuffer - | node Resources/NodeStreamingServer.js -port {websocket.Port} -type {websocket.Type} -burstsize 0.1";
         }
         
         public void Start()
