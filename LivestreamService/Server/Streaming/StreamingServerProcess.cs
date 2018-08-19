@@ -44,7 +44,7 @@ namespace Server.Streaming
         private void DataRecievedHandler (object sender, DataReceivedEventArgs e)
         {
             var logger = LogManager.GetCurrentClassLogger();
-            logger.Warn(e.Data);
+            //logger.Warn(e.Data);
         }
 
         public bool IsRunning()

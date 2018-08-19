@@ -41,6 +41,7 @@ namespace Api.Server
         private void StartApiServer()
         {
             var port = ConfigurationManager.AppSettings["ApiServerPort"];
+            var appServerIp = ConfigurationManager.AppSettings["AppServerIp"];
 
             if (port == null)
                 throw new ArgumentException("Port is not defined in app.config");
@@ -48,7 +49,7 @@ namespace Api.Server
             var defaults = new HttpRouteValueDictionary(new { id = RouteParameter.Optional });
             var route = new HttpRoute("api/{controller}/{id}", defaults);
             var config = new HttpSelfHostConfiguration($"http://localhost:{port}");
-            const string origin = "http://localhost:4200";
+            var origin = $"http://{appServerIp}";
             var cors = new EnableCorsAttribute(origin, "*", "GET");
             config.EnableCors(cors);
             config.Routes.Add("API", route);

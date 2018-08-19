@@ -3,7 +3,7 @@
         "name": "DEV"
     },
     "apiServer": {
-        "ip": "localhost",
+        "ip": "192.168.178.43",
         "port": "8080"
     }
 }
