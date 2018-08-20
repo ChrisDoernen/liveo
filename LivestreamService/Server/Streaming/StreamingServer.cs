@@ -2,6 +2,7 @@
 using Server.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Management;
 
 namespace Server.Streaming
 {
@@ -62,6 +63,26 @@ namespace Server.Streaming
         public void StopStream(string id)
         {
             _livestreams.StopStream(id);
+        }
+
+        public void ShutdownServer()
+        {
+            var mcWin32 = new ManagementClass("Win32_OperatingSystem");
+            mcWin32.Get();
+
+            // You can't shutdown without security privileges
+            mcWin32.Scope.Options.EnablePrivileges = true;
+            var mboShutdownParams = mcWin32.GetMethodParameters("Win32Shutdown");
+
+            // Flag 1 means we want to shut down the system. Use "2" to reboot.
+            mboShutdownParams["Flags"] = "1";
+            mboShutdownParams["Reserved"] = "0";
+            foreach (var managementBaseObject in mcWin32.GetInstances())
+            {
+                var managementObject = (ManagementObject) managementBaseObject;
+                managementObject.InvokeMethod("Win32Shutdown",
+                    mboShutdownParams, null);
+            }
         }
     }
 }

@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\StreamsController.cs" />
+    <Compile Include="Controller\SystemController.cs" />
     <Compile Include="Server\IApiServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server\ApiServer.cs" />
