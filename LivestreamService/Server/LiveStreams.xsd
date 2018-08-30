@@ -23,29 +23,6 @@
               </xs:element>
               <xs:element type="xs:string" name="Description" minOccurs="0" maxOccurs="1" />
               <xs:element type="xs:string" name="AudioInput" />
-              <xs:element name="WebsocketConfig" >
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="Type">
-                      <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                          <xs:enumeration value="mp3"/>
-                          <xs:enumeration value="wav"/>
-                        </xs:restriction>
-                      </xs:simpleType>
-                    </xs:element>
-                    <xs:element name="MimeType">
-                      <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                          <xs:enumeration value="audio/mpeg"/>
-                          <xs:enumeration value="audio/wav"/>
-                        </xs:restriction>
-                      </xs:simpleType>
-                    </xs:element>
-                    <xs:element type="xs:int" name="Port" />
-                  </xs:sequence>
-                </xs:complexType>
-              </xs:element>
               <xs:element type="xs:boolean" name="StartOnServiceStartup" />
             </xs:sequence>
           </xs:complexType>
