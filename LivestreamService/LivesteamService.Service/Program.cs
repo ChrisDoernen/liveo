@@ -1,6 +1,5 @@
 using LivestreamService.Service.Configuration;
 using Ninject;
-using NLog;
 using System;
 using System.Reflection;
 using Topshelf;
@@ -11,9 +10,6 @@ namespace LivestreamService.Service
     {
         public static void Main()
         {
-            var logger = LogManager.GetCurrentClassLogger();
-            logger.Info("Beginning startup...");
-
             // Loading Ninject kernel
             IKernel kernel = new StandardKernel();
             kernel.Load(Assembly.GetExecutingAssembly());

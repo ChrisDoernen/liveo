@@ -1,5 +1,5 @@
 ﻿using LivestreamService.Server.Configuration;
-using NLog;
+using Ninject.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Management;
@@ -16,16 +16,11 @@ namespace LivestreamService.Server.Streaming
         private Livestreams _livestreams;
         private List<AudioInput> _audioInputs;
 
-        public StreamingServer()
+        public StreamingServer(ILogger logger)
         {
             _livestreamsConfiguration = new LivestreamsConfiguration();
             _audioInputConfiguration = new AudioInputConfiguration();
-            _logger = LogManager.GetCurrentClassLogger();
-        }
-
-        public static StreamingServer GetInstance()
-        {
-            return _instance ?? (_instance = new StreamingServer());
+            _logger = logger;
         }
 
         public List<Livestream> GetStartedLiveStreams()
