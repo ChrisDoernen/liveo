@@ -1,4 +1,4 @@
-﻿namespace Server.Streaming
+﻿namespace LivestreamService.Server.Streaming
 {
     public class AudioInput
     {

@@ -1,10 +1,10 @@
-﻿using Server.Streaming;
+﻿using LivestreamService.Server.Streaming;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Server.Configuration
+namespace LivestreamService.Server.Configuration
 {
     public class AudioInputConfiguration
     {
@@ -54,7 +54,7 @@ namespace Server.Configuration
                 var audioInputIdentifier = regex.Match(line).Value;
                 audioInputs.Add(new AudioInput(audioInputIdentifier));
             }
-            
+
             return audioInputs;
         }
 

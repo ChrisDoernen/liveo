@@ -1,4 +1,4 @@
-﻿namespace Api.Server
+﻿namespace LiveStreamService.Api.Server
 {
     public interface IApiServer
     {

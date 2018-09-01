@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{2757CD13-FA34-40B4-B75C-2DF29ECD53E8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamService.Service", "Service\LivestreamService.Service.csproj", "{2757CD13-FA34-40B4-B75C-2DF29ECD53E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{5ED7C0D3-CDFE-44FE-91F2-449F45567C0A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamService.Api", "Api\LivestreamService.Api.csproj", "{5ED7C0D3-CDFE-44FE-91F2-449F45567C0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{2AA291C7-562D-4A91-8A9C-767B4BACE957}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamService.Server", "Server\LivestreamService.Server.csproj", "{2AA291C7-562D-4A91-8A9C-767B4BACE957}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

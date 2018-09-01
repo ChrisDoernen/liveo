@@ -1,8 +1,8 @@
-﻿using NLog;
-using Server.Streaming;
+﻿using LivestreamService.Server.Streaming;
+using NLog;
 using System.Web.Http;
 
-namespace Api.Controller
+namespace LiveStreamService.Api.Controller
 {
     public class SystemController : ApiController
     {

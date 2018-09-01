@@ -1,16 +1,15 @@
-﻿using Api.Server;
+﻿using LivestreamService.Server.Streaming;
+using LiveStreamService.Api.Server;
 using Ninject.Modules;
-using Server.Streaming;
-using Service.Startup;
 
-namespace Service.Configuration
+namespace LivestreamService.Service.Configuration
 {
     public class Dependencies : NinjectModule
     {
         public override void Load()
         {
             Bind<IApiServer>().To<ApiServer>();
-            Bind<LivestreamService>().To<LivestreamService>();
+            Bind<Startup.LivestreamService>().To<Startup.LivestreamService>();
             Bind<StreamingServer>().To<StreamingServer>();
         }
     }

@@ -7,8 +7,8 @@
     <ProjectGuid>{2AA291C7-562D-4A91-8A9C-767B4BACE957}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Server</RootNamespace>
-    <AssemblyName>Server</AssemblyName>
+    <RootNamespace>LivestreamService.Server</RootNamespace>
+    <AssemblyName>LivestreamService.Server</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -35,6 +35,7 @@
       <HintPath>..\packages\NLog.4.5.7\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
@@ -48,28 +49,23 @@
     <Compile Include="Configuration\AudioInputConfiguration.cs" />
     <Compile Include="Configuration\LiveStreamsConfiguration.cs" />
     <Compile Include="Configuration\SystemConfiguration.cs" />
+    <Compile Include="Entities\LiveStreams.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Streaming\AudioInput.cs" />
     <Compile Include="Streaming\LiveStream.cs" />
     <Compile Include="Streaming\LiveStreams.cs" />
     <Compile Include="Streaming\StreamingServerProcess.cs" />
     <Compile Include="Streaming\StreamingServer.cs" />
-    <Compile Include="Streaming\WebsocketConfig.cs" />
+    <Compile Include="Streaming\WebsocketConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LiveStreams.config">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="LiveStreams.xsd">
+    <EmbeddedResource Include="LiveStreams.xsd">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\NodeStreamingServer.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

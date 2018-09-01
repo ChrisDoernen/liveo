@@ -1,8 +1,8 @@
-﻿using Api.Server;
+﻿using LivestreamService.Server.Streaming;
+using LiveStreamService.Api.Server;
 using NLog;
-using Server.Streaming;
 
-namespace Service.Startup
+namespace LivestreamService.Service.Startup
 {
     public class LivestreamService
     {
@@ -22,11 +22,12 @@ namespace Service.Startup
             _streamingServer.Initialize();
             _streamingServer.StartStreams();
             _apiServer.Start();
-            
+
             _logger.Info("LivestreamService started.");
         }
 
-        public void Stop() {
+        public void Stop()
+        {
             _streamingServer.Shutdown();
             _apiServer.Stop();
 

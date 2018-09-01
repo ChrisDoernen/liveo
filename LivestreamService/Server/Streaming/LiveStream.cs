@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 
-namespace Server.Streaming
+namespace LivestreamService.Server.Streaming
 {
     public class LiveStream
     {
@@ -13,7 +13,6 @@ namespace Server.Streaming
         public string CountryCode { get; set; }
         public string AudioInput { get; set; }
         public bool StartOnServiceStartup { get; set; }
-        public WebsocketConfig WebsocketConfig { get; set; }
 
         [XmlIgnore]
         public string Ip { get; set; }
@@ -49,7 +48,8 @@ namespace Server.Streaming
                 return;
             }
 
-            _streamingServerProcess = new StreamingServerProcess(AudioInput, WebsocketConfig);
+            // ToDo: Adapt StreamingServerProcess
+            _streamingServerProcess = new StreamingServerProcess(AudioInput, null);
             IsInitialized = true;
 
             _logger.Info($"Initialized livestream \"{Id}\"");
@@ -59,7 +59,7 @@ namespace Server.Streaming
         {
             if (!IsInitialized)
                 return;
-            
+
 
             _streamingServerProcess.Start();
             IsStarted = true;

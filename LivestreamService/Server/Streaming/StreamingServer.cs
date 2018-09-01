@@ -1,16 +1,17 @@
-﻿using NLog;
-using Server.Configuration;
+﻿using LivestreamService.Server.Configuration;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Management;
 
-namespace Server.Streaming
+namespace LivestreamService.Server.Streaming
 {
     public class StreamingServer
     {
         private static StreamingServer _instance;
         private readonly LiveStreamsConfiguration _liveStreamsConfiguration;
         private readonly AudioInputConfiguration _audioInputConfiguration;
+        private WebsocketConfiguration _websocketConfiguration;
         private readonly ILogger _logger;
         private LiveStreams _livestreams;
         private List<AudioInput> _audioInputs;
@@ -37,13 +38,11 @@ namespace Server.Streaming
 
         public void Initialize()
         {
-            _audioInputs = _audioInputConfiguration.GetAudioInputs();
-            _livestreams = _liveStreamsConfiguration.GetAvailableStreams();
-            _livestreams.Validate(_audioInputs);
-            _livestreams.Initialize();
 
             _logger.Info("StreamingServerHost initialized.");
         }
+
+
 
         public void Shutdown()
         {
@@ -79,7 +78,7 @@ namespace Server.Streaming
             mboShutdownParams["Reserved"] = "0";
             foreach (var managementBaseObject in mcWin32.GetInstances())
             {
-                var managementObject = (ManagementObject) managementBaseObject;
+                var managementObject = (ManagementObject)managementBaseObject;
                 managementObject.InvokeMethod("Win32Shutdown",
                     mboShutdownParams, null);
             }

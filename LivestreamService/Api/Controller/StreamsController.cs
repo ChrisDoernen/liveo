@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using LivestreamService.Server.Streaming;
+using Newtonsoft.Json;
 using NLog;
-using Server.Streaming;
 using System.Linq;
 using System.Web.Http;
 
-namespace Api.Controller
+namespace LiveStreamService.Api.Controller
 {
     public class StreamsController : ApiController
     {
@@ -15,7 +15,7 @@ namespace Api.Controller
         {
             _logger = LogManager.GetCurrentClassLogger();
         }
-        
+
         public string Get()
         {
             var liveStreams = _streamingServer.GetStartedLiveStreams();
@@ -30,7 +30,7 @@ namespace Api.Controller
         {
             var liveStream = _streamingServer.GetStartedLiveStreams()
                 .First(ls => ls.Id == id);
-            
+
             var response = JsonConvert.SerializeObject(liveStream);
             _logger.Info($"Get stream was invoked, returned stream {id}.");
             return response;

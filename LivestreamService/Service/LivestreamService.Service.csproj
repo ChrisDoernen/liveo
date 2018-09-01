@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2757CD13-FA34-40B4-B75C-2DF29ECD53E8}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Service</RootNamespace>
-    <AssemblyName>Service</AssemblyName>
+    <RootNamespace>LivestreamService.Service</RootNamespace>
+    <AssemblyName>LivestreamService.Service</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -64,13 +64,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Api\Api.csproj">
+    <ProjectReference Include="..\Api\LivestreamService.Api.csproj">
       <Project>{5ed7c0d3-cdfe-44fe-91f2-449f45567c0a}</Project>
-      <Name>Api</Name>
+      <Name>LivestreamService.Api</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Server\Server.csproj">
+    <ProjectReference Include="..\Server\LivestreamService.Server.csproj">
       <Project>{2AA291C7-562D-4A91-8A9C-767B4BACE957}</Project>
-      <Name>Server</Name>
+      <Name>LivestreamService.Server</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

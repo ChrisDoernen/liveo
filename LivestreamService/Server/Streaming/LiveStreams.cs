@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Xml.Serialization;
 
-namespace Server.Streaming
+namespace LivestreamService.Server.Streaming
 {
     [XmlRoot(Namespace = "LiveStreamsConfigXsd", ElementName = "LiveStreams")]
     public class LiveStreams

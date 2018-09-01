@@ -6,7 +6,7 @@ using System.Web.Http.Cors;
 using System.Web.Http.Routing;
 using System.Web.Http.SelfHost;
 
-namespace Api.Server
+namespace LiveStreamService.Api.Server
 {
     public class ApiServer : IApiServer
     {

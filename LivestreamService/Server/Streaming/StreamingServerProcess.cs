@@ -1,7 +1,7 @@
 ﻿using NLog;
 using System.Diagnostics;
 
-namespace Server.Streaming
+namespace LivestreamService.Server.Streaming
 {
     internal class StreamingServerProcess
     {
@@ -9,11 +9,11 @@ namespace Server.Streaming
         private Process _process;
         private bool _isProcessRunning;
 
-        public StreamingServerProcess(string audioInput, WebsocketConfig websocket)
+        public StreamingServerProcess(string audioInput, WebsocketConfiguration websocket)
         {
-            _command = $@"ffmpeg -y -f dshow -i audio=""{audioInput}"" -rtbufsize 64 -probesize 64 -acodec libmp3lame -ab 320k -ac 1 -reservoir 0 -f {websocket.Type} -hide_banner -fflags +nobuffer - | node Resources/NodeStreamingServer.js -port {websocket.Port} -type {websocket.Type} -burstsize 0.1";
+            _command = $@"ffmpeg -y -f dshow -i audio=""{audioInput}"" -rtbufsize 64 -probesize 64 -acodec libmp3lame -ab 320k -ac 1 -reservoir 0 -f {websocket.AudioEncoding} -hide_banner -fflags +nobuffer - | node Resources/NodeStreamingServer.js -port {websocket.Port} -type {websocket.AudioEncoding} -burstsize 0.1";
         }
-        
+
         public void Start()
         {
             var processInfo = new ProcessStartInfo("cmd.exe", "/c " + _command)
@@ -41,7 +41,7 @@ namespace Server.Streaming
             _isProcessRunning = false;
         }
 
-        private void DataRecievedHandler (object sender, DataReceivedEventArgs e)
+        private void DataRecievedHandler(object sender, DataReceivedEventArgs e)
         {
             var logger = LogManager.GetCurrentClassLogger();
             //logger.Warn(e.Data);

@@ -12,8 +12,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Api</RootNamespace>
-    <AssemblyName>Api</AssemblyName>
+    <RootNamespace>LiveStreamService.Api</RootNamespace>
+    <AssemblyName>LiveStreamService.Api</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -113,9 +113,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Server\Server.csproj">
+    <ProjectReference Include="..\Server\LivestreamService.Server.csproj">
       <Project>{2aa291c7-562d-4a91-8a9c-767b4bace957}</Project>
-      <Name>Server</Name>
+      <Name>LivestreamService.Server</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
