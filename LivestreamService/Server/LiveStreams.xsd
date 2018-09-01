@@ -1,45 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:ls="LiveStreamsConfigXsd" 
-           targetNamespace="LiveStreamsConfigXsd" 
+<xs:schema xmlns:ls="LivestreamsConfigXsd"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="LivestreamsConfigXsd" 
            attributeFormDefault="unqualified" 
-           elementFormDefault="qualified" 
-           xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name="LiveStreamsType">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="LiveStreamType" minOccurs="0" maxOccurs="unbounded">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="Id">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:pattern value="[a-z]*"></xs:pattern>
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element type="xs:string" name="Title" />
-              <xs:element name="CountryCode">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:pattern value="[a-z]{2}"></xs:pattern>
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element type="xs:string" name="Description" minOccurs="0" maxOccurs="1" />
-              <xs:element type="xs:string" name="AudioInput" />
-              <xs:element type="xs:boolean" name="StartOnServiceStartup" />
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-      </xs:sequence>
-    </xs:complexType>
-    <xs:unique name="uniqueAudioInput">
-      <xs:selector xpath="ls:LiveStream"/>
-      <xs:field xpath="ls:AudioInput"/>
-    </xs:unique>
-    <xs:unique name="uniqueId">
-      <xs:selector xpath="ls:LiveStream"/>
-      <xs:field xpath="ls:Id"/>
-    </xs:unique>
+           elementFormDefault="qualified">
+  
+  <xs:complexType name="LivestreamsType">
+    <xs:sequence>
+      <xs:element name="LiveStream" type="ls:LivestreamType" minOccurs="0" maxOccurs="unbounded">
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="LivestreamType">
+    <xs:sequence>
+      <xs:element name="Id">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="[a-z]*"></xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="Title" />
+      <xs:element name="CountryCode">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="[a-z]{2}"></xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="Description" minOccurs="0" maxOccurs="1" />
+      <xs:element type="xs:string" name="AudioInput" />
+      <xs:element type="xs:boolean" name="StartOnServiceStartup" />
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:element name="LiveStreams" type="ls:LivestreamsType">
   </xs:element>
 </xs:schema>

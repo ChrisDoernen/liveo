@@ -14,12 +14,13 @@ namespace LivestreamService.Server.Test
         public void ReadFromFile_ValidConfig()
         {
             // ARANGE
+            var validConfig = ValidConfig;
 
             // ACT
-            var deserialized = XmlUtilities.ReadFromFile<LiveStreamsType>(ValidConfig);
+            var deserialized = XmlUtilities.ReadFromFile<LivestreamsType>(validConfig);
 
             // ASSERT
-
+            Assert.AreEqual(2, deserialized.LiveStream.Length);
         }
     }
 }

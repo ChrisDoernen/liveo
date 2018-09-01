@@ -28,7 +28,7 @@ namespace LivestreamService.Server.Configuration
 
         private LiveStreams DeserializeLiveStreams()
         {
-            var liveStreamsType = XmlUtilities.ReadFromFile<LiveStreamsType>(LiveStreamsConfig);
+            var liveStreamsType = XmlUtilities.ReadFromFile<LivestreamsType>(LiveStreamsConfig);
             return null;
         }
 
