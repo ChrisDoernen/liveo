@@ -10,17 +10,21 @@ namespace LivestreamService.Server.Utilities
         private bool _isProcessRunning;
 
         public delegate void OnOutDataReceived(object sender, DataReceivedEventArgs e);
-        public static event OnOutDataReceived OutDataReceived;
+        public event OnOutDataReceived OutDataReceived;
 
         public delegate void OnErrorDataReceived(object sender, DataReceivedEventArgs e);
-        public static event OnErrorDataReceived ErrDataReceived;
+        public event OnErrorDataReceived ErrDataReceived;
+
+        public delegate void OnProcessReturned(object sender, DataReceivedEventArgs e);
+        public event OnProcessReturned ProcessReturned;
+
 
         public ExternalProcess(ILogger logger)
         {
             _logger = logger;
         }
 
-        public void ExecuteCommand(string command)
+        public int ExecuteCommandAndWaitForExit(string command)
         {
             var processInfo = new ProcessStartInfo("cmd.exe", "/c " + command)
             {
@@ -34,13 +38,16 @@ namespace LivestreamService.Server.Utilities
 
             process.OutputDataReceived += OutputDataReceived;
             process.ErrorDataReceived += ErrorDataReceived;
-            process.BeginErrorReadLine();
+            process.BeginOutputReadLine();
             process.BeginErrorReadLine();
 
             _process = process;
             _isProcessRunning = true;
 
-            _logger.Info($"Starting external process with command {command}");
+            _logger.Info($"Starting external process with command {command} and PID {_process.Id}");
+
+            process.WaitForExit();
+            return process.ExitCode;
         }
 
         public void Kill()

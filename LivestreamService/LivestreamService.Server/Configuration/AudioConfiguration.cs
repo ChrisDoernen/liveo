@@ -1,4 +1,6 @@
 ﻿using LivestreamService.Server.Entities;
+using LivestreamService.Server.Utilities;
+using Ninject.Extensions.Logging;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -8,36 +10,26 @@ namespace LivestreamService.Server.Configuration
 {
     public class AudioConfiguration
     {
-        private readonly string _listDevicesCommand = $@"ffmpeg -list_devices true -f dshow -i dummy -hide_banner";
-
+        private readonly string _listDevicesCommand = @"ffmpeg -list_devices true -f dshow -i dummy -hide_banner";
         private readonly List<string> _listDevicesCommandProcessOutput = new List<string>();
+        private readonly ExternalProcess _externalProcess;
+        private readonly ILogger _logger;
+
+        public AudioConfiguration(ILogger logger, ExternalProcess externalProcess)
+        {
+            _logger = logger;
+            _externalProcess = externalProcess;
+        }
 
         public List<AudioInput> GetAudioInputs()
         {
-            // This is a horrible way of getting the audio inputs but
-            // there seems to be no other way...
-            StartListDevicesCommandProcess();
+            // ffmpeg redirects output to error output
+            _externalProcess.ErrDataReceived += OutputDataRecievedHandler;
+            _externalProcess.ExecuteCommandAndWaitForExit(_listDevicesCommand);
+            _externalProcess.ErrDataReceived -= OutputDataRecievedHandler;
+
             var audioInputs = ParseProcessOutput();
             return audioInputs;
-        }
-
-        private void StartListDevicesCommandProcess()
-        {
-            var processInfo = new ProcessStartInfo("cmd.exe", "/c " + _listDevicesCommand)
-            {
-                CreateNoWindow = false,
-                UseShellExecute = false,
-                RedirectStandardError = true,
-                RedirectStandardOutput = true
-            };
-
-            var process = Process.Start(processInfo);
-
-            // ffmpeg sends all output to error output for some reason
-            process.ErrorDataReceived += DataRecievedHandler;
-            process.BeginErrorReadLine();
-
-            process.WaitForExit();
         }
 
         private List<AudioInput> ParseProcessOutput()
@@ -58,7 +50,7 @@ namespace LivestreamService.Server.Configuration
             return audioInputs;
         }
 
-        private void DataRecievedHandler(object sender, DataReceivedEventArgs e)
+        private void OutputDataRecievedHandler(object sender, DataReceivedEventArgs e)
         {
             _listDevicesCommandProcessOutput.Add(e.Data);
         }

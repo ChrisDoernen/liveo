@@ -46,6 +46,8 @@ namespace LivestreamService.Server.Streaming
 
         public void Initialize()
         {
+            var audioInputs = _audioConfiguration.GetAudioInputs();
+
             var livestreams = _livestreamsConfiguration.GetAvailableStreams("Livestreams.config");
             _logger.Info("StreamingServerHost initialized.");
         }

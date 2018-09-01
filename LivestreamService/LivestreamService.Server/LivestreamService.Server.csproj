@@ -51,7 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\AudioInputConfiguration.cs" />
+    <Compile Include="Configuration\AudioConfiguration.cs" />
     <Compile Include="AppConfiguration\AutoMapperProfile.cs" />
     <Compile Include="Configuration\LivestreamsConfiguration.cs" />
     <Compile Include="Configuration\SystemConfiguration.cs" />
@@ -60,9 +60,9 @@
     <Compile Include="Entities\AudioInput.cs" />
     <Compile Include="Entities\Livestream.cs" />
     <Compile Include="Entities\Livestreams.cs" />
-    <Compile Include="Streaming\StreamingServerProcess.cs" />
     <Compile Include="Streaming\StreamingServer.cs" />
     <Compile Include="Streaming\WebsocketConfiguration.cs" />
+    <Compile Include="Utilities\ExternalProcess.cs" />
     <Compile Include="Utilities\XmlUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
