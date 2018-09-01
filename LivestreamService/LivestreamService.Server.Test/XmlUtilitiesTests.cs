@@ -23,6 +23,8 @@ namespace LivestreamService.Server.Test
             // Assert
             Assert.AreEqual(2, deserialized.LiveStream.Length);
             Assert.AreEqual("deutsch", deserialized.LiveStream[0].Id);
+            Assert.AreEqual("de", deserialized.LiveStream[0].CountryCode);
+            Assert.AreEqual("Originalton", deserialized.LiveStream[0].Description);
         }
 
         [TestMethod]

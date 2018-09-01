@@ -4,7 +4,7 @@ using Ninject.Modules;
 
 namespace LivestreamService.Service.Configuration
 {
-    public class Dependencies : NinjectModule
+    public class NinjectDependencies : NinjectModule
     {
         public override void Load()
         {

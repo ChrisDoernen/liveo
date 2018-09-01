@@ -1,3 +1,4 @@
+using LivestreamService.Service.Configuration;
 using Ninject;
 using NLog;
 using System;
@@ -13,10 +14,15 @@ namespace LivestreamService.Service
             var logger = LogManager.GetCurrentClassLogger();
             logger.Info("Beginning startup...");
 
+            // Loading Ninject kernel
             IKernel kernel = new StandardKernel();
             kernel.Load(Assembly.GetExecutingAssembly());
             var livestreamService = kernel.Get<Startup.LivestreamService>();
 
+            // Loading AutoMapper profile
+            AutoMapperProfile.Initialize();
+
+            // Run Topshelf
             var rc = HostFactory.Run(x =>
             {
                 x.Service<Startup.LivestreamService>(s =>

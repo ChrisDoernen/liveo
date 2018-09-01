@@ -9,7 +9,7 @@ namespace LivestreamService.Server.Streaming
     public class StreamingServer
     {
         private static StreamingServer _instance;
-        private readonly LiveStreamsConfiguration _liveStreamsConfiguration;
+        private readonly LivestreamsConfiguration _livestreamsConfiguration;
         private readonly AudioInputConfiguration _audioInputConfiguration;
         private WebsocketConfiguration _websocketConfiguration;
         private readonly ILogger _logger;
@@ -18,7 +18,7 @@ namespace LivestreamService.Server.Streaming
 
         public StreamingServer()
         {
-            _liveStreamsConfiguration = new LiveStreamsConfiguration();
+            _livestreamsConfiguration = new LivestreamsConfiguration();
             _audioInputConfiguration = new AudioInputConfiguration();
             _logger = LogManager.GetCurrentClassLogger();
         }

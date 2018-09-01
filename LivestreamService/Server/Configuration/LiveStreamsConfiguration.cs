@@ -1,16 +1,20 @@
-﻿using LivestreamService.Server.Streaming;
+﻿using AutoMapper;
+using LivestreamService.Server.Entities;
+using LivestreamService.Server.Streaming;
+using LivestreamService.Server.Utilities;
 using NLog;
 using System;
 using System.IO;
 
 namespace LivestreamService.Server.Configuration
 {
-    public class LiveStreamsConfiguration
+    public class LivestreamsConfiguration
     {
         private readonly ILogger _logger;
         private const string LiveStreamsConfig = "LiveStreams.config";
+        private const string LiveStreamsScheme = "LiveStreams.xsd";
 
-        public LiveStreamsConfiguration()
+        public LivestreamsConfiguration()
         {
             _logger = LogManager.GetCurrentClassLogger();
         }
@@ -18,23 +22,25 @@ namespace LivestreamService.Server.Configuration
         public LiveStreams GetAvailableStreams()
         {
             ValidateConfigFileExistance();
-
-            var liveStreams = DeserializeLiveStreams();
+            var liveStreamsType = DeserializeLiveStreams();
+            var liveStreams = MapLivestreams(liveStreamsType);
 
             return liveStreams;
         }
 
-        private LiveStreams DeserializeLiveStreams()
+        private LiveStreams MapLivestreams(LivestreamsType liveStreamsType)
         {
-            //var liveStreamsType = XmlUtilities.ValidateAndDeserialize<>()<LivestreamsType>(LiveStreamsConfig);
-            return null;
+            return Mapper.Map<LiveStreams>(liveStreamsType);
+        }
+
+        private LivestreamsType DeserializeLiveStreams()
+        {
+            var liveStreamsType = XmlUtilities.ValidateAndDeserialize<LivestreamsType>(LiveStreamsConfig, LiveStreamsScheme);
+            return liveStreamsType;
         }
 
         private void ValidateConfigFileExistance()
         {
-            if (LiveStreamsConfig == null)
-                throw new ArgumentException("The LiveStreams.xsd could not be found.");
-
             if (!File.Exists(LiveStreamsConfig))
                 throw new ArgumentException("The LiveStreams.xsd could not be found.");
 
