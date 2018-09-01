@@ -8,7 +8,7 @@ namespace LivestreamService.Service.Configuration
     {
         public static void Initialize()
         {
-            Mapper.Initialize(config => config.CreateMap<LivestreamsType, LiveStreams>());
+            Mapper.Initialize(config => config.CreateMap<LivestreamsType, Livestreams>());
         }
     }
 }

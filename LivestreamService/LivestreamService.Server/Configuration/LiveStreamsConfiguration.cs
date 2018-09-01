@@ -18,11 +18,11 @@ namespace LivestreamService.Server.Configuration
             _logger = LogManager.GetCurrentClassLogger();
         }
 
-        public LiveStreams GetAvailableStreams(string configFile)
+        public Livestreams GetAvailableStreams(string configFile)
         {
             ValidateConfigFileExistance(configFile);
             var liveStreamsType = DeserializeLiveStreams(configFile);
-            var liveStreams = Mapper.Map<LiveStreams>(liveStreamsType);
+            var liveStreams = Mapper.Map<Livestreams>(liveStreamsType);
 
             return liveStreams;
         }

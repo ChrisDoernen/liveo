@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace LivestreamService.Server.Streaming
 {
-    public class LiveStream
+    public class Livestream
     {
         public string Id { get; set; }
         public string Title { get; set; }
@@ -12,11 +12,8 @@ namespace LivestreamService.Server.Streaming
         public string CountryCode { get; set; }
         public string AudioInput { get; set; }
         public bool StartOnServiceStartup { get; set; }
-
         public string Ip { get; set; }
-
         public bool IsStarted { get; private set; }
-
         public bool HasValidAudioInput { get; private set; }
 
         public bool IsInitialized { get; private set; }

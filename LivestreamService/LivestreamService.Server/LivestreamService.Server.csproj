@@ -55,8 +55,8 @@
     <Compile Include="Entities\LiveStreams.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Streaming\AudioInput.cs" />
-    <Compile Include="Streaming\LiveStream.cs" />
-    <Compile Include="Streaming\LiveStreams.cs" />
+    <Compile Include="Streaming\Livestream.cs" />
+    <Compile Include="Streaming\Livestreams.cs" />
     <Compile Include="Streaming\StreamingServerProcess.cs" />
     <Compile Include="Streaming\StreamingServer.cs" />
     <Compile Include="Streaming\WebsocketConfiguration.cs" />

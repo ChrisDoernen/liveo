@@ -13,7 +13,7 @@ namespace LivestreamService.Server.Streaming
         private readonly AudioInputConfiguration _audioInputConfiguration;
         private WebsocketConfiguration _websocketConfiguration;
         private readonly ILogger _logger;
-        private LiveStreams _livestreams;
+        private Livestreams _livestreams;
         private List<AudioInput> _audioInputs;
 
         public StreamingServer()
@@ -28,7 +28,7 @@ namespace LivestreamService.Server.Streaming
             return _instance ?? (_instance = new StreamingServer());
         }
 
-        public List<LiveStream> GetStartedLiveStreams()
+        public List<Livestream> GetStartedLiveStreams()
         {
             if (_livestreams == null)
                 throw new ArgumentException("StreamingServerHost was not initialized.");

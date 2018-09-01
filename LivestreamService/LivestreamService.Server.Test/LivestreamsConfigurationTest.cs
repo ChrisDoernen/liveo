@@ -17,17 +17,18 @@ namespace LivestreamService.Server.Test
             const string validConfig = "TestResources\\config\\ValidLivestreams.config";
             Mapper.Initialize(config =>
             {
-                config.CreateMap<LivestreamsType, LiveStreams>()
-                    .ForMember(dest => dest.Livestreams, opt => opt.MapFrom(src => src.LiveStream.ToList()))
-                    .IgnoreAllUnmapped();
+                config.CreateMap<LivestreamsType, Livestreams>()
+                    .IgnoreAllUnmapped()
+                    .ForMember(dest => dest.Streams, opt => opt.MapFrom(src => src.LiveStream.ToList()));
 
-                config.CreateMap<LivestreamType, LiveStream>()
+
+                config.CreateMap<LivestreamType, Livestream>()
                     .IgnoreAllUnmapped();
             });
 
             var livestreamsConfiguration = new LivestreamsConfiguration();
 
-            var expectedLivestreamDeutsch = new LiveStream
+            var expectedLivestreamDeutsch = new Livestream
             {
                 Id = "deutsch",
                 Title = "Deutsch",
@@ -37,7 +38,7 @@ namespace LivestreamService.Server.Test
                 StartOnServiceStartup = true
             };
 
-            var expectedLivestreamEnglish = new LiveStream
+            var expectedLivestreamEnglish = new Livestream
             {
                 Id = "english",
                 Title = "English",
@@ -47,20 +48,18 @@ namespace LivestreamService.Server.Test
                 StartOnServiceStartup = false
             };
 
-            var expectedLivestreams = new LiveStreams();
-            expectedLivestreams.Livestreams.Add(expectedLivestreamDeutsch);
-            expectedLivestreams.Livestreams.Add(expectedLivestreamEnglish);
+            var expectedLivestreams = new Livestreams();
+            expectedLivestreams.Streams.Add(expectedLivestreamDeutsch);
+            expectedLivestreams.Streams.Add(expectedLivestreamEnglish);
 
             // Act
             var livestreams = livestreamsConfiguration.GetAvailableStreams(validConfig);
 
             // Assert
             Assert.IsNotNull(livestreams);
-            Assert.AreEqual(expectedLivestreams.Livestreams.Count, livestreams.Livestreams.Count);
-            Assert.AreEqual(expectedLivestreams.Livestreams[0].Id, livestreams.Livestreams[0].Id);
-            Assert.AreEqual(expectedLivestreams.Livestreams[1].Title, livestreams.Livestreams[1].Title);
+            Assert.AreEqual(expectedLivestreams.Streams.Count, livestreams.Streams.Count);
+            Assert.AreEqual(expectedLivestreams.Streams[0].Id, livestreams.Streams[0].Id);
+            Assert.AreEqual(expectedLivestreams.Streams[1].Title, livestreams.Streams[1].Title);
         }
-
-
     }
 }
