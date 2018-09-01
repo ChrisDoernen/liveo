@@ -73,11 +73,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Api\LivestreamService.Api.csproj">
+    <ProjectReference Include="..\LivestreamService.Api\LivestreamService.Api.csproj">
       <Project>{5ed7c0d3-cdfe-44fe-91f2-449f45567c0a}</Project>
       <Name>LivestreamService.Api</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Server\LivestreamService.Server.csproj">
+    <ProjectReference Include="..\LivestreamService.Server\LivestreamService.Server.csproj">
       <Project>{2AA291C7-562D-4A91-8A9C-767B4BACE957}</Project>
       <Name>LivestreamService.Server</Name>
     </ProjectReference>
