@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:ls="LiveStreamsConfigXsd" targetNamespace="LiveStreamsConfigXsd" attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:ls="LiveStreamsConfigXsd" 
+           targetNamespace="LiveStreamsConfigXsd" 
+           attributeFormDefault="unqualified" 
+           elementFormDefault="qualified" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:element name="LiveStreamsType">
     <xs:complexType>
       <xs:sequence>

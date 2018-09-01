@@ -57,6 +57,7 @@
     <Compile Include="Streaming\StreamingServerProcess.cs" />
     <Compile Include="Streaming\StreamingServer.cs" />
     <Compile Include="Streaming\WebsocketConfiguration.cs" />
+    <Compile Include="Utilities\XmlUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LiveStreams.config">
