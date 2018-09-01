@@ -1,5 +1,6 @@
 ﻿using LivestreamService.Server.Streaming;
-using LiveStreamService.Api.Server;
+using LivestreamService.Service.Configuration;
+using Nancy.Hosting.Self;
 using NLog;
 
 namespace LivestreamService.Service.Startup
@@ -7,29 +8,30 @@ namespace LivestreamService.Service.Startup
     public class LivestreamService
     {
         private readonly StreamingServer _streamingServer;
-        private readonly IApiServer _apiServer;
+        private readonly NancyHost _nancyHost;
         private readonly ILogger _logger;
 
-        public LivestreamService(IApiServer apiServer)
+        public LivestreamService()
         {
             _streamingServer = StreamingServer.GetInstance();
-            _apiServer = apiServer;
             _logger = LogManager.GetCurrentClassLogger();
+            _nancyHost = NancySetup.GetHost();
+
         }
 
         public void Start()
         {
-            _streamingServer.Initialize();
-            _streamingServer.StartStreams();
-            _apiServer.Start();
+            //_streamingServer.Initialize();
+            //_streamingServer.StartStreams();
+            _nancyHost.Start();
 
             _logger.Info("LivestreamService started.");
         }
 
         public void Stop()
         {
-            _streamingServer.Shutdown();
-            _apiServer.Stop();
+            //_streamingServer.Shutdown();
+            _nancyHost.Stop();
 
             _logger.Info("LivestreamService stopped.");
         }
