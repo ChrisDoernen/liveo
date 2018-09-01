@@ -1,6 +1,4 @@
-﻿using LivestreamService.Server.Entities;
-using LivestreamService.Server.Streaming;
-using LivestreamService.Server.Utilities;
+﻿using LivestreamService.Server.Streaming;
 using NLog;
 using System;
 using System.IO;
@@ -28,7 +26,7 @@ namespace LivestreamService.Server.Configuration
 
         private LiveStreams DeserializeLiveStreams()
         {
-            var liveStreamsType = XmlUtilities.ReadFromFile<LivestreamsType>(LiveStreamsConfig);
+            //var liveStreamsType = XmlUtilities.ValidateAndDeserialize<>()<LivestreamsType>(LiveStreamsConfig);
             return null;
         }
 

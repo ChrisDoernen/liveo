@@ -1,26 +1,50 @@
 ﻿using LivestreamService.Server.Entities;
 using LivestreamService.Server.Utilities;
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Xml.Schema;
 
 namespace LivestreamService.Server.Test
 {
     [TestClass]
     public class XmlUtilitiesTests
     {
-        private readonly string ValidConfig = "LiveStreams.config";
+        private const string XsdResource = "LivestreamService.Server.Livestreams.xsd";
 
         [TestMethod]
         public void ReadFromFile_ValidConfig()
         {
-            // ARANGE
-            var validConfig = ValidConfig;
+            // Arrange
+            const string validConfig = "TestResources\\config\\ValidLivestreams.config";
 
-            // ACT
-            var deserialized = XmlUtilities.ReadFromFile<LivestreamsType>(validConfig);
+            // Act
+            var deserialized = XmlUtilities.ValidateAndDeserialize<LivestreamsType>(validConfig, XsdResource);
 
-            // ASSERT
+            // Assert
             Assert.AreEqual(2, deserialized.LiveStream.Length);
+            Assert.AreEqual("deutsch", deserialized.LiveStream[0].Id);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ReadFromConfigFile_InvalidNamespace()
+        {
+            // Arrange
+            const string invalidNamespaceConfig = "TestResources\\config\\InvalidNamespaceLivestreams.config";
+
+            // Act
+            var deserialized = XmlUtilities.ValidateAndDeserialize<LivestreamsType>(invalidNamespaceConfig, XsdResource);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(XmlSchemaValidationException))]
+        public void ReadFromConfigFile_InvalidConfig()
+        {
+            // Arrange
+            const string invalidConfig = "TestResources\\config\\InvalidLivestreams.config";
+
+            // Act
+            var deserialized = XmlUtilities.ValidateAndDeserialize<LivestreamsType>(invalidConfig, XsdResource);
         }
     }
 }

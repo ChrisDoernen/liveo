@@ -60,11 +60,11 @@
     <Compile Include="Utilities\XmlUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="LiveStreams.config">
+    <None Include="Livestreams.config">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <EmbeddedResource Include="LiveStreams.xsd">
+    <EmbeddedResource Include="Livestreams.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
