@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using LivestreamService.Server.Configuration;
-using LivestreamService.Server.Entities;
 using LivestreamService.Server.Streaming;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
+using Moq;
+using Ninject.Extensions.Logging;
 
 namespace LivestreamService.Server.Test
 {
@@ -15,18 +15,14 @@ namespace LivestreamService.Server.Test
         {
             // Arrange
             const string validConfig = "TestResources\\config\\ValidLivestreams.config";
-            Mapper.Initialize(config =>
-            {
-                config.CreateMap<LivestreamsType, Livestreams>()
-                    .IgnoreAllUnmapped()
-                    .ForMember(dest => dest.Streams, opt => opt.MapFrom(src => src.LiveStream.ToList()));
+            var mockLogger = new Mock<ILogger>();
+            Mapper.Initialize(config => config.AddProfiles(new[] {
+                    typeof(AppConfiguration.AutoMapperProfile)
+                })
+            );
 
-
-                config.CreateMap<LivestreamType, Livestream>()
-                    .IgnoreAllUnmapped();
-            });
-
-            var livestreamsConfiguration = new LivestreamsConfiguration();
+            var livestreamsConfiguration =
+                new LivestreamsConfiguration(mockLogger.Object, Mapper.Instance);
 
             var expectedLivestreamDeutsch = new Livestream
             {

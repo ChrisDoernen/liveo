@@ -1,4 +1,3 @@
-using LivestreamService.Service.Configuration;
 using Ninject;
 using System;
 using System.Reflection;
@@ -10,13 +9,13 @@ namespace LivestreamService.Service
     {
         public static void Main()
         {
+            // Loading AutoMapper profile
+            AppConfiguration.AutoMapper.Initialize();
+
             // Loading Ninject kernel
             IKernel kernel = new StandardKernel();
             kernel.Load(Assembly.GetExecutingAssembly());
             var livestreamService = kernel.Get<Startup.LivestreamService>();
-
-            // Loading AutoMapper profile
-            AutoMapperProfile.Initialize();
 
             // Run Topshelf
             var rc = HostFactory.Run(x =>

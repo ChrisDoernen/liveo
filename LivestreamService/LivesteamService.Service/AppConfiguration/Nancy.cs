@@ -1,10 +1,10 @@
-﻿using Nancy.Hosting.Self;
-using System;
+﻿using System;
 using System.Configuration;
+using Nancy.Hosting.Self;
 
-namespace LivestreamService.Service.Configuration
+namespace LivestreamService.Service.AppConfiguration
 {
-    public class NancySetup
+    public class Nancy
     {
         public static NancyHost GetHost()
         {

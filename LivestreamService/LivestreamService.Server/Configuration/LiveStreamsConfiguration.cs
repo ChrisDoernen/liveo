@@ -2,7 +2,7 @@
 using LivestreamService.Server.Entities;
 using LivestreamService.Server.Streaming;
 using LivestreamService.Server.Utilities;
-using NLog;
+using Ninject.Extensions.Logging;
 using System;
 using System.IO;
 
@@ -11,18 +11,20 @@ namespace LivestreamService.Server.Configuration
     public class LivestreamsConfiguration
     {
         private readonly ILogger _logger;
+        private readonly IMapper _mapper;
         private const string LiveStreamsScheme = "LivestreamService.Server.Livestreams.xsd";
 
-        public LivestreamsConfiguration()
+        public LivestreamsConfiguration(ILogger logger, IMapper mapper)
         {
-            _logger = LogManager.GetCurrentClassLogger();
+            _logger = logger;
+            _mapper = mapper;
         }
 
         public Livestreams GetAvailableStreams(string configFile)
         {
             ValidateConfigFileExistance(configFile);
             var liveStreamsType = DeserializeLiveStreams(configFile);
-            var liveStreams = Mapper.Map<Livestreams>(liveStreamsType);
+            var liveStreams = _mapper.Map<Livestreams>(liveStreamsType);
 
             return liveStreams;
         }

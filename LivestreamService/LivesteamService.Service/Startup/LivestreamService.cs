@@ -1,5 +1,4 @@
 ﻿using LivestreamService.Server.Streaming;
-using LivestreamService.Service.Configuration;
 using Nancy.Hosting.Self;
 using Ninject.Extensions.Logging;
 
@@ -15,13 +14,12 @@ namespace LivestreamService.Service.Startup
         {
             _logger = logger;
             _streamingServer = streamingServer;
-            _nancyHost = NancySetup.GetHost();
+            _nancyHost = AppConfiguration.Nancy.GetHost();
         }
 
         public void Start()
         {
-            //_streamingServer.Initialize();
-            //_streamingServer.StartStreams();
+            _streamingServer.Start();
             _nancyHost.Start();
 
             _logger.Info("LivestreamService started.");
@@ -29,7 +27,7 @@ namespace LivestreamService.Service.Startup
 
         public void Stop()
         {
-            //_streamingServer.Shutdown();
+            _streamingServer.Stop();
             _nancyHost.Stop();
 
             _logger.Info("LivestreamService stopped.");

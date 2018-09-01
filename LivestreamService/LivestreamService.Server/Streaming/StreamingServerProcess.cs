@@ -1,16 +1,18 @@
-﻿using NLog;
+﻿using Ninject.Extensions.Logging;
 using System.Diagnostics;
 
 namespace LivestreamService.Server.Streaming
 {
     internal class StreamingServerProcess
     {
+        private readonly ILogger _logger;
         private readonly string _command;
         private Process _process;
         private bool _isProcessRunning;
 
-        public StreamingServerProcess(string audioInput, WebsocketConfiguration websocket)
+        public StreamingServerProcess(ILogger logger, string audioInput, WebsocketConfiguration websocket)
         {
+            _logger = logger;
             _command = $@"ffmpeg -y -f dshow -i audio=""{audioInput}"" -rtbufsize 64 -probesize 64 -acodec libmp3lame -ab 320k -ac 1 -reservoir 0 -f {websocket.AudioEncoding} -hide_banner -fflags +nobuffer - | node Resources/NodeStreamingServer.js -port {websocket.Port} -type {websocket.AudioEncoding} -burstsize 0.1";
         }
 
@@ -43,7 +45,6 @@ namespace LivestreamService.Server.Streaming
 
         private void DataRecievedHandler(object sender, DataReceivedEventArgs e)
         {
-            var logger = LogManager.GetCurrentClassLogger();
             //logger.Warn(e.Data);
         }
 
