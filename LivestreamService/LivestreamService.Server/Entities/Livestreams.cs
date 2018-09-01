@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace LivestreamService.Server.Streaming
+namespace LivestreamService.Server.Entities
 {
     public class Livestreams
     {

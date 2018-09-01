@@ -1,4 +1,5 @@
 ﻿using LivestreamService.Server.Configuration;
+using LivestreamService.Server.Entities;
 using Ninject.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace LivestreamService.Server.Streaming
     {
         private static StreamingServer _instance;
         private readonly LivestreamsConfiguration _livestreamsConfiguration;
-        private readonly AudioInputConfiguration _audioInputConfiguration;
+        private readonly AudioConfiguration _audioConfiguration;
         private WebsocketConfiguration _websocketConfiguration;
         private readonly ILogger _logger;
         private Livestreams _livestreams;
@@ -17,10 +18,10 @@ namespace LivestreamService.Server.Streaming
 
         public StreamingServer(ILogger logger,
             LivestreamsConfiguration livestreamsConfiguration,
-            AudioInputConfiguration audioInputConfiguration)
+            AudioConfiguration audioConfiguration)
         {
             _livestreamsConfiguration = livestreamsConfiguration;
-            _audioInputConfiguration = audioInputConfiguration;
+            _audioConfiguration = audioConfiguration;
             _logger = logger;
         }
 

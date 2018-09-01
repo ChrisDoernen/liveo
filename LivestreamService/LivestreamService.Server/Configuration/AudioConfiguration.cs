@@ -1,4 +1,4 @@
-﻿using LivestreamService.Server.Streaming;
+﻿using LivestreamService.Server.Entities;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace LivestreamService.Server.Configuration
 {
-    public class AudioInputConfiguration
+    public class AudioConfiguration
     {
         private readonly string _listDevicesCommand = $@"ffmpeg -list_devices true -f dshow -i dummy -hide_banner";
 

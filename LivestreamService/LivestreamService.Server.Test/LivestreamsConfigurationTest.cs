@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using LivestreamService.Server.Configuration;
-using LivestreamService.Server.Streaming;
+using LivestreamService.Server.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Ninject.Extensions.Logging;

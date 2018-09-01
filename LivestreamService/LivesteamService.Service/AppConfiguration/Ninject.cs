@@ -12,7 +12,7 @@ namespace LivestreamService.Service.AppConfiguration
             Bind<Startup.LivestreamService>().To<Startup.LivestreamService>();
             Bind<StreamingServer>().To<StreamingServer>().InSingletonScope();
             Bind<LivestreamsConfiguration>().To<LivestreamsConfiguration>();
-            Bind<AudioInputConfiguration>().To<AudioInputConfiguration>();
+            Bind<AudioConfiguration>().To<AudioConfiguration>();
             Bind<IMapper>().ToConstant(Mapper.Instance);
         }
     }

@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace LivestreamService.Server.Streaming
 {
-    internal class StreamingServerProcess
+    public class StreamingServerProcess
     {
         private readonly ILogger _logger;
         private readonly string _command;
