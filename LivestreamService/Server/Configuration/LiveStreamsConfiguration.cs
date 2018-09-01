@@ -11,40 +11,34 @@ namespace LivestreamService.Server.Configuration
     public class LivestreamsConfiguration
     {
         private readonly ILogger _logger;
-        private const string LiveStreamsConfig = "LiveStreams.config";
-        private const string LiveStreamsScheme = "LiveStreams.xsd";
+        private const string LiveStreamsScheme = "LivestreamService.Server.Livestreams.xsd";
 
         public LivestreamsConfiguration()
         {
             _logger = LogManager.GetCurrentClassLogger();
         }
 
-        public LiveStreams GetAvailableStreams()
+        public LiveStreams GetAvailableStreams(string configFile)
         {
-            ValidateConfigFileExistance();
-            var liveStreamsType = DeserializeLiveStreams();
-            var liveStreams = MapLivestreams(liveStreamsType);
+            ValidateConfigFileExistance(configFile);
+            var liveStreamsType = DeserializeLiveStreams(configFile);
+            var liveStreams = Mapper.Map<LiveStreams>(liveStreamsType);
 
             return liveStreams;
         }
 
-        private LiveStreams MapLivestreams(LivestreamsType liveStreamsType)
+        private LivestreamsType DeserializeLiveStreams(string configFile)
         {
-            return Mapper.Map<LiveStreams>(liveStreamsType);
-        }
-
-        private LivestreamsType DeserializeLiveStreams()
-        {
-            var liveStreamsType = XmlUtilities.ValidateAndDeserialize<LivestreamsType>(LiveStreamsConfig, LiveStreamsScheme);
+            var liveStreamsType = XmlUtilities.ValidateAndDeserialize<LivestreamsType>(configFile, LiveStreamsScheme);
             return liveStreamsType;
         }
 
-        private void ValidateConfigFileExistance()
+        private void ValidateConfigFileExistance(string configFile)
         {
-            if (!File.Exists(LiveStreamsConfig))
+            if (!File.Exists(configFile))
                 throw new ArgumentException("The LiveStreams.xsd could not be found.");
 
-            _logger.Info($"{LiveStreamsConfig} exist.");
+            _logger.Info($"{configFile} exist.");
         }
     }
 }

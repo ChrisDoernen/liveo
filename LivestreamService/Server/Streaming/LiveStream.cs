@@ -1,7 +1,6 @@
 ﻿using NLog;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Serialization;
 
 namespace LivestreamService.Server.Streaming
 {
@@ -14,22 +13,16 @@ namespace LivestreamService.Server.Streaming
         public string AudioInput { get; set; }
         public bool StartOnServiceStartup { get; set; }
 
-        [XmlIgnore]
         public string Ip { get; set; }
 
-        [XmlIgnore]
         public bool IsStarted { get; private set; }
 
-        [XmlIgnore]
         public bool HasValidAudioInput { get; private set; }
 
-        [XmlIgnore]
         public bool IsInitialized { get; private set; }
 
-        [XmlIgnore]
         private StreamingServerProcess _streamingServerProcess;
 
-        [XmlIgnore]
         private ILogger _logger;
 
         public void Validate(List<AudioInput> validAudioInputs)

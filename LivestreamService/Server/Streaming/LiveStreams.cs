@@ -1,28 +1,25 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Serialization;
 
 namespace LivestreamService.Server.Streaming
 {
-    [XmlRoot(Namespace = "LiveStreamsConfigXsd", ElementName = "LiveStreams")]
     public class LiveStreams
     {
-        [XmlElement("LiveStream")]
-        public List<LiveStream> Streams = new List<LiveStream>();
+        public List<LiveStream> Livestreams = new List<LiveStream>();
 
         public List<LiveStream> GetStartedStreams()
         {
-            return Streams.Where(ls => ls.IsStarted).ToList();
+            return Livestreams.Where(ls => ls.IsStarted).ToList();
         }
 
         public List<LiveStream> GetAvailableStreams()
         {
-            return Streams;
+            return Livestreams;
         }
 
         public void Validate(List<AudioInput> validAudioInputs)
         {
-            foreach (var stream in Streams)
+            foreach (var stream in Livestreams)
             {
                 stream.Validate(validAudioInputs);
             }
@@ -30,7 +27,7 @@ namespace LivestreamService.Server.Streaming
 
         public void Initialize()
         {
-            foreach (var stream in Streams)
+            foreach (var stream in Livestreams)
             {
                 stream.Initialize();
             }
@@ -38,7 +35,7 @@ namespace LivestreamService.Server.Streaming
 
         public void StartStreams()
         {
-            foreach (var stream in Streams.Where(ls => ls.StartOnServiceStartup))
+            foreach (var stream in Livestreams.Where(ls => ls.StartOnServiceStartup))
             {
                 stream.Start();
             }
@@ -46,13 +43,13 @@ namespace LivestreamService.Server.Streaming
 
         public void StartStream(string id)
         {
-            Streams.First(s => s.Id == id).Start();
+            Livestreams.First(s => s.Id == id).Start();
         }
 
 
         public void StopStreams()
         {
-            foreach (var stream in Streams)
+            foreach (var stream in Livestreams)
             {
                 stream.Stop();
             }
@@ -60,13 +57,13 @@ namespace LivestreamService.Server.Streaming
 
         public void StopStream(string id)
         {
-            Streams.First(s => s.Id == id).Stop();
+            Livestreams.First(s => s.Id == id).Stop();
         }
 
 
         public void SetIpAdress(string ipAdress)
         {
-            foreach (var stream in Streams)
+            foreach (var stream in Livestreams)
             {
                 stream.Ip = ipAdress;
             }
