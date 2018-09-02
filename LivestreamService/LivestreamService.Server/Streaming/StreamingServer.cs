@@ -12,7 +12,6 @@ namespace LivestreamService.Server.Streaming
     {
         private readonly IAudioHardware _audioHardware;
         private readonly ILivestreamsConfiguration _livestreamsConfiguration;
-        private WebsocketConfiguration _websocketConfiguration;
         private readonly ILogger _logger;
         private Livestreams _livestreams;
         private List<AudioInput> _audioInputs;

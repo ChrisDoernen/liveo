@@ -12,7 +12,7 @@ namespace LivestreamService.Server.Test.Tests
     [TestClass]
     public class StreamingServerTest
     {
-        private const string _mockLivestreamConfig = "Livestreams.config";
+        private const string MockLivestreamConfig = "Livestreams.config";
         private readonly Mock<ILogger> _mockLogger = new Mock<ILogger>();
         private readonly Mock<IAudioHardware> _mockAudioHardware = new Mock<IAudioHardware>();
         private readonly Mock<ILivestreamsConfiguration> _mockLivestreamsConfiguration
@@ -35,7 +35,7 @@ namespace LivestreamService.Server.Test.Tests
             _mockAudioHardware.Setup(mah => mah.GetAudioInputs()).Returns(mockAudioInputs);
             var mockLivestreams = new Livestreams();
             mockLivestreams.Streams.Add(_mockLivestreamEnglish);
-            _mockLivestreamsConfiguration.Setup(mlc => mlc.GetAvailableStreams(_mockLivestreamConfig))
+            _mockLivestreamsConfiguration.Setup(mlc => mlc.GetAvailableStreams(MockLivestreamConfig))
                 .Returns(mockLivestreams);
 
             var expectedLivestreamEnglish = new Livestream
@@ -60,7 +60,7 @@ namespace LivestreamService.Server.Test.Tests
 
             // Assert
             _mockAudioHardware.Verify(mah => mah.GetAudioInputs());
-            _mockLivestreamsConfiguration.Verify(mlc => mlc.GetAvailableStreams(_mockLivestreamConfig));
+            _mockLivestreamsConfiguration.Verify(mlc => mlc.GetAvailableStreams(MockLivestreamConfig));
             Assert.AreEqual(1, streamingServer.GetStartedLiveStreams().Count);
             Assert.AreEqual(expectedLivestreamEnglish.Id, startedLivestreams[0].Id);
             Assert.AreEqual(expectedLivestreamEnglish.Description, startedLivestreams[0].Description);
@@ -76,7 +76,7 @@ namespace LivestreamService.Server.Test.Tests
             _mockAudioHardware.Setup(mah => mah.GetAudioInputs()).Returns(new List<AudioInput>());
             var mockLivestreams = new Livestreams();
             mockLivestreams.Streams.Add(_mockLivestreamEnglish);
-            _mockLivestreamsConfiguration.Setup(mlc => mlc.GetAvailableStreams(_mockLivestreamConfig))
+            _mockLivestreamsConfiguration.Setup(mlc => mlc.GetAvailableStreams(MockLivestreamConfig))
                 .Returns(mockLivestreams);
 
             var streamingServer = new StreamingServer(_mockLogger.Object,
@@ -88,7 +88,7 @@ namespace LivestreamService.Server.Test.Tests
 
             // Assert
             _mockAudioHardware.Verify(mah => mah.GetAudioInputs());
-            _mockLivestreamsConfiguration.Verify(mlc => mlc.GetAvailableStreams(_mockLivestreamConfig));
+            _mockLivestreamsConfiguration.Verify(mlc => mlc.GetAvailableStreams(MockLivestreamConfig));
             Assert.AreEqual(0, startedLivestreams.Count);
         }
     }
