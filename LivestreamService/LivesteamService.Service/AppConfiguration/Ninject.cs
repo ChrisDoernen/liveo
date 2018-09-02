@@ -1,5 +1,4 @@
-﻿using LivestreamService.Server.Streaming;
-using Ninject.Modules;
+﻿using Ninject.Modules;
 
 namespace LivestreamService.Service.AppConfiguration
 {
@@ -8,7 +7,6 @@ namespace LivestreamService.Service.AppConfiguration
         public override void Load()
         {
             Bind<Startup.LivestreamService>().To<Startup.LivestreamService>();
-            Bind<IStreamingServer>().To<StreamingServer>().InSingletonScope();
         }
     }
 }
