@@ -64,7 +64,6 @@
     <Compile Include="Entities\Livestream.cs" />
     <Compile Include="Entities\Livestreams.cs" />
     <Compile Include="Streaming\StreamingServer.cs" />
-    <Compile Include="Streaming\WebsocketConfiguration.cs" />
     <Compile Include="Utilities\CustomDataReceivedEventArgs.cs" />
     <Compile Include="Utilities\ExternalProcess.cs" />
     <Compile Include="Utilities\IExternalProcess.cs" />
