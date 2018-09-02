@@ -1,5 +1,6 @@
 ﻿using LivestreamService.Server.Configuration;
 using LivestreamService.Server.Entities;
+using LivestreamService.Server.Environment;
 using Ninject.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -8,20 +9,19 @@ namespace LivestreamService.Server.Streaming
 {
     public class StreamingServer
     {
-        private static StreamingServer _instance;
-        private readonly LivestreamsConfiguration _livestreamsConfiguration;
-        private readonly AudioConfiguration _audioConfiguration;
+        private readonly IAudioHardware _audioHardware;
+        private readonly ILivestreamsConfiguration _livestreamsConfiguration;
         private WebsocketConfiguration _websocketConfiguration;
         private readonly ILogger _logger;
         private Livestreams _livestreams;
         private List<AudioInput> _audioInputs;
 
         public StreamingServer(ILogger logger,
-            LivestreamsConfiguration livestreamsConfiguration,
-            AudioConfiguration audioConfiguration)
+            IAudioHardware audioHardware,
+            ILivestreamsConfiguration livestreamsConfiguration)
         {
+            _audioHardware = audioHardware;
             _livestreamsConfiguration = livestreamsConfiguration;
-            _audioConfiguration = audioConfiguration;
             _logger = logger;
         }
 
@@ -44,11 +44,11 @@ namespace LivestreamService.Server.Streaming
 
         }
 
-        public void Initialize()
+        private void Initialize()
         {
-            var audioInputs = _audioConfiguration.GetAudioInputs();
+            _audioInputs = _audioHardware.GetAudioInputs();
+            _livestreams = _livestreamsConfiguration.GetAvailableStreams("Livestreams.config");
 
-            var livestreams = _livestreamsConfiguration.GetAvailableStreams("Livestreams.config");
             _logger.Info("StreamingServerHost initialized.");
         }
 

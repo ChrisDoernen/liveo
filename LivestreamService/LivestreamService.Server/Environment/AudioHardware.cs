@@ -4,17 +4,16 @@ using Ninject.Extensions.Logging;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace LivestreamService.Server.Configuration
+namespace LivestreamService.Server.Environment
 {
-    public class AudioConfiguration
+    public class AudioHardware : IAudioHardware
     {
         private const string ListDevicesCommand = @"ffmpeg -list_devices true -f dshow -i dummy -hide_banner";
         private readonly IExternalProcess _externalProcess;
         private readonly ILogger _logger;
         private readonly List<AudioInput> _audioInputs = new List<AudioInput>();
 
-
-        public AudioConfiguration(ILogger logger, IExternalProcess externalProcess)
+        public AudioHardware(ILogger logger, IExternalProcess externalProcess)
         {
             _logger = logger;
             _externalProcess = externalProcess;

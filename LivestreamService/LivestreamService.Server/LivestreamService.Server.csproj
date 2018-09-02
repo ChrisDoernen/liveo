@@ -52,11 +52,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppConfiguration\Ninject.cs" />
-    <Compile Include="Configuration\AudioConfiguration.cs" />
+    <Compile Include="Configuration\ILivestreamsConfiguration.cs" />
+    <Compile Include="Environment\AudioHardware.cs" />
     <Compile Include="AppConfiguration\AutoMapper.cs" />
     <Compile Include="Configuration\LivestreamsConfiguration.cs" />
     <Compile Include="Configuration\SystemConfiguration.cs" />
     <Compile Include="Entities\LivestreamsConfigTypes.cs" />
+    <Compile Include="Environment\IAudioHardware.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\AudioInput.cs" />
     <Compile Include="Entities\Livestream.cs" />

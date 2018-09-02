@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using LivestreamService.Server.Entities;
-using LivestreamService.Server.Streaming;
 using LivestreamService.Server.Utilities;
 using Ninject.Extensions.Logging;
 using System;
@@ -8,7 +7,7 @@ using System.IO;
 
 namespace LivestreamService.Server.Configuration
 {
-    public class LivestreamsConfiguration
+    public class LivestreamsConfiguration : ILivestreamsConfiguration
     {
         private readonly ILogger _logger;
         private readonly IMapper _mapper;

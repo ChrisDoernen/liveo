@@ -7,7 +7,7 @@ using System.Xml.Schema;
 namespace LivestreamService.Server.Test
 {
     [TestClass]
-    public class XmlUtilitiesTests
+    public class XmlUtilitiesTest
     {
         private const string XsdResource = "LivestreamService.Server.Livestreams.xsd";
 

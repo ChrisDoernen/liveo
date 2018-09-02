@@ -71,8 +71,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LivestreamsConfigurationTest.cs" />
-    <Compile Include="AudioConfigurationTest.cs" />
-    <Compile Include="XmlUtilitiesTests.cs" />
+    <Compile Include="AudioHardwareTest.cs" />
+    <Compile Include="StreamingServerTest.cs" />
+    <Compile Include="XmlUtilitiesTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
