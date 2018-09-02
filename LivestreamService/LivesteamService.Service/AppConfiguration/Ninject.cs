@@ -8,7 +8,7 @@ namespace LivestreamService.Service.AppConfiguration
         public override void Load()
         {
             Bind<Startup.LivestreamService>().To<Startup.LivestreamService>();
-            Bind<StreamingServer>().To<StreamingServer>().InSingletonScope();
+            Bind<IStreamingServer>().To<StreamingServer>().InSingletonScope();
         }
     }
 }

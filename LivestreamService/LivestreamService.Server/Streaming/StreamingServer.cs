@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace LivestreamService.Server.Streaming
 {
-    public class StreamingServer
+    public class StreamingServer : IStreamingServer
     {
         private readonly IAudioHardware _audioHardware;
         private readonly ILivestreamsConfiguration _livestreamsConfiguration;

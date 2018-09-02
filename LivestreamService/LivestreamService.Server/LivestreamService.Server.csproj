@@ -63,6 +63,7 @@
     <Compile Include="Entities\AudioInput.cs" />
     <Compile Include="Entities\Livestream.cs" />
     <Compile Include="Entities\Livestreams.cs" />
+    <Compile Include="Streaming\IStreamingServer.cs" />
     <Compile Include="Streaming\StreamingServer.cs" />
     <Compile Include="Utilities\CustomDataReceivedEventArgs.cs" />
     <Compile Include="Utilities\ExternalProcess.cs" />
