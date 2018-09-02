@@ -1,22 +1,23 @@
 ﻿using Ninject.Extensions.Logging;
+using System;
 using System.Diagnostics;
 
 namespace LivestreamService.Server.Utilities
 {
-    public class ExternalProcess
+    public class ExternalProcess : IExternalProcess
     {
         private readonly ILogger _logger;
         private Process _process;
         private bool _isProcessRunning;
 
         public delegate void OnOutDataReceived(object sender, DataReceivedEventArgs e);
-        public event OnOutDataReceived OutDataReceived;
+        public event OnOutDataReceived OutputDataReceived;
 
         public delegate void OnErrorDataReceived(object sender, DataReceivedEventArgs e);
-        public event OnErrorDataReceived ErrDataReceived;
+        public event OnErrorDataReceived ErrorDataReceived;
 
-        public delegate void OnProcessReturned(object sender, DataReceivedEventArgs e);
-        public event OnProcessReturned ProcessReturned;
+        public delegate void OnProcessReturned(object sender, EventArgs e);
+        public event OnProcessReturned ProcessExited;
 
 
         public ExternalProcess(ILogger logger)
@@ -36,8 +37,9 @@ namespace LivestreamService.Server.Utilities
 
             var process = Process.Start(processInfo);
 
-            process.OutputDataReceived += OutputDataReceived;
-            process.ErrorDataReceived += ErrorDataReceived;
+            process.OutputDataReceived += OutDataReceived;
+            process.ErrorDataReceived += ErrDataReceived;
+            process.Exited += ProcessExit;
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
 
@@ -69,14 +71,19 @@ namespace LivestreamService.Server.Utilities
             return _process.Responding;
         }
 
-        private void OutputDataReceived(object sender, DataReceivedEventArgs e)
+        private void OutDataReceived(object sender, DataReceivedEventArgs e)
         {
-            OutDataReceived?.Invoke(sender, e);
+            OutputDataReceived?.Invoke(sender, e);
         }
 
-        private void ErrorDataReceived(object sender, DataReceivedEventArgs e)
+        private void ErrDataReceived(object sender, DataReceivedEventArgs e)
         {
-            ErrDataReceived?.Invoke(sender, e);
+            ErrorDataReceived?.Invoke(sender, e);
+        }
+
+        private void ProcessExit(object sender, EventArgs e)
+        {
+            ProcessExited?.Invoke(sender, e);
         }
     }
 }

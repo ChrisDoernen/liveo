@@ -10,12 +10,12 @@ namespace LivestreamService.Server.Configuration
 {
     public class AudioConfiguration
     {
-        private readonly string _listDevicesCommand = @"ffmpeg -list_devices true -f dshow -i dummy -hide_banner";
+        private const string ListDevicesCommand = @"ffmpeg -list_devices true -f dshow -i dummy -hide_banner";
         private readonly List<string> _listDevicesCommandProcessOutput = new List<string>();
-        private readonly ExternalProcess _externalProcess;
+        private readonly IExternalProcess _externalProcess;
         private readonly ILogger _logger;
 
-        public AudioConfiguration(ILogger logger, ExternalProcess externalProcess)
+        public AudioConfiguration(ILogger logger, IExternalProcess externalProcess)
         {
             _logger = logger;
             _externalProcess = externalProcess;
@@ -24,12 +24,19 @@ namespace LivestreamService.Server.Configuration
         public List<AudioInput> GetAudioInputs()
         {
             // ffmpeg redirects output to error output
-            _externalProcess.ErrDataReceived += OutputDataRecievedHandler;
-            _externalProcess.ExecuteCommandAndWaitForExit(_listDevicesCommand);
-            _externalProcess.ErrDataReceived -= OutputDataRecievedHandler;
+            _externalProcess.ErrorDataReceived += OutputDataRecievedHandler;
+            var exitCode = _externalProcess.ExecuteCommandAndWaitForExit(ListDevicesCommand);
+            _externalProcess.ErrorDataReceived -= OutputDataRecievedHandler;
 
-            var audioInputs = ParseProcessOutput();
-            return audioInputs;
+            if (exitCode == 0)
+            {
+                var audioInputs = ParseProcessOutput();
+                _logger.Info($"Found {audioInputs.Count} available audio inputs.");
+                return audioInputs;
+            }
+
+            _logger.Warn($"The external process for getting audio inputs returned with code {exitCode}.");
+            return null;
         }
 
         private List<AudioInput> ParseProcessOutput()
