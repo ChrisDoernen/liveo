@@ -9,7 +9,6 @@ namespace LivestreamService.Server.Configuration
     public class AudioConfiguration
     {
         private const string ListDevicesCommand = @"ffmpeg -list_devices true -f dshow -i dummy -hide_banner";
-        private readonly List<string> _listDevicesCommandProcessOutput = new List<string>();
         private readonly IExternalProcess _externalProcess;
         private readonly ILogger _logger;
         private readonly List<AudioInput> _audioInputs = new List<AudioInput>();
@@ -27,14 +26,10 @@ namespace LivestreamService.Server.Configuration
             _externalProcess.ErrorDataReceived += OutputDataRecievedHandler;
             var exitCode = _externalProcess.ExecuteCommandAndWaitForExit(ListDevicesCommand);
 
-            if (exitCode == 0)
-            {
-                _logger.Info($"Found {_audioInputs.Count} available audio inputs.");
-                return _audioInputs;
-            }
+            _logger.Info($"The external process for getting audio inputs returned with code {exitCode}.");
+            _logger.Info($"Found {_audioInputs.Count} available audio inputs.");
 
-            _logger.Warn($"The external process for getting audio inputs returned with code {exitCode}.");
-            return null;
+            return _audioInputs;
         }
 
         private void OutputDataRecievedHandler(object sender, CustomDataReceivedEventArgs e)
