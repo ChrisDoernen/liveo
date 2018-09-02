@@ -2,8 +2,6 @@
 using LivestreamService.Server.Utilities;
 using Ninject.Extensions.Logging;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace LivestreamService.Server.Configuration
@@ -14,6 +12,8 @@ namespace LivestreamService.Server.Configuration
         private readonly List<string> _listDevicesCommandProcessOutput = new List<string>();
         private readonly IExternalProcess _externalProcess;
         private readonly ILogger _logger;
+        private readonly List<AudioInput> _audioInputs = new List<AudioInput>();
+
 
         public AudioConfiguration(ILogger logger, IExternalProcess externalProcess)
         {
@@ -26,40 +26,28 @@ namespace LivestreamService.Server.Configuration
             // ffmpeg redirects output to error output
             _externalProcess.ErrorDataReceived += OutputDataRecievedHandler;
             var exitCode = _externalProcess.ExecuteCommandAndWaitForExit(ListDevicesCommand);
-            _externalProcess.ErrorDataReceived -= OutputDataRecievedHandler;
 
             if (exitCode == 0)
             {
-                var audioInputs = ParseProcessOutput();
-                _logger.Info($"Found {audioInputs.Count} available audio inputs.");
-                return audioInputs;
+                _logger.Info($"Found {_audioInputs.Count} available audio inputs.");
+                return _audioInputs;
             }
 
             _logger.Warn($"The external process for getting audio inputs returned with code {exitCode}.");
             return null;
         }
 
-        private List<AudioInput> ParseProcessOutput()
+        private void OutputDataRecievedHandler(object sender, CustomDataReceivedEventArgs e)
         {
-            var audioInputs = new List<AudioInput>();
+            var line = e.Data;
 
-            foreach (var line in _listDevicesCommandProcessOutput.ToList())
-            {
-                if (line == null || !(line.Contains("(") && line.Contains(")") && line.Contains("\"")))
-                    continue;
+            if (line == null || !(line.Contains("(") && line.Contains(")") && line.Contains("\"")))
+                return;
 
-                // Capture everything between "" exclusively
-                var regex = new Regex("(?<=\")(.*?)(?=\")");
-                var audioInputIdentifier = regex.Match(line).Value;
-                audioInputs.Add(new AudioInput(audioInputIdentifier));
-            }
-
-            return audioInputs;
-        }
-
-        private void OutputDataRecievedHandler(object sender, DataReceivedEventArgs e)
-        {
-            _listDevicesCommandProcessOutput.Add(e.Data);
+            // Capture everything between "" exclusively
+            var regex = new Regex("(?<=\")(.*?)(?=\")");
+            var audioInputIdentifier = regex.Match(line).Value;
+            _audioInputs.Add(new AudioInput(audioInputIdentifier));
         }
     }
 }

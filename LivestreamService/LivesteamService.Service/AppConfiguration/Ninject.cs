@@ -1,7 +1,4 @@
-﻿using AutoMapper;
-using LivestreamService.Server.Configuration;
-using LivestreamService.Server.Streaming;
-using LivestreamService.Server.Utilities;
+﻿using LivestreamService.Server.Streaming;
 using Ninject.Modules;
 
 namespace LivestreamService.Service.AppConfiguration
@@ -12,10 +9,6 @@ namespace LivestreamService.Service.AppConfiguration
         {
             Bind<Startup.LivestreamService>().To<Startup.LivestreamService>();
             Bind<StreamingServer>().To<StreamingServer>().InSingletonScope();
-            Bind<LivestreamsConfiguration>().To<LivestreamsConfiguration>();
-            Bind<AudioConfiguration>().To<AudioConfiguration>();
-            Bind<ExternalProcess>().To<ExternalProcess>();
-            Bind<IMapper>().ToConstant(Mapper.Instance);
         }
     }
 }

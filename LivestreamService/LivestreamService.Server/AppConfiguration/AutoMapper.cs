@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
 using LivestreamService.Server.Entities;
-using LivestreamService.Server.Streaming;
 using System.Linq;
 
 namespace LivestreamService.Server.AppConfiguration
 {
-    public class AutoMapperProfile : Profile
+    public class AutoMapper : Profile
     {
-        public AutoMapperProfile()
+        public AutoMapper()
         {
             CreateMap<LivestreamsType, Livestreams>()
                     .ForMember(d => d.Streams, opt => opt.MapFrom(s => s.LiveStream.ToList()));

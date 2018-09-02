@@ -17,7 +17,7 @@ namespace LivestreamService.Server.Test
             const string validConfig = "TestResources\\config\\ValidLivestreams.config";
             var mockLogger = new Mock<ILogger>();
             Mapper.Initialize(config => config.AddProfiles(new[] {
-                    typeof(AppConfiguration.AutoMapperProfile)
+                    typeof(AppConfiguration.AutoMapper)
                 })
             );
 

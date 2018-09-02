@@ -10,10 +10,10 @@ namespace LivestreamService.Server.Utilities
         private Process _process;
         private bool _isProcessRunning;
 
-        public delegate void OnOutDataReceived(object sender, DataReceivedEventArgs e);
+        public delegate void OnOutDataReceived(object sender, CustomDataReceivedEventArgs e);
         public event OnOutDataReceived OutputDataReceived;
 
-        public delegate void OnErrorDataReceived(object sender, DataReceivedEventArgs e);
+        public delegate void OnErrorDataReceived(object sender, CustomDataReceivedEventArgs e);
         public event OnErrorDataReceived ErrorDataReceived;
 
         public delegate void OnProcessReturned(object sender, EventArgs e);
@@ -73,12 +73,12 @@ namespace LivestreamService.Server.Utilities
 
         private void OutDataReceived(object sender, DataReceivedEventArgs e)
         {
-            OutputDataReceived?.Invoke(sender, e);
+            OutputDataReceived?.Invoke(sender, new CustomDataReceivedEventArgs(e));
         }
 
         private void ErrDataReceived(object sender, DataReceivedEventArgs e)
         {
-            ErrorDataReceived?.Invoke(sender, e);
+            ErrorDataReceived?.Invoke(sender, new CustomDataReceivedEventArgs(e));
         }
 
         private void ProcessExit(object sender, EventArgs e)
