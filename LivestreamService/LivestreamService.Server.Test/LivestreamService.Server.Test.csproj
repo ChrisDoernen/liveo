@@ -70,10 +70,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LivestreamsConfigurationTest.cs" />
-    <Compile Include="AudioHardwareTest.cs" />
-    <Compile Include="StreamingServerTest.cs" />
-    <Compile Include="XmlUtilitiesTest.cs" />
+    <Compile Include="Tests\LivestreamsConfigurationTest.cs" />
+    <Compile Include="Tests\AudioHardwareTest.cs" />
+    <Compile Include="Tests\StreamingServerTest.cs" />
+    <Compile Include="Tests\XmlUtilitiesTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

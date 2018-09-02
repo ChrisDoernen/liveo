@@ -5,7 +5,7 @@ using Moq;
 using Ninject.Extensions.Logging;
 using System.Collections.Generic;
 
-namespace LivestreamService.Server.Test
+namespace LivestreamService.Server.Test.Tests
 {
     [TestClass]
     public class AudioHardwareTest

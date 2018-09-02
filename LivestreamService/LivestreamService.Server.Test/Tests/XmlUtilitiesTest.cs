@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Xml.Schema;
 
-namespace LivestreamService.Server.Test
+namespace LivestreamService.Server.Test.Tests
 {
     [TestClass]
     public class XmlUtilitiesTest

@@ -6,7 +6,7 @@
         public string Title { get; set; }
         public string Description { get; set; }
         public string CountryCode { get; set; }
-        public string AudioInput { get; set; }
+        public AudioInput AudioInput { get; set; }
         public bool StartOnServiceStartup { get; set; }
         public bool IsStarted { get; set; }
         public bool HasValidAudioInput { get; set; }
