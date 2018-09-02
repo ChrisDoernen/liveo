@@ -6,7 +6,7 @@ namespace LiveStreamService.Api.Modules
 {
     public class LivestreamsModule : NancyModule
     {
-        public LivestreamsModule(ILogger logger, IStreamingServer streamingServer)
+        public LivestreamsModule(ILogger logger, StreamingServer streamingServer)
             : base("/api")
         {
             Get["/livestreams"] = _ =>

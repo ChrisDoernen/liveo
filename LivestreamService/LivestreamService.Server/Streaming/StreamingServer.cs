@@ -30,7 +30,7 @@ namespace LivestreamService.Server.Streaming
             if (_livestreams == null)
                 throw new ArgumentException("StreamingServer is not initialized.");
 
-            var startedLivestreams = _livestreams.Streams.Where(ls => ls.IsStarted == true).ToList();
+            var startedLivestreams = _livestreams.Streams.Where(ls => ls.IsStarted).ToList();
             return startedLivestreams;
         }
 

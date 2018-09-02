@@ -7,6 +7,7 @@ namespace LivestreamService.Service.AppConfiguration
 {
     public class NancyBootstrapper : NinjectNancyBootstrapper
     {
+
         protected override void ApplicationStartup(IKernel container, IPipelines pipelines)
         {
             // No registrations should be performed in here, however you may
@@ -16,6 +17,8 @@ namespace LivestreamService.Service.AppConfiguration
         protected override void ConfigureApplicationContainer(IKernel existingContainer)
         {
             // Perform registration that should have an application lifetime
+            existingContainer.Load(
+                new Server.AppConfiguration.Ninject());
         }
 
         protected override void ConfigureRequestContainer(IKernel container, NancyContext context)

@@ -91,7 +91,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppConfiguration\NancyBootstrapper.cs" />
     <Compile Include="Modules\LivestreamsModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

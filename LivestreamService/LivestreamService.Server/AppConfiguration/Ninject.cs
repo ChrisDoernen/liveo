@@ -11,7 +11,7 @@ namespace LivestreamService.Server.AppConfiguration
     {
         public override void Load()
         {
-            Bind<IStreamingServer>().To<StreamingServer>().InSingletonScope();
+            Bind<StreamingServer>().To<StreamingServer>().InSingletonScope();
             Bind<ILivestreamsConfiguration>().To<LivestreamsConfiguration>();
             Bind<IAudioHardware>().To<AudioHardware>();
             Bind<IExternalProcess>().To<ExternalProcess>();
