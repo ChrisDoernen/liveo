@@ -68,7 +68,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppConfiguration\AutoMapper.cs" />
     <Compile Include="AppConfiguration\Nancy.cs" />
     <Compile Include="AppConfiguration\Ninject.cs" />
     <Compile Include="Program.cs" />

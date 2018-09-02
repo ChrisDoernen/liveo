@@ -11,7 +11,7 @@ namespace LivestreamService.Server.AppConfiguration
         {
             Bind<LivestreamsConfiguration>().To<LivestreamsConfiguration>();
             Bind<AudioConfiguration>().To<AudioConfiguration>();
-            Bind<ExternalProcess>().To<ExternalProcess>();
+            Bind<IExternalProcess>().To<ExternalProcess>();
             Bind<IMapper>().ToConstant(Mapper.Instance);
         }
     }

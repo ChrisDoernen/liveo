@@ -4,7 +4,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Ninject.Extensions.Logging;
 using System.Collections.Generic;
-using System.Threading;
 
 namespace LivestreamService.Server.Test
 {
@@ -31,22 +30,22 @@ namespace LivestreamService.Server.Test
             };
 
             mockExternalProcess.Setup(foo => foo.ExecuteCommandAndWaitForExit(listDevicesCommand))
-                .Callback(() => Thread.Sleep(2000))
+                .Callback(() =>
+                {
+                    foreach (var mockLine in mockLines)
+                    {
+                        mockExternalProcess.Raise(m => m.ErrorDataReceived += null, new CustomDataReceivedEventArgs(mockLine));
+                    }
+                })
                 .Returns(0);
 
             // Act
             var audioInputs = audioConfiguration.GetAudioInputs();
-            foreach (var mockLine in mockLines)
-            {
-                mockExternalProcess.Raise(m => m.ErrorDataReceived += null, new CustomDataReceivedEventArgs(mockLine));
-            }
-
-
-
 
             // Assert
             Assert.IsNotNull(audioInputs);
             Assert.AreEqual(1, audioInputs.Count);
+            Assert.AreEqual("Mikrofonarray (Realtek High Definition Audio)", audioInputs[0].Id);
         }
     }
 }

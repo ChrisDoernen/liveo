@@ -51,8 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppConfiguration\Ninject.cs" />
     <Compile Include="Configuration\AudioConfiguration.cs" />
-    <Compile Include="AppConfiguration\AutoMapperProfile.cs" />
+    <Compile Include="AppConfiguration\AutoMapper.cs" />
     <Compile Include="Configuration\LivestreamsConfiguration.cs" />
     <Compile Include="Configuration\SystemConfiguration.cs" />
     <Compile Include="Entities\LivestreamsConfigTypes.cs" />
