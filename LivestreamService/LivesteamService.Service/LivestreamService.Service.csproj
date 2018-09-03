@@ -75,7 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppConfiguration\NancyBootstrapper.cs" />
-    <Compile Include="Startup\Nancy.cs" />
+    <Compile Include="Startup\NancyStartup.cs" />
     <Compile Include="AppConfiguration\ServiceModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -109,6 +109,10 @@
     <ProjectReference Include="..\LivestreamService.Server\LivestreamService.Server.csproj">
       <Project>{2AA291C7-562D-4A91-8A9C-767B4BACE957}</Project>
       <Name>LivestreamService.Server</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LivestreamService.Shared\LivestreamService.Shared.csproj">
+      <Project>{0aae9820-f6ac-43f3-af3c-e41a8d3fd6be}</Project>
+      <Name>LivestreamService.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

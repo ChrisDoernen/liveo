@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamService.App", "Li
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamService.Backend", "LivestramService.Backend\LivestreamService.Backend.csproj", "{B4BBA85F-6641-489A-9E2E-E95348BC4598}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamService.Shared", "LivestreamService.Shared\LivestreamService.Shared.csproj", "{0AAE9820-F6AC-43F3-AF3C-E41A8D3FD6BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{B4BBA85F-6641-489A-9E2E-E95348BC4598}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4BBA85F-6641-489A-9E2E-E95348BC4598}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4BBA85F-6641-489A-9E2E-E95348BC4598}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AAE9820-F6AC-43F3-AF3C-E41A8D3FD6BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AAE9820-F6AC-43F3-AF3C-E41A8D3FD6BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AAE9820-F6AC-43F3-AF3C-E41A8D3FD6BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AAE9820-F6AC-43F3-AF3C-E41A8D3FD6BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

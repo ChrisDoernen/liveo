@@ -7,6 +7,7 @@ namespace LivestreamService.Service.AppConfiguration
         public override void Load()
         {
             Bind<Startup.LivestreamService>().To<Startup.LivestreamService>();
+            Bind<Startup.NancyStartup>().To<Startup.NancyStartup>();
         }
     }
 }

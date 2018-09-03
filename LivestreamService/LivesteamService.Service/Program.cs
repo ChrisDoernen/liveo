@@ -1,4 +1,7 @@
 using AutoMapper;
+using LivestreamService.Server.AppConfiguration;
+using LivestreamService.Service.AppConfiguration;
+using LivestreamService.Shared.AppConfiguration;
 using Ninject;
 using System;
 using Topshelf;
@@ -10,15 +13,12 @@ namespace LivestreamService.Service
         public static void Main()
         {
             // Loading AutoMapper profiles
-            Mapper.Initialize(config => config.AddProfiles(new[] {
-                    typeof(Server.AppConfiguration.ServerProfile)
-                })
-            );
+            Mapper.Initialize(config => config.AddProfiles(typeof(ServerProfile)));
             Mapper.AssertConfigurationIsValid();
 
             // Loading Ninject kernel
             IKernel kernel = new StandardKernel();
-            kernel.Load(new AppConfiguration.ServiceModule());
+            kernel.Load(new ServiceModule(), new SharedModule());
             var livestreamService = kernel.Get<Startup.LivestreamService>();
 
             // Run Topshelf
