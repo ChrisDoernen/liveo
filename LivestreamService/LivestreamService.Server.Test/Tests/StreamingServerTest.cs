@@ -55,7 +55,6 @@ namespace LivestreamService.Server.Test.Tests
                 _mockAudioHardware.Object, _mockLivestreamsConfiguration.Object);
 
             // Act
-            streamingServer.Start();
             var startedLivestreams = streamingServer.GetStartedLiveStreams();
 
             // Assert
@@ -83,7 +82,6 @@ namespace LivestreamService.Server.Test.Tests
                 _mockAudioHardware.Object, _mockLivestreamsConfiguration.Object);
 
             // Act
-            streamingServer.Start();
             var startedLivestreams = streamingServer.GetStartedLiveStreams();
 
             // Assert
