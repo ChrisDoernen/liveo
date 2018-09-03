@@ -11,17 +11,14 @@ namespace LivestreamService.Service
         {
             // Loading AutoMapper profiles
             Mapper.Initialize(config => config.AddProfiles(new[] {
-                    typeof(Server.AppConfiguration.AutoMapper)
+                    typeof(Server.AppConfiguration.ServerProfile)
                 })
             );
-
             Mapper.AssertConfigurationIsValid();
 
             // Loading Ninject kernel
             IKernel kernel = new StandardKernel();
-            kernel.Load(
-                new Service.AppConfiguration.Ninject(),
-                new Server.AppConfiguration.Ninject());
+            kernel.Load(new AppConfiguration.ServiceModule());
             var livestreamService = kernel.Get<Startup.LivestreamService>();
 
             // Run Topshelf

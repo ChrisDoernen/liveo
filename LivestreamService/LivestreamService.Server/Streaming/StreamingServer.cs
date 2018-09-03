@@ -23,6 +23,8 @@ namespace LivestreamService.Server.Streaming
             _audioHardware = audioHardware;
             _livestreamsConfiguration = livestreamsConfiguration;
             _logger = logger;
+
+            Start();
         }
 
         public List<Livestream> GetStartedLiveStreams()
@@ -34,7 +36,7 @@ namespace LivestreamService.Server.Streaming
             return startedLivestreams;
         }
 
-        public void Start()
+        private void Start()
         {
             Initialize();
             ValidateLivestreams();
@@ -94,6 +96,11 @@ namespace LivestreamService.Server.Streaming
 
         public void StopStream(string id)
         {
+        }
+
+        public void StopStreams()
+        {
+            throw new NotImplementedException();
         }
 
         public void ShutdownServer()

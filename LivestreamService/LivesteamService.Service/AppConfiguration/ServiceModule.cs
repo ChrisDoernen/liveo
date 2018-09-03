@@ -2,7 +2,7 @@
 
 namespace LivestreamService.Service.AppConfiguration
 {
-    public class Ninject : NinjectModule
+    public class ServiceModule : NinjectModule
     {
         public override void Load()
         {

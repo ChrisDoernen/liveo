@@ -7,11 +7,11 @@ using Ninject.Modules;
 
 namespace LivestreamService.Server.AppConfiguration
 {
-    public class Ninject : NinjectModule
+    public class ServerModule : NinjectModule
     {
         public override void Load()
         {
-            Bind<StreamingServer>().To<StreamingServer>().InSingletonScope();
+            Bind<IStreamingServer>().To<StreamingServer>().InSingletonScope();
             Bind<ILivestreamsConfiguration>().To<LivestreamsConfiguration>();
             Bind<IAudioHardware>().To<AudioHardware>();
             Bind<IExternalProcess>().To<ExternalProcess>();

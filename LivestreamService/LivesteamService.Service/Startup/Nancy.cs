@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Nancy.Hosting.Self;
+using System;
 using System.Configuration;
-using Nancy.Hosting.Self;
 
-namespace LivestreamService.Service.AppConfiguration
+namespace LivestreamService.Service.Startup
 {
     public class Nancy
     {

@@ -18,7 +18,7 @@ namespace LivestreamService.Server.Test.Tests
             // Arrange
             const string validConfig = "TestResources\\config\\ValidLivestreams.config";
             Mapper.Initialize(config => config.AddProfiles(new[] {
-                    typeof(AppConfiguration.AutoMapper)
+                    typeof(AppConfiguration.ServerProfile)
                 })
             );
 

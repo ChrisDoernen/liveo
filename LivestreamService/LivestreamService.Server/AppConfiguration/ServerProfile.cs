@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace LivestreamService.Server.AppConfiguration
 {
-    public class AutoMapper : Profile
+    public class ServerProfile : Profile
     {
-        public AutoMapper()
+        public ServerProfile()
         {
             CreateMap<LivestreamsType, Livestreams>()
                 .ForMember(d => d.Streams, opt => opt.MapFrom(s => s.LiveStream.ToList()));

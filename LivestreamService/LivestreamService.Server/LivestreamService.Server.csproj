@@ -51,10 +51,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppConfiguration\Ninject.cs" />
+    <Compile Include="AppConfiguration\ServerModule.cs" />
     <Compile Include="Configuration\ILivestreamsConfiguration.cs" />
     <Compile Include="Environment\AudioHardware.cs" />
-    <Compile Include="AppConfiguration\AutoMapper.cs" />
+    <Compile Include="AppConfiguration\ServerProfile.cs" />
     <Compile Include="Configuration\LivestreamsConfiguration.cs" />
     <Compile Include="Configuration\SystemConfiguration.cs" />
     <Compile Include="Entities\LivestreamsConfigTypes.cs" />
