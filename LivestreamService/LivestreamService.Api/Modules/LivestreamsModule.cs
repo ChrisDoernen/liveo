@@ -16,7 +16,6 @@ namespace LiveStreamService.Api.Modules
 
                 return "Dummy response";
             };
-
         }
     }
 }
