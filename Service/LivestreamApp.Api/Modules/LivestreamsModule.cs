@@ -12,9 +12,8 @@ namespace LivestreamApp.Api.Modules
             Get["/livestreams"] = _ =>
             {
                 var livestreams = streamingServer.GetStartedLiveStreams();
-                logger.Info("Api: /livestreams was invoked.");
-
-                return "Dummy response";
+                logger.Info($"api/livestreams was invoked, returned {livestreams.Count} livestreams.");
+                return livestreams;
             };
         }
     }

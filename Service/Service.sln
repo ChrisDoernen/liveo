@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamApp.Shared", "Liv
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamApp.Client", "LivestreamApp.Client\LivestreamApp.Client.csproj", "{2A619133-BDE7-45C7-8F04-692D0770CE90}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamApp.Api.Test", "LivestreamApp.Api.Test\LivestreamApp.Api.Test.csproj", "{2A46F51E-51E7-4BA7-9F5C-ACD404CCEA6B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{2A619133-BDE7-45C7-8F04-692D0770CE90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A619133-BDE7-45C7-8F04-692D0770CE90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A619133-BDE7-45C7-8F04-692D0770CE90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A46F51E-51E7-4BA7-9F5C-ACD404CCEA6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A46F51E-51E7-4BA7-9F5C-ACD404CCEA6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A46F51E-51E7-4BA7-9F5C-ACD404CCEA6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A46F51E-51E7-4BA7-9F5C-ACD404CCEA6B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
