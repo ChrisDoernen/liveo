@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using LivestreamApp.Server.Entities;
+using LivestreamApp.Server.Streaming.Entities;
 using System.Linq;
 
 namespace LivestreamApp.Server.AppConfiguration

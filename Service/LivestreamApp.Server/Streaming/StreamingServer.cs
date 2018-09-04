@@ -1,6 +1,6 @@
-﻿using LivestreamApp.Server.Configuration;
-using LivestreamApp.Server.Entities;
-using LivestreamApp.Server.Environment;
+﻿using LivestreamApp.Server.Streaming.Configuration;
+using LivestreamApp.Server.Streaming.Entities;
+using LivestreamApp.Server.Streaming.Environment;
 using Ninject.Extensions.Logging;
 using System;
 using System.Collections.Generic;

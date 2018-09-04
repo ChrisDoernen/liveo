@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 
-namespace LivestreamApp.Server.Configuration
+namespace LivestreamApp.Server.Streaming.Configuration
 {
     static class SystemConfiguration
     {

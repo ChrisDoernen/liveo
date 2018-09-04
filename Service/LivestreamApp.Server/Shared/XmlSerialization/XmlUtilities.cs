@@ -5,7 +5,7 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace LivestreamApp.Server.Utilities
+namespace LivestreamApp.Server.Shared.XmlSerialization
 {
     public class XmlUtilities
     {

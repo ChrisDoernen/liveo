@@ -52,23 +52,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppConfiguration\ServerModule.cs" />
-    <Compile Include="Configuration\ILivestreamsConfiguration.cs" />
-    <Compile Include="Environment\AudioHardware.cs" />
+    <Compile Include="Streaming\Configuration\ILivestreamsConfiguration.cs" />
+    <Compile Include="Streaming\Environment\AudioHardware.cs" />
     <Compile Include="AppConfiguration\ServerProfile.cs" />
-    <Compile Include="Configuration\LivestreamsConfiguration.cs" />
-    <Compile Include="Configuration\SystemConfiguration.cs" />
-    <Compile Include="Entities\LivestreamsConfigTypes.cs" />
-    <Compile Include="Environment\IAudioHardware.cs" />
+    <Compile Include="Streaming\Configuration\LivestreamsConfiguration.cs" />
+    <Compile Include="Streaming\Configuration\SystemConfiguration.cs" />
+    <Compile Include="Streaming\Entities\LivestreamsConfigTypes.cs" />
+    <Compile Include="Streaming\Environment\IAudioHardware.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Entities\AudioInput.cs" />
-    <Compile Include="Entities\Livestream.cs" />
-    <Compile Include="Entities\Livestreams.cs" />
+    <Compile Include="Streaming\Entities\AudioInput.cs" />
+    <Compile Include="Streaming\Entities\Livestream.cs" />
+    <Compile Include="Streaming\Entities\Livestreams.cs" />
     <Compile Include="Streaming\IStreamingServer.cs" />
     <Compile Include="Streaming\StreamingServer.cs" />
-    <Compile Include="Utilities\CustomDataReceivedEventArgs.cs" />
-    <Compile Include="Utilities\ExternalProcess.cs" />
-    <Compile Include="Utilities\IExternalProcess.cs" />
-    <Compile Include="Utilities\XmlUtilities.cs" />
+    <Compile Include="Streaming\ProcessCommunication\CustomDataReceivedEventArgs.cs" />
+    <Compile Include="Streaming\ProcessCommunication\ExternalProcess.cs" />
+    <Compile Include="Streaming\ProcessCommunication\IExternalProcess.cs" />
+    <Compile Include="Shared\XmlSerialization\XmlUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Livestreams.config">
@@ -79,6 +79,11 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Diagnostics\" />
+    <Folder Include="Notifications\" />
+    <Folder Include="Statistics\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

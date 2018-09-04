@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
-using LivestreamApp.Server.Configuration;
-using LivestreamApp.Server.Entities;
-using LivestreamApp.Server.Environment;
 using LivestreamApp.Server.Streaming;
+using LivestreamApp.Server.Streaming.Configuration;
+using LivestreamApp.Server.Streaming.Entities;
+using LivestreamApp.Server.Streaming.Environment;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Ninject.Extensions.Logging;

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using LivestreamApp.Server.Configuration;
-using LivestreamApp.Server.Environment;
 using LivestreamApp.Server.Streaming;
-using LivestreamApp.Server.Utilities;
+using LivestreamApp.Server.Streaming.Configuration;
+using LivestreamApp.Server.Streaming.Environment;
+using LivestreamApp.Server.Streaming.ProcessCommunication;
 using Ninject.Modules;
 
 namespace LivestreamApp.Server.AppConfiguration

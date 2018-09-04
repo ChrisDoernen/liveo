@@ -1,6 +1,6 @@
-﻿using LivestreamApp.Server.Entities;
+﻿using LivestreamApp.Server.Streaming.Entities;
 
-namespace LivestreamApp.Server.Configuration
+namespace LivestreamApp.Server.Streaming.Configuration
 {
     public interface ILivestreamsConfiguration
     {

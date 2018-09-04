@@ -1,10 +1,10 @@
-﻿using LivestreamApp.Server.Entities;
-using LivestreamApp.Server.Utilities;
+﻿using LivestreamApp.Server.Streaming.Entities;
+using LivestreamApp.Server.Streaming.ProcessCommunication;
 using Ninject.Extensions.Logging;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace LivestreamApp.Server.Environment
+namespace LivestreamApp.Server.Streaming.Environment
 {
     public class AudioHardware : IAudioHardware
     {

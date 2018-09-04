@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using LivestreamApp.Server.Entities;
-using LivestreamApp.Server.Utilities;
+using LivestreamApp.Server.Shared.XmlSerialization;
+using LivestreamApp.Server.Streaming.Entities;
 using Ninject.Extensions.Logging;
 using System;
 using System.IO;
 
-namespace LivestreamApp.Server.Configuration
+namespace LivestreamApp.Server.Streaming.Configuration
 {
     public class LivestreamsConfiguration : ILivestreamsConfiguration
     {

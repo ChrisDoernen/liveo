@@ -1,4 +1,4 @@
-﻿namespace LivestreamApp.Server.Entities
+﻿namespace LivestreamApp.Server.Streaming.Entities
 {
     public class AudioInput
     {
