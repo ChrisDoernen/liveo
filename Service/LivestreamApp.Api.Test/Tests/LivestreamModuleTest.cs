@@ -3,7 +3,7 @@
 namespace LivestreamApp.Api.Test.Tests
 {
     [TestClass]
-    public class UnitTest1
+    public class LivestreamModuleTest
     {
         [TestMethod]
         public void TestMethod1()
