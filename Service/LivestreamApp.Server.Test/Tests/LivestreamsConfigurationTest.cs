@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using FluentAssertions;
 using LivestreamApp.Server.Configuration;
-using LivestreamApp.Server.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Ninject.Extensions.Logging;
@@ -11,54 +11,35 @@ namespace LivestreamApp.Server.Test.Tests
     public class LivestreamsConfigurationTest
     {
         private readonly Mock<ILogger> _mockLogger = new Mock<ILogger>();
+        private LivestreamsConfiguration _livestreamsConfiguration;
 
-        [TestMethod]
-        public void GetAvailableStreams_ValidConfig()
+        [TestInitialize]
+        public void TestInitialize()
         {
-            // Arrange
-            const string validConfig = "TestResources\\config\\ValidLivestreams.config";
+            _livestreamsConfiguration =
+                new LivestreamsConfiguration(_mockLogger.Object, Mapper.Instance);
+
             Mapper.Initialize(config => config.AddProfiles(new[] {
                     typeof(AppConfiguration.ServerProfile)
                 })
             );
+        }
 
-            var livestreamsConfiguration =
-                new LivestreamsConfiguration(_mockLogger.Object, Mapper.Instance);
+        [TestMethod]
+        public void GetAvailableStreams_ValidConfig_ShouldReturnCorrectStreams()
+        {
+            // Given
+            const string validConfig = "TestResources\\config\\ValidLivestreams.config";
 
-            var expectedLivestreamDeutsch = new Livestream
-            {
-                Id = "deutsch",
-                Title = "Deutsch",
-                CountryCode = "de",
-                Description = "Originalton",
-                AudioInput = new AudioInput("Mikrofonarray (Realtek High Definition Audio)"),
-                StartOnServiceStartup = true
-            };
+            // When
+            var livestreams = _livestreamsConfiguration.GetAvailableStreams(validConfig);
 
-            var expectedLivestreamEnglish = new Livestream
-            {
-                Id = "english",
-                Title = "English",
-                CountryCode = "gb",
-                Description = "Originalton",
-                AudioInput = new AudioInput("Mikrofon (2- USB Audio Device)"),
-                StartOnServiceStartup = false
-            };
-
-            var expectedLivestreams = new Livestreams();
-            expectedLivestreams.Streams.Add(expectedLivestreamDeutsch);
-            expectedLivestreams.Streams.Add(expectedLivestreamEnglish);
-
-            // Act
-            var livestreams = livestreamsConfiguration.GetAvailableStreams(validConfig);
-
-            // Assert
-            Assert.IsNotNull(livestreams);
-            Assert.AreEqual(expectedLivestreams.Streams.Count, livestreams.Streams.Count);
-            Assert.AreEqual(expectedLivestreams.Streams[0].Id, livestreams.Streams[0].Id);
-            Assert.AreEqual(expectedLivestreams.Streams[1].Title, livestreams.Streams[1].Title);
-            Assert.AreEqual(expectedLivestreams.Streams[1].AudioInput.Id,
-                livestreams.Streams[1].AudioInput.Id);
+            // Then
+            livestreams.Should().NotBeNull();
+            livestreams.Streams.Count.Should().Be(2);
+            livestreams.Streams[0].Id.Should().Be("deutsch");
+            livestreams.Streams[0].Description.Should().Be("Originalton");
+            livestreams.Streams[1].Title.Should().Be("English");
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using LivestreamApp.Server.Entities;
+﻿using FluentAssertions;
+using LivestreamApp.Server.Entities;
 using LivestreamApp.Server.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -12,29 +13,29 @@ namespace LivestreamApp.Server.Test.Tests
         private const string XsdResource = "LivestreamApp.Server.Livestreams.xsd";
 
         [TestMethod]
-        public void ReadFromFile_ValidConfig()
+        public void ValidateAndDeserialize_ValidConfig_ShouldReturnCorrectObject()
         {
-            // Arrange
+            // Given
             const string validConfig = "TestResources\\config\\ValidLivestreams.config";
 
-            // Act
+            // When
             var deserialized = XmlUtilities.ValidateAndDeserialize<LivestreamsType>(validConfig, XsdResource);
 
-            // Assert
-            Assert.AreEqual(2, deserialized.LiveStream.Length);
-            Assert.AreEqual("deutsch", deserialized.LiveStream[0].Id);
-            Assert.AreEqual("de", deserialized.LiveStream[0].CountryCode);
-            Assert.AreEqual("Originalton", deserialized.LiveStream[0].Description);
+            // Then
+            deserialized.LiveStream.Length.Should().Be(2);
+            deserialized.LiveStream[0].Id.Should().Be("deutsch");
+            deserialized.LiveStream[0].CountryCode.Should().Be("de");
+            deserialized.LiveStream[0].Description.Should().Be("Originalton");
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void ReadFromConfigFile_InvalidNamespace()
         {
-            // Arrange
+            // Given
             const string invalidNamespaceConfig = "TestResources\\config\\InvalidNamespaceLivestreams.config";
 
-            // Act
+            // When
             var deserialized = XmlUtilities.ValidateAndDeserialize<LivestreamsType>(invalidNamespaceConfig, XsdResource);
         }
 
@@ -42,10 +43,10 @@ namespace LivestreamApp.Server.Test.Tests
         [ExpectedException(typeof(XmlSchemaValidationException))]
         public void ReadFromConfigFile_InvalidConfig()
         {
-            // Arrange
+            // Given
             const string invalidConfig = "TestResources\\config\\InvalidLivestreams.config";
 
-            // Act
+            // When
             var deserialized = XmlUtilities.ValidateAndDeserialize<LivestreamsType>(invalidConfig, XsdResource);
         }
     }

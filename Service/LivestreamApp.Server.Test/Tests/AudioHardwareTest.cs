@@ -1,4 +1,5 @@
-﻿using LivestreamApp.Server.Environment;
+﻿using FluentAssertions;
+using LivestreamApp.Server.Environment;
 using LivestreamApp.Server.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -10,15 +11,22 @@ namespace LivestreamApp.Server.Test.Tests
     [TestClass]
     public class AudioHardwareTest
     {
-        [TestMethod]
-        public void GetAudioInputs_DummyInput()
+        private readonly Mock<ILogger> _mockLogger = new Mock<ILogger>();
+        private readonly Mock<IExternalProcess> _mockExternalProcess = new Mock<IExternalProcess>();
+        private const string ListDevicesCommand = @"ffmpeg -list_devices true -f dshow -i dummy -hide_banner";
+        private AudioHardware _audioHardware;
+
+        [TestInitialize]
+        public void TestInitialize()
         {
-            // Arrange
-            var mockLogger = new Mock<ILogger>();
-            var mockExternalProcess = new Mock<IExternalProcess>();
-            const string listDevicesCommand = @"ffmpeg -list_devices true -f dshow -i dummy -hide_banner";
-            var audioConfiguration = new AudioHardware(mockLogger.Object, mockExternalProcess.Object);
-            var mockLines = new List<string>
+            _audioHardware = new AudioHardware(_mockLogger.Object, _mockExternalProcess.Object);
+        }
+
+        [TestMethod]
+        public void GetAudioInputs_DummyInput_ShouldReturnCorrectAudioInput()
+        {
+            // Given
+            var processOutput = new List<string>
             {
                 "[dshow @ 0000023e3e56a1c0] DirectShow video devices (some may be both video and audio devices)",
                 "[dshow @ 0000023e3e56a1c0]  \"USB Boot\"",
@@ -29,33 +37,29 @@ namespace LivestreamApp.Server.Test.Tests
                 "dummy: Immediate exit requested"
             };
 
-            mockExternalProcess.Setup(mep => mep.ExecuteCommandAndWaitForExit(listDevicesCommand))
+            _mockExternalProcess.Setup(mep => mep.ExecuteCommandAndWaitForExit(ListDevicesCommand))
                 .Callback(() =>
                 {
-                    foreach (var mockLine in mockLines)
+                    foreach (var line in processOutput)
                     {
-                        mockExternalProcess.Raise(m => m.ErrorDataReceived += null, new CustomDataReceivedEventArgs(mockLine));
+                        _mockExternalProcess.Raise(m => m.ErrorDataReceived += null, new CustomDataReceivedEventArgs(line));
                     }
                 })
                 .Returns(0);
 
-            // Act
-            var audioInputs = audioConfiguration.GetAudioInputs();
+            // When
+            var audioInputs = _audioHardware.GetAudioInputs();
 
-            // Assert
-            Assert.IsNotNull(audioInputs);
-            Assert.AreEqual(1, audioInputs.Count);
-            Assert.AreEqual("Mikrofonarray (Realtek High Definition Audio)", audioInputs[0].Id);
+            // Then
+            audioInputs.Should().NotBeNull();
+            audioInputs.Count.Should().Be(1);
+            audioInputs[0].Id.Should().Be("Mikrofonarray (Realtek High Definition Audio)");
         }
 
         [TestMethod]
         public void GetAudioInputs_NoInputs()
         {
-            // Arrange
-            var mockLogger = new Mock<ILogger>();
-            var mockExternalProcess = new Mock<IExternalProcess>();
-            const string listDevicesCommand = @"ffmpeg -list_devices true -f dshow -i dummy -hide_banner";
-            var audioConfiguration = new AudioHardware(mockLogger.Object, mockExternalProcess.Object);
+            // Given
             var mockLines = new List<string>
             {
                 "[dshow @ 0000023e3e56a1c0] DirectShow video devices (some may be both video and audio devices)",
@@ -64,22 +68,22 @@ namespace LivestreamApp.Server.Test.Tests
                 "dummy: Immediate exit requested"
             };
 
-            mockExternalProcess.Setup(foo => foo.ExecuteCommandAndWaitForExit(listDevicesCommand))
+            _mockExternalProcess.Setup(foo => foo.ExecuteCommandAndWaitForExit(ListDevicesCommand))
                 .Callback(() =>
                 {
                     foreach (var mockLine in mockLines)
                     {
-                        mockExternalProcess.Raise(m => m.ErrorDataReceived += null, new CustomDataReceivedEventArgs(mockLine));
+                        _mockExternalProcess.Raise(m => m.ErrorDataReceived += null, new CustomDataReceivedEventArgs(mockLine));
                     }
                 })
                 .Returns(0);
 
-            // Act
-            var audioInputs = audioConfiguration.GetAudioInputs();
+            // When
+            var audioInputs = _audioHardware.GetAudioInputs();
 
-            // Assert
-            Assert.IsNotNull(audioInputs);
-            Assert.AreEqual(0, audioInputs.Count);
+            // Then
+            audioInputs.Should().NotBeNull();
+            audioInputs.Count.Should().Be(0);
         }
     }
 }
