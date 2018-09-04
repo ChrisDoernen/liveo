@@ -1,9 +1,0 @@
-{
-    "env": {
-        "name": "PROD"
-    },
-    "apiServer": {
-        "ip": "localhost",
-        "port": "8080"
-    }
-}
