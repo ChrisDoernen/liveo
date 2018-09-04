@@ -1,0 +1,5 @@
+<div class="select-languages">
+    <div *ngIf="isLoading" class="ui active loader"></div>
+    <div *ngIf="connectionError">Can not connect to server</div>
+    <stream *ngFor="let stream of availableLiveSteams" [stream]="stream"></stream>
+</div>
