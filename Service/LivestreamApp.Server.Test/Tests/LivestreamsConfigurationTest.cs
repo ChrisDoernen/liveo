@@ -16,13 +16,13 @@ namespace LivestreamApp.Server.Test.Tests
         [TestInitialize]
         public void TestInitialize()
         {
-            _livestreamsConfiguration =
-                new LivestreamsConfiguration(_mockLogger.Object, Mapper.Instance);
-
             Mapper.Initialize(config => config.AddProfiles(new[] {
                     typeof(AppConfiguration.ServerProfile)
                 })
             );
+
+            _livestreamsConfiguration =
+                new LivestreamsConfiguration(_mockLogger.Object, Mapper.Instance);
         }
 
         [TestMethod]
