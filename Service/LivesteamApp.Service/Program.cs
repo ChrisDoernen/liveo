@@ -1,10 +1,11 @@
 using AutoMapper;
 using LivestreamApp.Server.AppConfiguration;
 using LivestreamApp.Service.AppConfiguration;
+using LivestreamApp.Shared;
 using LivestreamApp.Shared.AppConfiguration;
 using Ninject;
-using System;
 using Topshelf;
+using Topshelf.Nancy;
 
 namespace LivestreamApp.Service
 {
@@ -19,26 +20,36 @@ namespace LivestreamApp.Service
             // Loading Ninject kernel
             IKernel kernel = new StandardKernel();
             kernel.Load(new ServiceModule(), new SharedModule());
-            var LivestreamApp = kernel.Get<Startup.LivestreamApp>();
+            var livestreamApp = kernel.Get<Service>();
+
+            // Url registration and firewall
+            var appSettingsprovider = kernel.Get<IAppSettingsProvider>();
+            var port = appSettingsprovider.GetIntValue(AppSetting.DefaultPort);
 
             // Run Topshelf
-            var rc = HostFactory.Run(x =>
+            var host = HostFactory.New(x =>
             {
-                x.Service<Startup.LivestreamApp>(s =>
+                x.UseNLog();
+                x.Service<Service>(s =>
                 {
-                    s.ConstructUsing(name => LivestreamApp);
+                    s.ConstructUsing(name => livestreamApp);
                     s.WhenStarted(ls => ls.Start());
                     s.WhenStopped(ls => ls.Stop());
+                    s.WithNancyEndpoint(x, c =>
+                    {
+                        c.AddHost(port: port);
+                        c.CreateUrlReservationsOnInstall();
+                        c.OpenFirewallPortsOnInstall("LivestreamApp.Service");
+                    });
                 });
                 x.RunAsLocalSystem();
-
-                x.SetDescription("A backend service for live streaming audio");
-                x.SetDisplayName("Livestream Service");
-                x.SetServiceName("Livestream Service");
+                x.RunAsNetworkService();
+                x.SetDescription("A service for live streaming app");
+                x.SetDisplayName("LivestreamApp.Service");
+                x.SetServiceName("LivestreamApp.Service");
             });
 
-            var exitCode = (int)Convert.ChangeType(rc, rc.GetTypeCode());
-            Environment.ExitCode = exitCode;
+            host.Run();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
-using LivestreamApp.Server.Streaming;
 using LivestreamApp.Server.Streaming.Configuration;
+using LivestreamApp.Server.Streaming.Core;
 using LivestreamApp.Server.Streaming.Entities;
 using LivestreamApp.Server.Streaming.Environment;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace LivestreamApp.Server.Test.Tests
 {
     [TestClass]
-    public class StreamingServerTest
+    public class StreamingServerCoreTest
     {
         private const string MockLivestreamConfig = "Livestreams.config";
         private readonly Mock<ILogger> _mockLogger = new Mock<ILogger>();
@@ -39,7 +39,7 @@ namespace LivestreamApp.Server.Test.Tests
             _mockLivestreamsConfiguration.Setup(mlc => mlc.GetAvailableStreams(MockLivestreamConfig))
                 .Returns(mockLivestreams);
 
-            var streamingServer = new StreamingServer(_mockLogger.Object,
+            var streamingServer = new StreamingServerCore(_mockLogger.Object,
                 _mockAudioHardware.Object, _mockLivestreamsConfiguration.Object);
 
             // When
@@ -66,7 +66,7 @@ namespace LivestreamApp.Server.Test.Tests
             _mockLivestreamsConfiguration.Setup(mlc => mlc.GetAvailableStreams(MockLivestreamConfig))
                 .Returns(mockLivestreams);
 
-            var streamingServer = new StreamingServer(_mockLogger.Object,
+            var streamingServer = new StreamingServerCore(_mockLogger.Object,
                 _mockAudioHardware.Object, _mockLivestreamsConfiguration.Object);
 
             // When

@@ -64,8 +64,8 @@
     <Compile Include="Streaming\Entities\AudioInput.cs" />
     <Compile Include="Streaming\Entities\Livestream.cs" />
     <Compile Include="Streaming\Entities\Livestreams.cs" />
-    <Compile Include="Streaming\IStreamingServer.cs" />
-    <Compile Include="Streaming\StreamingServer.cs" />
+    <Compile Include="Streaming\Core\IStreamingServerCore.cs" />
+    <Compile Include="Streaming\Core\StreamingServerCore.cs" />
     <Compile Include="Streaming\ProcessCommunication\CustomDataReceivedEventArgs.cs" />
     <Compile Include="Streaming\ProcessCommunication\ExternalProcess.cs" />
     <Compile Include="Streaming\ProcessCommunication\IExternalProcess.cs" />

@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using LivestreamApp.Api.Modules;
-using LivestreamApp.Server.Streaming;
+using LivestreamApp.Server.Streaming.Core;
 using LivestreamApp.Server.Streaming.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -18,7 +18,7 @@ namespace LivestreamApp.Api.Test.Tests
         public void GetLivestreams_ShouldGetStatusOKWithCorrectResponseJson()
         {
             // Given
-            var mockStreamingServer = new Mock<IStreamingServer>();
+            var mockStreamingServer = new Mock<IStreamingServerCore>();
             mockStreamingServer.Setup(mss => mss.GetStartedLiveStreams()).Returns(new List<Livestream>());
             var mockLogger = new Mock<ILogger>();
 

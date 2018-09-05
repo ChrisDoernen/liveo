@@ -1,9 +1,9 @@
 ﻿using LivestreamApp.Server.Streaming.Entities;
 using System.Collections.Generic;
 
-namespace LivestreamApp.Server.Streaming
+namespace LivestreamApp.Server.Streaming.Core
 {
-    public interface IStreamingServer
+    public interface IStreamingServerCore
     {
         List<Livestream> GetStartedLiveStreams();
         void ShutdownServer();

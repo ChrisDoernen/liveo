@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LivestreamApp.Server.Streaming
+namespace LivestreamApp.Server.Streaming.Core
 {
-    public class StreamingServer : IStreamingServer
+    public class StreamingServerCore : IStreamingServerCore
     {
         private readonly IAudioHardware _audioHardware;
         private readonly ILivestreamsConfiguration _livestreamsConfiguration;
@@ -16,7 +16,7 @@ namespace LivestreamApp.Server.Streaming
         private Livestreams _livestreams;
         private List<AudioInput> _audioInputs;
 
-        public StreamingServer(ILogger logger,
+        public StreamingServerCore(ILogger logger,
             IAudioHardware audioHardware,
             ILivestreamsConfiguration livestreamsConfiguration)
         {
@@ -30,7 +30,7 @@ namespace LivestreamApp.Server.Streaming
         public List<Livestream> GetStartedLiveStreams()
         {
             if (_livestreams == null)
-                throw new ArgumentException("StreamingServer is not initialized.");
+                throw new ArgumentException("StreamingServerCore is not initialized.");
 
             var startedLivestreams = _livestreams.Streams.Where(ls => ls.IsStarted).ToList();
             return startedLivestreams;
@@ -42,7 +42,7 @@ namespace LivestreamApp.Server.Streaming
             ValidateLivestreams();
             StartStreams();
 
-            _logger.Info("StreamingServer started.");
+            _logger.Info("StreamingServerCore started.");
         }
 
         private void Initialize()
@@ -64,6 +64,7 @@ namespace LivestreamApp.Server.Streaming
                 else
                 {
                     _logger.Warn($"Livestream {livestream.Id} has invalid audio input.");
+                    _logger.Warn($"Livestream {livestream.Id} will not be started.");
                 }
 
                 livestream.IsInitialized = true;

@@ -46,7 +46,9 @@ namespace LivestreamApp.Server.Streaming.ProcessCommunication
             _process = process;
             _isProcessRunning = true;
 
-            _logger.Info($"Starting external process with command {command} and PID {_process.Id}");
+            _logger.Info("Starting external process.");
+            _logger.Info($"Process command: {command}");
+            _logger.Info($"PID: {_process.Id}");
 
             process.WaitForExit();
             return process.ExitCode;

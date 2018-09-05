@@ -76,7 +76,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomTestNancyBootstrapper.cs" />
     <Compile Include="Tests\LivestreamModuleTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
