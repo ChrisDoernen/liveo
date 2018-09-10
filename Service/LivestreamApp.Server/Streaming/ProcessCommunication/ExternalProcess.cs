@@ -25,7 +25,22 @@ namespace LivestreamApp.Server.Streaming.ProcessCommunication
             _logger = logger;
         }
 
-        public int ExecuteCommandAndWaitForExit(string command)
+        public int ExecuteCommand(string command)
+        {
+            Process process = SetupProcess(command);
+            process.WaitForExit();
+            var exitCode = process.ExitCode;
+            process.Dispose();
+
+            return exitCode;
+        }
+
+        public void ExecuteCommandAsync(string command)
+        {
+            Process process = SetupProcess(command);
+        }
+
+        private Process SetupProcess(string command)
         {
             var processInfo = new ProcessStartInfo("cmd.exe", "/c " + command)
             {
@@ -36,6 +51,8 @@ namespace LivestreamApp.Server.Streaming.ProcessCommunication
             };
 
             var process = Process.Start(processInfo);
+
+            if (process == null) throw new Exception("Process handle is null.");
 
             process.OutputDataReceived += OutDataReceived;
             process.ErrorDataReceived += ErrDataReceived;
@@ -50,14 +67,14 @@ namespace LivestreamApp.Server.Streaming.ProcessCommunication
             _logger.Info($"Process command: {command}");
             _logger.Info($"PID: {_process.Id}");
 
-            process.WaitForExit();
-            return process.ExitCode;
+            return process;
         }
 
         public void Kill()
         {
             _process.Kill();
             _process.Close();
+            _process.Dispose();
             _isProcessRunning = false;
 
             _logger.Info($"Killed external process wit PID {_process.Id}.");
@@ -86,6 +103,7 @@ namespace LivestreamApp.Server.Streaming.ProcessCommunication
         private void ProcessExit(object sender, EventArgs e)
         {
             ProcessExited?.Invoke(sender, e);
+            _isProcessRunning = false;
         }
     }
 }

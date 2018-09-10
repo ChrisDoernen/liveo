@@ -6,7 +6,7 @@
         event ExternalProcess.OnOutDataReceived OutputDataReceived;
         event ExternalProcess.OnProcessReturned ProcessExited;
 
-        int ExecuteCommandAndWaitForExit(string command);
+        int ExecuteCommand(string command);
         bool IsResponding();
         bool IsRunning();
         void Kill();

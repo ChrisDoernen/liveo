@@ -23,7 +23,7 @@ namespace LivestreamApp.Server.Streaming.Environment
         {
             // ffmpeg redirects output to error output
             _externalProcess.ErrorDataReceived += OutputDataRecievedHandler;
-            var exitCode = _externalProcess.ExecuteCommandAndWaitForExit(ListDevicesCommand);
+            var exitCode = _externalProcess.ExecuteCommand(ListDevicesCommand);
 
             _logger.Info($"The external process for getting audio inputs returned with code {exitCode}.");
             _logger.Info($"Found {_audioInputs.Count} available audio inputs.");

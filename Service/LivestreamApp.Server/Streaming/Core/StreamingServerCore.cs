@@ -63,8 +63,7 @@ namespace LivestreamApp.Server.Streaming.Core
                 }
                 else
                 {
-                    _logger.Warn($"Livestream {livestream.Id} has invalid audio input.");
-                    _logger.Warn($"Livestream {livestream.Id} will not be started.");
+                    _logger.Warn($"Livestream {livestream.Id} has invalid audio input - will not be started.");
                 }
 
                 livestream.IsInitialized = true;

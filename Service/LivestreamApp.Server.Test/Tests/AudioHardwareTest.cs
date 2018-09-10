@@ -37,7 +37,7 @@ namespace LivestreamApp.Server.Test.Tests
                 "dummy: Immediate exit requested"
             };
 
-            _mockExternalProcess.Setup(mep => mep.ExecuteCommandAndWaitForExit(ListDevicesCommand))
+            _mockExternalProcess.Setup(mep => mep.ExecuteCommand(ListDevicesCommand))
                 .Callback(() =>
                 {
                     foreach (var line in processOutput)
@@ -68,7 +68,7 @@ namespace LivestreamApp.Server.Test.Tests
                 "dummy: Immediate exit requested"
             };
 
-            _mockExternalProcess.Setup(foo => foo.ExecuteCommandAndWaitForExit(ListDevicesCommand))
+            _mockExternalProcess.Setup(foo => foo.ExecuteCommand(ListDevicesCommand))
                 .Callback(() =>
                 {
                     foreach (var mockLine in mockLines)
