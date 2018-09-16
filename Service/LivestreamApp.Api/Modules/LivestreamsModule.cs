@@ -12,7 +12,9 @@ namespace LivestreamApp.Api.Modules
             Get["/livestreams"] = _ =>
             {
                 var livestreams = streamingServerCore.GetStartedLiveStreams();
+
                 logger.Info($"api/livestreams was invoked, returned {livestreams.Count} livestreams.");
+
                 return livestreams;
             };
         }
