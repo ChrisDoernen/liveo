@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace LivestreamApp.Server.Streaming.Core
 {
-    public class AudioInputMp3Streamer
+    public class AudioInputMp3Streamer : IAudioInputMp3Streamer
     {
         private readonly ILogger _logger;
         private readonly IProcessExecutor _processExecutor;
@@ -40,6 +40,8 @@ namespace LivestreamApp.Server.Streaming.Core
             {
                 FileName = "ffmpeg.exe",
                 Arguments = arguments,
+                UseShellExecute = false,
+                CreateNoWindow = true,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true
             };

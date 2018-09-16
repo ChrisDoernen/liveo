@@ -81,6 +81,7 @@ namespace LivestreamApp.Server.Streaming.Core
                 if (livestream.StartOnServiceStartup && livestream.HasValidAudioInput)
                 {
                     var streamer = _audioInputStreamerFactory.GetAudioInputMp3Streamer(livestream.AudioInput);
+
                     livestream.IsStarted = true;
                 }
             }

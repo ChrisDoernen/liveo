@@ -65,7 +65,9 @@
     <Compile Include="AppConfiguration\ServerModule.cs" />
     <Compile Include="Streaming\Configuration\ILivestreamsConfiguration.cs" />
     <Compile Include="Streaming\Core\AudioInputMp3Streamer.cs" />
-    <Compile Include="Streaming\Core\AudioInputStreamerFactory.cs" />
+    <Compile Include="Streaming\Core\AudioInputMp3StreamerFactory.cs" />
+    <Compile Include="Streaming\Core\IAudioInputMp3Streamer.cs" />
+    <Compile Include="Streaming\Core\IAudioInputStreamerFactory.cs" />
     <Compile Include="Streaming\Environment\AudioHardware.cs" />
     <Compile Include="AppConfiguration\ServerProfile.cs" />
     <Compile Include="Streaming\Configuration\LivestreamsConfiguration.cs" />

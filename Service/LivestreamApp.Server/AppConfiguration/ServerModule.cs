@@ -3,7 +3,6 @@ using LivestreamApp.Server.Streaming.Configuration;
 using LivestreamApp.Server.Streaming.Core;
 using LivestreamApp.Server.Streaming.Environment;
 using LivestreamApp.Server.Streaming.Processes;
-using Ninject.Extensions.Factory;
 using Ninject.Modules;
 
 namespace LivestreamApp.Server.AppConfiguration
@@ -18,7 +17,8 @@ namespace LivestreamApp.Server.AppConfiguration
             Bind<IProcessExecutor>().To<ProcessExecutor>();
             Bind<IMapper>().ToConstant(Mapper.Instance);
             Bind<IAudioInputDetector>().To<AudioInputDetector>();
-            Bind<IAudioInputStreamerFactory>().ToFactory();
+            Bind<IAudioInputMp3Streamer>().To<AudioInputMp3Streamer>();
+            Bind<IAudioInputStreamerFactory>().To<AudioInputStreamerFactory>();
         }
     }
 }

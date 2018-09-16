@@ -15,6 +15,8 @@ namespace LivestreamApp.Server.Streaming.Environment
         {
             FileName = "ffmpeg.exe",
             Arguments = "-list_devices true -f dshow -i dummy -hide_banner",
+            UseShellExecute = false,
+            CreateNoWindow = true,
             RedirectStandardOutput = true,
             RedirectStandardError = true
         };
