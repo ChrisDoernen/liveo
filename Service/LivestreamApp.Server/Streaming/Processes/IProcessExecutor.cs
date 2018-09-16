@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace LivestreamApp.Server.Streaming.ProcessCommunication
+namespace LivestreamApp.Server.Streaming.Processes
 {
     public interface IProcessExecutor
     {
@@ -14,6 +14,6 @@ namespace LivestreamApp.Server.Streaming.ProcessCommunication
         void ExecuteProcessAsync(ProcessStartInfo processStartInfo, bool getBinaryOutput, int bufferSize);
         bool IsResponding();
         bool IsRunning();
-        void Kill();
+        void KillProcess();
     }
 }

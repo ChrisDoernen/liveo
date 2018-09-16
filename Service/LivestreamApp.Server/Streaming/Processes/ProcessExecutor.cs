@@ -3,7 +3,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 
-namespace LivestreamApp.Server.Streaming.ProcessCommunication
+namespace LivestreamApp.Server.Streaming.Processes
 {
     public class ProcessExecutor : IProcessExecutor
     {
@@ -96,7 +96,7 @@ namespace LivestreamApp.Server.Streaming.ProcessCommunication
             return process;
         }
 
-        public void Kill()
+        public void KillProcess()
         {
             _process.Kill();
             _process.Close();

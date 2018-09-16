@@ -2,7 +2,7 @@
 using LivestreamApp.Server.Streaming.Configuration;
 using LivestreamApp.Server.Streaming.Core;
 using LivestreamApp.Server.Streaming.Environment;
-using LivestreamApp.Server.Streaming.ProcessCommunication;
+using LivestreamApp.Server.Streaming.Processes;
 using Ninject.Modules;
 
 namespace LivestreamApp.Server.AppConfiguration

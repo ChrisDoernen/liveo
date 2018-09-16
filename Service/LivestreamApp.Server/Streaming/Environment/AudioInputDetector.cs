@@ -1,4 +1,4 @@
-﻿using LivestreamApp.Server.Streaming.ProcessCommunication;
+﻿using LivestreamApp.Server.Streaming.Processes;
 using Ninject.Extensions.Logging;
 using System.Collections.Generic;
 using System.Diagnostics;

@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using LivestreamApp.Server.Streaming.Environment;
-using LivestreamApp.Server.Streaming.ProcessCommunication;
+using LivestreamApp.Server.Streaming.Processes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Ninject.Extensions.Logging;

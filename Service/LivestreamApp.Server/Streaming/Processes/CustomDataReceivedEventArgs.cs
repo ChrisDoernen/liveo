@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace LivestreamApp.Server.Streaming.ProcessCommunication
+namespace LivestreamApp.Server.Streaming.Processes
 {
     public class CustomDataReceivedEventArgs : EventArgs
     {
