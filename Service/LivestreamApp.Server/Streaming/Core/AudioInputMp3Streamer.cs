@@ -5,13 +5,13 @@ using System.Diagnostics;
 
 namespace LivestreamApp.Server.Streaming.Core
 {
-    public class StreamManger
+    public class AudioInputMp3Streamer
     {
         private readonly ILogger _logger;
         private readonly IProcessExecutor _processExecutor;
         private readonly AudioInput _audioInput;
 
-        public StreamManger(ILogger logger, IProcessExecutor processExecutor, AudioInput audioInput)
+        public AudioInputMp3Streamer(ILogger logger, IProcessExecutor processExecutor, AudioInput audioInput)
         {
             _logger = logger;
             _audioInput = audioInput;
@@ -51,7 +51,7 @@ namespace LivestreamApp.Server.Streaming.Core
         {
             var processStartInfo = GetProcessStartInfo();
             _processExecutor.OutputBytesReceived += OutputBytesReceivedHandler;
-            _processExecutor.ExecuteProcessAsync(processStartInfo, true, 4000);
+            _processExecutor.ExecuteProcessAsync(processStartInfo, 4000);
 
             _logger.Info($"Started capturing audio on input {_audioInput.Id}.");
         }

@@ -11,16 +11,20 @@ namespace LivestreamApp.Server.Streaming.Core
     public class StreamingServerCore : IStreamingServerCore
     {
         private readonly IAudioHardware _audioHardware;
+        private readonly IAudioInputStreamerFactory _audioInputStreamerFactory;
         private readonly ILivestreamsConfiguration _livestreamsConfiguration;
         private readonly ILogger _logger;
+        private const string LivestreamsConfigFile = "Livestreams.config";
         private Livestreams _livestreams;
         private List<AudioInput> _audioInputs;
 
         public StreamingServerCore(ILogger logger,
             IAudioHardware audioHardware,
+            IAudioInputStreamerFactory audioInputStreamerFactory,
             ILivestreamsConfiguration livestreamsConfiguration)
         {
             _audioHardware = audioHardware;
+            _audioInputStreamerFactory = audioInputStreamerFactory;
             _livestreamsConfiguration = livestreamsConfiguration;
             _logger = logger;
 
@@ -48,7 +52,7 @@ namespace LivestreamApp.Server.Streaming.Core
         private void Initialize()
         {
             _audioInputs = _audioHardware.GetAudioInputs();
-            _livestreams = _livestreamsConfiguration.GetAvailableStreams("Livestreams.config");
+            _livestreams = _livestreamsConfiguration.GetAvailableStreams(LivestreamsConfigFile);
         }
 
         private void ValidateLivestreams()
@@ -76,6 +80,7 @@ namespace LivestreamApp.Server.Streaming.Core
             {
                 if (livestream.StartOnServiceStartup && livestream.HasValidAudioInput)
                 {
+                    var streamer = _audioInputStreamerFactory.GetAudioInputMp3Streamer(livestream.AudioInput);
                     livestream.IsStarted = true;
                 }
             }

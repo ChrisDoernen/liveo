@@ -33,9 +33,15 @@
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.7.0.1\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.4.2.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Extensions.Factory, Version=3.3.2.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Extensions.Factory.3.3.2\lib\net45\Ninject.Extensions.Factory.dll</HintPath>
     </Reference>
     <Reference Include="Ninject.Extensions.Logging, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.Extensions.Logging.3.3.0\lib\net45\Ninject.Extensions.Logging.dll</HintPath>
@@ -54,7 +60,7 @@
   <ItemGroup>
     <Compile Include="AppConfiguration\ServerModule.cs" />
     <Compile Include="Streaming\Configuration\ILivestreamsConfiguration.cs" />
-    <Compile Include="Streaming\Core\StreamManger.cs" />
+    <Compile Include="Streaming\Core\AudioInputMp3Streamer.cs" />
     <Compile Include="Streaming\Environment\AudioHardware.cs" />
     <Compile Include="AppConfiguration\ServerProfile.cs" />
     <Compile Include="Streaming\Configuration\LivestreamsConfiguration.cs" />
@@ -75,6 +81,7 @@
     <Compile Include="Shared\XmlSerialization\XmlUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Livestreams.config">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

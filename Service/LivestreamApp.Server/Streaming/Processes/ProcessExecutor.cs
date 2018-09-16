@@ -57,16 +57,14 @@ namespace LivestreamApp.Server.Streaming.Processes
         }
 
         /// <summary>
-        ///     Executes the specified process asynchronously
+        ///     Executes the specified process asynchronously with enabled binary output
+        ///     using the domain specific buffer size
         /// </summary>
         /// <param name="processStartInfo">Contains information about the process</param>
-        /// <param name="getBinaryOutput">Whether to activate the <see cref="OutputBytesReceived"/>event.
-        /// When set to true, a domain specific buffer size has to be defined.</param>
         /// <param name="bufferSize">The size of the internal buffer</param>
-        public void ExecuteProcessAsync(ProcessStartInfo processStartInfo,
-            bool getBinaryOutput, int bufferSize)
+        public void ExecuteProcessAsync(ProcessStartInfo processStartInfo, int bufferSize)
         {
-            _enableOutputBytesReceivedEvent = getBinaryOutput;
+            _enableOutputBytesReceivedEvent = true;
             _buffer = new byte[bufferSize];
             SetupProcessAndStart(processStartInfo);
         }

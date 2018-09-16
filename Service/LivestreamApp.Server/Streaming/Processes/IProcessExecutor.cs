@@ -10,8 +10,7 @@ namespace LivestreamApp.Server.Streaming.Processes
         event ProcessExecutor.OnProcessReturned ProcessExited;
 
         int ExecuteProcess(ProcessStartInfo processStartInfo);
-        void ExecuteProcessAsync(ProcessStartInfo processStartInfo);
-        void ExecuteProcessAsync(ProcessStartInfo processStartInfo, bool getBinaryOutput, int bufferSize);
+        void ExecuteProcessAsync(ProcessStartInfo processStartInfo, int bufferSize);
         bool IsResponding();
         bool IsRunning();
         void KillProcess();
