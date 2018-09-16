@@ -8,21 +8,21 @@ namespace LivestreamApp.Server.Streaming.Core
     {
         private readonly ILogger _logger;
         private readonly string _captureAudioCommand;
-        private readonly IExternalProcess _externalProcess;
+        private readonly IProcessExecutor _processExecutor;
         private readonly AudioInput _audioInput;
 
-        public StreamManger(ILogger logger, IExternalProcess externalProcess, AudioInput audioInput)
+        public StreamManger(ILogger logger, IProcessExecutor processExecutor, AudioInput audioInput)
         {
             _logger = logger;
             _audioInput = audioInput;
-            _externalProcess = externalProcess;
+            _processExecutor = processExecutor;
             _captureAudioCommand = $@"ffmpeg -y -f dshow -i audio=""{audioInput}"" -rtbufsize 64 -probesize 64 -acodec libmp3lame -ab 320k -ac 1 -reservoir 0 -f mp3 -hide_banner -fflags +nobuffer pipe:1";
         }
 
         public void Start()
         {
-            _externalProcess.ErrorDataReceived += OutputDataRecievedHandler;
-            _externalProcess.ExecuteCommandAsync(_captureAudioCommand);
+            _processExecutor.ErrorDataReceived += OutputDataRecievedHandler;
+            //_processExecutor.ExecuteCommandAsync(_captureAudioCommand);
 
             _logger.Info($"Started capturing audio on input {_audioInput.Id}.");
         }

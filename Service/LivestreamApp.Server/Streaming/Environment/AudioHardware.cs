@@ -1,29 +1,35 @@
-﻿using LivestreamApp.Server.Streaming.Entities;
-using LivestreamApp.Server.Streaming.ProcessCommunication;
+﻿using LivestreamApp.Server.Streaming.ProcessCommunication;
 using Ninject.Extensions.Logging;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 namespace LivestreamApp.Server.Streaming.Environment
 {
     public class AudioHardware : IAudioHardware
     {
-        private const string ListDevicesCommand = @"ffmpeg -list_devices true -f dshow -i dummy -hide_banner";
-        private readonly IExternalProcess _externalProcess;
+        private readonly IProcessExecutor _processExecutor;
         private readonly ILogger _logger;
         private readonly List<AudioInput> _audioInputs = new List<AudioInput>();
+        private ProcessStartInfo ListDevicesProcessStartInfo => new ProcessStartInfo
+        {
+            FileName = "ffmpeg.exe",
+            Arguments = "-list_devices true -f dshow -i dummy -hide_banner",
+            RedirectStandardOutput = true,
+            RedirectStandardError = true
+        };
 
-        public AudioHardware(ILogger logger, IExternalProcess externalProcess)
+        public AudioHardware(ILogger logger, IProcessExecutor processExecutor)
         {
             _logger = logger;
-            _externalProcess = externalProcess;
+            _processExecutor = processExecutor;
         }
 
         public List<AudioInput> GetAudioInputs()
         {
             // ffmpeg redirects output to error output
-            _externalProcess.ErrorDataReceived += OutputDataRecievedHandler;
-            var exitCode = _externalProcess.ExecuteCommand(ListDevicesCommand);
+            _processExecutor.ErrorDataReceived += OutputDataRecievedHandler;
+            var exitCode = _processExecutor.ExecuteProcess(ListDevicesProcessStartInfo);
 
             _logger.Info($"The external process for getting audio inputs returned with code {exitCode}.");
             _logger.Info($"Found {_audioInputs.Count} available audio inputs.");

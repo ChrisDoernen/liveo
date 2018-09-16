@@ -68,8 +68,8 @@
     <Compile Include="Streaming\Core\IStreamingServerCore.cs" />
     <Compile Include="Streaming\Core\StreamingServerCore.cs" />
     <Compile Include="Streaming\ProcessCommunication\CustomDataReceivedEventArgs.cs" />
-    <Compile Include="Streaming\ProcessCommunication\ExternalProcess.cs" />
-    <Compile Include="Streaming\ProcessCommunication\IExternalProcess.cs" />
+    <Compile Include="Streaming\ProcessCommunication\ProcessExecutor.cs" />
+    <Compile Include="Streaming\ProcessCommunication\IProcessExecutor.cs" />
     <Compile Include="Shared\XmlSerialization\XmlUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -87,6 +87,11 @@
     <Folder Include="Notifications\" />
     <Folder Include="Settings\" />
     <Folder Include="Statistics\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ffmpeg.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

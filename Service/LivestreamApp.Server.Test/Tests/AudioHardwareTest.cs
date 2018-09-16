@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Ninject.Extensions.Logging;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace LivestreamApp.Server.Test.Tests
 {
@@ -12,8 +13,7 @@ namespace LivestreamApp.Server.Test.Tests
     public class AudioHardwareTest
     {
         private readonly Mock<ILogger> _mockLogger = new Mock<ILogger>();
-        private readonly Mock<IExternalProcess> _mockExternalProcess = new Mock<IExternalProcess>();
-        private const string ListDevicesCommand = @"ffmpeg -list_devices true -f dshow -i dummy -hide_banner";
+        private readonly Mock<IProcessExecutor> _mockExternalProcess = new Mock<IProcessExecutor>();
         private AudioHardware _audioHardware;
 
         [TestInitialize]
@@ -37,7 +37,7 @@ namespace LivestreamApp.Server.Test.Tests
                 "dummy: Immediate exit requested"
             };
 
-            _mockExternalProcess.Setup(mep => mep.ExecuteCommand(ListDevicesCommand))
+            _mockExternalProcess.Setup(mep => mep.ExecuteProcess(It.IsAny<ProcessStartInfo>()))
                 .Callback(() =>
                 {
                     foreach (var line in processOutput)
@@ -68,7 +68,7 @@ namespace LivestreamApp.Server.Test.Tests
                 "dummy: Immediate exit requested"
             };
 
-            _mockExternalProcess.Setup(foo => foo.ExecuteCommand(ListDevicesCommand))
+            _mockExternalProcess.Setup(mep => mep.ExecuteProcess(It.IsAny<ProcessStartInfo>()))
                 .Callback(() =>
                 {
                     foreach (var mockLine in mockLines)

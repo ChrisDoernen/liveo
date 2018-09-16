@@ -14,7 +14,7 @@ namespace LivestreamApp.Server.AppConfiguration
             Bind<IStreamingServerCore>().To<StreamingServerCore>().InSingletonScope();
             Bind<ILivestreamsConfiguration>().To<LivestreamsConfiguration>();
             Bind<IAudioHardware>().To<AudioHardware>();
-            Bind<IExternalProcess>().To<ExternalProcess>();
+            Bind<IProcessExecutor>().To<ProcessExecutor>();
             Bind<IMapper>().ToConstant(Mapper.Instance);
         }
     }

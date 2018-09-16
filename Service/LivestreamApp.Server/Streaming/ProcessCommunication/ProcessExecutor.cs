@@ -5,12 +5,13 @@ using System.IO;
 
 namespace LivestreamApp.Server.Streaming.ProcessCommunication
 {
-    public class ExternalProcess : IExternalProcess
+    public class ProcessExecutor : IProcessExecutor
     {
         private readonly ILogger _logger;
         private Process _process;
         private bool _isProcessRunning;
         private byte[] _buffer;
+        private bool _enableOutputBytesReceivedEvent;
 
         public delegate void OnStdOutBytesReceived(byte[] streamBytes);
         public event OnStdOutBytesReceived OutputBytesReceived;
@@ -24,14 +25,19 @@ namespace LivestreamApp.Server.Streaming.ProcessCommunication
         public delegate void OnProcessReturned(object sender, EventArgs e);
         public event OnProcessReturned ProcessExited;
 
-        public ExternalProcess(ILogger logger)
+        public ProcessExecutor(ILogger logger)
         {
             _logger = logger;
         }
 
-        public int ExecuteCommand(string command)
+        /// <summary>
+        ///     Executes the specified process synchronously
+        /// </summary>
+        /// <param name="processStartInfo">Contains information about the process</param>
+        /// <returns>The exit code returned from the process</returns>
+        public int ExecuteProcess(ProcessStartInfo processStartInfo)
         {
-            Process process = SetupProcess(command);
+            Process process = SetupProcessAndStart(processStartInfo);
             process.WaitForExit();
             var exitCode = process.ExitCode;
             process.Dispose();
@@ -39,22 +45,33 @@ namespace LivestreamApp.Server.Streaming.ProcessCommunication
             return exitCode;
         }
 
-        public void ExecuteCommandAsync(string command)
+        /// <summary>
+        ///     Executes the specified process asynchronously
+        /// </summary>
+        /// <param name="processStartInfo">Contains information about the process</param>
+        public void ExecuteProcessAsync(ProcessStartInfo processStartInfo)
         {
-            Process process = SetupProcess(command);
+            SetupProcessAndStart(processStartInfo);
         }
 
-        private Process SetupProcess(string command)
+        /// <summary>
+        ///     Executes the specified process asynchronously
+        /// </summary>
+        /// <param name="processStartInfo">Contains information about the process</param>
+        /// <param name="getBinaryOutput">Whether to activate the <see cref="OutputBytesReceived"/>event.
+        /// When set to true, a domain specific buffer size has to be defined.</param>
+        /// <param name="bufferSize">The size of the internal buffer</param>
+        public void ExecuteProcessAsync(ProcessStartInfo processStartInfo,
+            bool getBinaryOutput, int bufferSize)
         {
-            var processInfo = new ProcessStartInfo("cmd.exe", "/c " + command)
-            {
-                CreateNoWindow = true,
-                UseShellExecute = false,
-                RedirectStandardError = true,
-                RedirectStandardOutput = true
-            };
+            _enableOutputBytesReceivedEvent = getBinaryOutput;
+            _buffer = new byte[bufferSize];
+            SetupProcessAndStart(processStartInfo);
+        }
 
-            var process = Process.Start(processInfo);
+        private Process SetupProcessAndStart(ProcessStartInfo processStartInfo)
+        {
+            var process = Process.Start(processStartInfo);
             _process = process;
 
             if (process == null) throw new Exception("Process handle is null.");
@@ -64,14 +81,15 @@ namespace LivestreamApp.Server.Streaming.ProcessCommunication
             process.Exited += ProcessExit;
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
-            process.StandardOutput.BaseStream.BeginRead(
-                _buffer, 0, _buffer.Length, ReadStdOutBaseStream, null);
+            if (_enableOutputBytesReceivedEvent)
+            {
+                process.StandardOutput.BaseStream.BeginRead(
+                    _buffer, 0, _buffer.Length, ReadStdOutBaseStream, null);
+            }
 
             _isProcessRunning = true;
 
-            _logger.Info("Starting external process.");
-            _logger.Info($"Process command: {command}");
-            _logger.Info($"PID: {_process.Id}");
+            _logger.Info($"Starting external process with PID: {_process.Id}");
 
             return process;
         }
@@ -98,7 +116,14 @@ namespace LivestreamApp.Server.Streaming.ProcessCommunication
 
         private void ReadStdOutBaseStream(IAsyncResult result)
         {
-            int bytesRead = _process.StandardOutput.BaseStream.EndRead(result);
+            var bytesRead = _process.StandardOutput.BaseStream.EndRead(result);
+
+            if (bytesRead > _buffer.Length)
+            {
+                throw new ArgumentException("The specified buffer size was less than the " +
+                                            "chunk size returned from process stdout");
+            }
+
             var memoryStream = new MemoryStream();
             memoryStream.Write(_buffer, 0, bytesRead);
             OutDataReceived(memoryStream.ToArray());
