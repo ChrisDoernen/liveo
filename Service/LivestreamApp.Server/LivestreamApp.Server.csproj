@@ -88,10 +88,5 @@
     <Folder Include="Settings\" />
     <Folder Include="Statistics\" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\ffmpeg.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

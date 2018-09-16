@@ -31,7 +31,6 @@ namespace LivestreamApp.Server.Streaming.Environment
             _processExecutor.ErrorDataReceived += OutputDataRecievedHandler;
             var exitCode = _processExecutor.ExecuteProcess(ListDevicesProcessStartInfo);
 
-            _logger.Info($"The external process for getting audio inputs returned with code {exitCode}.");
             _logger.Info($"Found {_audioInputs.Count} available audio inputs.");
 
             return _audioInputs;

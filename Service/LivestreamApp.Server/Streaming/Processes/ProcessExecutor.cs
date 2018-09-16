@@ -42,6 +42,8 @@ namespace LivestreamApp.Server.Streaming.ProcessCommunication
             var exitCode = process.ExitCode;
             process.Dispose();
 
+            _logger.Info($"Process exited with code {exitCode}.");
+
             return exitCode;
         }
 
