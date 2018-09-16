@@ -1,6 +1,7 @@
 ﻿using Ninject.Extensions.Logging;
 using System;
 using System.Diagnostics;
+using System.IO;
 
 namespace LivestreamApp.Server.Streaming.ProcessCommunication
 {
@@ -9,16 +10,19 @@ namespace LivestreamApp.Server.Streaming.ProcessCommunication
         private readonly ILogger _logger;
         private Process _process;
         private bool _isProcessRunning;
+        private byte[] _buffer;
 
-        public delegate void OnOutDataReceived(object sender, CustomDataReceivedEventArgs e);
-        public event OnOutDataReceived OutputDataReceived;
+        public delegate void OnStdOutBytesReceived(byte[] streamBytes);
+        public event OnStdOutBytesReceived OutputBytesReceived;
 
-        public delegate void OnErrorDataReceived(object sender, CustomDataReceivedEventArgs e);
-        public event OnErrorDataReceived ErrorDataReceived;
+        public delegate void OnStdOutDataReceived(object sender, CustomDataReceivedEventArgs e);
+        public event OnStdOutDataReceived OutputDataReceived;
+
+        public delegate void OnStdErrDataReceived(object sender, CustomDataReceivedEventArgs e);
+        public event OnStdErrDataReceived ErrorDataReceived;
 
         public delegate void OnProcessReturned(object sender, EventArgs e);
         public event OnProcessReturned ProcessExited;
-
 
         public ExternalProcess(ILogger logger)
         {
@@ -51,6 +55,7 @@ namespace LivestreamApp.Server.Streaming.ProcessCommunication
             };
 
             var process = Process.Start(processInfo);
+            _process = process;
 
             if (process == null) throw new Exception("Process handle is null.");
 
@@ -59,8 +64,9 @@ namespace LivestreamApp.Server.Streaming.ProcessCommunication
             process.Exited += ProcessExit;
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
+            process.StandardOutput.BaseStream.BeginRead(
+                _buffer, 0, _buffer.Length, ReadStdOutBaseStream, null);
 
-            _process = process;
             _isProcessRunning = true;
 
             _logger.Info("Starting external process.");
@@ -88,6 +94,22 @@ namespace LivestreamApp.Server.Streaming.ProcessCommunication
         public bool IsResponding()
         {
             return _process.Responding;
+        }
+
+        private void ReadStdOutBaseStream(IAsyncResult result)
+        {
+            int bytesRead = _process.StandardOutput.BaseStream.EndRead(result);
+            var memoryStream = new MemoryStream();
+            memoryStream.Write(_buffer, 0, bytesRead);
+            OutDataReceived(memoryStream.ToArray());
+
+            _process.StandardOutput.BaseStream.BeginRead(_buffer, 0, _buffer.Length,
+                ReadStdOutBaseStream, null);
+        }
+
+        private void OutDataReceived(byte[] bytes)
+        {
+            OutputBytesReceived?.Invoke(bytes);
         }
 
         private void OutDataReceived(object sender, DataReceivedEventArgs e)
