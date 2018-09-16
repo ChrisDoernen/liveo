@@ -10,16 +10,16 @@ using System.Diagnostics;
 namespace LivestreamApp.Server.Test.Tests
 {
     [TestClass]
-    public class AudioHardwareTest
+    public class AudioInputDetectorTest
     {
         private readonly Mock<ILogger> _mockLogger = new Mock<ILogger>();
         private readonly Mock<IProcessExecutor> _mockExternalProcess = new Mock<IProcessExecutor>();
-        private AudioHardware _audioHardware;
+        private IAudioInputDetector _audioInputDetector;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _audioHardware = new AudioHardware(_mockLogger.Object, _mockExternalProcess.Object);
+            _audioInputDetector = new AudioInputDetector(_mockLogger.Object, _mockExternalProcess.Object);
         }
 
         [TestMethod]
@@ -48,7 +48,7 @@ namespace LivestreamApp.Server.Test.Tests
                 .Returns(0);
 
             // When
-            var audioInputs = _audioHardware.GetAudioInputs();
+            var audioInputs = _audioInputDetector.GetAudioInputs();
 
             // Then
             audioInputs.Should().NotBeNull();
@@ -79,7 +79,7 @@ namespace LivestreamApp.Server.Test.Tests
                 .Returns(0);
 
             // When
-            var audioInputs = _audioHardware.GetAudioInputs();
+            var audioInputs = _audioInputDetector.GetAudioInputs();
 
             // Then
             audioInputs.Should().NotBeNull();

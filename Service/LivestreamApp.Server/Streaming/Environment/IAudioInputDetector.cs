@@ -2,7 +2,7 @@
 
 namespace LivestreamApp.Server.Streaming.Environment
 {
-    public interface IAudioHardware
+    public interface IAudioInputDetector
     {
         List<AudioInput> GetAudioInputs();
     }

@@ -16,6 +16,7 @@ namespace LivestreamApp.Server.AppConfiguration
             Bind<IAudioHardware>().To<AudioHardware>();
             Bind<IProcessExecutor>().To<ProcessExecutor>();
             Bind<IMapper>().ToConstant(Mapper.Instance);
+            Bind<IAudioInputDetector>().To<AudioInputDetector>();
         }
     }
 }
