@@ -60,14 +60,17 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="websocket-sharp.clone, Version=1.0.2.39869, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\websocket-sharp.clone.3.0.0\lib\net45\websocket-sharp.clone.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppConfiguration\ServerModule.cs" />
     <Compile Include="Streaming\Configuration\ILivestreamsConfiguration.cs" />
-    <Compile Include="Streaming\Core\AudioInputMp3Streamer.cs" />
-    <Compile Include="Streaming\Core\AudioInputMp3StreamerFactory.cs" />
-    <Compile Include="Streaming\Core\IAudioInputMp3Streamer.cs" />
-    <Compile Include="Streaming\Core\IAudioInputStreamerFactory.cs" />
+    <Compile Include="Streaming\Core\Mp3StreamingService.cs" />
+    <Compile Include="Streaming\Core\StreamingServiceFactory.cs" />
+    <Compile Include="Streaming\Core\IMp3StreamingService.cs" />
+    <Compile Include="Streaming\Core\IStreamingServiceFactory.cs" />
     <Compile Include="Streaming\Environment\AudioHardware.cs" />
     <Compile Include="AppConfiguration\ServerProfile.cs" />
     <Compile Include="Streaming\Configuration\LivestreamsConfiguration.cs" />
@@ -103,6 +106,12 @@
     <Folder Include="Notifications\" />
     <Folder Include="Settings\" />
     <Folder Include="Statistics\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LivestreamApp.Shared\LivestreamApp.Shared.csproj">
+      <Project>{0AAE9820-F6AC-43F3-AF3C-E41A8D3FD6BE}</Project>
+      <Name>LivestreamApp.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

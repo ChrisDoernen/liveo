@@ -2,16 +2,17 @@
 using LivestreamApp.Server.Streaming.Processes;
 using Ninject.Extensions.Logging;
 using System.Diagnostics;
+using WebSocketSharp.Server;
 
 namespace LivestreamApp.Server.Streaming.Core
 {
-    public class AudioInputMp3Streamer : IAudioInputMp3Streamer
+    public class Mp3StreamingService : WebSocketBehavior, IMp3StreamingService
     {
         private readonly ILogger _logger;
         private readonly IProcessExecutor _processExecutor;
         private readonly AudioInput _audioInput;
 
-        public AudioInputMp3Streamer(ILogger logger, IProcessExecutor processExecutor, AudioInput audioInput)
+        public Mp3StreamingService(ILogger logger, IProcessExecutor processExecutor, AudioInput audioInput)
         {
             _logger = logger;
             _audioInput = audioInput;
@@ -68,6 +69,7 @@ namespace LivestreamApp.Server.Streaming.Core
 
         private void OutputBytesReceivedHandler(byte[] bytes)
         {
+            Sessions?.Broadcast(bytes);
         }
     }
 }

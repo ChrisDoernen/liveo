@@ -5,18 +5,18 @@ using Ninject.Syntax;
 
 namespace LivestreamApp.Server.Streaming.Core
 {
-    public class AudioInputStreamerFactory : IAudioInputStreamerFactory
+    public class StreamingServiceFactory : IStreamingServiceFactory
     {
         private readonly IResolutionRoot _resolutionRoot;
 
-        public AudioInputStreamerFactory(IResolutionRoot resolutionRoot)
+        public StreamingServiceFactory(IResolutionRoot resolutionRoot)
         {
             _resolutionRoot = resolutionRoot;
         }
 
-        public AudioInputMp3Streamer GetAudioInputMp3Streamer(AudioInput audioInput)
+        public Mp3StreamingService GetAudioInputMp3Streamer(AudioInput audioInput)
         {
-            return _resolutionRoot.Get<AudioInputMp3Streamer>(
+            return _resolutionRoot.Get<Mp3StreamingService>(
                 new ConstructorArgument("audioInput", audioInput));
         }
     }

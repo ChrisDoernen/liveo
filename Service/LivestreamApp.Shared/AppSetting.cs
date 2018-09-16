@@ -2,6 +2,7 @@
 {
     public enum AppSetting
     {
-        DefaultPort
+        DefaultPort,
+        DefaultWebSocketPort
     }
 }
