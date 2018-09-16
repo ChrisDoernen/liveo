@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="AppConfiguration\ServerModule.cs" />
     <Compile Include="Streaming\Configuration\ILivestreamsConfiguration.cs" />
+    <Compile Include="Streaming\Core\StreamManger.cs" />
     <Compile Include="Streaming\Environment\AudioHardware.cs" />
     <Compile Include="AppConfiguration\ServerProfile.cs" />
     <Compile Include="Streaming\Configuration\LivestreamsConfiguration.cs" />
@@ -61,7 +62,7 @@
     <Compile Include="Streaming\Entities\LivestreamsConfigTypes.cs" />
     <Compile Include="Streaming\Environment\IAudioHardware.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Streaming\Entities\AudioInput.cs" />
+    <Compile Include="Streaming\Environment\AudioInput.cs" />
     <Compile Include="Streaming\Entities\Livestream.cs" />
     <Compile Include="Streaming\Entities\Livestreams.cs" />
     <Compile Include="Streaming\Core\IStreamingServerCore.cs" />

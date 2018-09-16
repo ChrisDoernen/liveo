@@ -1,4 +1,6 @@
-﻿namespace LivestreamApp.Server.Streaming.Entities
+﻿using LivestreamApp.Server.Streaming.Environment;
+
+namespace LivestreamApp.Server.Streaming.Entities
 {
     public class Livestream
     {
@@ -11,5 +13,15 @@
         public bool IsStarted { get; set; }
         public bool HasValidAudioInput { get; set; }
         public bool IsInitialized { get; set; }
+
+        public void Start()
+        {
+
+        }
+
+        public void Stop()
+        {
+
+        }
     }
 }
