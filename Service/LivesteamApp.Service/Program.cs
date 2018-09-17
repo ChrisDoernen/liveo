@@ -1,8 +1,8 @@
 using AutoMapper;
 using LivestreamApp.Server.AppConfiguration;
 using LivestreamApp.Service.AppConfiguration;
-using LivestreamApp.Shared;
 using LivestreamApp.Shared.AppConfiguration;
+using LivestreamApp.Shared.AppSettings;
 using Ninject;
 using Ninject.Extensions.Logging;
 using System;

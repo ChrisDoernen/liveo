@@ -1,4 +1,4 @@
-﻿namespace LivestreamApp.Shared
+﻿namespace LivestreamApp.Shared.AppSettings
 {
     public interface IAppSettingsProvider
     {

@@ -46,9 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppConfiguration\SharedModule.cs" />
-    <Compile Include="AppSetting.cs" />
-    <Compile Include="AppSettingsProvider.cs" />
-    <Compile Include="IAppSettingsProvider.cs" />
+    <Compile Include="AppSettings\AppSetting.cs" />
+    <Compile Include="AppSettings\AppSettingsProvider.cs" />
+    <Compile Include="AppSettings\ConfigurationManagerAdapter.cs" />
+    <Compile Include="AppSettings\IAppSettingsProvider.cs" />
+    <Compile Include="AppSettings\IConfigurationManagerAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

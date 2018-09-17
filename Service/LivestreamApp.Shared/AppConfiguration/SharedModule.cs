@@ -1,4 +1,5 @@
-﻿using Ninject.Modules;
+﻿using LivestreamApp.Shared.AppSettings;
+using Ninject.Modules;
 
 namespace LivestreamApp.Shared.AppConfiguration
 {
@@ -7,6 +8,7 @@ namespace LivestreamApp.Shared.AppConfiguration
         public override void Load()
         {
             Bind<IAppSettingsProvider>().To<AppSettingsProvider>();
+            Bind<IConfigurationManagerAdapter>().To<ConfigurationManagerAdapter>();
         }
     }
 }

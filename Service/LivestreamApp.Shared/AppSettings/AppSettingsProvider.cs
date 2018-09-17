@@ -1,10 +1,16 @@
 ﻿using System;
-using System.Configuration;
 
-namespace LivestreamApp.Shared
+namespace LivestreamApp.Shared.AppSettings
 {
     public class AppSettingsProvider : IAppSettingsProvider
     {
+        private readonly IConfigurationManagerAdapter _configurationManagerAdapter;
+
+        public AppSettingsProvider(IConfigurationManagerAdapter configurationManagerAdapter)
+        {
+            _configurationManagerAdapter = configurationManagerAdapter;
+        }
+
         public int GetIntValue(AppSetting setting)
         {
             var value = GetValue(setting);
@@ -26,7 +32,7 @@ namespace LivestreamApp.Shared
 
         private string GetValue(AppSetting setting)
         {
-            return ConfigurationManager.AppSettings[setting.ToString()];
+            return _configurationManagerAdapter.GetAppSetting(setting.ToString());
         }
     }
 }
