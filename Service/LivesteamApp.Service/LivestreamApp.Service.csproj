@@ -67,9 +67,6 @@
     <Reference Include="Topshelf, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
       <HintPath>..\packages\Topshelf.4.0.4\lib\net452\Topshelf.dll</HintPath>
     </Reference>
-    <Reference Include="Topshelf.Nancy, Version=1.0.0.42, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Topshelf.Nancy.1.0.0.42\lib\net452\Topshelf.Nancy.dll</HintPath>
-    </Reference>
     <Reference Include="Topshelf.NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
       <HintPath>..\packages\Topshelf.NLog.4.0.4\lib\net452\Topshelf.NLog.dll</HintPath>
     </Reference>
@@ -79,7 +76,14 @@
     <Compile Include="AppConfiguration\ServiceModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service.cs" />
+    <Compile Include="Startup\Service.cs" />
+    <Compile Include="UriReservation\NetSh.cs" />
+    <Compile Include="UriReservation\NetShResult.cs" />
+    <Compile Include="UriReservation\NetShResultCode.cs" />
+    <Compile Include="UriReservation\TopshelfConfiguratorExtensions.cs" />
+    <Compile Include="UriReservation\UriReservationConfiguration.cs" />
+    <Compile Include="UriReservation\UriReservationManager.cs" />
+    <Compile Include="UriReservation\UrlReservationsHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

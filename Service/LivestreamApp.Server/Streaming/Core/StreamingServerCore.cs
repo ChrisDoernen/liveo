@@ -6,7 +6,6 @@ using Ninject.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using WebSocketSharp.Server;
 
 namespace LivestreamApp.Server.Streaming.Core
 {
@@ -17,7 +16,6 @@ namespace LivestreamApp.Server.Streaming.Core
         private readonly IStreamingServiceFactory _streamingServiceFactory;
         private readonly ILivestreamsConfiguration _livestreamsConfiguration;
         private readonly IAppSettingsProvider _appSettingsProvider;
-        private WebSocketServer _webSocketServer;
         private const string LivestreamsConfigFile = "Livestreams.config";
         private Livestreams _livestreams;
         private List<AudioInput> _audioInputs;
@@ -84,16 +82,12 @@ namespace LivestreamApp.Server.Streaming.Core
 
         public void StartStreams()
         {
-            if (_webSocketServer == null)
-                throw new Exception("WebSocketServer has not been initialized.");
-
             foreach (var livestream in _livestreams.Streams)
             {
                 if (livestream.StartOnServiceStartup && livestream.HasValidAudioInput)
                 {
                     var mp3StreamingService = _streamingServiceFactory.GetAudioInputMp3Streamer(livestream.AudioInput);
                     var uri = $"/{livestream.Id}";
-                    _webSocketServer.AddWebSocketService(uri, () => mp3StreamingService);
                     livestream.IsStarted = true;
                 }
             }
@@ -103,13 +97,10 @@ namespace LivestreamApp.Server.Streaming.Core
         {
             var ipAddress = SystemConfiguration.GetLocalIPAddress();
             var port = _appSettingsProvider.GetIntValue(AppSetting.DefaultWebSocketPort);
-            _webSocketServer = new WebSocketServer();
-            _webSocketServer.Start();
         }
 
-        private async void StopWebSocketServer()
+        private void StopWebSocketServer()
         {
-            await _webSocketServer.Stop();
         }
 
         public void Stop()

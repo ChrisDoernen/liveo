@@ -5,83 +5,66 @@ using System.IO;
 
 namespace LivestreamApp.Server.Streaming.Processes
 {
-    public class ProcessExecutor : IProcessExecutor
+    public class ProcessAdapter : IProcessAdapter
     {
         private readonly ILogger _logger;
         private Process _process;
         private bool _isProcessRunning;
         private byte[] _buffer;
-        private bool _enableOutputBytesReceivedEvent;
 
-        public delegate void OnStdOutBytesReceived(byte[] streamBytes);
-        public event OnStdOutBytesReceived OutputBytesReceived;
+        public event EventHandler OutputBytesReceived;
+        public event EventHandler OutputDataReceived;
+        public event EventHandler ErrorDataReceived;
+        public event EventHandler ProcessExited;
 
-        public delegate void OnStdOutDataReceived(object sender, CustomDataReceivedEventArgs e);
-        public event OnStdOutDataReceived OutputDataReceived;
-
-        public delegate void OnStdErrDataReceived(object sender, CustomDataReceivedEventArgs e);
-        public event OnStdErrDataReceived ErrorDataReceived;
-
-        public delegate void OnProcessReturned(object sender, EventArgs e);
-        public event OnProcessReturned ProcessExited;
-
-        public ProcessExecutor(ILogger logger)
+        public ProcessAdapter(ILogger logger)
         {
             _logger = logger;
         }
 
-        /// <summary>
-        ///     Executes the specified process synchronously
-        /// </summary>
-        /// <param name="processStartInfo">Contains information about the process</param>
-        /// <returns>The exit code returned from the process</returns>
-        public int ExecuteProcess(ProcessStartInfo processStartInfo)
+        public int ExecuteAndReadSync(ProcessStartInfo processStartInfo,
+            out string output, out string errorOutput)
         {
-            Process process = SetupProcessAndStart(processStartInfo);
+            Process process = Execute(processStartInfo, false, false);
             process.WaitForExit();
+            output = process.StandardOutput.ReadToEnd();
+            errorOutput = process.StandardError.ReadToEnd();
             var exitCode = process.ExitCode;
-            process.Dispose();
-
-            _logger.Info($"Process exited with code {exitCode}.");
 
             return exitCode;
         }
 
-        /// <summary>
-        ///     Executes the specified process asynchronously
-        /// </summary>
-        /// <param name="processStartInfo">Contains information about the process</param>
-        public void ExecuteProcessAsync(ProcessStartInfo processStartInfo)
+        public void ExecuteAndReadAsync(ProcessStartInfo processStartInfo)
         {
-            SetupProcessAndStart(processStartInfo);
+            Execute(processStartInfo, true, false);
         }
 
-        /// <summary>
-        ///     Executes the specified process asynchronously with enabled binary output
-        ///     using the domain specific buffer size
-        /// </summary>
-        /// <param name="processStartInfo">Contains information about the process</param>
-        /// <param name="bufferSize">The size of the internal buffer</param>
-        public void ExecuteProcessAsync(ProcessStartInfo processStartInfo, int bufferSize)
+        public void ExecuteAndReadAsync(ProcessStartInfo processStartInfo, int bufferSize)
         {
-            _enableOutputBytesReceivedEvent = true;
             _buffer = new byte[bufferSize];
-            SetupProcessAndStart(processStartInfo);
+            Execute(processStartInfo, true, true);
         }
 
-        private Process SetupProcessAndStart(ProcessStartInfo processStartInfo)
+        private Process Execute(ProcessStartInfo processStartInfo,
+            bool readAsync, bool readBaseStreamAsync)
         {
             var process = Process.Start(processStartInfo);
             _process = process;
 
             if (process == null) throw new Exception("Process handle is null.");
 
-            process.OutputDataReceived += OutDataReceived;
+            if (readAsync)
+            {
+                process.OutputDataReceived += OutDataReceived;
+                process.BeginOutputReadLine();
+            }
+
             process.ErrorDataReceived += ErrDataReceived;
-            process.Exited += ProcessExit;
-            process.BeginOutputReadLine();
             process.BeginErrorReadLine();
-            if (_enableOutputBytesReceivedEvent)
+
+            process.Exited += ProcessExit;
+
+            if (readBaseStreamAsync)
             {
                 process.StandardOutput.BaseStream.BeginRead(
                     _buffer, 0, _buffer.Length, ReadStdOutBaseStream, null);
@@ -134,7 +117,7 @@ namespace LivestreamApp.Server.Streaming.Processes
 
         private void OutDataReceived(byte[] bytes)
         {
-            OutputBytesReceived?.Invoke(bytes);
+            OutputBytesReceived?.Invoke(null, new BytesReceivedEventArgs(bytes));
         }
 
         private void OutDataReceived(object sender, DataReceivedEventArgs e)
@@ -150,7 +133,12 @@ namespace LivestreamApp.Server.Streaming.Processes
         private void ProcessExit(object sender, EventArgs e)
         {
             ProcessExited?.Invoke(sender, e);
+
+            _logger.Info($"Process exited with code {_process.ExitCode}.");
+
             _isProcessRunning = false;
+            _process.Close();
+            _process.Dispose();
         }
     }
 }

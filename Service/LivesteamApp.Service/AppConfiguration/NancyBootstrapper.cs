@@ -1,4 +1,6 @@
-﻿using Nancy.Bootstrapper;
+﻿using LivestreamApp.Server.AppConfiguration;
+using LivestreamApp.Shared.AppConfiguration;
+using Nancy.Bootstrapper;
 using Nancy.Bootstrappers.Ninject;
 using Ninject;
 
@@ -16,8 +18,7 @@ namespace LivestreamApp.Service.AppConfiguration
         protected override void ConfigureApplicationContainer(IKernel existingContainer)
         {
             // Perform registration that should have an application lifetime
-            existingContainer.Load(
-                new Server.AppConfiguration.ServerModule());
+            existingContainer.Load(new ServerModule(), new ServiceModule(), new SharedModule());
         }
     }
 }

@@ -1,14 +1,15 @@
-﻿using LivestreamApp.Server.Streaming.Processes;
-using Ninject.Extensions.Logging;
+﻿using Ninject.Extensions.Logging;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using CustomDataReceivedEventArgs = LivestreamApp.Server.Streaming.Processes.CustomDataReceivedEventArgs;
+using IProcessAdapter = LivestreamApp.Server.Streaming.Processes.IProcessAdapter;
 
 namespace LivestreamApp.Server.Streaming.Environment
 {
     public class AudioInputDetector : IAudioInputDetector
     {
-        private readonly IProcessExecutor _processExecutor;
+        private readonly IProcessAdapter _processAdapter;
         private readonly ILogger _logger;
         private readonly List<AudioInput> _audioInputs = new List<AudioInput>();
         private ProcessStartInfo ListDevicesProcessStartInfo => new ProcessStartInfo
@@ -21,17 +22,21 @@ namespace LivestreamApp.Server.Streaming.Environment
             RedirectStandardError = true
         };
 
-        public AudioInputDetector(ILogger logger, IProcessExecutor processExecutor)
+        public AudioInputDetector(ILogger logger, IProcessAdapter processAdapter)
         {
             _logger = logger;
-            _processExecutor = processExecutor;
+            _processAdapter = processAdapter;
         }
 
         public List<AudioInput> GetAudioInputs()
         {
             // ffmpeg redirects output to error output
-            _processExecutor.ErrorDataReceived += OutputDataRecievedHandler;
-            var exitCode = _processExecutor.ExecuteProcess(ListDevicesProcessStartInfo);
+            var output = string.Empty;
+            var errorOutput = string.Empty;
+            var exitCode = _processAdapter.ExecuteAndReadSync(ListDevicesProcessStartInfo,
+                out output, out errorOutput);
+
+            var lines = errorOutput.Split();
 
             _logger.Info($"Found {_audioInputs.Count} available audio inputs.");
 

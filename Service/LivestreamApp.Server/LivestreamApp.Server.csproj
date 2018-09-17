@@ -60,9 +60,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="websocket-sharp.clone, Version=1.0.2.39869, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\websocket-sharp.clone.3.0.0\lib\net45\websocket-sharp.clone.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppConfiguration\ServerModule.cs" />
@@ -85,10 +82,11 @@
     <Compile Include="Streaming\Core\IStreamingServerCore.cs" />
     <Compile Include="Streaming\Core\StreamingServerCore.cs" />
     <Compile Include="Streaming\Environment\IAudioInputDetector.cs" />
-    <Compile Include="Streaming\Processes\CustomDataReceivedEventArgs.cs" />
-    <Compile Include="Streaming\Processes\ProcessExecutor.cs" />
-    <Compile Include="Streaming\Processes\IProcessExecutor.cs" />
     <Compile Include="Shared\XmlSerialization\XmlUtilities.cs" />
+    <Compile Include="Streaming\Processes\BytesReceivedEventArgs.cs" />
+    <Compile Include="Streaming\Processes\CustomDataReceivedEventArgs.cs" />
+    <Compile Include="Streaming\Processes\IProcessAdapter.cs" />
+    <Compile Include="Streaming\Processes\ProcessAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

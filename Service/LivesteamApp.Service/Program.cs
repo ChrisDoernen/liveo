@@ -1,13 +1,13 @@
 using AutoMapper;
 using LivestreamApp.Server.AppConfiguration;
 using LivestreamApp.Service.AppConfiguration;
+using LivestreamApp.Service.UriReservation;
 using LivestreamApp.Shared.AppConfiguration;
 using LivestreamApp.Shared.AppSettings;
 using Ninject;
 using Ninject.Extensions.Logging;
 using System;
 using Topshelf;
-using Topshelf.Nancy;
 
 namespace LivestreamApp.Service
 {
@@ -22,7 +22,7 @@ namespace LivestreamApp.Service
             // Loading Ninject kernel
             IKernel kernel = new StandardKernel();
             kernel.Load(new ServiceModule(), new SharedModule());
-            var livestreamApp = kernel.Get<Service>();
+            var livestreamApp = kernel.Get<Startup.Service>();
 
             // Get logger for top level logging
             var logger = kernel.Get<ILoggerFactory>().GetCurrentClassLogger();
@@ -35,17 +35,18 @@ namespace LivestreamApp.Service
             var host = HostFactory.New(x =>
             {
                 x.UseNLog();
-                x.Service<Service>(s =>
+                x.Service<Startup.Service>(s =>
                 {
                     s.ConstructUsing(name => livestreamApp);
                     s.WhenStarted(ls => ls.Start());
                     s.WhenStopped(ls => ls.Stop());
-                    s.WithNancyEndpoint(x, c =>
-                    {
-                        c.AddHost(port: port);
-                        c.CreateUrlReservationsOnInstall();
-                        c.OpenFirewallPortsOnInstall("LivestreamApp.Service");
-                    });
+                });
+                x.WithUriReservation(r =>
+                {
+                    r.AddHost(port: 20005);
+                    r.CreateUrlReservationsOnInstall();
+                    r.OpenFirewallPortsOnInstall("LivestreamApp.Service");
+                    r.DeleteReservationsOnUnInstall();
                 });
                 x.RunAsLocalSystem();
                 x.RunAsNetworkService();

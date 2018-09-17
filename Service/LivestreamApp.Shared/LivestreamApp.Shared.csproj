@@ -34,6 +34,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject.Extensions.Logging, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Extensions.Logging.3.3.0\lib\net45\Ninject.Extensions.Logging.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -51,6 +54,10 @@
     <Compile Include="AppSettings\ConfigurationManagerAdapter.cs" />
     <Compile Include="AppSettings\IAppSettingsProvider.cs" />
     <Compile Include="AppSettings\IConfigurationManagerAdapter.cs" />
+    <Compile Include="Processes\BytesReceivedEventArgs.cs" />
+    <Compile Include="Processes\CustomDataReceivedEventArgs.cs" />
+    <Compile Include="Processes\IProcessAdapter.cs" />
+    <Compile Include="Processes\ProcessAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
