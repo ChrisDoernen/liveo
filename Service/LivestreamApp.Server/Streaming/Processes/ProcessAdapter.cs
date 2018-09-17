@@ -11,6 +11,7 @@ namespace LivestreamApp.Server.Streaming.Processes
         private Process _process;
         private bool _isProcessRunning;
         private byte[] _buffer;
+        private int _exitCode;
 
         public event EventHandler OutputBytesReceived;
         public event EventHandler OutputDataReceived;
@@ -22,16 +23,16 @@ namespace LivestreamApp.Server.Streaming.Processes
             _logger = logger;
         }
 
-        public int ExecuteAndReadSync(ProcessStartInfo processStartInfo,
-            out string output, out string errorOutput)
+        public ProcessResult ExecuteAndReadSync(ProcessStartInfo processStartInfo)
         {
             Process process = Execute(processStartInfo, false, false);
-            process.WaitForExit();
-            output = process.StandardOutput.ReadToEnd();
-            errorOutput = process.StandardError.ReadToEnd();
-            var exitCode = process.ExitCode;
 
-            return exitCode;
+            process.WaitForExit();
+
+            var output = process.StandardOutput.ReadToEnd();
+            var errorOutput = process.StandardError.ReadToEnd();
+
+            return new ProcessResult(_exitCode, output, errorOutput);
         }
 
         public void ExecuteAndReadAsync(ProcessStartInfo processStartInfo)
@@ -57,10 +58,9 @@ namespace LivestreamApp.Server.Streaming.Processes
             {
                 process.OutputDataReceived += OutDataReceived;
                 process.BeginOutputReadLine();
+                process.ErrorDataReceived += ErrDataReceived;
+                process.BeginErrorReadLine();
             }
-
-            process.ErrorDataReceived += ErrDataReceived;
-            process.BeginErrorReadLine();
 
             process.Exited += ProcessExit;
 
@@ -134,11 +134,12 @@ namespace LivestreamApp.Server.Streaming.Processes
         {
             ProcessExited?.Invoke(sender, e);
 
-            _logger.Info($"Process exited with code {_process.ExitCode}.");
-
-            _isProcessRunning = false;
+            _exitCode = _process.ExitCode;
             _process.Close();
             _process.Dispose();
+
+            _isProcessRunning = false;
+            _logger.Info($"Process exited with code {_exitCode}.");
         }
     }
 }

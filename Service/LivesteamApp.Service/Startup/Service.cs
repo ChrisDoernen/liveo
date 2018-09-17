@@ -8,7 +8,7 @@ namespace LivestreamApp.Service.Startup
     {
         private readonly ILogger _logger;
 
-        private NancyHost host;
+        private NancyHost _host;
 
         public Service(ILogger logger)
         {
@@ -17,7 +17,9 @@ namespace LivestreamApp.Service.Startup
 
         public bool Start()
         {
-            host = new NancyHost(new Uri("http://localhost"));
+            var host = new NancyHost(new Uri("http://localhost"));
+            _host = host;
+            _host.Start();
 
             _logger.Info("LivestreamApp.Service started. _____________");
             return true;
@@ -25,7 +27,7 @@ namespace LivestreamApp.Service.Startup
 
         public bool Stop()
         {
-            host.Stop();
+            _host.Stop();
             _logger.Info("LivestreamApp.Service stopped. _____________");
             return true;
         }

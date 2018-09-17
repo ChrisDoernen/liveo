@@ -27,9 +27,10 @@ namespace LivestreamApp.Service
             // Get logger for top level logging
             var logger = kernel.Get<ILoggerFactory>().GetCurrentClassLogger();
 
-            // Url registration and firewall
+            // Url registrations
             var appSettingsprovider = kernel.Get<IAppSettingsProvider>();
-            var port = appSettingsprovider.GetIntValue(AppSetting.DefaultPort);
+            var webServerPort = appSettingsprovider.GetIntValue(AppSetting.DefaultPort);
+            var webSocketPort = appSettingsprovider.GetIntValue(AppSetting.DefaultWebSocketPort);
 
             // Run Topshelf
             var host = HostFactory.New(x =>
@@ -43,10 +44,11 @@ namespace LivestreamApp.Service
                 });
                 x.WithUriReservation(r =>
                 {
-                    r.AddHost(port: 20005);
+                    r.AddHost("http", "localhost", webServerPort);
+                    r.AddHost("ws", "localhost", webSocketPort);
                     r.CreateUrlReservationsOnInstall();
-                    r.OpenFirewallPortsOnInstall("LivestreamApp.Service");
                     r.DeleteReservationsOnUnInstall();
+                    r.OpenFirewallPortsOnInstall("LivestreamApp.Service");
                 });
                 x.RunAsLocalSystem();
                 x.RunAsNetworkService();

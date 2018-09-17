@@ -54,10 +54,6 @@
     <Compile Include="AppSettings\ConfigurationManagerAdapter.cs" />
     <Compile Include="AppSettings\IAppSettingsProvider.cs" />
     <Compile Include="AppSettings\IConfigurationManagerAdapter.cs" />
-    <Compile Include="Processes\BytesReceivedEventArgs.cs" />
-    <Compile Include="Processes\CustomDataReceivedEventArgs.cs" />
-    <Compile Include="Processes\IProcessAdapter.cs" />
-    <Compile Include="Processes\ProcessAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

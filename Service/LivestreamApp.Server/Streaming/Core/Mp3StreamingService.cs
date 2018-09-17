@@ -1,6 +1,7 @@
 ﻿using LivestreamApp.Server.Streaming.Environment;
 using LivestreamApp.Server.Streaming.Processes;
 using Ninject.Extensions.Logging;
+using System;
 using System.Diagnostics;
 
 namespace LivestreamApp.Server.Streaming.Core
@@ -8,14 +9,14 @@ namespace LivestreamApp.Server.Streaming.Core
     public class Mp3StreamingService : IMp3StreamingService
     {
         private readonly ILogger _logger;
-        private readonly IProcessExecutor _processExecutor;
+        private readonly IProcessAdapter _processAdapter;
         private readonly AudioInput _audioInput;
 
-        public Mp3StreamingService(ILogger logger, IProcessExecutor processExecutor, AudioInput audioInput)
+        public Mp3StreamingService(ILogger logger, IProcessAdapter processAdapter, AudioInput audioInput)
         {
             _logger = logger;
             _audioInput = audioInput;
-            _processExecutor = processExecutor;
+            _processAdapter = processAdapter;
         }
 
         private ProcessStartInfo GetProcessStartInfo()
@@ -52,21 +53,21 @@ namespace LivestreamApp.Server.Streaming.Core
         public void Start()
         {
             var processStartInfo = GetProcessStartInfo();
-            _processExecutor.OutputBytesReceived += OutputBytesReceivedHandler;
-            _processExecutor.ExecuteProcessAsync(processStartInfo, 4000);
+            _processAdapter.OutputBytesReceived += OutputBytesReceivedHandler;
+            //_processAdapter.ExecuteProcessAsync(processStartInfo, 4000);
 
             _logger.Info($"Started capturing audio on input {_audioInput.Id}.");
         }
 
         public void Stop()
         {
-            _processExecutor.OutputBytesReceived -= OutputBytesReceivedHandler;
-            _processExecutor.KillProcess();
+            _processAdapter.OutputBytesReceived -= OutputBytesReceivedHandler;
+            _processAdapter.KillProcess();
 
             _logger.Info($"Stopped capturing audio on input {_audioInput.Id}.");
         }
 
-        private void OutputBytesReceivedHandler(byte[] bytes)
+        private void OutputBytesReceivedHandler(object sender, EventArgs e)
         {
         }
     }

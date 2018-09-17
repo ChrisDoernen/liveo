@@ -32,8 +32,7 @@ namespace LivestreamApp.Server.Streaming.Processes
         /// <param name="output">The output from the process</param>
         /// <param name="errorOutput">The error ouput from the process</param>
         /// <returns>The exit code returned from the process</returns>
-        int ExecuteAndReadSync(ProcessStartInfo processStartInfo,
-            out string output, out string errorOutput);
+        ProcessResult ExecuteAndReadSync(ProcessStartInfo processStartInfo);
 
         /// <summary>
         ///     Executes the specified process asynchronously

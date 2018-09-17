@@ -14,7 +14,7 @@ namespace LivestreamApp.Server.AppConfiguration
             Bind<IStreamingServerCore>().To<StreamingServerCore>().InSingletonScope();
             Bind<ILivestreamsConfiguration>().To<LivestreamsConfiguration>();
             Bind<IAudioHardware>().To<AudioHardware>();
-            Bind<IProcessExecutor>().To<ProcessExecutor>();
+            Bind<IProcessAdapter>().To<ProcessAdapter>();
             Bind<IMapper>().ToConstant(Mapper.Instance);
             Bind<IAudioInputDetector>().To<AudioInputDetector>();
             Bind<IMp3StreamingService>().To<Mp3StreamingService>();

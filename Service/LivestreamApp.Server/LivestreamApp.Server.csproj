@@ -87,6 +87,7 @@
     <Compile Include="Streaming\Processes\CustomDataReceivedEventArgs.cs" />
     <Compile Include="Streaming\Processes\IProcessAdapter.cs" />
     <Compile Include="Streaming\Processes\ProcessAdapter.cs" />
+    <Compile Include="Streaming\Processes\ProcessResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

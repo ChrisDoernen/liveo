@@ -1,8 +1,8 @@
 ﻿using Ninject.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
-using CustomDataReceivedEventArgs = LivestreamApp.Server.Streaming.Processes.CustomDataReceivedEventArgs;
 using IProcessAdapter = LivestreamApp.Server.Streaming.Processes.IProcessAdapter;
 
 namespace LivestreamApp.Server.Streaming.Environment
@@ -30,30 +30,33 @@ namespace LivestreamApp.Server.Streaming.Environment
 
         public List<AudioInput> GetAudioInputs()
         {
-            // ffmpeg redirects output to error output
-            var output = string.Empty;
-            var errorOutput = string.Empty;
-            var exitCode = _processAdapter.ExecuteAndReadSync(ListDevicesProcessStartInfo,
-                out output, out errorOutput);
+            var processResult = _processAdapter.ExecuteAndReadSync(ListDevicesProcessStartInfo);
 
-            var lines = errorOutput.Split();
+            // ffmpeg writes to error output
+            ParseLines(processResult.ErrorOutput);
 
             _logger.Info($"Found {_audioInputs.Count} available audio inputs.");
 
             return _audioInputs;
         }
 
-        private void OutputDataRecievedHandler(object sender, CustomDataReceivedEventArgs e)
+        private void ParseLines(string output)
         {
-            var line = e.Data;
+            var lines = output.Split(
+                new[] { "\r\n", "\r", "\n" },
+                StringSplitOptions.None
+            );
 
-            if (line == null || !(line.Contains("(") && line.Contains(")") && line.Contains("\"")))
-                return;
+            foreach (var line in lines)
+            {
+                if (line == null || !(line.Contains("(") && line.Contains(")") && line.Contains("\"")))
+                    continue;
 
-            // Capture everything between "" exclusively
-            var regex = new Regex("(?<=\")(.*?)(?=\")");
-            var audioInputIdentifier = regex.Match(line).Value;
-            _audioInputs.Add(new AudioInput(audioInputIdentifier));
+                // Capture everything between "" exclusively
+                var regex = new Regex("(?<=\")(.*?)(?=\")");
+                var audioInputIdentifier = regex.Match(line).Value;
+                _audioInputs.Add(new AudioInput(audioInputIdentifier));
+            }
         }
     }
 }

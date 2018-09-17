@@ -51,7 +51,7 @@ namespace LivestreamApp.Service.UriReservation
         }
 
         /// <summary>
-        /// Adds a new Host for Nancy to listen on.
+        /// Adds a new Host for reservations.
         /// </summary>
         /// <param name="scheme">http or https. Defaults to http.</param>
         /// <param name="domain">The domain to listen on e.g. www.mydomain.com. Defaults to localhost.</param>

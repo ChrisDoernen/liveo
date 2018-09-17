@@ -1,6 +1,5 @@
 ﻿/* Adapted from: https://github.com/justeat/Topshelf.Nancy */
 
-using Nancy.Hosting.Self;
 using System.Linq;
 
 namespace LivestreamApp.Service.UriReservation
@@ -13,10 +12,7 @@ namespace LivestreamApp.Service.UriReservation
 
         public void Configure(UriReservationConfiguration uriReservationConfiguration)
         {
-            var nancyHostConfiguration = new HostConfiguration();
-
             _uriReservationConfiguration = uriReservationConfiguration;
-
             _urlReservationsHelper = new UrlReservationsHelper(_uriReservationConfiguration.Uris);
         }
 

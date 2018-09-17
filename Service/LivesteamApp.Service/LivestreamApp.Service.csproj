@@ -81,6 +81,7 @@
     <Compile Include="UriReservation\NetShResult.cs" />
     <Compile Include="UriReservation\NetShResultCode.cs" />
     <Compile Include="UriReservation\TopshelfConfiguratorExtensions.cs" />
+    <Compile Include="UriReservation\UacHelper.cs" />
     <Compile Include="UriReservation\UriReservationConfiguration.cs" />
     <Compile Include="UriReservation\UriReservationManager.cs" />
     <Compile Include="UriReservation\UrlReservationsHelper.cs" />
