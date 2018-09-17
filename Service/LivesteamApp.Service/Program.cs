@@ -4,6 +4,8 @@ using LivestreamApp.Service.AppConfiguration;
 using LivestreamApp.Shared;
 using LivestreamApp.Shared.AppConfiguration;
 using Ninject;
+using Ninject.Extensions.Logging;
+using System;
 using Topshelf;
 using Topshelf.Nancy;
 
@@ -21,6 +23,9 @@ namespace LivestreamApp.Service
             IKernel kernel = new StandardKernel();
             kernel.Load(new ServiceModule(), new SharedModule());
             var livestreamApp = kernel.Get<Service>();
+
+            // Get logger for top level logging
+            var logger = kernel.Get<ILoggerFactory>().GetCurrentClassLogger();
 
             // Url registration and firewall
             var appSettingsprovider = kernel.Get<IAppSettingsProvider>();
@@ -49,7 +54,18 @@ namespace LivestreamApp.Service
                 x.SetServiceName("LivestreamApp.Service");
             });
 
-            host.Run();
+            try
+            {
+                host.Run();
+            }
+            catch (Exception ex)
+            {
+                logger.Error("An top level exception occurred.");
+                logger.Error(ex.Message);
+            }
+
+            Console.WriteLine("Please press enter to exit.");
+            Console.ReadLine();
         }
     }
 }
