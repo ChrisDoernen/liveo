@@ -10,7 +10,7 @@ using WebSocketSharp.Server;
 
 namespace LivestreamApp.Server.Streaming.Core
 {
-    public class StreamingServerCore : IStreamingServerCore
+    public class StreamingServerCore : IStreamingServerCore, IDisposable
     {
         private readonly ILogger _logger;
         private readonly IHardware _hardware;
@@ -88,8 +88,9 @@ namespace LivestreamApp.Server.Streaming.Core
             {
                 if (livestream.StartOnServiceStartup && livestream.HasValidAudioInput)
                 {
-                    var mp3StreamingService = _streamingServiceFactory.GetAudioInputMp3Streamer(livestream.AudioDevice);
                     var path = $"/{livestream.Id}";
+                    _webSocketServer.AddWebSocketService(path,
+                        () => _streamingServiceFactory.GetStreamingService(livestream.AudioDevice));
                     livestream.IsStarted = true;
                 }
             }
@@ -97,9 +98,18 @@ namespace LivestreamApp.Server.Streaming.Core
 
         private void StartWebSocketServer()
         {
-            var wsUri = _uriConfiguration.GetWsUri();
-            _webSocketServer = new WebSocketServer(wsUri);
-            _webSocketServer.Start();
+            try
+            {
+                var wsUri = _uriConfiguration.GetWsUri();
+                _webSocketServer = new WebSocketServer(wsUri) { KeepClean = false };
+                _webSocketServer.Start();
+                _logger.Info($"WebSocket server started, listening on {wsUri}.");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("An exception occurred while starting the WebSocket server.");
+                _logger.Error(ex.Message);
+            }
         }
 
         private void StopWebSocketServer()
@@ -126,11 +136,24 @@ namespace LivestreamApp.Server.Streaming.Core
 
         public void StopStreams()
         {
-            throw new NotImplementedException();
+            foreach (var livestream in _livestreams.Streams)
+            {
+                if (livestream.IsStarted)
+                {
+                    var path = $"/{livestream.Id}";
+                    _webSocketServer.RemoveWebSocketService(path);
+                    livestream.IsStarted = false;
+                }
+            }
         }
 
         public void ShutdownServer()
         {
+        }
+
+        public void Dispose()
+        {
+            _logger.Info("dispose core");
         }
     }
 }

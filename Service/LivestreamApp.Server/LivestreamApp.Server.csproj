@@ -67,9 +67,9 @@
   <ItemGroup>
     <Compile Include="AppConfiguration\ServerModule.cs" />
     <Compile Include="Streaming\Configuration\ILivestreamsConfiguration.cs" />
-    <Compile Include="Streaming\Core\Mp3StreamingService.cs" />
+    <Compile Include="Streaming\Core\StreamingService.cs" />
     <Compile Include="Streaming\Core\StreamingServiceFactory.cs" />
-    <Compile Include="Streaming\Core\IMp3StreamingService.cs" />
+    <Compile Include="Streaming\Core\IStreamingService.cs" />
     <Compile Include="Streaming\Core\IStreamingServiceFactory.cs" />
     <Compile Include="Streaming\Environment\Hardware.cs" />
     <Compile Include="AppConfiguration\ServerProfile.cs" />
@@ -87,7 +87,6 @@
     <Compile Include="Streaming\Environment\IAudioDeviceDetector.cs" />
     <Compile Include="Shared\XmlSerialization\XmlUtilities.cs" />
     <Compile Include="Streaming\Processes\BytesReceivedEventArgs.cs" />
-    <Compile Include="Streaming\Processes\CustomDataReceivedEventArgs.cs" />
     <Compile Include="Streaming\Processes\IProcessAdapter.cs" />
     <Compile Include="Streaming\Processes\ProcessAdapter.cs" />
     <Compile Include="Streaming\Processes\ProcessResult.cs" />

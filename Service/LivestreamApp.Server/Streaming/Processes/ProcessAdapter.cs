@@ -46,7 +46,7 @@ namespace LivestreamApp.Server.Streaming.Processes
         {
             _buffer = new byte[bufferSize];
             var processStartInfo = GetProcessStartInfo(file, arguments);
-            Execute(processStartInfo, true, true);
+            Execute(processStartInfo, false, true);
         }
 
         private ProcessStartInfo GetProcessStartInfo(string file, string arguments)

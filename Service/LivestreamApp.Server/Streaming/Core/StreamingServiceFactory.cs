@@ -14,7 +14,7 @@ namespace LivestreamApp.Server.Streaming.Core
             _resolutionRoot = resolutionRoot;
         }
 
-        public StreamingService GetAudioInputMp3Streamer(AudioDevice audioDevice)
+        public StreamingService GetStreamingService(AudioDevice audioDevice)
         {
             return _resolutionRoot.Get<StreamingService>(
                 new ConstructorArgument("audioDevice", audioDevice));

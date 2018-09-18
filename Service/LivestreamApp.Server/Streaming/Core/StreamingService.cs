@@ -2,10 +2,12 @@
 using LivestreamApp.Server.Streaming.Processes;
 using Ninject.Extensions.Logging;
 using System;
+using WebSocketSharp;
+using WebSocketSharp.Server;
 
 namespace LivestreamApp.Server.Streaming.Core
 {
-    public class StreamingService : IStreamingService
+    public class StreamingService : WebSocketBehavior, IDisposable
     {
         private readonly ILogger _logger;
         private readonly IProcessAdapter _processAdapter;
@@ -17,6 +19,7 @@ namespace LivestreamApp.Server.Streaming.Core
             _logger = logger;
             _audioDevice = audioDevice;
             _processAdapter = processAdapter;
+            IgnoreExtensions = true;
         }
 
         private string GetArguments()
@@ -55,8 +58,26 @@ namespace LivestreamApp.Server.Streaming.Core
             _logger.Info($"Stopped capturing audio on input {_audioDevice.Id}.");
         }
 
-        private void OutputBytesReceivedHandler(object sender, EventArgs e)
+        private void OutputBytesReceivedHandler(object sender, BytesReceivedEventArgs e)
         {
+            Sessions?.Broadcast(e.Bytes);
+        }
+
+        protected override void OnOpen()
+        {
+            _logger.Info("New client connected.");
+            base.OnOpen();
+        }
+
+        protected override void OnClose(CloseEventArgs e)
+        {
+            _logger.Info("Client disconnected.");
+            base.OnClose(e);
+        }
+
+        public void Dispose()
+        {
+            Stop();
         }
     }
 }
