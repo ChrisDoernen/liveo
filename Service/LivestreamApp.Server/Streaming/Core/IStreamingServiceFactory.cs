@@ -4,6 +4,6 @@ namespace LivestreamApp.Server.Streaming.Core
 {
     public interface IStreamingServiceFactory
     {
-        Mp3StreamingService GetAudioInputMp3Streamer(AudioDevice audioDevice);
+        StreamingService GetAudioInputMp3Streamer(AudioDevice audioDevice);
     }
 }

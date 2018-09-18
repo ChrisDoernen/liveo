@@ -13,9 +13,9 @@ namespace LivestreamApp.Server.Streaming.Processes
         private byte[] _buffer;
         private int _exitCode;
 
-        public event EventHandler OutputBytesReceived;
-        public event EventHandler OutputDataReceived;
-        public event EventHandler ErrorDataReceived;
+        public event EventHandler<BytesReceivedEventArgs> OutputBytesReceived;
+        public event EventHandler<DataReceivedEventArgs> OutputDataReceived;
+        public event EventHandler<DataReceivedEventArgs> ErrorDataReceived;
         public event EventHandler ProcessExited;
 
         public ProcessAdapter(ILogger logger)
@@ -114,8 +114,7 @@ namespace LivestreamApp.Server.Streaming.Processes
 
             if (bytesRead > _buffer.Length)
             {
-                throw new ArgumentException("The specified buffer size was less than the " +
-                                            "chunk size returned from process stdout");
+                _logger.Warn("The specified buffer size was less than the stdout data chunk size");
             }
 
             var memoryStream = new MemoryStream();
@@ -133,12 +132,12 @@ namespace LivestreamApp.Server.Streaming.Processes
 
         private void OutDataReceived(object sender, DataReceivedEventArgs e)
         {
-            OutputDataReceived?.Invoke(sender, new CustomDataReceivedEventArgs(e));
+            OutputDataReceived?.Invoke(sender, e);
         }
 
         private void ErrDataReceived(object sender, DataReceivedEventArgs e)
         {
-            ErrorDataReceived?.Invoke(sender, new CustomDataReceivedEventArgs(e));
+            ErrorDataReceived?.Invoke(sender, e);
         }
 
         private void ProcessExit(object sender, EventArgs e)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace LivestreamApp.Server.Streaming.Processes
 {
@@ -7,17 +8,17 @@ namespace LivestreamApp.Server.Streaming.Processes
         /// <summary>
         ///     Fires with the "on data" event of the process
         /// </summary>
-        event EventHandler OutputBytesReceived;
+        event EventHandler<BytesReceivedEventArgs> OutputBytesReceived;
 
         /// <summary>
         ///     Fires when a line of standard error output is received
         /// </summary>
-        event EventHandler ErrorDataReceived;
+        event EventHandler<DataReceivedEventArgs> ErrorDataReceived;
 
         /// <summary>
         ///     Fires when a line of standard output is received
         /// </summary>
-        event EventHandler OutputDataReceived;
+        event EventHandler<DataReceivedEventArgs> OutputDataReceived;
 
         /// <summary>
         ///     Fires when the process has exited

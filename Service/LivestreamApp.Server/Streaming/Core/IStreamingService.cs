@@ -1,6 +1,6 @@
 ﻿namespace LivestreamApp.Server.Streaming.Core
 {
-    public interface IMp3StreamingService
+    public interface IStreamingService
     {
         void Start();
         void Stop();

@@ -2,26 +2,26 @@
 using LivestreamApp.Server.Streaming.Processes;
 using Ninject.Extensions.Logging;
 using System;
-using System.Diagnostics;
 
 namespace LivestreamApp.Server.Streaming.Core
 {
-    public class Mp3StreamingService : IMp3StreamingService
+    public class StreamingService : IStreamingService
     {
         private readonly ILogger _logger;
         private readonly IProcessAdapter _processAdapter;
         private readonly AudioDevice _audioDevice;
+        private const string FileName = "ffmpeg.exe";
 
-        public Mp3StreamingService(ILogger logger, IProcessAdapter processAdapter, AudioDevice audioDevice)
+        public StreamingService(ILogger logger, IProcessAdapter processAdapter, AudioDevice audioDevice)
         {
             _logger = logger;
             _audioDevice = audioDevice;
             _processAdapter = processAdapter;
         }
 
-        private ProcessStartInfo GetProcessStartInfo()
+        private string GetArguments()
         {
-            var arguments =
+            return
                 "-y -f dshow " +
                 $"-i audio=\"{_audioDevice.Id}\" " +
                 "-rtbufsize 64 " +
@@ -36,25 +36,13 @@ namespace LivestreamApp.Server.Streaming.Core
                 "-fflags " +
                 "+nobuffer " +
                 "pipe:1";
-
-            var processStartInfo = new ProcessStartInfo
-            {
-                FileName = "ffmpeg.exe",
-                Arguments = arguments,
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true
-            };
-
-            return processStartInfo;
         }
 
         public void Start()
         {
-            var processStartInfo = GetProcessStartInfo();
+            var arguments = GetArguments();
             _processAdapter.OutputBytesReceived += OutputBytesReceivedHandler;
-            //_processAdapter.ExecuteProcessAsync(processStartInfo, 4000);
+            _processAdapter.ExecuteAndReadAsync(FileName, arguments, 4000);
 
             _logger.Info($"Started capturing audio on input {_audioDevice.Id}.");
         }
