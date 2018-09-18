@@ -98,8 +98,8 @@ namespace LivestreamApp.Server.Streaming.Core
         private void StartWebSocketServer()
         {
             var wsUri = _uriConfiguration.GetWsUri();
-            //_webSocketServer = new WebSocketServer(wsUri);
-            //_webSocketServer.Start();
+            _webSocketServer = new WebSocketServer(wsUri);
+            _webSocketServer.Start();
         }
 
         private void StopWebSocketServer()

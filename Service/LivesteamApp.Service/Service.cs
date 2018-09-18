@@ -1,4 +1,5 @@
-﻿using Nancy.Hosting.Self;
+﻿using LivestreamApp.Shared.Network;
+using Nancy.Hosting.Self;
 using Ninject.Extensions.Logging;
 using System;
 
@@ -7,21 +8,24 @@ namespace LivestreamApp.Service
     public class Service
     {
         private readonly ILogger _logger;
-
+        private readonly IUriConfiguration _uriConfiguration;
         private NancyHost _host;
 
-        public Service(ILogger logger)
+        public Service(ILogger logger, IUriConfiguration uriConfiguration)
         {
             _logger = logger;
+            _uriConfiguration = uriConfiguration;
         }
 
         public bool Start()
         {
             try
             {
-                var host = new NancyHost(new Uri("http://localhost:80"));
+                var uri = _uriConfiguration.GetHttpUri();
+                var host = new NancyHost(new Uri(uri));
                 _host = host;
                 _host.Start();
+                _logger.Error("NancyHost started.");
             }
             catch (Exception ex)
             {
@@ -38,6 +42,7 @@ namespace LivestreamApp.Service
             try
             {
                 _host.Stop();
+                _logger.Error("NancyHost stopped.");
             }
             catch (Exception ex)
             {

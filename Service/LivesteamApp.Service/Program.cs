@@ -1,6 +1,7 @@
 using AutoMapper;
 using LivestreamApp.Server.AppConfiguration;
 using LivestreamApp.Service.AppConfiguration;
+using LivestreamApp.Service.UriReservation;
 using LivestreamApp.Shared.AppConfiguration;
 using LivestreamApp.Shared.AppSettings;
 using Ninject;
@@ -41,14 +42,20 @@ namespace LivestreamApp.Service
                     s.WhenStarted(ls => ls.Start());
                     s.WhenStopped(ls => ls.Stop());
                 });
-                //x.WithUriReservation(r =>
-                //{
-                //    r.AddHost("http", "localhost", webServerPort);
-                //    r.AddHost("ws", "localhost", webSocketPort);
-                //    r.CreateUrlReservationsOnInstall();
-                //    r.DeleteReservationsOnUnInstall();
-                //    r.OpenFirewallPortsOnInstall("LivestreamApp.Service");
-                //});
+                x.WithUriReservation(r =>
+                {
+                    r.AddHost("http", "localhost", webServerPort);
+                    r.AddHost("ws", "localhost", webSocketPort);
+                    r.CreateUrlReservationsOnInstall();
+                    r.DeleteReservationsOnUnInstall();
+                    r.OpenFirewallPortsOnInstall("LivestreamApp.Service");
+                });
+                x.OnException(ex =>
+                {
+                    logger.Error("An top level exception occurred.");
+                    logger.Error(ex.Message);
+                    logger.Error(ex.StackTrace);
+                });
                 x.RunAsLocalSystem();
                 x.RunAsNetworkService();
                 x.SetDescription("A service for live streaming app");
@@ -56,15 +63,7 @@ namespace LivestreamApp.Service
                 x.SetServiceName("LivestreamApp.Service");
             });
 
-            try
-            {
-                host.Run();
-            }
-            catch (Exception ex)
-            {
-                logger.Error("An top level exception occurred.");
-                logger.Error(ex.Message);
-            }
+            host.Run();
 
             Console.WriteLine("Please press enter to exit.");
             Console.ReadLine();

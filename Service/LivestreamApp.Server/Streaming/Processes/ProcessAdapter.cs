@@ -5,7 +5,7 @@ using System.IO;
 
 namespace LivestreamApp.Server.Streaming.Processes
 {
-    public class ProcessAdapter : IProcessAdapter
+    public class ProcessAdapter : IProcessAdapter, IDisposable
     {
         private readonly ILogger _logger;
         private Process _process;
@@ -52,6 +52,10 @@ namespace LivestreamApp.Server.Streaming.Processes
 
             if (_process == null) throw new Exception("Process handle is null.");
 
+            _isProcessRunning = true;
+            _process.EnableRaisingEvents = true;
+            _process.Exited += ProcessExit;
+
             if (readAsync)
             {
                 _process.OutputDataReceived += OutDataReceived;
@@ -60,28 +64,21 @@ namespace LivestreamApp.Server.Streaming.Processes
                 _process.BeginErrorReadLine();
             }
 
-            _process.EnableRaisingEvents = true;
-            _process.Exited += ProcessExit;
-
             if (readBaseStreamAsync)
             {
                 _process.StandardOutput.BaseStream.BeginRead(
                     _buffer, 0, _buffer.Length, ReadStdOutBaseStream, null);
             }
 
-            _isProcessRunning = true;
-
-            _logger.Info($"Starting external process with PID: {_process.Id}");
+            _logger.Info($"Started {processStartInfo.FileName} with PID: {_process.Id}");
         }
 
         public void KillProcess()
         {
             _process.Kill();
-            _process.Close();
-            _process.Dispose();
             _isProcessRunning = false;
 
-            _logger.Info($"Killed external process wit PID {_process.Id}.");
+            _logger.Info($"Killed process wit PID {_process.Id}.");
         }
 
         public bool IsRunning()
@@ -129,14 +126,17 @@ namespace LivestreamApp.Server.Streaming.Processes
 
         private void ProcessExit(object sender, EventArgs e)
         {
-            ProcessExited?.Invoke(sender, e);
-
             _exitCode = _process.ExitCode;
-            _process.Close();
-            _process.Dispose();
-
             _isProcessRunning = false;
             _logger.Info($"Process exited with code {_exitCode}.");
+            ProcessExited?.Invoke(sender, e);
+        }
+
+        public void Dispose()
+        {
+            _process?.Close();
+            _process?.Dispose();
+            _logger.Info("Process disposed.");
         }
     }
 }
