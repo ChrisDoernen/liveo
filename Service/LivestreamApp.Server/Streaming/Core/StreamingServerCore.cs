@@ -1,11 +1,12 @@
 ﻿using LivestreamApp.Server.Streaming.Configuration;
 using LivestreamApp.Server.Streaming.Entities;
 using LivestreamApp.Server.Streaming.Environment;
-using LivestreamApp.Shared.AppSettings;
+using LivestreamApp.Shared.Network;
 using Ninject.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using WebSocketSharp.Server;
 
 namespace LivestreamApp.Server.Streaming.Core
 {
@@ -15,7 +16,8 @@ namespace LivestreamApp.Server.Streaming.Core
         private readonly IAudioHardware _audioHardware;
         private readonly IStreamingServiceFactory _streamingServiceFactory;
         private readonly ILivestreamsConfiguration _livestreamsConfiguration;
-        private readonly IAppSettingsProvider _appSettingsProvider;
+        private readonly IUriConfiguration _uriConfiguration;
+        private WebSocketServer _webSocketServer;
         private const string LivestreamsConfigFile = "Livestreams.config";
         private Livestreams _livestreams;
         private List<AudioInput> _audioInputs;
@@ -24,12 +26,12 @@ namespace LivestreamApp.Server.Streaming.Core
             IAudioHardware audioHardware,
             IStreamingServiceFactory streamingServiceFactory,
             ILivestreamsConfiguration livestreamsConfiguration,
-            IAppSettingsProvider appSettingsProvider)
+            IUriConfiguration uriConfiguration)
         {
             _audioHardware = audioHardware;
             _streamingServiceFactory = streamingServiceFactory;
             _livestreamsConfiguration = livestreamsConfiguration;
-            _appSettingsProvider = appSettingsProvider;
+            _uriConfiguration = uriConfiguration;
             _logger = logger;
 
             Start();
@@ -87,7 +89,7 @@ namespace LivestreamApp.Server.Streaming.Core
                 if (livestream.StartOnServiceStartup && livestream.HasValidAudioInput)
                 {
                     var mp3StreamingService = _streamingServiceFactory.GetAudioInputMp3Streamer(livestream.AudioInput);
-                    var uri = $"/{livestream.Id}";
+                    var path = $"/{livestream.Id}";
                     livestream.IsStarted = true;
                 }
             }
@@ -95,12 +97,14 @@ namespace LivestreamApp.Server.Streaming.Core
 
         private void StartWebSocketServer()
         {
-            var ipAddress = SystemConfiguration.GetLocalIPAddress();
-            var port = _appSettingsProvider.GetIntValue(AppSetting.DefaultWebSocketPort);
+            var wsUri = _uriConfiguration.GetWsUri();
+            //_webSocketServer = new WebSocketServer(wsUri);
+            //_webSocketServer.Start();
         }
 
         private void StopWebSocketServer()
         {
+            _webSocketServer.Stop();
         }
 
         public void Stop()

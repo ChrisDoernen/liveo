@@ -1,9 +1,9 @@
-﻿using Ninject.Extensions.Logging;
+﻿using LivestreamApp.Server.Streaming.Processes;
+using Ninject.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
-using IProcessAdapter = LivestreamApp.Server.Streaming.Processes.IProcessAdapter;
 
 namespace LivestreamApp.Server.Streaming.Environment
 {
@@ -45,10 +45,7 @@ namespace LivestreamApp.Server.Streaming.Environment
 
         private void ParseLines(string output)
         {
-            var lines = output.Split(
-                new[] { "\r\n", "\r", "\n" },
-                StringSplitOptions.None
-            );
+            var lines = output.Split(new[] { "\r\n" }, StringSplitOptions.None);
 
             foreach (var line in lines)
             {

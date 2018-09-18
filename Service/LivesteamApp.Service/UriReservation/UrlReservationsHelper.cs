@@ -149,7 +149,7 @@ namespace LivestreamApp.Service.UriReservation
 
                 // ToDo: Decide about original line
                 // if (_nancyHostConfiguration.RewriteLocalhost && !baseUri.Host.Contains("."))
-                if (true && !baseUri.Host.Contains("."))
+                if (false && !baseUri.Host.Contains("."))
                 {
                     prefix = prefix.Replace("localhost", "+");
                 }

@@ -25,12 +25,11 @@ namespace LivestreamApp.Server.Streaming.Processes
 
         public ProcessResult ExecuteAndReadSync(ProcessStartInfo processStartInfo)
         {
-            Process process = Execute(processStartInfo, false, false);
+            Execute(processStartInfo, false, false);
 
-            process.WaitForExit();
-
-            var output = process.StandardOutput.ReadToEnd();
-            var errorOutput = process.StandardError.ReadToEnd();
+            var output = _process.StandardOutput.ReadToEnd();
+            var errorOutput = _process.StandardError.ReadToEnd();
+            _process.WaitForExit();
 
             return new ProcessResult(_exitCode, output, errorOutput);
         }
@@ -46,35 +45,33 @@ namespace LivestreamApp.Server.Streaming.Processes
             Execute(processStartInfo, true, true);
         }
 
-        private Process Execute(ProcessStartInfo processStartInfo,
+        private void Execute(ProcessStartInfo processStartInfo,
             bool readAsync, bool readBaseStreamAsync)
         {
-            var process = Process.Start(processStartInfo);
-            _process = process;
+            _process = Process.Start(processStartInfo);
 
-            if (process == null) throw new Exception("Process handle is null.");
+            if (_process == null) throw new Exception("Process handle is null.");
 
             if (readAsync)
             {
-                process.OutputDataReceived += OutDataReceived;
-                process.BeginOutputReadLine();
-                process.ErrorDataReceived += ErrDataReceived;
-                process.BeginErrorReadLine();
+                _process.OutputDataReceived += OutDataReceived;
+                _process.BeginOutputReadLine();
+                _process.ErrorDataReceived += ErrDataReceived;
+                _process.BeginErrorReadLine();
             }
 
-            process.Exited += ProcessExit;
+            _process.EnableRaisingEvents = true;
+            _process.Exited += ProcessExit;
 
             if (readBaseStreamAsync)
             {
-                process.StandardOutput.BaseStream.BeginRead(
+                _process.StandardOutput.BaseStream.BeginRead(
                     _buffer, 0, _buffer.Length, ReadStdOutBaseStream, null);
             }
 
             _isProcessRunning = true;
 
             _logger.Info($"Starting external process with PID: {_process.Id}");
-
-            return process;
         }
 
         public void KillProcess()

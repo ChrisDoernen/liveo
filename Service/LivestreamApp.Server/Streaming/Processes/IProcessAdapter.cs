@@ -29,9 +29,7 @@ namespace LivestreamApp.Server.Streaming.Processes
         ///     Executes the specified process synchronously.
         /// </summary>
         /// <param name="processStartInfo">Contains information about the process</param>
-        /// <param name="output">The output from the process</param>
-        /// <param name="errorOutput">The error ouput from the process</param>
-        /// <returns>The exit code returned from the process</returns>
+        /// <returns>ProcessResult</returns>
         ProcessResult ExecuteAndReadSync(ProcessStartInfo processStartInfo);
 
         /// <summary>

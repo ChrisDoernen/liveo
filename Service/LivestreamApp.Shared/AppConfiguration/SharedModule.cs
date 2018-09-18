@@ -1,4 +1,5 @@
 ﻿using LivestreamApp.Shared.AppSettings;
+using LivestreamApp.Shared.Network;
 using Ninject.Modules;
 
 namespace LivestreamApp.Shared.AppConfiguration
@@ -9,6 +10,7 @@ namespace LivestreamApp.Shared.AppConfiguration
         {
             Bind<IAppSettingsProvider>().To<AppSettingsProvider>();
             Bind<IConfigurationManagerAdapter>().To<ConfigurationManagerAdapter>();
+            Bind<IUriConfiguration>().To<UriConfiguration>();
         }
     }
 }

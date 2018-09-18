@@ -1,7 +1,6 @@
 using AutoMapper;
 using LivestreamApp.Server.AppConfiguration;
 using LivestreamApp.Service.AppConfiguration;
-using LivestreamApp.Service.UriReservation;
 using LivestreamApp.Shared.AppConfiguration;
 using LivestreamApp.Shared.AppSettings;
 using Ninject;
@@ -22,7 +21,7 @@ namespace LivestreamApp.Service
             // Loading Ninject kernel
             IKernel kernel = new StandardKernel();
             kernel.Load(new ServiceModule(), new SharedModule());
-            var livestreamApp = kernel.Get<Startup.Service>();
+            var livestreamApp = kernel.Get<Service>();
 
             // Get logger for top level logging
             var logger = kernel.Get<ILoggerFactory>().GetCurrentClassLogger();
@@ -36,20 +35,20 @@ namespace LivestreamApp.Service
             var host = HostFactory.New(x =>
             {
                 x.UseNLog();
-                x.Service<Startup.Service>(s =>
+                x.Service<Service>(s =>
                 {
                     s.ConstructUsing(name => livestreamApp);
                     s.WhenStarted(ls => ls.Start());
                     s.WhenStopped(ls => ls.Stop());
                 });
-                x.WithUriReservation(r =>
-                {
-                    r.AddHost("http", "localhost", webServerPort);
-                    r.AddHost("ws", "localhost", webSocketPort);
-                    r.CreateUrlReservationsOnInstall();
-                    r.DeleteReservationsOnUnInstall();
-                    r.OpenFirewallPortsOnInstall("LivestreamApp.Service");
-                });
+                //x.WithUriReservation(r =>
+                //{
+                //    r.AddHost("http", "localhost", webServerPort);
+                //    r.AddHost("ws", "localhost", webSocketPort);
+                //    r.CreateUrlReservationsOnInstall();
+                //    r.DeleteReservationsOnUnInstall();
+                //    r.OpenFirewallPortsOnInstall("LivestreamApp.Service");
+                //});
                 x.RunAsLocalSystem();
                 x.RunAsNetworkService();
                 x.SetDescription("A service for live streaming app");
