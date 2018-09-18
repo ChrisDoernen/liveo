@@ -25,7 +25,7 @@ namespace LivestreamApp.Service
                 var host = new NancyHost(new Uri(uri));
                 _host = host;
                 _host.Start();
-                _logger.Error("NancyHost started.");
+                _logger.Info("NancyHost started.");
             }
             catch (Exception ex)
             {
@@ -42,7 +42,7 @@ namespace LivestreamApp.Service
             try
             {
                 _host.Stop();
-                _logger.Error("NancyHost stopped.");
+                _logger.Info("NancyHost stopped.");
             }
             catch (Exception ex)
             {

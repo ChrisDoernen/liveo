@@ -5,7 +5,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Ninject.Extensions.Logging;
 using System;
-using System.Diagnostics;
 using System.IO;
 
 namespace LivestreamApp.Server.Test.Tests
@@ -15,14 +14,14 @@ namespace LivestreamApp.Server.Test.Tests
     {
         private readonly Mock<ILogger> _mockLogger = new Mock<ILogger>();
         private readonly Mock<IProcessAdapter> _mockExternalProcess = new Mock<IProcessAdapter>();
-        private IAudioInputDetector _audioInputDetector;
+        private IAudioDeviceDetector _audioDeviceDetector;
         private const string ffmpegOutputOneDevice = "TestResources\\ffmpeg\\ffmpegListDevicesOutputOneDeviceAvailable.txt";
         private const string ffmpegOutputNoDevice = "TestResources\\ffmpeg\\ffmpegListDevicesOutputNoDeviceAvailable.txt";
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _audioInputDetector = new AudioInputDetector(_mockLogger.Object, _mockExternalProcess.Object);
+            _audioDeviceDetector = new AudioDeviceDetector(_mockLogger.Object, _mockExternalProcess.Object);
         }
 
         [TestMethod]
@@ -34,11 +33,11 @@ namespace LivestreamApp.Server.Test.Tests
             var result = new ProcessResult(1, "", processOutput);
 
             _mockExternalProcess
-                .Setup(mep => mep.ExecuteAndReadSync(It.IsAny<ProcessStartInfo>()))
+                .Setup(mep => mep.ExecuteAndReadSync(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(result);
 
             // When
-            var audioInputs = _audioInputDetector.GetAudioInputs();
+            var audioInputs = _audioDeviceDetector.GetAudioDevices();
 
             // Then
             audioInputs.Should().NotBeNull();
@@ -56,11 +55,11 @@ namespace LivestreamApp.Server.Test.Tests
             var result = new ProcessResult(0, "", processOutput);
 
             _mockExternalProcess
-                .Setup(mep => mep.ExecuteAndReadSync(It.IsAny<ProcessStartInfo>()))
+                .Setup(mep => mep.ExecuteAndReadSync(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(result);
 
             // When
-            var audioInputs = _audioInputDetector.GetAudioInputs();
+            var audioInputs = _audioDeviceDetector.GetAudioDevices();
         }
 
         [TestMethod]
@@ -72,11 +71,11 @@ namespace LivestreamApp.Server.Test.Tests
             var result = new ProcessResult(1, "", processOutput);
 
             _mockExternalProcess
-                .Setup(mep => mep.ExecuteAndReadSync(It.IsAny<ProcessStartInfo>()))
+                .Setup(mep => mep.ExecuteAndReadSync(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(result);
 
             // When
-            var audioInputs = _audioInputDetector.GetAudioInputs();
+            var audioInputs = _audioDeviceDetector.GetAudioDevices();
 
             // Then
             audioInputs.Should().NotBeNull();

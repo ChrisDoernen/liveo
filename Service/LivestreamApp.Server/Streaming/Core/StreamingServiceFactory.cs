@@ -14,10 +14,10 @@ namespace LivestreamApp.Server.Streaming.Core
             _resolutionRoot = resolutionRoot;
         }
 
-        public Mp3StreamingService GetAudioInputMp3Streamer(AudioInput audioInput)
+        public Mp3StreamingService GetAudioInputMp3Streamer(AudioDevice audioDevice)
         {
             return _resolutionRoot.Get<Mp3StreamingService>(
-                new ConstructorArgument("audioInput", audioInput));
+                new ConstructorArgument("audioDevice", audioDevice));
         }
     }
 }

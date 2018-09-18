@@ -13,10 +13,10 @@ namespace LivestreamApp.Server.AppConfiguration
         {
             Bind<IStreamingServerCore>().To<StreamingServerCore>().InSingletonScope();
             Bind<ILivestreamsConfiguration>().To<LivestreamsConfiguration>();
-            Bind<IAudioHardware>().To<AudioHardware>();
+            Bind<IHardware>().To<Hardware>();
             Bind<IProcessAdapter>().To<ProcessAdapter>();
             Bind<IMapper>().ToConstant(Mapper.Instance);
-            Bind<IAudioInputDetector>().To<AudioInputDetector>();
+            Bind<IAudioDeviceDetector>().To<AudioDeviceDetector>();
             Bind<IMp3StreamingService>().To<Mp3StreamingService>();
             Bind<IStreamingServiceFactory>().To<StreamingServiceFactory>();
         }

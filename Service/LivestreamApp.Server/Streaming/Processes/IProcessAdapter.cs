@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 
 namespace LivestreamApp.Server.Streaming.Processes
 {
@@ -28,23 +27,26 @@ namespace LivestreamApp.Server.Streaming.Processes
         /// <summary>
         ///     Executes the specified process synchronously.
         /// </summary>
-        /// <param name="processStartInfo">Contains information about the process</param>
+        /// <param name="file">File to execute</param>
+        /// <param name="arguments">Arguments to apply</param>
         /// <returns>ProcessResult</returns>
-        ProcessResult ExecuteAndReadSync(ProcessStartInfo processStartInfo);
+        ProcessResult ExecuteAndReadSync(string file, string arguments);
 
         /// <summary>
         ///     Executes the specified process asynchronously
         /// </summary>
-        /// <param name="processStartInfo">Contains information about the process</param>
-        void ExecuteAndReadAsync(ProcessStartInfo processStartInfo);
+        /// <param name="file">File to execute</param>
+        /// <param name="arguments">Arguments to apply</param>
+        void ExecuteAndReadAsync(string file, string arguments);
 
         /// <summary>
         ///     Executes the specified process asynchronously with enabled binary output
         ///     using the domain specific buffer size
         /// </summary>
-        /// <param name="processStartInfo">Contains information about the process</param>
+        /// <param name="file">File to execute</param>
+        /// <param name="arguments">Arguments to apply</param>
         /// <param name="bufferSize">The size of the internal buffer</param>
-        void ExecuteAndReadAsync(ProcessStartInfo processStartInfo, int bufferSize);
+        void ExecuteAndReadAsync(string file, string arguments, int bufferSize);
 
         /// <summary>
         ///     Indicates if the started process is responding

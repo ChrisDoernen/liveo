@@ -18,8 +18,7 @@ namespace LivestreamApp.Server.Test.Tests
         {
             Mapper.Initialize(config => config.AddProfiles(typeof(AppConfiguration.ServerProfile)));
 
-            _livestreamsConfiguration =
-                new LivestreamsConfiguration(_mockLogger.Object, Mapper.Instance);
+            _livestreamsConfiguration = new LivestreamsConfiguration(_mockLogger.Object, Mapper.Instance);
         }
 
         [TestMethod]

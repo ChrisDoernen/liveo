@@ -10,12 +10,12 @@ namespace LivestreamApp.Server.Streaming.Core
     {
         private readonly ILogger _logger;
         private readonly IProcessAdapter _processAdapter;
-        private readonly AudioInput _audioInput;
+        private readonly AudioDevice _audioDevice;
 
-        public Mp3StreamingService(ILogger logger, IProcessAdapter processAdapter, AudioInput audioInput)
+        public Mp3StreamingService(ILogger logger, IProcessAdapter processAdapter, AudioDevice audioDevice)
         {
             _logger = logger;
-            _audioInput = audioInput;
+            _audioDevice = audioDevice;
             _processAdapter = processAdapter;
         }
 
@@ -23,7 +23,7 @@ namespace LivestreamApp.Server.Streaming.Core
         {
             var arguments =
                 "-y -f dshow " +
-                $"-i audio=\"{_audioInput.Id}\" " +
+                $"-i audio=\"{_audioDevice.Id}\" " +
                 "-rtbufsize 64 " +
                 "-probesize 64 " +
                 "-acodec libmp3lame " +
@@ -56,7 +56,7 @@ namespace LivestreamApp.Server.Streaming.Core
             _processAdapter.OutputBytesReceived += OutputBytesReceivedHandler;
             //_processAdapter.ExecuteProcessAsync(processStartInfo, 4000);
 
-            _logger.Info($"Started capturing audio on input {_audioInput.Id}.");
+            _logger.Info($"Started capturing audio on input {_audioDevice.Id}.");
         }
 
         public void Stop()
@@ -64,7 +64,7 @@ namespace LivestreamApp.Server.Streaming.Core
             _processAdapter.OutputBytesReceived -= OutputBytesReceivedHandler;
             _processAdapter.KillProcess();
 
-            _logger.Info($"Stopped capturing audio on input {_audioInput.Id}.");
+            _logger.Info($"Stopped capturing audio on input {_audioDevice.Id}.");
         }
 
         private void OutputBytesReceivedHandler(object sender, EventArgs e)

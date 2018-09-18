@@ -23,8 +23,9 @@ namespace LivestreamApp.Server.Streaming.Processes
             _logger = logger;
         }
 
-        public ProcessResult ExecuteAndReadSync(ProcessStartInfo processStartInfo)
+        public ProcessResult ExecuteAndReadSync(string file, string arguments)
         {
+            var processStartInfo = GetProcessStartInfo(file, arguments);
             Execute(processStartInfo, false, false);
 
             var output = _process.StandardOutput.ReadToEnd();
@@ -34,15 +35,31 @@ namespace LivestreamApp.Server.Streaming.Processes
             return new ProcessResult(_exitCode, output, errorOutput);
         }
 
-        public void ExecuteAndReadAsync(ProcessStartInfo processStartInfo)
+        public void ExecuteAndReadAsync(string file, string arguments)
         {
+            var processStartInfo = GetProcessStartInfo(file, arguments);
+
             Execute(processStartInfo, true, false);
         }
 
-        public void ExecuteAndReadAsync(ProcessStartInfo processStartInfo, int bufferSize)
+        public void ExecuteAndReadAsync(string file, string arguments, int bufferSize)
         {
             _buffer = new byte[bufferSize];
+            var processStartInfo = GetProcessStartInfo(file, arguments);
             Execute(processStartInfo, true, true);
+        }
+
+        private ProcessStartInfo GetProcessStartInfo(string file, string arguments)
+        {
+            return new ProcessStartInfo
+            {
+                FileName = file,
+                Arguments = arguments,
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true
+            };
         }
 
         private void Execute(ProcessStartInfo processStartInfo,

@@ -1,10 +1,10 @@
 ﻿namespace LivestreamApp.Server.Streaming.Environment
 {
-    public class AudioInput
+    public class AudioDevice
     {
         public string Id;
 
-        public AudioInput(string id)
+        public AudioDevice(string id)
         {
             Id = id;
         }

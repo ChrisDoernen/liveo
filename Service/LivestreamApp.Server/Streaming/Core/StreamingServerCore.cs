@@ -13,22 +13,22 @@ namespace LivestreamApp.Server.Streaming.Core
     public class StreamingServerCore : IStreamingServerCore
     {
         private readonly ILogger _logger;
-        private readonly IAudioHardware _audioHardware;
+        private readonly IHardware _hardware;
         private readonly IStreamingServiceFactory _streamingServiceFactory;
         private readonly ILivestreamsConfiguration _livestreamsConfiguration;
         private readonly IUriConfiguration _uriConfiguration;
         private WebSocketServer _webSocketServer;
         private const string LivestreamsConfigFile = "Livestreams.config";
         private Livestreams _livestreams;
-        private List<AudioInput> _audioInputs;
+        private List<AudioDevice> _audioDevices;
 
         public StreamingServerCore(ILogger logger,
-            IAudioHardware audioHardware,
+            IHardware hardware,
             IStreamingServiceFactory streamingServiceFactory,
             ILivestreamsConfiguration livestreamsConfiguration,
             IUriConfiguration uriConfiguration)
         {
-            _audioHardware = audioHardware;
+            _hardware = hardware;
             _streamingServiceFactory = streamingServiceFactory;
             _livestreamsConfiguration = livestreamsConfiguration;
             _uriConfiguration = uriConfiguration;
@@ -58,7 +58,7 @@ namespace LivestreamApp.Server.Streaming.Core
 
         private void Initialize()
         {
-            _audioInputs = _audioHardware.GetAudioInputs();
+            _audioDevices = _hardware.GetAudioDevices();
             _livestreams = _livestreamsConfiguration.GetAvailableStreams(LivestreamsConfigFile);
 
         }
@@ -67,9 +67,9 @@ namespace LivestreamApp.Server.Streaming.Core
         {
             foreach (var livestream in _livestreams.Streams)
             {
-                var matchingInputs = _audioInputs.Where(ai => ai.Id == livestream.AudioInput.Id).ToList();
+                var matchingDevices = _audioDevices.Where(ai => ai.Id == livestream.AudioDevice.Id).ToList();
 
-                if (matchingInputs.Count == 1)
+                if (matchingDevices.Count == 1)
                 {
                     livestream.HasValidAudioInput = true;
                 }
@@ -88,7 +88,7 @@ namespace LivestreamApp.Server.Streaming.Core
             {
                 if (livestream.StartOnServiceStartup && livestream.HasValidAudioInput)
                 {
-                    var mp3StreamingService = _streamingServiceFactory.GetAudioInputMp3Streamer(livestream.AudioInput);
+                    var mp3StreamingService = _streamingServiceFactory.GetAudioInputMp3Streamer(livestream.AudioDevice);
                     var path = $"/{livestream.Id}";
                     livestream.IsStarted = true;
                 }
