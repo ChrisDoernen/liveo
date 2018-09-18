@@ -32,6 +32,9 @@ namespace LivestreamApp.Server.Streaming.Environment
         {
             var processResult = _processAdapter.ExecuteAndReadSync(ListDevicesProcessStartInfo);
 
+            if (processResult.ExitCode != 1)
+                throw new Exception("Could not get audio inputs.");
+
             // ffmpeg writes to error output
             ParseLines(processResult.ErrorOutput);
 

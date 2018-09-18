@@ -1,0 +1,7 @@
+[dshow @ 000001cbbb02a1c0] DirectShow video devices (some may be both video and audio devices)
+[dshow @ 000001cbbb02a1c0]  "USB Boot"
+[dshow @ 000001cbbb02a1c0]     Alternative name "@device_pnp_\\?\usb#vid_0bda&pid_5846&mi_00#6&18d0fbe5&0&0000#{65e8773d-8f56-11d0-a3b9-00a0c9223196}\global"
+[dshow @ 000001cbbb02a1c0] DirectShow audio devices
+[dshow @ 000001cbbb02a1c0]  "Mikrofonarray (Realtek High Definition Audio)"
+[dshow @ 000001cbbb02a1c0]     Alternative name "@device_cm_{33D9A762-90C8-11D0-BD43-00A0C911CE86}\wave_{810AC879-96E4-4CF7-856C-CF8CC0784E7D}"
+dummy: Immediate exit requested
