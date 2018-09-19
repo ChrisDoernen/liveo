@@ -30,7 +30,7 @@ namespace LivestreamApp.Service
             catch (Exception ex)
             {
                 _logger.Error("An exception occurred while starting the http server.");
-                _logger.Error(ex.Message);
+                _logger.Error(ex.ToString());
             }
 
             return true;
@@ -46,7 +46,7 @@ namespace LivestreamApp.Service
             catch (Exception ex)
             {
                 _logger.Error("An exception occurred while stopping the http server.");
-                _logger.Error(ex.Message);
+                _logger.Error(ex.ToString());
             }
 
             return true;

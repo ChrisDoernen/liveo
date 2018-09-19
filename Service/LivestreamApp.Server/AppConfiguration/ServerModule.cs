@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using LivestreamApp.Server.Streaming.Configuration;
+﻿using LivestreamApp.Server.Streaming.Configuration;
 using LivestreamApp.Server.Streaming.Core;
 using LivestreamApp.Server.Streaming.Environment;
 using LivestreamApp.Server.Streaming.Processes;
@@ -15,7 +14,6 @@ namespace LivestreamApp.Server.AppConfiguration
             Bind<ILivestreamsConfiguration>().To<LivestreamsConfiguration>();
             Bind<IHardware>().To<Hardware>();
             Bind<IProcessAdapter>().To<ProcessAdapter>();
-            Bind<IMapper>().ToConstant(Mapper.Instance);
             Bind<IAudioDeviceDetector>().To<AudioDeviceDetector>();
             Bind<IStreamingServiceFactory>().To<StreamingServiceFactory>();
         }

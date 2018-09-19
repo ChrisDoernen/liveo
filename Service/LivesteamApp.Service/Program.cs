@@ -1,5 +1,3 @@
-using AutoMapper;
-using LivestreamApp.Server.AppConfiguration;
 using LivestreamApp.Service.AppConfiguration;
 using LivestreamApp.Service.UriReservation;
 using LivestreamApp.Shared.AppConfiguration;
@@ -15,10 +13,6 @@ namespace LivestreamApp.Service
     {
         public static void Main()
         {
-            // Loading AutoMapper profiles
-            Mapper.Initialize(config => config.AddProfiles(typeof(ServerProfile)));
-            Mapper.AssertConfigurationIsValid();
-
             // Loading Ninject kernel
             IKernel kernel = new StandardKernel();
             kernel.Load(new ServiceModule(), new SharedModule());

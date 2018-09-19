@@ -65,11 +65,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppConfiguration\AutoMapperModule.cs" />
     <Compile Include="AppConfiguration\ServerModule.cs" />
     <Compile Include="Streaming\Configuration\ILivestreamsConfiguration.cs" />
     <Compile Include="Streaming\Core\StreamingService.cs" />
     <Compile Include="Streaming\Core\StreamingServiceFactory.cs" />
-    <Compile Include="Streaming\Core\IStreamingService.cs" />
     <Compile Include="Streaming\Core\IStreamingServiceFactory.cs" />
     <Compile Include="Streaming\Environment\Hardware.cs" />
     <Compile Include="AppConfiguration\ServerProfile.cs" />
