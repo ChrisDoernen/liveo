@@ -1,6 +1,7 @@
 ﻿using LivestreamApp.Server.Streaming.Configuration;
 using LivestreamApp.Server.Streaming.Entities;
 using LivestreamApp.Server.Streaming.Environment;
+using LivestreamApp.Server.Streaming.WebSockets;
 using LivestreamApp.Shared.Network;
 using Ninject.Extensions.Logging;
 using System;
@@ -12,6 +13,7 @@ namespace LivestreamApp.Server.Streaming.Core
     {
         private readonly ILogger _logger;
         private readonly IHardware _hardware;
+        private readonly IWebSocketServerAdapter _webSocketServerAdapter;
         private readonly ILivestreamsConfiguration _livestreamsConfiguration;
         private const string LivestreamsConfigFile = "Livestreams.config";
         private Livestreams _livestreams;
@@ -21,10 +23,12 @@ namespace LivestreamApp.Server.Streaming.Core
             IHardware hardware,
             IStreamerFactory streamerFactory,
             ILivestreamsConfiguration livestreamsConfiguration,
+            IWebSocketServerAdapter webSocketServerAdapter,
             IUriConfiguration uriConfiguration)
         {
             _hardware = hardware;
             _livestreamsConfiguration = livestreamsConfiguration;
+            _webSocketServerAdapter = webSocketServerAdapter;
             _logger = logger;
 
             Start();
@@ -41,6 +45,7 @@ namespace LivestreamApp.Server.Streaming.Core
         private void Start()
         {
             Initialize();
+            _webSocketServerAdapter.StartWebSocketServer();
             StartStreams();
 
             _logger.Info("StreamingService started.");
@@ -78,6 +83,7 @@ namespace LivestreamApp.Server.Streaming.Core
 
         public void Stop()
         {
+            _webSocketServerAdapter.StopWebSocketServer();
             _logger.Info("StreamingService stopped.");
         }
 

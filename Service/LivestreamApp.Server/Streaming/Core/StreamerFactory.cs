@@ -2,22 +2,34 @@
 using Ninject;
 using Ninject.Parameters;
 using Ninject.Syntax;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LivestreamApp.Server.Streaming.Core
 {
     public class StreamerFactory : IStreamerFactory
     {
-        private readonly IResolutionRoot _resolutionRoot;
+        private readonly IResolutionRoot _kernel;
+        private readonly List<Mp3Streamer> _streamers = new List<Mp3Streamer>();
 
-        public StreamerFactory(IResolutionRoot resolutionRoot)
+        public StreamerFactory(IResolutionRoot kernel)
         {
-            _resolutionRoot = resolutionRoot;
+            _kernel = kernel;
         }
 
-        public Mp3Streamer GetStreamingService(AudioDevice audioDevice)
+        public Mp3Streamer GetStreamer(AudioDevice audioDevice)
         {
-            return _resolutionRoot.Get<Mp3Streamer>(
-                new ConstructorArgument("audioDevice", audioDevice));
+            var streamer = _streamers.FirstOrDefault(s => s.AudioDevice.Equals(audioDevice));
+
+            if (streamer != null)
+            {
+                return streamer;
+            }
+
+            var newStreamer = _kernel.Get<Mp3Streamer>(new ConstructorArgument("audioDevice", audioDevice));
+            _streamers.Add(newStreamer);
+
+            return newStreamer;
         }
     }
 }

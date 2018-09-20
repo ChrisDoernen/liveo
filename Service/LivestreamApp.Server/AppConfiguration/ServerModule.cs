@@ -2,6 +2,7 @@
 using LivestreamApp.Server.Streaming.Core;
 using LivestreamApp.Server.Streaming.Environment;
 using LivestreamApp.Server.Streaming.Processes;
+using LivestreamApp.Server.Streaming.WebSockets;
 using Ninject.Modules;
 
 namespace LivestreamApp.Server.AppConfiguration
@@ -16,6 +17,8 @@ namespace LivestreamApp.Server.AppConfiguration
             Bind<IProcessAdapter>().To<ProcessAdapter>();
             Bind<IAudioDeviceDetector>().To<AudioDeviceDetector>();
             Bind<IStreamerFactory>().To<StreamerFactory>();
+            Bind<IWebSocketServerAdapter>().To<WebSocketServerAdapter>().InSingletonScope();
+            Bind<IWebSocketServiceFactory>().To<WebSocketServiceFactory>();
         }
     }
 }

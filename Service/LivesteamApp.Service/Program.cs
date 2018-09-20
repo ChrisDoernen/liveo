@@ -47,8 +47,7 @@ namespace LivestreamApp.Service
                 x.OnException(ex =>
                 {
                     logger.Error("An top level exception occurred.");
-                    logger.Error(ex.Message);
-                    logger.Error(ex.StackTrace);
+                    logger.Error(ex.ToString());
                 });
                 x.RunAsLocalSystem();
                 x.RunAsNetworkService();

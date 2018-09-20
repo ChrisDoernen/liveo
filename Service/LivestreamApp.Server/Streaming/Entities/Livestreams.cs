@@ -20,8 +20,8 @@ namespace LivestreamApp.Server.Streaming.Entities
         {
             foreach (var livestream in Streams)
             {
-                livestream.InitializeWebSocketServer();
                 livestream.ValidateAudioInput(audioDevices);
+                livestream.Initialize();
             }
 
             _logger.Info("Livestreams initialized.");

@@ -90,6 +90,11 @@
     <Compile Include="Streaming\Processes\IProcessAdapter.cs" />
     <Compile Include="Streaming\Processes\ProcessAdapter.cs" />
     <Compile Include="Streaming\Processes\ProcessResult.cs" />
+    <Compile Include="Streaming\WebSockets\AudioStreamingWebSocketService.cs" />
+    <Compile Include="Streaming\WebSockets\IWebSocketServerAdapter.cs" />
+    <Compile Include="Streaming\WebSockets\IWebSocketServiceFactory.cs" />
+    <Compile Include="Streaming\WebSockets\WebSocketServerAdapter.cs" />
+    <Compile Include="Streaming\WebSockets\WebSocketServiceFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

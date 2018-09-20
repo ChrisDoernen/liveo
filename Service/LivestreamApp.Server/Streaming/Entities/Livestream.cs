@@ -1,10 +1,9 @@
 ﻿using LivestreamApp.Server.Streaming.Core;
 using LivestreamApp.Server.Streaming.Environment;
-using LivestreamApp.Shared.Network;
+using LivestreamApp.Server.Streaming.WebSockets;
 using Ninject.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
-using WebSocketSharp.Server;
 
 namespace LivestreamApp.Server.Streaming.Entities
 {
@@ -19,28 +18,25 @@ namespace LivestreamApp.Server.Streaming.Entities
         public bool IsStarted { get; set; }
         public bool HasValidAudioInput { get; set; }
         public bool IsInitialized { get; set; }
-        private WebSocketServer _webSocketServer;
 
-        private readonly IUriConfiguration _uriConfiguration;
+        private readonly IWebSocketServerAdapter _webSocketServerAdapter;
         private readonly IStreamerFactory _streamerFactory;
         private readonly ILogger _logger;
+        private Mp3Streamer _streamer;
+        private string _path;
 
         public Livestream(ILogger logger, IStreamerFactory streamerFactory,
-            IUriConfiguration uriConfiguration)
+            IWebSocketServerAdapter webSocketServerAdapter)
         {
-            _streamerFactory = streamerFactory;
-            _uriConfiguration = uriConfiguration;
             _logger = logger;
+            _streamerFactory = streamerFactory;
+            _webSocketServerAdapter = webSocketServerAdapter;
         }
 
-        public void InitializeWebSocketServer()
+        public void Initialize()
         {
-            var wsUri = _uriConfiguration.GetWsUri();
-            var fullWsUri = wsUri + "/" + Id;
-            _webSocketServer = new WebSocketServer(fullWsUri);
-            _webSocketServer.AddWebSocketService("/mp3",
-                () => _streamerFactory.GetStreamingService(AudioDevice));
-
+            _path = $"/{Id}";
+            _streamer = _streamerFactory.GetStreamer(AudioDevice);
             IsInitialized = true;
         }
 
@@ -51,14 +47,22 @@ namespace LivestreamApp.Server.Streaming.Entities
 
         public void Start()
         {
-            _webSocketServer.Start();
-            IsStarted = true;
+            if (IsInitialized && HasValidAudioInput)
+            {
+                _streamer.Start();
+                _webSocketServerAdapter.AddAudioStreamingWebSocketService(_path, AudioDevice);
+                IsStarted = true;
+            }
         }
 
         public void Stop()
         {
-            _webSocketServer.Stop();
-            IsStarted = false;
+            if (IsStarted)
+            {
+                _streamer.Stop();
+                _webSocketServerAdapter.RemoveWebSocketService(_path);
+                IsStarted = false;
+            }
         }
     }
 }
