@@ -3,7 +3,6 @@ using LivestreamApp.Server.Streaming.Environment;
 using Ninject;
 using Ninject.Parameters;
 using Ninject.Syntax;
-using WebSocketSharp.Server;
 
 namespace LivestreamApp.Server.Streaming.WebSockets
 {
@@ -18,7 +17,7 @@ namespace LivestreamApp.Server.Streaming.WebSockets
             _streamerFactory = streamerFactory;
         }
 
-        public WebSocketBehavior GetAudioStreamingWebSocketervice(AudioDevice audioDevice)
+        public AudioStreamingWebSocketService GetAudioStreamingWebSocketervice(AudioDevice audioDevice)
         {
             var steamer = _streamerFactory.GetStreamer(audioDevice);
 

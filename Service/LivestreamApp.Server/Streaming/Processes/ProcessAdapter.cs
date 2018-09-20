@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 
 namespace LivestreamApp.Server.Streaming.Processes
 {
@@ -114,7 +115,7 @@ namespace LivestreamApp.Server.Streaming.Processes
 
             if (bytesRead > _buffer.Length)
             {
-                _logger.Warn("The specified buffer size was less than the stdout data chunk size");
+                _logger.Warn("The specified buffer size was less than the stdout data chunk size.");
             }
 
             var memoryStream = new MemoryStream();
@@ -127,7 +128,8 @@ namespace LivestreamApp.Server.Streaming.Processes
 
         private void OutDataReceived(byte[] bytes)
         {
-            OutputBytesReceived?.Invoke(null, new BytesReceivedEventArgs(bytes));
+            Interlocked.CompareExchange(ref OutputBytesReceived, null, null)?
+                .Invoke(null, new BytesReceivedEventArgs(bytes));
         }
 
         private void OutDataReceived(object sender, DataReceivedEventArgs e)

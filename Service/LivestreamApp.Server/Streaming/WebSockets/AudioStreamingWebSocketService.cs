@@ -16,16 +16,16 @@ namespace LivestreamApp.Server.Streaming.WebSockets
         {
             _logger = logger;
             _streamer = streamer;
-            _streamer.OutputBytesReceived += SendBytes;
         }
 
-        private void SendBytes(object sernder, BytesReceivedEventArgs e)
+        private void SendBytes(object sender, BytesReceivedEventArgs e)
         {
             Sessions.Broadcast(e.Bytes);
         }
 
         protected override void OnOpen()
         {
+            _streamer.OutputBytesReceived += SendBytes;
             _logger.Info("Client connected");
         }
 

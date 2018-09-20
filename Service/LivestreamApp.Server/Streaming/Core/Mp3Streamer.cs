@@ -2,9 +2,11 @@
 using LivestreamApp.Server.Streaming.Processes;
 using Ninject.Extensions.Logging;
 using System;
+using System.Threading;
 
 namespace LivestreamApp.Server.Streaming.Core
 {
+
     public class Mp3Streamer : IDisposable
     {
         private readonly ILogger _logger;
@@ -58,7 +60,7 @@ namespace LivestreamApp.Server.Streaming.Core
 
         private void OutputBytesReceivedHandler(object sender, BytesReceivedEventArgs e)
         {
-            OutputBytesReceived?.Invoke(null, e);
+            Interlocked.CompareExchange(ref OutputBytesReceived, null, null)?.Invoke(this, e);
         }
 
         public void Dispose()
