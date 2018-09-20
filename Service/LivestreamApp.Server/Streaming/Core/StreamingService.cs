@@ -1,83 +1,89 @@
-﻿using LivestreamApp.Server.Streaming.Environment;
-using LivestreamApp.Server.Streaming.Processes;
+﻿using LivestreamApp.Server.Streaming.Configuration;
+using LivestreamApp.Server.Streaming.Entities;
+using LivestreamApp.Server.Streaming.Environment;
+using LivestreamApp.Shared.Network;
 using Ninject.Extensions.Logging;
 using System;
-using WebSocketSharp;
-using WebSocketSharp.Server;
+using System.Collections.Generic;
 
 namespace LivestreamApp.Server.Streaming.Core
 {
-    public class StreamingService : WebSocketBehavior, IDisposable
+    public class StreamingService : IStreamingService, IDisposable
     {
         private readonly ILogger _logger;
-        private readonly IProcessAdapter _processAdapter;
-        private readonly AudioDevice _audioDevice;
-        private const string FileName = "ffmpeg.exe";
+        private readonly IHardware _hardware;
+        private readonly ILivestreamsConfiguration _livestreamsConfiguration;
+        private const string LivestreamsConfigFile = "Livestreams.config";
+        private Livestreams _livestreams;
+        private List<AudioDevice> _audioDevices;
 
-        public StreamingService(ILogger logger, IProcessAdapter processAdapter, AudioDevice audioDevice)
+        public StreamingService(ILogger logger,
+            IHardware hardware,
+            IStreamerFactory streamerFactory,
+            ILivestreamsConfiguration livestreamsConfiguration,
+            IUriConfiguration uriConfiguration)
         {
+            _hardware = hardware;
+            _livestreamsConfiguration = livestreamsConfiguration;
             _logger = logger;
-            _audioDevice = audioDevice;
-            _processAdapter = processAdapter;
-            IgnoreExtensions = true;
+
+            Start();
         }
 
-        private string GetArguments()
+        public List<Livestream> GetStartedLiveStreams()
         {
-            return
-                "-y -f dshow " +
-                $"-i audio=\"{_audioDevice.Id}\" " +
-                "-rtbufsize 64 " +
-                "-probesize 64 " +
-                "-acodec libmp3lame " +
-                "-ab 320k " +
-                "-ar 44100 " +
-                "-ac 1 " +
-                "-reservoir 0 " +
-                "-f mp3 " +
-                "-hide_banner " +
-                "-fflags " +
-                "+nobuffer " +
-                "pipe:1";
+            if (_livestreams == null)
+                throw new ArgumentException("StreamingService is not initialized.");
+
+            return _livestreams.GetStarted();
         }
 
-        public void Start()
+        private void Start()
         {
-            var arguments = GetArguments();
-            _processAdapter.OutputBytesReceived += OutputBytesReceivedHandler;
-            _processAdapter.ExecuteAndReadAsync(FileName, arguments, 4000);
+            Initialize();
+            StartStreams();
 
-            _logger.Info($"Started capturing audio on input {_audioDevice.Id}.");
+            _logger.Info("StreamingService started.");
+        }
+
+        private void Initialize()
+        {
+            _audioDevices = _hardware.GetAudioDevices();
+            _livestreams = _livestreamsConfiguration.GetAvailableStreams(LivestreamsConfigFile);
+            _livestreams.InitializeStreams(_audioDevices);
+        }
+
+
+        public void StartStreams()
+        {
+            _livestreams.StartStreams();
+        }
+
+
+        public void StopStreams()
+        {
+            _livestreams.StartStreams();
+        }
+
+
+        public void StartStream(string id)
+        {
+            _livestreams.StartStream(id);
+        }
+
+        public void StopStream(string id)
+        {
+            _livestreams.StopStream(id);
         }
 
         public void Stop()
         {
-            _processAdapter.OutputBytesReceived -= OutputBytesReceivedHandler;
-            _processAdapter.KillProcess();
-
-            _logger.Info($"Stopped capturing audio on input {_audioDevice.Id}.");
-        }
-
-        private void OutputBytesReceivedHandler(object sender, BytesReceivedEventArgs e)
-        {
-            Sessions?.Broadcast(e.Bytes);
-        }
-
-        protected override void OnOpen()
-        {
-            _logger.Info("New client connected.");
-            base.OnOpen();
-        }
-
-        protected override void OnClose(CloseEventArgs e)
-        {
-            _logger.Info("Client disconnected.");
-            base.OnClose(e);
+            _logger.Info("StreamingService stopped.");
         }
 
         public void Dispose()
         {
-            Stop();
+            _logger.Info("StreamingService disposed.");
         }
     }
 }

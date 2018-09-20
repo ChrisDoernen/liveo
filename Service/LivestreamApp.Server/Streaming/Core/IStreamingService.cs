@@ -3,10 +3,9 @@ using System.Collections.Generic;
 
 namespace LivestreamApp.Server.Streaming.Core
 {
-    public interface IStreamingServerCore
+    public interface IStreamingService
     {
         List<Livestream> GetStartedLiveStreams();
-        void ShutdownServer();
         void StartStream(string id);
         void StartStreams();
         void StopStream(string id);

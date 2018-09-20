@@ -10,12 +10,12 @@ namespace LivestreamApp.Server.AppConfiguration
     {
         public override void Load()
         {
-            Bind<IStreamingServerCore>().To<StreamingServerCore>().InSingletonScope();
+            Bind<IStreamingService>().To<StreamingService>().InSingletonScope();
             Bind<ILivestreamsConfiguration>().To<LivestreamsConfiguration>();
             Bind<IHardware>().To<Hardware>();
             Bind<IProcessAdapter>().To<ProcessAdapter>();
             Bind<IAudioDeviceDetector>().To<AudioDeviceDetector>();
-            Bind<IStreamingServiceFactory>().To<StreamingServiceFactory>();
+            Bind<IStreamerFactory>().To<StreamerFactory>();
         }
     }
 }

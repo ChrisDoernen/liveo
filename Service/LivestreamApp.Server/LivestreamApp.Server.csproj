@@ -68,9 +68,9 @@
     <Compile Include="AppConfiguration\AutoMapperModule.cs" />
     <Compile Include="AppConfiguration\ServerModule.cs" />
     <Compile Include="Streaming\Configuration\ILivestreamsConfiguration.cs" />
-    <Compile Include="Streaming\Core\StreamingService.cs" />
-    <Compile Include="Streaming\Core\StreamingServiceFactory.cs" />
-    <Compile Include="Streaming\Core\IStreamingServiceFactory.cs" />
+    <Compile Include="Streaming\Core\Mp3Streamer.cs" />
+    <Compile Include="Streaming\Core\StreamerFactory.cs" />
+    <Compile Include="Streaming\Core\IStreamerFactory.cs" />
     <Compile Include="Streaming\Environment\Hardware.cs" />
     <Compile Include="AppConfiguration\ServerProfile.cs" />
     <Compile Include="Streaming\Configuration\LivestreamsConfiguration.cs" />
@@ -82,8 +82,8 @@
     <Compile Include="Streaming\Environment\AudioDevice.cs" />
     <Compile Include="Streaming\Entities\Livestream.cs" />
     <Compile Include="Streaming\Entities\Livestreams.cs" />
-    <Compile Include="Streaming\Core\IStreamingServerCore.cs" />
-    <Compile Include="Streaming\Core\StreamingServerCore.cs" />
+    <Compile Include="Streaming\Core\IStreamingService.cs" />
+    <Compile Include="Streaming\Core\StreamingService.cs" />
     <Compile Include="Streaming\Environment\IAudioDeviceDetector.cs" />
     <Compile Include="Shared\XmlSerialization\XmlUtilities.cs" />
     <Compile Include="Streaming\Processes\BytesReceivedEventArgs.cs" />

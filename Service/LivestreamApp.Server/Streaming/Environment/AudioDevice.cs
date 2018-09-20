@@ -2,11 +2,24 @@
 {
     public class AudioDevice
     {
-        public string Id;
+        public readonly string Id;
 
         public AudioDevice(string id)
         {
             Id = id;
+        }
+
+        public override bool Equals(object obj)
+        {
+            var audioDevice = (AudioDevice)obj;
+
+            return audioDevice != null
+                && audioDevice.Id == Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
         }
     }
 }

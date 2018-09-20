@@ -52,5 +52,10 @@ namespace LivestreamApp.Server.Streaming.Entities
         {
             Streams.First(ls => ls.Id == id).Stop();
         }
+
+        public List<Livestream> GetStarted()
+        {
+            return Streams.Where(ls => ls.IsStarted).ToList();
+        }
     }
 }

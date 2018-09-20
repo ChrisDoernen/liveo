@@ -6,12 +6,12 @@ namespace LivestreamApp.Api.Modules
 {
     public class LivestreamsModule : NancyModule
     {
-        public LivestreamsModule(ILogger logger, IStreamingServerCore streamingServerCore)
+        public LivestreamsModule(ILogger logger, IStreamingService streamingService)
             : base("/api")
         {
             Get["/livestreams"] = _ =>
             {
-                var livestreams = streamingServerCore.GetStartedLiveStreams();
+                var livestreams = streamingService.GetStartedLiveStreams();
 
                 logger.Info($"api/livestreams was invoked, returned {livestreams.Count} livestreams.");
 

@@ -22,13 +22,13 @@ namespace LivestreamApp.Server.Streaming.Entities
         private WebSocketServer _webSocketServer;
 
         private readonly IUriConfiguration _uriConfiguration;
-        private readonly IStreamingServiceFactory _streamingServiceFactory;
+        private readonly IStreamerFactory _streamerFactory;
         private readonly ILogger _logger;
 
-        public Livestream(ILogger logger, IStreamingServiceFactory streamingServiceFactory,
+        public Livestream(ILogger logger, IStreamerFactory streamerFactory,
             IUriConfiguration uriConfiguration)
         {
-            _streamingServiceFactory = streamingServiceFactory;
+            _streamerFactory = streamerFactory;
             _uriConfiguration = uriConfiguration;
             _logger = logger;
         }
@@ -36,16 +36,17 @@ namespace LivestreamApp.Server.Streaming.Entities
         public void InitializeWebSocketServer()
         {
             var wsUri = _uriConfiguration.GetWsUri();
-            _webSocketServer = new WebSocketServer(wsUri);
-            _webSocketServer.AddWebSocketService(Id,
-                () => _streamingServiceFactory.GetStreamingService(AudioDevice));
+            var fullWsUri = wsUri + "/" + Id;
+            _webSocketServer = new WebSocketServer(fullWsUri);
+            _webSocketServer.AddWebSocketService("/mp3",
+                () => _streamerFactory.GetStreamingService(AudioDevice));
 
             IsInitialized = true;
         }
 
         public void ValidateAudioInput(List<AudioDevice> audioDevices)
         {
-            HasValidAudioInput = audioDevices.FirstOrDefault(d => d.Id == AudioDevice.Id) != null;
+            HasValidAudioInput = audioDevices.FirstOrDefault(d => d.Equals(AudioDevice)) != null;
         }
 
         public void Start()

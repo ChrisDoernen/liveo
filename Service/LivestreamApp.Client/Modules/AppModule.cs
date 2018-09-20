@@ -6,7 +6,7 @@ namespace LivestreamApp.Client.Modules
 {
     public class LivestreamsModule : NancyModule
     {
-        public LivestreamsModule(ILogger logger, IStreamingServerCore streamingServerCore)
+        public LivestreamsModule(ILogger logger, IStreamingService streamingService)
             : base("/app")
         {
             Get["/"] = _ =>

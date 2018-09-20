@@ -18,7 +18,7 @@ namespace LivestreamApp.Api.Test.Tests
         public void GetLivestreams_ShouldGetStatusOKWithCorrectResponseJson()
         {
             // Given
-            var mockStreamingServer = new Mock<IStreamingServerCore>();
+            var mockStreamingServer = new Mock<IStreamingService>();
             mockStreamingServer.Setup(mss => mss.GetStartedLiveStreams()).Returns(new List<Livestream>());
             var mockLogger = new Mock<ILogger>();
 
