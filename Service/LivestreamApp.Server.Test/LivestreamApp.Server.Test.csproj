@@ -90,6 +90,8 @@
     <Compile Include="Tests\AudioInputDetectorTest.cs" />
     <Compile Include="Tests\StreamerFactoryTest.cs" />
     <Compile Include="Tests\Mp3StreamerTest.cs" />
+    <Compile Include="Tests\HardwareTest.cs" />
+    <Compile Include="Tests\AudioDeviceTest.cs" />
     <Compile Include="Tests\XmlUtilitiesTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
