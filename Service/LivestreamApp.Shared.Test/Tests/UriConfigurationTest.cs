@@ -3,19 +3,30 @@ using LivestreamApp.Shared.AppSettings;
 using LivestreamApp.Shared.Network;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Ninject;
+using Ninject.MockingKernel.Moq;
 
 namespace LivestreamApp.Shared.Test.Tests
 {
     [TestClass]
     public class UriConfigurationTest
     {
-        private UriConfiguration _uriConfiguration;
-        private readonly Mock<IAppSettingsProvider> _appSettingsProvider = new Mock<IAppSettingsProvider>();
+        private readonly MoqMockingKernel _kernel;
+        private Mock<IAppSettingsProvider> _appSettingsProvider;
+        private IUriConfiguration _uriConfiguration;
+
+        public UriConfigurationTest()
+        {
+            _kernel = new MoqMockingKernel();
+            _kernel.Bind<IUriConfiguration>().To<UriConfiguration>();
+        }
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _uriConfiguration = new UriConfiguration(_appSettingsProvider.Object);
+            _kernel.Reset();
+            _appSettingsProvider = _kernel.GetMock<IAppSettingsProvider>();
+            _uriConfiguration = _kernel.Get<IUriConfiguration>();
         }
 
         [TestMethod]

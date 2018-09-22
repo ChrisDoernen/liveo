@@ -2,6 +2,8 @@
 using LivestreamApp.Shared.AppSettings;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Ninject;
+using Ninject.MockingKernel.Moq;
 using System;
 
 namespace LivestreamApp.Shared.Test.Tests
@@ -9,16 +11,23 @@ namespace LivestreamApp.Shared.Test.Tests
     [TestClass]
     public class AppSettingsProviderTest
     {
+        private readonly MoqMockingKernel _kernel;
         private IAppSettingsProvider _appSettingsProvider;
-        private readonly Mock<IConfigurationManagerAdapter> _mockConfigurationManagerAdapter =
-            new Mock<IConfigurationManagerAdapter>();
+        private Mock<IConfigurationManagerAdapter> _mockConfigurationManagerAdapter;
+
+        public AppSettingsProviderTest()
+        {
+            _kernel = new MoqMockingKernel();
+            _kernel.Bind<IAppSettingsProvider>().To<AppSettingsProvider>();
+        }
 
         [TestInitialize]
         public void TestInittialize()
         {
-            _appSettingsProvider = new AppSettingsProvider(_mockConfigurationManagerAdapter.Object);
+            _kernel.Reset();
+            _mockConfigurationManagerAdapter = _kernel.GetMock<IConfigurationManagerAdapter>();
+            _appSettingsProvider = _kernel.Get<IAppSettingsProvider>();
         }
-
 
         [TestMethod]
         public void GetStringValue_ValidInput_ShouldReturnCorrectValue()
