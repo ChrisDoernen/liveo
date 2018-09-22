@@ -16,7 +16,7 @@ namespace LivestreamApp.Server.Test.Tests
     {
         private readonly MoqMockingKernel _kernel;
 
-        private readonly Mock<ILogger> _mockLogger = new Mock<ILogger>();
+        private Mock<ILogger> _mockLogger;
         private Mock<IProcessAdapter> _mockProcessAdapter;
         private IAudioDeviceDetector _audioDeviceDetector;
         private const string ffmpegOutputOneDevice = "TestResources\\ffmpeg\\ffmpegListDevicesOutputOneDeviceAvailable.txt";
@@ -34,6 +34,7 @@ namespace LivestreamApp.Server.Test.Tests
             _kernel.Reset();
             _audioDeviceDetector = _kernel.Get<IAudioDeviceDetector>();
             _mockProcessAdapter = _kernel.GetMock<IProcessAdapter>();
+            _mockLogger = _kernel.GetMock<ILogger>();
         }
 
         [TestMethod]
