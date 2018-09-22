@@ -4,6 +4,6 @@ namespace LivestreamApp.Server.Streaming.WebSockets
 {
     public interface IWebSocketServiceFactory
     {
-        AudioStreamingWebSocketService GetAudioStreamingWebSocketervice(AudioDevice audioDevice);
+        StreamingWebSocketService GetAudioStreamingWebSocketervice(AudioDevice audioDevice);
     }
 }

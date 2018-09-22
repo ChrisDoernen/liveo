@@ -1,5 +1,5 @@
-﻿using LivestreamApp.Server.Streaming.Core;
-using LivestreamApp.Server.Streaming.Environment;
+﻿using LivestreamApp.Server.Streaming.Environment;
+using LivestreamApp.Server.Streaming.Streamer;
 using LivestreamApp.Server.Streaming.WebSockets;
 using Ninject.Extensions.Logging;
 using System.Collections.Generic;
@@ -22,7 +22,7 @@ namespace LivestreamApp.Server.Streaming.Entities
         private readonly IWebSocketServerAdapter _webSocketServerAdapter;
         private readonly IStreamerFactory _streamerFactory;
         private readonly ILogger _logger;
-        private Mp3Streamer _streamer;
+        private IStreamer _streamer;
         private string _path;
 
         public Livestream(ILogger logger, IStreamerFactory streamerFactory,
@@ -36,7 +36,7 @@ namespace LivestreamApp.Server.Streaming.Entities
         public void Initialize()
         {
             _path = $"/{Id}";
-            _streamer = _streamerFactory.GetStreamer(AudioDevice);
+            _streamer = _streamerFactory.GetAudioStreamer(AudioDevice);
             IsInitialized = true;
         }
 

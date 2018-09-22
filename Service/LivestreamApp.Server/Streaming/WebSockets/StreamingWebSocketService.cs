@@ -1,5 +1,5 @@
-﻿using LivestreamApp.Server.Streaming.Core;
-using LivestreamApp.Server.Streaming.Processes;
+﻿using LivestreamApp.Server.Streaming.Processes;
+using LivestreamApp.Server.Streaming.Streamer;
 using Ninject.Extensions.Logging;
 using System;
 using WebSocketSharp;
@@ -7,12 +7,12 @@ using WebSocketSharp.Server;
 
 namespace LivestreamApp.Server.Streaming.WebSockets
 {
-    public class AudioStreamingWebSocketService : WebSocketBehavior, IDisposable
+    public class StreamingWebSocketService : WebSocketBehavior, IDisposable
     {
-        private readonly Mp3Streamer _streamer;
+        private readonly IStreamer _streamer;
         private readonly ILogger _logger;
 
-        public AudioStreamingWebSocketService(ILogger logger, Mp3Streamer streamer)
+        public StreamingWebSocketService(ILogger logger, IStreamer streamer)
         {
             _logger = logger;
             _streamer = streamer;
@@ -25,7 +25,7 @@ namespace LivestreamApp.Server.Streaming.WebSockets
 
         protected override void OnOpen()
         {
-            _streamer.OutputBytesReceived += SendBytes;
+            _streamer.BytesReceived += SendBytes;
             _logger.Info("Client connected");
         }
 
@@ -36,7 +36,7 @@ namespace LivestreamApp.Server.Streaming.WebSockets
 
         public void Dispose()
         {
-            _streamer.OutputBytesReceived -= SendBytes;
+            _streamer.BytesReceived -= SendBytes;
         }
     }
 }

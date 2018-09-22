@@ -1,5 +1,5 @@
-﻿using LivestreamApp.Server.Streaming.Core;
-using LivestreamApp.Server.Streaming.Environment;
+﻿using LivestreamApp.Server.Streaming.Environment;
+using LivestreamApp.Server.Streaming.Streamer;
 using Ninject;
 using Ninject.Parameters;
 using Ninject.Syntax;
@@ -17,11 +17,11 @@ namespace LivestreamApp.Server.Streaming.WebSockets
             _streamerFactory = streamerFactory;
         }
 
-        public AudioStreamingWebSocketService GetAudioStreamingWebSocketervice(AudioDevice audioDevice)
+        public StreamingWebSocketService GetAudioStreamingWebSocketervice(AudioDevice audioDevice)
         {
-            var steamer = _streamerFactory.GetStreamer(audioDevice);
+            var steamer = _streamerFactory.GetAudioStreamer(audioDevice);
 
-            var service = _kernel.Get<AudioStreamingWebSocketService>(
+            var service = _kernel.Get<StreamingWebSocketService>(
                 new ConstructorArgument("streamer", steamer));
 
             return service;

@@ -4,22 +4,23 @@ using Ninject.Extensions.Logging;
 using System;
 using System.Threading;
 
-namespace LivestreamApp.Server.Streaming.Core
+namespace LivestreamApp.Server.Streaming.Streamer
 {
 
-    public class Mp3Streamer : IDisposable
+    public class Mp3Streamer : IStreamer
     {
         private readonly ILogger _logger;
         private readonly IProcessAdapter _processAdapter;
         public AudioDevice AudioDevice { get; }
         private const string FileName = "ffmpeg.exe";
-        public event EventHandler<BytesReceivedEventArgs> OutputBytesReceived;
+        public event EventHandler<BytesReceivedEventArgs> BytesReceived;
 
         public Mp3Streamer(ILogger logger, IProcessAdapter processAdapter, AudioDevice audioDevice)
         {
             _logger = logger;
             AudioDevice = audioDevice;
             _processAdapter = processAdapter;
+            _logger.Info($"Initialized Mp3Streamer on audio device {AudioDevice.Id}.");
         }
 
         private string GetArguments()
@@ -60,12 +61,7 @@ namespace LivestreamApp.Server.Streaming.Core
 
         private void OutputBytesReceivedHandler(object sender, BytesReceivedEventArgs e)
         {
-            Interlocked.CompareExchange(ref OutputBytesReceived, null, null)?.Invoke(this, e);
-        }
-
-        public void Dispose()
-        {
-            Stop();
+            Interlocked.CompareExchange(ref BytesReceived, null, null)?.Invoke(this, e);
         }
     }
 }

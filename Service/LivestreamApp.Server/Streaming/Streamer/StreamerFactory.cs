@@ -5,7 +5,7 @@ using Ninject.Syntax;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LivestreamApp.Server.Streaming.Core
+namespace LivestreamApp.Server.Streaming.Streamer
 {
     public class StreamerFactory : IStreamerFactory
     {
@@ -17,7 +17,7 @@ namespace LivestreamApp.Server.Streaming.Core
             _kernel = kernel;
         }
 
-        public Mp3Streamer GetStreamer(AudioDevice audioDevice)
+        public IStreamer GetAudioStreamer(AudioDevice audioDevice)
         {
             var streamer = _streamers.FirstOrDefault(s => s.AudioDevice.Equals(audioDevice));
 
