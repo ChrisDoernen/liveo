@@ -36,6 +36,11 @@ namespace LivestreamApp.Server.Streaming.WebSockets
             _logger.Info("Client disconnected");
         }
 
+        protected override void OnError(ErrorEventArgs e)
+        {
+            _logger.Info($"WebSocket service error: {e}");
+        }
+
         public void Dispose()
         {
             _streamer.BytesReceived -= SendBytes;

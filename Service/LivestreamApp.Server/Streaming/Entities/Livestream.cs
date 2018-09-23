@@ -13,11 +13,12 @@ namespace LivestreamApp.Server.Streaming.Entities
         public string Title { get; set; }
         public string Description { get; set; }
         public string CountryCode { get; set; }
+
         public Device Device { get; set; }
         public bool StartOnServiceStartup { get; set; }
-        public bool IsStarted { get; set; }
-        public bool HasValidAudioInput { get; set; }
-        public bool IsInitialized { get; set; }
+        public bool IsStarted { get; private set; }
+        public bool IsInitialized { get; private set; }
+        public bool HasValidAudioInput { get; private set; }
 
         private readonly IWebSocketServerAdapter _webSocketServerAdapter;
         private readonly IStreamerFactory _streamerFactory;
@@ -33,10 +34,20 @@ namespace LivestreamApp.Server.Streaming.Entities
             _webSocketServerAdapter = webSocketServerAdapter;
         }
 
-        public void Initialize()
+        public void Initialize(List<AudioDevice> audioDevices)
         {
+            ValidateAudioInput(audioDevices);
             _path = $"/{Id}";
-            _streamer = _streamerFactory.GetStreamer(Device);
+
+            if (HasValidAudioInput)
+            {
+                _streamer = _streamerFactory.GetStreamer(Device);
+            }
+            else
+            {
+                _logger.Warn($"Livestream {Id} has invalid audio input.");
+            }
+
             IsInitialized = true;
         }
 

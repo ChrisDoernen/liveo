@@ -19,7 +19,7 @@ namespace LivestreamApp.Server.Streaming.Streamer
             _logger = logger;
             AudioDevice = audioDevice;
             _processAdapter = processAdapter;
-            _logger.Info($"Initialized Mp3Streamer on audio device {AudioDevice.Id}.");
+            _logger.Info($"Initialized {nameof(Mp3Streamer)} on audio device {AudioDevice.Id}.");
         }
 
         private string GetArguments()
