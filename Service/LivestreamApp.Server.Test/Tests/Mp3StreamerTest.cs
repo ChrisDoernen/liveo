@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
-using LivestreamApp.Server.Streaming.Environment;
+using LivestreamApp.Server.Streaming.Environment.Devices;
 using LivestreamApp.Server.Streaming.Processes;
-using LivestreamApp.Server.Streaming.Streamer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Ninject;
@@ -36,10 +35,10 @@ namespace LivestreamApp.Server.Test.Tests
         public void Start_ShouldStartProcess()
         {
             // Given when
-            _mp3Streamer.Start();
+            _mp3Streamer.StartStraming();
 
             // Then
-            _process.Verify(mpa => mpa.ExecuteAndReadAsync("ffmpeg.exe", It.IsAny<string>(), It.IsAny<int>()), Times.Once);
+            _process.Verify(mpa => mpa.ExecuteAndReadBinaryAsync("ffmpeg.exe", It.IsAny<string>(), It.IsAny<int>()), Times.Once);
         }
 
         [TestMethod]
@@ -47,11 +46,11 @@ namespace LivestreamApp.Server.Test.Tests
         {
             // Given
             var bytes = new BytesReceivedEventArgs(new byte[] { 1, 0, 1 });
-            _process.Setup(mp => mp.ExecuteAndReadAsync("ffmpeg.exe", It.IsAny<string>(), It.IsAny<int>()))
+            _process.Setup(mp => mp.ExecuteAndReadBinaryAsync("ffmpeg.exe", It.IsAny<string>(), It.IsAny<int>()))
                 .Raises(x => x.OutputBytesReceived += null, bytes);
 
             // When 
-            _mp3Streamer.Start();
+            _mp3Streamer.StartStraming();
 
             // Then
             _mp3Streamer.BytesReceived += (sender, data) => { data.Should().Be(bytes); };
@@ -61,7 +60,7 @@ namespace LivestreamApp.Server.Test.Tests
         public void Stop_ShouldStopProcess()
         {
             // Given when
-            _mp3Streamer.Stop();
+            _mp3Streamer.StopStreaming();
 
             // Then
             _process.Verify(mpa => mpa.KillProcess(), Times.Once);

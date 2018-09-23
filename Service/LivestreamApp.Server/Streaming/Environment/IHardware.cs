@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using LivestreamApp.Server.Streaming.Environment.Devices;
+using System.Collections.Generic;
 
 namespace LivestreamApp.Server.Streaming.Environment
 {

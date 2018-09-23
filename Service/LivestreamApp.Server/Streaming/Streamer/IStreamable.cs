@@ -3,11 +3,10 @@ using System;
 
 namespace LivestreamApp.Server.Streaming.Streamer
 {
-    public interface IStreamer
+    public interface IStreamable
     {
         event EventHandler<BytesReceivedEventArgs> BytesReceived;
-        string DeviceId();
-        void Start();
-        void Stop();
+        void StartStreaming();
+        void StopStreaming();
     }
 }

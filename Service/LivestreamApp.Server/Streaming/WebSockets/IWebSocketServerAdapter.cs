@@ -6,7 +6,7 @@ namespace LivestreamApp.Server.Streaming.WebSockets
     {
         void StartWebSocketServer();
         void StopWebSocketServer();
-        void AddStreamingWebSocketService(string path, IStreamer streamer);
+        void AddStreamingWebSocketService(string path, IStreamable streamer);
         void RemoveWebSocketService(string path);
     }
 }

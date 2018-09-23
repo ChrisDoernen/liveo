@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace LivestreamApp.Server.Streaming.Environment
+namespace LivestreamApp.Server.Streaming.Environment.Devices
 {
     public interface IAudioDeviceDetector
     {

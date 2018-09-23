@@ -1,4 +1,4 @@
-﻿namespace LivestreamApp.Server.Streaming.Environment
+﻿namespace LivestreamApp.Server.Streaming.Environment.Devices
 {
     /// <summary>
     ///     Represents either an audio or video device

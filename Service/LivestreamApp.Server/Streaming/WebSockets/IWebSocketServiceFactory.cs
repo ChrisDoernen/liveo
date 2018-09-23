@@ -4,6 +4,6 @@ namespace LivestreamApp.Server.Streaming.WebSockets
 {
     public interface IWebSocketServiceFactory
     {
-        StreamingWebSocketService GetStreamingWebSocketervice(IStreamer streamer);
+        StreamingWebSocketService GetStreamingWebSocketervice(IStreamable streamer);
     }
 }

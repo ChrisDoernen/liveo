@@ -1,4 +1,4 @@
-﻿using LivestreamApp.Server.Streaming.Environment;
+﻿using LivestreamApp.Server.Streaming.Environment.Devices;
 using LivestreamApp.Server.Streaming.Streamer;
 using LivestreamApp.Server.Streaming.WebSockets;
 using Ninject.Extensions.Logging;
@@ -21,16 +21,16 @@ namespace LivestreamApp.Server.Streaming.Entities
         public bool HasValidAudioInput { get; private set; }
 
         private readonly IWebSocketServerAdapter _webSocketServerAdapter;
-        private readonly IStreamerFactory _streamerFactory;
+        private readonly IDeviceManager _deviceManager;
         private readonly ILogger _logger;
-        private IStreamer _streamer;
+        private IStreamable _streamer;
         private string _path;
 
-        public Livestream(ILogger logger, IStreamerFactory streamerFactory,
+        public Livestream(ILogger logger, IDeviceManager deviceManager,
             IWebSocketServerAdapter webSocketServerAdapter)
         {
             _logger = logger;
-            _streamerFactory = streamerFactory;
+            _deviceManager = deviceManager;
             _webSocketServerAdapter = webSocketServerAdapter;
         }
 
@@ -41,7 +41,7 @@ namespace LivestreamApp.Server.Streaming.Entities
 
             if (HasValidAudioInput)
             {
-                _streamer = _streamerFactory.GetStreamer(Device);
+                _streamer = _deviceManager.GetAudioDevice(Device.Id);
             }
             else
             {
@@ -60,7 +60,7 @@ namespace LivestreamApp.Server.Streaming.Entities
         {
             if (IsInitialized && HasValidAudioInput && StartOnServiceStartup)
             {
-                _streamer.Start();
+                _streamer.StartStreaming();
                 _webSocketServerAdapter.AddStreamingWebSocketService(_path, _streamer);
                 IsStarted = true;
             }
@@ -70,7 +70,7 @@ namespace LivestreamApp.Server.Streaming.Entities
         {
             if (IsStarted)
             {
-                _streamer.Stop();
+                _streamer.StopStreaming();
                 _webSocketServerAdapter.RemoveWebSocketService(_path);
                 IsStarted = false;
             }

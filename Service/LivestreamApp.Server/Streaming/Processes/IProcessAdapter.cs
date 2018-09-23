@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LivestreamApp.Server.Streaming.Streamer;
+using System;
 using System.Diagnostics;
 
 namespace LivestreamApp.Server.Streaming.Processes
@@ -28,26 +29,23 @@ namespace LivestreamApp.Server.Streaming.Processes
         /// <summary>
         ///     Executes the specified process synchronously.
         /// </summary>
-        /// <param name="file">File to execute</param>
-        /// <param name="arguments">Arguments to apply</param>
+        /// <param name="settings">Object providing settings for process execution</param>
         /// <returns>ProcessResult</returns>
-        ProcessResult ExecuteAndReadSync(string file, string arguments);
+        ProcessResult ExecuteAndReadSync(ProcessSettings settings);
 
         /// <summary>
         ///     Executes the specified process asynchronously
         /// </summary>
-        /// <param name="file">File to execute</param>
-        /// <param name="arguments">Arguments to apply</param>
-        void ExecuteAndReadAsync(string file, string arguments);
+        /// <param name="processSettings">Object providing settings for process execution</param>
+        void ExecuteAndReadAsync(ProcessSettings processSettings);
 
         /// <summary>
         ///     Executes the specified process asynchronously with enabled binary output
-        ///     using the domain specific buffer size
+        ///     internally using the domain specific buffer size for reading the
+        ///     process data output
         /// </summary>
-        /// <param name="file">File to execute</param>
-        /// <param name="arguments">Arguments to apply</param>
-        /// <param name="bufferSize">The size of the internal buffer</param>
-        void ExecuteAndReadAsync(string file, string arguments, int bufferSize);
+        /// <param name="processSettings">Object providing settings for process execution</param>
+        void ExecuteAndReadBinaryAsync(ProcessSettings processSettings);
 
         /// <summary>
         ///     Indicates if the started process is responding

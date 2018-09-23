@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using LivestreamApp.Server.Streaming.Environment;
+using LivestreamApp.Server.Streaming.Environment.Devices;
 using LivestreamApp.Server.Streaming.Processes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;

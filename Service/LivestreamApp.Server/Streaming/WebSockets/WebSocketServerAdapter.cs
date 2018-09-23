@@ -51,7 +51,7 @@ namespace LivestreamApp.Server.Streaming.WebSockets
             }
         }
 
-        public void AddStreamingWebSocketService(string path, IStreamer streamer)
+        public void AddStreamingWebSocketService(string path, IStreamable streamer)
         {
             _webSocketServer.AddWebSocketService(path,
                 () => _webSocketServiceFactory.GetStreamingWebSocketervice(streamer));

@@ -1,4 +1,4 @@
-﻿using LivestreamApp.Server.Streaming.Environment;
+﻿using LivestreamApp.Server.Streaming.Environment.Devices;
 using Ninject.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;

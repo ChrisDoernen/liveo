@@ -9,10 +9,10 @@ namespace LivestreamApp.Server.Streaming.WebSockets
 {
     public class StreamingWebSocketService : WebSocketBehavior, IDisposable
     {
-        private readonly IStreamer _streamer;
+        private readonly IStreamable _streamer;
         private readonly ILogger _logger;
 
-        public StreamingWebSocketService(ILogger logger, IStreamer streamer)
+        public StreamingWebSocketService(ILogger logger, IStreamable streamer)
         {
             _logger = logger;
             _streamer = streamer;

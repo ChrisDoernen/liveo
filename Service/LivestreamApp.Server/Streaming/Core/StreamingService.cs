@@ -1,7 +1,7 @@
 ﻿using LivestreamApp.Server.Streaming.Configuration;
 using LivestreamApp.Server.Streaming.Entities;
 using LivestreamApp.Server.Streaming.Environment;
-using LivestreamApp.Server.Streaming.Streamer;
+using LivestreamApp.Server.Streaming.Environment.Devices;
 using LivestreamApp.Server.Streaming.WebSockets;
 using LivestreamApp.Shared.Network;
 using Ninject.Extensions.Logging;
@@ -22,7 +22,7 @@ namespace LivestreamApp.Server.Streaming.Core
 
         public StreamingService(ILogger logger,
             IHardware hardware,
-            IStreamerFactory streamerFactory,
+            IDeviceManager deviceManager,
             ILivestreamsConfiguration livestreamsConfiguration,
             IWebSocketServerAdapter webSocketServerAdapter,
             IUriConfiguration uriConfiguration)
