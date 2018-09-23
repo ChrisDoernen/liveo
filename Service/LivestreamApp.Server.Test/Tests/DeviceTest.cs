@@ -5,9 +5,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace LivestreamApp.Server.Test.Tests
 {
     [TestClass]
-    public class AudioDeviceTest
+    public class DeviceTest
     {
-        private readonly AudioDevice _audioDevice = new AudioDevice("Mikro");
+        private readonly Device _audioDevice = new AudioDevice("Mikro");
 
         [TestMethod]
         public void Equals_ShouldGetRightValueWhenNotTheSame()
