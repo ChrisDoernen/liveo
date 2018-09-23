@@ -16,7 +16,7 @@ namespace LivestreamApp.Server.Test.Tests
     {
         private readonly MoqMockingKernel _kernel;
         private Livestream _livestream;
-        private Mock<IDeviceManager> _mockStreamerFactory;
+        private Mock<IDeviceFactory> _mockStreamerFactory;
         private Mock<IStreamable> _mockStreamer;
         private Mock<IWebSocketServerAdapter> _mockWebSocketServerAdapter;
 
@@ -31,7 +31,7 @@ namespace LivestreamApp.Server.Test.Tests
         {
             _kernel.Reset();
             _livestream = _kernel.Get<Livestream>();
-            _mockStreamerFactory = _kernel.GetMock<IDeviceManager>();
+            _mockStreamerFactory = _kernel.GetMock<IDeviceFactory>();
             _mockStreamer = _kernel.GetMock<IStreamable>();
             _mockWebSocketServerAdapter = _kernel.GetMock<IWebSocketServerAdapter>();
         }

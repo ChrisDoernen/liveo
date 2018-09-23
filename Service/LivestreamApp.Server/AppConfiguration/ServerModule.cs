@@ -16,9 +16,9 @@ namespace LivestreamApp.Server.AppConfiguration
             Bind<ILivestreamsConfiguration>().To<LivestreamsConfiguration>();
             Bind<IHardware>().To<Hardware>();
             Bind<IProcessAdapter>().To<ProcessAdapter>();
-            Bind<IAudioDeviceDetector>().To<AudioDeviceDetector>();
+            Bind<IAudioDeviceManager>().To<AudioDeviceManager>();
             Bind<AudioDevice>().ToSelf();
-            Bind<IDeviceManager>().To<DeviceManager>().InSingletonScope();
+            Bind<IDeviceFactory>().To<DeviceFactory>().InSingletonScope();
             Bind<IWebSocketServerAdapter>().To<WebSocketServerAdapter>().InSingletonScope();
             Bind<IWebSocketServiceFactory>().To<WebSocketServiceFactory>().InSingletonScope();
         }

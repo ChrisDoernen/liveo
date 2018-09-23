@@ -14,10 +14,10 @@ namespace LivestreamApp.Server.Streaming.WebSockets
             _kernel = kernel;
         }
 
-        public StreamingWebSocketService GetStreamingWebSocketervice(IStreamable streamer)
+        public StreamingWebSocketService GetStreamingWebSocketervice(IStreamable source)
         {
             var service = _kernel.Get<StreamingWebSocketService>(
-                new ConstructorArgument("streamer", streamer));
+                new ConstructorArgument("source", source));
 
             return service;
         }

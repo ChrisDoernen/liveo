@@ -5,16 +5,16 @@ namespace LivestreamApp.Server.Streaming.Environment
 {
     public class Hardware : IHardware
     {
-        private readonly IAudioDeviceDetector _audioDeviceDetector;
+        private readonly IAudioDeviceManager _audioDeviceManager;
 
-        public Hardware(IAudioDeviceDetector audioDeviceDetector)
+        public Hardware(IAudioDeviceManager audioDeviceManager)
         {
-            _audioDeviceDetector = audioDeviceDetector;
+            _audioDeviceManager = audioDeviceManager;
         }
 
         public List<AudioDevice> GetAudioDevices()
         {
-            return _audioDeviceDetector.GetAudioDevices();
+            return _audioDeviceManager.GetAudioDevices();
         }
     }
 }

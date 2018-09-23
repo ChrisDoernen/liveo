@@ -1,5 +1,4 @@
-﻿using LivestreamApp.Server.Streaming.Streamer;
-using Ninject.Extensions.Logging;
+﻿using Ninject.Extensions.Logging;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -25,11 +24,10 @@ namespace LivestreamApp.Server.Streaming.Processes
             _logger = logger;
         }
 
-        public ProcessResult ExecuteAndReadSync(IProcessSettings settings)
+        public ProcessResult ExecuteAndReadSync(ProcessSettings settings)
         {
             var processStartInfo = GetProcessStartInfo(settings.FileName, settings.Arguments);
             Execute(processStartInfo, false, false);
-
             var output = _process.StandardOutput.ReadToEnd();
             var errorOutput = _process.StandardError.ReadToEnd();
             _process.WaitForExit();
@@ -37,17 +35,15 @@ namespace LivestreamApp.Server.Streaming.Processes
             return new ProcessResult(_exitCode, output, errorOutput);
         }
 
-        public void ExecuteAndReadAsync(IProcessSettings settings)
+        public void ExecuteAndReadAsync(ProcessSettings settings)
         {
             var processStartInfo = GetProcessStartInfo(settings.FileName, settings.Arguments);
-
             Execute(processStartInfo, true, false);
         }
 
-        public void ExecuteAndReadBinaryAsync(IProcessSettings settings)
+        public void ExecuteAndReadBinaryAsync(ProcessSettings settings)
         {
             var bufferSize = settings.BufferSize ?? throw new ArgumentException("No buffer size provided.");
-
             _buffer = new byte[bufferSize];
             var processStartInfo = GetProcessStartInfo(settings.FileName, settings.Arguments);
             Execute(processStartInfo, false, true);

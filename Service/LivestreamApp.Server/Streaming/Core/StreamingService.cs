@@ -3,7 +3,6 @@ using LivestreamApp.Server.Streaming.Entities;
 using LivestreamApp.Server.Streaming.Environment;
 using LivestreamApp.Server.Streaming.Environment.Devices;
 using LivestreamApp.Server.Streaming.WebSockets;
-using LivestreamApp.Shared.Network;
 using Ninject.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -20,36 +19,16 @@ namespace LivestreamApp.Server.Streaming.Core
         private Livestreams _livestreams;
         private List<AudioDevice> _audioDevices;
 
-        public StreamingService(ILogger logger,
-            IHardware hardware,
-            IDeviceManager deviceManager,
-            ILivestreamsConfiguration livestreamsConfiguration,
-            IWebSocketServerAdapter webSocketServerAdapter,
-            IUriConfiguration uriConfiguration)
+        public StreamingService(ILogger logger, ILivestreamsConfiguration livestreamsConfiguration,
+            IHardware hardware, IWebSocketServerAdapter webSocketServerAdapter)
         {
             _hardware = hardware;
             _livestreamsConfiguration = livestreamsConfiguration;
             _webSocketServerAdapter = webSocketServerAdapter;
             _logger = logger;
 
-            Start();
-        }
-
-        public List<Livestream> GetStartedLiveStreams()
-        {
-            if (_livestreams == null)
-                throw new ArgumentException("StreamingService is not initialized.");
-
-            return _livestreams.GetStarted();
-        }
-
-        private void Start()
-        {
             Initialize();
-            _webSocketServerAdapter.StartWebSocketServer();
-            StartStreams();
-
-            _logger.Info("StreamingService started.");
+            Start();
         }
 
         private void Initialize()
@@ -59,6 +38,13 @@ namespace LivestreamApp.Server.Streaming.Core
             _livestreams.InitializeStreams(_audioDevices);
         }
 
+        private void Start()
+        {
+            _webSocketServerAdapter.StartWebSocketServer();
+            StartStreams();
+
+            _logger.Info("StreamingService started.");
+        }
 
         public void StartStreams()
         {
@@ -68,6 +54,11 @@ namespace LivestreamApp.Server.Streaming.Core
         public void StopStreams()
         {
             _livestreams.StartStreams();
+        }
+
+        public List<Livestream> GetStartedLiveStreams()
+        {
+            return _livestreams.GetStarted();
         }
 
         public void StartStream(string id)

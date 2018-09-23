@@ -7,12 +7,12 @@ using System.Linq;
 
 namespace LivestreamApp.Server.Streaming.Environment.Devices
 {
-    public class DeviceManager : IDeviceManager
+    public class DeviceFactory : IDeviceFactory
     {
         private readonly IResolutionRoot _kernel;
         private readonly List<AudioDevice> _audioDevices = new List<AudioDevice>();
 
-        public DeviceManager(IResolutionRoot kernel)
+        public DeviceFactory(IResolutionRoot kernel)
         {
             _kernel = kernel;
         }

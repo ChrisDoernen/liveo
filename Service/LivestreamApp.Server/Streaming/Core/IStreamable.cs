@@ -1,7 +1,7 @@
 ﻿using LivestreamApp.Server.Streaming.Processes;
 using System;
 
-namespace LivestreamApp.Server.Streaming.Streamer
+namespace LivestreamApp.Server.Streaming.Core
 {
     public interface IStreamable
     {

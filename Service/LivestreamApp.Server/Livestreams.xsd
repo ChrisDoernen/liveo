@@ -30,7 +30,7 @@
         </xs:simpleType>
       </xs:element>
       <xs:element type="xs:string" name="Description" minOccurs="0" maxOccurs="1" />
-      <xs:element type="xs:string" name="AudioInput" />
+      <xs:element type="xs:string" name="InputSource" />
       <xs:element type="xs:boolean" name="StartOnServiceStartup" />
     </xs:sequence>
   </xs:complexType>

@@ -1,4 +1,4 @@
-﻿using LivestreamApp.Server.Streaming.Streamer;
+﻿using LivestreamApp.Server.Streaming.Core;
 using LivestreamApp.Shared.Network;
 using Ninject.Extensions.Logging;
 using System;
@@ -51,11 +51,11 @@ namespace LivestreamApp.Server.Streaming.WebSockets
             }
         }
 
-        public void AddStreamingWebSocketService(string path, IStreamable streamer)
+        public void AddStreamingWebSocketService(string path, IStreamable source)
         {
             _webSocketServer.AddWebSocketService(path,
-                () => _webSocketServiceFactory.GetStreamingWebSocketervice(streamer));
-            _logger.Info($"Added streaming service for device {streamer.DeviceId()} on path {path}.");
+                () => _webSocketServiceFactory.GetStreamingWebSocketervice(source));
+            _logger.Info($"Added streaming service on path {path}.");
         }
 
         public void RemoveWebSocketService(string path)

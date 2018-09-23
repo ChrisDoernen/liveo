@@ -9,13 +9,13 @@ namespace LivestreamApp.Server.Streaming.WebSockets
 {
     public class StreamingWebSocketService : WebSocketBehavior, IDisposable
     {
-        private readonly IStreamable _streamer;
+        private readonly IStreamable _source;
         private readonly ILogger _logger;
 
-        public StreamingWebSocketService(ILogger logger, IStreamable streamer)
+        public StreamingWebSocketService(ILogger logger, IStreamable source)
         {
             _logger = logger;
-            _streamer = streamer;
+            _source = source;
             IgnoreExtensions = true;
         }
 
@@ -26,13 +26,13 @@ namespace LivestreamApp.Server.Streaming.WebSockets
 
         protected override void OnOpen()
         {
-            _streamer.BytesReceived += SendBytes;
+            _source.BytesReceived += SendBytes;
             _logger.Info("Client connected");
         }
 
         protected override void OnClose(CloseEventArgs e)
         {
-            _streamer.BytesReceived -= SendBytes;
+            _source.BytesReceived -= SendBytes;
             _logger.Info("Client disconnected");
         }
 
@@ -43,7 +43,7 @@ namespace LivestreamApp.Server.Streaming.WebSockets
 
         public void Dispose()
         {
-            _streamer.BytesReceived -= SendBytes;
+            _source.BytesReceived -= SendBytes;
         }
     }
 }

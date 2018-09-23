@@ -7,42 +7,40 @@ using System.Text.RegularExpressions;
 
 namespace LivestreamApp.Server.Streaming.Environment.Devices
 {
-    public class AudioDeviceDetector : IAudioDeviceDetector
+    public class AudioDeviceManager : IAudioDeviceManager
     {
         private readonly IProcessAdapter _processAdapter;
         private readonly ILogger _logger;
         private readonly Regex _matchAudioDeviceIdRegex = new Regex("(?<=\")(.*?)(?=\")");
-        private readonly IDeviceManager _deviceManager;
+        private readonly IDeviceFactory _deviceFactory;
         private const string FileName = "ffmpeg.exe";
         private const string Arguments = "-list_devices true -f dshow -i dummy -hide_banner";
 
-        public AudioDeviceDetector(ILogger logger, IProcessAdapter processAdapter,
-            IDeviceManager deviceManager)
+        public AudioDeviceManager(ILogger logger, IProcessAdapter processAdapter,
+            IDeviceFactory deviceFactory)
         {
             _logger = logger;
             _processAdapter = processAdapter;
-            _deviceManager = deviceManager;
+            _deviceFactory = deviceFactory;
         }
 
         public List<AudioDevice> GetAudioDevices()
         {
-            var audioDevices = new List<AudioDevice>();
+            var processResult = GetProcessResult();
+            var audioDeviceIds = ParseLines(processResult.ErrorOutput);
+            var audioDevices = audioDeviceIds.Select(id => _deviceFactory.GetAudioDevice(id)).ToList();
+            _logger.Info($"Detected {audioDevices.Count} audio devices.");
+            return audioDevices;
+        }
 
+        private ProcessResult GetProcessResult()
+        {
             var processSettings = new ProcessSettings(FileName, Arguments);
             var processResult = _processAdapter.ExecuteAndReadSync(processSettings);
 
             if (processResult.ExitCode != 1)
                 throw new Exception("Could not get audio inputs.");
-
-            var audioDeviceIds = ParseLines(processResult.ErrorOutput);
-
-            foreach (var id in audioDeviceIds)
-            {
-                audioDevices.Add(_deviceManager.GetAudioDevice(id));
-            }
-
-            _logger.Info($"Detected {audioDevices.Count} audio devices.");
-            return audioDevices;
+            return processResult;
         }
 
         private List<string> ParseLines(string output)

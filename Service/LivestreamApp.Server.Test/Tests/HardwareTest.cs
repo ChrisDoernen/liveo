@@ -14,7 +14,7 @@ namespace LivestreamApp.Server.Test.Tests
     {
         private readonly MoqMockingKernel _kernel;
         private Hardware _hardware;
-        private Mock<IAudioDeviceDetector> _mockAudioDeviceDetector;
+        private Mock<IAudioDeviceManager> _mockAudioDeviceDetector;
 
         public HardwareTest()
         {
@@ -26,7 +26,7 @@ namespace LivestreamApp.Server.Test.Tests
         public void TestInitialize()
         {
             _kernel.Reset();
-            _mockAudioDeviceDetector = _kernel.GetMock<IAudioDeviceDetector>();
+            _mockAudioDeviceDetector = _kernel.GetMock<IAudioDeviceManager>();
             _hardware = _kernel.Get<Hardware>();
         }
 

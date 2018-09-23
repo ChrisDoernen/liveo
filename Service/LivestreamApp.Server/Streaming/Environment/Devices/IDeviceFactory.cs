@@ -1,6 +1,6 @@
 ﻿namespace LivestreamApp.Server.Streaming.Environment.Devices
 {
-    public interface IDeviceManager
+    public interface IDeviceFactory
     {
         AudioDevice GetAudioDevice(string deviceId);
     }

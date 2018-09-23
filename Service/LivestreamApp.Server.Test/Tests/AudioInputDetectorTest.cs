@@ -18,21 +18,21 @@ namespace LivestreamApp.Server.Test.Tests
 
         private Mock<ILogger> _mockLogger;
         private Mock<IProcessAdapter> _mockProcessAdapter;
-        private IAudioDeviceDetector _audioDeviceDetector;
+        private IAudioDeviceManager _audioDeviceManager;
         private const string ffmpegOutputOneDevice = "TestResources\\ffmpeg\\ffmpegListDevicesOutputOneDeviceAvailable.txt";
         private const string ffmpegOutputNoDevice = "TestResources\\ffmpeg\\ffmpegListDevicesOutputNoDeviceAvailable.txt";
 
         public AudioInputDetectorTest()
         {
             _kernel = new MoqMockingKernel();
-            _kernel.Bind<IAudioDeviceDetector>().To<AudioDeviceDetector>();
+            _kernel.Bind<IAudioDeviceManager>().To<AudioDeviceManager>();
         }
 
         [TestInitialize]
         public void TestInitialize()
         {
             _kernel.Reset();
-            _audioDeviceDetector = _kernel.Get<IAudioDeviceDetector>();
+            _audioDeviceManager = _kernel.Get<IAudioDeviceManager>();
             _mockProcessAdapter = _kernel.GetMock<IProcessAdapter>();
             _mockLogger = _kernel.GetMock<ILogger>();
         }
@@ -50,7 +50,7 @@ namespace LivestreamApp.Server.Test.Tests
                 .Returns(result);
 
             // When
-            var audioInputs = _audioDeviceDetector.GetAudioDevices();
+            var audioInputs = _audioDeviceManager.GetAudioDevices();
 
             // Then
             audioInputs.Should().NotBeNull();
@@ -72,7 +72,7 @@ namespace LivestreamApp.Server.Test.Tests
                 .Returns(result);
 
             // When
-            var audioInputs = _audioDeviceDetector.GetAudioDevices();
+            var audioInputs = _audioDeviceManager.GetAudioDevices();
         }
 
         [TestMethod]
@@ -88,7 +88,7 @@ namespace LivestreamApp.Server.Test.Tests
                 .Returns(result);
 
             // When
-            var audioInputs = _audioDeviceDetector.GetAudioDevices();
+            var audioInputs = _audioDeviceManager.GetAudioDevices();
 
             // Then
             audioInputs.Should().NotBeNull();

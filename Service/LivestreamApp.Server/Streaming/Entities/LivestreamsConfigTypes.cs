@@ -57,7 +57,7 @@ namespace LivestreamApp.Server.Streaming.Entities
 
         private string descriptionField;
 
-        private string audioInputField;
+        private string inputSourceField;
 
         private bool startOnServiceStartupField;
 
@@ -114,15 +114,15 @@ namespace LivestreamApp.Server.Streaming.Entities
         }
 
         /// <remarks/>
-        public string AudioInput
+        public string InputSource
         {
             get
             {
-                return this.audioInputField;
+                return this.inputSourceField;
             }
             set
             {
-                this.audioInputField = value;
+                this.inputSourceField = value;
             }
         }
 

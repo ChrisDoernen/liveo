@@ -10,19 +10,19 @@ namespace LivestreamApp.Server.Test.Tests
     public class StreamerFactoryTest
     {
         private readonly MoqMockingKernel _kernel;
-        private IDeviceManager _deviceManager;
+        private IDeviceFactory _deviceFactory;
 
         public StreamerFactoryTest()
         {
             _kernel = new MoqMockingKernel();
-            _kernel.Bind<IDeviceManager>().To<DeviceManager>();
+            _kernel.Bind<IDeviceFactory>().To<DeviceFactory>();
         }
 
         [TestInitialize]
         public void TestInitialize()
         {
             _kernel.Reset();
-            _deviceManager = _kernel.Get<IDeviceManager>();
+            _deviceFactory = _kernel.Get<IDeviceFactory>();
         }
 
         [TestMethod]
@@ -32,8 +32,8 @@ namespace LivestreamApp.Server.Test.Tests
             var audioDevice = new AudioDevice("Some Id");
 
             // When
-            var firstStreamer = _deviceManager.GetAudioDevice(audioDevice);
-            var secondStreamer = _deviceManager.GetAudioDevice(audioDevice);
+            var firstStreamer = _deviceFactory.GetAudioDevice(audioDevice);
+            var secondStreamer = _deviceFactory.GetAudioDevice(audioDevice);
 
             // Then
             firstStreamer.Should().NotBeNull();
