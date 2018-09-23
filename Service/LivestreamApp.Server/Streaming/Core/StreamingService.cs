@@ -65,12 +65,10 @@ namespace LivestreamApp.Server.Streaming.Core
             _livestreams.StartStreams();
         }
 
-
         public void StopStreams()
         {
             _livestreams.StartStreams();
         }
-
 
         public void StartStream(string id)
         {

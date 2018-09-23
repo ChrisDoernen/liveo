@@ -19,7 +19,7 @@ namespace LivestreamApp.Server.AppConfiguration
             Bind<IAudioDeviceDetector>().To<AudioDeviceDetector>();
             Bind<IStreamerFactory>().To<StreamerFactory>().InSingletonScope();
             Bind<IWebSocketServerAdapter>().To<WebSocketServerAdapter>().InSingletonScope();
-            Bind<IWebSocketServiceFactory>().To<WebSocketServiceFactory>();
+            Bind<IWebSocketServiceFactory>().To<WebSocketServiceFactory>().InSingletonScope();
         }
     }
 }

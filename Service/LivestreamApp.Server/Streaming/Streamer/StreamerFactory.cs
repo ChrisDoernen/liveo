@@ -2,6 +2,7 @@
 using Ninject;
 using Ninject.Parameters;
 using Ninject.Syntax;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,7 +18,19 @@ namespace LivestreamApp.Server.Streaming.Streamer
             _kernel = kernel;
         }
 
-        public IStreamer GetAudioStreamer(AudioDevice audioDevice)
+        public IStreamer GetStreamer(Device device)
+        {
+            var deviceType = device.GetType();
+
+            if (deviceType == typeof(AudioDevice))
+            {
+                return GetAudioStreamer(device);
+            }
+
+            throw new ArgumentException("Cannot crate streamer: Unsupported device type.");
+        }
+
+        private IStreamer GetAudioStreamer(Device audioDevice)
         {
             var streamer = _streamers.FirstOrDefault(s => s.AudioDevice.Equals(audioDevice));
 

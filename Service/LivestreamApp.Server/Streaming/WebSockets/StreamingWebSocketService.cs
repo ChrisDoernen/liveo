@@ -16,11 +16,12 @@ namespace LivestreamApp.Server.Streaming.WebSockets
         {
             _logger = logger;
             _streamer = streamer;
+            IgnoreExtensions = true;
         }
 
         private void SendBytes(object sender, BytesReceivedEventArgs e)
         {
-            Sessions.Broadcast(e.Bytes);
+            Sessions?.Broadcast(e.Bytes);
         }
 
         protected override void OnOpen()
@@ -31,6 +32,7 @@ namespace LivestreamApp.Server.Streaming.WebSockets
 
         protected override void OnClose(CloseEventArgs e)
         {
+            _streamer.BytesReceived -= SendBytes;
             _logger.Info("Client disconnected");
         }
 

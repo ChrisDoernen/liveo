@@ -2,7 +2,6 @@
 using LivestreamApp.Server.Streaming.Processes;
 using Ninject.Extensions.Logging;
 using System;
-using System.Threading;
 
 namespace LivestreamApp.Server.Streaming.Streamer
 {
@@ -11,9 +10,9 @@ namespace LivestreamApp.Server.Streaming.Streamer
     {
         private readonly ILogger _logger;
         private readonly IProcessAdapter _processAdapter;
+        public event EventHandler<BytesReceivedEventArgs> BytesReceived;
         public AudioDevice AudioDevice { get; }
         private const string FileName = "ffmpeg.exe";
-        public event EventHandler<BytesReceivedEventArgs> BytesReceived;
 
         public Mp3Streamer(ILogger logger, IProcessAdapter processAdapter, AudioDevice audioDevice)
         {
@@ -42,11 +41,17 @@ namespace LivestreamApp.Server.Streaming.Streamer
                 "pipe:1";
         }
 
+        public string DeviceId()
+        {
+            return AudioDevice.Id;
+        }
+
         public void Start()
         {
             var arguments = GetArguments();
             _processAdapter.OutputBytesReceived += OutputBytesReceivedHandler;
-            _processAdapter.ExecuteAndReadAsync(FileName, arguments, 4000);
+            _processAdapter.ProcessExited += ProcessExitedHandler;
+            _processAdapter.ExecuteAndReadAsync(FileName, arguments, 5000);
 
             _logger.Info($"Started capturing audio on input {AudioDevice.Id}.");
         }
@@ -61,7 +66,13 @@ namespace LivestreamApp.Server.Streaming.Streamer
 
         private void OutputBytesReceivedHandler(object sender, BytesReceivedEventArgs e)
         {
-            Interlocked.CompareExchange(ref BytesReceived, null, null)?.Invoke(this, e);
+            BytesReceived?.Invoke(this, e);
+        }
+
+        private void ProcessExitedHandler(object sender, EventArgs e)
+        {
+            _processAdapter.OutputBytesReceived -= OutputBytesReceivedHandler;
+            _logger.Info("The process exited.");
         }
     }
 }

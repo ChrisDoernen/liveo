@@ -4,6 +4,6 @@ namespace LivestreamApp.Server.Streaming.Streamer
 {
     public interface IStreamerFactory
     {
-        IStreamer GetAudioStreamer(AudioDevice audioDevice);
+        IStreamer GetStreamer(Device device);
     }
 }

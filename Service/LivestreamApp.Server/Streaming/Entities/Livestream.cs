@@ -13,7 +13,7 @@ namespace LivestreamApp.Server.Streaming.Entities
         public string Title { get; set; }
         public string Description { get; set; }
         public string CountryCode { get; set; }
-        public AudioDevice AudioDevice { get; set; }
+        public Device Device { get; set; }
         public bool StartOnServiceStartup { get; set; }
         public bool IsStarted { get; set; }
         public bool HasValidAudioInput { get; set; }
@@ -36,21 +36,21 @@ namespace LivestreamApp.Server.Streaming.Entities
         public void Initialize()
         {
             _path = $"/{Id}";
-            _streamer = _streamerFactory.GetAudioStreamer(AudioDevice);
+            _streamer = _streamerFactory.GetStreamer(Device);
             IsInitialized = true;
         }
 
         public void ValidateAudioInput(List<AudioDevice> audioDevices)
         {
-            HasValidAudioInput = audioDevices.FirstOrDefault(d => d.Equals(AudioDevice)) != null;
+            HasValidAudioInput = audioDevices.FirstOrDefault(d => d.Equals(Device)) != null;
         }
 
         public void Start()
         {
-            if (IsInitialized && HasValidAudioInput)
+            if (IsInitialized && HasValidAudioInput && StartOnServiceStartup)
             {
                 _streamer.Start();
-                _webSocketServerAdapter.AddAudioStreamingWebSocketService(_path, AudioDevice);
+                _webSocketServerAdapter.AddStreamingWebSocketService(_path, _streamer);
                 IsStarted = true;
             }
         }
