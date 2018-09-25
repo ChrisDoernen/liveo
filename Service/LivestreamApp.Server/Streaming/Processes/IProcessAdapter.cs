@@ -1,5 +1,4 @@
-﻿using LivestreamApp.Server.Streaming.Streamer;
-using System;
+﻿using System;
 using System.Diagnostics;
 
 namespace LivestreamApp.Server.Streaming.Processes
@@ -31,13 +30,13 @@ namespace LivestreamApp.Server.Streaming.Processes
         /// </summary>
         /// <param name="settings">Object providing settings for process execution</param>
         /// <returns>ProcessResult</returns>
-        ProcessResult ExecuteAndReadSync(ProcessSettings settings);
+        ProcessResult ExecuteAndReadSync(IProcessSettings settings);
 
         /// <summary>
         ///     Executes the specified process asynchronously
         /// </summary>
         /// <param name="processSettings">Object providing settings for process execution</param>
-        void ExecuteAndReadAsync(ProcessSettings processSettings);
+        void ExecuteAndReadAsync(IProcessSettings processSettings);
 
         /// <summary>
         ///     Executes the specified process asynchronously with enabled binary output
@@ -45,7 +44,7 @@ namespace LivestreamApp.Server.Streaming.Processes
         ///     process data output
         /// </summary>
         /// <param name="processSettings">Object providing settings for process execution</param>
-        void ExecuteAndReadBinaryAsync(ProcessSettings processSettings);
+        void ExecuteAndReadBinaryAsync(IProcessSettings processSettings);
 
         /// <summary>
         ///     Indicates if the started process is responding

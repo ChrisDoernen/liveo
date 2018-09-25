@@ -16,26 +16,22 @@ namespace LivestreamApp.Server.Streaming.Configuration
 
         public string GetArguments(string deviceId)
         {
-            if (deviceId.IsNullOrEmpty())
-            {
-                throw new ArgumentException("Device id not set.");
-            }
-
-            return
-                "-y -f dshow " +
-                $"-i audio=\"{deviceId}\" " +
-                $"-rtbufsize {RtBufSize} " +
-                $"-probesize {Probesize} " +
-                "-acodec libmp3lame " +
-                $"-ab {Bitrate}k " +
-                $"-ar {SampleRate} " +
-                $"-ac {NumberOfChannels} " +
-                $"-reservoir {Resorvoir} " +
-                "-f mp3 " +
-                "-hide_banner " +
-                "-fflags " +
-                "+nobuffer " +
-                "pipe:1";
+            return deviceId.IsNullOrEmpty()
+                ? throw new ArgumentException("Device id not set.")
+                : "-y -f dshow " +
+                  $"-i audio=\"{deviceId}\" " +
+                  $"-rtbufsize {RtBufSize} " +
+                  $"-probesize {Probesize} " +
+                  "-acodec libmp3lame " +
+                  $"-ab {Bitrate}k " +
+                  $"-ar {SampleRate} " +
+                  $"-ac {NumberOfChannels} " +
+                  $"-reservoir {Resorvoir} " +
+                  "-f mp3 " +
+                  "-hide_banner " +
+                  "-fflags " +
+                  "+nobuffer " +
+                  "pipe:1";
         }
     }
 }

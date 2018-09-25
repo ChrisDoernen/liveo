@@ -32,8 +32,8 @@ namespace LivestreamApp.Server.Test.Tests
             var audioDevice = new AudioDevice("Some Id");
 
             // When
-            var firstStreamer = _deviceFactory.GetAudioDevice(audioDevice);
-            var secondStreamer = _deviceFactory.GetAudioDevice(audioDevice);
+            var firstStreamer = _deviceFactory.GetDevice(audioDevice);
+            var secondStreamer = _deviceFactory.GetDevice(audioDevice);
 
             // Then
             firstStreamer.Should().NotBeNull();

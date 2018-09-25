@@ -2,6 +2,6 @@
 {
     public interface IDeviceFactory
     {
-        AudioDevice GetAudioDevice(string deviceId);
+        IStreamingDevice GetDevice(string deviceId, DeviceType deviceType);
     }
 }

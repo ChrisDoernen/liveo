@@ -24,7 +24,7 @@ namespace LivestreamApp.Server.Streaming.Processes
             _logger = logger;
         }
 
-        public ProcessResult ExecuteAndReadSync(ProcessSettings settings)
+        public ProcessResult ExecuteAndReadSync(IProcessSettings settings)
         {
             var processStartInfo = GetProcessStartInfo(settings.FileName, settings.Arguments);
             Execute(processStartInfo, false, false);
@@ -35,13 +35,13 @@ namespace LivestreamApp.Server.Streaming.Processes
             return new ProcessResult(_exitCode, output, errorOutput);
         }
 
-        public void ExecuteAndReadAsync(ProcessSettings settings)
+        public void ExecuteAndReadAsync(IProcessSettings settings)
         {
             var processStartInfo = GetProcessStartInfo(settings.FileName, settings.Arguments);
             Execute(processStartInfo, true, false);
         }
 
-        public void ExecuteAndReadBinaryAsync(ProcessSettings settings)
+        public void ExecuteAndReadBinaryAsync(IProcessSettings settings)
         {
             var bufferSize = settings.BufferSize ?? throw new ArgumentException("No buffer size provided.");
             _buffer = new byte[bufferSize];

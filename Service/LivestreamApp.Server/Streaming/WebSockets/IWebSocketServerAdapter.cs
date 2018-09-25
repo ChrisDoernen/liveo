@@ -1,4 +1,4 @@
-﻿using LivestreamApp.Server.Streaming.Streamer;
+﻿using LivestreamApp.Server.Streaming.Environment.Devices;
 
 namespace LivestreamApp.Server.Streaming.WebSockets
 {
@@ -6,7 +6,7 @@ namespace LivestreamApp.Server.Streaming.WebSockets
     {
         void StartWebSocketServer();
         void StopWebSocketServer();
-        void AddStreamingWebSocketService(string path, IStreamable streamer);
+        void AddStreamingWebSocketService(string path, IStreamingDevice device);
         void RemoveWebSocketService(string path);
     }
 }

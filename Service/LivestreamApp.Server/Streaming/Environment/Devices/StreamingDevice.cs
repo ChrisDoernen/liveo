@@ -1,31 +1,43 @@
 ﻿using LivestreamApp.Server.Streaming.Configuration;
 using LivestreamApp.Server.Streaming.Processes;
-using LivestreamApp.Server.Streaming.Streamer;
 using Ninject.Extensions.Logging;
 using System;
 
 namespace LivestreamApp.Server.Streaming.Environment.Devices
 {
-    /// <summary>
-    ///     Represents an audio device with an unique id. It can be used for streaming.
-    /// </summary>
-    public class AudioDevice : Device, IStreamable
+    public class StreamingDevice : IStreamingDevice
     {
+        public string Id { get; }
+        public DeviceType DeviceType { get; }
+        public bool IsValidDevice { get; } = true;
+        public event EventHandler<BytesReceivedEventArgs> BytesReceived;
+
         private readonly ILogger _logger;
         private readonly IProcessAdapter _processAdapter;
         private readonly ProcessSettings _processSettings;
 
-        public AudioDevice(ILogger logger, IProcessAdapter processAdapter, string id,
-            IStreamingConfiguration streamingConfiguration) : base(id)
+        public StreamingDevice(ILogger logger, IProcessAdapter processAdapter, string id,
+            DeviceType deviceType, IStreamingConfiguration streamingConfiguration)
         {
+            Id = id;
             _logger = logger;
+            DeviceType = deviceType;
             _processAdapter = processAdapter;
             _processSettings = new ProcessSettings(streamingConfiguration.FileName,
                 streamingConfiguration.GetArguments(id), streamingConfiguration.BufferSize);
-            _logger.Info($"Initialized audio device {Id}.");
+            _logger.Info($"Initialized device {Id}.");
         }
 
-        public event EventHandler<BytesReceivedEventArgs> BytesReceived;
+        public override bool Equals(object obj)
+        {
+            var audioDevice = (StreamingDevice)obj;
+            return audioDevice != null && audioDevice.Id == Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
 
         public void StartStreaming()
         {
@@ -33,7 +45,7 @@ namespace LivestreamApp.Server.Streaming.Environment.Devices
             _processAdapter.ProcessExited += ProcessExitedHandler;
             _processAdapter.ExecuteAndReadBinaryAsync(_processSettings);
 
-            _logger.Info($"Started capturing audio on input {Id}.");
+            _logger.Info($"Started capturing on input {Id}.");
         }
 
         public void StopStreaming()
@@ -41,7 +53,7 @@ namespace LivestreamApp.Server.Streaming.Environment.Devices
             _processAdapter.OutputBytesReceived -= OutputBytesReceivedHandler;
             _processAdapter.KillProcess();
 
-            _logger.Info($"Stopped capturing audio on input {Id}.");
+            _logger.Info($"Stopped capturing on input {Id}.");
         }
 
         private void OutputBytesReceivedHandler(object sender, BytesReceivedEventArgs e)

@@ -1,24 +1,9 @@
 ﻿namespace LivestreamApp.Server.Streaming.Processes
 {
-    /// <summary>
-    ///     Contains settings to be used with an <see cref="IProcessAdapter"/>
-    /// </summary>
-    public class ProcessSettings
+    public class ProcessSettings : IProcessSettings
     {
-        /// <summary>
-        ///     Name of the file to be executed
-        /// </summary>
         public string FileName { get; }
-
-        /// <summary>
-        ///     Arguments to be applied to process execution
-        /// </summary>
         public string Arguments { get; }
-
-        /// <summary>
-        ///     Optional buffer size to be used when reading binary standard output
-        ///     from the process is intended.
-        /// </summary>
         public int? BufferSize { get; }
 
         public ProcessSettings(string fileName, string arguments, int? bufferSize)

@@ -1,5 +1,5 @@
-﻿using LivestreamApp.Server.Streaming.Processes;
-using LivestreamApp.Server.Streaming.Streamer;
+﻿using LivestreamApp.Server.Streaming.Environment.Devices;
+using LivestreamApp.Server.Streaming.Processes;
 using Ninject.Extensions.Logging;
 using System;
 using WebSocketSharp;
@@ -9,10 +9,10 @@ namespace LivestreamApp.Server.Streaming.WebSockets
 {
     public class StreamingWebSocketService : WebSocketBehavior, IDisposable
     {
-        private readonly IStreamable _source;
+        private readonly IStreamingDevice _source;
         private readonly ILogger _logger;
 
-        public StreamingWebSocketService(ILogger logger, IStreamable source)
+        public StreamingWebSocketService(ILogger logger, IStreamingDevice source)
         {
             _logger = logger;
             _source = source;

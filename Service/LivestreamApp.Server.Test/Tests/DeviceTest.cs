@@ -7,7 +7,7 @@ namespace LivestreamApp.Server.Test.Tests
     [TestClass]
     public class DeviceTest
     {
-        private readonly Device _audioDevice = new AudioDevice("Mikro");
+        private readonly StreamingDevice _audioStreamingDevice = new AudioDevice("Mikro");
 
         [TestMethod]
         public void Equals_ShouldGetRightValueWhenNotTheSame()
@@ -16,7 +16,7 @@ namespace LivestreamApp.Server.Test.Tests
             var secondAudioDevice = new AudioDevice("Other mikro");
 
             // When
-            var areSame = _audioDevice.Equals(secondAudioDevice);
+            var areSame = _audioStreamingDevice.Equals(secondAudioDevice);
 
             // Then
             areSame.Should().Be(false);
@@ -26,10 +26,10 @@ namespace LivestreamApp.Server.Test.Tests
         public void Equals_ShouldGetRightValueWhenTheSame()
         {
             // Given
-            var secondAudioDevice = _audioDevice;
+            var secondAudioDevice = _audioStreamingDevice;
 
             // When
-            var areSame = _audioDevice.Equals(secondAudioDevice);
+            var areSame = _audioStreamingDevice.Equals(secondAudioDevice);
 
             // Then
             areSame.Should().Be(true);

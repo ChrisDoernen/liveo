@@ -2,37 +2,36 @@
 using Ninject;
 using Ninject.Parameters;
 using Ninject.Syntax;
-using System.Collections.Generic;
-using System.Linq;
+using System;
 
 namespace LivestreamApp.Server.Streaming.Environment.Devices
 {
     public class DeviceFactory : IDeviceFactory
     {
         private readonly IResolutionRoot _kernel;
-        private readonly List<AudioDevice> _audioDevices = new List<AudioDevice>();
+        private readonly IStreamingConfiguration _audioStreamingConfiguration;
 
         public DeviceFactory(IResolutionRoot kernel)
         {
             _kernel = kernel;
+            _audioStreamingConfiguration = new Mp3StreamingConfiguration();
         }
 
-        public AudioDevice GetAudioDevice(string deviceId)
+        public IStreamingDevice GetDevice(string deviceId, DeviceType deviceType)
         {
-            var streamer = _audioDevices.FirstOrDefault(d => d.Id == deviceId);
+            IStreamingDevice device;
 
-            if (streamer != null)
+            switch (deviceType)
             {
-                return streamer;
+                case DeviceType.AudioDevice:
+                    device = _kernel.Get<IStreamingDevice>(new ConstructorArgument("id", deviceId),
+                        new ConstructorArgument("streamingConfiguration", _audioStreamingConfiguration));
+                    break;
+                default:
+                    throw new NotImplementedException("Video streaming is not yet supported.");
             }
 
-            var streamingConfiguration = new Mp3StreamingConfiguration();
-
-            var newStreamer = _kernel.Get<AudioDevice>(new ConstructorArgument("id", deviceId),
-                new ConstructorArgument("streamingConfiguration", streamingConfiguration));
-            _audioDevices.Add(newStreamer);
-
-            return newStreamer;
+            return device;
         }
     }
 }
