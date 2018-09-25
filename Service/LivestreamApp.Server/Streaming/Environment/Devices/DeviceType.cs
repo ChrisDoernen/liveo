@@ -3,7 +3,6 @@
     public enum DeviceType
     {
         Unknown,
-        All,
         AudioDevice,
         VideoDevice
     }
