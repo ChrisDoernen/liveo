@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Ninject.MockingKernel.Moq;
 
-namespace LivestreamApp.Server.Test.Tests
+namespace LivestreamApp.Server.Test.Tests.Streaming.Devices
 {
     [TestClass]
     public class DeviceTest

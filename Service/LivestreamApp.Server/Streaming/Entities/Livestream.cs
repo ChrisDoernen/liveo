@@ -19,22 +19,22 @@ namespace LivestreamApp.Server.Streaming.Entities
         private IStreamingSource Source { get; set; }
 
         private readonly IWebSocketServerAdapter _webSocketServerAdapter;
-        private readonly IStreamingSourceManager _streamingSourceManager;
+        private readonly IStreamingSourceFactory _streamingSourceFactory;
         private readonly ILogger _logger;
         private string _path;
 
         public Livestream(ILogger logger, IWebSocketServerAdapter webSocketServerAdapter,
-            IStreamingSourceManager streamingSourceManager)
+            IStreamingSourceFactory streamingSourceFactory)
         {
             _logger = logger;
-            _streamingSourceManager = streamingSourceManager;
+            _streamingSourceFactory = streamingSourceFactory;
             _webSocketServerAdapter = webSocketServerAdapter;
         }
 
         public void Initialize()
         {
-            Source = _streamingSourceManager.GetDevice(Id);
-            HasValidInputSource = Source.IsValidDevice;
+            Source = _streamingSourceFactory.GetStreamingSourceByDeviceId(Id);
+            HasValidInputSource = Source.HasValidDevice();
             if (!HasValidInputSource) _logger.Warn($"Livestream {Id} has invalid input source.");
             _path = $"/{Id}";
             IsInitialized = true;
@@ -47,13 +47,6 @@ namespace LivestreamApp.Server.Streaming.Entities
                 Source.StartStreaming();
                 _webSocketServerAdapter.AddStreamingWebSocketService(_path, Source);
                 IsStarted = true;
-            }
-            else
-            {
-                _logger.Info(
-                    $"Livestream {Id} was not started because one of the following is false: " +
-                    $"IsInitialized: {IsInitialized}, HasValidInputSource: {HasValidInputSource}, " +
-                    $"Start on service startup {StartOnServiceStartup}.");
             }
         }
 

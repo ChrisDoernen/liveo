@@ -86,14 +86,11 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tests\LivestreamsConfigurationTest.cs" />
-    <Compile Include="Tests\DeviceDetectorTest.cs" />
-    <Compile Include="Tests\StreamerFactoryTest.cs" />
-    <Compile Include="Tests\Mp3StreamerTest.cs" />
-    <Compile Include="Tests\HardwareTest.cs" />
-    <Compile Include="Tests\DeviceTest.cs" />
-    <Compile Include="Tests\LivestreamTest.cs" />
-    <Compile Include="Tests\XmlUtilitiesTest.cs" />
+    <Compile Include="Tests\Streaming\Configuration\LivestreamsConfigurationTest.cs" />
+    <Compile Include="Tests\Streaming\Devices\DeviceDetectorTest.cs" />
+    <Compile Include="Tests\Streaming\Devices\DeviceTest.cs" />
+    <Compile Include="Tests\Streaming\Entities\LivestreamTest.cs" />
+    <Compile Include="Tests\Shared\XmlSerialization\XmlUtilitiesTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

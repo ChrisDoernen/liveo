@@ -8,7 +8,7 @@ using Ninject;
 using Ninject.MockingKernel.Moq;
 using System.Collections.Generic;
 
-namespace LivestreamApp.Server.Test.Tests
+namespace LivestreamApp.Server.Test.Tests.Streaming.Entities
 {
     [TestClass]
     public class LivestreamTest
@@ -16,7 +16,7 @@ namespace LivestreamApp.Server.Test.Tests
         private readonly MoqMockingKernel _kernel;
         private Livestream _livestream;
         private Mock<IStreamingSourceFactory> _mockStreamerFactory;
-        private Mock<IStreamable> _mockStreamer;
+        private Mock<IStreamingSource> _mockStreamingSource;
         private Mock<IWebSocketServerAdapter> _mockWebSocketServerAdapter;
 
         public LivestreamTest()
@@ -31,7 +31,7 @@ namespace LivestreamApp.Server.Test.Tests
             _kernel.Reset();
             _livestream = _kernel.Get<Livestream>();
             _mockStreamerFactory = _kernel.GetMock<IStreamingSourceFactory>();
-            _mockStreamer = _kernel.GetMock<IStreamable>();
+            _mockStreamingSource = _kernel.GetMock<IStreamingSource>();
             _mockWebSocketServerAdapter = _kernel.GetMock<IWebSocketServerAdapter>();
         }
 
@@ -40,11 +40,10 @@ namespace LivestreamApp.Server.Test.Tests
         {
             // Given
             _livestream.Id = "LivestreamId";
-            _livestream.Source = new AudioDevice("Id");
             _livestream.StartOnServiceStartup = true;
             var audioDevices = new List<AudioDevice> { new AudioDevice("Id") };
             _mockStreamerFactory.Setup(msf => msf.GetDevice(_livestream.Source))
-                .Returns(_mockStreamer.Object);
+                .Returns(_mockStreamingSource.Object);
 
             // When 
             _livestream.Initialize(audioDevices);
@@ -54,9 +53,9 @@ namespace LivestreamApp.Server.Test.Tests
             _livestream.HasValidAudioInput.Should().Be(true);
             _livestream.IsInitialized.Should().Be(true);
             _mockStreamerFactory.Verify(msf => msf.GetDevice(_livestream.Source), Times.Once);
-            _mockStreamer.Verify(ms => ms.StartStreaming(), Times.Once);
+            _mockStreamingSource.Verify(ms => ms.StartStreaming(), Times.Once);
             _mockWebSocketServerAdapter
-                .Verify(mwssa => mwssa.AddStreamingWebSocketService("/LivestreamId", _mockStreamer.Object), Times.Once);
+                .Verify(mwssa => mwssa.AddStreamingWebSocketService("/LivestreamId", _mockStreamingSource.Object), Times.Once);
             _livestream.IsStarted.Should().Be(true);
         }
 
@@ -69,7 +68,7 @@ namespace LivestreamApp.Server.Test.Tests
             _livestream.StartOnServiceStartup = true;
             var audioDevices = new List<AudioDevice> { new AudioDevice("Other Id") };
             _mockStreamerFactory.Setup(msf => msf.GetDevice(_livestream.Source))
-                .Returns(_mockStreamer.Object);
+                .Returns(_mockStreamingSource.Object);
 
             // When 
             _livestream.Initialize(audioDevices);
@@ -79,9 +78,9 @@ namespace LivestreamApp.Server.Test.Tests
             _livestream.HasValidAudioInput.Should().Be(false);
             _livestream.IsInitialized.Should().Be(true);
             _mockStreamerFactory.Verify(msf => msf.GetDevice(_livestream.Source), Times.Never);
-            _mockStreamer.Verify(ms => ms.StartStreaming(), Times.Never);
+            _mockStreamingSource.Verify(ms => ms.StartStreaming(), Times.Never);
             _mockWebSocketServerAdapter
-                .Verify(mwssa => mwssa.AddStreamingWebSocketService("/LivestreamId", _mockStreamer.Object), Times.Never);
+                .Verify(mwssa => mwssa.AddStreamingWebSocketService("/LivestreamId", _mockStreamingSource.Object), Times.Never);
             _livestream.IsStarted.Should().Be(false);
         }
 
@@ -94,7 +93,7 @@ namespace LivestreamApp.Server.Test.Tests
             _livestream.StartOnServiceStartup = true;
             var audioDevices = new List<AudioDevice> { new AudioDevice("Id") };
             _mockStreamerFactory.Setup(msf => msf.GetDevice(_livestream.Source))
-                .Returns(_mockStreamer.Object);
+                .Returns(_mockStreamingSource.Object);
 
             // When 
             _livestream.Initialize(audioDevices);
@@ -102,7 +101,7 @@ namespace LivestreamApp.Server.Test.Tests
             _livestream.Stop();
 
             // Then
-            _mockStreamer.Verify(ms => ms.StopStreaming(), Times.Once);
+            _mockStreamingSource.Verify(ms => ms.StopStreaming(), Times.Once);
             _mockWebSocketServerAdapter
                 .Verify(mwssa => mwssa.RemoveWebSocketService(It.IsAny<string>()), Times.Once);
         }

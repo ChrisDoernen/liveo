@@ -10,7 +10,7 @@ using Ninject.MockingKernel.Moq;
 using System;
 using System.IO;
 
-namespace LivestreamApp.Server.Test.Tests
+namespace LivestreamApp.Server.Test.Tests.Streaming.Devices
 {
     [TestClass]
     public class DeviceDetectorTest
@@ -39,37 +39,33 @@ namespace LivestreamApp.Server.Test.Tests
         }
 
         [TestMethod]
-        public void GetAudioInputs_OneInput_ShouldReturnCorrectAudioInput()
+        public void DetectAvailableDevices_OneInput_ShouldReturnCorrectAudioInput()
         {
             // Given
             var processOutput = File.ReadAllText(FfmpegOutputOneDevice);
             var result = new ProcessResult(1, "", processOutput);
-
             _mockProcessAdapter
                 .Setup(mep => mep.ExecuteAndReadSync(It.IsAny<IProcessSettings>()))
                 .Returns(result);
 
             // When
             _deviceDetector.DetectAvailableDevices();
-            var devices = _deviceDetector.Devices;
 
             // Then
-            devices.Should().NotBeNull();
-            devices.Count.Should().Be(1);
-            devices[0].Id.Should().Be("Mikrofonarray (Realtek High Definition Audio)");
-            devices[0].DeviceState.Should().Be(DeviceState.Available);
-            devices[0].DeviceType.Should().Be(DeviceType.AudioDevice);
+            _deviceDetector.Devices.Should().NotBeNull();
+            _deviceDetector.Devices.Count.Should().Be(1);
+            _deviceDetector.Devices[0].Id.Should().Be("Mikrofonarray (Realtek High Definition Audio)");
+            _deviceDetector.Devices[0].DeviceState.Should().Be(DeviceState.Available);
+            _deviceDetector.Devices[0].DeviceType.Should().Be(DeviceType.AudioDevice);
         }
 
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public void GetAudioInputs_OneInputProcessFails_ShouldThrow()
+        public void DetectAvailableDevices_ProcessFails_ShouldThrow()
         {
             // Given
             var processOutput = File.ReadAllText(FfmpegOutputOneDevice);
-
             var result = new ProcessResult(0, "", processOutput);
-
             _mockProcessAdapter
                 .Setup(mep => mep.ExecuteAndReadSync(It.IsAny<IProcessSettings>()))
                 .Returns(result);
@@ -79,24 +75,62 @@ namespace LivestreamApp.Server.Test.Tests
         }
 
         [TestMethod]
-        public void GetAudioInputs_NoInputs_ShouldReturnEmptyList()
+        public void DetectAvailableDevices_NoInputs_ShouldReturnEmptyList()
         {
             // Given
             var processOutput = File.ReadAllText(FfmpegOutputNoDevice);
-
             var result = new ProcessResult(1, "", processOutput);
-
             _mockProcessAdapter
                 .Setup(mep => mep.ExecuteAndReadSync(It.IsAny<IProcessSettings>()))
                 .Returns(result);
 
             // When
             _deviceDetector.DetectAvailableDevices();
-            var devices = _deviceDetector.Devices;
 
             // Then
-            devices.Should().NotBeNull();
-            devices.Count.Should().Be(0);
+            _deviceDetector.Devices.Should().NotBeNull();
+            _deviceDetector.Devices.Count.Should().Be(0);
+        }
+
+        [TestMethod]
+        public void GetDeviceById_MatchingId_ShouldReturnCorrectDevice()
+        {
+            // Given
+            var processOutput = File.ReadAllText(FfmpegOutputNoDevice);
+            var result = new ProcessResult(1, "", processOutput);
+            _mockProcessAdapter
+                .Setup(mep => mep.ExecuteAndReadSync(It.IsAny<IProcessSettings>()))
+                .Returns(result);
+
+            // When
+            _deviceDetector.DetectAvailableDevices();
+            var device = _deviceDetector.GetDeviceById("Mikrofonarray (Realtek High Definition Audio)");
+
+            // Then
+            device.Id.Should().Be("Mikrofonarray (Realtek High Definition Audio)");
+            device.DeviceState.Should().Be(DeviceState.Available);
+            device.DeviceType.Should().Be(DeviceType.AudioDevice);
+        }
+
+        [TestMethod]
+        public void GetDeviceById_NonMatchingId_ShouldReturnUnknownDevice()
+        {
+            // Given
+            var processOutput = File.ReadAllText(FfmpegOutputNoDevice);
+            var result = new ProcessResult(1, "", processOutput);
+            _mockProcessAdapter
+                .Setup(mep => mep.ExecuteAndReadSync(It.IsAny<IProcessSettings>()))
+                .Returns(result);
+
+            // When
+            _deviceDetector.DetectAvailableDevices();
+            var device = _deviceDetector.GetDeviceById("Mikrofonarray (Realtek High Definition Audio)");
+
+            // Then
+            device.Should().BeOfType(typeof(UnknownDevice));
+            device.Id.Should().Be("Mikrofonarray (Rea");
+            device.DeviceState.Should().Be(DeviceState.Unknown);
+            device.DeviceType.Should().Be(DeviceType.Unknown);
         }
     }
 }

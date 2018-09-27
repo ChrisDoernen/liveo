@@ -2,6 +2,6 @@
 {
     public interface IStreamingSourceFactory
     {
-        IStreamingSource GetDevice(string deviceId, ContentType contentType);
+        IStreamingSource GetStreamingSourceByDeviceId(string id);
     }
 }

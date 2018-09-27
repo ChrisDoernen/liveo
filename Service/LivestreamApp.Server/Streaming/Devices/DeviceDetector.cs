@@ -10,7 +10,7 @@ namespace LivestreamApp.Server.Streaming.Devices
 {
     public class DeviceDetector : IDeviceDetector
     {
-        public List<IDevice> Devices { get; }
+        public List<IDevice> Devices { get; private set; }
 
         private readonly ILogger _logger;
         private readonly IProcessAdapter _processAdapter;
@@ -23,13 +23,23 @@ namespace LivestreamApp.Server.Streaming.Devices
             _logger = logger;
             _processAdapter = processAdapter;
             _processSettingsProvider = processSettingsProvider;
-            Devices = new List<IDevice>(20);
         }
 
         public void DetectAvailableDevices()
         {
+            Devices = new List<IDevice>(20);
             var lines = GetProcessOutput();
             GetAudioDevices(lines);
+        }
+
+        public IDevice GetDeviceById(string id)
+        {
+            if (Devices == null)
+                DetectAvailableDevices();
+
+            return Devices
+                .DefaultIfEmpty(new UnknownDevice(id))
+                .FirstOrDefault(d => d.Id == id);
         }
 
         private List<string> GetProcessOutput()

@@ -5,7 +5,7 @@ using LivestreamApp.Server.Streaming.StreamingSources;
 namespace LivestreamApp.Server.Streaming.Devices
 {
     /// <summary>
-    ///     Represents a hardware device that can be used in a <see cref="IStreamingSource"/>
+    ///     Represents a hardware device that can be used by a <see cref="IStreamingSource"/>
     /// </summary>
     public interface IDevice
     {
@@ -17,7 +17,7 @@ namespace LivestreamApp.Server.Streaming.Devices
         /// <summary>
         ///     The state of the device, i.e. if it is in use.
         /// </summary>
-        DeviceState DeviceState { get; }
+        DeviceState DeviceState { get; set; }
 
         /// <summary>
         ///     The device type, i.e. audio or video

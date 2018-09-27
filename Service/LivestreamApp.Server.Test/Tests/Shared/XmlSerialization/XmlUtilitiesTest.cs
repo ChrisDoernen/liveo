@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Xml.Schema;
 
-namespace LivestreamApp.Server.Test.Tests
+namespace LivestreamApp.Server.Test.Tests.Shared.XmlSerialization
 {
     [TestClass]
     public class XmlUtilitiesTest

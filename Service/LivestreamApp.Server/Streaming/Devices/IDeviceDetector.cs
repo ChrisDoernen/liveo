@@ -17,5 +17,12 @@ namespace LivestreamApp.Server.Streaming.Devices
         ///     Triggeres the device detection
         /// </summary>
         void DetectAvailableDevices();
+
+        /// <summary>
+        ///     Gets a device by its id
+        /// </summary>
+        /// <param name="id">Id of the device</param>
+        /// <returns>The device. If not found, an <see cref="UnknownDevice"/> is returned.</returns>
+        IDevice GetDeviceById(string id);
     }
 }

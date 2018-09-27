@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Ninject.Extensions.Logging;
 
-namespace LivestreamApp.Server.Test.Tests
+namespace LivestreamApp.Server.Test.Tests.Streaming.Configuration
 {
     [TestClass]
     public class LivestreamsConfigurationTest

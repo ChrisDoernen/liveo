@@ -69,6 +69,7 @@
     <Compile Include="AppConfiguration\AutoMapperModule.cs" />
     <Compile Include="AppConfiguration\ServerModule.cs" />
     <Compile Include="Streaming\Configuration\ILivestreamsConfiguration.cs" />
+    <Compile Include="Streaming\Devices\UnknownDevice.cs" />
     <Compile Include="Streaming\ProcessSettings\IProcessSettingsProvider.cs" />
     <Compile Include="Streaming\ProcessSettings\ProcessSettingsProvider.cs" />
     <Compile Include="Streaming\Devices\Device.cs" />
@@ -80,13 +81,10 @@
     <Compile Include="Streaming\StreamingSources\ContentType.cs" />
     <Compile Include="Streaming\Devices\IDeviceDetector.cs" />
     <Compile Include="Streaming\StreamingSources\IStreamingSourceFactory.cs" />
-    <Compile Include="Streaming\StreamingSources\InvalidSource.cs" />
     <Compile Include="Streaming\StreamingSources\IStreamingSource.cs" />
-    <Compile Include="Streaming\StreamingSources\IStreamingSourceManager.cs" />
     <Compile Include="Streaming\StreamingSources\StreamingSource.cs" />
     <Compile Include="Streaming\Configuration\IStreamingConfiguration.cs" />
     <Compile Include="Streaming\ProcessSettings\Mp3StreamingConfiguration.cs" />
-    <Compile Include="Streaming\StreamingSources\StreamingSourceManger.cs" />
     <Compile Include="Streaming\ProcessSettings\IProcessSettings.cs" />
     <Compile Include="Streaming\ProcessSettings\ProcessSettings.cs" />
     <Compile Include="AppConfiguration\ServerProfile.cs" />

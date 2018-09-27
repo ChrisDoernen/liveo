@@ -20,6 +20,12 @@ namespace LivestreamApp.Server.Streaming.StreamingSources
         IDevice Device { get; }
 
         /// <summary>
+        ///     Indicates if the device is a read, valid device
+        /// </summary>
+        /// <returns></returns>
+        bool HasValidDevice();
+
+        /// <summary>
         ///     An event that can be subscribed to get streaming data
         /// </summary>
         event EventHandler<BytesReceivedEventArgs> BytesReceived;

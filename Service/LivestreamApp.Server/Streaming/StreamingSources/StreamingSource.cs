@@ -9,6 +9,7 @@ namespace LivestreamApp.Server.Streaming.StreamingSources
     {
         public IDevice Device { get; }
         public ContentType ContentType { get; }
+
         public event EventHandler<BytesReceivedEventArgs> BytesReceived;
 
         private readonly ILogger _logger;
@@ -21,6 +22,12 @@ namespace LivestreamApp.Server.Streaming.StreamingSources
             _processAdapter = processAdapter;
             ContentType = (ContentType)Device.DeviceType;
             _logger.Info($"Initialized a source for {Device.Id}.");
+        }
+
+        public bool HasValidDevice()
+        {
+            return Device.DeviceType != DeviceType.Unknown
+                   && Device.DeviceState != DeviceState.Unknown;
         }
 
         public void StartStreaming()
