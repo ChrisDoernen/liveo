@@ -1,7 +1,9 @@
-﻿namespace LivestreamApp.Server.Streaming.Processes
+﻿using LivestreamApp.Server.Streaming.Processes;
+
+namespace LivestreamApp.Server.Streaming.ProcessSettings
 {
     /// <summary>
-    ///     Contains settings to be used with an <see cref="IProcessAdapter"/>
+    ///     Implementation provides settings to be used with an <see cref="IProcessAdapter"/>
     /// </summary>
     public interface IProcessSettings
     {

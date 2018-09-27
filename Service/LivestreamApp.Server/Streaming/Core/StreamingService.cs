@@ -1,7 +1,6 @@
 ﻿using LivestreamApp.Server.Streaming.Configuration;
+using LivestreamApp.Server.Streaming.Devices;
 using LivestreamApp.Server.Streaming.Entities;
-using LivestreamApp.Server.Streaming.Environment;
-using LivestreamApp.Server.Streaming.Environment.Devices;
 using LivestreamApp.Server.Streaming.WebSockets;
 using Ninject.Extensions.Logging;
 using System;
@@ -12,19 +11,18 @@ namespace LivestreamApp.Server.Streaming.Core
     public class StreamingService : IStreamingService, IDisposable
     {
         private readonly ILogger _logger;
-        private readonly IHardware _hardware;
         private readonly IWebSocketServerAdapter _webSocketServerAdapter;
         private readonly ILivestreamsConfiguration _livestreamsConfiguration;
+        private readonly IDeviceDetector _deviceDetector;
         private const string LivestreamsConfigFile = "Livestreams.config";
         private Livestreams _livestreams;
-        private List<AudioDevice> _audioDevices;
 
         public StreamingService(ILogger logger, ILivestreamsConfiguration livestreamsConfiguration,
-            IHardware hardware, IWebSocketServerAdapter webSocketServerAdapter)
+            IDeviceDetector deviceDetector, IWebSocketServerAdapter webSocketServerAdapter)
         {
-            _hardware = hardware;
             _livestreamsConfiguration = livestreamsConfiguration;
             _webSocketServerAdapter = webSocketServerAdapter;
+            _deviceDetector = deviceDetector;
             _logger = logger;
 
             Initialize();
@@ -33,9 +31,9 @@ namespace LivestreamApp.Server.Streaming.Core
 
         private void Initialize()
         {
-            _audioDevices = _hardware.GetAudioDevices();
+            _deviceDetector.DetectAvailableDevices();
             _livestreams = _livestreamsConfiguration.GetAvailableStreams(LivestreamsConfigFile);
-            _livestreams.InitializeStreams(_audioDevices);
+            _livestreams.InitializeStreams();
         }
 
         private void Start()

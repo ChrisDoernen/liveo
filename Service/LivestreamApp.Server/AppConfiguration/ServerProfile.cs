@@ -12,7 +12,7 @@ namespace LivestreamApp.Server.AppConfiguration
                 .ForMember(d => d.Streams, opt => opt.MapFrom(s => s.LiveStream.ToList()))
                 .ConstructUsingServiceLocator();
             CreateMap<LivestreamType, Livestream>()
-                .ForMember(d => d.InputSource, opt => opt.MapFrom(s => s.InputSource))
+                .ForMember(d => d.Input, opt => opt.MapFrom(s => s.InputSource))
                 .ForMember(d => d.IsStarted, opt => opt.Ignore())
                 .ConstructUsingServiceLocator();
         }

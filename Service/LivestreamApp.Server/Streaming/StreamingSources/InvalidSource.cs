@@ -1,11 +1,11 @@
 ﻿using LivestreamApp.Server.Streaming.Processes;
 using System;
 
-namespace LivestreamApp.Server.Streaming.Environment.Devices
+namespace LivestreamApp.Server.Streaming.StreamingSources
 {
-    public class InvalidDevice : IStreamingDevice
+    public class InvalidSource : IStreamingSource
     {
-        public DeviceType DeviceType { get; } = DeviceType.Unknown;
+        public ContentType ContentType { get; } = ContentType.Unknown;
         public bool IsValidDevice { get; } = false;
         public string Id { get; } = "";
         public event EventHandler<BytesReceivedEventArgs> BytesReceived;

@@ -1,8 +1,9 @@
 ﻿using LivestreamApp.Server.Streaming.Configuration;
 using LivestreamApp.Server.Streaming.Core;
-using LivestreamApp.Server.Streaming.Environment;
-using LivestreamApp.Server.Streaming.Environment.Devices;
+using LivestreamApp.Server.Streaming.Devices;
 using LivestreamApp.Server.Streaming.Processes;
+using LivestreamApp.Server.Streaming.ProcessSettings;
+using LivestreamApp.Server.Streaming.StreamingSources;
 using LivestreamApp.Server.Streaming.WebSockets;
 using Ninject.Modules;
 
@@ -14,12 +15,12 @@ namespace LivestreamApp.Server.AppConfiguration
         {
             Bind<IStreamingService>().To<StreamingService>().InSingletonScope();
             Bind<ILivestreamsConfiguration>().To<LivestreamsConfiguration>();
-            Bind<IHardware>().To<Hardware>();
+            Bind<IProcessSettingsProvider>().To<ProcessSettingsProvider>().InSingletonScope();
             Bind<IProcessAdapter>().To<ProcessAdapter>();
-            Bind<StreamingDevice>().ToSelf();
+            Bind<StreamingSource>().ToSelf();
             Bind<IDeviceDetector>().To<DeviceDetector>().InSingletonScope();
-            Bind<IStreamingDeviceManager>().To<StreamingDeviceManger>().InSingletonScope();
-            Bind<IDeviceFactory>().To<DeviceFactory>().InSingletonScope();
+            Bind<IStreamingSourceManager>().To<StreamingSourceManger>().InSingletonScope();
+            Bind<IStreamingSourceFactory>().To<StreamingSourceFactory>().InSingletonScope();
             Bind<IWebSocketServerAdapter>().To<WebSocketServerAdapter>().InSingletonScope();
             Bind<IWebSocketServiceFactory>().To<WebSocketServiceFactory>().InSingletonScope();
         }

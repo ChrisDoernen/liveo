@@ -1,4 +1,4 @@
-﻿using LivestreamApp.Server.Streaming.Environment.Devices;
+﻿using LivestreamApp.Server.Streaming.StreamingSources;
 using LivestreamApp.Server.Streaming.WebSockets;
 using Ninject.Extensions.Logging;
 
@@ -10,31 +10,31 @@ namespace LivestreamApp.Server.Streaming.Entities
         public string Title { get; set; }
         public string Description { get; set; }
         public string CountryCode { get; set; }
-        public string InputSource { get; set; }
+        public string Input { get; set; }
         public bool StartOnServiceStartup { get; set; }
         public bool IsStarted { get; private set; }
 
         private bool IsInitialized { get; set; }
         private bool HasValidInputSource { get; set; }
-        private IStreamingDevice Device { get; set; }
+        private IStreamingSource Source { get; set; }
 
         private readonly IWebSocketServerAdapter _webSocketServerAdapter;
-        private readonly IStreamingDeviceManager _streamingDeviceManager;
+        private readonly IStreamingSourceManager _streamingSourceManager;
         private readonly ILogger _logger;
         private string _path;
 
         public Livestream(ILogger logger, IWebSocketServerAdapter webSocketServerAdapter,
-            IStreamingDeviceManager streamingDeviceManager)
+            IStreamingSourceManager streamingSourceManager)
         {
             _logger = logger;
-            _streamingDeviceManager = streamingDeviceManager;
+            _streamingSourceManager = streamingSourceManager;
             _webSocketServerAdapter = webSocketServerAdapter;
         }
 
         public void Initialize()
         {
-            Device = _streamingDeviceManager.GetDevice(Id);
-            HasValidInputSource = Device.IsValidDevice;
+            Source = _streamingSourceManager.GetDevice(Id);
+            HasValidInputSource = Source.IsValidDevice;
             if (!HasValidInputSource) _logger.Warn($"Livestream {Id} has invalid input source.");
             _path = $"/{Id}";
             IsInitialized = true;
@@ -44,8 +44,8 @@ namespace LivestreamApp.Server.Streaming.Entities
         {
             if (IsInitialized && HasValidInputSource && StartOnServiceStartup)
             {
-                Device.StartStreaming();
-                _webSocketServerAdapter.AddStreamingWebSocketService(_path, Device);
+                Source.StartStreaming();
+                _webSocketServerAdapter.AddStreamingWebSocketService(_path, Source);
                 IsStarted = true;
             }
             else
@@ -61,7 +61,7 @@ namespace LivestreamApp.Server.Streaming.Entities
         {
             if (IsStarted)
             {
-                Device.StopStreaming();
+                Source.StopStreaming();
                 _webSocketServerAdapter.RemoveWebSocketService(_path);
                 IsStarted = false;
             }

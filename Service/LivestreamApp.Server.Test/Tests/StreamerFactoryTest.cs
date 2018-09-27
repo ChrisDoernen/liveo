@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using LivestreamApp.Server.Streaming.Environment.Devices;
+using LivestreamApp.Server.Streaming.StreamingSources;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
 using Ninject.MockingKernel.Moq;
@@ -10,19 +10,19 @@ namespace LivestreamApp.Server.Test.Tests
     public class StreamerFactoryTest
     {
         private readonly MoqMockingKernel _kernel;
-        private IDeviceFactory _deviceFactory;
+        private IStreamingSourceFactory _streamingSourceFactory;
 
         public StreamerFactoryTest()
         {
             _kernel = new MoqMockingKernel();
-            _kernel.Bind<IDeviceFactory>().To<DeviceFactory>();
+            _kernel.Bind<IStreamingSourceFactory>().To<StreamingSourceFactory>();
         }
 
         [TestInitialize]
         public void TestInitialize()
         {
             _kernel.Reset();
-            _deviceFactory = _kernel.Get<IDeviceFactory>();
+            _streamingSourceFactory = _kernel.Get<IStreamingSourceFactory>();
         }
 
         [TestMethod]
@@ -32,8 +32,8 @@ namespace LivestreamApp.Server.Test.Tests
             var audioDevice = new AudioDevice("Some Id");
 
             // When
-            var firstStreamer = _deviceFactory.GetDevice(audioDevice);
-            var secondStreamer = _deviceFactory.GetDevice(audioDevice);
+            var firstStreamer = _streamingSourceFactory.GetDevice(audioDevice);
+            var secondStreamer = _streamingSourceFactory.GetDevice(audioDevice);
 
             // Then
             firstStreamer.Should().NotBeNull();

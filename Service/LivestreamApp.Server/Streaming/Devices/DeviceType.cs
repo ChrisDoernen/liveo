@@ -1,4 +1,4 @@
-﻿namespace LivestreamApp.Server.Streaming.Environment.Devices
+﻿namespace LivestreamApp.Server.Streaming.Devices
 {
     public enum DeviceType
     {

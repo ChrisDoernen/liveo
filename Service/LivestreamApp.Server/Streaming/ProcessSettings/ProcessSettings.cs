@@ -1,4 +1,4 @@
-﻿namespace LivestreamApp.Server.Streaming.Processes
+﻿namespace LivestreamApp.Server.Streaming.ProcessSettings
 {
     public class ProcessSettings : IProcessSettings
     {

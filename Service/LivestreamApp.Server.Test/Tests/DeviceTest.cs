@@ -1,38 +1,39 @@
 ﻿using FluentAssertions;
-using LivestreamApp.Server.Streaming.Environment.Devices;
+using LivestreamApp.Server.Streaming.Devices;
+using LivestreamApp.Server.Streaming.ProcessSettings;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using Ninject.MockingKernel.Moq;
 
 namespace LivestreamApp.Server.Test.Tests
 {
     [TestClass]
     public class DeviceTest
     {
-        private readonly StreamingDevice _audioStreamingDevice = new AudioDevice("Mikro");
+        private readonly MoqMockingKernel _kernel;
 
-        [TestMethod]
-        public void Equals_ShouldGetRightValueWhenNotTheSame()
+        private Mock<IProcessSettings> _processSettings;
+
+        public DeviceTest()
         {
-            // Given
-            var secondAudioDevice = new AudioDevice("Other mikro");
+            _kernel = new MoqMockingKernel();
+        }
 
-            // When
-            var areSame = _audioStreamingDevice.Equals(secondAudioDevice);
-
-            // Then
-            areSame.Should().Be(false);
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            _kernel.Reset();
+            _processSettings = _kernel.GetMock<IProcessSettings>();
         }
 
         [TestMethod]
-        public void Equals_ShouldGetRightValueWhenTheSame()
+        public void Construct_ShouldInitializeWithStateAvailable()
         {
-            // Given
-            var secondAudioDevice = _audioStreamingDevice;
-
-            // When
-            var areSame = _audioStreamingDevice.Equals(secondAudioDevice);
+            // Given when
+            IDevice device = new Device("Input", DeviceType.AudioDevice, _processSettings.Object);
 
             // Then
-            areSame.Should().Be(true);
+            device.DeviceState.Should().Be(DeviceState.Available);
         }
     }
 }

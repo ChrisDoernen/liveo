@@ -1,7 +1,8 @@
 ﻿using Castle.Core.Internal;
+using LivestreamApp.Server.Streaming.Configuration;
 using System;
 
-namespace LivestreamApp.Server.Streaming.Configuration
+namespace LivestreamApp.Server.Streaming.ProcessSettings
 {
     public class Mp3StreamingConfiguration : IStreamingConfiguration
     {

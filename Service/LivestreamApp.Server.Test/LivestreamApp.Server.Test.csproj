@@ -87,7 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Tests\LivestreamsConfigurationTest.cs" />
-    <Compile Include="Tests\AudioInputDetectorTest.cs" />
+    <Compile Include="Tests\DeviceDetectorTest.cs" />
     <Compile Include="Tests\StreamerFactoryTest.cs" />
     <Compile Include="Tests\Mp3StreamerTest.cs" />
     <Compile Include="Tests\HardwareTest.cs" />

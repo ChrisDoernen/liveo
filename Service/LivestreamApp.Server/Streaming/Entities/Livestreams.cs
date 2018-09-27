@@ -1,5 +1,4 @@
-﻿using LivestreamApp.Server.Streaming.Environment.Devices;
-using Ninject.Extensions.Logging;
+﻿using Ninject.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,11 +15,11 @@ namespace LivestreamApp.Server.Streaming.Entities
             _logger = logger;
         }
 
-        public void InitializeStreams(List<AudioDevice> audioDevices)
+        public void InitializeStreams()
         {
             foreach (var livestream in Streams)
             {
-                livestream.Initialize(audioDevices);
+                livestream.Initialize();
             }
 
             _logger.Info("Livestreams initialized.");
