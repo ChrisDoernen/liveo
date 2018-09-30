@@ -1,13 +1,12 @@
 ﻿using LivestreamApp.Server.Streaming.Processes;
 using LivestreamApp.Server.Streaming.StreamingSources;
 using Ninject.Extensions.Logging;
-using System;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 
-namespace LivestreamApp.Server.Streaming.WebSockets
+namespace LivestreamApp.Server.Shared.WebSockets
 {
-    public class StreamingWebSocketService : WebSocketBehavior, IDisposable
+    public class StreamingWebSocketService : WebSocketBehavior
     {
         private readonly IStreamingSource _source;
         private readonly ILogger _logger;
@@ -38,12 +37,7 @@ namespace LivestreamApp.Server.Streaming.WebSockets
 
         protected override void OnError(ErrorEventArgs e)
         {
-            _logger.Info($"WebSocket service error: {e}");
-        }
-
-        public void Dispose()
-        {
-            _source.BytesReceived -= SendBytes;
+            _logger.Warn($"WebSocket service error: {e}");
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using LivestreamApp.Server.Streaming.StreamingSources;
-using LivestreamApp.Server.Streaming.WebSockets;
+﻿using LivestreamApp.Server.Shared.WebSockets;
+using LivestreamApp.Server.Streaming.StreamingSources;
 using Ninject.Extensions.Logging;
 
 namespace LivestreamApp.Server.Streaming.Entities
@@ -33,7 +33,7 @@ namespace LivestreamApp.Server.Streaming.Entities
 
         public void Initialize()
         {
-            Source = _streamingSourceFactory.GetStreamingSourceByDeviceId(Id);
+            Source = _streamingSourceFactory.GetStreamingSourceByDeviceId(Input);
             HasValidInputSource = Source.HasValidDevice();
             if (!HasValidInputSource) _logger.Warn($"Livestream {Id} has invalid input source.");
             _path = $"/{Id}";

@@ -3,7 +3,7 @@ using Ninject;
 using Ninject.Parameters;
 using Ninject.Syntax;
 
-namespace LivestreamApp.Server.Streaming.WebSockets
+namespace LivestreamApp.Server.Shared.WebSockets
 {
     public class WebSocketServiceFactory : IWebSocketServiceFactory
     {
@@ -17,6 +17,14 @@ namespace LivestreamApp.Server.Streaming.WebSockets
         public StreamingWebSocketService GetStreamingWebSocketervice(IStreamingSource source)
         {
             var service = _kernel.Get<StreamingWebSocketService>(
+                new ConstructorArgument("source", source));
+
+            return service;
+        }
+
+        public LoggingWebSocketService GetLoggingWebSocketervice(ILoggingSource source)
+        {
+            var service = _kernel.Get<LoggingWebSocketService>(
                 new ConstructorArgument("source", source));
 
             return service;

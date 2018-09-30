@@ -1,7 +1,7 @@
-﻿using LivestreamApp.Server.Streaming.Configuration;
+﻿using LivestreamApp.Server.Shared.WebSockets;
+using LivestreamApp.Server.Streaming.Configuration;
 using LivestreamApp.Server.Streaming.Devices;
 using LivestreamApp.Server.Streaming.Entities;
-using LivestreamApp.Server.Streaming.WebSockets;
 using Ninject.Extensions.Logging;
 using System;
 using System.Collections.Generic;

@@ -84,7 +84,6 @@
     <Compile Include="Streaming\StreamingSources\IStreamingSource.cs" />
     <Compile Include="Streaming\StreamingSources\StreamingSource.cs" />
     <Compile Include="Streaming\Configuration\IStreamingConfiguration.cs" />
-    <Compile Include="Streaming\ProcessSettings\Mp3StreamingConfiguration.cs" />
     <Compile Include="Streaming\ProcessSettings\IProcessSettings.cs" />
     <Compile Include="Streaming\ProcessSettings\ProcessSettings.cs" />
     <Compile Include="AppConfiguration\ServerProfile.cs" />
@@ -101,11 +100,11 @@
     <Compile Include="Streaming\Processes\IProcessAdapter.cs" />
     <Compile Include="Streaming\Processes\ProcessAdapter.cs" />
     <Compile Include="Streaming\Processes\ProcessResult.cs" />
-    <Compile Include="Streaming\WebSockets\StreamingWebSocketService.cs" />
-    <Compile Include="Streaming\WebSockets\IWebSocketServerAdapter.cs" />
-    <Compile Include="Streaming\WebSockets\IWebSocketServiceFactory.cs" />
-    <Compile Include="Streaming\WebSockets\WebSocketServerAdapter.cs" />
-    <Compile Include="Streaming\WebSockets\WebSocketServiceFactory.cs" />
+    <Compile Include="Shared\WebSockets\StreamingWebSocketService.cs" />
+    <Compile Include="Shared\WebSockets\IWebSocketServerAdapter.cs" />
+    <Compile Include="Shared\WebSockets\IWebSocketServiceFactory.cs" />
+    <Compile Include="Shared\WebSockets\WebSocketServerAdapter.cs" />
+    <Compile Include="Shared\WebSockets\WebSocketServiceFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

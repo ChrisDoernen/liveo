@@ -2,8 +2,9 @@
 using Ninject.Extensions.Logging;
 using System;
 using System.Diagnostics;
-using System.IO;
-using System.Threading;
+using System.Text;
+using System.Threading.Tasks;
+using WebSocketSharp;
 
 namespace LivestreamApp.Server.Streaming.Processes
 {
@@ -47,7 +48,7 @@ namespace LivestreamApp.Server.Streaming.Processes
             var bufferSize = settings.BufferSize ?? throw new ArgumentException("No buffer size provided.");
             _buffer = new byte[bufferSize];
             var processStartInfo = GetProcessStartInfo(settings.FileName, settings.Arguments);
-            Execute(processStartInfo, false, true);
+            Execute(processStartInfo, true, true);
         }
 
         private ProcessStartInfo GetProcessStartInfo(string file, string arguments)
@@ -59,7 +60,8 @@ namespace LivestreamApp.Server.Streaming.Processes
                 UseShellExecute = false,
                 CreateNoWindow = true,
                 RedirectStandardOutput = true,
-                RedirectStandardError = true
+                RedirectStandardError = true,
+                StandardOutputEncoding = Encoding.UTF8
             };
         }
 
@@ -76,16 +78,15 @@ namespace LivestreamApp.Server.Streaming.Processes
 
             if (readAsync)
             {
-                _process.OutputDataReceived += OutDataReceived;
-                _process.BeginOutputReadLine();
+                //_process.OutputDataReceived += OutDataReceived;
+                //_process.BeginOutputReadLine();
                 _process.ErrorDataReceived += ErrDataReceived;
                 _process.BeginErrorReadLine();
             }
 
             if (readBaseStreamAsync)
             {
-                _process.StandardOutput.BaseStream.BeginRead(
-                    _buffer, 0, _buffer.Length, ReadStdOutBaseStream, null);
+                new Task(ReadBaseStream).Start();
             }
 
             _logger.Info($"Started {processStartInfo.FileName} with PID: {_process.Id}");
@@ -109,27 +110,18 @@ namespace LivestreamApp.Server.Streaming.Processes
             return _process.Responding;
         }
 
-        private void ReadStdOutBaseStream(IAsyncResult result)
+        private async void ReadBaseStream()
         {
-            var bytesRead = _process.StandardOutput.BaseStream.EndRead(result);
-
-            if (bytesRead > _buffer.Length)
+            while (_process.HasExited == false)
             {
-                _logger.Warn("The specified buffer size was less than the stdout data chunk size.");
+                var length = await _process.StandardOutput.BaseStream.ReadAsync(_buffer, 0, _buffer.Length);
+                OutDataReceived(_buffer.SubArray(0, length));
             }
-
-            var memoryStream = new MemoryStream();
-            memoryStream.Write(_buffer, 0, bytesRead);
-            OutDataReceived(memoryStream.ToArray());
-
-            _process.StandardOutput.BaseStream.BeginRead(_buffer, 0, _buffer.Length,
-                ReadStdOutBaseStream, null);
         }
 
         private void OutDataReceived(byte[] bytes)
         {
-            Interlocked.CompareExchange(ref OutputBytesReceived, null, null)?
-                .Invoke(null, new BytesReceivedEventArgs(bytes));
+            OutputBytesReceived?.Invoke(null, new BytesReceivedEventArgs(bytes));
         }
 
         private void OutDataReceived(object sender, DataReceivedEventArgs e)

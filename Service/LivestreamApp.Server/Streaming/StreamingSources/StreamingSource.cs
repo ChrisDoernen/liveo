@@ -1,15 +1,18 @@
-﻿using LivestreamApp.Server.Streaming.Devices;
+﻿using LivestreamApp.Server.Shared;
+using LivestreamApp.Server.Streaming.Devices;
 using LivestreamApp.Server.Streaming.Processes;
 using Ninject.Extensions.Logging;
 using System;
+using System.Diagnostics;
 
 namespace LivestreamApp.Server.Streaming.StreamingSources
 {
-    public class StreamingSource : IStreamingSource
+    public class StreamingSource : IStreamingSource, ILoggingSource
     {
         public IDevice Device { get; }
         public ContentType ContentType { get; }
 
+        public event EventHandler<DataReceivedEventArgs> LogLineReceived;
         public event EventHandler<BytesReceivedEventArgs> BytesReceived;
 
         private readonly ILogger _logger;
@@ -34,6 +37,7 @@ namespace LivestreamApp.Server.Streaming.StreamingSources
         {
             _processAdapter.OutputBytesReceived += OutputBytesReceivedHandler;
             _processAdapter.ProcessExited += ProcessExitedHandler;
+            _processAdapter.ErrorDataReceived += StandardErrorDataReceived;
             _processAdapter.ExecuteAndReadBinaryAsync(Device.StreamingProcessSettings);
             _logger.Info($"Started capturing on input {Device.Id}.");
         }
@@ -41,6 +45,8 @@ namespace LivestreamApp.Server.Streaming.StreamingSources
         public void StopStreaming()
         {
             _processAdapter.OutputBytesReceived -= OutputBytesReceivedHandler;
+            _processAdapter.ProcessExited -= ProcessExitedHandler;
+            _processAdapter.ErrorDataReceived -= StandardErrorDataReceived;
             _processAdapter.KillProcess();
             _logger.Info($"Stopped capturing on input {Device.Id}.");
         }
@@ -49,6 +55,12 @@ namespace LivestreamApp.Server.Streaming.StreamingSources
         {
             // Forward the data from the process to any observer, i.e. streaming services.
             BytesReceived?.Invoke(this, e);
+            Console.WriteLine($"Received {e.Bytes.Length} bytes.");
+        }
+
+        private void StandardErrorDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            LogLineReceived?.Invoke(this, e);
         }
 
         private void ProcessExitedHandler(object sender, EventArgs e)

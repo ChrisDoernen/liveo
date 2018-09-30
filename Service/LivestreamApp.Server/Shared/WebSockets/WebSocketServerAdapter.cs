@@ -4,7 +4,7 @@ using Ninject.Extensions.Logging;
 using System;
 using WebSocketSharp.Server;
 
-namespace LivestreamApp.Server.Streaming.WebSockets
+namespace LivestreamApp.Server.Shared.WebSockets
 {
     public class WebSocketServerAdapter : IWebSocketServerAdapter
     {
@@ -54,6 +54,13 @@ namespace LivestreamApp.Server.Streaming.WebSockets
         public void AddStreamingWebSocketService(string path, IStreamingSource source)
         {
             var service = _webSocketServiceFactory.GetStreamingWebSocketervice(source);
+            _webSocketServer.AddWebSocketService(path, () => service);
+            _logger.Info($"Added streaming service on path {path}.");
+        }
+
+        public void AddLogginggWebSocketService(string path, ILoggingSource source)
+        {
+            var service = _webSocketServiceFactory.GetLoggingWebSocketervice(source);
             _webSocketServer.AddWebSocketService(path, () => service);
             _logger.Info($"Added streaming service on path {path}.");
         }

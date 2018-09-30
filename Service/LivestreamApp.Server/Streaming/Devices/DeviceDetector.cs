@@ -37,9 +37,7 @@ namespace LivestreamApp.Server.Streaming.Devices
             if (Devices == null)
                 DetectAvailableDevices();
 
-            return Devices
-                .DefaultIfEmpty(new UnknownDevice(id))
-                .FirstOrDefault(d => d.Id == id);
+            return Devices.FirstOrDefault(d => d.Id == id) ?? new UnknownDevice(id);
         }
 
         private List<string> GetProcessOutput()
