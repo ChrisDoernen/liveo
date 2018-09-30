@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using LivestreamApp.Api.Modules;
+using LivestreamApp.Api.Client.Modules;
 using LivestreamApp.Server.Streaming.Core;
 using LivestreamApp.Server.Streaming.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -7,6 +7,7 @@ using Moq;
 using Nancy;
 using Nancy.Testing;
 using Ninject.Extensions.Logging;
+using Ninject.MockingKernel.Moq;
 using System.Collections.Generic;
 
 namespace LivestreamApp.Api.Test.Tests
@@ -14,19 +15,36 @@ namespace LivestreamApp.Api.Test.Tests
     [TestClass]
     public class LivestreamModuleTest
     {
+        private readonly MoqMockingKernel _kernel;
+        private Mock<IStreamingService> _mockStreamingService;
+        private Mock<ILogger> _mockLogger;
+
+        public LivestreamModuleTest()
+        {
+            _kernel = new MoqMockingKernel();
+        }
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            _kernel.Reset();
+            _mockStreamingService = _kernel.GetMock<IStreamingService>();
+            _mockLogger = _kernel.GetMock<ILogger>();
+        }
+
         [TestMethod]
         public void GetLivestreams_ShouldGetStatusOKWithCorrectResponseJson()
         {
             // Given
-            var mockStreamingServer = new Mock<IStreamingService>();
-            mockStreamingServer.Setup(mss => mss.GetStartedLiveStreams()).Returns(new List<Livestream>());
-            var mockLogger = new Mock<ILogger>();
+            _mockStreamingService
+                .Setup(mss => mss.GetStartedLiveStreams())
+                .Returns(new List<Livestream>());
 
             var browser = new Browser(config =>
                 {
                     config.Module<LivestreamsModule>();
-                    config.Dependency(mockStreamingServer.Object);
-                    config.Dependency(mockLogger.Object);
+                    config.Dependency(_mockStreamingService.Object);
+                    config.Dependency(_mockLogger.Object);
                 });
 
             // When

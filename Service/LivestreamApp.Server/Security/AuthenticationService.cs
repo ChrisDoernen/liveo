@@ -6,12 +6,12 @@ using System.Text;
 
 namespace LivestreamApp.Server.Security
 {
-    public class AuthenticationProvider : IAuthenticationProvider
+    public class AuthenticationService : IAuthenticationService
     {
         private readonly ILogger _logger;
         private readonly IAppSettingsProvider _appSettingsProvider;
 
-        public AuthenticationProvider(ILogger logger, IAppSettingsProvider appSettingsProvider)
+        public AuthenticationService(ILogger logger, IAppSettingsProvider appSettingsProvider)
         {
             _logger = logger;
             _appSettingsProvider = appSettingsProvider;

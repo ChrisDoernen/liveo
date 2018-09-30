@@ -2,7 +2,7 @@
 using Nancy;
 using Ninject.Extensions.Logging;
 
-namespace LivestreamApp.Api.Modules
+namespace LivestreamApp.Api.Client.Modules
 {
     public class LivestreamsModule : NancyModule
     {

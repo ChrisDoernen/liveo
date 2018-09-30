@@ -9,23 +9,23 @@ using Ninject.MockingKernel.Moq;
 namespace LivestreamApp.Server.Test.Tests.Security
 {
     [TestClass]
-    public class AuthenticationProviderTest
+    public class AuthenticationServiceTest
     {
         private readonly MoqMockingKernel _kernel;
-        private IAuthenticationProvider _authenticationProvider;
+        private IAuthenticationService _authenticationService;
         private Mock<IAppSettingsProvider> _mockAppSettingsProvider;
 
-        public AuthenticationProviderTest()
+        public AuthenticationServiceTest()
         {
             _kernel = new MoqMockingKernel();
-            _kernel.Bind<IAuthenticationProvider>().To<AuthenticationProvider>();
+            _kernel.Bind<IAuthenticationService>().To<AuthenticationService>();
         }
 
         [TestInitialize]
         public void TestInitialize()
         {
             _kernel.Reset();
-            _authenticationProvider = _kernel.Get<IAuthenticationProvider>();
+            _authenticationService = _kernel.Get<IAuthenticationService>();
             _mockAppSettingsProvider = _kernel.GetMock<IAppSettingsProvider>();
         }
 
@@ -37,7 +37,7 @@ namespace LivestreamApp.Server.Test.Tests.Security
             var md5Hash = "5b019e6e8062af413f4055b88fa5e7b2";
 
             // When
-            _authenticationProvider.SetAuthenticationHash(newPassword);
+            _authenticationService.SetAuthenticationHash(newPassword);
 
             // Then
             _mockAppSettingsProvider
@@ -54,8 +54,8 @@ namespace LivestreamApp.Server.Test.Tests.Security
                 .Returns(md5Hash);
 
             // When
-            var incorrect = _authenticationProvider.IsAuthenticationHashValid("1nc0rrect");
-            var correct = _authenticationProvider.IsAuthenticationHashValid(md5Hash);
+            var incorrect = _authenticationService.IsAuthenticationHashValid("1nc0rrect");
+            var correct = _authenticationService.IsAuthenticationHashValid(md5Hash);
 
             // Then
             incorrect.Should().Be(false);
