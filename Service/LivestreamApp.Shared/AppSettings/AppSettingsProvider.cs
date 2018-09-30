@@ -61,8 +61,7 @@ namespace LivestreamApp.Shared.AppSettings
 
         public void ValidateAppSettingsKeys()
         {
-            _logger.Error($"Validating app.config");
-
+            _logger.Info("Validating app.config");
             var appSettingKeys = Enum.GetValues(typeof(AppSetting));
 
             foreach (var key in appSettingKeys)
@@ -76,7 +75,7 @@ namespace LivestreamApp.Shared.AppSettings
                 }
             }
 
-            _logger.Error("app.config is valid.");
+            _logger.Info("app.config is valid.");
         }
     }
 }
