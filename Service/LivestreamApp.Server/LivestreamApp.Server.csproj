@@ -110,6 +110,8 @@
     <Compile Include="Shared\WebSockets\IWebSocketServiceFactory.cs" />
     <Compile Include="Shared\WebSockets\WebSocketServerAdapter.cs" />
     <Compile Include="Shared\WebSockets\WebSocketServiceFactory.cs" />
+    <Compile Include="System\ISystemService.cs" />
+    <Compile Include="System\SystemService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
