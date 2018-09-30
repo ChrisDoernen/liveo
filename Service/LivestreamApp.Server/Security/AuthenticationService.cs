@@ -37,7 +37,7 @@ namespace LivestreamApp.Server.Security
             return sBuilder.ToString();
         }
 
-        public bool IsAuthenticationHashValid(string input)
+        public bool ValidateHash(string input)
         {
             var hash = _appSettingsProvider.GetStringValue(AppSetting.AuthenticationHash);
             var isAuthenticated = VerifyHash(hash, input);

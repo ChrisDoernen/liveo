@@ -54,8 +54,8 @@ namespace LivestreamApp.Server.Test.Tests.Security
                 .Returns(md5Hash);
 
             // When
-            var incorrect = _authenticationService.IsAuthenticationHashValid("1nc0rrect");
-            var correct = _authenticationService.IsAuthenticationHashValid(md5Hash);
+            var incorrect = _authenticationService.ValidateHash("1nc0rrect");
+            var correct = _authenticationService.ValidateHash(md5Hash);
 
             // Then
             incorrect.Should().Be(false);

@@ -16,6 +16,6 @@
         /// </summary>
         /// <param name="input">Hash of the password</param>
         /// <returns>True if valid, otherwise false</returns>
-        bool IsAuthenticationHashValid(string input);
+        bool ValidateHash(string input);
     }
 }
