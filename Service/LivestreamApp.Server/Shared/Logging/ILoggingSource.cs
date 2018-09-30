@@ -1,5 +1,5 @@
-﻿using System;
-using System.Diagnostics;
+﻿using LivestreamApp.Server.Streaming.Processes;
+using System;
 
 namespace LivestreamApp.Server.Shared.Logging
 {
@@ -11,6 +11,6 @@ namespace LivestreamApp.Server.Shared.Logging
         /// <summary>
         ///     An event that can be subscribed to get logging data
         /// </summary>
-        event EventHandler<DataReceivedEventArgs> LogLineReceived;
+        event EventHandler<MessageReceivedEventArgs> LogLineReceived;
     }
 }

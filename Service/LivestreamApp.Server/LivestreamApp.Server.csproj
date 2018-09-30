@@ -72,6 +72,7 @@
     <Compile Include="Shared\WebSockets\LoggingWebSocketService.cs" />
     <Compile Include="Streaming\Configuration\ILivestreamsConfiguration.cs" />
     <Compile Include="Streaming\Devices\UnknownDevice.cs" />
+    <Compile Include="Streaming\Processes\MessageReceivedEventArgs.cs" />
     <Compile Include="Streaming\ProcessSettings\IProcessSettingsProvider.cs" />
     <Compile Include="Streaming\ProcessSettings\ProcessSettingsProvider.cs" />
     <Compile Include="Streaming\Devices\Device.cs" />

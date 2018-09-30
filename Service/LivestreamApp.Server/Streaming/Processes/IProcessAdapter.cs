@@ -1,6 +1,5 @@
 ﻿using LivestreamApp.Server.Streaming.ProcessSettings;
 using System;
-using System.Diagnostics;
 
 namespace LivestreamApp.Server.Streaming.Processes
 {
@@ -14,12 +13,12 @@ namespace LivestreamApp.Server.Streaming.Processes
         /// <summary>
         ///     Fires when a line of standard error output is received
         /// </summary>
-        event EventHandler<DataReceivedEventArgs> ErrorDataReceived;
+        event EventHandler<MessageReceivedEventArgs> ErrorDataReceived;
 
         /// <summary>
         ///     Fires when a line of standard output is received
         /// </summary>
-        event EventHandler<DataReceivedEventArgs> OutputDataReceived;
+        event EventHandler<MessageReceivedEventArgs> OutputDataReceived;
 
         /// <summary>
         ///     Fires when the process has exited

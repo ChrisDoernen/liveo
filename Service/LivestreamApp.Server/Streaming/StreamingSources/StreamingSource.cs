@@ -2,7 +2,6 @@
 using LivestreamApp.Server.Streaming.Processes;
 using Ninject.Extensions.Logging;
 using System;
-using System.Diagnostics;
 
 namespace LivestreamApp.Server.Streaming.StreamingSources
 {
@@ -11,7 +10,7 @@ namespace LivestreamApp.Server.Streaming.StreamingSources
         public IDevice Device { get; }
         public ContentType ContentType { get; }
 
-        public event EventHandler<DataReceivedEventArgs> LogLineReceived;
+        public event EventHandler<MessageReceivedEventArgs> LogLineReceived;
         public event EventHandler<BytesReceivedEventArgs> BytesReceived;
 
         private readonly ILogger _logger;
@@ -35,8 +34,8 @@ namespace LivestreamApp.Server.Streaming.StreamingSources
         public void StartStreaming()
         {
             _processAdapter.OutputBytesReceived += OutputBytesReceivedHandler;
-            _processAdapter.ProcessExited += ProcessExitedHandler;
             _processAdapter.ErrorDataReceived += StandardErrorDataReceived;
+            _processAdapter.ProcessExited += ProcessExitedHandler;
             _processAdapter.ExecuteAndReadBinaryAsync(Device.StreamingProcessSettings);
             _logger.Info($"Started capturing on input {Device.Id}.");
         }
@@ -56,7 +55,7 @@ namespace LivestreamApp.Server.Streaming.StreamingSources
             BytesReceived?.Invoke(this, e);
         }
 
-        private void StandardErrorDataReceived(object sender, DataReceivedEventArgs e)
+        private void StandardErrorDataReceived(object sender, MessageReceivedEventArgs e)
         {
             LogLineReceived?.Invoke(this, e);
         }
@@ -64,6 +63,7 @@ namespace LivestreamApp.Server.Streaming.StreamingSources
         private void ProcessExitedHandler(object sender, EventArgs e)
         {
             _processAdapter.OutputBytesReceived -= OutputBytesReceivedHandler;
+            _processAdapter.ErrorDataReceived -= StandardErrorDataReceived;
             _logger.Info("The process exited.");
         }
     }

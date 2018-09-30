@@ -1,6 +1,6 @@
-﻿using Ninject.Extensions.Logging;
-using System.Diagnostics;
-using LivestreamApp.Server.Shared.Logging;
+﻿using LivestreamApp.Server.Shared.Logging;
+using LivestreamApp.Server.Streaming.Processes;
+using Ninject.Extensions.Logging;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 
@@ -18,9 +18,9 @@ namespace LivestreamApp.Server.Shared.WebSockets
             IgnoreExtensions = true;
         }
 
-        private void SendLine(object sender, DataReceivedEventArgs e)
+        private void SendLine(object sender, MessageReceivedEventArgs e)
         {
-            Sessions?.Broadcast(e.Data);
+            Sessions?.Broadcast(e.Message);
         }
 
         protected override void OnOpen()

@@ -17,8 +17,8 @@ namespace LivestreamApp.Server.Streaming.Processes
         private int _exitCode;
 
         public event EventHandler<BytesReceivedEventArgs> OutputBytesReceived;
-        public event EventHandler<DataReceivedEventArgs> OutputDataReceived;
-        public event EventHandler<DataReceivedEventArgs> ErrorDataReceived;
+        public event EventHandler<MessageReceivedEventArgs> OutputDataReceived;
+        public event EventHandler<MessageReceivedEventArgs> ErrorDataReceived;
         public event EventHandler ProcessExited;
 
         public ProcessAdapter(ILogger logger)
@@ -126,12 +126,12 @@ namespace LivestreamApp.Server.Streaming.Processes
 
         private void OutDataReceived(object sender, DataReceivedEventArgs e)
         {
-            OutputDataReceived?.Invoke(sender, e);
+            OutputDataReceived?.Invoke(sender, new MessageReceivedEventArgs(e.Data));
         }
 
         private void ErrDataReceived(object sender, DataReceivedEventArgs e)
         {
-            ErrorDataReceived?.Invoke(sender, e);
+            ErrorDataReceived?.Invoke(sender, new MessageReceivedEventArgs(e.Data));
         }
 
         private void ProcessExit(object sender, EventArgs e)
