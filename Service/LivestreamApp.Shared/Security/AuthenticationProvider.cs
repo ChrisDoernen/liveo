@@ -1,17 +1,19 @@
 ﻿using LivestreamApp.Shared.AppSettings;
+using Nancy.Security;
 using Ninject.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace LivestreamApp.Server.Security
+namespace LivestreamApp.Shared.Security
 {
-    public class AuthenticationService : IAuthenticationService
+    public class AuthenticationProvider : IAuthenticationProvider
     {
         private readonly ILogger _logger;
         private readonly IAppSettingsProvider _appSettingsProvider;
 
-        public AuthenticationService(ILogger logger, IAppSettingsProvider appSettingsProvider)
+        public AuthenticationProvider(ILogger logger, IAppSettingsProvider appSettingsProvider)
         {
             _logger = logger;
             _appSettingsProvider = appSettingsProvider;
@@ -37,12 +39,15 @@ namespace LivestreamApp.Server.Security
             return sBuilder.ToString();
         }
 
-        public bool ValidateHash(string input)
+        public IUserIdentity Validate(string input)
         {
             var hash = _appSettingsProvider.GetStringValue(AppSetting.AuthenticationHash);
             var isAuthenticated = VerifyHash(hash, input);
             if (!isAuthenticated) _logger.Warn("Access denied. Wrong hash provided.");
-            return isAuthenticated;
+
+            return isAuthenticated
+                ? new UserIdentity("Admin", new List<string> { "ACCESS-BACKEND" })
+                : null;
         }
 
         private bool VerifyHash(string hash, string input)

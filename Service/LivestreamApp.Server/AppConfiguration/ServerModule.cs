@@ -1,5 +1,4 @@
-﻿using LivestreamApp.Server.Security;
-using LivestreamApp.Server.Shared.WebSockets;
+﻿using LivestreamApp.Server.Shared.WebSockets;
 using LivestreamApp.Server.Shutdown;
 using LivestreamApp.Server.Streaming.Configuration;
 using LivestreamApp.Server.Streaming.Core;
@@ -25,7 +24,6 @@ namespace LivestreamApp.Server.AppConfiguration
             Bind<IWebSocketServerAdapter>().To<WebSocketServerAdapter>().InSingletonScope();
             Bind<IWebSocketServiceFactory>().To<WebSocketServiceFactory>().InSingletonScope();
             Bind<IShutdownService>().To<ShutdownService>();
-            Bind<IAuthenticationService>().To<AuthenticationService>();
         }
     }
 }

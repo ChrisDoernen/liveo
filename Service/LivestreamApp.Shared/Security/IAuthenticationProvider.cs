@@ -1,9 +1,11 @@
-﻿namespace LivestreamApp.Server.Security
+﻿using Nancy.Security;
+
+namespace LivestreamApp.Shared.Security
 {
     /// <summary>
     ///     Provides authentication
     /// </summary>
-    public interface IAuthenticationService
+    public interface IAuthenticationProvider
     {
         /// <summary>
         ///     Sets a new authentication hash from a given password
@@ -16,6 +18,6 @@
         /// </summary>
         /// <param name="input">Hash of the password</param>
         /// <returns>True if valid, otherwise false</returns>
-        bool ValidateHash(string input);
+        IUserIdentity Validate(string input);
     }
 }
