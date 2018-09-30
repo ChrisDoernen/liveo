@@ -13,9 +13,9 @@ namespace LivestreamApp.Server.Streaming.Entities
         public string Input { get; set; }
         public bool StartOnServiceStartup { get; set; }
         public bool IsStarted { get; private set; }
+        public bool HasValidInputSource { get; set; }
+        public bool IsInitialized { get; set; }
 
-        private bool IsInitialized { get; set; }
-        private bool HasValidInputSource { get; set; }
         private IStreamingSource Source { get; set; }
 
         private readonly IWebSocketServerAdapter _webSocketServerAdapter;
@@ -44,7 +44,7 @@ namespace LivestreamApp.Server.Streaming.Entities
             {
                 Source.StartStreaming();
                 _webSocketServerAdapter.AddStreamingWebSocketService($"/livestreams/{Id}", Source);
-                _webSocketServerAdapter.AddLogginggWebSocketService($"/livestreams/log/{Id}", Source);
+                _webSocketServerAdapter.AddLoggingWebSocketService($"/livestreams/log/{Id}", Source);
                 IsStarted = true;
             }
         }

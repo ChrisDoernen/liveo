@@ -59,7 +59,7 @@ namespace LivestreamApp.Server.Shared.WebSockets
             _logger.Info($"Added streaming service on path {path}.");
         }
 
-        public void AddLogginggWebSocketService(string path, ILoggingSource source)
+        public void AddLoggingWebSocketService(string path, ILoggingSource source)
         {
             var service = _webSocketServiceFactory.GetLoggingWebSocketervice(source);
             _webSocketServer.AddWebSocketService(path, () => service);

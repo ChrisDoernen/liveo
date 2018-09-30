@@ -96,7 +96,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Devices
         public void GetDeviceById_MatchingId_ShouldReturnCorrectDevice()
         {
             // Given
-            var processOutput = File.ReadAllText(FfmpegOutputNoDevice);
+            var processOutput = File.ReadAllText(FfmpegOutputOneDevice);
             var result = new ProcessResult(1, "", processOutput);
             _mockProcessAdapter
                 .Setup(mep => mep.ExecuteAndReadSync(It.IsAny<IProcessSettings>()))
@@ -128,7 +128,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Devices
 
             // Then
             device.Should().BeOfType(typeof(UnknownDevice));
-            device.Id.Should().Be("Mikrofonarray (Rea");
+            device.Id.Should().Be("Mikrofonarray (Realtek High Definition Audio)");
             device.DeviceState.Should().Be(DeviceState.Unknown);
             device.DeviceType.Should().Be(DeviceType.Unknown);
         }

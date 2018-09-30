@@ -30,7 +30,7 @@ namespace LivestreamApp.Server.Shared.WebSockets
         /// </summary>
         /// <param name="sourceId">The path to publish</param>
         /// <param name="source">A logging source</param>
-        void AddLogginggWebSocketService(string sourceId, ILoggingSource source);
+        void AddLoggingWebSocketService(string sourceId, ILoggingSource source);
 
         /// <summary>
         ///     Remove a web socket service
