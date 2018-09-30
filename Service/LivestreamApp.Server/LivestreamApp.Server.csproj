@@ -68,6 +68,8 @@
   <ItemGroup>
     <Compile Include="AppConfiguration\AutoMapperModule.cs" />
     <Compile Include="AppConfiguration\ServerModule.cs" />
+    <Compile Include="Security\AuthenticationProvider.cs" />
+    <Compile Include="Security\IAuthenticationProvider.cs" />
     <Compile Include="Shared\Logging\ILoggingSource.cs" />
     <Compile Include="Shared\WebSockets\LoggingWebSocketService.cs" />
     <Compile Include="Streaming\Configuration\ILivestreamsConfiguration.cs" />

@@ -86,6 +86,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tests\Security\AuthenticationProviderTest.cs" />
     <Compile Include="Tests\Streaming\Configuration\LivestreamsConfigurationTest.cs" />
     <Compile Include="Tests\Streaming\Devices\DeviceDetectorTest.cs" />
     <Compile Include="Tests\Streaming\Devices\DeviceTest.cs" />
@@ -112,6 +113,10 @@
     <ProjectReference Include="..\LivestreamApp.Server\LivestreamApp.Server.csproj">
       <Project>{2aa291c7-562d-4a91-8a9c-767b4bace957}</Project>
       <Name>LivestreamApp.Server</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LivestreamApp.Shared\LivestreamApp.Shared.csproj">
+      <Project>{0aae9820-f6ac-43f3-af3c-e41a8d3fd6be}</Project>
+      <Name>LivestreamApp.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

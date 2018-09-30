@@ -3,6 +3,7 @@
     public enum AppSetting
     {
         DefaultPort,
-        DefaultWebSocketPort
+        DefaultWebSocketPort,
+        AuthenticationHash
     }
 }

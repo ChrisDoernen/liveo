@@ -6,7 +6,7 @@ using Ninject;
 using Ninject.MockingKernel.Moq;
 using System;
 
-namespace LivestreamApp.Shared.Test.Tests
+namespace LivestreamApp.Shared.Test.Tests.AppSettings
 {
     [TestClass]
     public class AppSettingsProviderTest
@@ -71,6 +71,21 @@ namespace LivestreamApp.Shared.Test.Tests
 
             // When
             var setting = _appSettingsProvider.GetIntValue(AppSetting.DefaultPort);
+        }
+
+        [TestMethod]
+        public void SetStringValue_ShouldSetValueCorrectly()
+        {
+            // Given
+            var appSetting = AppSetting.AuthenticationHash;
+            var valueToSet = "SomeValue";
+
+            // When
+            _appSettingsProvider.SetStringValue(appSetting, valueToSet);
+
+            // Then
+            _mockConfigurationManagerAdapter
+                .Verify(mcma => mcma.SetAppSetting(appSetting.ToString(), valueToSet), Times.Once);
         }
     }
 }

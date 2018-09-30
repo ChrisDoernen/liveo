@@ -8,5 +8,10 @@ namespace LivestreamApp.Shared.AppSettings
         {
             return ConfigurationManager.AppSettings[appSetting];
         }
+
+        public void SetAppSetting(string appSetting, string newValue)
+        {
+            ConfigurationManager.AppSettings[appSetting] = newValue;
+        }
     }
 }

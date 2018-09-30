@@ -81,7 +81,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Entities
             _livestream.Start();
 
             // Then
-            _livestream.HasValidInputSource.Should().Be(true);
+            _livestream.HasValidInputSource.Should().Be(false);
             _livestream.IsInitialized.Should().Be(true);
             _mockStreamingSource.Verify(ms => ms.StartStreaming(), Times.Never);
         }

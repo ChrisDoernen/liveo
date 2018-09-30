@@ -6,7 +6,7 @@ using Moq;
 using Ninject;
 using Ninject.MockingKernel.Moq;
 
-namespace LivestreamApp.Shared.Test.Tests
+namespace LivestreamApp.Shared.Test.Tests.Network
 {
     [TestClass]
     public class UriConfigurationTest

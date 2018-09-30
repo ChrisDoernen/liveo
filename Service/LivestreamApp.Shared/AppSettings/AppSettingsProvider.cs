@@ -34,5 +34,11 @@ namespace LivestreamApp.Shared.AppSettings
         {
             return _configurationManagerAdapter.GetAppSetting(setting.ToString());
         }
+
+        public void SetStringValue(AppSetting setting, string newValue)
+        {
+            _configurationManagerAdapter
+                .SetAppSetting(AppSetting.AuthenticationHash.ToString(), newValue);
+        }
     }
 }
