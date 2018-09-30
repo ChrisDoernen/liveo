@@ -61,7 +61,7 @@ namespace LivestreamApp.Shared.Test.Tests.AppSettings
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(FormatException))]
         public void GetIntValue_InValidInput_ShouldThrow()
         {
             // Given
@@ -86,6 +86,47 @@ namespace LivestreamApp.Shared.Test.Tests.AppSettings
             // Then
             _mockConfigurationManagerAdapter
                 .Verify(mcma => mcma.SetAppSetting(appSetting.ToString(), valueToSet), Times.Once);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void SetStringValue_NoKey_ShouldThrow()
+        {
+            // Given
+            _mockConfigurationManagerAdapter
+                .Setup(mcma => mcma.GetAppSetting(It.IsAny<string>()))
+                .Returns((string)null);
+
+            // When
+            _appSettingsProvider.GetStringValue(AppSetting.AuthenticationHash);
+        }
+
+        [TestMethod]
+        public void ValidateAppSettingKeys_AllKeysExisting_ShouldNotThrow()
+        {
+            // Given
+            _mockConfigurationManagerAdapter
+                .Setup(mcma => mcma.GetAppSetting(It.IsAny<string>()))
+                .Returns("SomeValue");
+
+            // When
+            _appSettingsProvider.ValidateAppSettingsKeys();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ValidateAppSettingKeys_KeyNotExisting_ShouldThrow()
+        {
+            // Given
+            var authenticationHash = AppSetting.AuthenticationHash.ToString();
+            string Returns(string x) => x == authenticationHash ? null : "SomeValue";
+
+            _mockConfigurationManagerAdapter
+                .Setup(mcma => mcma.GetAppSetting(It.IsAny<string>()))
+                .Returns((Func<string, string>)Returns);
+
+            // When
+            _appSettingsProvider.ValidateAppSettingsKeys();
         }
     }
 }

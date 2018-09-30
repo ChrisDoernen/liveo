@@ -13,7 +13,7 @@ namespace LivestreamApp.Server.Shutdown
 
         public void ShutdownServer()
         {
-            _logger.Info("Shuting down server.");
+            _logger.Info("Shutting down server.");
         }
 
         public void RestartServer()

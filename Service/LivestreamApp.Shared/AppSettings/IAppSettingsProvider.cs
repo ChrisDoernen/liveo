@@ -5,5 +5,6 @@
         int GetIntValue(AppSetting setting);
         string GetStringValue(AppSetting setting);
         void SetStringValue(AppSetting setting, string newValue);
+        void ValidateAppSettingsKeys();
     }
 }
