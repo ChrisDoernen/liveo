@@ -21,7 +21,6 @@ namespace LivestreamApp.Server.Streaming.Entities
         private readonly IWebSocketServerAdapter _webSocketServerAdapter;
         private readonly IStreamingSourceFactory _streamingSourceFactory;
         private readonly ILogger _logger;
-        private string _path;
 
         public Livestream(ILogger logger, IWebSocketServerAdapter webSocketServerAdapter,
             IStreamingSourceFactory streamingSourceFactory)
@@ -36,7 +35,6 @@ namespace LivestreamApp.Server.Streaming.Entities
             Source = _streamingSourceFactory.GetStreamingSourceByDeviceId(Input);
             HasValidInputSource = Source.HasValidDevice();
             if (!HasValidInputSource) _logger.Warn($"Livestream {Id} has invalid input source.");
-            _path = $"/{Id}";
             IsInitialized = true;
         }
 
@@ -45,7 +43,8 @@ namespace LivestreamApp.Server.Streaming.Entities
             if (IsInitialized && HasValidInputSource && StartOnServiceStartup)
             {
                 Source.StartStreaming();
-                _webSocketServerAdapter.AddStreamingWebSocketService(_path, Source);
+                _webSocketServerAdapter.AddStreamingWebSocketService($"/livestreams/{Id}", Source);
+                _webSocketServerAdapter.AddLogginggWebSocketService($"/livestreams/log/{Id}", Source);
                 IsStarted = true;
             }
         }
@@ -55,7 +54,8 @@ namespace LivestreamApp.Server.Streaming.Entities
             if (IsStarted)
             {
                 Source.StopStreaming();
-                _webSocketServerAdapter.RemoveWebSocketService(_path);
+                _webSocketServerAdapter.RemoveWebSocketService($"/livestreams/{Id}");
+                _webSocketServerAdapter.RemoveWebSocketService($"/livestreams/log/{Id}");
                 IsStarted = false;
             }
         }

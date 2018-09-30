@@ -1,4 +1,5 @@
-﻿using LivestreamApp.Server.Streaming.Devices;
+﻿using LivestreamApp.Server.Shared.Logging;
+using LivestreamApp.Server.Streaming.Devices;
 using LivestreamApp.Server.Streaming.Processes;
 using System;
 
@@ -7,7 +8,7 @@ namespace LivestreamApp.Server.Streaming.StreamingSources
     /// <summary>
     ///     A source capable of streaming media
     /// </summary>
-    public interface IStreamingSource
+    public interface IStreamingSource : ILoggingSource
     {
         /// <summary>
         ///     The type of the streaming content

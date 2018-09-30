@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace LivestreamApp.Server.Shared
+namespace LivestreamApp.Server.Shared.Logging
 {
     /// <summary>
     ///     A source of log messages

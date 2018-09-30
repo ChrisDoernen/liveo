@@ -1,4 +1,5 @@
-﻿using LivestreamApp.Server.Streaming.StreamingSources;
+﻿using LivestreamApp.Server.Shared.Logging;
+using LivestreamApp.Server.Streaming.StreamingSources;
 using Ninject;
 using Ninject.Parameters;
 using Ninject.Syntax;

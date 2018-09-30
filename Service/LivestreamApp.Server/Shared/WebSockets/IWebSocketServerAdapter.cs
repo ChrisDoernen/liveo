@@ -1,4 +1,5 @@
-﻿using LivestreamApp.Server.Streaming.StreamingSources;
+﻿using LivestreamApp.Server.Shared.Logging;
+using LivestreamApp.Server.Streaming.StreamingSources;
 
 namespace LivestreamApp.Server.Shared.WebSockets
 {
@@ -20,16 +21,16 @@ namespace LivestreamApp.Server.Shared.WebSockets
         /// <summary>
         ///     Add a streaming web socket service
         /// </summary>
-        /// <param name="path">The path to publish</param>
+        /// <param name="sourceId">The path to publish</param>
         /// <param name="source">A streaming source</param>
-        void AddStreamingWebSocketService(string path, IStreamingSource source);
+        void AddStreamingWebSocketService(string sourceId, IStreamingSource source);
 
         /// <summary>
         ///     Add a logging web socket service
         /// </summary>
-        /// <param name="path">The path to publish</param>
+        /// <param name="sourceId">The path to publish</param>
         /// <param name="source">A logging source</param>
-        void AddLogginggWebSocketService(string path, ILoggingSource source);
+        void AddLogginggWebSocketService(string sourceId, ILoggingSource source);
 
         /// <summary>
         ///     Remove a web socket service

@@ -1,5 +1,6 @@
 ﻿using Ninject.Extensions.Logging;
 using System.Diagnostics;
+using LivestreamApp.Server.Shared.Logging;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 

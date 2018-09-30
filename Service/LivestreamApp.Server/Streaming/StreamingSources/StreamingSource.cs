@@ -1,5 +1,4 @@
-﻿using LivestreamApp.Server.Shared;
-using LivestreamApp.Server.Streaming.Devices;
+﻿using LivestreamApp.Server.Streaming.Devices;
 using LivestreamApp.Server.Streaming.Processes;
 using Ninject.Extensions.Logging;
 using System;
@@ -7,7 +6,7 @@ using System.Diagnostics;
 
 namespace LivestreamApp.Server.Streaming.StreamingSources
 {
-    public class StreamingSource : IStreamingSource, ILoggingSource
+    public class StreamingSource : IStreamingSource
     {
         public IDevice Device { get; }
         public ContentType ContentType { get; }
@@ -55,7 +54,6 @@ namespace LivestreamApp.Server.Streaming.StreamingSources
         {
             // Forward the data from the process to any observer, i.e. streaming services.
             BytesReceived?.Invoke(this, e);
-            Console.WriteLine($"Received {e.Bytes.Length} bytes.");
         }
 
         private void StandardErrorDataReceived(object sender, DataReceivedEventArgs e)
