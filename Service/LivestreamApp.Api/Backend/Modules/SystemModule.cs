@@ -11,10 +11,8 @@ namespace LivestreamApp.Api.Backend.Modules
         {
             Get["/system/shutdown"] = _ =>
             {
+                logger.Info("/system/shutdown was invoked, trying to shut down server.");
                 shutdownService.ShutdownServer();
-
-                logger.Info($"/system/shutdown was invoked, trying to shot down server.");
-
                 return HttpStatusCode.Accepted;
             };
         }
