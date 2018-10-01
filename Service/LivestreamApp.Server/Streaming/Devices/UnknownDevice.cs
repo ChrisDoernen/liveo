@@ -1,4 +1,4 @@
-﻿using LivestreamApp.Server.Streaming.ProcessSettings;
+﻿using LivestreamApp.Server.Shared.ProcessSettings;
 
 namespace LivestreamApp.Server.Streaming.Devices
 {

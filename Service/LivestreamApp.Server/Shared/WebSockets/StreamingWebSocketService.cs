@@ -1,4 +1,4 @@
-﻿using LivestreamApp.Server.Streaming.Processes;
+﻿using LivestreamApp.Server.Shared.Processes;
 using LivestreamApp.Server.Streaming.StreamingSources;
 using Ninject.Extensions.Logging;
 using WebSocketSharp;

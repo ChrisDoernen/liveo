@@ -1,5 +1,5 @@
-﻿using LivestreamApp.Server.Streaming.Processes;
-using LivestreamApp.Server.Streaming.ProcessSettings;
+﻿using LivestreamApp.Server.Shared.Processes;
+using LivestreamApp.Server.Shared.ProcessSettings;
 using LivestreamApp.Server.Streaming.StreamingSources;
 
 namespace LivestreamApp.Server.Streaming.Devices

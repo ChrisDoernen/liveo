@@ -1,5 +1,5 @@
-﻿using LivestreamApp.Server.Streaming.Devices;
-using LivestreamApp.Server.Streaming.Processes;
+﻿using LivestreamApp.Server.Shared.Processes;
+using LivestreamApp.Server.Streaming.Devices;
 using Ninject.Extensions.Logging;
 using System;
 

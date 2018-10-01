@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
+using LivestreamApp.Server.Shared.ProcessSettings;
 using LivestreamApp.Server.Streaming.Devices;
-using LivestreamApp.Server.Streaming.ProcessSettings;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Ninject.MockingKernel.Moq;

@@ -1,4 +1,4 @@
-﻿using LivestreamApp.Server.Streaming.Processes;
+﻿using LivestreamApp.Server.Shared.Processes;
 using System;
 
 namespace LivestreamApp.Server.Shared.Logging

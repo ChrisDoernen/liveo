@@ -1,4 +1,4 @@
-﻿using LivestreamApp.Server.Streaming.ProcessSettings;
+﻿using LivestreamApp.Server.Shared.ProcessSettings;
 using Ninject.Extensions.Logging;
 using System;
 using System.Diagnostics;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WebSocketSharp;
 
-namespace LivestreamApp.Server.Streaming.Processes
+namespace LivestreamApp.Server.Shared.Processes
 {
     public class ProcessAdapter : IProcessAdapter, IDisposable
     {
@@ -35,6 +35,12 @@ namespace LivestreamApp.Server.Streaming.Processes
             _process.WaitForExit();
 
             return new ProcessResult(_exitCode, output, errorOutput);
+        }
+
+        public void ExecuteAsync(IProcessSettings settings)
+        {
+            var processStartInfo = GetProcessStartInfo(settings.FileName, settings.Arguments);
+            Execute(processStartInfo, false, false);
         }
 
         public void ExecuteAndReadAsync(IProcessSettings settings)

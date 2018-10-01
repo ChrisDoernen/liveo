@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LivestreamApp.Server.Streaming.ProcessSettings
+namespace LivestreamApp.Server.Shared.ProcessSettings
 {
     public class ProcessSettingsProvider : IProcessSettingsProvider
     {

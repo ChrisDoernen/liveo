@@ -1,6 +1,6 @@
 ﻿using LivestreamApp.Server.Shared.Logging;
+using LivestreamApp.Server.Shared.Processes;
 using LivestreamApp.Server.Streaming.Devices;
-using LivestreamApp.Server.Streaming.Processes;
 using System;
 
 namespace LivestreamApp.Server.Streaming.StreamingSources

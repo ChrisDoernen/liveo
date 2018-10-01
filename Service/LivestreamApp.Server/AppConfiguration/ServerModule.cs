@@ -1,10 +1,10 @@
-﻿using LivestreamApp.Server.Shared.WebSockets;
+﻿using LivestreamApp.Server.Shared.Processes;
+using LivestreamApp.Server.Shared.ProcessSettings;
+using LivestreamApp.Server.Shared.WebSockets;
 using LivestreamApp.Server.Shutdown;
 using LivestreamApp.Server.Streaming.Configuration;
 using LivestreamApp.Server.Streaming.Core;
 using LivestreamApp.Server.Streaming.Devices;
-using LivestreamApp.Server.Streaming.Processes;
-using LivestreamApp.Server.Streaming.ProcessSettings;
 using LivestreamApp.Server.Streaming.StreamingSources;
 using Ninject.Modules;
 
@@ -23,7 +23,12 @@ namespace LivestreamApp.Server.AppConfiguration
             Bind<IStreamingSourceFactory>().To<StreamingSourceFactory>().InSingletonScope();
             Bind<IWebSocketServerAdapter>().To<WebSocketServerAdapter>().InSingletonScope();
             Bind<IWebSocketServiceFactory>().To<WebSocketServiceFactory>().InSingletonScope();
+
+#if DEBUG
             Bind<IShutdownService>().To<ShutdownService>();
+#else
+            Bind<IShutdownService>().To<ShutdownService>();
+#endif
         }
     }
 }

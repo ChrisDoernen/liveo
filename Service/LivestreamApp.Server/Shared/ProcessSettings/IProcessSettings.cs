@@ -1,6 +1,6 @@
-﻿using LivestreamApp.Server.Streaming.Processes;
+﻿using LivestreamApp.Server.Shared.Processes;
 
-namespace LivestreamApp.Server.Streaming.ProcessSettings
+namespace LivestreamApp.Server.Shared.ProcessSettings
 {
     /// <summary>
     ///     Implementation provides settings to be used with an <see cref="IProcessAdapter"/>
