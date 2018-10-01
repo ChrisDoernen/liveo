@@ -27,10 +27,10 @@ namespace LivestreamApp.Service.AppConfiguration
             StatelessAuthentication.Enable(pipelines, configuration);
         }
 
-        protected override void ConfigureApplicationContainer(IKernel existingContainer)
+        protected override void ConfigureApplicationContainer(IKernel kernel)
         {
             // Perform registration that should have an application lifetime
-            existingContainer.Load(new ServerModule(), new ServiceModule(), new SharedModule(), new AutoMapperModule());
+            kernel.Load(new ServerModule(), new ServiceModule(), new SharedModule(), new AutoMapperModule());
         }
     }
 }

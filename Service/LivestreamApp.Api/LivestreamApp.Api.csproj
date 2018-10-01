@@ -57,7 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Backend\Modules\SystemModule.cs" />
+    <Compile Include="Backend\Modules\ShutdownModule.cs" />
     <Compile Include="Client\Modules\LivestreamsModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

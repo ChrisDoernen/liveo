@@ -10,16 +10,16 @@ using Ninject.Extensions.Logging;
 using Ninject.MockingKernel.Moq;
 using System.Collections.Generic;
 
-namespace LivestreamApp.Api.Test.Tests
+namespace LivestreamApp.Api.Test.Tests.Client
 {
     [TestClass]
-    public class LivestreamModuleTest
+    public class LivestreamsModuleTest
     {
         private readonly MoqMockingKernel _kernel;
         private Mock<IStreamingService> _mockStreamingService;
         private Mock<ILogger> _mockLogger;
 
-        public LivestreamModuleTest()
+        public LivestreamsModuleTest()
         {
             _kernel = new MoqMockingKernel();
         }
