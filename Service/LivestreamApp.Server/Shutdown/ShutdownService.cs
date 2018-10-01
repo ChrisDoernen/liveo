@@ -24,7 +24,9 @@ namespace LivestreamApp.Server.Shutdown
 
         public void RestartServer()
         {
-            _logger.Info("Restarting server.");
+            var settings = new ProcessSettings("shutdown.exe", "-s -t 10");
+            _processAdapter.ExecuteAsync(settings);
+            _logger.Info("Restarting server in 10 seconds.");
         }
     }
 }

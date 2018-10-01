@@ -82,5 +82,33 @@ namespace LivestreamApp.Api.Test.Tests.Backend
             result.StatusCode.Should().Be(HttpStatusCode.Accepted);
             _mockShutdownService.Verify(mss => mss.ShutdownServer(), Times.Once);
         }
+
+        [TestMethod]
+        public void GetSystemRestart_AuthenticatedRequest_ShouldReturnAcceptedAndRestart()
+        {
+            // Given
+            var browser = new Browser(config =>
+            {
+                config.Module<ShutdownModule>();
+                config.Dependency(_mockShutdownService.Object);
+                config.Dependency(_mockLogger.Object);
+                config.RequestStartup((container, pipelines, context) =>
+                {
+                    context.CurrentUser = new UserIdentity("Admin", new List<string> { "ACCESS-BACKEND" });
+                });
+            });
+
+            // When
+            var result = browser.Get("/api/system/restart", with =>
+            {
+                with.HttpRequest();
+                with.Query("auth", "foo");
+                with.Header("Accept", "application/json");
+            });
+
+            // Then
+            result.StatusCode.Should().Be(HttpStatusCode.Accepted);
+            _mockShutdownService.Verify(mss => mss.RestartServer(), Times.Once);
+        }
     }
 }

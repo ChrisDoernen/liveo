@@ -25,7 +25,7 @@ namespace LivestreamApp.Server.AppConfiguration
             Bind<IWebSocketServiceFactory>().To<WebSocketServiceFactory>().InSingletonScope();
 
 #if DEBUG
-            Bind<IShutdownService>().To<ShutdownService>();
+            Bind<IShutdownService>().To<MockShutdownService>();
 #else
             Bind<IShutdownService>().To<ShutdownService>();
 #endif
