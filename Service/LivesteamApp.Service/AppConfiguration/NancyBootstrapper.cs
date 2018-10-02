@@ -30,7 +30,7 @@ namespace LivestreamApp.Service.AppConfiguration
         protected override void ConfigureApplicationContainer(IKernel kernel)
         {
             // Perform registration that should have an application lifetime
-            kernel.Load(new ServerModule(), new ServiceModule(), new SharedModule(), new AutoMapperModule());
+            kernel.Load(new ServerModule(), new AutoMapperModule(), new SharedModule());
         }
     }
 }

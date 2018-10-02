@@ -2,11 +2,11 @@
 
 namespace LivestreamApp.Server.Shutdown
 {
-    public class MockShutdownService : IShutdownService
+    public class ShutdownSimulationService : IShutdownService
     {
         private readonly ILogger _logger;
 
-        public MockShutdownService(ILogger logger)
+        public ShutdownSimulationService(ILogger logger)
         {
             _logger = logger;
         }

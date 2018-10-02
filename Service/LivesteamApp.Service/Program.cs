@@ -1,4 +1,3 @@
-using LivestreamApp.Service.AppConfiguration;
 using LivestreamApp.Service.UriReservation;
 using LivestreamApp.Shared.AppConfiguration;
 using LivestreamApp.Shared.AppSettings;
@@ -13,18 +12,23 @@ namespace LivestreamApp.Service
     {
         public static void Main()
         {
-            // Loading Ninject kernel
+            // Load Ninject kernel
             IKernel kernel = new StandardKernel();
-            kernel.Load(new ServiceModule(), new SharedModule());
+            kernel.Load(new SharedModule());
+
+            // Validate app settings before startup
+            var appSettingsProvider = kernel.Get<IAppSettingsProvider>();
+            appSettingsProvider.ValidateAppSettingsKeys();
+
+            // Load service
             var livestreamApp = kernel.Get<Service>();
 
             // Get logger for top level logging
             var logger = kernel.Get<ILoggerFactory>().GetCurrentClassLogger();
 
-            // Url registrations
-            var appSettingsprovider = kernel.Get<IAppSettingsProvider>();
-            var webServerPort = appSettingsprovider.GetIntValue(AppSetting.DefaultPort);
-            var webSocketPort = appSettingsprovider.GetIntValue(AppSetting.DefaultWebSocketPort);
+            // Get ports  for url registrations
+            var webServerPort = appSettingsProvider.GetIntValue(AppSetting.DefaultPort);
+            var webSocketPort = appSettingsProvider.GetIntValue(AppSetting.DefaultWebSocketPort);
 
             // Run Topshelf
             var host = HostFactory.New(x =>

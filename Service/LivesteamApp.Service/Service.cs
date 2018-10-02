@@ -1,5 +1,4 @@
-﻿using LivestreamApp.Shared.AppSettings;
-using LivestreamApp.Shared.Network;
+﻿using LivestreamApp.Shared.Network;
 using Nancy.Hosting.Self;
 using Ninject.Extensions.Logging;
 using System;
@@ -10,22 +9,18 @@ namespace LivestreamApp.Service
     {
         private readonly ILogger _logger;
         private readonly IUriConfiguration _uriConfiguration;
-        private readonly IAppSettingsProvider _appSettingsProvider;
         private NancyHost _nancyHost;
 
-        public Service(ILogger logger, IUriConfiguration uriConfiguration,
-            IAppSettingsProvider appSettingsProvider)
+        public Service(ILogger logger, IUriConfiguration uriConfiguration)
         {
             _logger = logger;
             _uriConfiguration = uriConfiguration;
-            _appSettingsProvider = appSettingsProvider;
         }
 
         public bool Start()
         {
             try
             {
-                _appSettingsProvider.ValidateAppSettingsKeys();
                 StartHttpServer();
             }
             catch (Exception ex)
@@ -64,6 +59,7 @@ namespace LivestreamApp.Service
         private void StopHttpServer()
         {
             _nancyHost.Stop();
+            _nancyHost.Dispose();
             _logger.Info("Http server stopped.");
         }
     }

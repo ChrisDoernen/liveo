@@ -53,6 +53,22 @@ namespace LivestreamApp.Shared.AppSettings
             }
         }
 
+        public bool GetBooleanValue(AppSetting appSetting)
+        {
+            var setting = appSetting.ToString();
+
+            try
+            {
+                return bool.Parse(_configurationManagerAdapter.GetAppSetting(setting));
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Parsing app setting {setting} failed.");
+                _logger.Error(ex.ToString());
+                throw ex;
+            }
+        }
+
         public void SetStringValue(AppSetting setting, string newValue)
         {
             _configurationManagerAdapter
