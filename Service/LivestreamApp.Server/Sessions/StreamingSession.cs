@@ -32,7 +32,7 @@ namespace LivestreamApp.Server.Sessions
 
         public void EndSession()
         {
-            _sessionState = _sessionState.StopSession();
+            _sessionState = _sessionState.EndSession();
         }
 
         public void Pause()
@@ -54,6 +54,5 @@ namespace LivestreamApp.Server.Sessions
         {
 
         }
-
     }
 }

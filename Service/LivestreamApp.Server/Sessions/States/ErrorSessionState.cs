@@ -7,7 +7,7 @@
             throw new System.NotImplementedException();
         }
 
-        public ISessionState StopSession()
+        public ISessionState EndSession()
         {
             throw new System.NotImplementedException();
         }

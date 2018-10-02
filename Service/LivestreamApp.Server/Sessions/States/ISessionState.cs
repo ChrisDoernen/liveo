@@ -3,7 +3,7 @@
     public interface ISessionState
     {
         ISessionState StartSession();
-        ISessionState StopSession();
+        ISessionState EndSession();
         ISessionState Pause();
         ISessionState Resume();
         ISessionState ScheduleSession();
