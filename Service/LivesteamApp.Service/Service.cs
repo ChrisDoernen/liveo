@@ -21,7 +21,8 @@ namespace LivestreamApp.Service
         {
             try
             {
-                StartHttpServer();
+                StartServer();
+                return true;
             }
             catch (Exception ex)
             {
@@ -29,11 +30,12 @@ namespace LivestreamApp.Service
                 _logger.Error(ex.ToString());
             }
 
-            return true;
+            return false;
         }
 
-        private void StartHttpServer()
+        private void StartServer()
         {
+            _logger.Info("Starting application service.");
             var uri = _uriConfiguration.GetHttpUri();
             var host = new NancyHost(new Uri(uri));
             _nancyHost = host;
@@ -45,7 +47,7 @@ namespace LivestreamApp.Service
         {
             try
             {
-                StopHttpServer();
+                StopServer();
             }
             catch (Exception ex)
             {
@@ -56,8 +58,9 @@ namespace LivestreamApp.Service
             return true;
         }
 
-        private void StopHttpServer()
+        private void StopServer()
         {
+            _logger.Info("Stopping application service.");
             _nancyHost.Stop();
             _nancyHost.Dispose();
             _logger.Info("Http server stopped.");

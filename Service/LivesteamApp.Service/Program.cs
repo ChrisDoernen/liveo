@@ -20,11 +20,12 @@ namespace LivestreamApp.Service
             var appSettingsProvider = kernel.Get<IAppSettingsProvider>();
             appSettingsProvider.ValidateAppSettingsKeys();
 
-            // Load service
+            // Construct service
             var livestreamApp = kernel.Get<Service>();
 
             // Get logger for top level logging
-            var logger = kernel.Get<ILoggerFactory>().GetCurrentClassLogger();
+            var logFactory = kernel.Get<ILoggerFactory>();
+            var logger = logFactory.GetCurrentClassLogger();
 
             // Get ports  for url registrations
             var webServerPort = appSettingsProvider.GetIntValue(AppSetting.DefaultPort);
@@ -39,6 +40,8 @@ namespace LivestreamApp.Service
                     s.ConstructUsing(name => livestreamApp);
                     s.WhenStarted(ls => ls.Start());
                     s.WhenStopped(ls => ls.Stop());
+                    s.WhenPaused(ls => ls.Stop());
+                    s.WhenContinued(ls => ls.Start());
                 });
                 x.WithUriReservation(r =>
                 {

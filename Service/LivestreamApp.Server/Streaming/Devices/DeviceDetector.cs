@@ -54,8 +54,9 @@ namespace LivestreamApp.Server.Streaming.Devices
                 .Select(GetAudioDevice)
                 .ToList();
 
+            var audioDeviceIds = audioDevices.Select(ad => ad.Id);
+            _logger.Info($"Audio device(s) ({audioDevices.Count}): {string.Join(", ", audioDeviceIds)}.");
             Devices.AddRange(audioDevices);
-            _logger.Info($"Audio device(s) ({audioDevices.Count}): {string.Join(", ", audioDevices)}.");
         }
 
         private IDevice GetAudioDevice(string id)
