@@ -145,7 +145,6 @@
     <Folder Include="Notifications\" />
     <Folder Include="Settings\" />
     <Folder Include="Statistics\" />
-    <Folder Include="Streaming\Sessions\Configuration\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LivestreamApp.Shared\LivestreamApp.Shared.csproj">

@@ -7,7 +7,7 @@ using WebSocketSharp.Server;
 
 namespace LivestreamApp.Server.Shared.WebSockets
 {
-    public class WebSocketServerAdapter : IWebSocketServerAdapter
+    public class WebSocketServerAdapter : IWebSocketServerAdapter, IDisposable
     {
         private readonly ILogger _logger;
         private WebSocketServer _webSocketServer;
@@ -20,6 +20,7 @@ namespace LivestreamApp.Server.Shared.WebSockets
             _logger = logger;
             _webSocketServiceFactory = webSocketServiceFactory;
             _uriConfiguration = uriConfiguration;
+            StartWebSocketServer();
         }
 
         public void StartWebSocketServer()
@@ -70,6 +71,13 @@ namespace LivestreamApp.Server.Shared.WebSockets
         {
             _webSocketServer.RemoveWebSocketService(path);
             _logger.Info($"Removed streaming service on path {path}.");
+        }
+
+        public void Dispose()
+        {
+            StopWebSocketServer();
+            _logger.Info("WebSocketServerAdapter disposed.");
+
         }
     }
 }

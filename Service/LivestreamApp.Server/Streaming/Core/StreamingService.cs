@@ -38,7 +38,6 @@ namespace LivestreamApp.Server.Streaming.Core
 
         private void Start()
         {
-            _webSocketServerAdapter.StartWebSocketServer();
             StartStreams();
 
             _logger.Info("StreamingService started.");
@@ -71,12 +70,12 @@ namespace LivestreamApp.Server.Streaming.Core
 
         public void Stop()
         {
-            _webSocketServerAdapter.StopWebSocketServer();
             _logger.Info("StreamingService stopped.");
         }
 
         public void Dispose()
         {
+            Stop();
             _logger.Info("StreamingService disposed.");
         }
     }
