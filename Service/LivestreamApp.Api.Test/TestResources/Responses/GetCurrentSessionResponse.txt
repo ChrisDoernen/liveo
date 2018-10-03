@@ -1,0 +1,1 @@
+﻿{"id":"SomeSessionId","title":"SomeSessionTitle","startedOn":null,"stoppedOn":null,"startingOn":null,"stoppingOn":null,"shutdownServerOn":null,"livestreams":{"streams":[{"id":"SomeId","title":null,"description":"SomeDescription","countryCode":null,"input":null,"startOnServiceStartup":false,"isStarted":false,"hasValidInputSource":false,"isInitialized":false}]}}

@@ -1,4 +1,5 @@
-﻿using LivestreamApp.Server.Shared.Processes;
+﻿using LivestreamApp.Server.Sessions;
+using LivestreamApp.Server.Shared.Processes;
 using LivestreamApp.Server.Shared.ProcessSettings;
 using LivestreamApp.Server.Shared.WebSockets;
 using LivestreamApp.Server.Shutdown;
@@ -14,6 +15,7 @@ namespace LivestreamApp.Server.AppConfiguration
     {
         public override void Load()
         {
+            Bind<ISessionService>().To<SessionService>().InSingletonScope();
             Bind<IStreamingService>().To<StreamingService>().InSingletonScope();
             Bind<ILivestreamsConfiguration>().To<LivestreamsConfiguration>();
             Bind<IProcessSettingsProvider>().To<ProcessSettingsProvider>().InSingletonScope();

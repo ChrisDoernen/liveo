@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="AppConfiguration\AutoMapperModule.cs" />
     <Compile Include="AppConfiguration\ServerModule.cs" />
+    <Compile Include="Sessions\ISessionService.cs" />
     <Compile Include="Sessions\States\EndedSessionState.cs" />
     <Compile Include="Sessions\States\ErrorSessionState.cs" />
     <Compile Include="Sessions\States\InvalidSessionState.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Sessions\States\ScheduledSessionState.cs" />
     <Compile Include="Sessions\States\StartedSessionState.cs" />
     <Compile Include="Sessions\StreamingSession.cs" />
+    <Compile Include="Sessions\SessionService.cs" />
     <Compile Include="Shared\Logging\ILoggingSource.cs" />
     <Compile Include="Shared\WebSockets\LoggingWebSocketService.cs" />
     <Compile Include="Shutdown\IShutdownService.cs" />
@@ -100,7 +102,6 @@
     <Compile Include="Streaming\StreamingSources\IStreamingSourceFactory.cs" />
     <Compile Include="Streaming\StreamingSources\IStreamingSource.cs" />
     <Compile Include="Streaming\StreamingSources\StreamingSource.cs" />
-    <Compile Include="Streaming\Configuration\IStreamingConfiguration.cs" />
     <Compile Include="Shared\ProcessSettings\IProcessSettings.cs" />
     <Compile Include="Shared\ProcessSettings\ProcessSettings.cs" />
     <Compile Include="AppConfiguration\ServerProfile.cs" />

@@ -9,12 +9,15 @@ namespace LivestreamApp.Server.Sessions
     {
         private readonly ILogger _logger;
 
-        public DateTime StartedOn;
-        public DateTime StoppedOn;
+        public string Id;
+        public string Title;
 
-        public DateTime StartingOn;
-        public DateTime StoppingOn;
-        public DateTime ShutdownServerOn;
+        public DateTime? StartedOn;
+        public DateTime? StoppedOn;
+
+        public DateTime? StartingOn;
+        public DateTime? StoppingOn;
+        public DateTime? ShutdownServerOn;
 
         public Livestreams Livestreams;
 
