@@ -3,7 +3,7 @@ using LivestreamApp.Server.Streaming.Entities;
 using Ninject.Extensions.Logging;
 using System;
 
-namespace LivestreamApp.Server.Sessions
+namespace LivestreamApp.Server.Sessions.Entities
 {
     public class StreamingSession
     {
@@ -12,12 +12,12 @@ namespace LivestreamApp.Server.Sessions
         public string Id;
         public string Title;
 
-        public DateTime? StartedOn;
-        public DateTime? StoppedOn;
+        public DateTime? TimeStarted;
+        public DateTime? TimeEnded;
 
-        public DateTime? StartingOn;
-        public DateTime? StoppingOn;
-        public DateTime? ShutdownServerOn;
+        public DateTime? TimeStarting;
+        public DateTime? TimeEnding;
+        public DateTime? TimeServerShutdown;
 
         public Livestreams Livestreams;
 

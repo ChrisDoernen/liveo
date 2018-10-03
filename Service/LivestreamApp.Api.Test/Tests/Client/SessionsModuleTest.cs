@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using LivestreamApp.Api.Client.Modules;
 using LivestreamApp.Server.Sessions;
+using LivestreamApp.Server.Sessions.Entities;
 using LivestreamApp.Server.Streaming.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;

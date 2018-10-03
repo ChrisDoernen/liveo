@@ -29,9 +29,9 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
-      <xs:element type="xs:string" name="Description" minOccurs="0" maxOccurs="1" />
-      <xs:element type="xs:string" name="InputSource" />
-      <xs:element type="xs:boolean" name="StartOnServiceStartup" />
+      <xs:element name="Description" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="InputSource" type="xs:string" />
+      <xs:element name="StartOnServiceStartup" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>
   

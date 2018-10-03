@@ -1,4 +1,5 @@
-﻿using Ninject.Extensions.Logging;
+﻿using LivestreamApp.Server.Sessions.Entities;
+using Ninject.Extensions.Logging;
 
 namespace LivestreamApp.Server.Sessions
 {

@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="AppConfiguration\AutoMapperModule.cs" />
     <Compile Include="AppConfiguration\ServerModule.cs" />
+    <Compile Include="Sessions\Entities\StreamingSessionsConfigTypes.cs" />
     <Compile Include="Sessions\ISessionService.cs" />
     <Compile Include="Sessions\States\EndedSessionState.cs" />
     <Compile Include="Sessions\States\ErrorSessionState.cs" />
@@ -79,7 +80,7 @@
     <Compile Include="Sessions\States\PausedSessionState.cs" />
     <Compile Include="Sessions\States\ScheduledSessionState.cs" />
     <Compile Include="Sessions\States\StartedSessionState.cs" />
-    <Compile Include="Sessions\StreamingSession.cs" />
+    <Compile Include="Sessions\Entities\StreamingSession.cs" />
     <Compile Include="Sessions\SessionService.cs" />
     <Compile Include="Shared\Logging\ILoggingSource.cs" />
     <Compile Include="Shared\WebSockets\LoggingWebSocketService.cs" />
@@ -134,6 +135,10 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <None Include="StreamingSessions.config" />
+    <None Include="StreamingSessions.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Diagnostics\" />
