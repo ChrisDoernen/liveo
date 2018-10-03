@@ -1,9 +1,9 @@
-﻿using LivestreamApp.Server.Sessions.States;
-using LivestreamApp.Server.Streaming.Entities;
+﻿using LivestreamApp.Server.Streaming.Entities;
+using LivestreamApp.Server.Streaming.Sessions.States;
 using Ninject.Extensions.Logging;
 using System;
 
-namespace LivestreamApp.Server.Sessions.Entities
+namespace LivestreamApp.Server.Streaming.Sessions.Entities
 {
     public class StreamingSession
     {

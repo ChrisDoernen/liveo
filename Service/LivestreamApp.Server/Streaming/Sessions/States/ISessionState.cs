@@ -1,4 +1,4 @@
-﻿namespace LivestreamApp.Server.Sessions.States
+﻿namespace LivestreamApp.Server.Streaming.Sessions.States
 {
     public interface ISessionState
     {

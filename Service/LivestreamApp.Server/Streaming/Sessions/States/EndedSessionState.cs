@@ -1,6 +1,6 @@
-﻿namespace LivestreamApp.Server.Sessions.States
+﻿namespace LivestreamApp.Server.Streaming.Sessions.States
 {
-    public class ScheduledSessionState : ISessionState
+    public class EndedSessionState : ISessionState
     {
         public ISessionState StartSession()
         {

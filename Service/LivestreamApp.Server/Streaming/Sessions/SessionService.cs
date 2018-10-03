@@ -1,7 +1,7 @@
-﻿using LivestreamApp.Server.Sessions.Entities;
+﻿using LivestreamApp.Server.Streaming.Sessions.Entities;
 using Ninject.Extensions.Logging;
 
-namespace LivestreamApp.Server.Sessions
+namespace LivestreamApp.Server.Streaming.Sessions
 {
     public class SessionService : ISessionService
     {

@@ -71,17 +71,18 @@
   <ItemGroup>
     <Compile Include="AppConfiguration\AutoMapperModule.cs" />
     <Compile Include="AppConfiguration\ServerModule.cs" />
-    <Compile Include="Sessions\Entities\StreamingSessionsConfigTypes.cs" />
-    <Compile Include="Sessions\ISessionService.cs" />
-    <Compile Include="Sessions\States\EndedSessionState.cs" />
-    <Compile Include="Sessions\States\ErrorSessionState.cs" />
-    <Compile Include="Sessions\States\InvalidSessionState.cs" />
-    <Compile Include="Sessions\States\ISessionState.cs" />
-    <Compile Include="Sessions\States\PausedSessionState.cs" />
-    <Compile Include="Sessions\States\ScheduledSessionState.cs" />
-    <Compile Include="Sessions\States\StartedSessionState.cs" />
-    <Compile Include="Sessions\Entities\StreamingSession.cs" />
-    <Compile Include="Sessions\SessionService.cs" />
+    <Compile Include="Streaming\Sessions\Entities\StreamingSessions.cs" />
+    <Compile Include="Streaming\Sessions\Entities\StreamingSessionsConfigTypes.cs" />
+    <Compile Include="Streaming\Sessions\ISessionService.cs" />
+    <Compile Include="Streaming\Sessions\States\EndedSessionState.cs" />
+    <Compile Include="Streaming\Sessions\States\ErrorSessionState.cs" />
+    <Compile Include="Streaming\Sessions\States\InvalidSessionState.cs" />
+    <Compile Include="Streaming\Sessions\States\ISessionState.cs" />
+    <Compile Include="Streaming\Sessions\States\PausedSessionState.cs" />
+    <Compile Include="Streaming\Sessions\States\ScheduledSessionState.cs" />
+    <Compile Include="Streaming\Sessions\States\StartedSessionState.cs" />
+    <Compile Include="Streaming\Sessions\Entities\StreamingSession.cs" />
+    <Compile Include="Streaming\Sessions\SessionService.cs" />
     <Compile Include="Shared\Logging\ILoggingSource.cs" />
     <Compile Include="Shared\WebSockets\LoggingWebSocketService.cs" />
     <Compile Include="Shutdown\IShutdownService.cs" />
@@ -107,7 +108,6 @@
     <Compile Include="Shared\ProcessSettings\ProcessSettings.cs" />
     <Compile Include="AppConfiguration\ServerProfile.cs" />
     <Compile Include="Streaming\Configuration\LivestreamsConfiguration.cs" />
-    <Compile Include="Streaming\Configuration\SystemConfiguration.cs" />
     <Compile Include="Streaming\Entities\LivestreamsConfigTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Streaming\Entities\Livestream.cs" />
@@ -145,6 +145,7 @@
     <Folder Include="Notifications\" />
     <Folder Include="Settings\" />
     <Folder Include="Statistics\" />
+    <Folder Include="Streaming\Sessions\Configuration\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LivestreamApp.Shared\LivestreamApp.Shared.csproj">

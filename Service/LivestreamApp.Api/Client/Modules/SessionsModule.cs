@@ -1,4 +1,4 @@
-﻿using LivestreamApp.Server.Sessions;
+﻿using LivestreamApp.Server.Streaming.Sessions;
 using Nancy;
 using Ninject.Extensions.Logging;
 
