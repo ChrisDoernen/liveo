@@ -71,6 +71,9 @@
   <ItemGroup>
     <Compile Include="AppConfiguration\AutoMapperModule.cs" />
     <Compile Include="AppConfiguration\ServerModule.cs" />
+    <Compile Include="AppConfiguration\StreamingSessionValueResolver.cs" />
+    <Compile Include="Shared\XmlSerialization\ITypeSerializer.cs" />
+    <Compile Include="Streaming\Streams\Manager\LivestreamManager.cs" />
     <Compile Include="Streaming\Sessions\Entities\StreamingSessions.cs" />
     <Compile Include="Streaming\Sessions\Entities\StreamingSessionsConfigTypes.cs" />
     <Compile Include="Streaming\Sessions\ISessionService.cs" />
@@ -88,7 +91,6 @@
     <Compile Include="Shutdown\IShutdownService.cs" />
     <Compile Include="Shutdown\ShutdownSimulationService.cs" />
     <Compile Include="Shutdown\ShutdownService.cs" />
-    <Compile Include="Streaming\Configuration\ILivestreamsConfiguration.cs" />
     <Compile Include="Streaming\Devices\UnknownDevice.cs" />
     <Compile Include="Shared\Processes\MessageReceivedEventArgs.cs" />
     <Compile Include="Shared\ProcessSettings\IProcessSettingsProvider.cs" />
@@ -107,11 +109,11 @@
     <Compile Include="Shared\ProcessSettings\IProcessSettings.cs" />
     <Compile Include="Shared\ProcessSettings\ProcessSettings.cs" />
     <Compile Include="AppConfiguration\ServerProfile.cs" />
-    <Compile Include="Streaming\Configuration\LivestreamsConfiguration.cs" />
-    <Compile Include="Streaming\Entities\LivestreamsConfigTypes.cs" />
+    <Compile Include="Shared\XmlSerialization\TypeSerializer.cs" />
+    <Compile Include="Streaming\Streams\Entities\LivestreamsConfigTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Streaming\Entities\Livestream.cs" />
-    <Compile Include="Streaming\Entities\Livestreams.cs" />
+    <Compile Include="Streaming\Streams\Entities\Livestream.cs" />
+    <Compile Include="Streaming\Streams\Entities\Livestreams.cs" />
     <Compile Include="Streaming\Core\IStreamingService.cs" />
     <Compile Include="Streaming\Core\StreamingService.cs" />
     <Compile Include="Shared\XmlSerialization\XmlUtilities.cs" />

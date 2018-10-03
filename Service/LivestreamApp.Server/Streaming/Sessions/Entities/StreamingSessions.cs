@@ -5,7 +5,7 @@ namespace LivestreamApp.Server.Streaming.Sessions.Entities
 {
     public class StreamingSessions
     {
-        public List<StreamingSession> Streams = new List<StreamingSession>();
+        public List<StreamingSession> Sessions = new List<StreamingSession>();
 
         private readonly ILogger _logger;
 

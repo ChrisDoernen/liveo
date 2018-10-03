@@ -1,5 +1,5 @@
-﻿using LivestreamApp.Server.Streaming.Entities;
-using LivestreamApp.Server.Streaming.Sessions.States;
+﻿using LivestreamApp.Server.Streaming.Sessions.States;
+using LivestreamApp.Server.Streaming.Streams.Entities;
 using Ninject.Extensions.Logging;
 using System;
 

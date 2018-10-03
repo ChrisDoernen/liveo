@@ -26,19 +26,19 @@ namespace LivestreamApp.Server.Streaming.Sessions.Entities
     public partial class StreamingSessionsType
     {
 
-        private StreamingSessionType[] streamingSessionField;
+        private StreamingSessionType[] _streamingSessionsField;
 
         /// <remarks/>
         [XmlElement("StreamingSession")]
-        public StreamingSessionType[] StreamingSession
+        public StreamingSessionType[] StreamingSessions
         {
             get
             {
-                return this.streamingSessionField;
+                return this._streamingSessionsField;
             }
             set
             {
-                this.streamingSessionField = value;
+                this._streamingSessionsField = value;
             }
         }
     }

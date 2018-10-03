@@ -2,7 +2,7 @@
 using LivestreamApp.Server.Streaming.StreamingSources;
 using Ninject.Extensions.Logging;
 
-namespace LivestreamApp.Server.Streaming.Entities
+namespace LivestreamApp.Server.Streaming.Streams.Entities
 {
     public class Livestream
     {

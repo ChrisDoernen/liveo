@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using LivestreamApp.Server.Streaming.Entities;
+using LivestreamApp.Server.Streaming.Sessions.Entities;
+using LivestreamApp.Server.Streaming.Streams.Entities;
 using System.Linq;
 
 namespace LivestreamApp.Server.AppConfiguration
@@ -9,7 +10,7 @@ namespace LivestreamApp.Server.AppConfiguration
         public ServerProfile()
         {
             CreateMap<LivestreamsType, Livestreams>()
-                .ForMember(d => d.Streams, opt => opt.MapFrom(s => s.LiveStream.ToList()))
+                .ForMember(d => d.Streams, opt => opt.MapFrom(s => s.LiveStreams.ToList()))
                 .ConstructUsingServiceLocator();
             CreateMap<LivestreamType, Livestream>()
                 .ForMember(d => d.Input, opt => opt.MapFrom(s => s.InputSource))
@@ -18,6 +19,10 @@ namespace LivestreamApp.Server.AppConfiguration
                 .ForMember(d => d.IsStarted, opt => opt.Ignore())
                 .ForMember(d => d.IsInitialized, opt => opt.Ignore())
                 .ConstructUsingServiceLocator();
+            CreateMap<StreamingSessionsType, StreamingSessions>()
+                .ForMember(d => d.Sessions, opt => opt.MapFrom(s => s.StreamingSessions.ToList()));
+            CreateMap<StreamingSessionType, StreamingSession>()
+                .ForMember(d => d.Livestreams, opt => opt.ResolveUsing<>());
         }
     }
 }

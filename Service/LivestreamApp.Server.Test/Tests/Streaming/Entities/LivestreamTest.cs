@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using LivestreamApp.Server.Shared.WebSockets;
-using LivestreamApp.Server.Streaming.Entities;
 using LivestreamApp.Server.Streaming.StreamingSources;
+using LivestreamApp.Server.Streaming.Streams.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Ninject;

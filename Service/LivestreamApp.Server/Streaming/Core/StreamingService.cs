@@ -1,7 +1,5 @@
-﻿using LivestreamApp.Server.Shared.WebSockets;
-using LivestreamApp.Server.Streaming.Configuration;
-using LivestreamApp.Server.Streaming.Devices;
-using LivestreamApp.Server.Streaming.Entities;
+﻿using LivestreamApp.Server.Streaming.Devices;
+using LivestreamApp.Server.Streaming.Streams.Entities;
 using Ninject.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -11,17 +9,11 @@ namespace LivestreamApp.Server.Streaming.Core
     public class StreamingService : IStreamingService, IDisposable
     {
         private readonly ILogger _logger;
-        private readonly IWebSocketServerAdapter _webSocketServerAdapter;
-        private readonly ILivestreamsConfiguration _livestreamsConfiguration;
         private readonly IDeviceDetector _deviceDetector;
-        private const string LivestreamsConfigFile = "Livestreams.config";
         private Livestreams _livestreams;
 
-        public StreamingService(ILogger logger, ILivestreamsConfiguration livestreamsConfiguration,
-            IDeviceDetector deviceDetector, IWebSocketServerAdapter webSocketServerAdapter)
+        public StreamingService(ILogger logger, IDeviceDetector deviceDetector)
         {
-            _livestreamsConfiguration = livestreamsConfiguration;
-            _webSocketServerAdapter = webSocketServerAdapter;
             _deviceDetector = deviceDetector;
             _logger = logger;
 
@@ -32,7 +24,6 @@ namespace LivestreamApp.Server.Streaming.Core
         private void Initialize()
         {
             _deviceDetector.DetectAvailableDevices();
-            _livestreams = _livestreamsConfiguration.GetAvailableStreams(LivestreamsConfigFile);
             _livestreams.InitializeStreams();
         }
 

@@ -2,7 +2,6 @@
 using LivestreamApp.Server.Shared.ProcessSettings;
 using LivestreamApp.Server.Shared.WebSockets;
 using LivestreamApp.Server.Shutdown;
-using LivestreamApp.Server.Streaming.Configuration;
 using LivestreamApp.Server.Streaming.Core;
 using LivestreamApp.Server.Streaming.Devices;
 using LivestreamApp.Server.Streaming.Sessions;
@@ -17,7 +16,7 @@ namespace LivestreamApp.Server.AppConfiguration
         {
             Bind<ISessionService>().To<SessionService>().InSingletonScope();
             Bind<IStreamingService>().To<StreamingService>().InSingletonScope();
-            Bind<ILivestreamsConfiguration>().To<LivestreamsConfiguration>();
+            Bind<ITypeSerializer>().To<TypeSerializer>();
             Bind<IProcessSettingsProvider>().To<ProcessSettingsProvider>().InSingletonScope();
             Bind<IProcessAdapter>().To<ProcessAdapter>();
             Bind<IStreamingSource>().To<StreamingSource>();

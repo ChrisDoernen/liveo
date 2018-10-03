@@ -11,7 +11,7 @@
 // 
 // Dieser Quellcode wurde automatisch generiert von xsd, Version=4.6.1055.0.
 // 
-namespace LivestreamApp.Server.Streaming.Entities
+namespace LivestreamApp.Server.Streaming.Streams.Entities
 {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
@@ -23,19 +23,19 @@ namespace LivestreamApp.Server.Streaming.Entities
     public partial class LivestreamsType
     {
 
-        private LivestreamType[] liveStreamField;
+        private LivestreamType[] _liveStreamsField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("LiveStream")]
-        public LivestreamType[] LiveStream
+        public LivestreamType[] LiveStreams
         {
             get
             {
-                return this.liveStreamField;
+                return this._liveStreamsField;
             }
             set
             {
-                this.liveStreamField = value;
+                this._liveStreamsField = value;
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿using LivestreamApp.Server.Streaming.Entities;
+﻿using LivestreamApp.Server.Streaming.Streams.Entities;
 using System.Collections.Generic;
 
 namespace LivestreamApp.Server.Streaming.Core

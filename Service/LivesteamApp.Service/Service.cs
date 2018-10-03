@@ -19,6 +19,8 @@ namespace LivestreamApp.Service
 
         public bool Start()
         {
+            _logger.Info("Starting application service.");
+
             try
             {
                 StartServer();
@@ -35,7 +37,6 @@ namespace LivestreamApp.Service
 
         private void StartServer()
         {
-            _logger.Info("Starting application service.");
             var uri = _uriConfiguration.GetHttpUri();
             var host = new NancyHost(new Uri(uri));
             _nancyHost = host;
@@ -45,6 +46,8 @@ namespace LivestreamApp.Service
 
         public bool Stop()
         {
+            _logger.Info("Stopping application service.");
+
             try
             {
                 StopServer();
@@ -60,7 +63,6 @@ namespace LivestreamApp.Service
 
         private void StopServer()
         {
-            _logger.Info("Stopping application service.");
             _nancyHost.Stop();
             _nancyHost.Dispose();
             _logger.Info("Http server stopped.");

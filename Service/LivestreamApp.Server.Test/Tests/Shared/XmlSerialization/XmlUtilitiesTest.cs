@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using LivestreamApp.Server.Shared.XmlSerialization;
-using LivestreamApp.Server.Streaming.Entities;
+using LivestreamApp.Server.Streaming.Streams.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Xml.Schema;
@@ -22,10 +22,10 @@ namespace LivestreamApp.Server.Test.Tests.Shared.XmlSerialization
             var deserialized = XmlUtilities.ValidateAndDeserialize<LivestreamsType>(validConfig, XsdResource);
 
             // Then
-            deserialized.LiveStream.Length.Should().Be(2);
-            deserialized.LiveStream[0].Id.Should().Be("deutsch");
-            deserialized.LiveStream[0].CountryCode.Should().Be("de");
-            deserialized.LiveStream[0].Description.Should().Be("Originalton");
+            deserialized.LiveStreams.Length.Should().Be(2);
+            deserialized.LiveStreams[0].Id.Should().Be("deutsch");
+            deserialized.LiveStreams[0].CountryCode.Should().Be("de");
+            deserialized.LiveStreams[0].Description.Should().Be("Originalton");
         }
 
         [TestMethod]

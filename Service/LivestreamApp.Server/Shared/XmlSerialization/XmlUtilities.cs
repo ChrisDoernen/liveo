@@ -16,7 +16,7 @@ namespace LivestreamApp.Server.Shared.XmlSerialization
             var myAssembly = Assembly.GetExecutingAssembly();
             using (var schemaStream = myAssembly.GetManifestResourceStream(schemaResource))
             {
-                var schema = XmlSchema.Read(schemaStream, null);
+                var schema = XmlSchema.Read(schemaStream ?? throw new InvalidOperationException(), null);
                 schemas.Add(schema);
             }
 
@@ -61,7 +61,7 @@ namespace LivestreamApp.Server.Shared.XmlSerialization
             return result;
         }
 
-        public static void WriteToFile<T>(T objectToSave, string file)
+        public static void Serialize<T>(T objectToSave, string file)
         {
             using (var streamWriter = new StreamWriter(file))
             {
