@@ -5,7 +5,6 @@ using LivestreamApp.Server.Streaming.Devices;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Ninject;
-using Ninject.Extensions.Logging;
 using Ninject.MockingKernel.Moq;
 using System;
 using System.IO;
@@ -16,12 +15,12 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Devices
     public class DeviceDetectorTest
     {
         private readonly MoqMockingKernel _kernel;
-
-        private Mock<ILogger> _mockLogger;
         private Mock<IProcessAdapter> _mockProcessAdapter;
         private IDeviceDetector _deviceDetector;
-        private const string FfmpegOutputOneDevice = "TestResources\\ffmpeg\\ffmpegListDevicesOutputOneDeviceAvailable.txt";
-        private const string FfmpegOutputNoDevice = "TestResources\\ffmpeg\\ffmpegListDevicesOutputNoDeviceAvailable.txt";
+        private const string FfmpegOutputOneDevice =
+            "TestResources\\ffmpeg\\ffmpegListDevicesOutputOneDeviceAvailable.txt";
+        private const string FfmpegOutputNoDevice =
+            "TestResources\\ffmpeg\\ffmpegListDevicesOutputNoDeviceAvailable.txt";
 
         public DeviceDetectorTest()
         {
@@ -35,7 +34,6 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Devices
             _kernel.Reset();
             _deviceDetector = _kernel.Get<IDeviceDetector>();
             _mockProcessAdapter = _kernel.GetMock<IProcessAdapter>();
-            _mockLogger = _kernel.GetMock<ILogger>();
         }
 
         [TestMethod]

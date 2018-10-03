@@ -23,7 +23,8 @@ namespace LivestreamApp.Api.Test.Tests.Client
         private StreamingSession _streamingSession;
         private Livestreams _livestreams;
         private Livestream _livestream;
-        private const string GetCurrentSessionResponse = "TestResources\\Responses\\GetCurrentSessionResponse.txt";
+        private const string GetCurrentSessionResponse =
+            "TestResources\\Responses\\GetCurrentSessionResponse.txt";
 
 
         public SessionsModuleTest()
