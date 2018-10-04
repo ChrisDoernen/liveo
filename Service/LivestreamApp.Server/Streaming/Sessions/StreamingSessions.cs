@@ -1,7 +1,7 @@
 ﻿using Ninject.Extensions.Logging;
 using System.Collections.Generic;
 
-namespace LivestreamApp.Server.Streaming.Sessions.Entities
+namespace LivestreamApp.Server.Streaming.Sessions
 {
     public class StreamingSessions
     {

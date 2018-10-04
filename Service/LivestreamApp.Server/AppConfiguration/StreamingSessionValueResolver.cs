@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
+using LivestreamApp.Server.Streaming.Sessions;
 using LivestreamApp.Server.Streaming.Sessions.Entities;
-using LivestreamApp.Server.Streaming.Streams.Entities;
+using LivestreamApp.Server.Streaming.Streams;
 
 namespace LivestreamApp.Server.AppConfiguration
 {

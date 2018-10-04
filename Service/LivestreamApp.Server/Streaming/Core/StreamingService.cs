@@ -1,5 +1,5 @@
 ﻿using LivestreamApp.Server.Streaming.Devices;
-using LivestreamApp.Server.Streaming.Streams.Entities;
+using LivestreamApp.Server.Streaming.Streams;
 using Ninject.Extensions.Logging;
 using System;
 using System.Collections.Generic;

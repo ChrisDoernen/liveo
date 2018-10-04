@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LivestreamApp.Server.Streaming.Streams.Entities
+namespace LivestreamApp.Server.Streaming.Streams
 {
     public class Livestreams
     {
