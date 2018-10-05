@@ -1,4 +1,5 @@
-﻿using LivestreamApp.Server.Shared.XmlSerialization;
+﻿using AutoMapper;
+using LivestreamApp.Server.Shared.XmlSerialization;
 using LivestreamApp.Server.Streaming.Streams.Entities;
 using Ninject.Extensions.Logging;
 using System.Linq;
@@ -8,30 +9,55 @@ namespace LivestreamApp.Server.Streaming.Streams.Manager
     public class LivestreamManager : ILivestreamManager
     {
         private readonly ILogger _logger;
-        private readonly ITypeSerializer _typeSerializer;
+        private readonly IMapper _mapper;
         private const string LivestreamsConfig = "Livestreams.config";
         private const string LivestreamsConfigScheme = "LivestreamApp.Server.Livestreams.xsd";
 
         public Livestreams Livestreams { get; private set; }
 
-        public LivestreamManager(ILogger logger, ITypeSerializer typeSerializer)
+        public LivestreamManager(ILogger logger, IMapper mappper)
         {
             _logger = logger;
-            _typeSerializer = typeSerializer;
-            GetLivestreamsFromConfig();
+            _mapper = mappper;
+            LoadLivestreamsFromConfig();
         }
 
-        public void GetLivestreamsFromConfig()
+        public void LoadLivestreamsFromConfig()
         {
-            Livestreams = _typeSerializer
-                .DeserializeAndMap<LivestreamsType, Livestreams>(LivestreamsConfig, LivestreamsConfigScheme);
+            var livestreamsType =
+                XmlUtilities.ValidateAndDeserialize<LivestreamsType>(LivestreamsConfig,
+                    LivestreamsConfigScheme);
+
+            Livestreams = _mapper.Map<Livestreams>(livestreamsType);
         }
 
-        public void UpdateLivestream(Livestream livestream)
+        public void UpdateLivestream(LivestreamBackendEntity livestreamBackendEntity)
         {
-            _logger.Info($"Adding new livestream with id: {livestream.Id}.");
-            // ToDo
-            Livestreams.Streams.Add(livestream);
+            var livestream = _mapper.Map<Livestream>(livestreamBackendEntity);
+            if (livestream.Id == null)
+            {
+                // Get id
+                Livestreams.Streams.Add(livestream);
+                _logger.Info($"Added new livestream with id: {livestream.Id}.");
+            }
+            else
+            {
+                var livestreamToUpdate =
+                    Livestreams.Streams
+                        .FirstOrDefault(l => l.Id.Equals(livestream.Id));
+
+                if (livestreamToUpdate != null)
+                {
+                    Livestreams.Streams.Remove(livestreamToUpdate);
+                    Livestreams.Streams.Add(livestream);
+                    _logger.Info($"Updated livestream with id: {livestream.Id}.");
+                }
+                else
+                {
+                    _logger.Warn($"Updating livestream failed, id {livestream.Id} not found.");
+                }
+            }
+
             UpdateConfig();
         }
 
@@ -48,8 +74,9 @@ namespace LivestreamApp.Server.Streaming.Streams.Manager
 
         private void UpdateConfig()
         {
-            _typeSerializer.MapAndSerialize<Livestreams, LivestreamsType>(Livestreams, LivestreamsConfig);
-            _logger.Info("Updating Livestreams.config.");
+            var livestreamsType = _mapper.Map<LivestreamType>(Livestreams.Streams);
+            XmlUtilities.Serialize(livestreamsType, LivestreamsConfig);
+            _logger.Info("Livestreams.config updated.");
         }
     }
 }

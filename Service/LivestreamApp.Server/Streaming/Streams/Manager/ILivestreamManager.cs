@@ -1,4 +1,6 @@
-﻿namespace LivestreamApp.Server.Streaming.Streams.Manager
+﻿using LivestreamApp.Server.Streaming.Streams.Entities;
+
+namespace LivestreamApp.Server.Streaming.Streams.Manager
 {
     /// <summary>
     ///     Provides functionality to manage livestreams
@@ -13,8 +15,8 @@
         /// <summary>
         ///     Update an existing livestream or adds a new one
         /// </summary>
-        /// <param name="livestream">The livestream entity containing the new values</param>
-        void UpdateLivestream(Livestream livestream);
+        /// <param name="livestreamBackendEntity">The livestream entity containing the new values</param>
+        void UpdateLivestream(LivestreamBackendEntity livestreamBackendEntity);
 
         /// <summary>
         ///     Delete livestream
@@ -25,6 +27,6 @@
         /// <summary>
         ///     Get livestreams from config file
         /// </summary>
-        void GetLivestreamsFromConfig();
+        void LoadLivestreamsFromConfig();
     }
 }

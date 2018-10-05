@@ -15,8 +15,8 @@ namespace LivestreamApp.Server.Streaming.Sessions
         /// <summary>
         ///     Update an existing session or adds a new one
         /// </summary>
-        /// <param name="streamingSession">The streamin session entity containing the new values</param>
-        void UpdateStreaminSession(StreamingSessionBackendEntity streamingSession);
+        /// <param name="streamingSessionBackendEntity">The streaming session entity containing the new values</param>
+        void UpdateStreaminSession(StreamingSessionBackendEntity streamingSessionBackendEntity);
 
         /// <summary>
         ///     Delete streaming session
@@ -27,6 +27,6 @@ namespace LivestreamApp.Server.Streaming.Sessions
         /// <summary>
         ///     Get streaming sessions from config file
         /// </summary>
-        void GetStreamingSessionsFromConfig();
+        void LoadStreamingSessionsFromConfig();
     }
 }

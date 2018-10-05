@@ -20,11 +20,19 @@ namespace LivestreamApp.Api.Backend.Modules
                 return sessionsManager.StreamingSessions;
             };
 
-            Put["/session"] = (sessionJson) =>
+            Put["/sessions"] = (sessionJson) =>
             {
-                var session = this.Bind<StreamingSessionBackendEntity>();
                 logger.Info("PUT request on api/sessions.");
+                var session = this.Bind<StreamingSessionBackendEntity>();
                 sessionsManager.UpdateStreaminSession(session);
+                return HttpStatusCode.OK;
+            };
+
+            Delete["/sessions/{id}"] = x =>
+            {
+                logger.Info("DELETE request on api/sessions.");
+                string id = x.id;
+                sessionsManager.DeleteStreamingSession(id);
                 return HttpStatusCode.OK;
             };
         }
