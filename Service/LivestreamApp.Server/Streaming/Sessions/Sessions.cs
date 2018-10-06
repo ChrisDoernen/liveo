@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace LivestreamApp.Server.Streaming.Sessions
 {
-    public class StreamingSessions
+    public class Sessions
     {
-        public List<StreamingSession> Sessions = new List<StreamingSession>();
+        public List<Session> SessionList = new List<Session>();
 
         private readonly ILogger _logger;
 
-        public StreamingSessions(ILogger logger)
+        public Sessions(ILogger logger)
         {
             _logger = logger;
         }

@@ -4,7 +4,7 @@ using Ninject.Extensions.Logging;
 
 namespace LivestreamApp.Server.Streaming.Streams
 {
-    public class Livestream
+    public class Stream
     {
         public string Id { get; set; }
         public string Title { get; set; }
@@ -22,7 +22,7 @@ namespace LivestreamApp.Server.Streaming.Streams
         private readonly IStreamingSourceFactory _streamingSourceFactory;
         private readonly ILogger _logger;
 
-        public Livestream(ILogger logger, IWebSocketServerAdapter webSocketServerAdapter,
+        public Stream(ILogger logger, IWebSocketServerAdapter webSocketServerAdapter,
             IStreamingSourceFactory streamingSourceFactory)
         {
             _logger = logger;

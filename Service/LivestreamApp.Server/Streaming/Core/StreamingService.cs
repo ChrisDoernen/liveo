@@ -10,7 +10,7 @@ namespace LivestreamApp.Server.Streaming.Core
     {
         private readonly ILogger _logger;
         private readonly IDeviceDetector _deviceDetector;
-        private Livestreams _livestreams;
+        private Streams.Streams _streams;
 
         public StreamingService(ILogger logger, IDeviceDetector deviceDetector)
         {
@@ -24,7 +24,7 @@ namespace LivestreamApp.Server.Streaming.Core
         private void Initialize()
         {
             _deviceDetector.DetectAvailableDevices();
-            _livestreams.InitializeStreams();
+            _streams.InitializeStreams();
         }
 
         private void Start()
@@ -36,27 +36,27 @@ namespace LivestreamApp.Server.Streaming.Core
 
         public void StartStreams()
         {
-            _livestreams.StartStreams();
+            _streams.StartStreams();
         }
 
         public void StopStreams()
         {
-            _livestreams.StartStreams();
+            _streams.StartStreams();
         }
 
-        public List<Livestream> GetStartedLiveStreams()
+        public List<Stream> GetStartedLiveStreams()
         {
-            return _livestreams.GetStarted();
+            return _streams.GetStarted();
         }
 
         public void StartStream(string id)
         {
-            _livestreams.StartStream(id);
+            _streams.StartStream(id);
         }
 
         public void StopStream(string id)
         {
-            _livestreams.StopStream(id);
+            _streams.StopStream(id);
         }
 
         public void Stop()

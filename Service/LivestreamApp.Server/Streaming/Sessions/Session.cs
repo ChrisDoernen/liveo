@@ -5,7 +5,7 @@ using System;
 
 namespace LivestreamApp.Server.Streaming.Sessions
 {
-    public class StreamingSession
+    public class Session
     {
         private readonly ILogger _logger;
 
@@ -19,11 +19,11 @@ namespace LivestreamApp.Server.Streaming.Sessions
         public DateTime? TimeEnding;
         public DateTime? TimeServerShutdown;
 
-        public Livestreams Livestreams;
+        public Streams.Streams Streams;
 
         private ISessionState _sessionState;
 
-        public StreamingSession(ILogger logger)
+        public Session(ILogger logger)
         {
             _logger = logger;
         }

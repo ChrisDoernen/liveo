@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:ls="StreamingSessionsConfigXsd"
+<xs:schema xmlns:ls="SessionsConfigXsd"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           targetNamespace="StreamingSessionsConfigXsd"
+           targetNamespace="SessionsConfigXsd"
            attributeFormDefault="unqualified"
            elementFormDefault="qualified">
 
-  <xs:complexType name="StreamingSessionsType">
+  <xs:complexType name="SessionsType">
     <xs:sequence>
-      <xs:element name="StreamingSession" type="ls:StreamingSessionType" minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="Session" type="ls:SessionType" minOccurs="0" maxOccurs="unbounded">
       </xs:element>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="StreamingSessionType">
+  <xs:complexType name="SessionType">
     <xs:sequence>
       <xs:element name="Id">
         <xs:simpleType>
@@ -25,17 +25,17 @@
       <xs:element name="TimeStarting" type="xs:time" minOccurs="0" maxOccurs="1" />
       <xs:element name="TimeStopping" type="xs:time" minOccurs="0" maxOccurs="1" />
       <xs:element name="TimeServerShutdown" type="xs:time" minOccurs="0" maxOccurs="1" />
-      <xs:element name="Livestreams" type="ls:StreamingSessionLivestreamsType" />
+      <xs:element name="Streams" type="ls:SessionStreamsType" />
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="StreamingSessionLivestreamsType">
+  <xs:complexType name="SessionStreamsType">
     <xs:sequence>
-      <xs:element name="LivestreamId" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="StreamId" type="xs:string" minOccurs="0" maxOccurs="unbounded">
       </xs:element>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:element name="StreamingSessions" type="ls:StreamingSessionsType">
+  <xs:element name="Sessions" type="ls:SessionsType">
   </xs:element>
 </xs:schema>

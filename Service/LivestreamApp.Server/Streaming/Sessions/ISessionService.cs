@@ -4,6 +4,6 @@ namespace LivestreamApp.Server.Streaming.Sessions
 {
     public interface ISessionService
     {
-        StreamingSession CurrentSession { get; }
+        Session CurrentSession { get; }
     }
 }

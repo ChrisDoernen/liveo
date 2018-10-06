@@ -6,10 +6,10 @@ using LivestreamApp.Server.Streaming.Streams;
 namespace LivestreamApp.Server.AppConfiguration
 {
     public class StreamingSessionValueResolver
-        : IValueResolver<StreamingSessionType, StreamingSession, Livestreams>
+        : IValueResolver<StreamingSessionType, Session, Streams>
     {
-        public Livestreams Resolve(StreamingSessionType source, StreamingSession destination,
-            Livestreams member, ResolutionContext context)
+        public Streams Resolve(StreamingSessionType source, Session destination,
+            Streams member, ResolutionContext context)
         {
             return null;
         }

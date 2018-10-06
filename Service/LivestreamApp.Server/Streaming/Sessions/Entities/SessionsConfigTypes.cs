@@ -21,24 +21,24 @@ namespace LivestreamApp.Server.Streaming.Sessions.Entities
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [XmlType(Namespace = "StreamingSessionsConfigXsd")]
-    [XmlRoot("StreamingSessions", Namespace = "StreamingSessionsConfigXsd", IsNullable = false)]
-    public partial class StreamingSessionsType
+    [XmlType(Namespace = "SessionsConfigXsd")]
+    [XmlRoot("Sessions", Namespace = "SessionsConfigXsd", IsNullable = false)]
+    public partial class SessionsType
     {
 
-        private StreamingSessionType[] _streamingSessionsField;
+        private SessionType[] _sessionsField;
 
         /// <remarks/>
-        [XmlElement("StreamingSession")]
-        public StreamingSessionType[] StreamingSessions
+        [XmlElement("Session")]
+        public SessionType[] Sessions
         {
             get
             {
-                return this._streamingSessionsField;
+                return this._sessionsField;
             }
             set
             {
-                this._streamingSessionsField = value;
+                this._sessionsField = value;
             }
         }
     }
@@ -48,8 +48,8 @@ namespace LivestreamApp.Server.Streaming.Sessions.Entities
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [XmlType(Namespace = "StreamingSessionsConfigXsd")]
-    public partial class StreamingSessionType
+    [XmlType(Namespace = "SessionsConfigXsd")]
+    public partial class SessionType
     {
 
         private string idField;
@@ -68,7 +68,7 @@ namespace LivestreamApp.Server.Streaming.Sessions.Entities
 
         private bool timeServerShutdownFieldSpecified;
 
-        private string[] livestreamsField;
+        private string[] streamsField;
 
         /// <remarks/>
         public string Id
@@ -186,11 +186,11 @@ namespace LivestreamApp.Server.Streaming.Sessions.Entities
         {
             get
             {
-                return this.livestreamsField;
+                return this.streamsField;
             }
             set
             {
-                this.livestreamsField = value;
+                this.streamsField = value;
             }
         }
     }

@@ -5,7 +5,7 @@ namespace LivestreamApp.Server.Streaming.Core
 {
     public interface IStreamingService
     {
-        List<Livestream> GetStartedLiveStreams();
+        List<Stream> GetStartedLiveStreams();
         void StartStream(string id);
         void StartStreams();
         void StopStream(string id);

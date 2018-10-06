@@ -4,20 +4,20 @@ using System.Linq;
 
 namespace LivestreamApp.Server.Streaming.Streams
 {
-    public class Livestreams
+    public class Streams
     {
-        public List<Livestream> Streams = new List<Livestream>();
+        public List<Stream> StreamList = new List<Stream>();
 
         private readonly ILogger _logger;
 
-        public Livestreams(ILogger logger)
+        public Streams(ILogger logger)
         {
             _logger = logger;
         }
 
         public void InitializeStreams()
         {
-            foreach (var livestream in Streams)
+            foreach (var livestream in StreamList)
             {
                 livestream.Initialize();
             }
@@ -27,7 +27,7 @@ namespace LivestreamApp.Server.Streaming.Streams
 
         public void StartStreams()
         {
-            foreach (var livestream in Streams)
+            foreach (var livestream in StreamList)
             {
                 livestream.Start();
             }
@@ -35,7 +35,7 @@ namespace LivestreamApp.Server.Streaming.Streams
 
         public void StopStreams()
         {
-            foreach (var livestream in Streams)
+            foreach (var livestream in StreamList)
             {
                 livestream.Stop();
             }
@@ -43,17 +43,17 @@ namespace LivestreamApp.Server.Streaming.Streams
 
         public void StartStream(string id)
         {
-            Streams.First(ls => ls.Id == id).Start();
+            StreamList.First(ls => ls.Id == id).Start();
         }
 
         public void StopStream(string id)
         {
-            Streams.First(ls => ls.Id == id).Stop();
+            StreamList.First(ls => ls.Id == id).Stop();
         }
 
-        public List<Livestream> GetStarted()
+        public List<Stream> GetStarted()
         {
-            return Streams.Where(ls => ls.IsStarted).ToList();
+            return StreamList.Where(ls => ls.IsStarted).ToList();
         }
     }
 }

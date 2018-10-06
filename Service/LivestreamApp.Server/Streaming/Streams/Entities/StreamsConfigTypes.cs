@@ -18,24 +18,24 @@ namespace LivestreamApp.Server.Streaming.Streams.Entities
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "LivestreamsConfigXsd")]
-    [System.Xml.Serialization.XmlRootAttribute("LiveStreams", Namespace = "LivestreamsConfigXsd", IsNullable = false)]
-    public partial class LivestreamsType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "StreamsConfigXsd")]
+    [System.Xml.Serialization.XmlRootAttribute("Streams", Namespace = "StreamsConfigXsd", IsNullable = false)]
+    public partial class StreamsType
     {
 
-        private LivestreamType[] _liveStreamsField;
+        private StreamType[] _streamsField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("LiveStream")]
-        public LivestreamType[] LiveStreams
+        [System.Xml.Serialization.XmlElementAttribute("Stream")]
+        public StreamType[] Streams
         {
             get
             {
-                return this._liveStreamsField;
+                return this._streamsField;
             }
             set
             {
-                this._liveStreamsField = value;
+                this._streamsField = value;
             }
         }
     }
@@ -45,8 +45,8 @@ namespace LivestreamApp.Server.Streaming.Streams.Entities
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "LivestreamsConfigXsd")]
-    public partial class LivestreamType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "StreamsConfigXsd")]
+    public partial class StreamType
     {
 
         private string idField;

@@ -3,7 +3,7 @@ using System;
 
 namespace LivestreamApp.Server.Streaming.Sessions.Entities
 {
-    public class StreamingSessionClientEntity
+    public class SessionBackendEntity
     {
         public string Id;
         public string Title;
@@ -11,6 +11,7 @@ namespace LivestreamApp.Server.Streaming.Sessions.Entities
         public DateTime? TimeEnded;
         public DateTime? TimeStarting;
         public DateTime? TimeEnding;
-        public Livestreams Livestreams;
+        public DateTime? TimeServerShutdown;
+        public Streams.Streams Streams;
     }
 }

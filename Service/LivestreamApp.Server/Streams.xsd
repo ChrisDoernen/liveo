@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:ls="LivestreamsConfigXsd"
+<xs:schema xmlns:ls="StreamsConfigXsd"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           targetNamespace="LivestreamsConfigXsd" 
+           targetNamespace="StreamsConfigXsd" 
            attributeFormDefault="unqualified" 
            elementFormDefault="qualified">
   
-  <xs:complexType name="LivestreamsType">
+  <xs:complexType name="StreamsType">
     <xs:sequence>
-      <xs:element name="LiveStream" type="ls:LivestreamType" minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="Stream" type="ls:StreamsType" minOccurs="0" maxOccurs="unbounded">
       </xs:element>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="LivestreamType">
+  <xs:complexType name="StreamType">
     <xs:sequence>
       <xs:element name="Id">
         <xs:simpleType>
@@ -35,6 +35,6 @@
     </xs:sequence>
   </xs:complexType>
   
-  <xs:element name="LiveStreams" type="ls:LivestreamsType">
+  <xs:element name="Streams" type="ls:StreamsType">
   </xs:element>
 </xs:schema>

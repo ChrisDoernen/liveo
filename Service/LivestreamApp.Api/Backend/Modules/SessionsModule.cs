@@ -9,7 +9,7 @@ namespace LivestreamApp.Api.Backend.Modules
 {
     public class SessionsModule : NancyModule
     {
-        public SessionsModule(ILogger logger, ISessionsManager sessionsManager)
+        public SessionsModule(ILogger logger, ISessionManager sessionManager)
             : base("/api")
         {
             this.RequiresAuthentication();
@@ -17,14 +17,14 @@ namespace LivestreamApp.Api.Backend.Modules
             Get["/sessions"] = _ =>
             {
                 logger.Info("GET request on api/sessions.");
-                return sessionsManager.StreamingSessions;
+                return sessionManager.Sessions;
             };
 
             Put["/sessions"] = (sessionJson) =>
             {
                 logger.Info("PUT request on api/sessions.");
-                var session = this.Bind<StreamingSessionBackendEntity>();
-                sessionsManager.UpdateStreaminSession(session);
+                var session = this.Bind<SessionBackendEntity>();
+                sessionManager.UpdateSession(session);
                 return HttpStatusCode.OK;
             };
 
@@ -32,7 +32,7 @@ namespace LivestreamApp.Api.Backend.Modules
             {
                 logger.Info("DELETE request on api/sessions.");
                 string id = x.id;
-                sessionsManager.DeleteStreamingSession(id);
+                sessionManager.DeleteSession(id);
                 return HttpStatusCode.OK;
             };
         }

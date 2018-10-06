@@ -11,22 +11,22 @@ namespace LivestreamApp.Server.AppConfiguration
     {
         public ServerProfile()
         {
-            CreateMap<LivestreamsType, Livestreams>()
+            CreateMap<LivestreamsType, Streams>()
                 .ForMember(d => d.Streams, opt => opt.MapFrom(s => s.LiveStreams.ToList()))
                 .ConstructUsingServiceLocator();
-            CreateMap<LivestreamType, Livestream>()
+            CreateMap<LivestreamType, Stream>()
                 .ForMember(d => d.Input, opt => opt.MapFrom(s => s.InputSource))
                 .ForMember(d => d.IsStarted, opt => opt.Ignore())
                 .ForMember(d => d.HasValidInputSource, opt => opt.Ignore())
                 .ForMember(d => d.IsStarted, opt => opt.Ignore())
                 .ForMember(d => d.IsInitialized, opt => opt.Ignore())
                 .ConstructUsingServiceLocator();
-            CreateMap<Livestream, LivestreamClientEntity>();
-            CreateMap<StreamingSessionsType, StreamingSessions>()
+            CreateMap<Stream, StreamClientEntity>();
+            CreateMap<StreamingSessionsType, Sessions>()
                 .ForMember(d => d.Sessions, opt => opt.MapFrom(s => s.StreamingSessions.ToList()));
-            CreateMap<StreamingSession, StreamingSessionClientEntity>();
-            CreateMap<StreamingSessionType, StreamingSession>()
-                .ForMember(d => d.Livestreams, opt => opt.ResolveUsing<>());
+            CreateMap<Session, SessionClientEntity>();
+            CreateMap<StreamingSessionType, Session>()
+                .ForMember(d => d.Streams, opt => opt.ResolveUsing<>());
         }
     }
 }

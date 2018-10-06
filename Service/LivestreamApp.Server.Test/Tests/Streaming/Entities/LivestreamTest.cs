@@ -13,7 +13,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Entities
     public class LivestreamTest
     {
         private readonly MoqMockingKernel _kernel;
-        private Livestream _livestream;
+        private Stream _stream;
         private Mock<IWebSocketServerAdapter> _mockWebSocketServerAdapter;
         private Mock<IStreamingSourceFactory> _mockStreamerFactory;
         private Mock<IStreamingSource> _mockStreamingSource;
@@ -21,14 +21,14 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Entities
         public LivestreamTest()
         {
             _kernel = new MoqMockingKernel();
-            _kernel.Bind<Livestream>().ToSelf();
+            _kernel.Bind<Stream>().ToSelf();
         }
 
         [TestInitialize]
         public void TestInitialize()
         {
             _kernel.Reset();
-            _livestream = _kernel.Get<Livestream>();
+            _stream = _kernel.Get<Stream>();
             _mockWebSocketServerAdapter = _kernel.GetMock<IWebSocketServerAdapter>();
             _mockStreamerFactory = _kernel.GetMock<IStreamingSourceFactory>();
             _mockStreamingSource = _kernel.GetMock<IStreamingSource>();
@@ -38,22 +38,22 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Entities
         public void InititalizeAndStart_StartOnStartupValidSource_ShouldInitializeCorrectlyAndStart()
         {
             // Given
-            _livestream.Id = "deutsch";
-            _livestream.StartOnServiceStartup = true;
+            _stream.Id = "deutsch";
+            _stream.StartOnServiceStartup = true;
             _mockStreamerFactory
-                .Setup(msf => msf.GetStreamingSourceByDeviceId(_livestream.Input))
+                .Setup(msf => msf.GetStreamingSourceByDeviceId(_stream.Input))
                 .Returns(_mockStreamingSource.Object);
             _mockStreamingSource
                 .Setup(mss => mss.HasValidDevice())
                 .Returns(true);
 
             // When 
-            _livestream.Initialize();
-            _livestream.Start();
+            _stream.Initialize();
+            _stream.Start();
 
             // Then
-            _livestream.HasValidInputSource.Should().Be(true);
-            _livestream.IsInitialized.Should().Be(true);
+            _stream.HasValidInputSource.Should().Be(true);
+            _stream.IsInitialized.Should().Be(true);
             _mockStreamingSource.Verify(ms => ms.StartStreaming(), Times.Once);
             _mockWebSocketServerAdapter
                 .Verify(mwssa => mwssa.AddStreamingWebSocketService("/livestreams/deutsch",
@@ -68,21 +68,21 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Entities
         public void InititalizeAndStart_StartOnStartupInValidSource_ShouldInitializeCorrectlyAndNotStart()
         {
             // Given
-            _livestream.StartOnServiceStartup = true;
+            _stream.StartOnServiceStartup = true;
             _mockStreamerFactory
-                .Setup(msf => msf.GetStreamingSourceByDeviceId(_livestream.Input))
+                .Setup(msf => msf.GetStreamingSourceByDeviceId(_stream.Input))
                 .Returns(_mockStreamingSource.Object);
             _mockStreamingSource
                 .Setup(mss => mss.HasValidDevice())
                 .Returns(false);
 
             // When 
-            _livestream.Initialize();
-            _livestream.Start();
+            _stream.Initialize();
+            _stream.Start();
 
             // Then
-            _livestream.HasValidInputSource.Should().Be(false);
-            _livestream.IsInitialized.Should().Be(true);
+            _stream.HasValidInputSource.Should().Be(false);
+            _stream.IsInitialized.Should().Be(true);
             _mockStreamingSource.Verify(ms => ms.StartStreaming(), Times.Never);
         }
 
@@ -90,19 +90,19 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Entities
         public void Stop_ShouldStopStartedStream()
         {
             // Given
-            _livestream.Id = "Id";
-            _livestream.StartOnServiceStartup = true;
+            _stream.Id = "Id";
+            _stream.StartOnServiceStartup = true;
             _mockStreamerFactory
-                .Setup(msf => msf.GetStreamingSourceByDeviceId(_livestream.Input))
+                .Setup(msf => msf.GetStreamingSourceByDeviceId(_stream.Input))
                 .Returns(_mockStreamingSource.Object);
             _mockStreamingSource
                 .Setup(mss => mss.HasValidDevice())
                 .Returns(true);
 
             // When 
-            _livestream.Initialize();
-            _livestream.Start();
-            _livestream.Stop();
+            _stream.Initialize();
+            _stream.Start();
+            _stream.Stop();
 
             // Then
             _mockStreamingSource.Verify(ms => ms.StopStreaming(), Times.Once);

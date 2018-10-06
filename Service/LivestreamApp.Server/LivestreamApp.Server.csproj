@@ -72,13 +72,16 @@
     <Compile Include="AppConfiguration\AutoMapperModule.cs" />
     <Compile Include="AppConfiguration\ServerModule.cs" />
     <Compile Include="AppConfiguration\StreamingSessionValueResolver.cs" />
-    <Compile Include="Shared\XmlSerialization\ITypeSerializer.cs" />
-    <Compile Include="Streaming\Sessions\Entities\StreamingSessionClientEntity.cs" />
+    <Compile Include="Streaming\Sessions\Entities\SessionBackendEntity.cs" />
+    <Compile Include="Streaming\Sessions\Entities\SessionClientEntity.cs" />
+    <Compile Include="Streaming\Sessions\ISessionsManager.cs" />
+    <Compile Include="Streaming\Sessions\SessionsManager.cs" />
+    <Compile Include="Streaming\Streams\Entities\LivestreamBackendEntity.cs" />
     <Compile Include="Streaming\Streams\Entities\LivestreamClientEntity.cs" />
     <Compile Include="Streaming\Streams\Manager\ILivestreamManager.cs" />
     <Compile Include="Streaming\Streams\Manager\LivestreamManager.cs" />
-    <Compile Include="Streaming\Sessions\StreamingSessions.cs" />
-    <Compile Include="Streaming\Sessions\Entities\StreamingSessionsConfigTypes.cs" />
+    <Compile Include="Streaming\Sessions\Sessions.cs" />
+    <Compile Include="Streaming\Sessions\Entities\SessionsConfigTypes.cs" />
     <Compile Include="Streaming\Sessions\ISessionService.cs" />
     <Compile Include="Streaming\Sessions\States\EndedSessionState.cs" />
     <Compile Include="Streaming\Sessions\States\ErrorSessionState.cs" />
@@ -87,7 +90,7 @@
     <Compile Include="Streaming\Sessions\States\PausedSessionState.cs" />
     <Compile Include="Streaming\Sessions\States\ScheduledSessionState.cs" />
     <Compile Include="Streaming\Sessions\States\StartedSessionState.cs" />
-    <Compile Include="Streaming\Sessions\StreamingSession.cs" />
+    <Compile Include="Streaming\Sessions\Session.cs" />
     <Compile Include="Streaming\Sessions\SessionService.cs" />
     <Compile Include="Shared\Logging\ILoggingSource.cs" />
     <Compile Include="Shared\WebSockets\LoggingWebSocketService.cs" />
@@ -112,7 +115,6 @@
     <Compile Include="Shared\ProcessSettings\IProcessSettings.cs" />
     <Compile Include="Shared\ProcessSettings\ProcessSettings.cs" />
     <Compile Include="AppConfiguration\ServerProfile.cs" />
-    <Compile Include="Shared\XmlSerialization\TypeSerializer.cs" />
     <Compile Include="Streaming\Streams\Entities\LivestreamsConfigTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Streaming\Streams\Livestream.cs" />
@@ -132,16 +134,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Livestreams.config">
+    <None Include="Streams.config">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <EmbeddedResource Include="Livestreams.xsd">
+    <EmbeddedResource Include="Streams.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="packages.config" />
-    <None Include="StreamingSessions.config" />
-    <None Include="StreamingSessions.xsd">
+    <None Include="Sessions.config" />
+    <None Include="Sessions.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

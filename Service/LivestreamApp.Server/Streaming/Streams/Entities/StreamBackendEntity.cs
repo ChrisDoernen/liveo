@@ -1,6 +1,6 @@
 ﻿namespace LivestreamApp.Server.Streaming.Streams.Entities
 {
-    public class LivestreamBackendEntity
+    public class StreamBackendEntity
     {
         public string Id { get; set; }
         public string Title { get; set; }

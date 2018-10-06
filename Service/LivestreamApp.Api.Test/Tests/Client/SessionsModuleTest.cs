@@ -11,6 +11,7 @@ using Ninject.Extensions.Logging;
 using Ninject.MockingKernel.Moq;
 using System.Collections.Generic;
 using System.IO;
+using Stream = LivestreamApp.Server.Streaming.Streams.Stream;
 
 namespace LivestreamApp.Api.Test.Tests.Client
 {
@@ -20,9 +21,9 @@ namespace LivestreamApp.Api.Test.Tests.Client
         private readonly MoqMockingKernel _kernel;
         private Mock<ISessionService> _mockSessionService;
         private Mock<ILogger> _mockLogger;
-        private StreamingSession _streamingSession;
-        private Livestreams _livestreams;
-        private Livestream _livestream;
+        private Session _session;
+        private Streams _streams;
+        private Stream _stream;
         private const string GetCurrentSessionResponse =
             "TestResources\\Responses\\GetCurrentSessionResponse.txt";
 
@@ -38,9 +39,9 @@ namespace LivestreamApp.Api.Test.Tests.Client
             _kernel.Reset();
             _mockSessionService = _kernel.GetMock<ISessionService>();
             _mockLogger = _kernel.GetMock<ILogger>();
-            _streamingSession = _kernel.Get<StreamingSession>();
-            _livestreams = _kernel.Get<Livestreams>();
-            _livestream = _kernel.Get<Livestream>();
+            _session = _kernel.Get<Session>();
+            _streams = _kernel.Get<Streams>();
+            _stream = _kernel.Get<Stream>();
         }
 
         [TestMethod]
@@ -49,7 +50,7 @@ namespace LivestreamApp.Api.Test.Tests.Client
             // Given
             _mockSessionService
                 .Setup(mss => mss.CurrentSession)
-                .Returns((StreamingSession)null);
+                .Returns((Session)null);
 
             var browser = new Browser(config =>
             {
@@ -73,16 +74,16 @@ namespace LivestreamApp.Api.Test.Tests.Client
         public void GetLivestreams_SessionAvailable_ShouldReturnStatusCodeOKWithCorrectJsonResponse()
         {
             // Given
-            _livestream.Id = "SomeId";
-            _livestream.Description = "SomeDescription";
-            _livestreams.Streams = new List<Livestream> { _livestream };
-            _streamingSession.Id = "SomeSessionId";
-            _streamingSession.Title = "SomeSessionTitle";
-            _streamingSession.Livestreams = _livestreams;
+            _stream.Id = "SomeId";
+            _stream.Description = "SomeDescription";
+            _streams.Streams = new List<Stream> { _stream };
+            _session.Id = "SomeSessionId";
+            _session.Title = "SomeSessionTitle";
+            _session.Streams = _streams;
 
             _mockSessionService
                 .Setup(mss => mss.CurrentSession)
-                .Returns(_streamingSession);
+                .Returns(_session);
 
             var browser = new Browser(config =>
                 {
