@@ -22,8 +22,10 @@
         </xs:simpleType>
       </xs:element>
       <xs:element name="Title" type="xs:string"/>
+      <xs:element name="InternalTitle" type="xs:string"/>
+      <xs:element name="Description" type="xs:string"/>
       <xs:element name="TimeStarting" type="xs:time" minOccurs="0" maxOccurs="1" />
-      <xs:element name="TimeStopping" type="xs:time" minOccurs="0" maxOccurs="1" />
+      <xs:element name="TimeEnding" type="xs:time" minOccurs="0" maxOccurs="1" />
       <xs:element name="TimeServerShutdown" type="xs:time" minOccurs="0" maxOccurs="1" />
       <xs:element name="Streams" type="ls:SessionStreamsType" />
     </xs:sequence>

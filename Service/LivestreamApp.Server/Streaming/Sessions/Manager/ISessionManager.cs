@@ -1,6 +1,7 @@
 ﻿using LivestreamApp.Server.Streaming.Sessions.Entities;
+using System.Collections.Generic;
 
-namespace LivestreamApp.Server.Streaming.Sessions
+namespace LivestreamApp.Server.Streaming.Sessions.Manager
 {
     /// <summary>
     ///     Provides functionality to manage sessions
@@ -10,7 +11,7 @@ namespace LivestreamApp.Server.Streaming.Sessions
         /// <summary>
         ///     Get sessions
         /// </summary>
-        Sessions Sessions { get; }
+        List<Session> GetSessions();
 
         /// <summary>
         ///     Create a new session

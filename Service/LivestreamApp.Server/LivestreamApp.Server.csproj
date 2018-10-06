@@ -71,11 +71,11 @@
   <ItemGroup>
     <Compile Include="AppConfiguration\AutoMapperModule.cs" />
     <Compile Include="AppConfiguration\ServerModule.cs" />
-    <Compile Include="AppConfiguration\StreamingSessionValueResolver.cs" />
+    <Compile Include="AppConfiguration\SessionValueResolver.cs" />
     <Compile Include="Streaming\Sessions\Entities\SessionBackendEntity.cs" />
     <Compile Include="Streaming\Sessions\Entities\SessionClientEntity.cs" />
-    <Compile Include="Streaming\Sessions\ISessionManager.cs" />
-    <Compile Include="Streaming\Sessions\SessionManager.cs" />
+    <Compile Include="Streaming\Sessions\Manager\ISessionManager.cs" />
+    <Compile Include="Streaming\Sessions\Manager\SessionManager.cs" />
     <Compile Include="Streaming\Streams\Entities\StreamBackendEntity.cs" />
     <Compile Include="Streaming\Streams\Entities\StreamClientEntity.cs" />
     <Compile Include="Streaming\Streams\Manager\IStreamManager.cs" />
@@ -119,7 +119,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Streaming\Streams\Stream.cs" />
     <Compile Include="Streaming\Streams\Streams.cs" />
-    <Compile Include="Shared\XmlSerialization\XmlUtilities.cs" />
+    <Compile Include="Shared\Utilities\XmlSerializer.cs" />
     <Compile Include="Shared\Processes\BytesReceivedEventArgs.cs" />
     <Compile Include="Shared\Processes\IProcessAdapter.cs" />
     <Compile Include="Shared\Processes\ProcessAdapter.cs" />
@@ -140,10 +140,12 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="packages.config" />
-    <None Include="Sessions.config" />
-    <None Include="Sessions.xsd">
-      <SubType>Designer</SubType>
+    <None Include="Sessions.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <EmbeddedResource Include="Sessions.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Diagnostics\" />

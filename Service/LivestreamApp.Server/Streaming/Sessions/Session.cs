@@ -1,21 +1,24 @@
 ﻿using LivestreamApp.Server.Streaming.Sessions.States;
+using LivestreamApp.Server.Streaming.Streams;
 using Ninject.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 
 namespace LivestreamApp.Server.Streaming.Sessions
 {
     public class Session
     {
-        public string Id;
-        public string Title;
-        public string InternalTitle;
-        public string Description;
-        public DateTime? TimeStarted;
-        public DateTime? TimeEnded;
-        public DateTime? TimeStarting;
-        public DateTime? TimeEnding;
-        public DateTime? TimeServerShutdown;
-        public Streams.Streams Streams;
+        public string Id { get; set; }
+        public string Title { get; set; }
+        public string InternalTitle { get; set; }
+        public string Description { get; set; }
+        public DateTime? TimeStarted { get; set; }
+        public DateTime? TimeEnded { get; set; }
+        public DateTime? TimeStarting { get; set; }
+        public DateTime? TimeEnding { get; set; }
+        public DateTime? TimeServerShutdown { get; set; }
+
+        public List<Stream> Streams { get; set; }
 
         private readonly ILogger _logger;
         private ISessionState _sessionState;

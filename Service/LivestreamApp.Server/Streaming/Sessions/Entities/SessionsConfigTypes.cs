@@ -56,11 +56,15 @@ namespace LivestreamApp.Server.Streaming.Sessions.Entities
 
         private string titleField;
 
+        private string internalTitleField;
+
+        private string descriptionField;
+
         private System.DateTime timeStartingField;
 
         private bool timeStartingFieldSpecified;
 
-        private System.DateTime timeStoppingField;
+        private System.DateTime timeEndingField;
 
         private bool timeStoppingFieldSpecified;
 
@@ -97,6 +101,32 @@ namespace LivestreamApp.Server.Streaming.Sessions.Entities
         }
 
         /// <remarks/>
+        public string InternalTitle
+        {
+            get
+            {
+                return this.internalTitleField;
+            }
+            set
+            {
+                this.internalTitleField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string Description
+        {
+            get
+            {
+                return this.descriptionField;
+            }
+            set
+            {
+                this.descriptionField = value;
+            }
+        }
+
+        /// <remarks/>
         [XmlElement(DataType = "time")]
         public System.DateTime TimeStarting
         {
@@ -126,21 +156,21 @@ namespace LivestreamApp.Server.Streaming.Sessions.Entities
 
         /// <remarks/>
         [XmlElement(DataType = "time")]
-        public System.DateTime TimeStopping
+        public System.DateTime TimeEnding
         {
             get
             {
-                return this.timeStoppingField;
+                return this.timeEndingField;
             }
             set
             {
-                this.timeStoppingField = value;
+                this.timeEndingField = value;
             }
         }
 
         /// <remarks/>
         [XmlIgnore()]
-        public bool TimeStoppingSpecified
+        public bool TimeEndingSpecified
         {
             get
             {

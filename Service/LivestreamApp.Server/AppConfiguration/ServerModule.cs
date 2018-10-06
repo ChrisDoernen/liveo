@@ -2,10 +2,11 @@
 using LivestreamApp.Server.Shared.ProcessSettings;
 using LivestreamApp.Server.Shared.WebSockets;
 using LivestreamApp.Server.Shutdown;
-using LivestreamApp.Server.Streaming.Core;
 using LivestreamApp.Server.Streaming.Devices;
 using LivestreamApp.Server.Streaming.Sessions;
+using LivestreamApp.Server.Streaming.Sessions.Manager;
 using LivestreamApp.Server.Streaming.StreamingSources;
+using LivestreamApp.Server.Streaming.Streams.Manager;
 using Ninject.Modules;
 
 namespace LivestreamApp.Server.AppConfiguration
@@ -15,9 +16,9 @@ namespace LivestreamApp.Server.AppConfiguration
         public override void Load()
         {
             Bind<ISessionService>().To<SessionService>().InSingletonScope();
-            Bind<IStreamingService>().To<StreamingService>().InSingletonScope();
-            Bind<ITypeSerializer>().To<TypeSerializer>();
-            Bind<IProcessSettingsProvider>().To<ProcessSettingsProvider>().InSingletonScope();
+            Bind<ISessionManager>().To<SessionManager>().InSingletonScope();
+            Bind<IStreamManager>().To<StreamManager>().InSingletonScope();
+            Bind<IProcessSettingsProvider>().To<ProcessSettingsProvider>();
             Bind<IProcessAdapter>().To<ProcessAdapter>();
             Bind<IStreamingSource>().To<StreamingSource>();
             Bind<IDeviceDetector>().To<DeviceDetector>().InSingletonScope();

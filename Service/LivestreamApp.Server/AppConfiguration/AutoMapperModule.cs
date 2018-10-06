@@ -1,6 +1,11 @@
 ﻿using AutoMapper;
+using LivestreamApp.Server.Streaming.Sessions;
+using LivestreamApp.Server.Streaming.Sessions.Entities;
+using LivestreamApp.Server.Streaming.Streams;
 using Ninject;
+using Ninject.Activation;
 using Ninject.Modules;
+using System.Collections.Generic;
 
 namespace LivestreamApp.Server.AppConfiguration
 {
@@ -9,9 +14,10 @@ namespace LivestreamApp.Server.AppConfiguration
         public override void Load()
         {
             Bind<IMapper>().ToMethod(AutoMapper).InSingletonScope();
+            Bind<IValueResolver<SessionType, Session, List<Stream>>>().To<SessionValueResolver>();
         }
 
-        private IMapper AutoMapper(Ninject.Activation.IContext context)
+        private IMapper AutoMapper(IContext context)
         {
             Mapper.Initialize(config =>
             {

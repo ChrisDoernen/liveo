@@ -1,5 +1,6 @@
 ﻿using LivestreamApp.Server.Streaming.Sessions;
 using LivestreamApp.Server.Streaming.Sessions.Entities;
+using LivestreamApp.Server.Streaming.Sessions.Manager;
 using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Security;

@@ -3,11 +3,10 @@ using System.IO;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Schema;
-using System.Xml.Serialization;
 
-namespace LivestreamApp.Server.Shared.XmlSerialization
+namespace LivestreamApp.Server.Shared.Utilities
 {
-    public class XmlUtilities
+    public class XmlSerializer
     {
         public static T ValidateAndDeserialize<T>(string file, string schemaResource)
         {
@@ -48,7 +47,7 @@ namespace LivestreamApp.Server.Shared.XmlSerialization
             using (var input = new StreamReader(file))
             using (var reader = XmlReader.Create(input, settings))
             {
-                var ser = new XmlSerializer(typeof(T));
+                var ser = new System.Xml.Serialization.XmlSerializer(typeof(T));
                 result = (T)ser.Deserialize(reader);
             }
 
@@ -65,7 +64,7 @@ namespace LivestreamApp.Server.Shared.XmlSerialization
         {
             using (var streamWriter = new StreamWriter(file))
             {
-                new XmlSerializer(typeof(T)).Serialize(streamWriter, objectToSave);
+                new System.Xml.Serialization.XmlSerializer(typeof(T)).Serialize(streamWriter, objectToSave);
             }
         }
     }

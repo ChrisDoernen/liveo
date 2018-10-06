@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
-using LivestreamApp.Server.Shared.XmlSerialization;
+using LivestreamApp.Server.Shared.Utilities;
 using LivestreamApp.Server.Streaming.Streams.Entities;
 using LivestreamApp.Shared.Utilities;
 using Ninject.Extensions.Logging;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace LivestreamApp.Server.Streaming.Streams.Manager
@@ -15,7 +16,7 @@ namespace LivestreamApp.Server.Streaming.Streams.Manager
         private const string Config = "Streams.config";
         private const string Scheme = "LivestreamApp.Server.Streams.xsd";
 
-        public Streams Streams { get; private set; }
+        private Streams Streams { get; set; }
 
         public StreamManager(ILogger logger, IMapper mappper, IHashGenerator hashGenerator)
         {
@@ -27,8 +28,13 @@ namespace LivestreamApp.Server.Streaming.Streams.Manager
 
         public void LoadStreamsFromConfig()
         {
-            var streamsType = XmlUtilities.ValidateAndDeserialize<StreamsType>(Config, Scheme);
+            var streamsType = XmlSerializer.ValidateAndDeserialize<StreamsType>(Config, Scheme);
             Streams = _mapper.Map<Streams>(streamsType);
+        }
+
+        public List<Stream> GetStreams()
+        {
+            return Streams.StreamList;
         }
 
         public void CreateStream(StreamBackendEntity streamBackendEntity)
@@ -71,7 +77,7 @@ namespace LivestreamApp.Server.Streaming.Streams.Manager
         private void UpdateConfig()
         {
             var streamsType = _mapper.Map<StreamsType>(Streams.StreamList);
-            XmlUtilities.Serialize(streamsType, Config);
+            XmlSerializer.Serialize(streamsType, Config);
             _logger.Info("Streams.config updated.");
         }
 
@@ -79,7 +85,7 @@ namespace LivestreamApp.Server.Streaming.Streams.Manager
         {
             var hashInput = stream.Title + stream.Description + stream.CountryCode;
             var md5Hash = _hashGenerator.GetMd5Hash(hashInput);
-            return md5Hash.Substring(0, 5);
+            return md5Hash.Substring(0, 5).ToLower();
         }
     }
 }

@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
-using LivestreamApp.Server.Shared.XmlSerialization;
+using LivestreamApp.Server.Shared.Utilities;
 using LivestreamApp.Server.Streaming.Sessions.Entities;
 using LivestreamApp.Shared.Utilities;
 using Ninject.Extensions.Logging;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace LivestreamApp.Server.Streaming.Sessions
+namespace LivestreamApp.Server.Streaming.Sessions.Manager
 {
     public class SessionManager : ISessionManager
     {
@@ -16,7 +17,7 @@ namespace LivestreamApp.Server.Streaming.Sessions
         private const string Config = "Sessions.config";
         private const string Scheme = "LivestreamApp.Server.Sessions.xsd";
 
-        public Sessions Sessions { get; private set; }
+        private Sessions Sessions { get; set; }
 
         public SessionManager(ILogger logger, IMapper mapper, IHashGenerator hashGenerator)
         {
@@ -28,9 +29,14 @@ namespace LivestreamApp.Server.Streaming.Sessions
 
         public void LoadSessionsFromConfig()
         {
-            var sessionsType = XmlUtilities.ValidateAndDeserialize<SessionsType>(Config, Scheme);
+            var sessionsType = XmlSerializer.ValidateAndDeserialize<SessionsType>(Config, Scheme);
             Sessions = _mapper.Map<Sessions>(sessionsType);
             _logger.Info($"Sessions loaded from config ({Sessions.SessionList.Count}).");
+        }
+
+        public List<Session> GetSessions()
+        {
+            return Sessions.SessionList;
         }
 
         public void CreateSession(SessionBackendEntity sessionBackendEntity)
@@ -73,7 +79,7 @@ namespace LivestreamApp.Server.Streaming.Sessions
         private void UpdateConfig()
         {
             var streamingSessionsType = _mapper.Map<SessionsType>(Sessions);
-            XmlUtilities.Serialize(streamingSessionsType, Config);
+            XmlSerializer.Serialize(streamingSessionsType, Config);
             _logger.Info("Sessions.config updated.");
         }
 
@@ -81,7 +87,7 @@ namespace LivestreamApp.Server.Streaming.Sessions
         {
             var hashInput = session.Title + session.InternalTitle + session.Description;
             var md5Hash = _hashGenerator.GetMd5Hash(hashInput);
-            return md5Hash.Substring(0, 5);
+            return md5Hash.Substring(0, 5).ToLower();
         }
     }
 }

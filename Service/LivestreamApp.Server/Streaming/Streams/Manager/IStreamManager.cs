@@ -1,4 +1,5 @@
 ﻿using LivestreamApp.Server.Streaming.Streams.Entities;
+using System.Collections.Generic;
 
 namespace LivestreamApp.Server.Streaming.Streams.Manager
 {
@@ -10,7 +11,7 @@ namespace LivestreamApp.Server.Streaming.Streams.Manager
         /// <summary>
         ///     Get streams
         /// </summary>
-        Streams Streams { get; }
+        List<Stream> GetStreams();
 
         /// <summary>
         ///     Create a new stream

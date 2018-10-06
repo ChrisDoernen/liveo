@@ -11,10 +11,10 @@ namespace LivestreamApp.Server.AppConfiguration
     {
         public ServerProfile()
         {
-            CreateMap<LivestreamsType, Streams>()
-                .ForMember(d => d.Streams, opt => opt.MapFrom(s => s.LiveStreams.ToList()))
+            CreateMap<StreamsType, Streams>()
+                .ForMember(d => d.StreamList, opt => opt.MapFrom(s => s.Streams.ToList()))
                 .ConstructUsingServiceLocator();
-            CreateMap<LivestreamType, Stream>()
+            CreateMap<StreamType, Stream>()
                 .ForMember(d => d.Input, opt => opt.MapFrom(s => s.InputSource))
                 .ForMember(d => d.IsStarted, opt => opt.Ignore())
                 .ForMember(d => d.HasValidInputSource, opt => opt.Ignore())
@@ -22,11 +22,15 @@ namespace LivestreamApp.Server.AppConfiguration
                 .ForMember(d => d.IsInitialized, opt => opt.Ignore())
                 .ConstructUsingServiceLocator();
             CreateMap<Stream, StreamClientEntity>();
-            CreateMap<StreamingSessionsType, Sessions>()
-                .ForMember(d => d.Sessions, opt => opt.MapFrom(s => s.StreamingSessions.ToList()));
+            CreateMap<SessionsType, Sessions>()
+                .ForMember(d => d.SessionList, opt => opt.MapFrom(s => s.Sessions.ToList()))
+                .ConstructUsingServiceLocator();
             CreateMap<Session, SessionClientEntity>();
-            CreateMap<StreamingSessionType, Session>()
-                .ForMember(d => d.Streams, opt => opt.ResolveUsing<>());
+            CreateMap<SessionType, Session>()
+                .ForMember(d => d.TimeStarted, opt => opt.Ignore())
+                .ForMember(d => d.TimeEnded, opt => opt.Ignore())
+                .ForMember(d => d.Streams, opt => opt.ResolveUsing<SessionValueResolver>())
+                .ConstructUsingServiceLocator();
         }
     }
 }

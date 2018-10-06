@@ -7,10 +7,10 @@ using Moq;
 using Ninject;
 using Ninject.MockingKernel.Moq;
 
-namespace LivestreamApp.Server.Test.Tests.Streaming.Entities
+namespace LivestreamApp.Server.Test.Tests.Streaming.Streams.Entities
 {
     [TestClass]
-    public class LivestreamTest
+    public class StreamTest
     {
         private readonly MoqMockingKernel _kernel;
         private Stream _stream;
@@ -18,7 +18,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Entities
         private Mock<IStreamingSourceFactory> _mockStreamerFactory;
         private Mock<IStreamingSource> _mockStreamingSource;
 
-        public LivestreamTest()
+        public StreamTest()
         {
             _kernel = new MoqMockingKernel();
             _kernel.Bind<Stream>().ToSelf();
@@ -56,10 +56,10 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Entities
             _stream.IsInitialized.Should().Be(true);
             _mockStreamingSource.Verify(ms => ms.StartStreaming(), Times.Once);
             _mockWebSocketServerAdapter
-                .Verify(mwssa => mwssa.AddStreamingWebSocketService("/livestreams/deutsch",
+                .Verify(mwssa => mwssa.AddStreamingWebSocketService("/streams/deutsch",
                     _mockStreamingSource.Object));
             _mockWebSocketServerAdapter
-                .Verify(mwssa => mwssa.AddLoggingWebSocketService("/livestreams/log/deutsch",
+                .Verify(mwssa => mwssa.AddLoggingWebSocketService("/streams/log/deutsch",
                     _mockStreamingSource.Object));
 
         }
@@ -107,9 +107,9 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Entities
             // Then
             _mockStreamingSource.Verify(ms => ms.StopStreaming(), Times.Once);
             _mockWebSocketServerAdapter
-                .Verify(mwssa => mwssa.RemoveWebSocketService("/livestreams/Id"), Times.Once);
+                .Verify(mwssa => mwssa.RemoveWebSocketService("/streams/Id"), Times.Once);
             _mockWebSocketServerAdapter
-                .Verify(mwssa => mwssa.RemoveWebSocketService("/livestreams/log/Id"), Times.Once);
+                .Verify(mwssa => mwssa.RemoveWebSocketService("/streams/log/Id"), Times.Once);
         }
     }
 }

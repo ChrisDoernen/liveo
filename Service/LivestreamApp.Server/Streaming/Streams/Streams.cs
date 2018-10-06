@@ -5,7 +5,7 @@ namespace LivestreamApp.Server.Streaming.Streams
 {
     public class Streams
     {
-        public List<Stream> StreamList = new List<Stream>();
+        public List<Stream> StreamList { get; set; }
 
         private readonly ILogger _logger;
 

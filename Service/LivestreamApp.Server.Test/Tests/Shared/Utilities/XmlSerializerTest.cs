@@ -1,14 +1,14 @@
 ﻿using FluentAssertions;
-using LivestreamApp.Server.Shared.XmlSerialization;
+using LivestreamApp.Server.Shared.Utilities;
 using LivestreamApp.Server.Streaming.Streams.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Xml.Schema;
 
-namespace LivestreamApp.Server.Test.Tests.Shared.XmlSerialization
+namespace LivestreamApp.Server.Test.Tests.Shared.Utilities
 {
     [TestClass]
-    public class XmlUtilitiesTest
+    public class XmlSerializerTest
     {
         private const string XsdResource = "LivestreamApp.Server.Livestreams.xsd";
 
@@ -19,13 +19,13 @@ namespace LivestreamApp.Server.Test.Tests.Shared.XmlSerialization
             const string validConfig = "TestResources\\config\\ValidLivestreams.config";
 
             // When
-            var deserialized = XmlUtilities.ValidateAndDeserialize<LivestreamsType>(validConfig, XsdResource);
+            var deserialized = XmlSerializer.ValidateAndDeserialize<StreamsType>(validConfig, XsdResource);
 
             // Then
-            deserialized.LiveStreams.Length.Should().Be(2);
-            deserialized.LiveStreams[0].Id.Should().Be("deutsch");
-            deserialized.LiveStreams[0].CountryCode.Should().Be("de");
-            deserialized.LiveStreams[0].Description.Should().Be("Originalton");
+            deserialized.Streams.Length.Should().Be(2);
+            deserialized.Streams[0].Id.Should().Be("deutsch");
+            deserialized.Streams[0].CountryCode.Should().Be("de");
+            deserialized.Streams[0].Description.Should().Be("Originalton");
         }
 
         [TestMethod]
@@ -36,7 +36,7 @@ namespace LivestreamApp.Server.Test.Tests.Shared.XmlSerialization
             const string invalidNamespaceConfig = "TestResources\\config\\InvalidNamespaceLivestreams.config";
 
             // When
-            var deserialized = XmlUtilities.ValidateAndDeserialize<LivestreamsType>(invalidNamespaceConfig, XsdResource);
+            var deserialized = XmlSerializer.ValidateAndDeserialize<StreamsType>(invalidNamespaceConfig, XsdResource);
         }
 
         [TestMethod]
@@ -47,7 +47,7 @@ namespace LivestreamApp.Server.Test.Tests.Shared.XmlSerialization
             const string invalidConfig = "TestResources\\config\\InvalidLivestreams.config";
 
             // When
-            var deserialized = XmlUtilities.ValidateAndDeserialize<LivestreamsType>(invalidConfig, XsdResource);
+            var deserialized = XmlSerializer.ValidateAndDeserialize<StreamsType>(invalidConfig, XsdResource);
         }
     }
 }
