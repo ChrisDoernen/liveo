@@ -15,13 +15,13 @@ namespace LivestreamApp.Server.Streaming.Sessions
         /// <summary>
         ///     Create a new session
         /// </summary>
-        /// <param name="sessionBackendEntity"></param>
+        /// <param name="sessionBackendEntity">Entity containing the new values</param>
         void CreateSession(SessionBackendEntity sessionBackendEntity);
 
         /// <summary>
         ///     Update an existing session
         /// </summary>
-        /// <param name="sessionBackendEntity">The session entity containing the new values</param>
+        /// <param name="sessionBackendEntity">Entity containing the new values</param>
         void UpdateSession(SessionBackendEntity sessionBackendEntity);
 
         /// <summary>

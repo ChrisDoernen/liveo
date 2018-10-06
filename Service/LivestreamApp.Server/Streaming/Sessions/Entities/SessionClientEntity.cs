@@ -1,5 +1,4 @@
-﻿using LivestreamApp.Server.Streaming.Streams;
-using System;
+﻿using System;
 
 namespace LivestreamApp.Server.Streaming.Sessions.Entities
 {
@@ -7,6 +6,7 @@ namespace LivestreamApp.Server.Streaming.Sessions.Entities
     {
         public string Id;
         public string Title;
+        public string Description;
         public DateTime? TimeStarted;
         public DateTime? TimeEnded;
         public DateTime? TimeStarting;

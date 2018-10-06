@@ -13,9 +13,15 @@ namespace LivestreamApp.Server.Streaming.Streams.Manager
         Streams Streams { get; }
 
         /// <summary>
+        ///     Create a new stream
+        /// </summary>
+        /// <param name="streamBackendEntity">Entity containing the new values</param>
+        void CreateStream(StreamBackendEntity streamBackendEntity);
+
+        /// <summary>
         ///     Update an existing livestream or adds a new one
         /// </summary>
-        /// <param name="streamBackendEntity">The stream entity containing the new values</param>
+        /// <param name="streamBackendEntity">Entity containing the new values</param>
         void UpdateStream(StreamBackendEntity streamBackendEntity);
 
         /// <summary>

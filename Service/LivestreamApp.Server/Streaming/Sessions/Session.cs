@@ -8,6 +8,8 @@ namespace LivestreamApp.Server.Streaming.Sessions
     {
         public string Id;
         public string Title;
+        public string InternalTitle;
+        public string Description;
         public DateTime? TimeStarted;
         public DateTime? TimeEnded;
         public DateTime? TimeStarting;
