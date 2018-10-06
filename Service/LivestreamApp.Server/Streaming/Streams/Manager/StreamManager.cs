@@ -10,8 +10,8 @@ namespace LivestreamApp.Server.Streaming.Streams.Manager
     {
         private readonly ILogger _logger;
         private readonly IMapper _mapper;
-        private const string StreamsConfig = "Streams.config";
-        private const string StreamsConfigScheme = "LivestreamApp.Server.Streams.xsd";
+        private const string Config = "Streams.config";
+        private const string Scheme = "LivestreamApp.Server.Streams.xsd";
 
         public Streams Streams { get; private set; }
 
@@ -24,37 +24,32 @@ namespace LivestreamApp.Server.Streaming.Streams.Manager
 
         public void LoadStreamsFromConfig()
         {
-            var streamsType =
-                XmlUtilities.ValidateAndDeserialize<StreamsType>(StreamsConfig,
-                    StreamsConfigScheme);
-
+            var streamsType = XmlUtilities.ValidateAndDeserialize<StreamsType>(Config, Scheme);
             Streams = _mapper.Map<Streams>(streamsType);
         }
 
         public void UpdateStream(StreamBackendEntity streamBackendEntity)
         {
-            var livestream = _mapper.Map<Stream>(streamBackendEntity);
-            if (livestream.Id == null)
+            var stream = _mapper.Map<Stream>(streamBackendEntity);
+            if (stream.Id == null)
             {
                 // Get id
-                Streams.StreamList.Add(livestream);
-                _logger.Info($"Added new stream with id: {livestream.Id}.");
+                Streams.StreamList.Add(stream);
+                _logger.Info($"Added new stream with id: {stream.Id}.");
             }
             else
             {
-                var livestreamToUpdate =
-                    Streams.StreamList
-                        .FirstOrDefault(l => l.Id.Equals(livestream.Id));
+                var streamToUpdate = Streams.StreamList.FirstOrDefault(l => l.Id.Equals(stream.Id));
 
-                if (livestreamToUpdate != null)
+                if (streamToUpdate != null)
                 {
-                    Streams.StreamList.Remove(livestreamToUpdate);
-                    Streams.StreamList.Add(livestream);
-                    _logger.Info($"Updated stream with id: {livestream.Id}.");
+                    Streams.StreamList.Remove(streamToUpdate);
+                    Streams.StreamList.Add(stream);
+                    _logger.Info($"Updated stream with id: {stream.Id}.");
                 }
                 else
                 {
-                    _logger.Warn($"Updating stream failed, id {livestream.Id} not found.");
+                    _logger.Warn($"Updating stream failed, id {stream.Id} not found.");
                 }
             }
 
@@ -75,7 +70,7 @@ namespace LivestreamApp.Server.Streaming.Streams.Manager
         private void UpdateConfig()
         {
             var streamsType = _mapper.Map<StreamsType>(Streams.StreamList);
-            XmlUtilities.Serialize(streamsType, StreamsConfig);
+            XmlUtilities.Serialize(streamsType, Config);
             _logger.Info("Streams.config updated.");
         }
     }

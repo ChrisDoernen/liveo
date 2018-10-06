@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using LivestreamApp.Api.Backend.Modules;
 using LivestreamApp.Server.Shutdown;
-using LivestreamApp.Shared.Security;
+using LivestreamApp.Shared.Authentication;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Nancy;

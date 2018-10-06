@@ -1,13 +1,14 @@
 ﻿using FluentAssertions;
 using LivestreamApp.Shared.AppSettings;
-using LivestreamApp.Shared.Security;
+using LivestreamApp.Shared.Authentication;
+using LivestreamApp.Shared.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Ninject;
 using Ninject.MockingKernel.Moq;
 using System.Collections.Generic;
 
-namespace LivestreamApp.Shared.Test.Tests.Security
+namespace LivestreamApp.Shared.Test.Tests.Authentication
 {
     [TestClass]
     public class AuthenticationProviderTest
@@ -15,6 +16,7 @@ namespace LivestreamApp.Shared.Test.Tests.Security
         private readonly MoqMockingKernel _kernel;
         private IAuthenticationProvider _authenticationProvider;
         private Mock<IAppSettingsProvider> _mockAppSettingsProvider;
+        private Mock<IHashGenerator> _mockHashGenerator;
 
         public AuthenticationProviderTest()
         {
@@ -28,6 +30,7 @@ namespace LivestreamApp.Shared.Test.Tests.Security
             _kernel.Reset();
             _authenticationProvider = _kernel.Get<IAuthenticationProvider>();
             _mockAppSettingsProvider = _kernel.GetMock<IAppSettingsProvider>();
+            _mockHashGenerator = _kernel.GetMock<IHashGenerator>();
         }
 
         [TestMethod]
@@ -36,6 +39,9 @@ namespace LivestreamApp.Shared.Test.Tests.Security
             // Given
             var newPassword = "MySecureNewPassword";
             var md5Hash = "5b019e6e8062af413f4055b88fa5e7b2";
+            _mockHashGenerator
+                .Setup(mhg => mhg.GetMd5Hash(It.IsAny<string>()))
+                .Returns(md5Hash);
 
             // When
             _authenticationProvider.SetAuthenticationHash(newPassword);

@@ -1,7 +1,7 @@
 ﻿using Nancy.Security;
 using System.Collections.Generic;
 
-namespace LivestreamApp.Shared.Security
+namespace LivestreamApp.Shared.Authentication
 {
     public class UserIdentity : IUserIdentity
     {

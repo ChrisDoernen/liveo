@@ -58,7 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Backend\Modules\ShutdownModule.cs" />
-    <Compile Include="Backend\Modules\SessionsModule.cs" />
+    <Compile Include="Backend\Modules\SessionModule.cs" />
     <Compile Include="Client\Modules\SessionsModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

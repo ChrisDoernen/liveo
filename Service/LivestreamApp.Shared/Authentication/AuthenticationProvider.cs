@@ -1,42 +1,30 @@
 ﻿using LivestreamApp.Shared.AppSettings;
+using LivestreamApp.Shared.Utilities;
 using Nancy.Security;
 using Ninject.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
 
-namespace LivestreamApp.Shared.Security
+namespace LivestreamApp.Shared.Authentication
 {
-    public class AuthenticationProvider : IAuthenticationProvider
+    public class AuthenticationProvider : IAuthenticationProvider, IDisposable
     {
         private readonly ILogger _logger;
         private readonly IAppSettingsProvider _appSettingsProvider;
+        private readonly IHashGenerator _hashGenerator;
 
-        public AuthenticationProvider(ILogger logger, IAppSettingsProvider appSettingsProvider)
+        public AuthenticationProvider(ILogger logger, IAppSettingsProvider appSettingsProvider,
+            IHashGenerator hashGenerator)
         {
             _logger = logger;
+            _hashGenerator = hashGenerator;
             _appSettingsProvider = appSettingsProvider;
         }
 
         public void SetAuthenticationHash(string password)
         {
-            var md5Hash = GetMd5Hash(password);
+            var md5Hash = _hashGenerator.GetMd5Hash(password);
             _appSettingsProvider.SetStringValue(AppSetting.AuthenticationHash, md5Hash);
-        }
-
-        private string GetMd5Hash(string password)
-        {
-            var md5Hash = MD5.Create();
-            var bytes = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
-            var sBuilder = new StringBuilder();
-
-            foreach (var b in bytes)
-            {
-                sBuilder.Append(b.ToString("x2"));
-            }
-
-            return sBuilder.ToString();
         }
 
         public IUserIdentity Validate(string input)
@@ -54,6 +42,11 @@ namespace LivestreamApp.Shared.Security
         {
             var comparer = StringComparer.OrdinalIgnoreCase;
             return 0 == comparer.Compare(input, hash);
+        }
+
+        public void Dispose()
+        {
+            _hashGenerator.Dispose();
         }
     }
 }

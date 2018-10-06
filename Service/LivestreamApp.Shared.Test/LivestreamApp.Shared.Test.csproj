@@ -87,7 +87,7 @@
     <Compile Include="Tests\AppSettings\AppSettingsProviderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\Network\UriConfigurationTest.cs" />
-    <Compile Include="Tests\Security\AuthenticationProviderTest.cs" />
+    <Compile Include="Tests\Authentication\AuthenticationProviderTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -1,6 +1,7 @@
 ﻿using LivestreamApp.Shared.AppSettings;
+using LivestreamApp.Shared.Authentication;
 using LivestreamApp.Shared.Network;
-using LivestreamApp.Shared.Security;
+using LivestreamApp.Shared.Utilities;
 using Ninject.Modules;
 
 namespace LivestreamApp.Shared.AppConfiguration
@@ -13,6 +14,7 @@ namespace LivestreamApp.Shared.AppConfiguration
             Bind<IConfigurationManagerAdapter>().To<ConfigurationManagerAdapter>();
             Bind<IUriConfiguration>().To<UriConfiguration>();
             Bind<IAuthenticationProvider>().To<AuthenticationProvider>();
+            Bind<IHashGenerator>().To<HashGenerator>().InSingletonScope();
         }
     }
 }

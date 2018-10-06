@@ -1,6 +1,6 @@
 ﻿using LivestreamApp.Server.AppConfiguration;
 using LivestreamApp.Shared.AppConfiguration;
-using LivestreamApp.Shared.Security;
+using LivestreamApp.Shared.Authentication;
 using Nancy.Authentication.Stateless;
 using Nancy.Bootstrapper;
 using Nancy.Bootstrappers.Ninject;

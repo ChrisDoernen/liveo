@@ -1,6 +1,6 @@
 ﻿using Nancy.Security;
 
-namespace LivestreamApp.Shared.Security
+namespace LivestreamApp.Shared.Authentication
 {
     /// <summary>
     ///     Provides authentication

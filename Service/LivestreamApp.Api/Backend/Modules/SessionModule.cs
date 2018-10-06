@@ -7,9 +7,9 @@ using Ninject.Extensions.Logging;
 
 namespace LivestreamApp.Api.Backend.Modules
 {
-    public class SessionsModule : NancyModule
+    public class SessionModule : NancyModule
     {
-        public SessionsModule(ILogger logger, ISessionManager sessionManager)
+        public SessionModule(ILogger logger, ISessionManager sessionManager)
             : base("/api")
         {
             this.RequiresAuthentication();
@@ -20,18 +20,27 @@ namespace LivestreamApp.Api.Backend.Modules
                 return sessionManager.Sessions;
             };
 
-            Put["/sessions"] = (sessionJson) =>
+            Post["/sessions"] = request =>
             {
-                logger.Info("PUT request on api/sessions.");
+                logger.Info("POST request on api/sessions.");
+                var session = this.Bind<SessionBackendEntity>();
+                sessionManager.CreateSession(session);
+                return HttpStatusCode.Created;
+            };
+
+            Put["/sessions/{id}"] = request =>
+            {
+                string id = request.id;
+                logger.Info($"PUT request on api/sessions/{id}.");
                 var session = this.Bind<SessionBackendEntity>();
                 sessionManager.UpdateSession(session);
                 return HttpStatusCode.OK;
             };
 
-            Delete["/sessions/{id}"] = x =>
+            Delete["/sessions/{id}"] = request =>
             {
-                logger.Info("DELETE request on api/sessions.");
-                string id = x.id;
+                string id = request.id;
+                logger.Info($"DELETE request on api/sessions/{id}.");
                 sessionManager.DeleteSession(id);
                 return HttpStatusCode.OK;
             };
