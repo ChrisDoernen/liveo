@@ -3,10 +3,10 @@ using LivestreamApp.Server.Shared.ProcessSettings;
 using LivestreamApp.Server.Shared.WebSockets;
 using LivestreamApp.Server.Shutdown;
 using LivestreamApp.Server.Streaming.Devices;
-using LivestreamApp.Server.Streaming.Sessions;
-using LivestreamApp.Server.Streaming.Sessions.Manager;
+using LivestreamApp.Server.Streaming.Livestreams.Manager;
+using LivestreamApp.Server.Streaming.StreamingSessions.Manager;
+using LivestreamApp.Server.Streaming.StreamingSessions.Service;
 using LivestreamApp.Server.Streaming.StreamingSources;
-using LivestreamApp.Server.Streaming.Streams.Manager;
 using Ninject.Modules;
 
 namespace LivestreamApp.Server.AppConfiguration

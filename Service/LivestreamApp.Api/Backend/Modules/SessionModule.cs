@@ -1,6 +1,5 @@
-﻿using LivestreamApp.Server.Streaming.Sessions;
-using LivestreamApp.Server.Streaming.Sessions.Entities;
-using LivestreamApp.Server.Streaming.Sessions.Manager;
+﻿using LivestreamApp.Server.Streaming.StreamingSessions.Entities;
+using LivestreamApp.Server.Streaming.StreamingSessions.Manager;
 using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Security;
@@ -18,7 +17,7 @@ namespace LivestreamApp.Api.Backend.Modules
             Get["/sessions"] = _ =>
             {
                 logger.Info("GET request on api/sessions.");
-                return sessionManager.Sessions;
+                return sessionManager.GetSessions();
             };
 
             Post["/sessions"] = request =>

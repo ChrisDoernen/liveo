@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using LivestreamApp.Server.Shared.Utilities;
-using LivestreamApp.Server.Streaming.Streams.Entities;
+using LivestreamApp.Server.Streaming.Livestreams.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Xml.Schema;

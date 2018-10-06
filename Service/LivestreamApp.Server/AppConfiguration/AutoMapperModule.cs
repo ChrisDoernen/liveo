@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using LivestreamApp.Server.Streaming.Sessions;
-using LivestreamApp.Server.Streaming.Sessions.Entities;
-using LivestreamApp.Server.Streaming.Streams;
+using LivestreamApp.Server.Streaming.Livestreams;
+using LivestreamApp.Server.Streaming.StreamingSessions;
+using LivestreamApp.Server.Streaming.StreamingSessions.Entities;
 using Ninject;
 using Ninject.Activation;
 using Ninject.Modules;

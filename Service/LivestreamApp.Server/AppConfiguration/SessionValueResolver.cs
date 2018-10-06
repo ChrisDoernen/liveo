@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using LivestreamApp.Server.Streaming.Sessions;
-using LivestreamApp.Server.Streaming.Sessions.Entities;
-using LivestreamApp.Server.Streaming.Streams;
-using LivestreamApp.Server.Streaming.Streams.Manager;
+using LivestreamApp.Server.Streaming.Livestreams;
+using LivestreamApp.Server.Streaming.Livestreams.Manager;
+using LivestreamApp.Server.Streaming.StreamingSessions;
+using LivestreamApp.Server.Streaming.StreamingSessions.Entities;
 using Ninject.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +23,7 @@ namespace LivestreamApp.Server.AppConfiguration
         public List<Stream> Resolve(SessionType source, Session destination,
             List<Stream> member, ResolutionContext context)
         {
-            var ids = source.Livestreams.ToList();
+            var ids = source.Streams.ToList();
             var streams = _streamManager.GetStreams().Where(s => ids.Contains(s.Id)).ToList();
             var selectedIds = streams.Select(s => s.Id).ToList();
             ids.RemoveAll(i => selectedIds.Contains(i));
