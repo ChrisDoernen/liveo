@@ -10,16 +10,17 @@ namespace LivestreamApp.Server.Test.Tests.Shared.Utilities
     [TestClass]
     public class XmlSerializerTest
     {
-        private const string XsdResource = "LivestreamApp.Server.Livestreams.xsd";
+        private const string Scheme = "LivestreamApp.Server.Streams.xsd";
 
         [TestMethod]
         public void ValidateAndDeserialize_ValidConfig_ShouldReturnCorrectObject()
         {
             // Given
-            const string validConfig = "TestResources\\config\\ValidLivestreams.config";
+            const string validConfig = "TestResources\\Config\\ValidStreams.config";
 
             // When
-            var deserialized = XmlSerializer.ValidateAndDeserialize<StreamsType>(validConfig, XsdResource);
+            var deserialized =
+                XmlSerializer.ValidateAndDeserialize<StreamsType>(validConfig, Scheme);
 
             // Then
             deserialized.Streams.Length.Should().Be(2);
@@ -33,10 +34,12 @@ namespace LivestreamApp.Server.Test.Tests.Shared.Utilities
         public void ReadFromConfigFile_InvalidNamespace()
         {
             // Given
-            const string invalidNamespaceConfig = "TestResources\\config\\InvalidNamespaceLivestreams.config";
+            const string invalidNamespaceConfig =
+                "TestResources\\Config\\InvalidNamespaceStreams.config";
 
             // When
-            var deserialized = XmlSerializer.ValidateAndDeserialize<StreamsType>(invalidNamespaceConfig, XsdResource);
+            var deserialized =
+                XmlSerializer.ValidateAndDeserialize<StreamsType>(invalidNamespaceConfig, Scheme);
         }
 
         [TestMethod]
@@ -44,10 +47,11 @@ namespace LivestreamApp.Server.Test.Tests.Shared.Utilities
         public void ReadFromConfigFile_InvalidConfig()
         {
             // Given
-            const string invalidConfig = "TestResources\\config\\InvalidLivestreams.config";
+            const string invalidConfig = "TestResources\\Config\\InvalidStreams.config";
 
             // When
-            var deserialized = XmlSerializer.ValidateAndDeserialize<StreamsType>(invalidConfig, XsdResource);
+            var deserialized =
+                XmlSerializer.ValidateAndDeserialize<StreamsType>(invalidConfig, Scheme);
         }
     }
 }

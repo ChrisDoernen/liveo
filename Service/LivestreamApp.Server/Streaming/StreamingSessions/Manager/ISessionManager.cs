@@ -30,10 +30,5 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions.Manager
         /// </summary>
         /// <param name="id">Id of the session to delete</param>
         void DeleteSession(string id);
-
-        /// <summary>
-        ///     Get sessions from config file
-        /// </summary>
-        void LoadSessionsFromConfig();
     }
 }

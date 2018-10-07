@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LivestreamApp.Server.Shared.Utilities;
 using LivestreamApp.Server.Streaming.Livestreams.Entities;
+using LivestreamApp.Shared.AppSettings;
 using LivestreamApp.Shared.Utilities;
 using Ninject.Extensions.Logging;
 using System.Collections.Generic;
@@ -13,30 +14,35 @@ namespace LivestreamApp.Server.Streaming.Livestreams.Manager
         private readonly ILogger _logger;
         private readonly IMapper _mapper;
         private readonly IHashGenerator _hashGenerator;
-        private const string Config = "Streams.config";
+
+        private readonly string _config;
         private const string Scheme = "LivestreamApp.Server.Streams.xsd";
 
         private Streams Streams { get; set; }
 
-        public StreamManager(ILogger logger, IMapper mappper, IHashGenerator hashGenerator)
+        public StreamManager(ILogger logger, IMapper mappper, IHashGenerator hashGenerator,
+            IAppSettingsProvider appSettingsProvider)
         {
             _logger = logger;
             _mapper = mappper;
             _hashGenerator = hashGenerator;
+            _config = appSettingsProvider.GetStringValue(AppSetting.StreamsConfigurationFile);
             LoadStreamsFromConfig();
         }
 
-        public void LoadStreamsFromConfig()
+        private void LoadStreamsFromConfig()
         {
-            var streamsType = XmlSerializer.ValidateAndDeserialize<StreamsType>(Config, Scheme);
+            var streamsType = XmlSerializer.ValidateAndDeserialize<StreamsType>(_config, Scheme);
             Streams = _mapper.Map<Streams>(streamsType);
         }
 
+        /// <inheritdoc />
         public List<Stream> GetStreams()
         {
             return Streams.StreamList;
         }
 
+        /// <inheritdoc />
         public void CreateStream(StreamBackendEntity streamBackendEntity)
         {
             var stream = _mapper.Map<Stream>(streamBackendEntity);
@@ -45,6 +51,7 @@ namespace LivestreamApp.Server.Streaming.Livestreams.Manager
             _logger.Info($"Added new stream with id {stream.Id}.");
         }
 
+        /// <inheritdoc />
         public void UpdateStream(StreamBackendEntity streamBackendEntity)
         {
             var stream = _mapper.Map<Stream>(streamBackendEntity);
@@ -63,6 +70,7 @@ namespace LivestreamApp.Server.Streaming.Livestreams.Manager
             }
         }
 
+        /// <inheritdoc />
         public void DeleteStream(string id)
         {
             _logger.Info($"Deleting stream with id {id}.");
@@ -77,7 +85,7 @@ namespace LivestreamApp.Server.Streaming.Livestreams.Manager
         private void UpdateConfig()
         {
             var streamsType = _mapper.Map<StreamsType>(Streams);
-            XmlSerializer.Serialize(streamsType, Config);
+            XmlSerializer.Serialize(streamsType, _config);
             _logger.Info("Streams.config updated.");
         }
 

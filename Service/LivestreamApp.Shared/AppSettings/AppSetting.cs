@@ -4,6 +4,8 @@
     {
         DefaultPort,
         DefaultWebSocketPort,
-        AuthenticationHash
+        AuthenticationHash,
+        StreamsConfigurationFile,
+        SessionsConfigurationFile
     }
 }

@@ -20,7 +20,7 @@ namespace LivestreamApp.Server.Streaming.Livestreams.Manager
         void CreateStream(StreamBackendEntity streamBackendEntity);
 
         /// <summary>
-        ///     Update an existing livestream or adds a new one
+        ///     Update a stream
         /// </summary>
         /// <param name="streamBackendEntity">Entity containing the new values</param>
         void UpdateStream(StreamBackendEntity streamBackendEntity);
@@ -30,10 +30,5 @@ namespace LivestreamApp.Server.Streaming.Livestreams.Manager
         /// </summary>
         /// <param name="id">Id of the stream to delete</param>
         void DeleteStream(string id);
-
-        /// <summary>
-        ///     Get streams from config file
-        /// </summary>
-        void LoadStreamsFromConfig();
     }
 }

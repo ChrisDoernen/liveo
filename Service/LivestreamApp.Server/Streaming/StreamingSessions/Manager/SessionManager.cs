@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LivestreamApp.Server.Shared.Utilities;
 using LivestreamApp.Server.Streaming.StreamingSessions.Entities;
+using LivestreamApp.Shared.AppSettings;
 using LivestreamApp.Shared.Utilities;
 using Ninject.Extensions.Logging;
 using System.Collections.Generic;
@@ -14,39 +15,44 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions.Manager
         private readonly IMapper _mapper;
         private readonly IHashGenerator _hashGenerator;
 
-        private const string Config = "Sessions.config";
+        private readonly string _config;
         private const string Scheme = "LivestreamApp.Server.Sessions.xsd";
 
         private Sessions Sessions { get; set; }
 
-        public SessionManager(ILogger logger, IMapper mapper, IHashGenerator hashGenerator)
+        public SessionManager(ILogger logger, IMapper mapper, IHashGenerator hashGenerator,
+            IAppSettingsProvider appSettingsProvider)
         {
             _logger = logger;
             _mapper = mapper;
             _hashGenerator = hashGenerator;
+            _config = appSettingsProvider.GetStringValue(AppSetting.SessionsConfigurationFile);
             LoadSessionsFromConfig();
         }
 
-        public void LoadSessionsFromConfig()
+        private void LoadSessionsFromConfig()
         {
-            var sessionsType = XmlSerializer.ValidateAndDeserialize<SessionsType>(Config, Scheme);
+            var sessionsType = XmlSerializer.ValidateAndDeserialize<SessionsType>(_config, Scheme);
             Sessions = _mapper.Map<Sessions>(sessionsType);
             _logger.Info($"Sessions loaded from config ({Sessions.SessionList.Count}).");
         }
 
+        /// <inheritdoc />
         public List<Session> GetSessions()
         {
             return Sessions.SessionList;
         }
 
+        /// <inheritdoc />
         public void CreateSession(SessionBackendEntity sessionBackendEntity)
         {
             var session = _mapper.Map<Session>(sessionBackendEntity);
             session.Id = GetNewSessionId(session);
             Sessions.SessionList.Add(session);
-            _logger.Info($"Added new session with id: {session.Id}.");
+            _logger.Info($"Added new session with id {session.Id}.");
         }
 
+        /// <inheritdoc />
         public void UpdateSession(SessionBackendEntity sessionBackendEntity)
         {
             var session = _mapper.Map<Session>(sessionBackendEntity);
@@ -56,7 +62,7 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions.Manager
             {
                 Sessions.SessionList.Remove(sessionToUpdate);
                 Sessions.SessionList.Add(session);
-                _logger.Info($"Updated session with id: {session.Id}.");
+                _logger.Info($"Updated session with id {session.Id}.");
                 UpdateConfig();
             }
             else
@@ -65,9 +71,10 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions.Manager
             }
         }
 
+        /// <inheritdoc />
         public void DeleteSession(string id)
         {
-            _logger.Info($"Deleting session with id: {id}.");
+            _logger.Info($"Deleting session with id {id}.");
             var sessionToRemove = Sessions.SessionList.FirstOrDefault(l => l.Id.Equals(id));
             if (sessionToRemove != null)
             {
@@ -79,7 +86,7 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions.Manager
         private void UpdateConfig()
         {
             var streamingSessionsType = _mapper.Map<SessionsType>(Sessions);
-            XmlSerializer.Serialize(streamingSessionsType, Config);
+            XmlSerializer.Serialize(streamingSessionsType, _config);
             _logger.Info("Sessions.config updated.");
         }
 
