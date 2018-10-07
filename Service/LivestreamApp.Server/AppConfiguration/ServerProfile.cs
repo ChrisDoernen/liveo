@@ -16,6 +16,11 @@ namespace LivestreamApp.Server.AppConfiguration
                 .ConstructUsingServiceLocator();
             CreateMap<Streams, StreamsType>()
                 .ForMember(d => d.Streams, opt => opt.MapFrom(s => s.StreamList.ToArray()));
+            CreateMap<StreamBackendEntity, Stream>()
+                .ForMember(d => d.IsStarted, opt => opt.Ignore())
+                .ForMember(d => d.HasValidInputSource, opt => opt.Ignore())
+                .ForMember(d => d.IsInitialized, opt => opt.Ignore())
+                .ConstructUsingServiceLocator();
             CreateMap<StreamType, Stream>()
                 .ForMember(d => d.IsStarted, opt => opt.Ignore())
                 .ForMember(d => d.HasValidInputSource, opt => opt.Ignore())
