@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using LivestreamApp.Server.AppConfiguration;
 using LivestreamApp.Server.Streaming.Livestreams.Manager;
 using LivestreamApp.Shared.AppSettings;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -17,6 +18,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Manager
         public StreamManagerTest()
         {
             _kernel = new MoqMockingKernel();
+            _kernel.Load(new AutoMapperModule());
             _kernel.Bind<IStreamManager>().To<StreamManager>();
         }
 
