@@ -23,7 +23,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSources
         {
             _kernel = new MoqMockingKernel();
             _kernel.Bind<IStreamingSource>().To<StreamingSource>();
-            _audioDevice = new Device("AudioDevice", DeviceType.AudioDevice, new ProcessSettings("", ""));
+            _audioDevice = new Device("AudioDevice", DeviceType.AudioDevice, _mockProcessSettings);
         }
 
         [TestInitialize]
@@ -98,7 +98,6 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSources
         public void StartStreaming_ShouldListenOnErrorDataReceivedEventCorrectlyAndRaise()
         {
             // Given
-            var audioDevice = new Device("AudioDevice", DeviceType.AudioDevice, _mockProcessSettings);
             string messageReceived = null;
             var messageSent = "Some text";
 
