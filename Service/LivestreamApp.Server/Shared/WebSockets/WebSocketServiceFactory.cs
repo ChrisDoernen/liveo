@@ -3,6 +3,7 @@ using LivestreamApp.Server.Streaming.StreamingSources;
 using Ninject;
 using Ninject.Parameters;
 using Ninject.Syntax;
+using System;
 
 namespace LivestreamApp.Server.Shared.WebSockets
 {
@@ -12,7 +13,7 @@ namespace LivestreamApp.Server.Shared.WebSockets
 
         public WebSocketServiceFactory(IResolutionRoot kernel)
         {
-            _kernel = kernel;
+            _kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
         }
 
         public StreamingWebSocketService GetStreamingWebSocketervice(IStreamingSource source)

@@ -1,4 +1,5 @@
 ﻿using LivestreamApp.Server.Shared.ProcessSettings;
+using System;
 
 namespace LivestreamApp.Server.Streaming.Devices
 {
@@ -11,7 +12,7 @@ namespace LivestreamApp.Server.Streaming.Devices
 
         public UnknownDevice(string id)
         {
-            Id = id;
+            Id = id ?? throw new ArgumentNullException(nameof(id));
             StreamingProcessSettings = null;
         }
     }

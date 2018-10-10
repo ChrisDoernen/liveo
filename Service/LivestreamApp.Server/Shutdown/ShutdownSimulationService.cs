@@ -1,4 +1,5 @@
 ﻿using Ninject.Extensions.Logging;
+using System;
 
 namespace LivestreamApp.Server.Shutdown
 {
@@ -8,7 +9,7 @@ namespace LivestreamApp.Server.Shutdown
 
         public ShutdownSimulationService(ILogger logger)
         {
-            _logger = logger;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public void ShutdownServer()

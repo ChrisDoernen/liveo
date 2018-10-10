@@ -1,6 +1,7 @@
 ﻿using LivestreamApp.Server.Shared.WebSockets;
 using LivestreamApp.Server.Streaming.StreamingSources;
 using Ninject.Extensions.Logging;
+using System;
 
 namespace LivestreamApp.Server.Streaming.Livestreams
 {
@@ -25,9 +26,11 @@ namespace LivestreamApp.Server.Streaming.Livestreams
         public Stream(ILogger logger, IWebSocketServerAdapter webSocketServerAdapter,
             IStreamingSourceFactory streamingSourceFactory)
         {
-            _logger = logger;
-            _streamingSourceFactory = streamingSourceFactory;
-            _webSocketServerAdapter = webSocketServerAdapter;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _streamingSourceFactory =
+                streamingSourceFactory ?? throw new ArgumentNullException(nameof(streamingSourceFactory));
+            _webSocketServerAdapter =
+                webSocketServerAdapter ?? throw new ArgumentNullException(nameof(webSocketServerAdapter));
         }
 
         public void Initialize()

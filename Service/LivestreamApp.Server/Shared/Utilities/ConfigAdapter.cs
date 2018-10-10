@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System;
 
 namespace LivestreamApp.Server.Shared.Utilities
 {
@@ -8,7 +9,7 @@ namespace LivestreamApp.Server.Shared.Utilities
 
         public ConfigAdapter(IMapper mappper)
         {
-            _mapper = mappper;
+            _mapper = mappper ?? throw new ArgumentNullException(nameof(mappper));
         }
 
         /// <inheritdoc />

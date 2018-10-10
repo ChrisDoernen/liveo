@@ -36,7 +36,7 @@ namespace LivestreamApp.Server.Streaming.Livestreams.Manager
         private void LoadStreamsFromConfig()
         {
             Streams = _configAdapter.Load<Streams, StreamsType>(_config, Scheme);
-            _logger.Info($"Streams loaded from config ({Streams.StreamList.Count}).");
+            _logger.Debug($"Streams loaded from config ({Streams.StreamList.Count}).");
         }
 
         /// <inheritdoc />
@@ -52,7 +52,7 @@ namespace LivestreamApp.Server.Streaming.Livestreams.Manager
             stream.Id = GetNewId(stream);
             Streams.StreamList.Add(stream);
             UpdateConfig();
-            _logger.Info($"Added new stream with id {stream.Id}.");
+            _logger.Debug($"Added new stream with id {stream.Id}.");
         }
 
         /// <inheritdoc />
@@ -66,11 +66,11 @@ namespace LivestreamApp.Server.Streaming.Livestreams.Manager
                 Streams.StreamList.Remove(streamToUpdate);
                 Streams.StreamList.Add(stream);
                 UpdateConfig();
-                _logger.Info($"Updated stream with id {stream.Id}.");
+                _logger.Debug($"Updated stream with id {stream.Id}.");
             }
             else
             {
-                _logger.Warn($"Updating stream failed, id {stream.Id} not found.");
+                _logger.Debug($"Updating stream failed, id {stream.Id} not found.");
             }
         }
 
@@ -82,18 +82,18 @@ namespace LivestreamApp.Server.Streaming.Livestreams.Manager
             {
                 Streams.StreamList.Remove(livestreamToRemove);
                 UpdateConfig();
-                _logger.Info($"Deleted stream with id {id}.");
+                _logger.Debug($"Deleted stream with id {id}.");
             }
             else
             {
-                _logger.Warn($"Deleting stream failed, id {id} not found.");
+                _logger.Debug($"Deleting stream failed, id {id} not found.");
             }
         }
 
         private void UpdateConfig()
         {
             _configAdapter.Save<Streams, StreamsType>(Streams, _config);
-            _logger.Info("Streams.config updated.");
+            _logger.Debug("Streams.config updated.");
         }
 
         private string GetNewId(Stream stream)

@@ -17,9 +17,9 @@ namespace LivestreamApp.Server.Shared.WebSockets
         public WebSocketServerAdapter(ILogger logger, IUriConfiguration uriConfiguration,
             IWebSocketServiceFactory webSocketServiceFactory)
         {
-            _logger = logger;
-            _webSocketServiceFactory = webSocketServiceFactory;
-            _uriConfiguration = uriConfiguration;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _webSocketServiceFactory = webSocketServiceFactory ?? throw new ArgumentNullException(nameof(webSocketServiceFactory));
+            _uriConfiguration = uriConfiguration ?? throw new ArgumentNullException(nameof(uriConfiguration));
             StartWebSocketServer();
         }
 

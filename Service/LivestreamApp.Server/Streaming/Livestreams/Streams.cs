@@ -1,4 +1,5 @@
 ﻿using Ninject.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 
 namespace LivestreamApp.Server.Streaming.Livestreams
@@ -11,7 +12,7 @@ namespace LivestreamApp.Server.Streaming.Livestreams
 
         public Streams(ILogger logger)
         {
-            _logger = logger;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
     }
 }

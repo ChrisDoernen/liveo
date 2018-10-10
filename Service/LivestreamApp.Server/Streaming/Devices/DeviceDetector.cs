@@ -20,9 +20,9 @@ namespace LivestreamApp.Server.Streaming.Devices
         public DeviceDetector(ILogger logger, IProcessAdapter processAdapter,
             IProcessSettingsProvider processSettingsProvider)
         {
-            _logger = logger;
-            _processAdapter = processAdapter;
-            _processSettingsProvider = processSettingsProvider;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _processAdapter = processAdapter ?? throw new ArgumentNullException(nameof(processAdapter));
+            _processSettingsProvider = processSettingsProvider ?? throw new ArgumentNullException(nameof(processSettingsProvider));
         }
 
         public void DetectAvailableDevices()
@@ -55,7 +55,7 @@ namespace LivestreamApp.Server.Streaming.Devices
                 .ToList();
 
             var audioDeviceIds = audioDevices.Select(ad => ad.Id);
-            _logger.Info($"Audio device(s) ({audioDevices.Count}): {string.Join(", ", audioDeviceIds)}.");
+            _logger.Debug($"Audio device(s) ({audioDevices.Count}): {string.Join(", ", audioDeviceIds)}.");
             Devices.AddRange(audioDevices);
         }
 
@@ -68,9 +68,10 @@ namespace LivestreamApp.Server.Streaming.Devices
         private ProcessResult ExecuteProcess(IProcessSettings processSettings)
         {
             var processResult = _processAdapter.ExecuteAndReadSync(processSettings);
-            return processResult.ExitCode != 1
-                ? throw new Exception("Could not get process output.")
-                : processResult;
+            if (processResult.ExitCode != 1)
+                throw new Exception("Could not get process output.");
+
+            return processResult;
         }
 
         private bool LineContainsAudioDevice(string line)

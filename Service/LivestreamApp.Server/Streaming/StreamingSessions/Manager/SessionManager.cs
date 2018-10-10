@@ -4,6 +4,7 @@ using LivestreamApp.Server.Streaming.StreamingSessions.Entities;
 using LivestreamApp.Shared.AppSettings;
 using LivestreamApp.Shared.Utilities;
 using Ninject.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,10 +25,10 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions.Manager
         public SessionManager(ILogger logger, IMapper mapper, IHashGenerator hashGenerator,
             IAppSettingsProvider appSettingsProvider, IConfigAdapter configAdapter)
         {
-            _logger = logger;
-            _mapper = mapper;
-            _hashGenerator = hashGenerator;
-            _configAdapter = configAdapter;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _hashGenerator = hashGenerator ?? throw new ArgumentNullException(nameof(hashGenerator));
+            _configAdapter = configAdapter ?? throw new ArgumentNullException(nameof(configAdapter));
             _config = appSettingsProvider.GetStringValue(AppSetting.SessionsConfigurationFile);
             LoadSessionsFromConfig();
         }

@@ -1,6 +1,7 @@
 ﻿using LivestreamApp.Server.Shared.Processes;
 using LivestreamApp.Server.Shared.ProcessSettings;
 using Ninject.Extensions.Logging;
+using System;
 
 namespace LivestreamApp.Server.Shutdown
 {
@@ -11,8 +12,8 @@ namespace LivestreamApp.Server.Shutdown
 
         public ShutdownService(ILogger logger, IProcessAdapter processAdapter)
         {
-            _logger = logger;
-            _processAdapter = processAdapter;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _processAdapter = processAdapter ?? throw new ArgumentNullException(nameof(processAdapter));
         }
 
         public void ShutdownServer()

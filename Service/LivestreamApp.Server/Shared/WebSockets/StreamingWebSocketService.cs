@@ -1,6 +1,7 @@
 ﻿using LivestreamApp.Server.Shared.Processes;
 using LivestreamApp.Server.Streaming.StreamingSources;
 using Ninject.Extensions.Logging;
+using System;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 
@@ -13,8 +14,8 @@ namespace LivestreamApp.Server.Shared.WebSockets
 
         public StreamingWebSocketService(ILogger logger, IStreamingSource source)
         {
-            _logger = logger;
-            _source = source;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _source = source ?? throw new ArgumentNullException(nameof(source));
             IgnoreExtensions = true;
         }
 

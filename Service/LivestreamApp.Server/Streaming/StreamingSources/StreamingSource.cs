@@ -18,11 +18,11 @@ namespace LivestreamApp.Server.Streaming.StreamingSources
 
         public StreamingSource(ILogger logger, IProcessAdapter processAdapter, IDevice device)
         {
-            _logger = logger;
-            Device = device;
-            _processAdapter = processAdapter;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            Device = device ?? throw new ArgumentNullException(nameof(device));
+            _processAdapter = processAdapter ?? throw new ArgumentNullException(nameof(processAdapter));
             ContentType = (ContentType)Device.DeviceType;
-            _logger.Info($"Initialized a source for {Device.Id}.");
+            _logger.Debug($"Initialized a source for {Device.Id}.");
         }
 
         public bool HasValidDevice()
@@ -37,7 +37,7 @@ namespace LivestreamApp.Server.Streaming.StreamingSources
             _processAdapter.ErrorDataReceived += StandardErrorDataReceived;
             _processAdapter.ProcessExited += ProcessExitedHandler;
             _processAdapter.ExecuteAndReadBinaryAsync(Device.StreamingProcessSettings);
-            _logger.Info($"Started capturing on input {Device.Id}.");
+            _logger.Debug($"Started capturing on input {Device.Id}.");
         }
 
         public void StopStreaming()
@@ -46,7 +46,7 @@ namespace LivestreamApp.Server.Streaming.StreamingSources
             _processAdapter.ProcessExited -= ProcessExitedHandler;
             _processAdapter.ErrorDataReceived -= StandardErrorDataReceived;
             _processAdapter.KillProcess();
-            _logger.Info($"Stopped capturing on input {Device.Id}.");
+            _logger.Debug($"Stopped capturing on input {Device.Id}.");
         }
 
         private void OutputBytesReceivedHandler(object sender, BytesReceivedEventArgs e)
@@ -64,7 +64,7 @@ namespace LivestreamApp.Server.Streaming.StreamingSources
         {
             _processAdapter.OutputBytesReceived -= OutputBytesReceivedHandler;
             _processAdapter.ErrorDataReceived -= StandardErrorDataReceived;
-            _logger.Info("The process exited.");
+            _logger.Debug("The process exited.");
         }
     }
 }

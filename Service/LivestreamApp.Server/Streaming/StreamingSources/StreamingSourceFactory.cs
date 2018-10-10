@@ -2,6 +2,7 @@
 using Ninject;
 using Ninject.Parameters;
 using Ninject.Syntax;
+using System;
 
 namespace LivestreamApp.Server.Streaming.StreamingSources
 {
@@ -12,8 +13,8 @@ namespace LivestreamApp.Server.Streaming.StreamingSources
 
         public StreamingSourceFactory(IResolutionRoot kernel, IDeviceDetector deviceDetector)
         {
-            _kernel = kernel;
-            _deviceDetector = deviceDetector;
+            _kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
+            _deviceDetector = deviceDetector ?? throw new ArgumentNullException(nameof(deviceDetector));
         }
 
         public IStreamingSource GetStreamingSourceByDeviceId(string deviceId)
