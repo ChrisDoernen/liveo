@@ -4,9 +4,9 @@ using Ninject.Extensions.Logging;
 
 namespace LivestreamApp.Api.Client.Modules
 {
-    public class SessionModule : NancyModule
+    public class SessionsModule : NancyModule
     {
-        public SessionModule(ILogger logger, ISessionService sessionService)
+        public SessionsModule(ILogger logger, ISessionService sessionService)
             : base("/api")
         {
             Get["/sessions/current"] = _ =>

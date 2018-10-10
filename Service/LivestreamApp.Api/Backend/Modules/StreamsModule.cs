@@ -7,9 +7,9 @@ using Ninject.Extensions.Logging;
 
 namespace LivestreamApp.Api.Backend.Modules
 {
-    public class StreamModule : NancyModule
+    public class StreamsModule : NancyModule
     {
-        public StreamModule(ILogger logger, IStreamManager streamManager)
+        public StreamsModule(ILogger logger, IStreamManager streamManager)
             : base("/api")
         {
             this.RequiresAuthentication();

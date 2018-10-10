@@ -16,7 +16,7 @@ using System.Collections.Generic;
 namespace LivestreamApp.Api.Test.Tests.Client
 {
     [TestClass]
-    public class SessionModuleTest
+    public class SessionsModuleTest
     {
         private readonly MoqMockingKernel _kernel;
         private Mock<ISessionService> _mockSessionService;
@@ -26,8 +26,7 @@ namespace LivestreamApp.Api.Test.Tests.Client
         private const string GetCurrentSessionResponse =
             "TestResources\\Responses\\GetCurrentSessionResponse.txt";
 
-
-        public SessionModuleTest()
+        public SessionsModuleTest()
         {
             _kernel = new MoqMockingKernel();
         }
@@ -52,7 +51,7 @@ namespace LivestreamApp.Api.Test.Tests.Client
 
             var browser = new Browser(config =>
             {
-                config.Module<SessionModule>();
+                config.Module<SessionsModule>();
                 config.Dependency(_mockSessionService.Object);
                 config.Dependency(_mockLogger.Object);
             });
@@ -84,7 +83,7 @@ namespace LivestreamApp.Api.Test.Tests.Client
 
             var browser = new Browser(config =>
                 {
-                    config.Module<SessionModule>();
+                    config.Module<SessionsModule>();
                     config.Dependency(_mockSessionService.Object);
                     config.Dependency(_mockLogger.Object);
                 });
