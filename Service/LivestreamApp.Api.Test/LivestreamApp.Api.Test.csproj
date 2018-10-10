@@ -96,7 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Tests\Backend\ShutdownModuleTest.cs" />
-    <Compile Include="Tests\Client\SessionModuleTest.cs" />
+    <Compile Include="Tests\Client\SessionsModuleTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
