@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using LivestreamApp.Server.Shared.ProcessSettings;
 using LivestreamApp.Server.Streaming.Devices;
 using LivestreamApp.Server.Streaming.StreamingSources;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -29,7 +30,8 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSources
             _kernel.Reset();
             _mockDeviceDetector = _kernel.GetMock<IDeviceDetector>();
             _streamingSourceFactory = _kernel.Get<IStreamingSourceFactory>();
-            _device = new Device("SomeId", DeviceType.AudioDevice, null);
+            _device = new Device("SomeId", DeviceType.AudioDevice,
+                new ProcessSettings(string.Empty, string.Empty));
         }
 
         [TestMethod]

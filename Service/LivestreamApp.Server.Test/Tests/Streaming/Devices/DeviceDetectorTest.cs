@@ -16,6 +16,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Devices
     {
         private readonly MoqMockingKernel _kernel;
         private Mock<IProcessAdapter> _mockProcessAdapter;
+        private Mock<IProcessSettingsProvider> _mockProcessSettingsProvider;
         private IDeviceDetector _deviceDetector;
         private const string FfmpegOutputOneDevice =
             "TestResources\\ffmpeg\\ffmpegListDevicesOutputOneDeviceAvailable.txt";
@@ -34,6 +35,10 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Devices
             _kernel.Reset();
             _deviceDetector = _kernel.Get<IDeviceDetector>();
             _mockProcessAdapter = _kernel.GetMock<IProcessAdapter>();
+            _mockProcessSettingsProvider = _kernel.GetMock<IProcessSettingsProvider>();
+            _mockProcessSettingsProvider
+                .Setup(mpsp => mpsp.GetAudioStreamingProcessSettings(It.IsAny<string>()))
+                .Returns(new ProcessSettings("FileName", "Arguments"));
         }
 
         [TestMethod]
@@ -77,7 +82,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Devices
         {
             // Given
             var processOutput = File.ReadAllText(FfmpegOutputNoDevice);
-            var result = new ProcessResult(1, "", processOutput);
+            var result = new ProcessResult(1, string.Empty, processOutput);
             _mockProcessAdapter
                 .Setup(mep => mep.ExecuteAndReadSync(It.IsAny<IProcessSettings>()))
                 .Returns(result);
@@ -95,7 +100,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Devices
         {
             // Given
             var processOutput = File.ReadAllText(FfmpegOutputOneDevice);
-            var result = new ProcessResult(1, "", processOutput);
+            var result = new ProcessResult(1, string.Empty, processOutput);
             _mockProcessAdapter
                 .Setup(mep => mep.ExecuteAndReadSync(It.IsAny<IProcessSettings>()))
                 .Returns(result);
@@ -115,7 +120,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Devices
         {
             // Given
             var processOutput = File.ReadAllText(FfmpegOutputNoDevice);
-            var result = new ProcessResult(1, "", processOutput);
+            var result = new ProcessResult(1, string.Empty, processOutput);
             _mockProcessAdapter
                 .Setup(mep => mep.ExecuteAndReadSync(It.IsAny<IProcessSettings>()))
                 .Returns(result);

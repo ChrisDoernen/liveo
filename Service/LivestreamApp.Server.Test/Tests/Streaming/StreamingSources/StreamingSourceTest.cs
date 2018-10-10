@@ -17,6 +17,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSources
         private readonly MoqMockingKernel _kernel;
         private readonly IDevice _audioDevice;
         private Mock<IProcessAdapter> _mockProcessAdapter;
+        private IProcessSettings _mockProcessSettings;
 
         public StreamingSourceTest()
         {
@@ -29,14 +30,15 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSources
         public void TestInitialize()
         {
             _mockProcessAdapter = _kernel.GetMock<IProcessAdapter>();
+            _mockProcessSettings = new ProcessSettings(string.Empty, string.Empty);
         }
 
         [TestMethod]
         public void Constructor_ShouldInitializeCorrectly()
         {
             // Given
-            var audioDevice = new Device("AudioDevice", DeviceType.AudioDevice, null);
-            var videoDevice = new Device("VideoDevice", DeviceType.VideoDevice, null);
+            var audioDevice = new Device("AudioDevice", DeviceType.AudioDevice, _mockProcessSettings);
+            var videoDevice = new Device("VideoDevice", DeviceType.VideoDevice, _mockProcessSettings);
 
             // When
             var audioSource = _kernel.Get<IStreamingSource>(new ConstructorArgument("device", audioDevice));
@@ -96,7 +98,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSources
         public void StartStreaming_ShouldListenOnErrorDataReceivedEventCorrectlyAndRaise()
         {
             // Given
-            var audioDevice = new Device("AudioDevice", DeviceType.AudioDevice, null);
+            var audioDevice = new Device("AudioDevice", DeviceType.AudioDevice, _mockProcessSettings);
             string messageReceived = null;
             var messageSent = "Some text";
 
