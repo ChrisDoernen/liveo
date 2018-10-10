@@ -15,7 +15,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Manager
     [TestClass]
     public class StreamManagerTest
     {
-        private MoqMockingKernel _kernel;
+        private readonly MoqMockingKernel _kernel;
         private Mock<IConfigAdapter> _mockConfigDataAdapter;
         private Mock<IHashGenerator> _mockHashGenerator;
         private IStreamManager _streamManager;
@@ -34,13 +34,6 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Manager
             _mockConfigDataAdapter = _kernel.GetMock<IConfigAdapter>();
             _mockHashGenerator = _kernel.GetMock<IHashGenerator>();
             _streamManager = GetStreamManager();
-        }
-
-        [TestCleanup]
-        public void TestCleanup()
-        {
-            _kernel.Dispose();
-            _kernel = null;
         }
 
         private IStreamManager GetStreamManager()

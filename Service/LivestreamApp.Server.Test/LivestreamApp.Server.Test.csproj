@@ -92,6 +92,7 @@
     <Compile Include="Tests\Shared\Utilities\XmlSerializerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\Streaming\Livestreams\Manager\StreamManagerTest.cs" />
+    <Compile Include="Tests\Streaming\StreamingSessions\Manager\SessionMangerTest.cs" />
     <Compile Include="Tests\Streaming\StreamingSources\StreamingSourceFactoryTest.cs" />
     <Compile Include="Tests\Streaming\StreamingSources\StreamingSourceTest.cs" />
   </ItemGroup>
