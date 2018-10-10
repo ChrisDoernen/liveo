@@ -14,7 +14,7 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions.Manager
         private readonly ILogger _logger;
         private readonly IMapper _mapper;
         private readonly IHashGenerator _hashGenerator;
-        private readonly IConfigDataAdapter _configDataAdapter;
+        private readonly IConfigAdapter _configAdapter;
 
         private readonly string _config;
         private const string Scheme = "LivestreamApp.Server.Sessions.xsd";
@@ -22,19 +22,19 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions.Manager
         private Sessions Sessions { get; set; }
 
         public SessionManager(ILogger logger, IMapper mapper, IHashGenerator hashGenerator,
-            IAppSettingsProvider appSettingsProvider, IConfigDataAdapter configDataAdapter)
+            IAppSettingsProvider appSettingsProvider, IConfigAdapter configAdapter)
         {
             _logger = logger;
             _mapper = mapper;
             _hashGenerator = hashGenerator;
-            _configDataAdapter = configDataAdapter;
+            _configAdapter = configAdapter;
             _config = appSettingsProvider.GetStringValue(AppSetting.SessionsConfigurationFile);
             LoadSessionsFromConfig();
         }
 
         private void LoadSessionsFromConfig()
         {
-            Sessions = _configDataAdapter.Load<Sessions, SessionsType>(_config, Scheme);
+            Sessions = _configAdapter.Load<Sessions, SessionsType>(_config, Scheme);
             _logger.Info($"Sessions loaded from config ({Sessions.SessionList.Count}).");
         }
 
@@ -91,7 +91,7 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions.Manager
 
         private void UpdateConfig()
         {
-            _configDataAdapter.Save<Sessions, SessionsType>(Sessions, _config);
+            _configAdapter.Save<Sessions, SessionsType>(Sessions, _config);
             _logger.Info("Sessions.config updated.");
         }
 

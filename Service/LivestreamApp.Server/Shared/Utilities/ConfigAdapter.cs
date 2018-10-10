@@ -2,11 +2,11 @@
 
 namespace LivestreamApp.Server.Shared.Utilities
 {
-    public class ConfigDataAdapter : IConfigDataAdapter
+    public class ConfigAdapter : IConfigAdapter
     {
         private readonly IMapper _mapper;
 
-        public ConfigDataAdapter(IMapper mappper)
+        public ConfigAdapter(IMapper mappper)
         {
             _mapper = mappper;
         }

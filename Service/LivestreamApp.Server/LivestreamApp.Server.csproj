@@ -72,8 +72,8 @@
     <Compile Include="AppConfiguration\AutoMapperModule.cs" />
     <Compile Include="AppConfiguration\ServerModule.cs" />
     <Compile Include="AppConfiguration\SessionValueResolver.cs" />
-    <Compile Include="Shared\Utilities\ConfigDataAdapter.cs" />
-    <Compile Include="Shared\Utilities\IConfigDataAdapter.cs" />
+    <Compile Include="Shared\Utilities\ConfigAdapter.cs" />
+    <Compile Include="Shared\Utilities\IConfigAdapter.cs" />
     <Compile Include="Streaming\StreamingSessions\Entities\SessionBackendEntity.cs" />
     <Compile Include="Streaming\StreamingSessions\Entities\SessionClientEntity.cs" />
     <Compile Include="Streaming\StreamingSessions\Manager\ISessionManager.cs" />

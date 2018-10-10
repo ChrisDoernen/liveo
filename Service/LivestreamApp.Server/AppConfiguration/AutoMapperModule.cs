@@ -19,14 +19,13 @@ namespace LivestreamApp.Server.AppConfiguration
 
         private IMapper AutoMapper(IContext context)
         {
-            Mapper.Initialize(config =>
+            var mapperConfiguration = new MapperConfiguration(config =>
             {
                 config.ConstructServicesUsing(type => context.Kernel.Get(type));
                 config.AddProfiles(typeof(ServerProfile));
             });
 
-            Mapper.AssertConfigurationIsValid();
-            return Mapper.Instance;
+            return mapperConfiguration.CreateMapper();
         }
     }
 }

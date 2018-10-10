@@ -21,7 +21,7 @@ namespace LivestreamApp.Server.AppConfiguration
             Bind<IStreamManager>().To<StreamManager>().InSingletonScope();
             Bind<IProcessSettingsProvider>().To<ProcessSettingsProvider>();
             Bind<IProcessAdapter>().To<ProcessAdapter>();
-            Bind<IConfigDataAdapter>().To<ConfigDataAdapter>();
+            Bind<IConfigAdapter>().To<ConfigAdapter>();
             Bind<IStreamingSource>().To<StreamingSource>();
             Bind<IDeviceDetector>().To<DeviceDetector>().InSingletonScope();
             Bind<IStreamingSourceFactory>().To<StreamingSourceFactory>().InSingletonScope();

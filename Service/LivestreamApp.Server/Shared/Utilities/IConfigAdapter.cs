@@ -3,7 +3,7 @@
     /// <summary>
     ///     Provides read and write access to files
     /// </summary>
-    public interface IConfigDataAdapter
+    public interface IConfigAdapter
     {
         /// <summary>
         ///     Loads an object from a given config file

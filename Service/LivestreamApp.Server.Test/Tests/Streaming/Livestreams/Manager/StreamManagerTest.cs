@@ -15,26 +15,32 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Manager
     [TestClass]
     public class StreamManagerTest
     {
-        private readonly MoqMockingKernel _kernel;
-        private Mock<IConfigDataAdapter> _mockConfigDataAdapter;
+        private MoqMockingKernel _kernel;
+        private Mock<IConfigAdapter> _mockConfigDataAdapter;
         private Mock<IHashGenerator> _mockHashGenerator;
         private IStreamManager _streamManager;
 
         public StreamManagerTest()
         {
             _kernel = new MoqMockingKernel();
-            _kernel.Bind<Stream>().To<Stream>();
             _kernel.Load(new AutoMapperModule());
+            _kernel.Bind<Stream>().To<Stream>();
             _kernel.Bind<IStreamManager>().To<StreamManager>();
         }
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _kernel.Reset();
-            _mockConfigDataAdapter = _kernel.GetMock<IConfigDataAdapter>();
+            _mockConfigDataAdapter = _kernel.GetMock<IConfigAdapter>();
             _mockHashGenerator = _kernel.GetMock<IHashGenerator>();
             _streamManager = GetStreamManager();
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            _kernel.Dispose();
+            _kernel = null;
         }
 
         private IStreamManager GetStreamManager()
@@ -116,6 +122,20 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Manager
         }
 
         [TestMethod]
+        public void DeleteStream_IdIsNotContained_ShouldDoNothing()
+        {
+            // Given when
+            _streamManager.DeleteStream("8b5va");
+            var returnedStreams = _streamManager.GetStreams();
+
+            // Then
+            returnedStreams.Should().NotBeNull();
+            returnedStreams.Count.Should().Be(2);
+            returnedStreams[0].Id.Should().Be("8b5aa");
+            returnedStreams[1].Id.Should().Be("bce9e");
+        }
+
+        [TestMethod]
         public void UpdateStream_IdIsContained_ShouldUpdateStreamCorrectlyAndCallUpdateConfig()
         {
             // Given
@@ -136,6 +156,26 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Manager
             _mockConfigDataAdapter
                 .Verify(mcda => mcda.Save<Streams, StreamsType>(It.IsAny<Streams>(),
                     It.IsAny<string>()), Times.Once);
+        }
+
+        [TestMethod]
+        public void UpdateStream_IdIsNotContained_ShouldDoNothing()
+        {
+            // Given
+            var streamWithUpdate = _kernel.Get<StreamBackendEntity>();
+            streamWithUpdate.Title = "SomeNewTitle";
+            streamWithUpdate.Id = "8b5av";
+
+            // When
+            _streamManager.UpdateStream(streamWithUpdate);
+            var returnedStreams = _streamManager.GetStreams();
+
+            // Then
+            returnedStreams.Should().NotBeNull();
+            returnedStreams.Count.Should().Be(2);
+            returnedStreams[0].Id.Should().Be("8b5aa");
+            returnedStreams[1].Id.Should().Be("bce9e");
+            returnedStreams[1].Title.Should().Be(null);
         }
     }
 }
