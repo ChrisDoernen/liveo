@@ -57,26 +57,26 @@ namespace LivestreamApp.Server.Shared.WebSockets
         {
             var service = _webSocketServiceFactory.GetStreamingWebSocketervice(source);
             _webSocketServer.AddWebSocketService(path, () => service);
-            _logger.Info($"Added streaming service on path {path}.");
+            _logger.Debug($"Added streaming service on path {path}.");
         }
 
         public void AddLoggingWebSocketService(string path, ILoggingSource source)
         {
             var service = _webSocketServiceFactory.GetLoggingWebSocketervice(source);
             _webSocketServer.AddWebSocketService(path, () => service);
-            _logger.Info($"Added streaming service on path {path}.");
+            _logger.Debug($"Added streaming service on path {path}.");
         }
 
         public void RemoveWebSocketService(string path)
         {
             _webSocketServer.RemoveWebSocketService(path);
-            _logger.Info($"Removed streaming service on path {path}.");
+            _logger.Debug($"Removed streaming service on path {path}.");
         }
 
         public void Dispose()
         {
             StopWebSocketServer();
-            _logger.Info("WebSocketServerAdapter disposed.");
+            _logger.Debug("WebSocketServerAdapter disposed.");
 
         }
     }

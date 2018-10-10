@@ -27,13 +27,13 @@ namespace LivestreamApp.Server.Shared.WebSockets
         protected override void OnOpen()
         {
             _source.BytesReceived += SendBytes;
-            _logger.Info("Client connected");
+            _logger.Debug("Client connected");
         }
 
         protected override void OnClose(CloseEventArgs e)
         {
             _source.BytesReceived -= SendBytes;
-            _logger.Info("Client disconnected");
+            _logger.Debug("Client disconnected");
         }
 
         protected override void OnError(ErrorEventArgs e)
