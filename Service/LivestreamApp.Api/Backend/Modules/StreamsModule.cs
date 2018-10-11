@@ -14,10 +14,7 @@ namespace LivestreamApp.Api.Backend.Modules
         {
             this.RequiresAuthentication();
 
-            Get["/streams"] = _ =>
-            {
-                return streamManager.GetStreams();
-            };
+            Get["/streams"] = _ => streamManager.GetStreams();
 
             Post["/streams"] = request =>
             {
