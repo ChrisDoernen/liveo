@@ -66,7 +66,8 @@ namespace LivestreamApp.Api.Test.Tests.Backend
                 config.Dependency(_mockLogger.Object);
                 config.RequestStartup((container, pipelines, context) =>
                 {
-                    context.CurrentUser = new UserIdentity("Admin", new List<string> { "ACCESS-BACKEND" });
+                    context.CurrentUser =
+                        new UserIdentity("Admin", new List<string> { "ACCESS-BACKEND" });
                 });
             });
 

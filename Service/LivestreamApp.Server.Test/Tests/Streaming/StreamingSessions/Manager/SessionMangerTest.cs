@@ -9,6 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Ninject;
 using Ninject.MockingKernel.Moq;
+using System;
 
 namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSessions.Manager
 {
@@ -72,6 +73,25 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSessions.Manager
             sessions.Count.Should().Be(2);
             sessions[0].Id.Should().Be("8b5aa");
             sessions[1].Id.Should().Be("bce9e");
+        }
+
+        [TestMethod]
+        public void GetSession_IdIsContained_ShouldReturnCorrectSession()
+        {
+            // Given when
+            var session = _sessionManager.GetSession("bce9e");
+
+            // Then
+            session.Should().NotBeNull();
+            session.Id.Should().Be("bce9e");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void GetSession_IdIsNotContained_ShouldThrow()
+        {
+            // Given when
+            _sessionManager.GetSession("bcexx");
         }
 
         [TestMethod]

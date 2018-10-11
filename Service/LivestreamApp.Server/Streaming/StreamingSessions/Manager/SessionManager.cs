@@ -46,6 +46,20 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions.Manager
         }
 
         /// <inheritdoc />
+        public Session GetSession(string id)
+        {
+            var session = Sessions.SessionList.FirstOrDefault(s => s.Id.Equals(id));
+
+            if (session == null)
+            {
+                _logger.Warn($"The session with id {id} could not be found.");
+                throw new ArgumentException($"The session with id {id} could not be found.");
+            }
+
+            return session;
+        }
+
+        /// <inheritdoc />
         public void CreateSession(SessionBackendEntity sessionBackendEntity)
         {
             var session = _mapper.Map<Session>(sessionBackendEntity);

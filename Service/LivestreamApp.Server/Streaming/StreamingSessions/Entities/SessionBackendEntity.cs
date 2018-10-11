@@ -1,5 +1,6 @@
-﻿using LivestreamApp.Server.Streaming.Livestreams;
+﻿using LivestreamApp.Server.Streaming.Livestreams.Entities;
 using System;
+using System.Collections.Generic;
 
 namespace LivestreamApp.Server.Streaming.StreamingSessions.Entities
 {
@@ -12,6 +13,6 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions.Entities
         public DateTime? TimeStarting;
         public DateTime? TimeEnding;
         public DateTime? TimeServerShutdown;
-        public Streams Streams;
+        public List<StreamBackendEntity> Streams;
     }
 }

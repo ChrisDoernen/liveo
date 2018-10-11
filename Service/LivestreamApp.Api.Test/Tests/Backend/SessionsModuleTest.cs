@@ -1,9 +1,10 @@
 ﻿using FluentAssertions;
-using LivestreamApp.Api.Client.Modules;
+using LivestreamApp.Api.Backend.Modules;
 using LivestreamApp.Server.Streaming.Livestreams.Entities;
-using LivestreamApp.Server.Streaming.StreamingSessions;
 using LivestreamApp.Server.Streaming.StreamingSessions.Entities;
+using LivestreamApp.Server.Streaming.StreamingSessions.Manager;
 using LivestreamApp.Server.Streaming.StreamingSessions.Service;
+using LivestreamApp.Shared.Authentication;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Nancy;
@@ -13,18 +14,19 @@ using Ninject.Extensions.Logging;
 using Ninject.MockingKernel.Moq;
 using System.Collections.Generic;
 
-namespace LivestreamApp.Api.Test.Tests.Client
+namespace LivestreamApp.Api.Test.Tests.Backend
 {
     [TestClass]
     public class SessionsModuleTest
     {
         private readonly MoqMockingKernel _kernel;
         private Mock<ISessionService> _mockSessionService;
+        private Mock<ISessionManager> _mockSessionManager;
         private Mock<ILogger> _mockLogger;
-        private SessionClientEntity _sessionClientEntity;
-        private StreamClientEntity _streamClientEntity;
-        private const string GetCurrentSessionResponse =
-            "TestResources\\Responses\\GetCurrentSessionResponse.txt";
+        private SessionBackendEntity _sessionBackendEntity;
+        private StreamBackendEntity _streamBackendEntity;
+        private const string ExpectedGetCurrentSessionResponse =
+            "TestResources\\Responses\\ExpectedGetCurrentSessionBackendResponse.txt";
 
         public SessionsModuleTest()
         {
@@ -36,9 +38,10 @@ namespace LivestreamApp.Api.Test.Tests.Client
         {
             _kernel.Reset();
             _mockSessionService = _kernel.GetMock<ISessionService>();
+            _mockSessionManager = _kernel.GetMock<ISessionManager>();
             _mockLogger = _kernel.GetMock<ILogger>();
-            _sessionClientEntity = _kernel.Get<SessionClientEntity>();
-            _streamClientEntity = _kernel.Get<StreamClientEntity>();
+            _sessionBackendEntity = _kernel.Get<SessionBackendEntity>();
+            _streamBackendEntity = _kernel.Get<StreamBackendEntity>();
         }
 
         [TestMethod]
@@ -46,14 +49,20 @@ namespace LivestreamApp.Api.Test.Tests.Client
         {
             // Given
             _mockSessionService
-                .Setup(mss => mss.CurrentSession)
-                .Returns((Session)null);
+                .Setup(mss => mss.GetCurrentSession<SessionBackendEntity>())
+                .Returns((SessionBackendEntity)null);
 
             var browser = new Browser(config =>
             {
                 config.Module<SessionsModule>();
-                config.Dependency(_mockSessionService.Object);
                 config.Dependency(_mockLogger.Object);
+                config.Dependency(_mockSessionService.Object);
+                config.Dependency(_mockSessionManager.Object);
+                config.RequestStartup((container, pipelines, context) =>
+                {
+                    context.CurrentUser =
+                        new UserIdentity("Admin", new List<string> { "ACCESS-BACKEND" });
+                });
             });
 
             // When
@@ -71,22 +80,28 @@ namespace LivestreamApp.Api.Test.Tests.Client
         public void GetCurrentSession_SessionAvailable_ShouldReturnStatusCodeOKWithCorrectJsonResponse()
         {
             // Given
-            _streamClientEntity.Id = "SomeId";
-            _streamClientEntity.Description = "SomeDescription";
-            _sessionClientEntity.Id = "SomeSessionId";
-            _sessionClientEntity.Title = "SomeSessionTitle";
-            _sessionClientEntity.Streams = new List<StreamClientEntity> { _streamClientEntity };
+            _sessionBackendEntity.Id = "SomeId";
+            _sessionBackendEntity.Description = "SomeDescription";
+            _sessionBackendEntity.Id = "SomeSessionId";
+            _sessionBackendEntity.Title = "SomeSessionTitle";
+            _sessionBackendEntity.Streams = new List<StreamBackendEntity> { _streamBackendEntity };
 
             _mockSessionService
-                .Setup(mss => mss.CurrentSessionClientEntity)
-                .Returns(_sessionClientEntity);
+                .Setup(mss => mss.GetCurrentSession<SessionBackendEntity>())
+                .Returns(_sessionBackendEntity);
 
             var browser = new Browser(config =>
+            {
+                config.Module<SessionsModule>();
+                config.Dependency(_mockLogger.Object);
+                config.Dependency(_mockSessionService.Object);
+                config.Dependency(_mockSessionManager.Object);
+                config.RequestStartup((container, pipelines, context) =>
                 {
-                    config.Module<SessionsModule>();
-                    config.Dependency(_mockSessionService.Object);
-                    config.Dependency(_mockLogger.Object);
+                    context.CurrentUser =
+                        new UserIdentity("Admin", new List<string> { "ACCESS-BACKEND" });
                 });
+            });
 
             // When
             var result = browser.Get("/api/sessions/current", with =>
@@ -96,7 +111,7 @@ namespace LivestreamApp.Api.Test.Tests.Client
             });
 
             // Then
-            var expectedResponse = System.IO.File.ReadAllText(GetCurrentSessionResponse);
+            var expectedResponse = System.IO.File.ReadAllText(ExpectedGetCurrentSessionResponse);
             result.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Body.ContentType.Should().Be("application/json; charset=utf-8");
             result.Body.AsString().Should().Be(expectedResponse);

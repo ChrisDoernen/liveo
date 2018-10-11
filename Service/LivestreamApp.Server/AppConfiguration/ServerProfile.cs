@@ -45,6 +45,7 @@ namespace LivestreamApp.Server.AppConfiguration
             CreateMap<SessionBackendEntity, Session>()
                 .ForMember(d => d.TimeStarted, opt => opt.Ignore())
                 .ForMember(d => d.TimeEnded, opt => opt.Ignore())
+                .ForMember(d => d.Streams, opt => opt.MapFrom(src => src.Streams.ToList()))
                 .ConstructUsingServiceLocator();
             CreateMap<Session, SessionClientEntity>();
         }

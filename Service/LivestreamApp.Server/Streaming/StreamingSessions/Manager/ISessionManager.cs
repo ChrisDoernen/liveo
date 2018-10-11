@@ -14,6 +14,13 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions.Manager
         List<Session> GetSessions();
 
         /// <summary>
+        ///     Get a specific session
+        /// </summary>
+        /// <param name="id">Id of the session</param>
+        /// <returns>The <see cref="Session"/></returns>
+        Session GetSession(string id);
+
+        /// <summary>
         ///     Create a new session
         /// </summary>
         /// <param name="sessionBackendEntity">Entity containing the new values</param>
