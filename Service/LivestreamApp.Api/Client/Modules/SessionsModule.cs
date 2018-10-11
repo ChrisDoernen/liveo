@@ -12,7 +12,6 @@ namespace LivestreamApp.Api.Client.Modules
             Get["/sessions/current"] = _ =>
             {
                 var currentSession = sessionService.CurrentSessionClientEntity;
-                logger.Info("GET request on api/sessions/current.");
                 if (currentSession == null)
                 {
                     logger.Info("No current session available.");

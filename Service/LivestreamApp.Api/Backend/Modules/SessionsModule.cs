@@ -16,13 +16,11 @@ namespace LivestreamApp.Api.Backend.Modules
 
             Get["/sessions"] = _ =>
             {
-                logger.Debug("GET request on api/sessions.");
                 return sessionManager.GetSessions();
             };
 
             Post["/sessions"] = request =>
             {
-                logger.Debug("POST request on api/sessions.");
                 var session = this.Bind<SessionBackendEntity>();
                 sessionManager.CreateSession(session);
                 return HttpStatusCode.Created;
@@ -31,7 +29,6 @@ namespace LivestreamApp.Api.Backend.Modules
             Put["/sessions/{id}"] = request =>
             {
                 string id = request.id;
-                logger.Debug($"PUT request on api/sessions/{id}.");
                 var session = this.Bind<SessionBackendEntity>();
                 sessionManager.UpdateSession(session);
                 return HttpStatusCode.OK;
@@ -40,7 +37,6 @@ namespace LivestreamApp.Api.Backend.Modules
             Delete["/sessions/{id}"] = request =>
             {
                 string id = request.id;
-                logger.Debug($"DELETE request on api/sessions/{id}.");
                 sessionManager.DeleteSession(id);
                 return HttpStatusCode.OK;
             };

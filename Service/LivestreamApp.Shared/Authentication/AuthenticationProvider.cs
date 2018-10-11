@@ -31,7 +31,7 @@ namespace LivestreamApp.Shared.Authentication
         {
             var hash = _appSettingsProvider.GetStringValue(AppSetting.AuthenticationHash);
             var isAuthenticated = VerifyHash(hash, input);
-            if (!isAuthenticated) _logger.Warn("Access denied. Wrong hash provided.");
+            if (!isAuthenticated) _logger.Warn("Authentication failed. Wrong hash provided.");
 
             return isAuthenticated
                 ? new UserIdentity("Admin", new List<string> { "ACCESS-BACKEND" })

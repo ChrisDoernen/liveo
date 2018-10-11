@@ -1,10 +1,12 @@
 ﻿using LivestreamApp.Server.AppConfiguration;
 using LivestreamApp.Shared.AppConfiguration;
 using LivestreamApp.Shared.Authentication;
+using Nancy;
 using Nancy.Authentication.Stateless;
 using Nancy.Bootstrapper;
 using Nancy.Bootstrappers.Ninject;
 using Ninject;
+using Ninject.Extensions.Logging;
 
 namespace LivestreamApp.Service.AppConfiguration
 {
@@ -25,6 +27,18 @@ namespace LivestreamApp.Service.AppConfiguration
                 });
 
             StatelessAuthentication.Enable(pipelines, configuration);
+        }
+
+        protected override void RequestStartup(IKernel kernel, IPipelines pipelines,
+            NancyContext nancyContext)
+        {
+            var logger = kernel.Get<ILoggerFactory>().GetCurrentClassLogger();
+            pipelines.BeforeRequest += (c) =>
+            {
+                var userName = c.CurrentUser != null ? c.CurrentUser.UserName : "no user";
+                logger.Debug($"{c.Request.Method} request on {c.Request.Path} - {userName}.");
+                return null;
+            };
         }
 
         protected override void ConfigureApplicationContainer(IKernel kernel)

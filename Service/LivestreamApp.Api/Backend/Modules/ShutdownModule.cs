@@ -14,14 +14,12 @@ namespace LivestreamApp.Api.Backend.Modules
 
             Get["/system/shutdown"] = _ =>
             {
-                logger.Info("api/system/shutdown was invoked, trying to shut down server.");
                 shutdownService.ShutdownServer();
                 return HttpStatusCode.Accepted;
             };
 
             Get["/system/restart"] = _ =>
             {
-                logger.Info("api/system/shutdown was invoked, trying to restart server.");
                 shutdownService.RestartServer();
                 return HttpStatusCode.Accepted;
             };

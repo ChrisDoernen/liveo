@@ -16,13 +16,11 @@ namespace LivestreamApp.Api.Backend.Modules
 
             Get["/streams"] = _ =>
             {
-                logger.Info("GET request on api/streams.");
                 return streamManager.GetStreams();
             };
 
             Post["/streams"] = request =>
             {
-                logger.Info("POST request on api/streams.");
                 var stream = this.Bind<StreamBackendEntity>();
                 streamManager.CreateStream(stream);
                 return HttpStatusCode.Created;
@@ -31,7 +29,6 @@ namespace LivestreamApp.Api.Backend.Modules
             Put["/streams/{id}"] = request =>
             {
                 string id = request.id;
-                logger.Info($"PUT request on api/streams/{id}.");
                 var stream = this.Bind<StreamBackendEntity>();
                 streamManager.UpdateStream(stream);
                 return HttpStatusCode.OK;
@@ -40,7 +37,6 @@ namespace LivestreamApp.Api.Backend.Modules
             Delete["/streams/{id}"] = request =>
             {
                 string id = request.id;
-                logger.Info($"DELETE request on api/streams/{id}.");
                 streamManager.DeleteStream(id);
                 return HttpStatusCode.OK;
             };
