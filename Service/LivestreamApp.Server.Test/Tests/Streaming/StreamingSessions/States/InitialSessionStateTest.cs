@@ -20,7 +20,6 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSessions.States
         public InitialSessionStateTest()
         {
             _kernel = new MoqMockingKernel();
-
         }
 
         [TestInitialize]
