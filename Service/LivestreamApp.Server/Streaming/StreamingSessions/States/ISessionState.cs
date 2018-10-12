@@ -4,8 +4,8 @@
     {
         ISessionState StartSession();
         ISessionState EndSession();
-        ISessionState Pause();
-        ISessionState Resume();
+        ISessionState PauseSession();
+        ISessionState ResumeSession();
         ISessionState ScheduleSession();
         ISessionState UnschduleSession();
     }

@@ -23,14 +23,14 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions.States
             return SessionStateFactory.GetSessionState<EndedSessionState>(Session);
         }
 
-        public ISessionState Pause()
+        public ISessionState PauseSession()
         {
             Session.StopStreams();
             Logger.Info("Session paused.");
             return SessionStateFactory.GetSessionState<PausedSessionState>(Session);
         }
 
-        public ISessionState Resume()
+        public ISessionState ResumeSession()
         {
             throw new ArgumentException("Session is already started.");
         }

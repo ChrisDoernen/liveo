@@ -45,5 +45,29 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSessions.States
             _mockSessionStateFactory
                 .Verify(msf => msf.GetSessionState<StartedSessionState>(_mockSession.Object), Times.Once);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void StopSession_ShouldThrow()
+        {
+            // Given when
+            _initialSessionState.EndSession();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void PauseSession_ShouldThrow()
+        {
+            // Given when
+            _initialSessionState.PauseSession();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ResumeSession_ShouldThrow()
+        {
+            // Given when
+            _initialSessionState.ResumeSession();
+        }
     }
 }

@@ -41,12 +41,12 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions
 
         public void Pause()
         {
-            _sessionState = _sessionState.Pause();
+            _sessionState = _sessionState.PauseSession();
         }
 
         public void Resume()
         {
-            _sessionState = _sessionState.Resume();
+            _sessionState = _sessionState.ResumeSession();
         }
 
         public void StartStreams()

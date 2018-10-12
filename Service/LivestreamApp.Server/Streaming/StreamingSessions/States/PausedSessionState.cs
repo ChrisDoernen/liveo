@@ -5,7 +5,7 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions.States
     public class PausedSessionState : SessionState, ISessionState
     {
         public PausedSessionState(ILogger logger, ISessionStateFactory sessionStateFactory,
-            Session session) : base(logger, sessionStateFactory, session)
+            ISession session) : base(logger, sessionStateFactory, session)
         {
         }
 
@@ -19,12 +19,12 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions.States
             throw new System.NotImplementedException();
         }
 
-        public ISessionState Pause()
+        public ISessionState PauseSession()
         {
             throw new System.NotImplementedException();
         }
 
-        public ISessionState Resume()
+        public ISessionState ResumeSession()
         {
             throw new System.NotImplementedException();
         }

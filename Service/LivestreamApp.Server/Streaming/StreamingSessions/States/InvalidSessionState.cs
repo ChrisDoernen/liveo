@@ -19,12 +19,12 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions.States
             throw new System.NotImplementedException();
         }
 
-        public ISessionState Pause()
+        public ISessionState PauseSession()
         {
             throw new System.NotImplementedException();
         }
 
-        public ISessionState Resume()
+        public ISessionState ResumeSession()
         {
             throw new System.NotImplementedException();
         }

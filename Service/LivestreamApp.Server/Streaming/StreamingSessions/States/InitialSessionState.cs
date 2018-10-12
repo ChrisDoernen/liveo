@@ -23,12 +23,12 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions.States
             throw new ArgumentException("The session has not yet been started.");
         }
 
-        public ISessionState Pause()
+        public ISessionState PauseSession()
         {
             throw new ArgumentException("The session has not yet been started.");
         }
 
-        public ISessionState Resume()
+        public ISessionState ResumeSession()
         {
             throw new ArgumentException("The session has not yet been started.");
         }
