@@ -1,12 +1,12 @@
 ﻿using LivestreamApp.Server.Streaming.Livestreams.Entities;
 using System.Collections.Generic;
 
-namespace LivestreamApp.Server.Streaming.Livestreams.Manager
+namespace LivestreamApp.Server.Streaming.Livestreams.Service
 {
     /// <summary>
     ///     Provides functionality to manage streams
     /// </summary>
-    public interface IStreamManager
+    public interface IStreamService
     {
         /// <summary>
         ///     Get streams

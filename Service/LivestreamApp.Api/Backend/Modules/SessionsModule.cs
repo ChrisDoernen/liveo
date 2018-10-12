@@ -1,5 +1,4 @@
 ﻿using LivestreamApp.Server.Streaming.StreamingSessions.Entities;
-using LivestreamApp.Server.Streaming.StreamingSessions.Manager;
 using LivestreamApp.Server.Streaming.StreamingSessions.Service;
 using Nancy;
 using Nancy.Extensions;
@@ -11,31 +10,31 @@ namespace LivestreamApp.Api.Backend.Modules
 {
     public class SessionsModule : NancyModule
     {
-        public SessionsModule(ILogger logger, ISessionManager sessionManager,
-            ISessionService sessionService) : base("/api")
+        public SessionsModule(ILogger logger, ISessionService sessionService)
+            : base("/api")
         {
             this.RequiresAuthentication();
 
-            Get["/sessions"] = _ => sessionManager.GetSessions();
+            Get["/sessions"] = _ => sessionService.GetSessions();
 
             Post["/sessions"] = request =>
             {
                 var session = this.Bind<SessionBackendEntity>();
-                sessionManager.CreateSession(session);
+                sessionService.CreateSession(session);
                 return HttpStatusCode.Created;
             };
 
             Put["/sessions"] = request =>
             {
                 var session = this.Bind<SessionBackendEntity>();
-                sessionManager.UpdateSession(session);
+                sessionService.UpdateSession(session);
                 return HttpStatusCode.OK;
             };
 
             Delete["/sessions/{id}"] = request =>
             {
                 string id = request.id;
-                sessionManager.DeleteSession(id);
+                sessionService.DeleteSession(id);
                 return HttpStatusCode.OK;
             };
 
@@ -55,6 +54,30 @@ namespace LivestreamApp.Api.Backend.Modules
             {
                 var sessionId = this.Request.Body.AsString();
                 sessionService.SetCurrentSession(sessionId);
+                return HttpStatusCode.OK;
+            };
+
+            Post["/sessions/current/start"] = request =>
+            {
+                sessionService.CurrentSession.Start();
+                return HttpStatusCode.OK;
+            };
+
+            Post["/sessions/current/end"] = request =>
+            {
+                sessionService.CurrentSession.End();
+                return HttpStatusCode.OK;
+            };
+
+            Post["/sessions/current/pause"] = request =>
+            {
+                sessionService.CurrentSession.Pause();
+                return HttpStatusCode.OK;
+            };
+
+            Post["/sessions/current/resume"] = request =>
+            {
+                sessionService.CurrentSession.Resume();
                 return HttpStatusCode.OK;
             };
         }

@@ -15,7 +15,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSources
     public class StreamingSourceTest
     {
         private readonly MoqMockingKernel _kernel;
-        private readonly IDevice _audioDevice;
+        private IDevice _audioDevice;
         private Mock<IProcessAdapter> _mockProcessAdapter;
         private IProcessSettings _mockProcessSettings;
 
@@ -23,7 +23,6 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSources
         {
             _kernel = new MoqMockingKernel();
             _kernel.Bind<IStreamingSource>().To<StreamingSource>();
-            _audioDevice = new Device("AudioDevice", DeviceType.AudioDevice, _mockProcessSettings);
         }
 
         [TestInitialize]
@@ -31,6 +30,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSources
         {
             _mockProcessAdapter = _kernel.GetMock<IProcessAdapter>();
             _mockProcessSettings = new ProcessSettings(string.Empty, string.Empty);
+            _audioDevice = new Device("AudioDevice", DeviceType.AudioDevice, _mockProcessSettings);
         }
 
         [TestMethod]

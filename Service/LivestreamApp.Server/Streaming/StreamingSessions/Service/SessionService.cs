@@ -1,35 +1,139 @@
 ﻿using AutoMapper;
-using LivestreamApp.Server.Streaming.StreamingSessions.Manager;
+using LivestreamApp.Server.Shared.Utilities;
+using LivestreamApp.Server.Streaming.StreamingSessions.Entities;
+using LivestreamApp.Shared.AppSettings;
+using LivestreamApp.Shared.Utilities;
 using Ninject.Extensions.Logging;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LivestreamApp.Server.Streaming.StreamingSessions.Service
 {
     public class SessionService : ISessionService
     {
-        private readonly IMapper _mapper;
         private readonly ILogger _logger;
-        private readonly ISessionManager _sessionManager;
-        private Session _currentSession;
+        private readonly IMapper _mapper;
+        private readonly IHashGenerator _hashGenerator;
+        private readonly IConfigAdapter _configAdapter;
 
-        public SessionService(ILogger logger, IMapper mapper, ISessionManager sessionManager)
+        private readonly string _config;
+        private const string Scheme = "LivestreamApp.Server.Sessions.xsd";
+
+        private Sessions Sessions { get; set; }
+
+        /// <inheritdoc />
+        public Session CurrentSession { get; private set; }
+
+        public SessionService(ILogger logger, IMapper mapper, IHashGenerator hashGenerator,
+            IAppSettingsProvider appSettingsProvider, IConfigAdapter configAdapter)
         {
-            _mapper = mapper ?? throw new ArgumentException(nameof(mapper));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _sessionManager = sessionManager ?? throw new ArgumentNullException(nameof(sessionManager));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _hashGenerator = hashGenerator ?? throw new ArgumentNullException(nameof(hashGenerator));
+            _configAdapter = configAdapter ?? throw new ArgumentNullException(nameof(configAdapter));
+            _config = appSettingsProvider.GetStringValue(AppSetting.SessionsConfigurationFile);
+            LoadSessionsFromConfig();
         }
 
+        private void LoadSessionsFromConfig()
+        {
+            Sessions = _configAdapter.Load<Sessions, SessionsType>(_config, Scheme);
+            _logger.Info($"Sessions loaded from config ({Sessions.SessionList.Count}).");
+        }
+
+        /// <inheritdoc />
+        public List<Session> GetSessions()
+        {
+            return Sessions.SessionList;
+        }
+
+        /// <inheritdoc />
+        public Session GetSession(string id)
+        {
+            var session = Sessions.SessionList.FirstOrDefault(s => s.Id.Equals(id));
+
+            if (session == null)
+            {
+                _logger.Warn($"The session with id {id} could not be found.");
+                throw new ArgumentException($"The session with id {id} could not be found.");
+            }
+
+            return session;
+        }
+
+        /// <inheritdoc />
+        public void CreateSession(SessionBackendEntity sessionBackendEntity)
+        {
+            var session = _mapper.Map<Session>(sessionBackendEntity);
+            session.Id = GetNewSessionId(session);
+            Sessions.SessionList.Add(session);
+            UpdateConfig();
+            _logger.Info($"Added new session with id {session.Id}.");
+        }
+
+        /// <inheritdoc />
+        public void UpdateSession(SessionBackendEntity sessionBackendEntity)
+        {
+            var session = _mapper.Map<Session>(sessionBackendEntity);
+            var sessionToUpdate = Sessions.SessionList.FirstOrDefault(s => s.Id.Equals(session.Id));
+
+            if (sessionToUpdate != null)
+            {
+                Sessions.SessionList.Remove(sessionToUpdate);
+                Sessions.SessionList.Add(session);
+                UpdateConfig();
+                _logger.Info($"Updated session with id {session.Id}.");
+            }
+            else
+            {
+                _logger.Warn($"Updating session failed, id {session.Id} not found.");
+            }
+        }
+
+        /// <inheritdoc />
+        public void DeleteSession(string id)
+        {
+            var sessionToRemove = Sessions.SessionList.FirstOrDefault(l => l.Id.Equals(id));
+            if (sessionToRemove != null)
+            {
+                Sessions.SessionList.Remove(sessionToRemove);
+                UpdateConfig();
+                _logger.Info($"Deleted session with id {id}.");
+            }
+            else
+            {
+                _logger.Warn($"Deleting session failed, id {id} not found.");
+            }
+        }
+
+        /// <inheritdoc />
         public void SetCurrentSession(string id)
         {
-            var session = _sessionManager.GetSession(id);
-            _currentSession = session;
+            var session = GetSession(id);
+            CurrentSession = session;
             _logger.Debug($"Current session set to {id}.");
         }
 
+        /// <inheritdoc />
         public T GetCurrentSession<T>()
         {
-            _logger.Debug($"Returning current session {_currentSession.Id} as {nameof(T)}.");
-            return _mapper.Map<T>(_currentSession);
+            if (CurrentSession != null)
+                _logger.Debug($"Returning current session {CurrentSession.Id} as {nameof(T)}.");
+            return _mapper.Map<T>(CurrentSession);
+        }
+
+        private void UpdateConfig()
+        {
+            _configAdapter.Save<Sessions, SessionsType>(Sessions, _config);
+            _logger.Info("Sessions.config updated.");
+        }
+
+        private string GetNewSessionId(Session session)
+        {
+            var hashInput = session.Title + session.InternalTitle + session.Description;
+            var md5Hash = _hashGenerator.GetMd5Hash(hashInput);
+            return md5Hash.Substring(0, 5).ToLower();
         }
     }
 }

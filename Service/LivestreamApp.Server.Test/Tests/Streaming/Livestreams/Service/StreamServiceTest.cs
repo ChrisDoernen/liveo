@@ -3,29 +3,29 @@ using LivestreamApp.Server.AppConfiguration;
 using LivestreamApp.Server.Shared.Utilities;
 using LivestreamApp.Server.Streaming.Livestreams;
 using LivestreamApp.Server.Streaming.Livestreams.Entities;
-using LivestreamApp.Server.Streaming.Livestreams.Manager;
+using LivestreamApp.Server.Streaming.Livestreams.Service;
 using LivestreamApp.Shared.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Ninject;
 using Ninject.MockingKernel.Moq;
 
-namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Manager
+namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Service
 {
     [TestClass]
-    public class StreamManagerTest
+    public class StreamServiceTest
     {
         private readonly MoqMockingKernel _kernel;
         private Mock<IConfigAdapter> _mockConfigDataAdapter;
         private Mock<IHashGenerator> _mockHashGenerator;
-        private IStreamManager _streamManager;
+        private IStreamService _streamService;
 
-        public StreamManagerTest()
+        public StreamServiceTest()
         {
             _kernel = new MoqMockingKernel();
             _kernel.Load(new AutoMapperModule());
             _kernel.Bind<Stream>().To<Stream>();
-            _kernel.Bind<IStreamManager>().To<StreamManager>();
+            _kernel.Bind<IStreamService>().To<StreamService>();
         }
 
         [TestInitialize]
@@ -33,10 +33,10 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Manager
         {
             _mockConfigDataAdapter = _kernel.GetMock<IConfigAdapter>();
             _mockHashGenerator = _kernel.GetMock<IHashGenerator>();
-            _streamManager = GetStreamManager();
+            _streamService = GetStreamManager();
         }
 
-        private IStreamManager GetStreamManager()
+        private IStreamService GetStreamManager()
         {
             var streams = ConstructStreams();
 
@@ -44,7 +44,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Manager
                 .Setup(mcda => mcda.Load<Streams, StreamsType>(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(streams);
 
-            return _kernel.Get<IStreamManager>();
+            return _kernel.Get<IStreamService>();
         }
 
         private Streams ConstructStreams()
@@ -65,7 +65,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Manager
         public void GetStreams_ShouldReturnCorrectStreams()
         {
             // Given when
-            var returnedStreams = _streamManager.GetStreams();
+            var returnedStreams = _streamService.GetStreams();
 
             // Then
             returnedStreams.Should().NotBeNull();
@@ -83,8 +83,8 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Manager
             _mockHashGenerator.Setup(mhg => mhg.GetMd5Hash(It.IsAny<string>())).Returns("1bf4f");
 
             // When
-            _streamManager.CreateStream(newStream);
-            var returnedStreams = _streamManager.GetStreams();
+            _streamService.CreateStream(newStream);
+            var returnedStreams = _streamService.GetStreams();
 
             // Then
             returnedStreams.Should().NotBeNull();
@@ -102,8 +102,8 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Manager
         public void DeleteStream_IdIsContained_ShouldDeleteCorrectStreamAndCallUpdateConfig()
         {
             // Given when
-            _streamManager.DeleteStream("8b5aa");
-            var returnedStreams = _streamManager.GetStreams();
+            _streamService.DeleteStream("8b5aa");
+            var returnedStreams = _streamService.GetStreams();
 
             // Then
             returnedStreams.Should().NotBeNull();
@@ -118,8 +118,8 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Manager
         public void DeleteStream_IdIsNotContained_ShouldDoNothing()
         {
             // Given when
-            _streamManager.DeleteStream("8b5va");
-            var returnedStreams = _streamManager.GetStreams();
+            _streamService.DeleteStream("8b5va");
+            var returnedStreams = _streamService.GetStreams();
 
             // Then
             returnedStreams.Should().NotBeNull();
@@ -137,8 +137,8 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Manager
             streamWithUpdate.Id = "8b5aa";
 
             // When
-            _streamManager.UpdateStream(streamWithUpdate);
-            var returnedStreams = _streamManager.GetStreams();
+            _streamService.UpdateStream(streamWithUpdate);
+            var returnedStreams = _streamService.GetStreams();
 
             // Then
             returnedStreams.Should().NotBeNull();
@@ -160,8 +160,8 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Manager
             streamWithUpdate.Id = "8b5av";
 
             // When
-            _streamManager.UpdateStream(streamWithUpdate);
-            var returnedStreams = _streamManager.GetStreams();
+            _streamService.UpdateStream(streamWithUpdate);
+            var returnedStreams = _streamService.GetStreams();
 
             // Then
             returnedStreams.Should().NotBeNull();

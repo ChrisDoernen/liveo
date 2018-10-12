@@ -28,12 +28,12 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public void StartSession()
+        public void Start()
         {
             _sessionState = _sessionState.StartSession();
         }
 
-        public void EndSession()
+        public void End()
         {
             _sessionState = _sessionState.EndSession();
         }

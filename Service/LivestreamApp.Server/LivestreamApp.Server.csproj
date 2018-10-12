@@ -76,15 +76,14 @@
     <Compile Include="Shared\Utilities\IConfigAdapter.cs" />
     <Compile Include="Streaming\StreamingSessions\Entities\SessionBackendEntity.cs" />
     <Compile Include="Streaming\StreamingSessions\Entities\SessionClientEntity.cs" />
-    <Compile Include="Streaming\StreamingSessions\Manager\ISessionManager.cs" />
-    <Compile Include="Streaming\StreamingSessions\Manager\SessionManager.cs" />
+    <Compile Include="Streaming\StreamingSessions\Service\ISessionService.cs" />
+    <Compile Include="Streaming\StreamingSessions\Service\SessionService.cs" />
     <Compile Include="Streaming\Livestreams\Entities\StreamBackendEntity.cs" />
     <Compile Include="Streaming\Livestreams\Entities\StreamClientEntity.cs" />
-    <Compile Include="Streaming\Livestreams\Manager\IStreamManager.cs" />
-    <Compile Include="Streaming\Livestreams\Manager\StreamManager.cs" />
+    <Compile Include="Streaming\Livestreams\Service\IStreamService.cs" />
+    <Compile Include="Streaming\Livestreams\Service\StreamService.cs" />
     <Compile Include="Streaming\StreamingSessions\Sessions.cs" />
     <Compile Include="Streaming\StreamingSessions\Entities\SessionsConfigTypes.cs" />
-    <Compile Include="Streaming\StreamingSessions\Service\ISessionService.cs" />
     <Compile Include="Streaming\StreamingSessions\States\EndedSessionState.cs" />
     <Compile Include="Streaming\StreamingSessions\States\ErrorSessionState.cs" />
     <Compile Include="Streaming\StreamingSessions\States\InvalidSessionState.cs" />
@@ -93,7 +92,6 @@
     <Compile Include="Streaming\StreamingSessions\States\ScheduledSessionState.cs" />
     <Compile Include="Streaming\StreamingSessions\States\StartedSessionState.cs" />
     <Compile Include="Streaming\StreamingSessions\Session.cs" />
-    <Compile Include="Streaming\StreamingSessions\Service\SessionService.cs" />
     <Compile Include="Shared\Logging\ILoggingSource.cs" />
     <Compile Include="Shared\WebSockets\LoggingWebSocketService.cs" />
     <Compile Include="Shutdown\IShutdownService.cs" />

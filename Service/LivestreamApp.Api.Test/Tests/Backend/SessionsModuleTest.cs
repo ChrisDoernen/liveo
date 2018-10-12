@@ -2,7 +2,6 @@
 using LivestreamApp.Api.Backend.Modules;
 using LivestreamApp.Server.Streaming.Livestreams.Entities;
 using LivestreamApp.Server.Streaming.StreamingSessions.Entities;
-using LivestreamApp.Server.Streaming.StreamingSessions.Manager;
 using LivestreamApp.Server.Streaming.StreamingSessions.Service;
 using LivestreamApp.Shared.Authentication;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -21,7 +20,7 @@ namespace LivestreamApp.Api.Test.Tests.Backend
     {
         private readonly MoqMockingKernel _kernel;
         private Mock<ISessionService> _mockSessionService;
-        private Mock<ISessionManager> _mockSessionManager;
+        private Mock<ISessionService> _mockSessionManager;
         private Mock<ILogger> _mockLogger;
         private SessionBackendEntity _sessionBackendEntity;
         private StreamBackendEntity _streamBackendEntity;
@@ -38,7 +37,7 @@ namespace LivestreamApp.Api.Test.Tests.Backend
         {
             _kernel.Reset();
             _mockSessionService = _kernel.GetMock<ISessionService>();
-            _mockSessionManager = _kernel.GetMock<ISessionManager>();
+            _mockSessionManager = _kernel.GetMock<ISessionService>();
             _mockLogger = _kernel.GetMock<ILogger>();
             _sessionBackendEntity = _kernel.Get<SessionBackendEntity>();
             _streamBackendEntity = _kernel.Get<StreamBackendEntity>();

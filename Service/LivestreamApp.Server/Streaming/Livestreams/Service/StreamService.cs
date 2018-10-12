@@ -8,9 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LivestreamApp.Server.Streaming.Livestreams.Manager
+namespace LivestreamApp.Server.Streaming.Livestreams.Service
 {
-    public class StreamManager : IStreamManager
+    public class StreamService : IStreamService
     {
         private readonly ILogger _logger;
         private readonly IMapper _mapper;
@@ -22,7 +22,7 @@ namespace LivestreamApp.Server.Streaming.Livestreams.Manager
 
         private Streams Streams { get; set; }
 
-        public StreamManager(ILogger logger, IHashGenerator hashGenerator, IMapper mapper,
+        public StreamService(ILogger logger, IHashGenerator hashGenerator, IMapper mapper,
             IAppSettingsProvider appSettingsProvider, IConfigAdapter configAdapter)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));

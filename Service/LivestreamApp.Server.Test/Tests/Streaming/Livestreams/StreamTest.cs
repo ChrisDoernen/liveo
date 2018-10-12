@@ -7,7 +7,7 @@ using Moq;
 using Ninject;
 using Ninject.MockingKernel.Moq;
 
-namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Entities
+namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams
 {
     [TestClass]
     public class StreamTest
