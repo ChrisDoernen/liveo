@@ -93,6 +93,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\Streaming\Livestreams\Service\StreamServiceTest.cs" />
     <Compile Include="Tests\Streaming\StreamingSessions\Service\SessionServiceTest.cs" />
+    <Compile Include="Tests\Streaming\StreamingSessions\States\InitialSessionStateTest.cs" />
     <Compile Include="Tests\Streaming\StreamingSources\StreamingSourceFactoryTest.cs" />
     <Compile Include="Tests\Streaming\StreamingSources\StreamingSourceTest.cs" />
   </ItemGroup>

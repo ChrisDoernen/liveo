@@ -5,7 +5,7 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions.States
     public class InvalidSessionState : SessionState, ISessionState
     {
         public InvalidSessionState(ILogger logger, ISessionStateFactory sessionStateFactory,
-            Session session) : base(logger, sessionStateFactory, session)
+            ISession session) : base(logger, sessionStateFactory, session)
         {
         }
 

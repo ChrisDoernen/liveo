@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace LivestreamApp.Server.Streaming.StreamingSessions
 {
-    public class Session
+    public class Session : ISession
     {
         public string Id { get; set; }
         public string Title { get; set; }

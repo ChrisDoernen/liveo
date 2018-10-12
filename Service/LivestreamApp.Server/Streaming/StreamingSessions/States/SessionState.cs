@@ -6,10 +6,10 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions.States
     public class SessionState
     {
         protected ILogger Logger;
-        protected Session Session { get; }
+        protected ISession Session { get; }
         protected ISessionStateFactory SessionStateFactory;
 
-        public SessionState(ILogger logger, ISessionStateFactory sessionStateFactory, Session session)
+        public SessionState(ILogger logger, ISessionStateFactory sessionStateFactory, ISession session)
         {
             Logger = logger ?? throw new ArgumentNullException(nameof(logger));
             SessionStateFactory = sessionStateFactory ?? throw new ArgumentNullException(nameof(sessionStateFactory));

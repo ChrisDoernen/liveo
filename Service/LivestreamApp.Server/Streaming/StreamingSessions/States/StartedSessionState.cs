@@ -6,7 +6,7 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions.States
     public class StartedSessionState : SessionState, ISessionState
     {
         public StartedSessionState(ILogger logger, ISessionStateFactory sessionStateFactory,
-            Session session) : base(logger, sessionStateFactory, session)
+            ISession session) : base(logger, sessionStateFactory, session)
         {
         }
 

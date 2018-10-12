@@ -5,7 +5,7 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions.States
     public class ErrorSessionState : SessionState, ISessionState
     {
         public ErrorSessionState(ILogger logger, ISessionStateFactory sessionStateFactory,
-            Session session) : base(logger, sessionStateFactory, session)
+            ISession session) : base(logger, sessionStateFactory, session)
         {
         }
 

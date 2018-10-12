@@ -14,7 +14,7 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions.States
             _kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
         }
 
-        public ISessionState GetSessionState<T>(Session session) where T : ISessionState
+        public ISessionState GetSessionState<T>(ISession session) where T : ISessionState
         {
             return _kernel.Get<T>(new ConstructorArgument("session", session));
         }

@@ -76,6 +76,7 @@
     <Compile Include="Shared\Utilities\IConfigAdapter.cs" />
     <Compile Include="Streaming\StreamingSessions\Entities\SessionBackendEntity.cs" />
     <Compile Include="Streaming\StreamingSessions\Entities\SessionClientEntity.cs" />
+    <Compile Include="Streaming\StreamingSessions\ISession.cs" />
     <Compile Include="Streaming\StreamingSessions\Service\ISessionService.cs" />
     <Compile Include="Streaming\StreamingSessions\Service\SessionService.cs" />
     <Compile Include="Streaming\Livestreams\Entities\StreamBackendEntity.cs" />
