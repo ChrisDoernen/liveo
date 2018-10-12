@@ -29,6 +29,7 @@ namespace LivestreamApp.Server.Shared.WebSockets
             {
                 var wsUri = _uriConfiguration.GetWsUri();
                 _webSocketServer = new WebSocketServer(wsUri);
+                _webSocketServer.KeepClean = false;
                 _webSocketServer.Start();
                 _logger.Info($"WebSocket server started, istening on {wsUri}.");
             }
@@ -55,15 +56,15 @@ namespace LivestreamApp.Server.Shared.WebSockets
 
         public void AddStreamingWebSocketService(string path, IStreamingSource source)
         {
-            var service = _webSocketServiceFactory.GetStreamingWebSocketervice(source);
-            _webSocketServer.AddWebSocketService(path, () => service);
+            _webSocketServer.AddWebSocketService(path, () =>
+                _webSocketServiceFactory.GetStreamingWebSocketervice(source));
             _logger.Debug($"Added streaming service on path {path}.");
         }
 
         public void AddLoggingWebSocketService(string path, ILoggingSource source)
         {
-            var service = _webSocketServiceFactory.GetLoggingWebSocketervice(source);
-            _webSocketServer.AddWebSocketService(path, () => service);
+            _webSocketServer.AddWebSocketService(path, () =>
+                _webSocketServiceFactory.GetLoggingWebSocketervice(source));
             _logger.Debug($"Added streaming service on path {path}.");
         }
 

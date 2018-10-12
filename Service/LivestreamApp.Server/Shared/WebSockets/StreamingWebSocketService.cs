@@ -21,7 +21,7 @@ namespace LivestreamApp.Server.Shared.WebSockets
 
         private void SendBytes(object sender, BytesReceivedEventArgs e)
         {
-            Sessions?.Broadcast(e.Bytes);
+            Send(e.Bytes);
         }
 
         protected override void OnOpen()
@@ -38,7 +38,7 @@ namespace LivestreamApp.Server.Shared.WebSockets
 
         protected override void OnError(ErrorEventArgs e)
         {
-            _logger.Warn($"WebSocket service error: {e}");
+            _logger.Warn($"WebSocket service error: {e.Exception}");
         }
     }
 }

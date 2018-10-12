@@ -21,7 +21,7 @@ namespace LivestreamApp.Server.Shared.WebSockets
 
         private void SendLine(object sender, MessageReceivedEventArgs e)
         {
-            Sessions?.Broadcast(e.Message);
+            Send(e.Message);
         }
 
         protected override void OnOpen()

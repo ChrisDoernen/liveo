@@ -14,7 +14,7 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions.States
         {
             Session.StartStreams();
             Session.TimeStarted = DateTime.Now;
-            Logger.Info("Session successfully stated.");
+            Logger.Info("Session successfully started.");
             return SessionStateFactory.GetSessionState<StartedSessionState>(Session);
         }
 
