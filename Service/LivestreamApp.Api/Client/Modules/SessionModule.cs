@@ -7,8 +7,7 @@ namespace LivestreamApp.Api.Client.Modules
 {
     public class SessionModule : NancyModule
     {
-        public SessionModule(ILogger logger, ISessionService sessionService)
-            : base("/api")
+        public SessionModule(ILogger logger, ISessionService sessionService) : base("/api")
         {
             Get["/session"] = _ =>
             {

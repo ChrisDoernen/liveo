@@ -10,8 +10,7 @@ namespace LivestreamApp.Api.Backend.Modules
 {
     public class SessionsModule : NancyModule
     {
-        public SessionsModule(ILogger logger, ISessionService sessionService)
-            : base("/api")
+        public SessionsModule(ILogger logger, ISessionService sessionService) : base("/api")
         {
             this.RequiresAuthentication();
 

@@ -9,8 +9,7 @@ namespace LivestreamApp.Api.Backend.Modules
 {
     public class StreamsModule : NancyModule
     {
-        public StreamsModule(ILogger logger, IStreamService streamService)
-            : base("/api")
+        public StreamsModule(ILogger logger, IStreamService streamService) : base("/api")
         {
             this.RequiresAuthentication();
 

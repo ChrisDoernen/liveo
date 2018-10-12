@@ -1,7 +1,14 @@
-﻿namespace LivestreamApp.Server.Streaming.StreamingSessions.States
+﻿using Ninject.Extensions.Logging;
+
+namespace LivestreamApp.Server.Streaming.StreamingSessions.States
 {
-    public class ErrorSessionState : ISessionState
+    public class ErrorSessionState : SessionState, ISessionState
     {
+        public ErrorSessionState(ILogger logger, ISessionStateFactory sessionStateFactory,
+            Session session) : base(logger, sessionStateFactory, session)
+        {
+        }
+
         public ISessionState StartSession()
         {
             throw new System.NotImplementedException();

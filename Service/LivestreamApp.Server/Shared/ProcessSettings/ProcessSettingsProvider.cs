@@ -7,7 +7,7 @@ namespace LivestreamApp.Server.Shared.ProcessSettings
         public string FileName { get; } = "ffmpeg.exe";
         public int BufferSize { get; } = 4500;
         private int SampleRate { get; } = 44100;
-        private int Bitrate { get; } = 320;
+        private int Bitrate { get; } = 224;
         private int NumberOfChannels { get; } = 1;
         private int Resorvoir { get; } = 0;
         private int Probesize { get; } = 64;

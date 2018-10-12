@@ -6,6 +6,7 @@ using LivestreamApp.Server.Shutdown;
 using LivestreamApp.Server.Streaming.Devices;
 using LivestreamApp.Server.Streaming.Livestreams.Service;
 using LivestreamApp.Server.Streaming.StreamingSessions.Service;
+using LivestreamApp.Server.Streaming.StreamingSessions.States;
 using LivestreamApp.Server.Streaming.StreamingSources;
 using Ninject.Modules;
 
@@ -16,6 +17,7 @@ namespace LivestreamApp.Server.AppConfiguration
         public override void Load()
         {
             Bind<ISessionService>().To<SessionService>().InSingletonScope();
+            Bind<ISessionStateFactory>().To<SessionStateFactory>().InSingletonScope();
             Bind<IStreamService>().To<StreamService>().InSingletonScope();
             Bind<IProcessSettingsProvider>().To<ProcessSettingsProvider>();
             Bind<IProcessAdapter>().To<ProcessAdapter>();

@@ -44,7 +44,7 @@ namespace LivestreamApp.Api.Test.Tests.Backend
             });
 
             // When
-            var result = browser.Get("/api/system/shutdown", with =>
+            var result = browser.Post("/api/system/shutdown", with =>
             {
                 with.HttpRequest();
                 with.Header("Accept", "application/json");
@@ -72,7 +72,7 @@ namespace LivestreamApp.Api.Test.Tests.Backend
             });
 
             // When
-            var result = browser.Get("/api/system/shutdown", with =>
+            var result = browser.Post("/api/system/shutdown", with =>
             {
                 with.HttpRequest();
                 with.Query("auth", "foo");

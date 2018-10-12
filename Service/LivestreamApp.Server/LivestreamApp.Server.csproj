@@ -86,10 +86,14 @@
     <Compile Include="Streaming\StreamingSessions\Entities\SessionsConfigTypes.cs" />
     <Compile Include="Streaming\StreamingSessions\States\EndedSessionState.cs" />
     <Compile Include="Streaming\StreamingSessions\States\ErrorSessionState.cs" />
+    <Compile Include="Streaming\StreamingSessions\States\InitialSessionState.cs" />
     <Compile Include="Streaming\StreamingSessions\States\InvalidSessionState.cs" />
     <Compile Include="Streaming\StreamingSessions\States\ISessionState.cs" />
+    <Compile Include="Streaming\StreamingSessions\States\ISessionStateFactory.cs" />
     <Compile Include="Streaming\StreamingSessions\States\PausedSessionState.cs" />
     <Compile Include="Streaming\StreamingSessions\States\ScheduledSessionState.cs" />
+    <Compile Include="Streaming\StreamingSessions\States\SessionState.cs" />
+    <Compile Include="Streaming\StreamingSessions\States\SessionStateFactory.cs" />
     <Compile Include="Streaming\StreamingSessions\States\StartedSessionState.cs" />
     <Compile Include="Streaming\StreamingSessions\Session.cs" />
     <Compile Include="Shared\Logging\ILoggingSource.cs" />
