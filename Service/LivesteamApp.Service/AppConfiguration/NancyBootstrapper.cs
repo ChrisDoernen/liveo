@@ -27,6 +27,13 @@ namespace LivestreamApp.Service.AppConfiguration
                 });
 
             StatelessAuthentication.Enable(pipelines, configuration);
+
+#if DEBUG
+            pipelines.AfterRequest.AddItemToEndOfPipeline((ctx) => ctx.Response
+                .WithHeader("Access-Control-Allow-Origin", "*")
+                .WithHeader("Access-Control-Allow-Methods", "POST,GET")
+                .WithHeader("Access-Control-Allow-Headers", "Accept, Origin, Content-type"));
+#endif
         }
 
         protected override void RequestStartup(IKernel kernel, IPipelines pipelines,

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { LiveStream } from '../../entities/live-stream.entity';
+import { Stream } from '../../entities/stream.entity';
 
 @Component({
   selector: 'stream',
@@ -9,7 +9,7 @@ import { LiveStream } from '../../entities/live-stream.entity';
 export class StreamComponent implements OnInit {
  
   @Input()
-  public stream: LiveStream;
+  public stream: Stream;
 
   constructor() { }
 
