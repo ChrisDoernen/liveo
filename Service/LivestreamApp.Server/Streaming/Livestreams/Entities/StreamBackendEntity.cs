@@ -7,7 +7,6 @@
         public string Description { get; set; }
         public string CountryCode { get; set; }
         public string Input { get; set; }
-        public bool StartOnServiceStartup { get; set; }
         public bool HasValidInputSource { get; set; }
         public bool IsInitialized { get; set; }
     }

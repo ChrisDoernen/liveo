@@ -59,8 +59,6 @@ namespace LivestreamApp.Server.Streaming.Livestreams.Entities
 
         private string inputField;
 
-        private bool startOnServiceStartupField;
-
         /// <remarks/>
         public string Id
         {
@@ -123,19 +121,6 @@ namespace LivestreamApp.Server.Streaming.Livestreams.Entities
             set
             {
                 this.inputField = value;
-            }
-        }
-
-        /// <remarks/>
-        public bool StartOnServiceStartup
-        {
-            get
-            {
-                return this.startOnServiceStartupField;
-            }
-            set
-            {
-                this.startOnServiceStartupField = value;
             }
         }
     }

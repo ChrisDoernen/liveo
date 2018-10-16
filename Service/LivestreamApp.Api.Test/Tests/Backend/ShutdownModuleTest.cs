@@ -100,10 +100,10 @@ namespace LivestreamApp.Api.Test.Tests.Backend
             });
 
             // When
-            var result = browser.Get("/api/system/restart", with =>
+            var result = browser.Post("/api/system/restart", with =>
             {
                 with.HttpRequest();
-                with.Query("auth", "foo");
+                with.Query("auth", "secret");
                 with.Header("Accept", "application/json");
             });
 

@@ -28,12 +28,10 @@ namespace LivestreamApp.Server.Test.Tests.Shared.Utilities
             deserialized.Streams[0].CountryCode.Should().Be("de");
             deserialized.Streams[0].Input.Should().Be("Mikrofonarray (Realtek High Definition Audio)");
             deserialized.Streams[0].Description.Should().Be("Originalton");
-            deserialized.Streams[0].StartOnServiceStartup.Should().Be(true);
             deserialized.Streams[1].Id.Should().Be("bce9e");
             deserialized.Streams[1].Title.Should().Be("English");
             deserialized.Streams[1].CountryCode.Should().Be("gb");
             deserialized.Streams[1].Input.Should().Be("Mikrofon (2- USB Audio Device)");
-            deserialized.Streams[1].StartOnServiceStartup.Should().Be(false);
         }
 
         [TestMethod]
@@ -45,8 +43,7 @@ namespace LivestreamApp.Server.Test.Tests.Shared.Utilities
                 "TestResources\\Config\\InvalidNamespaceStreams.config";
 
             // When
-            var deserialized =
-                XmlSerializer.ValidateAndDeserialize<StreamsType>(invalidNamespaceConfig, Scheme);
+            XmlSerializer.ValidateAndDeserialize<StreamsType>(invalidNamespaceConfig, Scheme);
         }
 
         [TestMethod]
@@ -57,8 +54,7 @@ namespace LivestreamApp.Server.Test.Tests.Shared.Utilities
             const string invalidConfig = "TestResources\\Config\\InvalidStreams.config";
 
             // When
-            var deserialized =
-                XmlSerializer.ValidateAndDeserialize<StreamsType>(invalidConfig, Scheme);
+            XmlSerializer.ValidateAndDeserialize<StreamsType>(invalidConfig, Scheme);
         }
     }
 }

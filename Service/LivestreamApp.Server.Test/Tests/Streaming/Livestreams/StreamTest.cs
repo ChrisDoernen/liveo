@@ -39,7 +39,6 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams
         {
             // Given
             _stream.Id = "deutsch";
-            _stream.StartOnServiceStartup = true;
             _mockStreamerFactory
                 .Setup(msf => msf.GetStreamingSourceByDeviceId(_stream.Input))
                 .Returns(_mockStreamingSource.Object);
@@ -68,7 +67,6 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams
         public void InititalizeAndStart_StartOnStartupInValidSource_ShouldInitializeCorrectlyAndNotStart()
         {
             // Given
-            _stream.StartOnServiceStartup = true;
             _mockStreamerFactory
                 .Setup(msf => msf.GetStreamingSourceByDeviceId(_stream.Input))
                 .Returns(_mockStreamingSource.Object);
@@ -91,7 +89,6 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams
         {
             // Given
             _stream.Id = "Id";
-            _stream.StartOnServiceStartup = true;
             _mockStreamerFactory
                 .Setup(msf => msf.GetStreamingSourceByDeviceId(_stream.Input))
                 .Returns(_mockStreamingSource.Object);

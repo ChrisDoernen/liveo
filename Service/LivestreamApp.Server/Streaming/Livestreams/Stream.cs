@@ -12,7 +12,6 @@ namespace LivestreamApp.Server.Streaming.Livestreams
         public string Description { get; set; }
         public string CountryCode { get; set; }
         public string Input { get; set; }
-        public bool StartOnServiceStartup { get; set; }
         public bool IsStarted { get; private set; }
         public bool HasValidInputSource { get; set; }
         public bool IsInitialized { get; set; }
@@ -43,7 +42,7 @@ namespace LivestreamApp.Server.Streaming.Livestreams
 
         public void Start()
         {
-            if (IsInitialized && HasValidInputSource && StartOnServiceStartup)
+            if (IsInitialized && HasValidInputSource)
             {
                 Source.StartStreaming();
                 _webSocketServerAdapter.AddStreamingWebSocketService($"/streams/{Id}", Source);
