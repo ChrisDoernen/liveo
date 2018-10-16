@@ -17,7 +17,7 @@ namespace LivestreamApp.Api.Client.Modules
                     logger.Info("No session available.");
                     return HttpStatusCode.NoContent;
                 }
-                logger.Info($"Returning session with id: {session.Id}.");
+                logger.Info($"Returning session with id {session.Id}.");
                 return session;
             };
         }

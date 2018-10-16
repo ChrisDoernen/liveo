@@ -119,7 +119,7 @@ namespace LivestreamApp.Server.Streaming.StreamingSessions.Service
         public T GetCurrentSession<T>()
         {
             if (CurrentSession != null)
-                _logger.Debug($"Returning current session {CurrentSession.Id} as {nameof(T)}.");
+                _logger.Debug($"Mapping current session {CurrentSession.Id} as {typeof(T).Name}.");
             return _mapper.Map<T>(CurrentSession);
         }
 
