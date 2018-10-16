@@ -14,10 +14,10 @@ namespace LivestreamApp.Api.Client.Modules
                 var session = sessionService.GetCurrentSession<SessionClientEntity>();
                 if (session == null)
                 {
-                    logger.Info("No session available.");
+                    logger.Debug("No session available.");
                     return HttpStatusCode.NoContent;
                 }
-                logger.Info($"Returning session with id {session.Id}.");
+                logger.Debug($"Returning session with id {session.Id}.");
                 return session;
             };
         }
