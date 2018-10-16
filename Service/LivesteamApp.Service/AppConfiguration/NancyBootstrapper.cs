@@ -39,7 +39,7 @@ namespace LivestreamApp.Service.AppConfiguration
             NancyContext nancyContext)
         {
             var logger = kernel.Get<ILoggerFactory>().GetCurrentClassLogger();
-            pipelines.BeforeRequest += (c) =>
+            pipelines.BeforeRequest += c =>
             {
                 var userName = c.CurrentUser != null ? c.CurrentUser.UserName : "no user";
                 logger.Debug($"{c.Request.Method} request on {c.Request.Path} - {userName}.");

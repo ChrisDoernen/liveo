@@ -63,8 +63,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Network\IUriConfiguration.cs" />
     <Compile Include="Network\UriConfiguration.cs" />
-    <Compile Include="Authentication\AuthenticationProvider.cs" />
-    <Compile Include="Authentication\IAuthenticationProvider.cs" />
+    <Compile Include="Authentication\AuthenticationService.cs" />
+    <Compile Include="Authentication\IAuthenticationService.cs" />
     <Compile Include="Authentication\UserIdentity.cs" />
     <Compile Include="Utilities\HashGenerator.cs" />
     <Compile Include="Utilities\IHashGenerator.cs" />
