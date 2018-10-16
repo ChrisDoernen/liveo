@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Hello-World": {
+    "LiveClient": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -40,8 +40,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "src/environments/environment.debug.ts",
+                  "with": "src/environments/environment.release.ts"
                 }
               ],
               "optimization": true,
@@ -59,18 +59,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "Hello-World:build"
+            "browserTarget": "LiveClient:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "Hello-World:build:production"
+              "browserTarget": "LiveClient:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Hello-World:build"
+            "browserTarget": "LiveClient:build"
           }
         },
         "test": {
@@ -104,7 +104,7 @@
         }
       }
     },
-    "Hello-World-e2e": {
+    "LiveClient-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -112,11 +112,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "Hello-World:serve"
+            "devServerTarget": "LiveClient:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "Hello-World:serve:production"
+              "devServerTarget": "LiveClient:serve:production"
             }
           }
         },
@@ -132,5 +132,5 @@
       }
     }
   },
-  "defaultProject": "Hello-World"
+  "defaultProject": "LiveClient"
 }

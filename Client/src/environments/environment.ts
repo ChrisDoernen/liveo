@@ -1,5 +1,5 @@
 export const environment = {
-  name: "dev",
+  name: "debug",
   production: false
 };
 

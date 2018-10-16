@@ -13,7 +13,7 @@ export class EndpointService {
 
   public getEndpoint(servicePart: string): string {
     const url = "http://" + this.apiServerIp + ":" + this.apiServerPort  + "/api/" + servicePart;
-    console.debug("EndpointService returned url " + url);
+    console.debug("Returned url " + url);
     return url;
   }
 }

@@ -3,7 +3,7 @@ import { Session } from '../../entities/session.entity';
 import { SessionService } from '../../services/session-service/session-service';
 
 @Component({
-  selector: 'select-language',
+  selector: 'session',
   templateUrl: './session.component.html',
   styleUrls: ['./session.component.css']
 })
@@ -25,10 +25,9 @@ export class SessionComponent implements OnInit {
       
     session.subscribe((session) => {
         this.session = session;
+        this.isLoading = false;
       }, (error) => {
         this.connectionError = true;
-        this.isLoading = false;
-      }, () => {
         this.isLoading = false;
       })
   }

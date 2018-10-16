@@ -1,3 +1,7 @@
-.session {
-    margin-top: 210px;
+.header {
+    height: 85px;
+    background: blue;
+    position: relative;
+    top: -20px;
+    transform: skewY(-2deg) translateZ(0);
 }
