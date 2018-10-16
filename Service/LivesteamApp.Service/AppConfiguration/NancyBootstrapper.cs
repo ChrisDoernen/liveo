@@ -18,12 +18,11 @@ namespace LivestreamApp.Service.AppConfiguration
             // resolve things that are needed during application startup.
             Conventions.ViewLocationConventions.Add((viewName, model, context) => $"Views/{viewName}");
 
-            var authenticationService = kernel.Get<IAuthenticationProvider>();
-            var configuration =
-                new StatelessAuthenticationConfiguration(nancyContext =>
+            var authenticationService = kernel.Get<IAuthenticationService>();
+            var configuration = new StatelessAuthenticationConfiguration(nancyContext =>
                 {
                     var hash = (string)nancyContext.Request.Query.Auth.Value;
-                    return authenticationService.Validate(hash);
+                    return hash == null ? null : authenticationService.Validate(hash);
                 });
 
             StatelessAuthentication.Enable(pipelines, configuration);

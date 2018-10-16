@@ -14,21 +14,21 @@ namespace LivestreamApp.Shared.Test.Tests.Authentication
     public class AuthenticationProviderTest
     {
         private readonly MoqMockingKernel _kernel;
-        private IAuthenticationProvider _authenticationProvider;
+        private IAuthenticationService _authenticationService;
         private Mock<IAppSettingsProvider> _mockAppSettingsProvider;
         private Mock<IHashGenerator> _mockHashGenerator;
 
         public AuthenticationProviderTest()
         {
             _kernel = new MoqMockingKernel();
-            _kernel.Bind<IAuthenticationProvider>().To<AuthenticationProvider>();
+            _kernel.Bind<IAuthenticationService>().To<AuthenticationService>();
         }
 
         [TestInitialize]
         public void TestInitialize()
         {
             _kernel.Reset();
-            _authenticationProvider = _kernel.Get<IAuthenticationProvider>();
+            _authenticationService = _kernel.Get<IAuthenticationService>();
             _mockAppSettingsProvider = _kernel.GetMock<IAppSettingsProvider>();
             _mockHashGenerator = _kernel.GetMock<IHashGenerator>();
         }
@@ -44,7 +44,7 @@ namespace LivestreamApp.Shared.Test.Tests.Authentication
                 .Returns(md5Hash);
 
             // When
-            _authenticationProvider.SetAuthenticationHash(newPassword);
+            _authenticationService.SetAuthenticationHash(newPassword);
 
             // Then
             _mockAppSettingsProvider
@@ -61,7 +61,7 @@ namespace LivestreamApp.Shared.Test.Tests.Authentication
                 .Returns(md5Hash);
 
             // When
-            var userIdentity = _authenticationProvider.Validate(md5Hash);
+            var userIdentity = _authenticationService.Validate(md5Hash);
 
             // Then
             userIdentity.Should().NotBeNull();
@@ -79,7 +79,7 @@ namespace LivestreamApp.Shared.Test.Tests.Authentication
                 .Returns(md5Hash);
 
             // When
-            var userIdentity = _authenticationProvider.Validate("InvalidString");
+            var userIdentity = _authenticationService.Validate("InvalidString");
 
             // Then
             userIdentity.Should().BeNull();

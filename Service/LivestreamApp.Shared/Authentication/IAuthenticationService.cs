@@ -5,7 +5,7 @@ namespace LivestreamApp.Shared.Authentication
     /// <summary>
     ///     Provides authentication
     /// </summary>
-    public interface IAuthenticationProvider
+    public interface IAuthenticationService
     {
         /// <summary>
         ///     Sets a new authentication hash from a given password

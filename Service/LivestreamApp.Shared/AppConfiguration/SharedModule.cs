@@ -13,7 +13,7 @@ namespace LivestreamApp.Shared.AppConfiguration
             Bind<IAppSettingsProvider>().To<AppSettingsProvider>();
             Bind<IConfigurationManagerAdapter>().To<ConfigurationManagerAdapter>();
             Bind<IUriConfiguration>().To<UriConfiguration>();
-            Bind<IAuthenticationProvider>().To<AuthenticationProvider>();
+            Bind<IAuthenticationService>().To<AuthenticationService>();
             Bind<IHashGenerator>().To<HashGenerator>().InSingletonScope();
         }
     }
