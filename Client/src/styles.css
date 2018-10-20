@@ -1,4 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
+html,
 body {
-    background-color: #f5f5f5!important;
+  height: 100%;
+}
+
+html {
+  font-size: 14px;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden;
+  min-width: 320px;
+  background: #FFFFFF;
+  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  line-height: 1.4285em;
+  color: #101010;
+  font-smoothing: antialiased;
 }

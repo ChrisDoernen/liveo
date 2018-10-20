@@ -28,6 +28,7 @@
       <xs:element name="TimeEnding" type="xs:time" minOccurs="0" maxOccurs="1" />
       <xs:element name="TimeServerShutdown" type="xs:time" minOccurs="0" maxOccurs="1" />
       <xs:element name="Streams" type="ls:SessionStreamsType" />
+      <xs:element name="AutoStart" type="xs:boolean"/>
     </xs:sequence>
   </xs:complexType>
 

@@ -1,6 +1,7 @@
-<div class="session">
-    <div class="header"></div>
     <div *ngIf="isLoading" class="ui active loader"></div>
-    <div *ngIf="connectionError">Can not connect to server</div>
-    <div>{{session?.title}}</div>
+<div *ngIf="connectionError">
+    There seems to be a problem with the WiFi connection. 
+    Please check your settings.
 </div>
+<div>{{session?.title}}</div>
+
