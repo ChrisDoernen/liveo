@@ -37,7 +37,7 @@ namespace LivestreamApp.Api.Backend.Modules
                 return HttpStatusCode.OK;
             };
 
-            Get["/sessions/current"] = request =>
+            Get["/sessions/active"] = request =>
             {
                 var session = sessionService.GetCurrentSession<SessionBackendEntity>();
                 if (session == null)
@@ -49,32 +49,32 @@ namespace LivestreamApp.Api.Backend.Modules
                 return session;
             };
 
-            Post["/sessions/current"] = request =>
+            Post["/sessions/active"] = request =>
             {
                 var sessionId = this.Request.Body.AsString();
                 sessionService.SetCurrentSession(sessionId);
                 return HttpStatusCode.OK;
             };
 
-            Post["/sessions/current/start"] = request =>
+            Post["/sessions/active/start"] = request =>
             {
                 sessionService.CurrentSession.Start();
                 return HttpStatusCode.OK;
             };
 
-            Post["/sessions/current/end"] = request =>
+            Post["/sessions/active/end"] = request =>
             {
                 sessionService.CurrentSession.End();
                 return HttpStatusCode.OK;
             };
 
-            Post["/sessions/current/pause"] = request =>
+            Post["/sessions/active/pause"] = request =>
             {
                 sessionService.CurrentSession.Pause();
                 return HttpStatusCode.OK;
             };
 
-            Post["/sessions/current/resume"] = request =>
+            Post["/sessions/active/resume"] = request =>
             {
                 sessionService.CurrentSession.Resume();
                 return HttpStatusCode.OK;

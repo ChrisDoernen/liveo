@@ -65,7 +65,7 @@ namespace LivestreamApp.Api.Test.Tests.Backend
             });
 
             // When
-            var result = browser.Get("/api/sessions/current", with =>
+            var result = browser.Get("/api/sessions/active", with =>
             {
                 with.HttpRequest();
                 with.Header("Accept", "application/json");
@@ -103,7 +103,7 @@ namespace LivestreamApp.Api.Test.Tests.Backend
             });
 
             // When
-            var result = browser.Get("/api/sessions/current", with =>
+            var result = browser.Get("/api/sessions/active", with =>
             {
                 with.HttpRequest();
                 with.Header("Accept", "application/json");

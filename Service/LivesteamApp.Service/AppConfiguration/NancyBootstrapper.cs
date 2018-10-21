@@ -25,7 +25,7 @@ namespace LivestreamApp.Service.AppConfiguration
             StatelessAuthentication.Enable(pipelines, configuration);
 
 #if DEBUG
-            pipelines.AfterRequest.AddItemToEndOfPipeline((ctx) => ctx.Response
+            pipelines.AfterRequest.AddItemToEndOfPipeline(ctx => ctx.Response
                 .WithHeader("Access-Control-Allow-Origin", "*")
                 .WithHeader("Access-Control-Allow-Methods", "POST,GET")
                 .WithHeader("Access-Control-Allow-Headers", "Accept, Origin, Content-type"));
@@ -47,10 +47,9 @@ namespace LivestreamApp.Service.AppConfiguration
             NancyContext nancyContext)
         {
             var logger = kernel.Get<ILoggerFactory>().GetCurrentClassLogger();
-            pipelines.BeforeRequest += c =>
+            pipelines.BeforeRequest += context =>
             {
-                var userName = c.CurrentUser != null ? c.CurrentUser.UserName : "no user";
-                logger.Debug($"{c.Request.Method} request on {c.Request.Path} - {userName}.");
+                logger.Debug($"{context.Request.Method} request on {context.Request.Path}.");
                 return null;
             };
         }

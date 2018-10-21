@@ -16,6 +16,7 @@ export class SessionService {
   public getSession(): Observable<Session> {
      return this.httpClient.get(this.endpointService.getApiEndpoint("session"))
       .pipe(map((response: any) => {
+        debugger;
         console.debug("Retrieved session " + response.id);
           return Session.deserialize(response);
       }))

@@ -24,6 +24,7 @@ export class SessionComponent implements OnInit {
     let session = this.sessionService.getSession()
       
     session.subscribe((session) => {
+      debugger;
         this.session = session;
         this.isLoading = false;
       }, (error) => {
