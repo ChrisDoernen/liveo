@@ -1,8 +1,8 @@
 export const environment = {
-  name: "release",
+  name: "production",
   production: true,
   protocol: "http",
-  deployUrl: "app",
+  deployUrl: "prod",
   ip: "localhost",
   apiPort: 80,
   webSocketPort: 8080
