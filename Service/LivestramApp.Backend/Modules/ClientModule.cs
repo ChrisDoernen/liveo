@@ -3,9 +3,9 @@ using Ninject.Extensions.Logging;
 
 namespace LivestreamApp.Apps.Modules
 {
-    public class LivestreamsModule : NancyModule
+    public class ClientModule : NancyModule
     {
-        public LivestreamsModule(ILogger logger)
+        public ClientModule(ILogger logger)
             : base("/app")
         {
             Get["/"] = _ => View["Client/Index"];

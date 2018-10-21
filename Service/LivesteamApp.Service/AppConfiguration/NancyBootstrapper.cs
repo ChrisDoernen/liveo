@@ -38,6 +38,9 @@ namespace LivestreamApp.Service.AppConfiguration
 
             conventions.StaticContentsConventions
                 .Add(StaticContentConventionBuilder.AddDirectory("app", "Client"));
+
+            conventions.StaticContentsConventions
+                .Add(StaticContentConventionBuilder.AddDirectory("backend", "Backend"));
         }
 
         protected override void RequestStartup(IKernel kernel, IPipelines pipelines,
