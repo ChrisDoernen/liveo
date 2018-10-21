@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
-import { ConfigurationService } from '../configuration-service/configuration.service';
+import { environment } from 'src/environments/environment.release';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class EndpointService {
 
-  private apiServerIp = ConfigurationService.settings.apiServer.ip;
-  private apiServerPort = ConfigurationService.settings.apiServer.port;
+  private protocol = environment.protocol;
+  private ip = environment.ip;
+  private apiPort = environment.apiPort;
   
   constructor() { }
 
-  public getEndpoint(servicePart: string): string {
-    const url = "http://" + this.apiServerIp + ":" + this.apiServerPort  + "/api/" + servicePart;
+  public getApiEndpoint(path: string): string {
+    const url = this.protocol + "://" + this.ip + ":" + this.apiPort  + "/api/" + path;
     console.debug("Returned url " + url);
     return url;
   }

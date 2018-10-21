@@ -1,9 +1,0 @@
-{
-    "env": {
-        "name": "Debug"
-    },
-    "apiServer": {
-        "ip": "localhost",
-        "port": "80"
-    }
-}
