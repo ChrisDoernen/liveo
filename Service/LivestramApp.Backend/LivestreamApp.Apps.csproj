@@ -7,8 +7,8 @@
     <ProjectGuid>{B4BBA85F-6641-489A-9E2E-E95348BC4598}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LivestreamApp.Backend</RootNamespace>
-    <AssemblyName>LivestreamApp.Backend</AssemblyName>
+    <RootNamespace>LivestreamApp.Apps</RootNamespace>
+    <AssemblyName>LivestreamApp.Apps</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modules\AppModule.cs" />
     <Compile Include="Modules\BackendModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -56,10 +57,5 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Content Include="Views\Index.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

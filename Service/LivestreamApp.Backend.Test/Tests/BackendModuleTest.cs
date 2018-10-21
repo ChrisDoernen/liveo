@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using LivestreamApp.Backend.Modules;
+using LivestreamApp.Apps.Modules;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Nancy;

@@ -1,7 +1,7 @@
 ﻿using Nancy;
 using Ninject.Extensions.Logging;
 
-namespace LivestreamApp.Client.Modules
+namespace LivestreamApp.Apps.Modules
 {
     public class LivestreamsModule : NancyModule
     {

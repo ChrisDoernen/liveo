@@ -89,9 +89,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LivestramApp.Backend\LivestreamApp.Backend.csproj">
+    <ProjectReference Include="..\LivestramApp.Backend\LivestreamApp.Apps.csproj">
       <Project>{b4bba85f-6641-489a-9e2e-e95348bc4598}</Project>
-      <Name>LivestreamApp.Backend</Name>
+      <Name>LivestreamApp.Apps</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

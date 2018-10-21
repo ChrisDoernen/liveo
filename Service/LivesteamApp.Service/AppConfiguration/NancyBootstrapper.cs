@@ -5,6 +5,7 @@ using Nancy;
 using Nancy.Authentication.Stateless;
 using Nancy.Bootstrapper;
 using Nancy.Bootstrappers.Ninject;
+using Nancy.Conventions;
 using Ninject;
 using Ninject.Extensions.Logging;
 
@@ -14,10 +15,6 @@ namespace LivestreamApp.Service.AppConfiguration
     {
         protected override void ApplicationStartup(IKernel kernel, IPipelines pipelines)
         {
-            // No registrations should be performed in here, however you may
-            // resolve things that are needed during application startup.
-            Conventions.ViewLocationConventions.Add((viewName, model, context) => $"Views/{viewName}");
-
             var authenticationService = kernel.Get<IAuthenticationService>();
             var configuration = new StatelessAuthenticationConfiguration(nancyContext =>
                 {
@@ -35,6 +32,14 @@ namespace LivestreamApp.Service.AppConfiguration
 #endif
         }
 
+        protected override void ConfigureConventions(NancyConventions conventions)
+        {
+            base.ConfigureConventions(conventions);
+
+            conventions.StaticContentsConventions
+                .Add(StaticContentConventionBuilder.AddDirectory("app", "Client"));
+        }
+
         protected override void RequestStartup(IKernel kernel, IPipelines pipelines,
             NancyContext nancyContext)
         {
@@ -49,7 +54,6 @@ namespace LivestreamApp.Service.AppConfiguration
 
         protected override void ConfigureApplicationContainer(IKernel kernel)
         {
-            // Perform registration that should have an application lifetime
             kernel.Load(new ServerModule(), new AutoMapperModule(), new SharedModule());
         }
     }

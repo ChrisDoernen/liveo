@@ -121,17 +121,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LivestramApp.Backend\LivestreamApp.Backend.csproj">
+    <ProjectReference Include="..\LivestramApp.Backend\LivestreamApp.Apps.csproj">
       <Project>{b4bba85f-6641-489a-9e2e-e95348bc4598}</Project>
-      <Name>LivestreamApp.Backend</Name>
+      <Name>LivestreamApp.Apps</Name>
     </ProjectReference>
     <ProjectReference Include="..\LivestreamApp.Api\LivestreamApp.Api.csproj">
       <Project>{415e7607-bb1d-4458-8289-659fb462e6c4}</Project>
       <Name>LivestreamApp.Api</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LivestreamApp.Client\LivestreamApp.Client.csproj">
-      <Project>{2a619133-bde7-45c7-8f04-692d0770ce90}</Project>
-      <Name>LivestreamApp.Client</Name>
     </ProjectReference>
     <ProjectReference Include="..\LivestreamApp.Server\LivestreamApp.Server.csproj">
       <Project>{2AA291C7-562D-4A91-8A9C-767B4BACE957}</Project>
