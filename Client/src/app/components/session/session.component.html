@@ -1,7 +1,10 @@
-    <div *ngIf="isLoading" class="ui active loader"></div>
+<div *ngIf="isLoading" class=""></div>
 <div *ngIf="connectionError">
     There seems to be a problem with the WiFi connection. 
     Please check your settings.
+</div>
+<div *ngIf="noSessionActive">
+    No Session
 </div>
 <div>{{session?.title}}</div>
 

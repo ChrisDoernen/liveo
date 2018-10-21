@@ -14,11 +14,13 @@ export class SessionService {
     private endpointService: EndpointService) { }
 
   public getSession(): Observable<Session> {
-     return this.httpClient.get(this.endpointService.getApiEndpoint("session"))
+     return this.httpClient.get(this.endpointService.getApiEndpoint("session"), { observe: 'response' })
       .pipe(map((response: any) => {
-        debugger;
+        if (response.status == 204) {
+          return null;
+        }
         console.debug("Retrieved session " + response.id);
-          return Session.deserialize(response);
+        return Session.deserialize(response.body);
       }))
   }
 }

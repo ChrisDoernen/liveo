@@ -11,6 +11,7 @@ export class SessionComponent implements OnInit {
 
   public session: Session;
   public isLoading: boolean = true;
+  public noSessionActive = false;
   public connectionError: boolean = false ;
 
   constructor(private sessionService: SessionService) {
@@ -24,8 +25,11 @@ export class SessionComponent implements OnInit {
     let session = this.sessionService.getSession()
       
     session.subscribe((session) => {
-      debugger;
-        this.session = session;
+        if (session != null) {
+          this.session = session;
+        } else {
+          this.noSessionActive = true;
+        }
         this.isLoading = false;
       }, (error) => {
         this.connectionError = true;
