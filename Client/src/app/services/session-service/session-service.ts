@@ -8,10 +8,10 @@ import { Session } from '../../entities/session.entity';
 @Injectable({
   providedIn: 'root'
 })
+
 export class SessionService {
 
-  constructor(private httpClient: HttpClient, 
-    private endpointService: EndpointService) { }
+  constructor(private httpClient: HttpClient, private endpointService: EndpointService) { }
 
   public getSession(): Observable<Session> {
      return this.httpClient.get(this.endpointService.getApiEndpoint("session"), { observe: 'response' })

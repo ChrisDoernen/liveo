@@ -7,6 +7,7 @@ import { SessionService } from '../../services/session-service/session-service';
   templateUrl: './session.component.html',
   styleUrls: ['./session.component.css']
 })
+
 export class SessionComponent implements OnInit {
 
   public session: Session;
