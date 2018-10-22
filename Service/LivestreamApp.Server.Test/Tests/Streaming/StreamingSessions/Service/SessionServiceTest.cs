@@ -5,15 +5,15 @@ using LivestreamApp.Server.Streaming.StreamingSessions;
 using LivestreamApp.Server.Streaming.StreamingSessions.Entities;
 using LivestreamApp.Server.Streaming.StreamingSessions.Service;
 using LivestreamApp.Shared.Utilities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Ninject;
 using Ninject.MockingKernel.Moq;
+using NUnit.Framework;
 using System;
 
 namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSessions.Service
 {
-    [TestClass]
+    [TestFixture]
     public class SessionServiceTest
     {
         private readonly MoqMockingKernel _kernel;
@@ -29,7 +29,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSessions.Service
             _kernel.Bind<ISessionService>().To<SessionService>();
         }
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             _mockConfigDataAdapter = _kernel.GetMock<IConfigAdapter>();
@@ -62,7 +62,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSessions.Service
             return streams;
         }
 
-        [TestMethod]
+        [Test]
         public void GetSessions_ShouldReturnCorrectSessions()
         {
             // Given when
@@ -75,7 +75,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSessions.Service
             sessions[1].Id.Should().Be("bce9e");
         }
 
-        [TestMethod]
+        [Test]
         public void GetSession_IdIsContained_ShouldReturnCorrectSession()
         {
             // Given when
@@ -86,15 +86,14 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSessions.Service
             session.Id.Should().Be("bce9e");
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Test]
         public void GetSession_IdIsNotContained_ShouldThrow()
         {
             // Given when
-            _sessionService.GetSession("bcexx");
+            Assert.Throws<ArgumentException>(() => _sessionService.GetSession("bcexx"));
         }
 
-        [TestMethod]
+        [Test]
         public void CreateSession_ShouldAddCorrectSessionAndCallUpdateConfig()
         {
             // Given
@@ -118,7 +117,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSessions.Service
                     It.IsAny<string>()), Times.Once);
         }
 
-        [TestMethod]
+        [Test]
         public void DeleteSession_IdIsContained_ShouldDeleteCorrectSessionAndCallUpdateConfig()
         {
             // Given when
@@ -134,7 +133,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSessions.Service
                     It.IsAny<string>()), Times.Once);
         }
 
-        [TestMethod]
+        [Test]
         public void DeleteSession_IdIsNotContained_ShouldDoNothing()
         {
             // Given when
@@ -148,7 +147,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSessions.Service
             sessions[1].Id.Should().Be("bce9e");
         }
 
-        [TestMethod]
+        [Test]
         public void UpdateSession_IdIsContained_ShouldUpdateSesssionCorrectlyAndCallUpdateConfig()
         {
             // Given
@@ -171,7 +170,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSessions.Service
                     It.IsAny<string>()), Times.Once);
         }
 
-        [TestMethod]
+        [Test]
         public void UpdateSession_IdIsNotContained_ShouldDoNothing()
         {
             // Given
@@ -191,7 +190,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSessions.Service
             sessions[1].Title.Should().Be(null);
         }
 
-        [TestMethod]
+        [Test]
         public void GetCurrentSessionClientEntity_SessionSet_ShouldReturnCorrectSession()
         {
             // Given
@@ -205,7 +204,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSessions.Service
             session.Id.Should().Be("8b5aa");
         }
 
-        [TestMethod]
+        [Test]
         public void GetCurrentSessionBackendEntity_SessionSet_ShouldReturnCorrectSession()
         {
             // Given
@@ -219,7 +218,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSessions.Service
             session.Id.Should().Be("8b5aa");
         }
 
-        [TestMethod]
+        [Test]
         public void GetCurrentSessionClientEntity_SessionNotSet_ShouldReturnNull()
         {
             // Given when
@@ -229,7 +228,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSessions.Service
             session.Should().BeNull();
         }
 
-        [TestMethod]
+        [Test]
         public void GetCurrentSessionBackendEntity_SessionNotSet_ShouldReturnCorrectSession()
         {
             // Given when

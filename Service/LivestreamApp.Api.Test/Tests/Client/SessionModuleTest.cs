@@ -3,7 +3,7 @@ using LivestreamApp.Api.Client.Modules;
 using LivestreamApp.Server.Streaming.Livestreams.Entities;
 using LivestreamApp.Server.Streaming.StreamingSessions.Entities;
 using LivestreamApp.Server.Streaming.StreamingSessions.Service;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Moq;
 using Nancy;
 using Nancy.Testing;
@@ -14,7 +14,7 @@ using System.Collections.Generic;
 
 namespace LivestreamApp.Api.Test.Tests.Client
 {
-    [TestClass]
+    [TestFixture]
     public class SessionModuleTest
     {
         private readonly MoqMockingKernel _kernel;
@@ -30,7 +30,7 @@ namespace LivestreamApp.Api.Test.Tests.Client
             _kernel = new MoqMockingKernel();
         }
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             _kernel.Reset();
@@ -40,7 +40,7 @@ namespace LivestreamApp.Api.Test.Tests.Client
             _streamClientEntity = _kernel.Get<StreamClientEntity>();
         }
 
-        [TestMethod]
+        [Test]
         public void GetCurrentSession_NoSessionAvailable_ShouldReturnStatusCodeNoContent()
         {
             // Given
@@ -66,7 +66,7 @@ namespace LivestreamApp.Api.Test.Tests.Client
             result.StatusCode.Should().Be(HttpStatusCode.NoContent);
         }
 
-        [TestMethod]
+        [Test]
         public void GetCurrentSession_SessionAvailable_ShouldReturnStatusCodeOKWithCorrectJsonResponse()
         {
             // Given

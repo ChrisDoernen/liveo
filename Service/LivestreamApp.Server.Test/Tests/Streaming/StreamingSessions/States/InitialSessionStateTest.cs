@@ -1,15 +1,15 @@
 ﻿using LivestreamApp.Server.Streaming.StreamingSessions;
 using LivestreamApp.Server.Streaming.StreamingSessions.States;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Ninject;
 using Ninject.MockingKernel.Moq;
 using Ninject.Parameters;
+using NUnit.Framework;
 using System;
 
 namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSessions.States
 {
-    [TestClass]
+    [TestFixture]
     public class InitialSessionStateTest
     {
         private readonly MoqMockingKernel _kernel;
@@ -22,7 +22,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSessions.States
             _kernel = new MoqMockingKernel();
         }
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             _kernel.Reset();
@@ -32,7 +32,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSessions.States
                 _kernel.Get<InitialSessionState>(new ConstructorArgument("session", _mockSession.Object));
         }
 
-        [TestMethod]
+        [Test]
         public void StartSession_ShouldStartSession()
         {
             // Given when
@@ -45,28 +45,25 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSessions.States
                 .Verify(msf => msf.GetSessionState<StartedSessionState>(_mockSession.Object), Times.Once);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Test]
         public void StopSession_ShouldThrow()
         {
             // Given when
-            _initialSessionState.EndSession();
+            Assert.Throws<ArgumentException>(() => _initialSessionState.EndSession());
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Test]
         public void PauseSession_ShouldThrow()
         {
             // Given when
-            _initialSessionState.PauseSession();
+            Assert.Throws<ArgumentException>(() => _initialSessionState.PauseSession());
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Test]
         public void ResumeSession_ShouldThrow()
         {
             // Given when
-            _initialSessionState.ResumeSession();
+            Assert.Throws<ArgumentException>(() => _initialSessionState.ResumeSession());
         }
     }
 }

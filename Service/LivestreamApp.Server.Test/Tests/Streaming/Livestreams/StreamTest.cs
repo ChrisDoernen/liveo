@@ -2,14 +2,14 @@
 using LivestreamApp.Server.Shared.WebSockets;
 using LivestreamApp.Server.Streaming.Livestreams;
 using LivestreamApp.Server.Streaming.StreamingSources;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Moq;
 using Ninject;
 using Ninject.MockingKernel.Moq;
 
 namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams
 {
-    [TestClass]
+    [TestFixture]
     public class StreamTest
     {
         private readonly MoqMockingKernel _kernel;
@@ -24,7 +24,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams
             _kernel.Bind<Stream>().ToSelf();
         }
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             _kernel.Reset();
@@ -34,7 +34,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams
             _mockStreamingSource = _kernel.GetMock<IStreamingSource>();
         }
 
-        [TestMethod]
+        [Test]
         public void InititalizeAndStart_StartOnStartupValidSource_ShouldInitializeCorrectlyAndStart()
         {
             // Given
@@ -63,7 +63,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams
 
         }
 
-        [TestMethod]
+        [Test]
         public void InititalizeAndStart_StartOnStartupInValidSource_ShouldInitializeCorrectlyAndNotStart()
         {
             // Given
@@ -84,7 +84,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams
             _mockStreamingSource.Verify(ms => ms.StartStreaming(), Times.Never);
         }
 
-        [TestMethod]
+        [Test]
         public void Stop_ShouldStopStartedStream()
         {
             // Given

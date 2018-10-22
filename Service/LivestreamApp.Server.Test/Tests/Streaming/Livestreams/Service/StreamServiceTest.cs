@@ -5,14 +5,14 @@ using LivestreamApp.Server.Streaming.Livestreams;
 using LivestreamApp.Server.Streaming.Livestreams.Entities;
 using LivestreamApp.Server.Streaming.Livestreams.Service;
 using LivestreamApp.Shared.Utilities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Moq;
 using Ninject;
 using Ninject.MockingKernel.Moq;
 
 namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Service
 {
-    [TestClass]
+    [TestFixture]
     public class StreamServiceTest
     {
         private readonly MoqMockingKernel _kernel;
@@ -28,7 +28,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Service
             _kernel.Bind<IStreamService>().To<StreamService>();
         }
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             _mockConfigDataAdapter = _kernel.GetMock<IConfigAdapter>();
@@ -61,7 +61,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Service
             return streams;
         }
 
-        [TestMethod]
+        [Test]
         public void GetStreams_ShouldReturnCorrectStreams()
         {
             // Given when
@@ -74,7 +74,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Service
             returnedStreams[1].Id.Should().Be("bce9e");
         }
 
-        [TestMethod]
+        [Test]
         public void CreateStream_ShouldAddCorrectStreamAndCallUpdateConfig()
         {
             // Given
@@ -98,7 +98,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Service
                     It.IsAny<string>()), Times.Once);
         }
 
-        [TestMethod]
+        [Test]
         public void DeleteStream_IdIsContained_ShouldDeleteCorrectStreamAndCallUpdateConfig()
         {
             // Given when
@@ -114,7 +114,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Service
                     It.IsAny<string>()), Times.Once);
         }
 
-        [TestMethod]
+        [Test]
         public void DeleteStream_IdIsNotContained_ShouldDoNothing()
         {
             // Given when
@@ -128,7 +128,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Service
             returnedStreams[1].Id.Should().Be("bce9e");
         }
 
-        [TestMethod]
+        [Test]
         public void UpdateStream_IdIsContained_ShouldUpdateStreamCorrectlyAndCallUpdateConfig()
         {
             // Given
@@ -151,7 +151,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Service
                     It.IsAny<string>()), Times.Once);
         }
 
-        [TestMethod]
+        [Test]
         public void UpdateStream_IdIsNotContained_ShouldDoNothing()
         {
             // Given

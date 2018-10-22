@@ -3,7 +3,7 @@ using LivestreamApp.Server.Shared.Processes;
 using LivestreamApp.Server.Shared.ProcessSettings;
 using LivestreamApp.Server.Streaming.Devices;
 using LivestreamApp.Server.Streaming.StreamingSources;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Moq;
 using Ninject;
 using Ninject.MockingKernel.Moq;
@@ -11,7 +11,7 @@ using Ninject.Parameters;
 
 namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSources
 {
-    [TestClass]
+    [TestFixture]
     public class StreamingSourceTest
     {
         private readonly MoqMockingKernel _kernel;
@@ -25,7 +25,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSources
             _kernel.Bind<IStreamingSource>().To<StreamingSource>();
         }
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             _mockProcessAdapter = _kernel.GetMock<IProcessAdapter>();
@@ -33,7 +33,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSources
             _audioDevice = new Device("AudioDevice", DeviceType.AudioDevice, _mockProcessSettings);
         }
 
-        [TestMethod]
+        [Test]
         public void Constructor_ShouldInitializeCorrectly()
         {
             // Given
@@ -53,7 +53,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSources
             videoSource.ContentType.Should().Be(ContentType.Video);
         }
 
-        [TestMethod]
+        [Test]
         public void StartStreaming_ShouldStartProcess()
         {
             // Given when
@@ -65,7 +65,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSources
                 .Verify(mpa => mpa.ExecuteAndReadBinaryAsync(It.IsAny<IProcessSettings>()), Times.Once);
         }
 
-        [TestMethod]
+        [Test]
         public void StopStreaming_ShouldKillProcess()
         {
             // Given when
@@ -76,7 +76,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSources
             _mockProcessAdapter.Verify(mpa => mpa.KillProcess(), Times.Once);
         }
 
-        [TestMethod]
+        [Test]
         public void StartStreaming_ShouldListenOnOutputBytedReceivedEventCorrectlyAndRaise()
         {
             // Given
@@ -94,7 +94,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSources
             bytedReceived.Should().Equal(bytesSent);
         }
 
-        [TestMethod]
+        [Test]
         public void StartStreaming_ShouldListenOnErrorDataReceivedEventCorrectlyAndRaise()
         {
             // Given

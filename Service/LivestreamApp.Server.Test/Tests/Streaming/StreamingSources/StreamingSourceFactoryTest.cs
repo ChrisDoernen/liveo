@@ -2,14 +2,14 @@
 using LivestreamApp.Server.Shared.ProcessSettings;
 using LivestreamApp.Server.Streaming.Devices;
 using LivestreamApp.Server.Streaming.StreamingSources;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Moq;
 using Ninject;
 using Ninject.MockingKernel.Moq;
 
 namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSources
 {
-    [TestClass]
+    [TestFixture]
     public class StreamingSourceFactoryTest
     {
         private readonly MoqMockingKernel _kernel;
@@ -24,7 +24,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSources
             _kernel.Bind<IStreamingSource>().To<StreamingSource>();
         }
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             _kernel.Reset();
@@ -34,7 +34,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSources
                 new ProcessSettings(string.Empty, string.Empty));
         }
 
-        [TestMethod]
+        [Test]
         public void GetStreamingSourceByDeviceId_ShouldReturnCorrectStreamingSource()
         {
             // Given

@@ -2,7 +2,7 @@
 using LivestreamApp.Shared.AppSettings;
 using LivestreamApp.Shared.Authentication;
 using LivestreamApp.Shared.Utilities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Moq;
 using Ninject;
 using Ninject.MockingKernel.Moq;
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace LivestreamApp.Shared.Test.Tests.Authentication
 {
-    [TestClass]
+    [TestFixture]
     public class AuthenticationProviderTest
     {
         private readonly MoqMockingKernel _kernel;
@@ -24,7 +24,7 @@ namespace LivestreamApp.Shared.Test.Tests.Authentication
             _kernel.Bind<IAuthenticationService>().To<AuthenticationService>();
         }
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             _kernel.Reset();
@@ -33,7 +33,7 @@ namespace LivestreamApp.Shared.Test.Tests.Authentication
             _mockHashGenerator = _kernel.GetMock<IHashGenerator>();
         }
 
-        [TestMethod]
+        [Test]
         public void SetAuthenticationHas_ShouldSetRightMd5HasValue()
         {
             // Given
@@ -51,7 +51,7 @@ namespace LivestreamApp.Shared.Test.Tests.Authentication
                 .Verify(masp => masp.SetStringValue(AppSetting.AuthenticationHash, md5Hash), Times.Once);
         }
 
-        [TestMethod]
+        [Test]
         public void Validate_ValidHash_ShouldReturnCorrectUserIdentity()
         {
             // Given
@@ -69,7 +69,7 @@ namespace LivestreamApp.Shared.Test.Tests.Authentication
             userIdentity.Claims.Should().Equal(new List<string> { "ACCESS-BACKEND" });
         }
 
-        [TestMethod]
+        [Test]
         public void Validate_InvalidHash_ShouldReturnNull()
         {
             // Given

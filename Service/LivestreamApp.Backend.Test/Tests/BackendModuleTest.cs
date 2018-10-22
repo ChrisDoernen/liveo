@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using LivestreamApp.Apps.Modules;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Moq;
 using Nancy;
 using Nancy.Testing;
@@ -8,10 +8,10 @@ using Ninject.Extensions.Logging;
 
 namespace LivestreamApp.Backend.Test.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class BackendModuleTest
     {
-        [TestMethod]
+        [Test]
         public void Get_ShouldReturnCorrectView()
         {
             // Given

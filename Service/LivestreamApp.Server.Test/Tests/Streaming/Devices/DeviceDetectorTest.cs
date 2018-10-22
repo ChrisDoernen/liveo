@@ -2,16 +2,16 @@
 using LivestreamApp.Server.Shared.Processes;
 using LivestreamApp.Server.Shared.ProcessSettings;
 using LivestreamApp.Server.Streaming.Devices;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Ninject;
 using Ninject.MockingKernel.Moq;
+using NUnit.Framework;
 using System;
 using System.IO;
 
 namespace LivestreamApp.Server.Test.Tests.Streaming.Devices
 {
-    [TestClass]
+    [TestFixture]
     public class DeviceDetectorTest
     {
         private readonly MoqMockingKernel _kernel;
@@ -29,7 +29,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Devices
             _kernel.Bind<IDeviceDetector>().To<DeviceDetector>();
         }
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             _kernel.Reset();
@@ -41,7 +41,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Devices
                 .Returns(new ProcessSettings("FileName", "Arguments"));
         }
 
-        [TestMethod]
+        [Test]
         public void DetectAvailableDevices_OneInput_ShouldReturnCorrectAudioInput()
         {
             // Given
@@ -62,8 +62,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Devices
             _deviceDetector.Devices[0].DeviceType.Should().Be(DeviceType.AudioDevice);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(Exception))]
+        [Test]
         public void DetectAvailableDevices_ProcessFails_ShouldThrow()
         {
             // Given
@@ -74,10 +73,10 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Devices
                 .Returns(result);
 
             // When
-            _deviceDetector.DetectAvailableDevices();
+            Assert.Throws<Exception>(() => _deviceDetector.DetectAvailableDevices());
         }
 
-        [TestMethod]
+        [Test]
         public void DetectAvailableDevices_NoInputs_ShouldReturnEmptyList()
         {
             // Given
@@ -95,7 +94,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Devices
             _deviceDetector.Devices.Count.Should().Be(0);
         }
 
-        [TestMethod]
+        [Test]
         public void GetDeviceById_MatchingId_ShouldReturnCorrectDevice()
         {
             // Given
@@ -115,7 +114,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Devices
             device.DeviceType.Should().Be(DeviceType.AudioDevice);
         }
 
-        [TestMethod]
+        [Test]
         public void GetDeviceById_NonMatchingId_ShouldReturnUnknownDevice()
         {
             // Given

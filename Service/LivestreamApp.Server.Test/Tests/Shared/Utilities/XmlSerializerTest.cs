@@ -1,18 +1,18 @@
 ﻿using FluentAssertions;
 using LivestreamApp.Server.Shared.Utilities;
 using LivestreamApp.Server.Streaming.Livestreams.Entities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 using System.Xml.Schema;
 
 namespace LivestreamApp.Server.Test.Tests.Shared.Utilities
 {
-    [TestClass]
+    [TestFixture]
     public class XmlSerializerTest
     {
         private const string Scheme = "LivestreamApp.Server.Streams.xsd";
 
-        [TestMethod]
+        [Test]
         public void ValidateAndDeserialize_ValidConfig_ShouldReturnCorrectObject()
         {
             // Given
@@ -34,8 +34,7 @@ namespace LivestreamApp.Server.Test.Tests.Shared.Utilities
             deserialized.Streams[1].Input.Should().Be("Mikrofon (2- USB Audio Device)");
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [Test]
         public void ReadFromConfigFile_InvalidNamespace()
         {
             // Given
@@ -43,18 +42,19 @@ namespace LivestreamApp.Server.Test.Tests.Shared.Utilities
                 "TestResources\\Config\\InvalidNamespaceStreams.config";
 
             // When
-            XmlSerializer.ValidateAndDeserialize<StreamsType>(invalidNamespaceConfig, Scheme);
+            Assert.Throws<InvalidOperationException>(() =>
+                XmlSerializer.ValidateAndDeserialize<StreamsType>(invalidNamespaceConfig, Scheme));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(XmlSchemaValidationException))]
+        [Test]
         public void ReadFromConfigFile_InvalidConfig()
         {
             // Given
             const string invalidConfig = "TestResources\\Config\\InvalidStreams.config";
 
             // When
-            XmlSerializer.ValidateAndDeserialize<StreamsType>(invalidConfig, Scheme);
+            Assert.Throws<XmlSchemaValidationException>(() =>
+                XmlSerializer.ValidateAndDeserialize<StreamsType>(invalidConfig, Scheme));
         }
     }
 }

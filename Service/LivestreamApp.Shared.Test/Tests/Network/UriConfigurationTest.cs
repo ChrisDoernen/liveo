@@ -1,14 +1,14 @@
 ﻿using FluentAssertions;
 using LivestreamApp.Shared.AppSettings;
 using LivestreamApp.Shared.Network;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Moq;
 using Ninject;
 using Ninject.MockingKernel.Moq;
 
 namespace LivestreamApp.Shared.Test.Tests.Network
 {
-    [TestClass]
+    [TestFixture]
     public class UriConfigurationTest
     {
         private readonly MoqMockingKernel _kernel;
@@ -21,7 +21,7 @@ namespace LivestreamApp.Shared.Test.Tests.Network
             _kernel.Bind<IUriConfiguration>().To<UriConfiguration>();
         }
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             _kernel.Reset();
@@ -29,7 +29,7 @@ namespace LivestreamApp.Shared.Test.Tests.Network
             _uriConfiguration = _kernel.Get<IUriConfiguration>();
         }
 
-        [TestMethod]
+        [Test]
         public void GetWsUri_ShouldReturnCorrectUri()
         {
             // Given
@@ -44,7 +44,7 @@ namespace LivestreamApp.Shared.Test.Tests.Network
             wsUri.Should().Be("ws://localhost:1234/");
         }
 
-        [TestMethod]
+        [Test]
         public void GetHttpUri_ShouldReturnCorrectUri()
         {
             // Given

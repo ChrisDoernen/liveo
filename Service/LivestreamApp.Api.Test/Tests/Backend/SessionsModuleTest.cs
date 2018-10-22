@@ -4,18 +4,18 @@ using LivestreamApp.Server.Streaming.Livestreams.Entities;
 using LivestreamApp.Server.Streaming.StreamingSessions.Entities;
 using LivestreamApp.Server.Streaming.StreamingSessions.Service;
 using LivestreamApp.Shared.Authentication;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Nancy;
 using Nancy.Testing;
 using Ninject;
 using Ninject.Extensions.Logging;
 using Ninject.MockingKernel.Moq;
+using NUnit.Framework;
 using System.Collections.Generic;
 
 namespace LivestreamApp.Api.Test.Tests.Backend
 {
-    [TestClass]
+    [TestFixture]
     public class SessionsModuleTest
     {
         private readonly MoqMockingKernel _kernel;
@@ -32,7 +32,7 @@ namespace LivestreamApp.Api.Test.Tests.Backend
             _kernel = new MoqMockingKernel();
         }
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             _kernel.Reset();
@@ -43,7 +43,7 @@ namespace LivestreamApp.Api.Test.Tests.Backend
             _streamBackendEntity = _kernel.Get<StreamBackendEntity>();
         }
 
-        [TestMethod]
+        [Test]
         public void GetCurrentSession_NoSessionAvailable_ShouldReturnStatusCodeNoContent()
         {
             // Given
@@ -75,7 +75,7 @@ namespace LivestreamApp.Api.Test.Tests.Backend
             result.StatusCode.Should().Be(HttpStatusCode.NoContent);
         }
 
-        [TestMethod]
+        [Test]
         public void GetCurrentSession_SessionAvailable_ShouldReturnStatusCodeOKWithCorrectJsonResponse()
         {
             // Given
@@ -103,7 +103,7 @@ namespace LivestreamApp.Api.Test.Tests.Backend
             });
 
             // When
-            var result = browser.Get("/api/sessions/active", with =>
+            var response = browser.Get("/api/sessions/active", with =>
             {
                 with.HttpRequest();
                 with.Header("Accept", "application/json");
@@ -111,9 +111,9 @@ namespace LivestreamApp.Api.Test.Tests.Backend
 
             // Then
             var expectedResponse = System.IO.File.ReadAllText(ExpectedGetCurrentSessionResponse);
-            result.StatusCode.Should().Be(HttpStatusCode.OK);
-            result.Body.ContentType.Should().Be("application/json; charset=utf-8");
-            result.Body.AsString().Should().Be(expectedResponse);
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            response.Body.ContentType.Should().Be("application/json; charset=utf-8");
+            response.Body.AsString().Should().Be(expectedResponse);
         }
     }
 }

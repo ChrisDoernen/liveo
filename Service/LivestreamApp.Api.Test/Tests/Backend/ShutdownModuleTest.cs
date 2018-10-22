@@ -2,7 +2,7 @@
 using LivestreamApp.Api.Backend.Modules;
 using LivestreamApp.Server.Shutdown;
 using LivestreamApp.Shared.Authentication;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Moq;
 using Nancy;
 using Nancy.Testing;
@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 namespace LivestreamApp.Api.Test.Tests.Backend
 {
-    [TestClass]
+    [TestFixture]
     public class ShutdownModuleTest
     {
         private readonly MoqMockingKernel _kernel;
@@ -24,7 +24,7 @@ namespace LivestreamApp.Api.Test.Tests.Backend
             _kernel = new MoqMockingKernel();
         }
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             _kernel.Reset();
@@ -32,7 +32,7 @@ namespace LivestreamApp.Api.Test.Tests.Backend
             _mockShutdownService = _kernel.GetMock<IShutdownService>();
         }
 
-        [TestMethod]
+        [Test]
         public void GetSystemShutdown_UnauthenticatedRequest_ShouldReturnUnauthorizedAndNotShutdown()
         {
             // Given
@@ -55,7 +55,7 @@ namespace LivestreamApp.Api.Test.Tests.Backend
             _mockShutdownService.Verify(mss => mss.ShutdownServer(), Times.Never);
         }
 
-        [TestMethod]
+        [Test]
         public void GetSystemShutdown_AuthenticatedRequest_ShouldReturnAcceptedAndShutdown()
         {
             // Given
@@ -84,7 +84,7 @@ namespace LivestreamApp.Api.Test.Tests.Backend
             _mockShutdownService.Verify(mss => mss.ShutdownServer(), Times.Once);
         }
 
-        [TestMethod]
+        [Test]
         public void GetSystemRestart_AuthenticatedRequest_ShouldReturnAcceptedAndRestart()
         {
             // Given

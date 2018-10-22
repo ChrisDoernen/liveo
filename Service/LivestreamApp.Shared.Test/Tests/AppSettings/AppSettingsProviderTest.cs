@@ -1,14 +1,14 @@
 ﻿using FluentAssertions;
 using LivestreamApp.Shared.AppSettings;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Ninject;
 using Ninject.MockingKernel.Moq;
+using NUnit.Framework;
 using System;
 
 namespace LivestreamApp.Shared.Test.Tests.AppSettings
 {
-    [TestClass]
+    [TestFixture]
     public class AppSettingsProviderTest
     {
         private readonly MoqMockingKernel _kernel;
@@ -21,7 +21,7 @@ namespace LivestreamApp.Shared.Test.Tests.AppSettings
             _kernel.Bind<IAppSettingsProvider>().To<AppSettingsProvider>();
         }
 
-        [TestInitialize]
+        [SetUp]
         public void TestInittialize()
         {
             _kernel.Reset();
@@ -29,7 +29,7 @@ namespace LivestreamApp.Shared.Test.Tests.AppSettings
             _appSettingsProvider = _kernel.Get<IAppSettingsProvider>();
         }
 
-        [TestMethod]
+        [Test]
         public void GetStringValue_ValidInput_ShouldReturnCorrectValue()
         {
             // Given
@@ -45,7 +45,7 @@ namespace LivestreamApp.Shared.Test.Tests.AppSettings
             setting.Should().Be("SomeAppSetting");
         }
 
-        [TestMethod]
+        [Test]
         public void GetIntValue_ValidInput_ShouldReturnCorrectValue()
         {
             // Given
@@ -60,8 +60,7 @@ namespace LivestreamApp.Shared.Test.Tests.AppSettings
             setting.Should().Be(8080);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(FormatException))]
+        [Test]
         public void GetIntValue_InValidInput_ShouldThrow()
         {
             // Given
@@ -70,10 +69,10 @@ namespace LivestreamApp.Shared.Test.Tests.AppSettings
                 .Returns("SomeStringAppSetting");
 
             // When
-            var setting = _appSettingsProvider.GetIntValue(AppSetting.DefaultPort);
+            Assert.Throws<FormatException>(() => _appSettingsProvider.GetIntValue(AppSetting.DefaultPort));
         }
 
-        [TestMethod]
+        [Test]
         public void SetStringValue_ShouldSetValueCorrectly()
         {
             // Given
@@ -88,8 +87,7 @@ namespace LivestreamApp.Shared.Test.Tests.AppSettings
                 .Verify(mcma => mcma.SetAppSetting(appSetting.ToString(), valueToSet), Times.Once);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Test]
         public void SetStringValue_NoKey_ShouldThrow()
         {
             // Given
@@ -98,10 +96,10 @@ namespace LivestreamApp.Shared.Test.Tests.AppSettings
                 .Returns((string)null);
 
             // When
-            _appSettingsProvider.GetStringValue(AppSetting.AuthenticationHash);
+            Assert.Throws<ArgumentException>(() => _appSettingsProvider.GetStringValue(AppSetting.AuthenticationHash));
         }
 
-        [TestMethod]
+        [Test]
         public void ValidateAppSettingKeys_AllKeysExisting_ShouldNotThrow()
         {
             // Given
@@ -113,8 +111,7 @@ namespace LivestreamApp.Shared.Test.Tests.AppSettings
             _appSettingsProvider.ValidateAppSettingsKeys();
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Test]
         public void ValidateAppSettingKeys_KeyNotExisting_ShouldThrow()
         {
             // Given
@@ -126,7 +123,7 @@ namespace LivestreamApp.Shared.Test.Tests.AppSettings
                 .Returns((Func<string, string>)Returns);
 
             // When
-            _appSettingsProvider.ValidateAppSettingsKeys();
+            Assert.Throws<ArgumentException>(() => _appSettingsProvider.ValidateAppSettingsKeys());
         }
     }
 }
