@@ -121,7 +121,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LivestramApp.Backend\LivestreamApp.Apps.csproj">
+    <ProjectReference Include="..\LivestramApp.Apps\LivestreamApp.Apps.csproj">
       <Project>{b4bba85f-6641-489a-9e2e-e95348bc4598}</Project>
       <Name>LivestreamApp.Apps</Name>
     </ProjectReference>
