@@ -117,14 +117,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="TestResources\Ffmpeg\FfmpegListDevicesOutputOneDeviceAvailable.txt">
+    <Content Include="TestResources\Ffmpeg\FfmpegListDevicesOutputNoDeviceAvailable.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="TestResources\Ffmpeg\FfmpegListDevicesOutputNoDeviceAvailable.txt">
+    </Content>
+    <Content Include="TestResources\Ffmpeg\FfmpegListDevicesOutputOneDeviceAvailable.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
