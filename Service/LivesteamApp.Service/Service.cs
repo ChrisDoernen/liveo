@@ -38,7 +38,8 @@ namespace LivestreamApp.Service
         private void StartServer()
         {
             var webServerUri = _networkConfiguration.WebServerUri;
-            var host = new NancyHost(new Uri(webServerUri));
+            var hostConfiguration = new HostConfiguration { UrlReservations = { CreateAutomatically = true } };
+            var host = new NancyHost(hostConfiguration, new Uri(webServerUri));
             _nancyHost = host;
             _nancyHost.Start();
             _logger.Info($"Http server started, listening on {webServerUri}.");
