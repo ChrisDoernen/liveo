@@ -38,7 +38,7 @@ namespace LivestreamApp.Server.Shared.WebSockets
 
         protected override async Task OnError(ErrorEventArgs e)
         {
-            _logger.Warn($"WebSocket service error: {e.Exception}");
+            _logger.Error(e.Exception, "WebSocket service error:");
         }
     }
 }
