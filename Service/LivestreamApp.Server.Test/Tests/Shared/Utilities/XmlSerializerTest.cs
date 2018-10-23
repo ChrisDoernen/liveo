@@ -3,6 +3,7 @@ using LivestreamApp.Server.Shared.Utilities;
 using LivestreamApp.Server.Streaming.Livestreams.Entities;
 using NUnit.Framework;
 using System;
+using System.IO;
 using System.Xml.Schema;
 
 namespace LivestreamApp.Server.Test.Tests.Shared.Utilities
@@ -11,12 +12,13 @@ namespace LivestreamApp.Server.Test.Tests.Shared.Utilities
     public class XmlSerializerTest
     {
         private const string Scheme = "LivestreamApp.Server.Streams.xsd";
+        private readonly string _testDir = TestContext.CurrentContext.TestDirectory;
 
         [Test]
         public void ValidateAndDeserialize_ValidConfig_ShouldReturnCorrectObject()
         {
             // Given
-            const string validConfig = "TestResources\\Config\\ValidStreams.config";
+            string validConfig = Path.Combine(_testDir, "TestResources\\Config\\ValidStreams.config");
 
             // When
             var deserialized =
@@ -38,8 +40,8 @@ namespace LivestreamApp.Server.Test.Tests.Shared.Utilities
         public void ReadFromConfigFile_InvalidNamespace()
         {
             // Given
-            const string invalidNamespaceConfig =
-                "TestResources\\Config\\InvalidNamespaceStreams.config";
+            var invalidNamespaceConfig =
+                Path.Combine(_testDir, "TestResources\\Config\\InvalidNamespaceStreams.config");
 
             // When
             Assert.Throws<InvalidOperationException>(() =>
@@ -50,7 +52,8 @@ namespace LivestreamApp.Server.Test.Tests.Shared.Utilities
         public void ReadFromConfigFile_InvalidConfig()
         {
             // Given
-            const string invalidConfig = "TestResources\\Config\\InvalidStreams.config";
+            var invalidConfig =
+                Path.Combine(_testDir, "TestResources\\Config\\InvalidStreams.config");
 
             // When
             Assert.Throws<XmlSchemaValidationException>(() =>

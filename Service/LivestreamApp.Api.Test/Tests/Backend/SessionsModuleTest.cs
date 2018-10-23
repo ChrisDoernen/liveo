@@ -12,6 +12,7 @@ using Ninject.Extensions.Logging;
 using Ninject.MockingKernel.Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.IO;
 
 namespace LivestreamApp.Api.Test.Tests.Backend
 {
@@ -19,6 +20,7 @@ namespace LivestreamApp.Api.Test.Tests.Backend
     public class SessionsModuleTest
     {
         private readonly MoqMockingKernel _kernel;
+        private readonly string _testDir = TestContext.CurrentContext.TestDirectory;
         private Mock<ISessionService> _mockSessionService;
         private Mock<ISessionService> _mockSessionManager;
         private Mock<ILogger> _mockLogger;
@@ -110,7 +112,7 @@ namespace LivestreamApp.Api.Test.Tests.Backend
             });
 
             // Then
-            var expectedResponse = System.IO.File.ReadAllText(ExpectedGetCurrentSessionResponse);
+            var expectedResponse = File.ReadAllText(Path.Combine(_testDir, ExpectedGetCurrentSessionResponse));
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             response.Body.ContentType.Should().Be("application/json; charset=utf-8");
             response.Body.AsString().Should().Be(expectedResponse);

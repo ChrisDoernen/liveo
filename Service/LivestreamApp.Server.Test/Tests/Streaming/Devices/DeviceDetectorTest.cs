@@ -15,6 +15,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Devices
     public class DeviceDetectorTest
     {
         private readonly MoqMockingKernel _kernel;
+        private readonly string _testDir = TestContext.CurrentContext.TestDirectory;
         private Mock<IProcessAdapter> _mockProcessAdapter;
         private Mock<IProcessSettingsProvider> _mockProcessSettingsProvider;
         private IDeviceDetector _deviceDetector;
@@ -45,7 +46,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Devices
         public void DetectAvailableDevices_OneInput_ShouldReturnCorrectAudioInput()
         {
             // Given
-            var processOutput = File.ReadAllText(FfmpegOutputOneDevice);
+            var processOutput = File.ReadAllText(Path.Combine(_testDir, FfmpegOutputOneDevice));
             var result = new ProcessResult(1, "", processOutput);
             _mockProcessAdapter
                 .Setup(mep => mep.ExecuteAndReadSync(It.IsAny<IProcessSettings>()))
@@ -66,7 +67,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Devices
         public void DetectAvailableDevices_ProcessFails_ShouldThrow()
         {
             // Given
-            var processOutput = File.ReadAllText(FfmpegOutputOneDevice);
+            var processOutput = File.ReadAllText(Path.Combine(_testDir, FfmpegOutputOneDevice));
             var result = new ProcessResult(0, "", processOutput);
             _mockProcessAdapter
                 .Setup(mep => mep.ExecuteAndReadSync(It.IsAny<IProcessSettings>()))
@@ -80,7 +81,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Devices
         public void DetectAvailableDevices_NoInputs_ShouldReturnEmptyList()
         {
             // Given
-            var processOutput = File.ReadAllText(FfmpegOutputNoDevice);
+            var processOutput = File.ReadAllText(Path.Combine(_testDir, FfmpegOutputNoDevice));
             var result = new ProcessResult(1, string.Empty, processOutput);
             _mockProcessAdapter
                 .Setup(mep => mep.ExecuteAndReadSync(It.IsAny<IProcessSettings>()))
@@ -98,7 +99,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Devices
         public void GetDeviceById_MatchingId_ShouldReturnCorrectDevice()
         {
             // Given
-            var processOutput = File.ReadAllText(FfmpegOutputOneDevice);
+            var processOutput = File.ReadAllText(Path.Combine(_testDir, FfmpegOutputOneDevice));
             var result = new ProcessResult(1, string.Empty, processOutput);
             _mockProcessAdapter
                 .Setup(mep => mep.ExecuteAndReadSync(It.IsAny<IProcessSettings>()))
@@ -118,7 +119,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Devices
         public void GetDeviceById_NonMatchingId_ShouldReturnUnknownDevice()
         {
             // Given
-            var processOutput = File.ReadAllText(FfmpegOutputNoDevice);
+            var processOutput = File.ReadAllText(Path.Combine(_testDir, FfmpegOutputNoDevice));
             var result = new ProcessResult(1, string.Empty, processOutput);
             _mockProcessAdapter
                 .Setup(mep => mep.ExecuteAndReadSync(It.IsAny<IProcessSettings>()))

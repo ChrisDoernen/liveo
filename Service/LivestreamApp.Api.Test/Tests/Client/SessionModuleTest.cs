@@ -3,14 +3,15 @@ using LivestreamApp.Api.Client.Modules;
 using LivestreamApp.Server.Streaming.Livestreams.Entities;
 using LivestreamApp.Server.Streaming.StreamingSessions.Entities;
 using LivestreamApp.Server.Streaming.StreamingSessions.Service;
-using NUnit.Framework;
 using Moq;
 using Nancy;
 using Nancy.Testing;
 using Ninject;
 using Ninject.Extensions.Logging;
 using Ninject.MockingKernel.Moq;
+using NUnit.Framework;
 using System.Collections.Generic;
+using System.IO;
 
 namespace LivestreamApp.Api.Test.Tests.Client
 {
@@ -22,6 +23,7 @@ namespace LivestreamApp.Api.Test.Tests.Client
         private Mock<ILogger> _mockLogger;
         private SessionClientEntity _sessionClientEntity;
         private StreamClientEntity _streamClientEntity;
+        private readonly string _testDir = TestContext.CurrentContext.TestDirectory;
         private const string ExpectedGetCurrentSessionResponse =
             "TestResources\\Responses\\ExpectedGetCurrentSessionClientResponse.txt";
 
@@ -95,7 +97,7 @@ namespace LivestreamApp.Api.Test.Tests.Client
             });
 
             // Then
-            var expectedResponse = System.IO.File.ReadAllText(ExpectedGetCurrentSessionResponse);
+            var expectedResponse = File.ReadAllText(Path.Combine(_testDir, ExpectedGetCurrentSessionResponse));
             result.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Body.ContentType.Should().Be("application/json; charset=utf-8");
             result.Body.AsString().Should().Be(expectedResponse);

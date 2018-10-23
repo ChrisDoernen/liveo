@@ -5,10 +5,10 @@ using LivestreamApp.Server.Streaming.Livestreams;
 using LivestreamApp.Server.Streaming.Livestreams.Entities;
 using LivestreamApp.Server.Streaming.Livestreams.Service;
 using LivestreamApp.Shared.Utilities;
-using NUnit.Framework;
 using Moq;
 using Ninject;
 using Ninject.MockingKernel.Moq;
+using NUnit.Framework;
 
 namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Service
 {
@@ -31,6 +31,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Livestreams.Service
         [SetUp]
         public void TestInitialize()
         {
+            _kernel.Reset();
             _mockConfigDataAdapter = _kernel.GetMock<IConfigAdapter>();
             _mockHashGenerator = _kernel.GetMock<IHashGenerator>();
             _streamService = GetStreamManager();

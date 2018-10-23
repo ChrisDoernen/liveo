@@ -3,11 +3,11 @@ using LivestreamApp.Server.Shared.Processes;
 using LivestreamApp.Server.Shared.ProcessSettings;
 using LivestreamApp.Server.Streaming.Devices;
 using LivestreamApp.Server.Streaming.StreamingSources;
-using NUnit.Framework;
 using Moq;
 using Ninject;
 using Ninject.MockingKernel.Moq;
 using Ninject.Parameters;
+using NUnit.Framework;
 
 namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSources
 {
@@ -28,6 +28,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSources
         [SetUp]
         public void TestInitialize()
         {
+            _kernel.Reset();
             _mockProcessAdapter = _kernel.GetMock<IProcessAdapter>();
             _mockProcessSettings = new ProcessSettings(string.Empty, string.Empty);
             _audioDevice = new Device("AudioDevice", DeviceType.AudioDevice, _mockProcessSettings);

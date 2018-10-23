@@ -32,6 +32,7 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.StreamingSessions.Service
         [SetUp]
         public void TestInitialize()
         {
+            _kernel.Reset();
             _mockConfigDataAdapter = _kernel.GetMock<IConfigAdapter>();
             _mockHashGenerator = _kernel.GetMock<IHashGenerator>();
             _sessionService = GetSessionManager();
