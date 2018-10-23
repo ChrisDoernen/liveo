@@ -8,13 +8,13 @@ namespace LivestreamApp.Service
     public class Service
     {
         private readonly ILogger _logger;
-        private readonly IUriConfiguration _uriConfiguration;
+        private readonly INetworkConfiguration _networkConfiguration;
         private NancyHost _nancyHost;
 
-        public Service(ILogger logger, IUriConfiguration uriConfiguration)
+        public Service(ILogger logger, INetworkConfiguration networkConfiguration)
         {
             _logger = logger;
-            _uriConfiguration = uriConfiguration;
+            _networkConfiguration = networkConfiguration;
         }
 
         public bool Start()
@@ -37,11 +37,11 @@ namespace LivestreamApp.Service
 
         private void StartServer()
         {
-            var uri = _uriConfiguration.GetHttpUri();
-            var host = new NancyHost(new Uri(uri));
+            var webServerUri = _networkConfiguration.WebServerUri;
+            var host = new NancyHost(new Uri(webServerUri));
             _nancyHost = host;
             _nancyHost.Start();
-            _logger.Info($"Http server started, listening on {uri}.");
+            _logger.Info($"Http server started, listening on {webServerUri}.");
         }
 
         public bool Stop()

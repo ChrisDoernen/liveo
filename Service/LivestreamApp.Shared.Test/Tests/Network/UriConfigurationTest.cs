@@ -1,10 +1,11 @@
 ﻿using FluentAssertions;
 using LivestreamApp.Shared.AppSettings;
 using LivestreamApp.Shared.Network;
-using NUnit.Framework;
 using Moq;
 using Ninject;
 using Ninject.MockingKernel.Moq;
+using NUnit.Framework;
+using System.Net;
 
 namespace LivestreamApp.Shared.Test.Tests.Network
 {
@@ -12,52 +13,90 @@ namespace LivestreamApp.Shared.Test.Tests.Network
     public class UriConfigurationTest
     {
         private readonly MoqMockingKernel _kernel;
-        private Mock<IAppSettingsProvider> _appSettingsProvider;
-        private IUriConfiguration _uriConfiguration;
+        private Mock<IAppSettingsProvider> _mockAppSettingsProvider;
+        private Mock<INetworkUtilities> _mockNetworkUtilities;
+        private INetworkConfiguration _networkConfiguration;
 
         public UriConfigurationTest()
         {
             _kernel = new MoqMockingKernel();
-            _kernel.Bind<IUriConfiguration>().To<UriConfiguration>();
+            _kernel.Bind<INetworkConfiguration>().To<NetworkConfiguration>();
         }
 
         [SetUp]
         public void TestInitialize()
         {
             _kernel.Reset();
-            _appSettingsProvider = _kernel.GetMock<IAppSettingsProvider>();
-            _uriConfiguration = _kernel.Get<IUriConfiguration>();
+            _mockAppSettingsProvider = _kernel.GetMock<IAppSettingsProvider>();
+            _mockNetworkUtilities = _kernel.GetMock<INetworkUtilities>();
+            ConfigureMocks();
+            _networkConfiguration = _kernel.Get<INetworkConfiguration>();
+        }
+
+        private void ConfigureMocks()
+        {
+            var expectedIpAddress = IPAddress.Parse("192.168.1.1");
+            _mockNetworkUtilities.Setup(mnu => mnu.GetIpAddress()).Returns(expectedIpAddress);
+
+            var hostEntry = new IPHostEntry { HostName = "live" };
+            _mockNetworkUtilities.Setup(mnu => mnu.GetHostName()).Returns(hostEntry);
+
+            _mockAppSettingsProvider
+                .Setup(masp => masp.GetIntValue(AppSetting.DefaultPort))
+                .Returns(80);
+            _mockAppSettingsProvider
+                .Setup(masp => masp.GetIntValue(AppSetting.DefaultWebSocketPort))
+                .Returns(8080);
         }
 
         [Test]
-        public void GetWsUri_ShouldReturnCorrectUri()
+        public void IpAddress_ShouldReturnCorrectIp()
         {
-            // Given
-            _appSettingsProvider
-                .Setup(masp => masp.GetIntValue(It.IsAny<AppSetting>()))
-                .Returns(1234);
-
-            // When 
-            var wsUri = _uriConfiguration.GetWsUri();
+            // Given when 
+            var ipAddress = _networkConfiguration.IpAddress;
 
             // Then
-            wsUri.Should().Be("ws://localhost:1234/");
+            ipAddress.Should().BeEquivalentTo(IPAddress.Parse("192.168.1.1"));
         }
 
         [Test]
-        public void GetHttpUri_ShouldReturnCorrectUri()
+        public void HostName_ShouldReturnCorrectHostName()
         {
-            // Given
-            _appSettingsProvider
-                .Setup(masp => masp.GetIntValue(It.IsAny<AppSetting>()))
-                .Returns(4321);
-
-            // When 
-            var wsUri = _uriConfiguration.GetHttpUri();
+            // Given when 
+            var host = _networkConfiguration.HostEntry;
 
             // Then
-            wsUri.Should().Be("http://localhost:4321/");
+            host.HostName.Should().BeEquivalentTo("live");
         }
 
+        [Test]
+        public void WebServerUri_ShouldReturnCorrectUri()
+        {
+            // Given when 
+            var webServerUri = _networkConfiguration.WebServerUri;
+
+            // Then
+            webServerUri.Should().Be("http://192.168.1.1:80/");
+        }
+
+        [Test]
+        public void WebSocketServerPort_ShouldReturnCorrectPort()
+        {
+            // Given when 
+            var webSocketServerPort = _networkConfiguration.WebSocketServerPort;
+
+            // Then
+            webSocketServerPort.Should().Be(8080);
+        }
+
+        [Test]
+        public void WebSocketServerUri_ShouldReturnCorrectUri()
+        {
+            // Given when 
+            var webSocketServerUri = _networkConfiguration.WebSocketServerUri;
+
+            // Then
+            webSocketServerUri.Should().Be("ws://192.168.1.1:8080/");
+        }
     }
 }

@@ -11,15 +11,15 @@ namespace LivestreamApp.Server.Shared.WebSockets
     {
         private readonly ILogger _logger;
         private WebSocketServer _webSocketServer;
-        private readonly IUriConfiguration _uriConfiguration;
+        private readonly INetworkConfiguration _networkConfiguration;
         private readonly IWebSocketServiceFactory _webSocketServiceFactory;
 
-        public WebSocketServerAdapter(ILogger logger, IUriConfiguration uriConfiguration,
+        public WebSocketServerAdapter(ILogger logger, INetworkConfiguration networkConfiguration,
             IWebSocketServiceFactory webSocketServiceFactory)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _webSocketServiceFactory = webSocketServiceFactory ?? throw new ArgumentNullException(nameof(webSocketServiceFactory));
-            _uriConfiguration = uriConfiguration ?? throw new ArgumentNullException(nameof(uriConfiguration));
+            _networkConfiguration = networkConfiguration ?? throw new ArgumentNullException(nameof(networkConfiguration));
             StartWebSocketServer();
         }
 
@@ -27,11 +27,12 @@ namespace LivestreamApp.Server.Shared.WebSockets
         {
             try
             {
-                var wsUri = _uriConfiguration.GetWsUri();
-                _webSocketServer = new WebSocketServer(wsUri);
-                _webSocketServer.KeepClean = false;
+                var webSocketServerIp = _networkConfiguration.IpAddress;
+                var webSocketServerPort = _networkConfiguration.WebSocketServerPort;
+                var webSocketServerUri = _networkConfiguration.WebSocketServerUri;
+                _webSocketServer = new WebSocketServer(webSocketServerIp, webSocketServerPort);
                 _webSocketServer.Start();
-                _logger.Info($"WebSocket server started, istening on {wsUri}.");
+                _logger.Info($"WebSocket server started, listening on {webSocketServerUri}.");
             }
             catch (Exception ex)
             {
@@ -40,11 +41,11 @@ namespace LivestreamApp.Server.Shared.WebSockets
             }
         }
 
-        public void StopWebSocketServer()
+        public async void StopWebSocketServer()
         {
             try
             {
-                _webSocketServer.Stop();
+                await _webSocketServer.Stop();
                 _logger.Info("WebSocket server stopped.");
             }
             catch (Exception ex)

@@ -2,6 +2,7 @@
 using LivestreamApp.Server.Streaming.StreamingSources;
 using Ninject.Extensions.Logging;
 using System;
+using System.Threading.Tasks;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 
@@ -16,7 +17,6 @@ namespace LivestreamApp.Server.Shared.WebSockets
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _source = source ?? throw new ArgumentNullException(nameof(source));
-            IgnoreExtensions = true;
         }
 
         private void SendBytes(object sender, BytesReceivedEventArgs e)
@@ -24,19 +24,19 @@ namespace LivestreamApp.Server.Shared.WebSockets
             Send(e.Bytes);
         }
 
-        protected override void OnOpen()
+        protected override async Task OnOpen()
         {
             _source.BytesReceived += SendBytes;
             _logger.Debug("Client connected");
         }
 
-        protected override void OnClose(CloseEventArgs e)
+        protected override async Task OnClose(CloseEventArgs e)
         {
             _source.BytesReceived -= SendBytes;
             _logger.Debug("Client disconnected");
         }
 
-        protected override void OnError(ErrorEventArgs e)
+        protected override async Task OnError(ErrorEventArgs e)
         {
             _logger.Warn($"WebSocket service error: {e.Exception}");
         }

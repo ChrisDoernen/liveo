@@ -4,7 +4,6 @@ using System;
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
-using WebSocketSharp;
 
 namespace LivestreamApp.Server.Shared.Processes
 {
@@ -121,7 +120,9 @@ namespace LivestreamApp.Server.Shared.Processes
             while (_process.HasExited == false)
             {
                 var length = await _process.StandardOutput.BaseStream.ReadAsync(_buffer, 0, _buffer.Length);
-                OutDataReceived(_buffer.SubArray(0, length));
+                var bytes = new byte[length];
+                Array.Copy(_buffer, 0, bytes, 0, length);
+                OutDataReceived(bytes);
             }
         }
 
