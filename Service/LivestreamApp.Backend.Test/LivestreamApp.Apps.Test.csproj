@@ -7,8 +7,8 @@
     <ProjectGuid>{618DC2C3-F0F9-4655-B3AF-BAC89CAC03F6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LivestreamApp.Backend.Test</RootNamespace>
-    <AssemblyName>LivestreamApp.Backend.Test</AssemblyName>
+    <RootNamespace>LivestreamApp.Apps.Test</RootNamespace>
+    <AssemblyName>LivestreamApp.Apps.Test</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>

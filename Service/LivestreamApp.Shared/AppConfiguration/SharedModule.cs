@@ -15,7 +15,7 @@ namespace LivestreamApp.Shared.AppConfiguration
             Bind<INetworkConfiguration>().To<NetworkConfiguration>();
             Bind<IAuthenticationService>().To<AuthenticationService>();
             Bind<IHashGenerator>().To<HashGenerator>().InSingletonScope();
-            Bind<INetworkUtilities>().To<NetworkUtilities>();
+            Bind<INetworkUtilities>().To<NetworkUtilities>().InSingletonScope();
         }
     }
 }

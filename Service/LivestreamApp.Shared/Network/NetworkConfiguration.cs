@@ -53,7 +53,7 @@ namespace LivestreamApp.Shared.Network
         private void GetWebServerUri()
         {
             var httpPort = _appSettingsProvider.GetIntValue(AppSetting.DefaultPort);
-            WebServerUri = GetUri(HttpScheme, IpAddress.ToString(), httpPort);
+            WebServerUri = GetUri(HttpScheme, Localhost, httpPort);
         }
 
         private void GetWebSocketServerPort()

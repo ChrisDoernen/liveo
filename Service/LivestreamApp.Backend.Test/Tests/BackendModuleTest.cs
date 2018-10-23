@@ -1,12 +1,12 @@
 ﻿using FluentAssertions;
 using LivestreamApp.Apps.Modules;
-using NUnit.Framework;
 using Moq;
 using Nancy;
 using Nancy.Testing;
 using Ninject.Extensions.Logging;
+using NUnit.Framework;
 
-namespace LivestreamApp.Backend.Test.Tests
+namespace LivestreamApp.Apps.Test.Tests
 {
     [TestFixture]
     public class BackendModuleTest
