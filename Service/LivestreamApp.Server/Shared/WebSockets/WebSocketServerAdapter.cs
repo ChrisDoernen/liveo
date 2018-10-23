@@ -27,10 +27,9 @@ namespace LivestreamApp.Server.Shared.WebSockets
         {
             try
             {
-                var webSocketServerIp = _networkConfiguration.IpAddress;
-                var webSocketServerPort = _networkConfiguration.WebSocketServerPort;
                 var webSocketServerUri = _networkConfiguration.WebSocketServerUri;
-                _webSocketServer = new WebSocketServer(webSocketServerIp, webSocketServerPort);
+                _webSocketServer = new WebSocketServer(webSocketServerUri);
+                _webSocketServer.KeepClean = false;
                 _webSocketServer.Start();
                 _logger.Info($"WebSocket server started, listening on {webSocketServerUri}.");
             }
@@ -41,11 +40,11 @@ namespace LivestreamApp.Server.Shared.WebSockets
             }
         }
 
-        public async void StopWebSocketServer()
+        public void StopWebSocketServer()
         {
             try
             {
-                await _webSocketServer.Stop();
+                _webSocketServer.Stop();
                 _logger.Info("WebSocket server stopped.");
             }
             catch (Exception ex)

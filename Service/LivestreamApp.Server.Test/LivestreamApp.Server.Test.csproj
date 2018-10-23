@@ -117,12 +117,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="TestResources\ffmpeg\ffmpegListDevicesOutputOneDeviceAvailable.txt">
+    <None Include="TestResources\Ffmpeg\FfmpegListDevicesOutputOneDeviceAvailable.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="TestResources\ffmpeg\ffmpegListDevicesOutputNoDeviceAvailable.txt">
+    <None Include="TestResources\Ffmpeg\FfmpegListDevicesOutputNoDeviceAvailable.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

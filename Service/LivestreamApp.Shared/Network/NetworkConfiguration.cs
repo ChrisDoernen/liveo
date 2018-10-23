@@ -64,7 +64,7 @@ namespace LivestreamApp.Shared.Network
         private void GetWebSocketServerUri()
         {
             var webSocketServerPort = _appSettingsProvider.GetIntValue(AppSetting.DefaultWebSocketPort);
-            WebSocketServerUri = GetUri(WebSocketScheme, IpAddress.ToString(), webSocketServerPort);
+            WebSocketServerUri = GetUri(WebSocketScheme, Localhost, webSocketServerPort);
         }
 
         private string GetUri(string scheme, string domain, int port)
