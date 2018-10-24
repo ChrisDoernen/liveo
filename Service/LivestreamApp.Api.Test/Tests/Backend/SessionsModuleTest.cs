@@ -27,7 +27,7 @@ namespace LivestreamApp.Api.Test.Tests.Backend
         private SessionBackendEntity _sessionBackendEntity;
         private StreamBackendEntity _streamBackendEntity;
         private const string ExpectedGetCurrentSessionResponse =
-            "TestResources\\Responses\\ExpectedGetCurrentSessionBackendResponse.txt";
+            "TestResources/Responses/ExpectedGetCurrentSessionBackendResponse.txt";
 
         public SessionsModuleTest()
         {

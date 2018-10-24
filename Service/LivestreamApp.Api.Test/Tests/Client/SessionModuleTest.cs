@@ -25,7 +25,7 @@ namespace LivestreamApp.Api.Test.Tests.Client
         private StreamClientEntity _streamClientEntity;
         private readonly string _testDir = TestContext.CurrentContext.TestDirectory;
         private const string ExpectedGetCurrentSessionResponse =
-            "TestResources\\Responses\\ExpectedGetCurrentSessionClientResponse.txt";
+            "TestResources/Responses/ExpectedGetCurrentSessionClientResponse.txt";
 
         public SessionModuleTest()
         {
