@@ -1,2 +1,9 @@
 language: csharp
 solution: Service/Service.sln
+install:
+  - nuget restore Service/Service.sln
+  - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory Service/Testrunner
+script:
+  - msbuild /p:Configuration=Release Service/Service.sln
+  - mono Service/Testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe Service/LivestreamApp.Api.Test/bin/Release/LivestreamApp.Api.Test.dll
+  
