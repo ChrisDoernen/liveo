@@ -76,7 +76,7 @@ namespace LivestreamApp.Shared.Test.Tests.Network
             var webServerUri = _networkConfiguration.WebServerUri;
 
             // Then
-            webServerUri.Should().Be("http://192.168.1.1:80/");
+            webServerUri.Should().Be("http://localhost:80/");
         }
 
         [Test]
@@ -96,7 +96,7 @@ namespace LivestreamApp.Shared.Test.Tests.Network
             var webSocketServerUri = _networkConfiguration.WebSocketServerUri;
 
             // Then
-            webSocketServerUri.Should().Be("ws://192.168.1.1:8080/");
+            webSocketServerUri.Should().Be("ws://localhost:8080/");
         }
     }
 }

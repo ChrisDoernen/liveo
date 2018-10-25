@@ -20,9 +20,9 @@ namespace LivestreamApp.Server.Test.Tests.Streaming.Devices
         private Mock<IProcessSettingsProvider> _mockProcessSettingsProvider;
         private IDeviceDetector _deviceDetector;
         private const string FfmpegOutputOneDevice =
-            "TestResources\\Ffmpeg\\FfmpegListDevicesOutputOneDeviceAvailable.txt";
+            "TestResources/Ffmpeg/FfmpegListDevicesOutputOneDeviceAvailable.txt";
         private const string FfmpegOutputNoDevice =
-            "TestResources\\Ffmpeg\\FfmpegListDevicesOutputNoDeviceAvailable.txt";
+            "TestResources/Ffmpeg/FfmpegListDevicesOutputNoDeviceAvailable.txt";
 
         public DeviceDetectorTest()
         {

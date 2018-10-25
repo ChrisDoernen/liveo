@@ -18,7 +18,7 @@ namespace LivestreamApp.Server.Test.Tests.Shared.Utilities
         public void ValidateAndDeserialize_ValidConfig_ShouldReturnCorrectObject()
         {
             // Given
-            string validConfig = Path.Combine(_testDir, "TestResources\\Config\\ValidStreams.config");
+            string validConfig = Path.Combine(_testDir, "TestResources/Config/ValidStreams.config");
 
             // When
             var deserialized =
@@ -41,7 +41,7 @@ namespace LivestreamApp.Server.Test.Tests.Shared.Utilities
         {
             // Given
             var invalidNamespaceConfig =
-                Path.Combine(_testDir, "TestResources\\Config\\InvalidNamespaceStreams.config");
+                Path.Combine(_testDir, "TestResources/Config/InvalidNamespaceStreams.config");
 
             // When
             Assert.Throws<InvalidOperationException>(() =>
@@ -53,7 +53,7 @@ namespace LivestreamApp.Server.Test.Tests.Shared.Utilities
         {
             // Given
             var invalidConfig =
-                Path.Combine(_testDir, "TestResources\\Config\\InvalidStreams.config");
+                Path.Combine(_testDir, "TestResources/Config/InvalidStreams.config");
 
             // When
             Assert.Throws<XmlSchemaValidationException>(() =>
