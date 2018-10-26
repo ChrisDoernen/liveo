@@ -11,7 +11,7 @@ script:
   - Service/TestRunner/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe Service/LivestreamApp.Api.Test/bin/Release/LivestreamApp.Api.Test.dll
   - Service/TestRunner/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe Service/LivestreamApp.Apps.Test/bin/Release/LivestreamApp.Apps.Test.dll
   - Service/TestRunner/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe Service/LivestreamApp.Server.Test/bin/Release/LivestreamApp.Server.Test.dll
-  - Service/TestRunner/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe Service/LivestreamApp.Shared.Test/bin/Release/LivestreamApp.Service.Test.dll
+  - Service/TestRunner/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe Service/LivestreamApp.Shared.Test/bin/Release/LivestreamApp.Shared.Test.dll
   
 notifications:
   email: false
