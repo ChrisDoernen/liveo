@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamApp.Service", "LivesteamApp.Service\LivestreamApp.Service.csproj", "{2757CD13-FA34-40B4-B75C-2DF29ECD53E8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamApp.Service", "LivestreamApp.Service\LivestreamApp.Service.csproj", "{2757CD13-FA34-40B4-B75C-2DF29ECD53E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamApp.Apps", "LivestramApp.Apps\LivestreamApp.Apps.csproj", "{B4BBA85F-6641-489A-9E2E-E95348BC4598}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamApp.Apps", "LivestreamApp.Apps\LivestreamApp.Apps.csproj", "{B4BBA85F-6641-489A-9E2E-E95348BC4598}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamApp.Api", "LivestreamApp.Api\LivestreamApp.Api.csproj", "{415E7607-BB1D-4458-8289-659FB462E6C4}"
 EndProject
