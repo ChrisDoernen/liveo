@@ -1,6 +1,4 @@
-﻿using LivestreamApp.Server.AppConfiguration;
-using LivestreamApp.Shared.AppConfiguration;
-using LivestreamApp.Shared.Authentication;
+﻿using LivestreamApp.Shared.Authentication;
 using Nancy;
 using Nancy.Authentication.Stateless;
 using Nancy.Bootstrapper;
@@ -8,11 +6,19 @@ using Nancy.Bootstrappers.Ninject;
 using Nancy.Conventions;
 using Ninject;
 using Ninject.Extensions.Logging;
+using System;
 
 namespace LivestreamApp.Service.AppConfiguration
 {
     public class NancyBootstrapper : NinjectNancyBootstrapper
     {
+        private readonly IKernel _kernel;
+
+        public NancyBootstrapper(IKernel kernel)
+        {
+            _kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
+        }
+
         protected override void ApplicationStartup(IKernel kernel, IPipelines pipelines)
         {
             var authenticationService = kernel.Get<IAuthenticationService>();
@@ -54,9 +60,9 @@ namespace LivestreamApp.Service.AppConfiguration
             };
         }
 
-        protected override void ConfigureApplicationContainer(IKernel kernel)
+        protected override IKernel GetApplicationContainer()
         {
-            kernel.Load(new ServerModule(), new AutoMapperModule(), new SharedModule());
+            return _kernel;
         }
     }
 }

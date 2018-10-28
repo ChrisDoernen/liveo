@@ -1,3 +1,4 @@
+using LivestreamApp.Server.AppConfiguration;
 using LivestreamApp.Service.UriReservation;
 using LivestreamApp.Shared.AppConfiguration;
 using LivestreamApp.Shared.AppSettings;
@@ -14,7 +15,7 @@ namespace LivestreamApp.Service
         {
             // Load Ninject kernel
             IKernel kernel = new StandardKernel();
-            kernel.Load(new SharedModule());
+            kernel.Load(new ServerModule(), new AutoMapperModule(), new SharedModule());
 
             // Validate app settings before startup
             var appSettingsProvider = kernel.Get<IAppSettingsProvider>();

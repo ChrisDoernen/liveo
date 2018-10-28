@@ -1,4 +1,5 @@
-﻿using LivestreamApp.Shared.Network;
+﻿using LivestreamApp.Service.AppConfiguration;
+using LivestreamApp.Shared.Network;
 using Nancy.Hosting.Self;
 using Ninject.Extensions.Logging;
 using System;
@@ -9,12 +10,15 @@ namespace LivestreamApp.Service
     {
         private readonly ILogger _logger;
         private readonly INetworkConfiguration _networkConfiguration;
+        private readonly NancyBootstrapper _nancyBootstrapper;
         private NancyHost _nancyHost;
 
-        public Service(ILogger logger, INetworkConfiguration networkConfiguration)
+        public Service(ILogger logger, INetworkConfiguration networkConfiguration,
+            NancyBootstrapper nancyBootstrapper)
         {
-            _logger = logger;
-            _networkConfiguration = networkConfiguration;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _networkConfiguration = networkConfiguration ?? throw new ArgumentNullException(nameof(networkConfiguration));
+            _nancyBootstrapper = nancyBootstrapper ?? throw new ArgumentNullException(nameof(nancyBootstrapper));
         }
 
         public bool Start()
@@ -23,7 +27,7 @@ namespace LivestreamApp.Service
 
             try
             {
-                StartServer();
+                StartWebServer();
                 return true;
             }
             catch (Exception ex)
@@ -35,11 +39,11 @@ namespace LivestreamApp.Service
             return false;
         }
 
-        private void StartServer()
+        private void StartWebServer()
         {
             var webServerUri = _networkConfiguration.WebServerUri;
             var hostConfiguration = new HostConfiguration { UrlReservations = { CreateAutomatically = true } };
-            var host = new NancyHost(hostConfiguration, new Uri(webServerUri));
+            var host = new NancyHost(_nancyBootstrapper, hostConfiguration, new Uri(webServerUri));
             _nancyHost = host;
             _nancyHost.Start();
             _logger.Info($"Http server started, listening on {webServerUri}.");
@@ -51,7 +55,7 @@ namespace LivestreamApp.Service
 
             try
             {
-                StopServer();
+                StopWebServer();
             }
             catch (Exception ex)
             {
@@ -62,7 +66,7 @@ namespace LivestreamApp.Service
             return true;
         }
 
-        private void StopServer()
+        private void StopWebServer()
         {
             _nancyHost.Stop();
             _nancyHost.Dispose();
