@@ -2,8 +2,8 @@ dist: trusty
 language: csharp
 solution: Service/Service.sln
 install:
-  - nvm install 8.0.0
-  - nvm use 8.0.0
+  - nvm install 8.11.3
+  - nvm use 8.11.3
   - nuget Restore Service/Service.sln
   - nuget Install NUnit.ConsoleRunner -Version 3.9.0 -OutputDirectory Service/TestRunner
 addons:
