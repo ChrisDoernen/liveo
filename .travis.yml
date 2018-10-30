@@ -1,11 +1,6 @@
 dist: trusty
 language: csharp
 solution: Service/Service.sln
-install:
-  - nvm install 8.11.3
-  - nvm use 8.11.3
-  - nuget Restore Service/Service.sln
-  - nuget Install NUnit.ConsoleRunner -Version 3.9.0 -OutputDirectory Service/TestRunner
 addons:
   sonarcloud:
     organization: "chrisdoernen-github"
@@ -15,7 +10,12 @@ addons:
       - google-chrome
     packages:
       - google-chrome-stable
+install:
+  - nvm install 8.11.3
+  - nvm use 8.11.3
 script:
+  - nuget Restore Service/Service.sln
+  - nuget Install NUnit.ConsoleRunner -Version 3.9.0 -OutputDirectory Service/TestRunner
   - msbuild /p:Configuration=Release Service/Service.sln
   - Service/TestRunner/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe 
     Service/LivestreamApp.Api.Test/bin/Release/LivestreamApp.Api.Test.dll 
@@ -25,6 +25,7 @@ script:
   - sonar-scanner
   - cd Client
   - npm install
-  - npm run test -- --watch=false --progress=false --browsers=ChromeHeadlessCI
+  - npm run buildProd
+  - npm run testCI
 notifications:
   email: false

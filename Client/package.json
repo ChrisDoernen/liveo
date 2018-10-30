@@ -4,8 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod --deploy-url /app/ --base-href /app/",
+    "build": "ng build",
+    "buildProd": "ng build --prod --deploy-url /app/ --base-href /app/",
     "test": "ng test",
+    "testCI": "ng test --watch=false --progress=false --browsers=ChromeHeadlessCI",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
