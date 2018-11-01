@@ -3,9 +3,9 @@
               "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
 
 <svg xmlns="http://www.w3.org/2000/svg"
-     width="9.72222in" height="2.77778in"
+     width="100px" height="50px"
      viewBox="0 0 700 200">
-  <path id="live-logo"
+  <path class="live-logo"
         fill="white"
         d="M 87.64,94.82
            C 87.73,118.82 71.00,132.09 52.75,132.00

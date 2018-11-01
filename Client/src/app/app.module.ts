@@ -7,18 +7,22 @@ import { SessionComponent } from './components/session/session.component';
 import { StreamComponent } from './components/stream/stream.component';
 import { AppRoutingModule } from './app-routing.module';
 import { EndpointService } from './services/endpoint-service/endpoint.service';
+import { InlineSVGModule } from 'ng-inline-svg';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SessionComponent,
-    StreamComponent
+    StreamComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    InlineSVGModule.forRoot()
   ],
   providers: [
     EndpointService,
