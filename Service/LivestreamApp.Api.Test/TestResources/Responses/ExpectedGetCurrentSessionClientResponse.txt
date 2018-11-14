@@ -1,1 +1,0 @@
-﻿{"id":"SomeSessionId","title":"SomeSessionTitle","description":null,"timeStarted":null,"timeEnded":null,"timeStarting":null,"timeEnding":null,"streams":[{"id":"SomeId","title":null,"description":"SomeDescription","countryCode":null}]}
