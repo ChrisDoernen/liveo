@@ -1,6 +1,5 @@
 dist: trusty
-language: csharp
-solution: Service/Service.sln
+language: node_js
 addons:
   sonarcloud:
     organization: "chrisdoernen-github"
@@ -14,18 +13,9 @@ install:
   - nvm install 8.11.3
   - nvm use 8.11.3
 script:
-  - nuget Restore Service/Service.sln
-  - nuget Install NUnit.ConsoleRunner -Version 3.9.0 -OutputDirectory Service/TestRunner
-  - msbuild /p:Configuration=Release Service/Service.sln
-  - Service/TestRunner/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe 
-    Service/LivestreamApp.Api.Test/bin/Release/LivestreamApp.Api.Test.dll 
-    Service/LivestreamApp.Apps.Test/bin/Release/LivestreamApp.Apps.Test.dll 
-    Service/LivestreamApp.Server.Test/bin/Release/LivestreamApp.Server.Test.dll 
-    Service/LivestreamApp.Shared.Test/bin/Release/LivestreamApp.Shared.Test.dll
-  - sonar-scanner
   - cd Client
   - npm install
-  - npm run buildProd
   - npm run testCI
+  - npm run buildProd
 notifications:
   email: false
