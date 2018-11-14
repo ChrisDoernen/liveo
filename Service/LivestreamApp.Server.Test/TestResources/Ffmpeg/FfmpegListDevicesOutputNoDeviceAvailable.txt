@@ -1,4 +1,0 @@
-[dshow @ 0000023e3e56a1c0] DirectShow video devices (some may be both video and audio devices)
-[dshow @ 0000023e3e56a1c0]  "USB Boot"
-[dshow @ 0000023e3e56a1c0]     Alternative name "@device_pnp_\\?\usb#vid_0bda&pid_5846&mi_00#6&18d0fbe5&0&0000#{65e8773d-8f56-11d0-a3b9-00a0c9223196}\global"
-dummy: Immediate exit requested
