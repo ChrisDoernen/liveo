@@ -9,13 +9,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { EndpointService } from './services/endpoint-service/endpoint.service';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { HeaderComponent } from './components/header/header.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SessionComponent,
     StreamComponent,
-    HeaderComponent
+    HeaderComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,

@@ -1,9 +1,9 @@
-.lc-loading__logo {
+.lc-welcome__logo {
     width: 100px;
     margin: auto;
 }
 
-.lc-loading {
+.lc-welcome {
     background-color: var(--main-color);
     height: 100vh;
     display: flex;
