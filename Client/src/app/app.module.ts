@@ -8,7 +8,7 @@ import { StreamComponent } from './components/stream/stream.component';
 import { AppRoutingModule } from './app-routing.module';
 import { EndpointService } from './services/endpoint-service/endpoint.service';
 import { InlineSVGModule } from 'ng-inline-svg';
-import { HeaderComponent } from './header/header.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
