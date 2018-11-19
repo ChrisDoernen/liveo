@@ -5,6 +5,8 @@
     "module": "commonjs",
     "types": [
       "jest",
+      "jquery",
+      "jsdom",
       "node"
     ]
   },
