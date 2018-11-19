@@ -5,18 +5,15 @@ import { EndpointService } from '../endpoint-service/endpoint.service';
 
 describe('SessionService', () => {
   let sessionService: SessionService;
-  let httpClient: jasmine.SpyObj<HttpClient>;
-  let endpointService: jasmine.SpyObj<EndpointService>;
+  let httpClient = jest.fn();
+  let endpointService = jest.fn();
 
   beforeEach(() => {
-    const httpClientSpy = jasmine.createSpyObj('HttpClient', ['']);
-    const endpointServiceSpy = jasmine.createSpyObj('EndpointService', ['']);
-
     TestBed.configureTestingModule({
       providers: [
         SessionService, 
-        { provide: HttpClient, useValue: httpClientSpy },
-        { provide: EndpointService, useValue: endpointServiceSpy}
+        { provide: HttpClient, useValue: httpClient },
+        { provide: EndpointService, useValue: endpointService}
       ]
     });
 

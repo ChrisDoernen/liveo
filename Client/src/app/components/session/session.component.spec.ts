@@ -7,7 +7,7 @@ describe('SessionComponent', () => {
   let fixture: ComponentFixture<SessionComponent>;
 
   beforeEach(() => {
-    const sessionServiceSpy = jasmine.createSpyObj('SessionService', ['']);
+    const sessionServiceSpy = jest.fn();
 
     TestBed.configureTestingModule({
 

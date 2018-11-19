@@ -7,7 +7,6 @@
     "build": "ng build",
     "buildProd": "ng build --prod --deploy-url /app/ --base-href /app/",
     "test": "jest",
-    "testCI": "ng test --watch=false --progress=false --browsers=ChromeHeadlessCI",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
