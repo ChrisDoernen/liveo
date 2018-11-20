@@ -1,0 +1,10 @@
+{  "rules": 
+  {
+    "member-access": [
+      true,
+      "check-accessor"
+    ],
+    // Disallows usages of any as a type declaration.
+    "no-any": false
+  }
+}

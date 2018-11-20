@@ -4,7 +4,10 @@
   "description": "",
   "main": "service.js",
   "scripts": {
-  	"start": "node service.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node service.js",
+    "start-monitor": "nodemon service.js"
+  },
+  "dependencies": {
+    "@types/node": "^10.12.9"
   }
 }
