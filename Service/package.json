@@ -4,10 +4,12 @@
   "description": "",
   "main": "service.js",
   "scripts": {
-    "start": "node service.js",
-    "start-monitor": "nodemon service.js"
+    "build": "tsc",
+    "start": "node dist/index.js"
   },
   "dependencies": {
-    "@types/node": "^10.12.9"
+    "@types/express": "^4.16.0",
+    "@types/node": "^10.12.9",
+    "express": "^4.16.4"
   }
 }

@@ -6,3 +6,6 @@ export class Shutdown {
         exec('shutdown now');
     }
 }
+
+var sh = new Shutdown();
+sh.shutdown();
