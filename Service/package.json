@@ -5,6 +5,7 @@
   "main": "service.js",
   "scripts": {
     "build": "tsc",
+    "buildProd": "tsc --sourceMap false",
     "start": "node dist/index.js"
   },
   "dependencies": {

@@ -1,11 +1,11 @@
-import app from './service';
+import server from './service';
 
 const port = 3000;
 
-app.listen(port, (err) => {
+server.listen(port, (err) => {
   if (err) {
     return console.log(err);
   }
 
   return console.log(`server is listening on ${port}`);
-})
+});
