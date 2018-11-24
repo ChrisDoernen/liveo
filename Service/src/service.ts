@@ -1,22 +1,24 @@
-import * as express from "express";
+import "reflect-metadata";
+import { InversifyExpressServer } from "inversify-express-utils";
+import { Container } from "inversify";
+import * as bodyParser from "body-parser";
+import "./controller/home";
 
-export class Service {
-  public express: any;
+// Load everything needed to the Container
+let container = new Container();
+// container.bind<UserService>(TYPES.UserService).to(UserService);
 
-  constructor() {
-    this.express = express();
-    this.mountRoutes();
-  }
+// Start the server
+let server = new InversifyExpressServer(container);
 
-  private mountRoutes(): void {
-    const router = express.Router();
-    router.get("/", (req, res) => {
-      res.json({
-        message: "Hello World!"
-      });
-    });
-    this.express.use("/", router);
-  }
-}
+server.setConfig((app) => {
+  app.use(bodyParser.urlencoded({
+    extended: true
+  }));
+  app.use(bodyParser.json());
+});
 
-export default new Service().express;
+let serverInstance = server.build();
+serverInstance.listen(3000);
+
+console.log("Server started on port 3000 :)");
