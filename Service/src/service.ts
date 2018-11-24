@@ -1,21 +1,21 @@
-import * as express from 'express';
+import * as express from "express";
 
 export class Service {
-  public express;
+  public express: any;
 
-  constructor () {
+  constructor() {
     this.express = express();
     this.mountRoutes();
   }
 
-  private mountRoutes (): void {
+  private mountRoutes(): void {
     const router = express.Router();
-    router.get('/', (req, res) => {
+    router.get("/", (req, res) => {
       res.json({
-        message: 'Hello World!'
+        message: "Hello World!"
       });
     });
-    this.express.use('/', router);
+    this.express.use("/", router);
   }
 }
 
