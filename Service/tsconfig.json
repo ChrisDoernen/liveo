@@ -6,7 +6,8 @@
     "sourceMap": true,
     "types": [ 
       "reflect-metadata", 
-      "jest" 
+      "jest",
+      "winston"
     ],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,

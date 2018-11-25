@@ -3,6 +3,9 @@ import { InversifyExpressServer } from "inversify-express-utils";
 import { Container } from "inversify";
 import * as bodyParser from "body-parser";
 import "./controller/home";
+import * as logger from "./config/logging.config";
+
+logger.info("Starting Live server...");
 
 // Load everything needed to the Container
 let container = new Container();
@@ -21,4 +24,4 @@ server.setConfig((app) => {
 let serverInstance = server.build();
 serverInstance.listen(3000);
 
-console.log("Server started on port 3000 :)");
+logger.info("Server started on port 3000)");
