@@ -1,9 +1,10 @@
-import "reflect-metadata";
 import { InversifyExpressServer } from "inversify-express-utils";
 import { Container } from "inversify";
 import * as bodyParser from "body-parser";
-import "./controller/home";
 import * as logger from "./config/logging.config";
+import "reflect-metadata";
+import * as serviceConfig from "./config/service.config";
+import "./controller/home";
 
 logger.info("Starting Live server...");
 
@@ -22,6 +23,6 @@ server.setConfig((app) => {
 });
 
 let serverInstance = server.build();
-serverInstance.listen(3000);
+serverInstance.listen(serviceConfig.port);
 
-logger.info("Server started on port 3000)");
+logger.info(`Server started, listening on port ${serviceConfig.port}`);

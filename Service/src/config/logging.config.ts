@@ -1,6 +1,12 @@
 import * as appRoot from "app-root-path";
 import * as winston from "winston";
 
+const timeLevelMessage = winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.align(),
+    winston.format.printf((info) => `${info.timestamp} ${info.level} ${info.message}`)
+);
+
 const options = {
     file: {
         level: "info",
@@ -9,13 +15,15 @@ const options = {
         json: true,
         maxsize: 5242880, // 5MB
         maxFiles: 5,
-        colorize: false
+        colorize: false,
+        format: timeLevelMessage
     },
     console: {
         level: "debug",
         handleExceptions: true,
         json: false,
-        colorize: true
+        colorize: true,
+        format: timeLevelMessage
     }
 };
 
