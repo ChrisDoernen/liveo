@@ -1,16 +1,13 @@
+import "reflect-metadata"; // This has to be imported first
 import { InversifyExpressServer } from "inversify-express-utils";
-import { Container } from "inversify";
+import { container } from "./config/inversify.config";
 import * as bodyParser from "body-parser";
 import * as logger from "./config/logging.config";
-import "reflect-metadata";
 import * as serviceConfig from "./config/service.config";
 import "./controller/home";
+import "./controller/system";
 
 logger.info("Starting Live server...");
-
-// Load everything needed to the Container
-let container = new Container();
-// container.bind<UserService>(TYPES.UserService).to(UserService);
 
 // Start the server
 let server = new InversifyExpressServer(container);
