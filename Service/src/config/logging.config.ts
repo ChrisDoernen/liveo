@@ -1,3 +1,4 @@
+import { Logger } from "winston";
 import * as appRoot from "app-root-path";
 import * as winston from "winston";
 
@@ -27,11 +28,11 @@ const options = {
     }
 };
 
-const logger = winston.createLogger({
+const winstonLogger: Logger = winston.createLogger({
     transports: [
         new winston.transports.Console(options.console),
         new winston.transports.File(options.file)
     ]
 });
 
-export = logger;
+export = winstonLogger;

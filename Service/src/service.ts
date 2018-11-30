@@ -1,16 +1,18 @@
 import "reflect-metadata"; // This has to be imported first
 import { InversifyExpressServer } from "inversify-express-utils";
 import { container } from "./config/inversify.config";
+import { Logger } from "./core/util/logger";
+import { Types } from "./config/types.config";
 import * as bodyParser from "body-parser";
-import * as logger from "./config/logging.config";
 import * as serviceConfig from "./config/service.config";
 import "./controller/home";
 import "./controller/system";
 
-logger.info("Starting Live server...");
-
 // Start the server
 let server = new InversifyExpressServer(container);
+const logger = container.get<Logger>(Types.Logger);
+logger.info("Starting Live server...");
+logger.info(`Environment: ${serviceConfig.environment}`);
 
 server.setConfig((app) => {
   app.use(bodyParser.urlencoded({
