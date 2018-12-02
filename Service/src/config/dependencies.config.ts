@@ -4,7 +4,9 @@ import { ShutdownService } from "../core/system/shutdown-service";
 import { ShutdownServiceSimulator } from "../core/system/shutdown-service-simulator";
 import { Container } from "inversify";
 import { Logger } from "../core/util/logger";
-import * as serviceConfig from "../config/service.config";
+import * as serviceConfig from "./service.config";
+import { DeviceDetector } from "../core/system/device-detector";
+import { CommandExecutor } from "../core/system/command-executor";
 
 const container = new Container();
 if (serviceConfig.environment === "Development") {
@@ -13,5 +15,7 @@ if (serviceConfig.environment === "Development") {
     container.bind<IShutdownService>(Types.IShutdownService).to(ShutdownService);
 }
 container.bind<Logger>(Types.Logger).toSelf();
+container.bind<DeviceDetector>(Types.AudioInputDetector).to(DeviceDetector).inSingletonScope();
+container.bind<CommandExecutor>(Types.CommandExecutionService).to(CommandExecutor);
 
 export { container };

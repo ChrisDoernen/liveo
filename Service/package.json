@@ -28,6 +28,7 @@
   "devDependencies": {
     "@types/jest": "^23.3.9",
     "jest": "^23.6.0",
+    "jest-create-mock-instance": "^1.1.0",
     "ts-jest": "^23.10.5"
   }
 }

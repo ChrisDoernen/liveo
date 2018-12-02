@@ -1,7 +1,7 @@
 import { controller, httpPost } from "inversify-express-utils";
+import { IShutdownService } from "../core/system/i-shutdown-service";
 import { inject } from "inversify";
 import { Types } from "../config/types.config";
-import { IShutdownService } from "../core/system/i-shutdown-service";
 
 @controller("/system")
 export class SystemController {
