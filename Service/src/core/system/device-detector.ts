@@ -1,11 +1,12 @@
 import { Logger } from "../util/logger";
 import { injectable } from "inversify";
 import { CommandExecutionService } from "./command-execution-service";
+import { Device } from "./device";
 
 @injectable()
 export class DeviceDetector {
 
-    public devices: string[];
+    public devices: Device[];
 
     private listDevicesCommand: string = "ffmpeg -list_devices true -f dshow -i dummy -hide_banner";
 
@@ -21,7 +22,8 @@ export class DeviceDetector {
         const response = this.commandExecutionService.executeWithResponse(this.listDevicesCommand);
         const lines = response.split("\n");
         this.devices = lines.filter((line) => this.lineContainsAudioDevice(line))
-            .map((line) => line.match(this.audioDeviceRegexPattern)[0]);
+            .map((line) => line.match(this.audioDeviceRegexPattern)[0])
+            .map((id) => new Device(id));
     }
 
     private lineContainsAudioDevice(line: string): boolean {
