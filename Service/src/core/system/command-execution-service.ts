@@ -1,10 +1,11 @@
+
 import { injectable } from "inversify";
 import { exec } from "child_process";
 
 @injectable()
-export class CommandExecutor {
+export class CommandExecutionService {
 
-    public execute(command: string): string {
+    public executeWithResponse(command: string): string {
         return "fake result";
     }
 

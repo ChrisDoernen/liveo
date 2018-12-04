@@ -6,7 +6,7 @@ import { Container } from "inversify";
 import { Logger } from "../core/util/logger";
 import * as serviceConfig from "./service.config";
 import { DeviceDetector } from "../core/system/device-detector";
-import { CommandExecutor } from "../core/system/command-executor";
+import { CommandExecutionService } from "../core/system/command-execution-service";
 
 const container = new Container();
 if (serviceConfig.environment === "Development") {
@@ -16,6 +16,6 @@ if (serviceConfig.environment === "Development") {
 }
 container.bind<Logger>(Types.Logger).toSelf();
 container.bind<DeviceDetector>(Types.AudioInputDetector).to(DeviceDetector).inSingletonScope();
-container.bind<CommandExecutor>(Types.CommandExecutionService).to(CommandExecutor);
+container.bind<CommandExecutionService>(Types.CommandExecutionService).to(CommandExecutionService);
 
 export { container };

@@ -2,12 +2,18 @@ import "reflect-metadata";
 import createMockInstance from "jest-create-mock-instance";
 import { ShutdownService } from "../../../core/system/shutdown-service";
 import { Logger } from "../../../core/util/logger";
-import { CommandExecutor } from "../../../core/system/command-executor";
+import { CommandExecutionService } from "../../../core/system/command-execution-service";
 
 describe("ShutdownService", () => {
-    const commandExecutor = createMockInstance(CommandExecutor);
-    const logger = createMockInstance(Logger);
-    const shutdownService = new ShutdownService(logger, commandExecutor);
+
+    let shutdownService;
+    let commandExecutionService;
+
+    beforeEach(() => {
+        commandExecutionService = createMockInstance(CommandExecutionService);
+        const logger = createMockInstance(Logger);
+        shutdownService = new ShutdownService(logger, commandExecutionService);
+    });
 
     it("should construct", async () => {
         expect(shutdownService).toBeDefined();
@@ -15,6 +21,6 @@ describe("ShutdownService", () => {
 
     it("should call command executor on shutdown correctly", async () => {
         shutdownService.shutdown();
-        expect(commandExecutor.executeAndForget).toHaveBeenCalled();
+        expect(commandExecutionService.executeAndForget).toHaveBeenCalled();
     });
 });

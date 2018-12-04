@@ -1,15 +1,15 @@
 import { injectable } from "inversify";
 import { Logger } from "../util/logger";
-import { CommandExecutor } from "./command-executor";
+import { CommandExecutionService } from "./command-execution-service";
 
 @injectable()
 export class ShutdownService {
 
     constructor(private logger: Logger,
-        private commandExecutor: CommandExecutor) { }
+        private commandExecutionService: CommandExecutionService) { }
 
     public shutdown(): void {
         this.logger.info("Shutting down server now.");
-        this.commandExecutor.executeAndForget("shutdown now");
+        this.commandExecutionService.executeAndForget("shutdown now");
     }
 }

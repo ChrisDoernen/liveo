@@ -1,6 +1,6 @@
-import { Logger } from "winston";
 import * as appRoot from "app-root-path";
 import * as winston from "winston";
+import { Logger } from "winston";
 
 const timeLevelMessage = winston.format.combine(
     winston.format.timestamp(),
