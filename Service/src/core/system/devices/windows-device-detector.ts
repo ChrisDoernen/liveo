@@ -1,10 +1,11 @@
-import { Logger } from "../util/logger";
+import { CommandExecutionService } from "../command-execution-service";
+import { IDeviceDetector } from "./i-device-detector";
+import { Logger } from "../../util/logger";
 import { injectable } from "inversify";
-import { CommandExecutionService } from "./command-execution-service";
 import { Device } from "./device";
 
 @injectable()
-export class DeviceDetector {
+export class WindowsDeviceDetector implements IDeviceDetector {
 
     public devices: Device[];
 
