@@ -24,7 +24,7 @@ export class WindowsDeviceDetector implements IDeviceDetector {
         const lines = response.split("\n");
         this.devices = lines.filter((line) => this.lineContainsAudioDevice(line))
             .map((line) => line.match(this.audioDeviceRegexPattern)[0])
-            .map((id) => new Device(id));
+            .map((id) => new Device(id, ""));
     }
 
     private lineContainsAudioDevice(line: string): boolean {

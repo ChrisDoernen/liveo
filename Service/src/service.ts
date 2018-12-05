@@ -13,7 +13,9 @@ import "./controller/streams";
 let server = new InversifyExpressServer(container);
 const logger = container.get<Logger>(Types.Logger);
 logger.info("Starting Live server...");
-logger.info(`Environment: ${serviceConfig.environment}`);
+logger.info(`Environment: ${serviceConfig.environment}.`);
+logger.info(`OS: ${serviceConfig.os}.`);
+logger.info(`Architecture: ${serviceConfig.arch}.`);
 
 server.setConfig((app) => {
   app.use(bodyParser.urlencoded({ extended: true }));

@@ -15,7 +15,7 @@ if (serviceConfig.environment === "Development") {
     container.bind<IShutdownService>(Types.IShutdownService).to(ShutdownService);
 }
 container.bind<Logger>(Types.Logger).toSelf();
-container.bind<WindowsDeviceDetector>(Types.AudioInputDetector).to(WindowsDeviceDetector).inSingletonScope();
+//container.bind<WindowsDeviceDetector>(Types.AudioInputDetector).to(WindowsDeviceDetector).inSingletonScope();
 container.bind<CommandExecutionService>(Types.CommandExecutionService).to(CommandExecutionService);
 
 export { container };

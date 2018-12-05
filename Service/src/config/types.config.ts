@@ -4,6 +4,7 @@ import { CommandExecutionService } from "../core/system/command-execution-servic
 
 const Types = {
     IShutdownService: Symbol.for("IShutdownService"),
+    IDeviceDetector: Symbol.for("IDeviceDetector"),
     Logger: Logger,
     AudioInputDetector: WindowsDeviceDetector,
     CommandExecutionService: CommandExecutionService
