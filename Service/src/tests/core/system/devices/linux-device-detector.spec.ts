@@ -14,9 +14,11 @@ describe("LinuxDeviceDetector", () => {
     beforeEach(() => {
         const logger = createMockInstance(Logger);
         commandExecutionService = createMockInstance(CommandExecutionService);
+
         const oneDeviceAvailableResource = `${appRoot}/src/tests/resources/system/arecordTwoAvailable.txt`;
         const commandResponse = fs.readFileSync(oneDeviceAvailableResource, "utf8");
         jest.spyOn(commandExecutionService, "executeWithResponse").mockReturnValue(commandResponse);
+
         linuxDeviceDetector = new LinuxDeviceDetector(logger, commandExecutionService);
     });
 
@@ -25,8 +27,11 @@ describe("LinuxDeviceDetector", () => {
     });
 
     it("should parse devices correctly when two devices are available", () => {
-
-
-        expect(linuxDeviceDetector.devices.length).toBe(2);
+        const devices = linuxDeviceDetector.devices;
+        expect(devices.length).toBe(2);
+        expect(devices[0].id).toBe("0");
+        expect(devices[0].description).toBe("ICH5 [Intel ICH5], device 0: Intel ICH [Intel ICH5]");
+        expect(devices[1].id).toBe("1");
+        expect(devices[1].description).toBe("U0x46d0x809 [USB Device 0x46d:0x809], device 0: USB Audio [USB Audio]");
     });
 });

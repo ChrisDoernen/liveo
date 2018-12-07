@@ -14,12 +14,19 @@ export class LinuxDeviceDetector implements IDeviceDetector {
 
     private listDevicesCommand: string = "arecord -l";
 
-    private audioDeviceRegexPattern: RegExp = new RegExp("(card \d+)");
+    private audioDeviceRegexPattern: RegExp = new RegExp("(card \\d+: )");
 
     constructor(private logger: Logger,
         private commandExecutionService: CommandExecutionService) {
         this.logger.debug("Detecting audio inputs.");
+
         this.detectDevices();
+
+        if (this.devices.some) {
+            this.logger.info(`Devices detected: ${this.devices.join(", ")}.`);
+        } else {
+            this.logger.warn("No devices detected. Please check your sound cards.");
+        }
     }
 
     private detectDevices(): void {
@@ -32,7 +39,7 @@ export class LinuxDeviceDetector implements IDeviceDetector {
 
     private parseDevice(line: string): Device {
         const cardPrefix = line.match(this.audioDeviceRegexPattern)[0];
-        const id = cardPrefix.match(new RegExp("d+")).toString();
+        const id = cardPrefix.match(new RegExp("\\d+")).toString();
         const description = line.slice(cardPrefix.length);
 
         return new Device(id, description);
