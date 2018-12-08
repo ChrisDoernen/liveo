@@ -24,5 +24,5 @@ server.setConfig((app) => {
 
 let serverInstance = server.build();
 serverInstance.listen(serviceConfig.port, () => {
-  logger.info(`Server started, listening on port ${serviceConfig.port}`);
+  logger.info(`Server started, listening on port ${serviceConfig.port}.`);
 });

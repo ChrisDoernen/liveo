@@ -20,11 +20,11 @@ export class WindowsDeviceDetector implements IDeviceDetector {
     }
 
     private detectDevices(): void {
-        const response = this.commandExecutionService.executeWithResponse(this.listDevicesCommand);
-        const lines = response.split("\n");
-        this.devices = lines.filter((line) => this.lineContainsAudioDevice(line))
-            .map((line) => line.match(this.audioDeviceRegexPattern)[0])
-            .map((id) => new Device(id, ""));
+        const response = this.commandExecutionService.execute(this.listDevicesCommand);
+        // const lines = response.split("\n");
+        // this.devices = lines.filter((line) => this.lineContainsAudioDevice(line))
+        //     .map((line) => line.match(this.audioDeviceRegexPattern)[0])
+        //     .map((id) => new Device(id, ""));
     }
 
     private lineContainsAudioDevice(line: string): boolean {

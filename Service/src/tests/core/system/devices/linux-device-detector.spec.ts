@@ -16,8 +16,9 @@ describe("LinuxDeviceDetector", () => {
         commandExecutionService = createMockInstance(CommandExecutionService);
 
         const oneDeviceAvailableResource = `${appRoot}/src/tests/resources/system/arecordTwoAvailable.txt`;
-        const commandResponse = fs.readFileSync(oneDeviceAvailableResource, "utf8");
-        jest.spyOn(commandExecutionService, "executeWithResponse").mockReturnValue(commandResponse);
+        const response = fs.readFileSync(oneDeviceAvailableResource, "utf8");
+        jest.spyOn(commandExecutionService, "execute")
+            .mockImplementation((command: string, callback: any) => callback(null, response, null));
 
         linuxDeviceDetector = new LinuxDeviceDetector(logger, commandExecutionService);
     });
