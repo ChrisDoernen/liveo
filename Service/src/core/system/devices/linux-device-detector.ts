@@ -33,18 +33,18 @@ export class LinuxDeviceDetector implements IDeviceDetector {
         });
     }
 
-    private parseResponse(res: string): void {
-        const lines = res.split("\n");
-        this.devices = lines.filter((line) => this.audioDeviceRegexPattern.test(line))
-            .map((line) => this.getDevice(line));
-    }
-
-    private executeListDevicesCommand(): Promise<string> {
-        return new Promise((resolve, reject) => {
+    private async executeListDevicesCommand(): Promise<string> {
+        return await new Promise<string>((resolve, reject) => {
             this.commandExecutionService.execute(this.listDevicesCommand, (error, stdout, stderr) => {
                 resolve(stdout);
             });
         });
+    }
+
+    private parseResponse(response: string): void {
+        const lines = response.split("\n");
+        this.devices = lines.filter((line) => this.audioDeviceRegexPattern.test(line))
+            .map((line) => this.getDevice(line));
     }
 
     private getDevice(line: string): Device {
