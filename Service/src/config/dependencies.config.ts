@@ -1,7 +1,7 @@
 import { Types } from "./types.config";
-import { IShutdownService } from "../core/system/i-shutdown-service";
-import { ShutdownService } from "../core/system/shutdown-service";
-import { ShutdownServiceSimulator } from "../core/system/shutdown-service-simulator";
+import { IShutdownService } from "../core/system/shutdown/i-shutdown-service";
+import { LinuxShutdownService } from "../core/system/shutdown/linux-shutdown-service";
+import { ShutdownSimulationService } from "../core/system/shutdown/shutdown-simulation-service";
 import { Container } from "inversify";
 import { Logger } from "../core/util/logger";
 import * as serviceConfig from "./service.config";
@@ -12,9 +12,9 @@ import { LinuxDeviceDetector } from "../core/system/devices/linux-device-detecto
 const container = new Container();
 
 if (serviceConfig.environment === "Development") {
-    container.bind<IShutdownService>(Types.IShutdownService).to(ShutdownServiceSimulator);
+    container.bind<IShutdownService>(Types.IShutdownService).to(ShutdownSimulationService);
 } else {
-    container.bind<IShutdownService>(Types.IShutdownService).to(ShutdownService);
+    container.bind<IShutdownService>(Types.IShutdownService).to(LinuxShutdownService);
 }
 
 container.bind<Logger>(Types.Logger).toSelf();
