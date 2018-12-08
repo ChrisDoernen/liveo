@@ -28,9 +28,11 @@ const options = {
     }
 };
 
-export const winstonLogger: Logger = winston.createLogger({
+const winstonLogger: Logger = winston.createLogger({
     transports: [
         new winston.transports.Console(options.console),
         new winston.transports.File(options.file)
     ]
 });
+
+export = winstonLogger;
