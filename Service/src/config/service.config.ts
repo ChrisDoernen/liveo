@@ -1,8 +1,10 @@
-const serviceConfig = {
-    port: process.env.PORT || 8080,
+import * as appRoot from "app-root-path";
+
+export const config = {
+    port: process.env.PORT || 3000,
     environment: process.env.ENVIRONMENT || "Development",
     os: process.platform,
-    arch: process.arch
+    arch: process.arch,
+    sessions: `${appRoot}/dist/data/sessions.json`
 };
 
-export = serviceConfig;
