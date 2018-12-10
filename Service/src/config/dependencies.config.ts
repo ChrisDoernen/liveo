@@ -8,6 +8,8 @@ import { config } from "./service.config";
 import { CommandExecutionService } from "../core/system/command-execution-service";
 import { IDeviceDetector } from "../core/system/devices/i-device-detector";
 import { LinuxDeviceDetector } from "../core/system/devices/linux-device-detector";
+import { DataService } from "../core/data/data-service";
+import { SessionService } from "../core/sessions/session-service";
 
 export const container = new Container();
 
@@ -25,3 +27,5 @@ if (config.os === "linux") {
 
 container.bind<Logger>(Types.Logger).toSelf();
 container.bind<CommandExecutionService>(Types.CommandExecutionService).to(CommandExecutionService);
+container.bind<DataService>(Types.DataService).to(DataService);
+container.bind<SessionService>(Types.SessionService).to(SessionService).inSingletonScope();

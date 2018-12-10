@@ -1,11 +1,13 @@
-import { Session } from "../sessions/session-entity";
+import { Session } from "../sessions/session";
 import { config } from "../../config/service.config";
 import { Logger } from "../util/logger";
+import { injectable } from "inversify";
 import * as fs from "fs";
 
 /**
  * Provides access to a file based data source
  */
+@injectable()
 export class DataService {
 
     constructor(private logger: Logger) { }

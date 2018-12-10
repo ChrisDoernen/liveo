@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { DataService } from "../../../core/data/data-service";
 import { config } from "../../../config/service.config";
-import { Session } from "../../../core/sessions/session-entity";
+import { Session } from "../../../core/sessions/session";
 import { Logger } from "../../../core/util/logger";
 import createMockInstance from "jest-create-mock-instance";
 import * as appRoot from "app-root-path";
