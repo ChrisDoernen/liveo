@@ -5,16 +5,17 @@ import { Logger } from "./core/util/logger";
 import { Types } from "./config/types.config";
 import { config } from "./config/service.config";
 import * as bodyParser from "body-parser";
-import "./controller/home";
-import "./controller/system";
-import "./controller/streams";
+import "./controller/home-controller";
+import "./controller/system-controller";
+import "./controller/streams-controller";
+import "./controller/session-controller";
 
 let server = new InversifyExpressServer(container);
 const logger = container.get<Logger>(Types.Logger);
 logger.info("Starting Live server...");
-logger.info(`Environment: ${config.environment}.`);
-logger.info(`OS: ${config.os}.`);
-logger.info(`Architecture: ${config.arch}.`);
+logger.debug(`Environment: ${config.environment}.`);
+logger.debug(`OS: ${config.os}.`);
+logger.debug(`Architecture: ${config.arch}.`);
 
 server.setConfig((app) => {
   app.use(bodyParser.urlencoded({ extended: true }));

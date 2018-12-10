@@ -22,10 +22,10 @@ export class LinuxDeviceDetector implements IDeviceDetector {
     }
 
     private detectDevices(): void {
-        this.executeListDevicesCommand().then((res) => {
+        this.executeListDevicesCommand().then((response) => {
             this.logger.debug("Detecting audio inputs.");
 
-            this.parseResponse(res);
+            this.parseResponse(response);
 
             if (!this.devices || !this.devices.some) {
                 this.logger.warn("No devices detected. Please check your sound cards.");
