@@ -14,6 +14,11 @@ export class SessionService {
      */
     public sessions: Session[];
 
+    /**
+     * The currently active session
+     */
+    public activeSession: Session;
+
     constructor(private logger: Logger,
         private dataService: DataService) {
         this.loadSessions();
@@ -29,5 +34,17 @@ export class SessionService {
         } else {
             this.logger.debug(`Loaded ${this.sessions.length} sessions.`);
         }
+    }
+
+    public activateSession(sessionToActivate: Session): Session {
+
+
+        if (this.sessions.some((session) => session.is(sessionToActivate))) {
+            this.activeSession = sessionToActivate;
+        } else {
+            throw new Error(`Session with id ${sessionToActivate.id} was not found`);
+        }
+
+        return this.activeSession;
     }
 }

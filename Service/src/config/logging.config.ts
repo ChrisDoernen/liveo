@@ -10,7 +10,7 @@ const timeLevelMessage = winston.format.combine(
 
 const options = {
     file: {
-        level: "info",
+        level: "debug",
         filename: `${appRoot}/dist/live-service.log`,
         handleExceptions: true,
         json: true,
