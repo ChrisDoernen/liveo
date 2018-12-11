@@ -3,13 +3,13 @@ import { inject } from "inversify";
 import { Types } from "../config/types.config";
 import { IDeviceDetector } from "../core/system/devices/i-device-detector";
 
-@controller("/streams")
+@controller("/api/streams")
 export class StreamsController {
 
   constructor(@inject(Types.IDeviceDetector) private audioInputDetector: IDeviceDetector) { }
 
   @httpGet("/")
-  public get(): string {
+  public getStreams(): string {
     return "Get streams";
   }
 }

@@ -5,7 +5,7 @@ import { inject } from "inversify";
 import { Session } from "../core/sessions/session";
 import express = require("express");
 
-@controller("/sessions")
+@controller("/api/sessions")
 export class SessionController {
 
     constructor(@inject(Types.SessionService) private sessionService: SessionService) { }
