@@ -11,13 +11,18 @@ export class SessionController {
     constructor(@inject(Types.SessionService) private sessionService: SessionService) { }
 
     @httpGet("/")
-    public get(): Session[] {
+    public getSessions(): Session[] {
         return this.sessionService.sessions;
     }
 
     @httpPost("/active")
-    public post(request: express.Request): Session {
+    public setActiveSession(request: express.Request): Session {
         const session = Session.fromRequest(request.body);
         return this.sessionService.activateSession(session);
+    }
+
+    @httpGet("/active")
+    public getActiveSession(): Session {
+        return this.sessionService.activeSession;
     }
 }

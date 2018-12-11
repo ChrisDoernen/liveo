@@ -11,7 +11,7 @@ export class Session {
         return new Session(request.id, request.title, request.deviceId);
     }
 
-    public is(other: Session): boolean {
+    public equals(other: Session): boolean {
         return this.id === other.id &&
             this.title === other.title &&
             this.deviceId === other.deviceId;

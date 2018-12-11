@@ -37,9 +37,7 @@ export class SessionService {
     }
 
     public activateSession(sessionToActivate: Session): Session {
-
-
-        if (this.sessions.some((session) => session.is(sessionToActivate))) {
+        if (this.sessions.some((session) => session.id == sessionToActivate.id)) {
             this.activeSession = sessionToActivate;
         } else {
             throw new Error(`Session with id ${sessionToActivate.id} was not found`);
