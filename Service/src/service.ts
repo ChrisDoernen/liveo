@@ -20,7 +20,7 @@ logger.debug(`Architecture: ${config.arch}.`);
 server.setConfig((app) => {
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
-  app.use((req, res, next) => { logger.debug(`${req.method} request on ${req.url}.`); next(); });
+  app.use((req, res, next) => { logger.debug(`${req.method} request on ${req.url} - ${res.status}.`); next(); });
   app.use((err, req, res, next) => { logger.error(`${req.method} request on ${req.url} - ${err}.`); next(); });
 });
 
