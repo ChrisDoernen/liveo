@@ -30,9 +30,11 @@ export class SessionService {
         this.sessions = this.dataService.loadSessions();
 
         if (!this.sessions.some) {
-            this.logger.warn("No session were loaded.");
+            this.logger.warn("No session available for loading.");
         } else {
-            this.logger.debug(`Loaded ${this.sessions.length} sessions.`);
+            this.sessions.forEach((session) => {
+                this.logger.debug(`Loaded session ${JSON.stringify(session)}.`);
+            });
         }
     }
 

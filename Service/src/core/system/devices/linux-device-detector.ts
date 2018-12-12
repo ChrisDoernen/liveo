@@ -51,9 +51,10 @@ export class LinuxDeviceDetector implements IDeviceDetector {
         const cardPrefix = line.match(this.audioDeviceRegexPattern)[0];
         const id = cardPrefix.match(new RegExp("\\d+")).toString();
         const description = line.slice(cardPrefix.length);
+        const device = new Device(id, description);
 
-        this.logger.debug(`Detected device ${description} with id ${id}.`);
+        this.logger.debug(`Detected device ${JSON.stringify(device)}.`);
 
-        return new Device(id, description);
+        return device;
     }
 }
