@@ -5,6 +5,7 @@ import { Logger } from "./core/util/logger";
 import { Types } from "./config/types.config";
 import { config } from "./config/service.config";
 import * as bodyParser from "body-parser";
+import * as socketio from "socket.io";
 import "./controller/home-controller";
 import "./controller/system-controller";
 import "./controller/streams-controller";
@@ -24,7 +25,9 @@ server.setConfig((app) => {
   app.use((err, req, res, next) => { logger.error(`${req.method} request on ${req.url} - ${err}.`); next(); });
 });
 
-let serverInstance = server.build();
-serverInstance.listen(config.port, () => {
+let httpServer = server.build();
+httpServer.listen(config.port, () => {
   logger.info(`Server started, listening on port ${config.port}.`);
 });
+
+const weboscketServer = socketio(httpServer);
