@@ -12,8 +12,8 @@ describe("SessionService", () => {
     let logger;
 
     const sessions = [
-        new Session("bcf4", "Service", "3"),
-        new Session("43kv", "Service2", "2")
+        new Session("bcf4", "Service", ["3"]),
+        new Session("43kv", "Service2", ["2"])
     ];
 
     beforeEach(() => {

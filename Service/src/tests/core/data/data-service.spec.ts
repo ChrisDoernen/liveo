@@ -20,8 +20,8 @@ describe("DataService", () => {
         config.sessions = `${appRoot}/src/tests/resources/data/valid-sessions.json`;
         const sessions = dataService.loadSessions();
 
-        const expectedSessionOne = new Session("bd34", "Service", "0");
-        const expectedSessionTwo = new Session("a4re", "Workshop", "1");
+        const expectedSessionOne = new Session("bd34", "Service", ["0ag8"]);
+        const expectedSessionTwo = new Session("a4re", "Workshop", ["15dd"]);
 
         expect(sessions[0]).toEqual(expectedSessionOne);
         expect(sessions[1]).toEqual(expectedSessionTwo);

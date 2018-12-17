@@ -2,6 +2,9 @@
     {
         "id": "bd34",
         "title": "Gottesdienst",
-        "deviceId": "0"
+        "streams": [
+            "4hdg",
+            "v67d"
+        ]
     }
 ]
