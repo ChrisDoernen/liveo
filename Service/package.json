@@ -4,12 +4,12 @@
   "description": "",
   "scripts": {
     "clean": "rimraf dist",
-    "copyData": "mkdir -p dist/data && cp -r src/data dist/data",
-    "build": "tsc ",
+    "copyData": "mkdir -p dist/data && cp -r -f src/data/* dist/data",
+    "build": "tsc && npm run copyData",
     "buildWatch": "tsc --watch",
     "buildProd": "tsc --sourceMap false",
     "test": "jest",
-    "start": "node dist/app.js",
+    "start": "npm run build && node dist/app.js",
     "startWatch": "nodemon './dist/service.js' --watch './dist'"
   },
   "dependencies": {
