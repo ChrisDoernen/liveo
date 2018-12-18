@@ -29,7 +29,7 @@ export class SessionService {
 
         this.sessions = this.dataService.loadSessions();
 
-        if (!this.sessions.some) {
+        if (!this.sessions || !this.sessions.some) {
             this.logger.warn("No session available for loading.");
         } else {
             this.sessions.forEach((session) => {

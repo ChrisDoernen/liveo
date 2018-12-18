@@ -5,6 +5,7 @@ export const config = {
     environment: process.env.ENVIRONMENT || "Development",
     os: process.platform,
     arch: process.arch,
-    sessions: `${appRoot}/dist/data/sessions.json`
+    sessions: `${appRoot}/dist/data/sessions.json`,
+    streams: `${appRoot}/dist/data/streams.json`
 };
 

@@ -8,7 +8,7 @@ import * as bodyParser from "body-parser";
 import * as socketio from "socket.io";
 import "./controller/home-controller";
 import "./controller/system-controller";
-import "./controller/streams-controller";
+import "./controller/stream-controller";
 import "./controller/session-controller";
 
 let server = new InversifyExpressServer(container);

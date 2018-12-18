@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "clean": "rimraf dist",
-    "copyData": "mkdir -p dist/data && cp src/data/sessions.json dist/data/sessions.json",
+    "copyData": "mkdir -p dist/data && cp -r src/data dist/data",
     "build": "tsc ",
     "buildWatch": "tsc --watch",
     "buildProd": "tsc --sourceMap false",

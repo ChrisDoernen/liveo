@@ -10,6 +10,7 @@ import { IDeviceDetector } from "../core/system/devices/i-device-detector";
 import { LinuxDeviceDetector } from "../core/system/devices/linux-device-detector";
 import { DataService } from "../core/data/data-service";
 import { SessionService } from "../core/sessions/session-service";
+import { StreamService } from "../core/streams/stream-service";
 
 export const container = new Container();
 
@@ -29,3 +30,4 @@ container.bind<Logger>(Types.Logger).toSelf();
 container.bind<CommandExecutionService>(Types.CommandExecutionService).to(CommandExecutionService);
 container.bind<DataService>(Types.DataService).to(DataService);
 container.bind<SessionService>(Types.SessionService).to(SessionService).inSingletonScope();
+container.bind<StreamService>(Types.StreamService).to(StreamService).inSingletonScope();
