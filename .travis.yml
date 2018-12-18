@@ -17,4 +17,5 @@ script:
   - npm run test
   - npm run buildProd
 notifications:
-  email: false
+  email:
+    on_failure: always
