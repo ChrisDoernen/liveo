@@ -11,6 +11,7 @@ import { LinuxDeviceDetector } from "../core/system/devices/linux-device-detecto
 import { DataService } from "../core/data/data-service";
 import { SessionService } from "../core/sessions/session-service";
 import { StreamService } from "../core/streams/stream-service";
+import { WebsocketService } from "../core/websocket/websocket-service";
 
 export const container = new Container();
 
@@ -31,3 +32,4 @@ container.bind<CommandExecutionService>(Types.CommandExecutionService).to(Comman
 container.bind<DataService>(Types.DataService).to(DataService);
 container.bind<SessionService>(Types.SessionService).to(SessionService).inSingletonScope();
 container.bind<StreamService>(Types.StreamService).to(StreamService).inSingletonScope();
+container.bind<WebsocketService>(Types.WebsocketService).to(WebsocketService).inSingletonScope();

@@ -2,6 +2,7 @@ import "reflect-metadata"; // This has to be imported first
 import { InversifyExpressServer } from "inversify-express-utils";
 import { container } from "./config/dependencies.config";
 import { Logger } from "./core/util/logger";
+import { WebsocketService } from "./core/websocket/websocket-service";
 import { Types } from "./config/types.config";
 import { config } from "./config/service.config";
 import * as bodyParser from "body-parser";
@@ -26,8 +27,14 @@ server.setConfig((app) => {
 });
 
 let httpServer = server.build();
+
+const weboscketServer = socketio(server, { path: "/streams" });
+const weboscketService = container.get<WebsocketService>(Types.WebsocketService);
+
+weboscketServer.on("connection", (socket) => {
+  weboscketService.onConnection(socket);
+});
+
 httpServer.listen(config.port, () => {
   logger.info(`Server started, listening on port ${config.port}.`);
 });
-
-const weboscketServer = socketio(server);

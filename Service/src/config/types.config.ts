@@ -3,6 +3,7 @@ import { CommandExecutionService } from "../core/system/command-execution-servic
 import { SessionService } from "../core/sessions/session-service";
 import { DataService } from "../core/data/data-service";
 import { StreamService } from "../core/streams/stream-service";
+import { WebsocketService } from "../core/websocket/websocket-service";
 
 export const Types = {
     IShutdownService: Symbol.for("IShutdownService"),
@@ -11,5 +12,6 @@ export const Types = {
     CommandExecutionService: CommandExecutionService,
     SessionService: SessionService,
     StreamService: StreamService,
-    DataService: DataService
+    DataService: DataService,
+    WebsocketService: WebsocketService
 };
