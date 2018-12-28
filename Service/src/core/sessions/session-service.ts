@@ -20,7 +20,7 @@ export class SessionService {
     /**
      * The currently active session
      */
-    public activeSession: SessionEntity;
+    public activeSession: Session;
 
     constructor(@inject("SessionFactory") private sessionFactory: (sessionEntity: SessionEntity, streams: Stream[]) => Session,
         private logger: Logger,
@@ -45,17 +45,33 @@ export class SessionService {
      * Activate the given session
      */
     public activateSession(sessionToActivate: SessionEntity): SessionEntity {
-        if (this.sessions.some((session) => session.sessionEntity.id == sessionToActivate.id)) {
-            this.activeSession = sessionToActivate;
+        const matchingSession = this.sessions.find((session) => session.sessionEntity.id == sessionToActivate.id);
+
+        if (matchingSession) {
+            this.activeSession = matchingSession;
         } else {
             throw new Error(`Session with id ${sessionToActivate.id} was not found.`);
         }
 
-        return this.activeSession;
+        return matchingSession.sessionEntity;
     }
 
+    /**
+     * Get all session entities
+     */
     public getSessionEntities(): SessionEntity[] {
         return this.sessions.map((session) => session.sessionEntity);
+    }
+
+    /**
+     * Starts the active session
+     */
+    public startActiveSession(): void {
+        if (!this.activeSession) {
+            throw new Error("No session was activated.");
+        }
+
+        this.activeSession.start();
     }
 
     private mapSession(sessionEntity: SessionEntity): Session {

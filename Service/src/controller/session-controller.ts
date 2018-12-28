@@ -23,6 +23,13 @@ export class SessionController {
 
     @httpGet("/active")
     public getActiveSession(): SessionEntity {
-        return this.sessionService.activeSession;
+        if (!!this.sessionService.activeSession) {
+            return this.sessionService.activeSession.sessionEntity;
+        }
+    }
+
+    @httpPost("/active/start")
+    public startActiveSession(): void {
+        this.sessionService.startActiveSession();
     }
 }
