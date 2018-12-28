@@ -1,5 +1,3 @@
-import { Device } from "../system/devices/device";
-
 /**
  * Class representing a live stream
  */
