@@ -14,6 +14,8 @@ export class Session {
 
     private streams: Stream[];
 
+    private isStarted: boolean;
+
     constructor(private logger: Logger, sessionEntity: SessionEntity, streams: Stream[]) {
         this.sessionEntity = sessionEntity;
         this.streams = streams;
@@ -24,13 +26,21 @@ export class Session {
      * Start the session
      */
     public start(): void {
-        this.logger.info(`Starting session ${this.sessionEntity.id}.`);
+        if (!this.isStarted) {
+            this.logger.info(`Starting session ${this.sessionEntity.id}.`);
+            this.streams.forEach((stream) => stream.start());
+            this.isStarted = true;
+        }
     }
 
     /**
-     * Stops the session
+     * Stop the session
      */
     public stop(): void {
-        this.logger.info(`Stopped session ${this.sessionEntity.id}.`);
+        if (this.isStarted) {
+            this.logger.info(`Stopped session ${this.sessionEntity.id}.`);
+            this.streams.forEach((stream) => stream.stop());
+            this.isStarted = false;
+        }
     }
 }

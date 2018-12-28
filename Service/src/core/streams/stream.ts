@@ -11,6 +11,8 @@ export class Stream {
      */
     public streamEntity: StreamEntity;
 
+    public isStarted: boolean;
+
     constructor(private logger: Logger, streamEntity: StreamEntity) {
         this.streamEntity = streamEntity;
         logger.debug(`Loaded stream ${JSON.stringify(streamEntity)}.`);
@@ -20,13 +22,19 @@ export class Stream {
      * Start the stream
      */
     public start(): void {
-        this.logger.info(`Starting stream ${this.streamEntity.id}.`);
+        if (!this.isStarted) {
+            this.logger.info(`Starting stream ${this.streamEntity.id}.`);
+            this.isStarted = true;
+        }
     }
 
     /**
-     * Stops the stream
+     * Stop the stream
      */
     public stop(): void {
-        this.logger.info(`Stopped stream ${this.streamEntity.id}.`);
+        if (this.isStarted) {
+            this.logger.info(`Stopped stream ${this.streamEntity.id}.`);
+            this.isStarted = false;
+        }
     }
 }
