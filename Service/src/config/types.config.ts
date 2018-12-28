@@ -13,5 +13,7 @@ export const Types = {
     SessionService: SessionService,
     StreamService: StreamService,
     DataService: DataService,
-    WebsocketService: WebsocketService
+    WebsocketService: WebsocketService,
+    StreamFactory: "StreamFactory",
+    SessionFactory: "SessionFactory"
 };

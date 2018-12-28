@@ -1,26 +1,36 @@
+import { Logger } from "../util/logger";
+import { SessionEntity } from "./session-entity";
+import { Stream } from "../streams/stream";
+
 /**
  * Class representing a streaming session
  */
 export class Session {
 
     /**
-     * A unique identifier
+     * The session entity
      */
-    public id: string;
+    public sessionEntity: SessionEntity;
 
-    /**
-     * A title to be displayed to the user
-     */
-    public title: string;
+    private streams: Stream[];
 
-    /**
-     * A list of streams contained by the session
-     */
-    public streams: string[];
-
-    constructor(id: string, title: string, streams: string[]) {
-        this.id = id;
-        this.title = title;
+    constructor(private logger: Logger, sessionEntity: SessionEntity, streams: Stream[]) {
+        this.sessionEntity = sessionEntity;
         this.streams = streams;
+        this.logger.debug(`Loaded session ${JSON.stringify(sessionEntity)}.`);
+    }
+
+    /**
+     * Start the session
+     */
+    public start(): void {
+        this.logger.info(`Starting session ${this.sessionEntity.id}.`);
+    }
+
+    /**
+     * Stops the session
+     */
+    public stop(): void {
+        this.logger.info(`Stopped session ${this.sessionEntity.id}.`);
     }
 }

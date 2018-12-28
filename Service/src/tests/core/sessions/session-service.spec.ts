@@ -3,7 +3,7 @@ import createMockInstance from "jest-create-mock-instance";
 import { DataService } from "../../../core/data/data-service";
 import { Logger } from "../../../core/util/logger";
 import { SessionService } from "../../../core/sessions/session-service";
-import { Session } from "../../../core/sessions/session";
+import { SessionEntity } from "../../../core/sessions/session-entity";
 
 describe("SessionService", () => {
 
@@ -12,8 +12,8 @@ describe("SessionService", () => {
     let logger;
 
     const sessions = [
-        new Session("bcf4", "Service", ["3"]),
-        new Session("43kv", "Service2", ["2"])
+        new SessionEntity("bcf4", "Service", ["3"]),
+        new SessionEntity("43kv", "Service2", ["2"])
     ];
 
     beforeEach(() => {
@@ -21,7 +21,7 @@ describe("SessionService", () => {
         logger = createMockInstance(Logger);
         dataService.loadSessions.mockReturnValue(sessions);
 
-        sessionService = new SessionService(logger, dataService);
+        sessionService = new SessionService(null, logger, dataService, null);
     });
 
     it("should construct", async () => {

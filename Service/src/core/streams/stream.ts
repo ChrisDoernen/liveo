@@ -1,32 +1,32 @@
+import { StreamEntity } from "./stream-entity";
+import { Logger } from "../util/logger";
+
 /**
  * Class representing a live stream
  */
 export class Stream {
 
     /**
-     * A unique identifier
+     * The stream entity
      */
-    public id: string;
+    public streamEntity: StreamEntity;
+
+    constructor(private logger: Logger, streamEntity: StreamEntity) {
+        this.streamEntity = streamEntity;
+        logger.debug(`Loaded stream ${JSON.stringify(streamEntity)}.`);
+    }
 
     /**
-     * A title to be displayed to the user
+     * Start the stream
      */
-    public title: string;
+    public start(): void {
+        this.logger.info(`Starting stream ${this.streamEntity.id}.`);
+    }
 
     /**
-     * A two digit country code representing the language
+     * Stops the stream
      */
-    public countryCode: string;
-
-    /**
-     * The device used as source for the stream
-     */
-    public deviceId: string;
-
-    constructor(id: string, title: string, countryCode: string, deviceId: string) {
-        this.id = id;
-        this.title = title;
-        this.countryCode = countryCode;
-        this.deviceId = deviceId;
+    public stop(): void {
+        this.logger.info(`Stopped stream ${this.streamEntity.id}.`);
     }
 }

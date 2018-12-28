@@ -1,9 +1,9 @@
-import { Session } from "../sessions/session";
+import { SessionEntity } from "../sessions/session-entity";
 import { config } from "../../config/service.config";
 import { Logger } from "../util/logger";
 import { injectable } from "inversify";
 import * as fs from "fs";
-import { Stream } from "../streams/stream";
+import { StreamEntity } from "../streams/stream-entity";
 
 /**
  * Provides access to a file based data source
@@ -16,7 +16,7 @@ export class DataService {
     /**
      * Loads sessions
      */
-    public loadSessions(): Session[] {
+    public loadSessions(): SessionEntity[] {
         try {
             return JSON.parse(this.readFileSync(config.sessions));
         } catch (error) {
@@ -25,9 +25,9 @@ export class DataService {
     }
 
     /**
-     * Loads sessions
+     * Loads streams
      */
-    public loadStreams(): Stream[] {
+    public loadStreams(): StreamEntity[] {
         try {
             return JSON.parse(this.readFileSync(config.streams));
         } catch (error) {
