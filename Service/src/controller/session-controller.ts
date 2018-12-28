@@ -1,5 +1,5 @@
 import { Types } from "../config/types.config";
-import { controller, httpGet, httpPost, requestBody } from "inversify-express-utils";
+import { controller, httpGet, httpPost } from "inversify-express-utils";
 import { SessionService } from "../core/sessions/session-service";
 import { inject } from "inversify";
 import { Session } from "../core/sessions/session";
@@ -17,7 +17,7 @@ export class SessionController {
 
     @httpPost("/active")
     public setActiveSession(request: express.Request): Session {
-        const session = Session.fromRequest(request.body);
+        const session = request.body as Session;
         return this.sessionService.activateSession(session);
     }
 

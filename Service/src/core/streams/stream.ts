@@ -29,8 +29,4 @@ export class Stream {
         this.countryCode = countryCode;
         this.deviceId = deviceId;
     }
-
-    public static fromRequest(request: any): Stream {
-        return new Stream(request.id, request.title, request.countryCode, request.deviceId);
-    }
 }

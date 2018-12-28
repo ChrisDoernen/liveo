@@ -23,8 +23,4 @@ export class Session {
         this.title = title;
         this.streams = streams;
     }
-
-    public static fromRequest(request: any): Session {
-        return new Session(request.id, request.title, request.streams);
-    }
 }
