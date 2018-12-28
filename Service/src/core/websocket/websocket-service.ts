@@ -13,7 +13,6 @@ export class WebsocketService {
 
     public onConnection(socket: Socket): void {
         this.logger.info("client connected.");
-        socket.
     }
 
 }
