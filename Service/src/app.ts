@@ -30,10 +30,7 @@ let httpServer = server.build();
 
 const weboscketServer = socketio(server, { path: "/streams" });
 const weboscketService = container.get<WebsocketService>(Types.WebsocketService);
-
-weboscketServer.on("connection", (socket) => {
-  weboscketService.onConnection(socket);
-});
+weboscketService.init(weboscketServer);
 
 httpServer.listen(config.port, () => {
   logger.info(`Server started, listening on port ${config.port}.`);

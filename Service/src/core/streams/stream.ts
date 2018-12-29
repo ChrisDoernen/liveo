@@ -1,5 +1,7 @@
 import { StreamEntity } from "./stream-entity";
 import { Logger } from "../util/logger";
+import { WebsocketService } from "../websocket/websocket-service";
+import { CommandExecutionService } from "../system/command-execution-service";
 
 /**
  * Class representing a live stream
@@ -13,7 +15,10 @@ export class Stream {
 
     public isStarted: boolean;
 
-    constructor(private logger: Logger, streamEntity: StreamEntity) {
+    constructor(private logger: Logger,
+        streamEntity: StreamEntity,
+        private websocketService: WebsocketService,
+        private commandExecutionService: CommandExecutionService) {
         this.streamEntity = streamEntity;
         logger.debug(`Loaded stream ${JSON.stringify(streamEntity)}.`);
     }
@@ -24,6 +29,7 @@ export class Stream {
     public start(): void {
         if (!this.isStarted) {
             this.logger.info(`Starting stream ${this.streamEntity.id}.`);
+            this.websocketService.addStream(this.streamEntity.id);
             this.isStarted = true;
         }
     }
@@ -34,6 +40,7 @@ export class Stream {
     public stop(): void {
         if (this.isStarted) {
             this.logger.info(`Stopped stream ${this.streamEntity.id}.`);
+            this.websocketService.removeStream(this.streamEntity.id);
             this.isStarted = false;
         }
     }
