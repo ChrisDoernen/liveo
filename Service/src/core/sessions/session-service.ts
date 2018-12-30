@@ -21,7 +21,7 @@ export class SessionService {
     private _activeSession: Session;
 
     public get activeSessionData(): SessionData {
-        return this._activeSession.data;
+        return this._activeSession ? this._activeSession.data : undefined;
     }
 
     constructor(private logger: Logger,
@@ -62,9 +62,6 @@ export class SessionService {
         return this.sessionFactory(sessionData, matchingStreams);
     }
 
-    /**
-     * Activate the given session
-     */
     public activateSession(sessionToActivate: SessionData): SessionData {
         const matchingSession = this.sessions.find((session) => session.id == sessionToActivate.id);
 
@@ -77,16 +74,10 @@ export class SessionService {
         return matchingSession.data;
     }
 
-    /**
-     * Get all session data transfer objects
-     */
     public getSessionData(): SessionData[] {
         return this.sessions.map((session) => session.data);
     }
 
-    /**
-     * Start the active session
-     */
     public startActiveSession(): void {
         if (!this._activeSession) {
             throw new Error("No session was activated.");

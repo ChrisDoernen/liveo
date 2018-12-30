@@ -43,8 +43,8 @@ export class Stream {
     public start(): void {
         if (!this.isStarted) {
             this.logger.info(`Starting stream ${this.streamData.id}.`);
-            this.websocketService.addStream(this.streamData.id);
-            this.commandExecutionService.spawn("ffmpeg", this.dataCallback);
+            // this.websocketService.addStream(this.streamData.id);
+            // this.commandExecutionService.spawn("ffmpeg", this.dataCallback);
             this.isStarted = true;
         }
     }

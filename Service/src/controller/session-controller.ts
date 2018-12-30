@@ -22,7 +22,7 @@ export class SessionController {
     }
 
     @httpGet("/active")
-    public getActiveSession(): SessionData {
+    public getActiveSessionData(): SessionData {
         return this.sessionService.activeSessionData;
     }
 
