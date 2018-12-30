@@ -9,6 +9,7 @@
     "buildWatch": "tsc --watch",
     "buildProd": "tsc --sourceMap false",
     "test": "jest",
+    "testWatch": "jest --watch",
     "start": "npm run build && node dist/app.js",
     "startWatch": "nodemon './dist/service.js' --watch './dist'"
   },

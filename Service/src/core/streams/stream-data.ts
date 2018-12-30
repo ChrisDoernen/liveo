@@ -1,7 +1,7 @@
 /**
  * Class representing a live stream entity
  */
-export class StreamEntity {
+export class StreamData {
 
     /**
      * A unique identifier

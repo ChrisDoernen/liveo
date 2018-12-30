@@ -1,6 +1,6 @@
 import { Logger } from "../util/logger";
 import { injectable, inject } from "inversify";
-import { SessionEntity } from "./session-entity";
+import { SessionData } from "./session-data";
 import { DataService } from "../data/data-service";
 import { StreamService } from "../streams/stream-service";
 import { Session } from "./session";
@@ -12,20 +12,22 @@ import { Stream } from "../streams/stream";
 @injectable()
 export class SessionService {
 
-    /**
-     * Available sessions
-     */
-    public sessions: Session[];
+    private _sessions: Session[];
 
-    /**
-     * The currently active session
-     */
-    public activeSession: Session;
+    public get sessions(): Session[] {
+        return this._sessions;
+    }
 
-    constructor(@inject("SessionFactory") private sessionFactory: (sessionEntity: SessionEntity, streams: Stream[]) => Session,
-        private logger: Logger,
+    private _activeSession: Session;
+
+    public get activeSessionData(): SessionData {
+        return this._activeSession.data;
+    }
+
+    constructor(private logger: Logger,
         private dataService: DataService,
-        private streamService: StreamService) {
+        private streamService: StreamService,
+        @inject("SessionFactory") private sessionFactory: (sessionData: SessionData, streams: Stream[]) => Session) {
         this.loadSessions();
     }
 
@@ -37,53 +39,59 @@ export class SessionService {
         if (sessionEntities.length === 0) {
             this.logger.warn("No session available for loading.");
         } else {
-            this.sessions = sessionEntities.map((sessionEntity) => this.mapSession(sessionEntity));
+            this._sessions = sessionEntities.map((sessionEntity) => this.convertSession(sessionEntity));
         }
     }
 
-    /**
-     * Activate the given session
-     */
-    public activateSession(sessionToActivate: SessionEntity): SessionEntity {
-        const matchingSession = this.sessions.find((session) => session.sessionEntity.id == sessionToActivate.id);
+    private convertSession(sessionData: SessionData): Session {
+        const ids = sessionData.streams;
+        const availableStreams = this.streamService.streams;
+        let matchingStreams = [];
 
-        if (matchingSession) {
-            this.activeSession = matchingSession;
-        } else {
-            throw new Error(`Session with id ${sessionToActivate.id} was not found.`);
+        if (availableStreams) {
+            matchingStreams = availableStreams.filter((stream) => ids.indexOf(stream.id) !== -1);
         }
 
-        return matchingSession.sessionEntity;
-    }
-
-    /**
-     * Get all session entities
-     */
-    public getSessionEntities(): SessionEntity[] {
-        return this.sessions.map((session) => session.sessionEntity);
-    }
-
-    /**
-     * Starts the active session
-     */
-    public startActiveSession(): void {
-        if (!this.activeSession) {
-            throw new Error("No session was activated.");
-        }
-
-        this.activeSession.start();
-    }
-
-    private mapSession(sessionEntity: SessionEntity): Session {
-        const ids = sessionEntity.streams;
-        const matchingStreams = this.streamService.streams.filter((stream) => ids.indexOf(stream.streamEntity.id) !== -1);
-        const matchingStreamsIds = matchingStreams.map((stream) => stream.streamEntity.id);
+        const matchingStreamsIds = matchingStreams.map((stream) => stream.id);
         const missingStreamIds = ids.filter((id) => matchingStreamsIds.indexOf(id) === -1);
 
         if (missingStreamIds.length > 0) {
             this.logger.warn(`Missing stream for ids ${JSON.stringify(missingStreamIds)}.`);
         }
 
-        return this.sessionFactory(sessionEntity, matchingStreams);
+        return this.sessionFactory(sessionData, matchingStreams);
+    }
+
+    /**
+     * Activate the given session
+     */
+    public activateSession(sessionToActivate: SessionData): SessionData {
+        const matchingSession = this.sessions.find((session) => session.id == sessionToActivate.id);
+
+        if (matchingSession) {
+            this._activeSession = matchingSession;
+        } else {
+            throw new Error(`Session with id ${sessionToActivate.id} was not found.`);
+        }
+
+        return matchingSession.data;
+    }
+
+    /**
+     * Get all session data transfer objects
+     */
+    public getSessionData(): SessionData[] {
+        return this.sessions.map((session) => session.data);
+    }
+
+    /**
+     * Start the active session
+     */
+    public startActiveSession(): void {
+        if (!this._activeSession) {
+            throw new Error("No session was activated.");
+        }
+
+        this._activeSession.start();
     }
 }

@@ -13,9 +13,9 @@ import { SessionService } from "../core/sessions/session-service";
 import { StreamService } from "../core/streams/stream-service";
 import { WebsocketService } from "../core/websocket/websocket-service";
 import { Stream } from "../core/streams/stream";
-import { StreamEntity } from "../core/streams/stream-entity";
+import { StreamData } from "../core/streams/stream-data";
 import { Session } from "../core/sessions/session";
-import { SessionEntity } from "../core/sessions/session-entity";
+import { SessionData } from "../core/sessions/session-data";
 
 export const container = new Container();
 
@@ -39,14 +39,14 @@ container.bind<StreamService>(Types.StreamService).to(StreamService).inSingleton
 container.bind<WebsocketService>(Types.WebsocketService).to(WebsocketService).inSingletonScope();
 
 container.bind<interfaces.Factory<Stream>>(Types.StreamFactory).toFactory((context) =>
-    (streamEntity: StreamEntity) => {
+    (streamEntity: StreamData) => {
         const logger = context.container.get<Logger>(Types.Logger);
-        return new Stream(logger, streamEntity);
+        return new Stream(logger, streamEntity, null, null);
     }
 );
 
 container.bind<interfaces.Factory<Session>>(Types.SessionFactory).toFactory((context) =>
-    (sessionEntity: SessionEntity, streams: Stream[]) => {
+    (sessionEntity: SessionData, streams: Stream[]) => {
         const logger = context.container.get<Logger>(Types.Logger);
         return new Session(logger, sessionEntity, streams);
     }

@@ -2,7 +2,7 @@ import { controller, httpGet } from "inversify-express-utils";
 import { inject } from "inversify";
 import { Types } from "../config/types.config";
 import { StreamService } from "../core/streams/stream-service";
-import { StreamEntity } from "../core/streams/stream-entity";
+import { StreamData } from "../core/streams/stream-data";
 
 @controller("/api/streams")
 export class StreamController {
@@ -10,7 +10,7 @@ export class StreamController {
   constructor(@inject(Types.StreamService) private streamService: StreamService) { }
 
   @httpGet("/")
-  public getStreams(): StreamEntity[] {
-    return this.streamService.getStreamEntities();
+  public getStreams(): StreamData[] {
+    return this.streamService.getStreamData();
   }
 }

@@ -11,9 +11,9 @@ describe('SessionService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        SessionService, 
+        SessionService,
         { provide: HttpClient, useValue: httpClient },
-        { provide: EndpointService, useValue: endpointService}
+        { provide: EndpointService, useValue: endpointService }
       ]
     });
 
@@ -24,5 +24,5 @@ describe('SessionService', () => {
 
   it('should be created', () => {
     expect(sessionService).toBeTruthy();
-  })
+  });
 });

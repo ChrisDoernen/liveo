@@ -1,4 +1,4 @@
-import { StreamEntity } from "./stream-entity";
+import { StreamData } from "./stream-data";
 import { Logger } from "../util/logger";
 import { WebsocketService } from "../websocket/websocket-service";
 import { CommandExecutionService } from "../system/command-execution-service";
@@ -9,18 +9,32 @@ import { CommandExecutionService } from "../system/command-execution-service";
 export class Stream {
 
     /**
-     * The stream entity
+     * The stream data transfer object
      */
-    public streamEntity: StreamEntity;
+    private streamData: StreamData;
+
+    /**
+     * The id of the stream
+     */
+    public get id(): string {
+        return this.streamData.id;
+    }
+
+    /**
+     * Get the stream data transfer object
+     */
+    public get data(): StreamData {
+        return this.streamData;
+    }
 
     public isStarted: boolean;
 
     constructor(private logger: Logger,
-        streamEntity: StreamEntity,
+        streamData: StreamData,
         private websocketService: WebsocketService,
         private commandExecutionService: CommandExecutionService) {
-        this.streamEntity = streamEntity;
-        logger.debug(`Loaded stream ${JSON.stringify(streamEntity)}.`);
+        this.streamData = streamData;
+        logger.debug(`Loaded stream ${JSON.stringify(streamData)}.`);
     }
 
     /**
@@ -28,10 +42,15 @@ export class Stream {
      */
     public start(): void {
         if (!this.isStarted) {
-            this.logger.info(`Starting stream ${this.streamEntity.id}.`);
-            this.websocketService.addStream(this.streamEntity.id);
+            this.logger.info(`Starting stream ${this.streamData.id}.`);
+            this.websocketService.addStream(this.streamData.id);
+            this.commandExecutionService.spawn("ffmpeg", this.dataCallback);
             this.isStarted = true;
         }
+    }
+
+    public dataCallback(data: Buffer): void {
+        this.websocketService.emit(this.streamData.id, data);
     }
 
     /**
@@ -39,8 +58,8 @@ export class Stream {
      */
     public stop(): void {
         if (this.isStarted) {
-            this.logger.info(`Stopped stream ${this.streamEntity.id}.`);
-            this.websocketService.removeStream(this.streamEntity.id);
+            this.logger.info(`Stopped stream ${this.streamData.id}.`);
+            this.websocketService.removeStream(this.streamData.id);
             this.isStarted = false;
         }
     }

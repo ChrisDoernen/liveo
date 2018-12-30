@@ -26,9 +26,9 @@ export class CommandExecutionService {
      * @param onExit A callback to be executed on exit event
      */
     public spawn(command: string,
-        stdoutOnData: (data: Buffer) => void,
-        stderrOnData: (data: Buffer) => void,
-        onExit: (exitCode: string) => void): void {
+        stdoutOnData?: (data: Buffer) => void,
+        stderrOnData?: (data: Buffer) => void,
+        onExit?: (exitCode: string) => void): void {
         const process = spawn(command);
 
         process.stdout.on("data", stdoutOnData);

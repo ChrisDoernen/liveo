@@ -1,7 +1,7 @@
 /**
  * Class representing a streaming session entity
  */
-export class SessionEntity {
+export class SessionData {
 
     /**
      * A unique identifier

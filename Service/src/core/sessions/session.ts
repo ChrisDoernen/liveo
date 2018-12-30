@@ -1,5 +1,5 @@
 import { Logger } from "../util/logger";
-import { SessionEntity } from "./session-entity";
+import { SessionData } from "./session-data";
 import { Stream } from "../streams/stream";
 
 /**
@@ -8,16 +8,30 @@ import { Stream } from "../streams/stream";
 export class Session {
 
     /**
-     * The session entity
+     * The session data transfer object
      */
-    public sessionEntity: SessionEntity;
+    private sessionData: SessionData;
+
+    /**
+     * Get the session data transfer object
+     */
+    public get data(): SessionData {
+        return this.sessionData;
+    }
+
+    /**
+     * Get the session id
+     */
+    public get id(): string {
+        return this.data.id;
+    }
 
     private streams: Stream[];
 
     private isStarted: boolean;
 
-    constructor(private logger: Logger, sessionEntity: SessionEntity, streams: Stream[]) {
-        this.sessionEntity = sessionEntity;
+    constructor(private logger: Logger, sessionEntity: SessionData, streams: Stream[]) {
+        this.sessionData = sessionEntity;
         this.streams = streams;
         this.logger.debug(`Loaded session ${JSON.stringify(sessionEntity)}.`);
     }
@@ -27,7 +41,7 @@ export class Session {
      */
     public start(): void {
         if (!this.isStarted) {
-            this.logger.info(`Starting session ${this.sessionEntity.id}.`);
+            this.logger.info(`Starting session ${this.sessionData.id}.`);
             this.streams.forEach((stream) => stream.start());
             this.isStarted = true;
         }
@@ -38,7 +52,7 @@ export class Session {
      */
     public stop(): void {
         if (this.isStarted) {
-            this.logger.info(`Stopped session ${this.sessionEntity.id}.`);
+            this.logger.info(`Stopped session ${this.sessionData.id}.`);
             this.streams.forEach((stream) => stream.stop());
             this.isStarted = false;
         }
