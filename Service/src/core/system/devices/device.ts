@@ -1,20 +1,25 @@
+import { DeviceData } from "./device-data";
+import { Logger } from "../../util/logger";
+
 /**
  * Represents either an audio or video device available in the system
  */
 export class Device {
 
-    /**
-     * A unique identifier
-     */
-    public id: string;
+    private _deviceData: DeviceData;
 
-    /**
-     * A technical description
-     */
-    public description: string;
+    public get id(): string {
+        return this._deviceData.id;
+    }
 
-    constructor(id: string, description: string) {
-        this.id = id;
-        this.description = description;
+    public get data(): DeviceData {
+        return this._deviceData;
+    }
+
+    constructor(private logger: Logger,
+        deviceData: DeviceData
+    ) {
+        this._deviceData = deviceData;
+        this.logger.debug(`Detected device ${JSON.stringify(this._deviceData)}.`);
     }
 }
