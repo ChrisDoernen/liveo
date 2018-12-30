@@ -16,21 +16,21 @@ export class StreamService {
         return this._streams;
     }
 
-    constructor(@inject("StreamFactory") private streamFactory: (streamEntity: StreamData) => Stream,
-        private logger: Logger,
-        private dataService: DataService) {
+    constructor(private logger: Logger,
+        private dataService: DataService,
+        @inject("StreamFactory") private streamFactory: (streamData: StreamData) => Stream) {
         this.loadStreams();
     }
 
     private loadStreams(): void {
         this.logger.debug("Loading streams.");
 
-        const streamData = this.dataService.loadStreams();
+        const streamsData = this.dataService.loadStreams();
 
-        if (streamData.length === 0) {
+        if (streamsData.length === 0) {
             this.logger.warn("No streams available for loading.");
         } else {
-            this._streams = streamData.map(this.convertStream);
+            this._streams = streamsData.map((streamData) => this.streamFactory(streamData));
         }
     }
 

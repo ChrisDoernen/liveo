@@ -34,12 +34,12 @@ export class SessionService {
     private loadSessions(): void {
         this.logger.debug("Loading sessions.");
 
-        const sessionEntities = this.dataService.loadSessions();
+        const sessionsData = this.dataService.loadSessions();
 
-        if (sessionEntities.length === 0) {
+        if (sessionsData.length === 0) {
             this.logger.warn("No session available for loading.");
         } else {
-            this._sessions = sessionEntities.map((sessionEntity) => this.convertSession(sessionEntity));
+            this._sessions = sessionsData.map((sessionData) => this.convertSession(sessionData));
         }
     }
 
