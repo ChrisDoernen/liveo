@@ -13,21 +13,18 @@ describe("SessionService", () => {
     let logger;
     let dataService;
     let streamService;
-    let sessionFactory: jest.Mock<{}>;
+    let sessionFactory;
+
+    const sessions = [
+        new SessionData("bcf4", "Service", ["vfg3"]),
+        new SessionData("43kv", "Service2", ["2gus"])
+    ];
 
     beforeEach(() => {
         logger = createMockInstance(Logger);
         dataService = createMockInstance(DataService);
-        streamService = createMockInstance(StreamService);
-
-        const stream = createMockInstance(Stream);
-
-        const sessions = [
-            new SessionData("bcf4", "Service", ["vfg3"]),
-            new SessionData("43kv", "Service2", ["2gus"])
-        ];
-
         dataService.loadSessions.mockReturnValue(sessions);
+        streamService = createMockInstance(StreamService);
         sessionFactory = jest.fn();
 
         sessionService = new SessionService(logger, dataService, streamService, sessionFactory);
@@ -43,8 +40,18 @@ describe("SessionService", () => {
     });
 
     it("should have called logger warn if no streams are available", async () => {
-        expect(dataService.loadSessions).toBeCalled();
         expect(sessionService.sessions.length).toBe(2);
         expect(logger.warn).toHaveBeenCalled();
+    });
+
+    it("should have loaded the streams of the sessions correctly when streams are available", async () => {
+        const stream = createMockInstance(Stream);
+        const streams = [stream];
+
+        // ToDo
+        // jest.spyOn(streamService, "streams", "get").mockReturnValue(streams);
+        // streamService.streams.mockReturnValue(null);
+
+        expect(sessionService.sessions.length).toBe(2);
     });
 });
