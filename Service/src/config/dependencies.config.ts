@@ -5,7 +5,7 @@ import { ShutdownSimulationService } from "../core/system/shutdown/shutdown-simu
 import { Container, interfaces } from "inversify";
 import { Logger } from "../core/util/logger";
 import { config } from "./service.config";
-import { CommandExecutionService } from "../core/system/command-execution-service";
+import { SimpleProcessdExecutionService } from "../core/system/child-processes/simple-process-execution-service";
 import { IDeviceDetector } from "../core/system/devices/i-device-detector";
 import { LinuxDeviceDetector } from "../core/system/devices/linux-device-detector";
 import { DataService } from "../core/data/data-service";
@@ -13,9 +13,11 @@ import { SessionService } from "../core/sessions/session-service";
 import { StreamService } from "../core/streams/stream-service";
 import { WebsocketService } from "../core/websocket/websocket-service";
 import { Stream } from "../core/streams/stream";
-import { StreamData } from "../core/streams/stream-data";
 import { Session } from "../core/sessions/session";
-import { SessionData } from "../core/sessions/session-data";
+import { Device } from "../core/system/devices/device";
+import { DeviceFactory } from "../core/system/devices/device-factory";
+import { SessionFactory } from "../core/sessions/session-factory";
+import { StreamFactory } from "../core/streams/stream-facrtory";
 
 export const container = new Container();
 
@@ -32,22 +34,11 @@ if (config.os === "linux") {
 }
 
 container.bind<Logger>(Types.Logger).toSelf();
-container.bind<CommandExecutionService>(Types.CommandExecutionService).to(CommandExecutionService);
+container.bind<SimpleProcessdExecutionService>(Types.CommandExecutionService).to(SimpleProcessdExecutionService);
 container.bind<DataService>(Types.DataService).to(DataService);
 container.bind<SessionService>(Types.SessionService).to(SessionService).inSingletonScope();
 container.bind<StreamService>(Types.StreamService).to(StreamService).inSingletonScope();
 container.bind<WebsocketService>(Types.WebsocketService).to(WebsocketService).inSingletonScope();
-
-container.bind<interfaces.Factory<Stream>>(Types.StreamFactory).toFactory((context) =>
-    (streamEntity: StreamData) => {
-        const logger = context.container.get<Logger>(Types.Logger);
-        return new Stream(logger, streamEntity, null, null);
-    }
-);
-
-container.bind<interfaces.Factory<Session>>(Types.SessionFactory).toFactory((context) =>
-    (sessionEntity: SessionData, streams: Stream[]) => {
-        const logger = context.container.get<Logger>(Types.Logger);
-        return new Session(logger, sessionEntity, streams);
-    }
-);
+container.bind<interfaces.Factory<Stream>>(Types.StreamFactory).toFactory(StreamFactory);
+container.bind<interfaces.Factory<Session>>(Types.SessionFactory).toFactory(SessionFactory);
+container.bind<interfaces.Factory<Device>>(Types.DeviceFactory).toFactory(DeviceFactory);
