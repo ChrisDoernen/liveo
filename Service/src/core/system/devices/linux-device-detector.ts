@@ -12,45 +12,53 @@ import { DeviceState } from "./device-state";
 @injectable()
 export class LinuxDeviceDetector implements IDeviceDetector {
 
-    private _devices: Device[];
+    private _devices: Device[] = [];
 
     public get devices(): Device[] {
         return this._devices;
     }
+
+    private _initialDetectionCompleted: Promise<boolean>;
 
     private listDevicesCommand: string = "arecord -l";
 
     private audioDeviceRegexPattern: RegExp = new RegExp("(card \\d+: )");
 
     constructor(private logger: Logger,
-        private commandExecutionService: ProcessdExecutionService,
+        private processExecutionService: ProcessdExecutionService,
         @inject("DeviceFactory") private deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
-        this.detectDevices();
+        this._initialDetectionCompleted = this.detectDevices();
     }
 
-    private detectDevices(): void {
-        this.executeListDevicesCommand().then((response) => {
-            this.logger.debug("Detecting audio inputs.");
+    private async detectDevices(): Promise<boolean> {
+        return await new Promise<boolean>((resolve, reject) => {
+            this.executeListDevicesCommand().then((response) => {
+                this.logger.debug("Detecting audio inputs.");
 
-            this.parseResponse(response);
+                this._devices = this.parseResponse(response);
 
-            if (!this._devices || !this._devices.some) {
-                this.logger.warn("No devices detected. Please check your sound cards.");
-            }
+                if (this._devices.length === 0) {
+                    this.logger.warn("No devices detected. Please check your sound cards.");
+                }
+
+                resolve(true);
+            });
         });
     }
 
     private async executeListDevicesCommand(): Promise<string> {
         return await new Promise<string>((resolve, reject) => {
-            this.commandExecutionService.execute(this.listDevicesCommand, (error, stdout, stderr) => {
+            this.processExecutionService.execute(this.listDevicesCommand, (error, stdout, stderr) => {
                 resolve(stdout);
             });
         });
     }
 
-    private parseResponse(response: string): void {
+    private parseResponse(response: string): Device[] {
         const lines = response.split("\n");
-        this._devices = lines.filter((line) => this.audioDeviceRegexPattern.test(line))
+
+        return lines
+            .filter((line) => this.audioDeviceRegexPattern.test(line))
             .map((line) => this.parseDevice(line));
     }
 
@@ -62,9 +70,12 @@ export class LinuxDeviceDetector implements IDeviceDetector {
         return this.deviceFactory(new DeviceData(id, description), DeviceState.Available);
     }
 
-    public getDevice(id: string): Device {
-        const matchingDevice = this._devices.find((device) => device.id === id);
-
-        return matchingDevice ? matchingDevice : this.deviceFactory(undefined, DeviceState.UnknownDevice);
+    public async getDevice(id: string): Promise<Device> {
+        return new Promise<Device>((resolve, reject) => {
+            this._initialDetectionCompleted.then(() => {
+                const matchingDevice = this._devices.find((device) => device.id === id);
+                resolve(matchingDevice ? matchingDevice : this.deviceFactory(new DeviceData(id, ""), DeviceState.UnknownDevice));
+            });
+        });
     }
 }

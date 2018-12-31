@@ -31,7 +31,7 @@ export class WindowsDeviceDetector implements IDeviceDetector {
         return line.includes("(") && line.includes(")") && line.includes("\"");
     }
 
-    public getDevice(id: string): Device {
+    public getDevice(id: string): Promise<Device> {
         throw new Error("Method not implemented.");
     }
 }

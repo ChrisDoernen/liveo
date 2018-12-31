@@ -9,44 +9,48 @@ import { inject } from "inversify";
  */
 export class Stream {
 
-    private streamData: StreamData;
+    private _streamData: StreamData;
 
     public get id(): string {
-        return this.streamData.id;
+        return this._streamData.id;
     }
 
     public get data(): StreamData {
-        return this.streamData;
+        return this._streamData;
     }
 
-    private isStarted: boolean;
+    private _isStarted: boolean;
 
-    private source: StreamingSource;
+    private _source: StreamingSource;
+
+    public get hasValidSource(): boolean {
+        return this._source.hasValidDevice;
+    }
 
     constructor(private logger: Logger,
         private websocketService: WebsocketService,
         @inject("StreamingSourceFactory") streamingSourceFactory: (deviceId: string) => StreamingSource,
         streamData: StreamData) {
-        this.streamData = streamData;
-        this.source = streamingSourceFactory(streamData.deviceId);
+        this._streamData = streamData;
+        this._source = streamingSourceFactory(streamData.deviceId);
         logger.debug(`Loaded stream ${JSON.stringify(streamData)}.`);
     }
 
     public start(): void {
-        if (!this.isStarted) {
+        if (!this._isStarted && this.hasValidSource) {
             this.websocketService.addStream(this.id);
-            this.source.startStreaming();
-            this.logger.info(`Started stream ${this.streamData.id}.`);
-            this.isStarted = true;
+            this._source.startStreaming();
+            this.logger.info(`Started stream ${this._streamData.id}.`);
+            this._isStarted = true;
         }
     }
 
     public stop(): void {
-        if (this.isStarted) {
+        if (this._isStarted) {
             this.websocketService.removeStream(this.id);
-            this.source.stopStreaming();
-            this.logger.info(`Stopped stream ${this.streamData.id}.`);
-            this.isStarted = false;
+            this._source.stopStreaming();
+            this.logger.info(`Stopped stream ${this._streamData.id}.`);
+            this._isStarted = false;
         }
     }
 }

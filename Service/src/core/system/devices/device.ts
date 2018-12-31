@@ -35,7 +35,7 @@ export class Device {
         }
 
         if (deviceState === DeviceState.UnknownDevice) {
-            this.logger.debug(`Detected device ${JSON.stringify(this._deviceData)}.`);
+            this.logger.warn(`Device with id ${this._deviceData.id} was not detected in the system.`);
         }
     }
 }

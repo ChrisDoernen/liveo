@@ -3,9 +3,6 @@ import { injectable, inject } from "inversify";
 import { StreamData } from "./stream-data";
 import { DataService } from "../data/data-service";
 import { Stream } from "./stream";
-import { IDeviceDetector } from "../system/devices/i-device-detector";
-import { Device } from "../system/devices/device";
-import { DeviceState } from "../system/devices/device-state";
 
 /**
  * A class providing methods to manage streams
@@ -21,8 +18,7 @@ export class StreamService {
 
     constructor(private logger: Logger,
         private dataService: DataService,
-        private deviceDetector: IDeviceDetector,
-        @inject("StreamFactory") private streamFactory: (streamData: StreamData, device: Device) => Stream) {
+        @inject("StreamFactory") private streamFactory: (streamData: StreamData) => Stream) {
         this.loadStreams();
     }
 
@@ -39,14 +35,7 @@ export class StreamService {
     }
 
     private convertStream(streamData: StreamData): Stream {
-        const id = streamData.deviceId;
-        const device = this.deviceDetector.getDevice(id);
-
-        if (device.state === DeviceState.UnknownDevice) {
-            this.logger.warn(`No device with id ${id} was found for stream ${streamData.id}.`);
-        }
-
-        return this.streamFactory(streamData, device);
+        return this.streamFactory(streamData);
     }
 
     public getStreamData(): StreamData[] {

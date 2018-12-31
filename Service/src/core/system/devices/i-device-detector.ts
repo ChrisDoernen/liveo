@@ -6,9 +6,9 @@ import { Device } from "./device";
 export interface IDeviceDetector {
 
     /**
-     * Get a device by id. Returnes a device without data and device state
-     * unknown device if the id is not found.
+     * Get a device by id. If the id is not found, a device with device state
+     * unknown device is returned.
      * @param id The id of the device
      */
-    getDevice(id: string): Device;
+    getDevice(id: string): Promise<Device>;
 }
