@@ -1,6 +1,6 @@
 import { injectable } from "inversify";
 import { Logger } from "../../util/logger";
-import { CommandExecutionService } from "../command-execution-service";
+import { ProcessdExecutionService } from "../child-processes/process-execution-service";
 
 /**
  * Linux implementation for IShutdownService
@@ -9,7 +9,7 @@ import { CommandExecutionService } from "../command-execution-service";
 export class LinuxShutdownService {
 
     constructor(private logger: Logger,
-        private commandExecutionService: CommandExecutionService) { }
+        private commandExecutionService: ProcessdExecutionService) { }
 
     /** @inheritdoc */
     public shutdown(): void {

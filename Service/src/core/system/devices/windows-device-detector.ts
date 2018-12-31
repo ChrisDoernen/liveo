@@ -1,4 +1,4 @@
-import { SimpleProcessdExecutionService } from "../child-processes/simple-process-execution-service";
+import { ProcessdExecutionService } from "../child-processes/process-execution-service";
 import { IDeviceDetector } from "./i-device-detector";
 import { Logger } from "../../util/logger";
 import { injectable } from "inversify";
@@ -14,7 +14,7 @@ export class WindowsDeviceDetector implements IDeviceDetector {
     private audioDeviceRegexPattern: string = `(?<="")(.*?)(?="")`;
 
     constructor(private logger: Logger,
-        private commandExecutionService: SimpleProcessdExecutionService) {
+        private commandExecutionService: ProcessdExecutionService) {
         this.logger.debug("Detecting audio inputs.");
         this.detectDevices();
     }
@@ -29,5 +29,9 @@ export class WindowsDeviceDetector implements IDeviceDetector {
 
     private lineContainsAudioDevice(line: string): boolean {
         return line.includes("(") && line.includes(")") && line.includes("\"");
+    }
+
+    public getDevice(id: string): Device {
+        throw new Error("Method not implemented.");
     }
 }

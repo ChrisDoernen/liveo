@@ -6,7 +6,9 @@ import { Device } from "./device";
 export interface IDeviceDetector {
 
     /**
-     * A list of devices available in the system
+     * Get a device by id. Returnes a device without data and device state
+     * unknown device if the id is not found.
+     * @param id The id of the device
      */
-    devices: Device[];
+    getDevice(id: string): Device;
 }

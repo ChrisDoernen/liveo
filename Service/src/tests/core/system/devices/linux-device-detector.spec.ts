@@ -3,10 +3,11 @@ import * as appRoot from "app-root-path";
 import * as fs from "fs";
 import createMockInstance from "jest-create-mock-instance";
 import { Logger } from "../../../../core/util/logger";
-import { SimpleProcessdExecutionService } from "../../../../core/system/child-processes/simple-process-execution-service";
+import { ProcessdExecutionService } from "../../../../core/system/child-processes/process-execution-service";
 import { LinuxDeviceDetector } from "../../../../core/system/devices/linux-device-detector";
 import { DeviceData } from "../../../../core/system/devices/device-data";
 import { Device } from "../../../../core/system/devices/device";
+import { DeviceState } from "../../../../core/system/devices/device-state";
 
 describe("LinuxDeviceDetector", () => {
 
@@ -16,8 +17,8 @@ describe("LinuxDeviceDetector", () => {
 
     beforeEach(() => {
         const logger = createMockInstance(Logger);
-        commandExecutionService = createMockInstance(SimpleProcessdExecutionService);
-        deviceFactory = jest.fn((deviceData: DeviceData) => new Device(logger, deviceData));
+        commandExecutionService = createMockInstance(ProcessdExecutionService);
+        deviceFactory = jest.fn((deviceData: DeviceData, deviceState: DeviceState) => new Device(logger, deviceData, deviceState));
 
         const oneDeviceAvailableResource = `${appRoot}/src/tests/resources/system/devices/arecordTwoAvailable.txt`;
         const response = fs.readFileSync(oneDeviceAvailableResource, "utf8");

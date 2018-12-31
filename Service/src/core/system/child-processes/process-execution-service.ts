@@ -1,4 +1,3 @@
-
 import { injectable } from "inversify";
 import { exec, ExecException, spawn } from "child_process";
 
@@ -6,10 +5,10 @@ import { exec, ExecException, spawn } from "child_process";
  * Wrapper for child_process
  */
 @injectable()
-export class CommandExecutionService {
+export class ProcessdExecutionService {
 
     /**
-     * Executes a command
+     * Executes a command and returnes output as string
      * @param command The command to execute
      * @param callback A callback to be called on error, stout and stderr events
      */
@@ -19,7 +18,7 @@ export class CommandExecutionService {
     }
 
     /**
-     * Spawns a child process
+     * Spawns a child process and returnes output as binary
      * @param command The command
      * @param stdoutOnData A callback to be executed on stdout data event
      * @param stderrOnData A callback to be executed on stdout data event

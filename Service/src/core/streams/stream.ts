@@ -1,65 +1,51 @@
 import { StreamData } from "./stream-data";
 import { Logger } from "../util/logger";
 import { WebsocketService } from "../websocket/websocket-service";
-import { CommandExecutionService } from "../system/command-execution-service";
+import { StreamingSource } from "./streaming-source";
+import { inject } from "inversify";
 
 /**
  * Class representing a live stream
  */
 export class Stream {
 
-    /**
-     * The stream data transfer object
-     */
     private streamData: StreamData;
 
-    /**
-     * The id of the stream
-     */
     public get id(): string {
         return this.streamData.id;
     }
 
-    /**
-     * Get the stream data transfer object
-     */
     public get data(): StreamData {
         return this.streamData;
     }
 
-    public isStarted: boolean;
+    private isStarted: boolean;
+
+    private source: StreamingSource;
 
     constructor(private logger: Logger,
-        streamData: StreamData,
         private websocketService: WebsocketService,
-        private commandExecutionService: CommandExecutionService) {
+        @inject("StreamingSourceFactory") streamingSourceFactory: (deviceId: string) => StreamingSource,
+        streamData: StreamData) {
         this.streamData = streamData;
+        this.source = streamingSourceFactory(streamData.deviceId);
         logger.debug(`Loaded stream ${JSON.stringify(streamData)}.`);
     }
 
-    /**
-     * Start the stream
-     */
     public start(): void {
         if (!this.isStarted) {
-            this.logger.info(`Starting stream ${this.streamData.id}.`);
-            // this.websocketService.addStream(this.streamData.id);
-            // this.commandExecutionService.spawn("ffmpeg", this.dataCallback);
+            this.websocketService.addStream(this.id);
+            this.source.startStreaming();
+            this.logger.info(`Started stream ${this.streamData.id}.`);
             this.isStarted = true;
         }
     }
 
-    public dataCallback(data: Buffer): void {
-        this.websocketService.emit(this.streamData.id, data);
-    }
-
-    /**
-     * Stop the stream
-     */
     public stop(): void {
         if (this.isStarted) {
+            this.websocketService.removeStream(this.id);
+            this.source.stopStreaming();
             this.logger.info(`Stopped stream ${this.streamData.id}.`);
-            this.websocketService.removeStream(this.streamData.id);
             this.isStarted = false;
         }
     }

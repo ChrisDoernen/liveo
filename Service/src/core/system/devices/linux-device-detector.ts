@@ -1,9 +1,10 @@
-import { SimpleProcessdExecutionService } from "../child-processes/simple-process-execution-service";
+import { ProcessdExecutionService } from "../child-processes/process-execution-service";
 import { IDeviceDetector } from "./i-device-detector";
 import { Logger } from "../../util/logger";
 import { injectable, inject } from "inversify";
 import { Device } from "./device";
 import { DeviceData } from "./device-data";
+import { DeviceState } from "./device-state";
 
 /**
  * Implementation of device detection on linux machines
@@ -13,17 +14,13 @@ export class LinuxDeviceDetector implements IDeviceDetector {
 
     private _devices: Device[];
 
-    public get devices(): Device[] {
-        return this._devices;
-    }
-
     private listDevicesCommand: string = "arecord -l";
 
     private audioDeviceRegexPattern: RegExp = new RegExp("(card \\d+: )");
 
     constructor(private logger: Logger,
-        private commandExecutionService: SimpleProcessdExecutionService,
-        @inject("DeviceFactory") private deviceFactory: (deviceData: DeviceData) => Device) {
+        private commandExecutionService: ProcessdExecutionService,
+        @inject("DeviceFactory") private deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
         this.detectDevices();
     }
 
@@ -50,14 +47,20 @@ export class LinuxDeviceDetector implements IDeviceDetector {
     private parseResponse(response: string): void {
         const lines = response.split("\n");
         this._devices = lines.filter((line) => this.audioDeviceRegexPattern.test(line))
-            .map((line) => this.getDevice(line));
+            .map((line) => this.parseDevice(line));
     }
 
-    private getDevice(line: string): Device {
+    private parseDevice(line: string): Device {
         const cardPrefix = line.match(this.audioDeviceRegexPattern)[0];
         const id = cardPrefix.match(new RegExp("\\d+")).toString();
         const description = line.slice(cardPrefix.length);
 
-        return this.deviceFactory(new DeviceData(id, description));
+        return this.deviceFactory(new DeviceData(id, description), DeviceState.Available);
+    }
+
+    public getDevice(id: string): Device {
+        const matchingDevice = this._devices.find((device) => device.id === id);
+
+        return matchingDevice ? matchingDevice : this.deviceFactory(undefined, DeviceState.UnknownDevice);
     }
 }

@@ -1,12 +1,12 @@
 import "reflect-metadata";
-import { CommandExecutionService } from "../../../core/system/command-execution-service";
+import { ProcessdExecutionService } from "../../../../core/system/child-processes/process-execution-service";
 
 describe("CommandExecutionService", () => {
 
     let commandExecutionService;
 
     beforeEach(() => {
-        commandExecutionService = new CommandExecutionService();
+        commandExecutionService = new ProcessdExecutionService();
     });
 
     it("should", () => {

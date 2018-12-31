@@ -3,6 +3,9 @@ import { injectable, inject } from "inversify";
 import { StreamData } from "./stream-data";
 import { DataService } from "../data/data-service";
 import { Stream } from "./stream";
+import { IDeviceDetector } from "../system/devices/i-device-detector";
+import { Device } from "../system/devices/device";
+import { DeviceState } from "../system/devices/device-state";
 
 /**
  * A class providing methods to manage streams
@@ -18,7 +21,8 @@ export class StreamService {
 
     constructor(private logger: Logger,
         private dataService: DataService,
-        @inject("StreamFactory") private streamFactory: (streamData: StreamData) => Stream) {
+        private deviceDetector: IDeviceDetector,
+        @inject("StreamFactory") private streamFactory: (streamData: StreamData, device: Device) => Stream) {
         this.loadStreams();
     }
 
@@ -30,29 +34,25 @@ export class StreamService {
         if (streamsData.length === 0) {
             this.logger.warn("No streams available for loading.");
         } else {
-            this._streams = streamsData.map((streamData) => this.streamFactory(streamData));
+            this._streams = streamsData.map((streamData) => this.convertStream(streamData));
         }
     }
 
-    /**
-     * Converts a stream data transfer object into a stream
-     * @param streamData The stream data transfer object
-     */
     private convertStream(streamData: StreamData): Stream {
-        return this.streamFactory(streamData);
+        const id = streamData.deviceId;
+        const device = this.deviceDetector.getDevice(id);
+
+        if (device.state === DeviceState.UnknownDevice) {
+            this.logger.warn(`No device with id ${id} was found for stream ${streamData.id}.`);
+        }
+
+        return this.streamFactory(streamData, device);
     }
 
-    /**
-     * Get all session data transfer objects
-     */
     public getStreamData(): StreamData[] {
         return this._streams.map((stream: Stream) => stream.data);
     }
 
-    /**
-     * Create a new stream
-     * @param streamData The stream data transfer object
-     */
     public createStream(streamData: StreamData): void {
         this._streams.push(this.convertStream(streamData));
         this.logger.info(`Created stream ${JSON.stringify(streamData)}.`);

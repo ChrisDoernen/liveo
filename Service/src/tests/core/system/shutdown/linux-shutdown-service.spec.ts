@@ -2,7 +2,7 @@ import "reflect-metadata";
 import createMockInstance from "jest-create-mock-instance";
 import { LinuxShutdownService } from "../../../../core/system/shutdown/linux-shutdown-service";
 import { Logger } from "../../../../core/util/logger";
-import { CommandExecutionService } from "../../../../core/system/command-execution-service";
+import { ProcessdExecutionService } from "../../../../core/system/child-processes/process-execution-service";
 
 describe("LinuxShutdownService", () => {
 
@@ -10,7 +10,7 @@ describe("LinuxShutdownService", () => {
     let commandExecutionService;
 
     beforeEach(() => {
-        commandExecutionService = createMockInstance(CommandExecutionService);
+        commandExecutionService = createMockInstance(ProcessdExecutionService);
         const logger = createMockInstance(Logger);
         linuxShutdownService = new LinuxShutdownService(logger, commandExecutionService);
     });

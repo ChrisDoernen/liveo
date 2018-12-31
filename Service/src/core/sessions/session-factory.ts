@@ -8,5 +8,6 @@ import { Types } from "../../config/types.config";
 export const SessionFactory = (context: interfaces.Context) =>
     (sessionData: SessionData, streams: Stream[]) => {
         const logger = context.container.get<Logger>(Types.Logger);
+
         return new Session(logger, sessionData, streams);
     };

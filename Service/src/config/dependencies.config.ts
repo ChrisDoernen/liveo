@@ -5,7 +5,7 @@ import { ShutdownSimulationService } from "../core/system/shutdown/shutdown-simu
 import { Container, interfaces } from "inversify";
 import { Logger } from "../core/util/logger";
 import { config } from "./service.config";
-import { SimpleProcessdExecutionService } from "../core/system/child-processes/simple-process-execution-service";
+import { ProcessdExecutionService } from "../core/system/child-processes/process-execution-service";
 import { IDeviceDetector } from "../core/system/devices/i-device-detector";
 import { LinuxDeviceDetector } from "../core/system/devices/linux-device-detector";
 import { DataService } from "../core/data/data-service";
@@ -17,7 +17,9 @@ import { Session } from "../core/sessions/session";
 import { Device } from "../core/system/devices/device";
 import { DeviceFactory } from "../core/system/devices/device-factory";
 import { SessionFactory } from "../core/sessions/session-factory";
-import { StreamFactory } from "../core/streams/stream-facrtory";
+import { StreamFactory } from "../core/streams/stream-factory";
+import { StreamingSource } from "../core/streams/streaming-source";
+import { StreamingSourceFactory } from "../core/streams/streaming-source-factory";
 
 export const container = new Container();
 
@@ -34,11 +36,13 @@ if (config.os === "linux") {
 }
 
 container.bind<Logger>(Types.Logger).toSelf();
-container.bind<SimpleProcessdExecutionService>(Types.CommandExecutionService).to(SimpleProcessdExecutionService);
+container.bind<ProcessdExecutionService>(Types.ProcessExecutionService).to(ProcessdExecutionService);
 container.bind<DataService>(Types.DataService).to(DataService);
 container.bind<SessionService>(Types.SessionService).to(SessionService).inSingletonScope();
 container.bind<StreamService>(Types.StreamService).to(StreamService).inSingletonScope();
 container.bind<WebsocketService>(Types.WebsocketService).to(WebsocketService).inSingletonScope();
+container.bind<StreamingSource>(Types.StreamingSource).to(StreamingSource);
 container.bind<interfaces.Factory<Stream>>(Types.StreamFactory).toFactory(StreamFactory);
 container.bind<interfaces.Factory<Session>>(Types.SessionFactory).toFactory(SessionFactory);
 container.bind<interfaces.Factory<Device>>(Types.DeviceFactory).toFactory(DeviceFactory);
+container.bind<interfaces.Factory<StreamingSource>>(Types.StreamingSourceFactory).toFactory(StreamingSourceFactory);

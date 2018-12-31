@@ -7,21 +7,12 @@ import { Stream } from "../streams/stream";
  */
 export class Session {
 
-    /**
-     * The session data transfer object
-     */
     private sessionData: SessionData;
 
-    /**
-     * Get the session data transfer object
-     */
     public get data(): SessionData {
         return this.sessionData;
     }
 
-    /**
-     * Get the session id
-     */
     public get id(): string {
         return this.data.id;
     }
@@ -36,9 +27,6 @@ export class Session {
         this.logger.debug(`Loaded session ${JSON.stringify(sessionEntity)}.`);
     }
 
-    /**
-     * Start the session
-     */
     public start(): void {
         if (!this.isStarted) {
             this.logger.info(`Starting session ${this.sessionData.id}.`);
@@ -47,9 +35,6 @@ export class Session {
         }
     }
 
-    /**
-     * Stop the session
-     */
     public stop(): void {
         if (this.isStarted) {
             this.logger.info(`Stopped session ${this.sessionData.id}.`);
