@@ -14,6 +14,10 @@ export class LinuxDeviceDetector implements IDeviceDetector {
 
     private _devices: Device[];
 
+    public get devices(): Device[] {
+        return this._devices;
+    }
+
     private listDevicesCommand: string = "arecord -l";
 
     private audioDeviceRegexPattern: RegExp = new RegExp("(card \\d+: )");

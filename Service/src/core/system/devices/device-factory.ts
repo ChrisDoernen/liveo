@@ -3,9 +3,11 @@ import { Logger } from "../../util/logger";
 import { Types } from "../../../config/types.config";
 import { interfaces } from "inversify";
 import { Device } from "./device";
+import { DeviceState } from "./device-state";
 
 export const DeviceFactory = (context: interfaces.Context) =>
-    (deviceData: DeviceData) => {
+    (deviceData: DeviceData, deviceState: DeviceState) => {
         const logger = context.container.get<Logger>(Types.Logger);
-        return new Device(logger, deviceData);
+
+        return new Device(logger, deviceData, deviceState);
     };

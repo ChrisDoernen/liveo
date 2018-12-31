@@ -21,6 +21,6 @@ export class StreamingSource {
     }
 
     public stopStreaming(): void {
-
+        //
     }
 }
