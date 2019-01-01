@@ -19,19 +19,20 @@ export class WindowsDeviceDetector implements IDeviceDetector {
         this.detectDevices();
     }
 
-    private detectDevices(): void {
+    public detectDevices(): Promise<void> {
         const response = this.commandExecutionService.execute(this.listDevicesCommand);
         // const lines = response.split("\n");
         // this.devices = lines.filter((line) => this.lineContainsAudioDevice(line))
         //     .map((line) => line.match(this.audioDeviceRegexPattern)[0])
         //     .map((id) => new Device(id, ""));
+        throw new Error("Not implemented");
     }
 
     private lineContainsAudioDevice(line: string): boolean {
         return line.includes("(") && line.includes(")") && line.includes("\"");
     }
 
-    public getDevice(id: string): Promise<Device> {
+    public getDevice(id: string): Device {
         throw new Error("Method not implemented.");
     }
 }

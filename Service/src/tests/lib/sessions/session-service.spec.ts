@@ -1,11 +1,11 @@
 import "reflect-metadata";
 import createMockInstance from "jest-create-mock-instance";
-import { DataService } from "../../../core/data/data-service";
-import { Logger } from "../../../core/util/logger";
-import { SessionService } from "../../../core/sessions/session-service";
-import { SessionData } from "../../../core/sessions/session-data";
-import { StreamService } from "../../../core/streams/stream-service";
-import { Stream } from "../../../core/streams/stream";
+import { DataService } from "../../../lib/data/data-service";
+import { Logger } from "../../../lib/util/logger";
+import { SessionService } from "../../../lib/sessions/session-service";
+import { SessionData } from "../../../lib/sessions/session-data";
+import { StreamService } from "../../../lib/streams/stream-service";
+import { Stream } from "../../../lib/streams/stream";
 
 describe("SessionService", () => {
 

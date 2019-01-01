@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { Logger } from "../../../core/util/logger";
+import { Logger } from "../../../lib/util/logger";
 
 describe("Logger", () => {
 

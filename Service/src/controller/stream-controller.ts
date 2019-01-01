@@ -1,8 +1,8 @@
 import { controller, httpGet } from "inversify-express-utils";
 import { inject } from "inversify";
 import { Types } from "../config/types.config";
-import { StreamService } from "../core/streams/stream-service";
-import { StreamData } from "../core/streams/stream-data";
+import { StreamService } from "../lib/streams/stream-service";
+import { StreamData } from "../lib/streams/stream-data";
 
 @controller("/api/streams")
 export class StreamController {

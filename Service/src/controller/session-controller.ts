@@ -1,8 +1,8 @@
 import { Types } from "../config/types.config";
 import { controller, httpGet, httpPost } from "inversify-express-utils";
-import { SessionService } from "../core/sessions/session-service";
+import { SessionService } from "../lib/sessions/session-service";
 import { inject } from "inversify";
-import { SessionData } from "../core/sessions/session-data";
+import { SessionData } from "../lib/sessions/session-data";
 import express = require("express");
 
 @controller("/api/sessions")

@@ -18,8 +18,6 @@ export class LinuxDeviceDetector implements IDeviceDetector {
         return this._devices;
     }
 
-    private _initialDetectionCompleted: Promise<boolean>;
-
     private listDevicesCommand: string = "arecord -l";
 
     private audioDeviceRegexPattern: RegExp = new RegExp("(card \\d+: )");
@@ -27,11 +25,10 @@ export class LinuxDeviceDetector implements IDeviceDetector {
     constructor(private logger: Logger,
         private processExecutionService: ProcessdExecutionService,
         @inject("DeviceFactory") private deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
-        this._initialDetectionCompleted = this.detectDevices();
     }
 
-    private async detectDevices(): Promise<boolean> {
-        return await new Promise<boolean>((resolve, reject) => {
+    public async detectDevices(): Promise<void> {
+        return await new Promise<void>((resolve, reject) => {
             this.executeListDevicesCommand().then((response) => {
                 this.logger.debug("Detecting audio inputs.");
 
@@ -41,7 +38,7 @@ export class LinuxDeviceDetector implements IDeviceDetector {
                     this.logger.warn("No devices detected. Please check your sound cards.");
                 }
 
-                resolve(true);
+                resolve();
             });
         });
     }
@@ -70,12 +67,13 @@ export class LinuxDeviceDetector implements IDeviceDetector {
         return this.deviceFactory(new DeviceData(id, description), DeviceState.Available);
     }
 
-    public async getDevice(id: string): Promise<Device> {
-        return new Promise<Device>((resolve, reject) => {
-            this._initialDetectionCompleted.then(() => {
-                const matchingDevice = this._devices.find((device) => device.id === id);
-                resolve(matchingDevice ? matchingDevice : this.deviceFactory(new DeviceData(id, ""), DeviceState.UnknownDevice));
-            });
-        });
+    public getDevice(id: string): Device {
+        const matchingDevice = this._devices.find((device) => device.id === id);
+
+        return matchingDevice ? matchingDevice : this.getUnknownDevice(id);
+    }
+
+    private getUnknownDevice(id: string): Device {
+        return this.deviceFactory(new DeviceData(id, ""), DeviceState.UnknownDevice);
     }
 }

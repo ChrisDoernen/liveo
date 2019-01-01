@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import createMockInstance from "jest-create-mock-instance";
-import { Logger } from "../../../../core/util/logger";
-import { ShutdownSimulationService } from "../../../../core/system/shutdown/shutdown-simulation-service";
+import { Logger } from "../../../../lib/util/logger";
+import { ShutdownSimulationService } from "../../../../lib/system/shutdown/shutdown-simulation-service";
 
 describe("ShutdownSimulationService", () => {
 

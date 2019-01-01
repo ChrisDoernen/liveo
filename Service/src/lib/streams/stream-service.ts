@@ -19,19 +19,22 @@ export class StreamService {
     constructor(private logger: Logger,
         private dataService: DataService,
         @inject("StreamFactory") private streamFactory: (streamData: StreamData) => Stream) {
-        this.loadStreams();
     }
 
-    private loadStreams(): void {
-        this.logger.debug("Loading streams.");
+    public async loadStreams(): Promise<void> {
+        return await new Promise<void>((resolve, reject) => {
+            this.logger.debug("Loading streams.");
 
-        const streamsData = this.dataService.loadStreams();
+            const streamsData = this.dataService.loadStreams();
 
-        if (streamsData.length === 0) {
-            this.logger.warn("No streams available for loading.");
-        } else {
-            this._streams = streamsData.map((streamData) => this.convertStream(streamData));
-        }
+            if (streamsData.length === 0) {
+                this.logger.warn("No streams available for loading.");
+            } else {
+                this._streams = streamsData.map((streamData) => this.convertStream(streamData));
+            }
+
+            resolve();
+        });
     }
 
     private convertStream(streamData: StreamData): Stream {

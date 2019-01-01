@@ -1,8 +1,8 @@
 import { StreamData } from "./stream-data";
 import { Logger } from "../util/logger";
-import { WebsocketService } from "../websocket/websocket-service";
 import { StreamingSource } from "./streaming-source";
 import { inject } from "inversify";
+import { WebsocketServer } from "../core/websocket-server";
 
 /**
  * Class representing a live stream
@@ -28,11 +28,16 @@ export class Stream {
     }
 
     constructor(private logger: Logger,
-        private websocketService: WebsocketService,
+        private websocketService: WebsocketServer,
         @inject("StreamingSourceFactory") streamingSourceFactory: (deviceId: string) => StreamingSource,
         streamData: StreamData) {
         this._streamData = streamData;
         this._source = streamingSourceFactory(streamData.deviceId);
+
+        if (!this._source.hasValidDevice) {
+            this.logger.warn(`Stream ${this.id} has invalid device and will not be startable.`);
+        }
+
         logger.debug(`Loaded stream ${JSON.stringify(streamData)}.`);
     }
 

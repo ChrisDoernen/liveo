@@ -28,19 +28,22 @@ export class SessionService {
         private dataService: DataService,
         private streamService: StreamService,
         @inject("SessionFactory") private sessionFactory: (sessionData: SessionData, streams: Stream[]) => Session) {
-        this.loadSessions();
     }
 
-    private loadSessions(): void {
-        this.logger.debug("Loading sessions.");
+    public async loadSessions(): Promise<void> {
+        return await new Promise<void>((resolve, reject) => {
+            this.logger.debug("Loading sessions.");
 
-        const sessionsData = this.dataService.loadSessions();
+            const sessionsData = this.dataService.loadSessions();
 
-        if (sessionsData.length === 0) {
-            this.logger.warn("No session available for loading.");
-        } else {
-            this._sessions = sessionsData.map((sessionData) => this.convertSession(sessionData));
-        }
+            if (sessionsData.length === 0) {
+                this.logger.warn("No session available for loading.");
+            } else {
+                this._sessions = sessionsData.map((sessionData) => this.convertSession(sessionData));
+            }
+
+            resolve();
+        });
     }
 
     private convertSession(sessionData: SessionData): Session {

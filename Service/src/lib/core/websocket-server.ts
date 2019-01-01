@@ -1,22 +1,27 @@
 import { Logger } from "../util/logger";
 import { injectable } from "inversify";
+import * as socketio from "socket.io";
 import { Socket } from "socket.io";
 
 @injectable()
-export class WebsocketService {
+export class WebsocketServer {
 
-    private websocketServer: any;
+    private _websocketServer: any;
 
     /**
      * The currently available streams that are represented as rooms in socket.io
      */
     private streams: string[];
 
-    constructor(private logger: Logger) { }
+    constructor(private logger: Logger) {
+    }
 
-    public init(websocketServer: any): void {
-        this.websocketServer = websocketServer;
-        this.websocketServer.on("connection", this.onConnection);
+    public initialize(server: any): void {
+        this._websocketServer = socketio(server, { path: "/streams" });
+    }
+
+    public listen(): void {
+        this._websocketServer.on("connection", this.onConnection);
     }
 
     public onConnection(socket: Socket): void {
@@ -35,6 +40,6 @@ export class WebsocketService {
     }
 
     public emit(id: string, data: Buffer): void {
-
+        //
     }
 }
