@@ -25,7 +25,7 @@ export class StreamService {
         return await new Promise<void>((resolve, reject) => {
             this._logger.debug("Loading streams.");
 
-            const streamsData = this._dataService.loadStreams();
+            const streamsData = this._dataService.loadStreamData();
 
             if (streamsData.length === 0) {
                 this._logger.warn("No streams available for loading.");

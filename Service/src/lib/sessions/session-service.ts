@@ -34,7 +34,7 @@ export class SessionService {
         return await new Promise<void>((resolve, reject) => {
             this._logger.debug("Loading sessions.");
 
-            const sessionsData = this._dataService.loadSessions();
+            const sessionsData = this._dataService.loadSessionData();
 
             if (sessionsData.length === 0) {
                 this._logger.warn("No session available for loading.");
@@ -65,11 +65,11 @@ export class SessionService {
         return this.sessionFactory(sessionData, matchingStreams);
     }
 
-    public activateSession(sessionToActivate: SessionData): SessionData {
-        const matchingSession = this.sessions.find((session) => session.id == sessionToActivate.id);
+    public activateSession(sessionId: string): SessionData {
+        const matchingSession = this.sessions.find((session) => session.id == sessionId);
 
         if (!matchingSession) {
-            throw new Error(`Session with id ${sessionToActivate.id} was not found.`);
+            throw new Error(`Session with id ${sessionId} was not found.`);
         }
 
         this._activeSession = matchingSession;

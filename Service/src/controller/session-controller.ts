@@ -17,7 +17,7 @@ export class SessionController {
     @httpPost("/active")
     public setActiveSession(request: express.Request): SessionData {
         const session = request.body as SessionData;
-        return this._sessionService.activateSession(session);
+        return this._sessionService.activateSession(session.id);
     }
 
     @httpGet("/active")

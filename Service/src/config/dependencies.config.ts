@@ -21,6 +21,7 @@ import { StreamingSource } from "../lib/streams/streaming-source";
 import { StreamingSourceFactory } from "../lib/streams/streaming-source-factory";
 import { Bootstrapper } from "../lib/core/bootstrapper";
 import { WebServer } from "../lib/core/web-server";
+import { AutostartService } from "../lib/autostart/autostart-service";
 
 export const container = new Container();
 
@@ -49,3 +50,4 @@ container.bind<SessionService>("SessionService").to(SessionService).inSingletonS
 container.bind<ProcessExecutionService>("ProcessExecutionService").to(ProcessExecutionService);
 container.bind<WebServer>("WebServer").to(WebServer).inSingletonScope();
 container.bind<WebsocketServer>("WebsocketServer").to(WebsocketServer).inSingletonScope();
+container.bind<AutostartService>("AutostartService").to(AutostartService).inSingletonScope();

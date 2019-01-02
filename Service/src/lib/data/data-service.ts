@@ -4,6 +4,7 @@ import { Logger } from "../util/logger";
 import { injectable, inject } from "inversify";
 import * as fs from "fs";
 import { StreamData } from "../streams/stream-data";
+import { AutostartData } from "../autostart/autostart-data";
 
 /**
  * Provides access to a file based data source
@@ -13,19 +14,27 @@ export class DataService {
 
     constructor(@inject("Logger") private _logger: Logger) { }
 
-    public loadSessions(): SessionData[] {
+    public loadSessionData(): SessionData[] {
         try {
             return JSON.parse(this.readFileSync(config.sessions));
         } catch (error) {
-            this._logger.error(`Could not load sessions from file system: ${error}`);
+            this._logger.error(`Could not load session data from file system: ${error}.`);
         }
     }
 
-    public loadStreams(): StreamData[] {
+    public loadStreamData(): StreamData[] {
         try {
             return JSON.parse(this.readFileSync(config.streams));
         } catch (error) {
-            this._logger.error(`Could not load streams from file system: ${error}`);
+            this._logger.error(`Could not load stream data from file system: ${error}.`);
+        }
+    }
+
+    public loadAutostartData(): AutostartData {
+        try {
+            return JSON.parse(this.readFileSync(config.autostart));
+        } catch (error) {
+            this._logger.error(`Could not load autostart data from file system: ${error}.`);
         }
     }
 

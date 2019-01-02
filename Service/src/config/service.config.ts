@@ -6,6 +6,7 @@ export const config = {
     os: process.platform,
     arch: process.arch,
     sessions: `${appRoot}/dist/data/sessions.json`,
-    streams: `${appRoot}/dist/data/streams.json`
+    streams: `${appRoot}/dist/data/streams.json`,
+    autostart: `${appRoot}/dist/data/autostart.json`
 };
 
