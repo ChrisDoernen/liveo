@@ -1,6 +1,6 @@
 import { injectable, inject } from "inversify";
 import { Logger } from "./../util/logger";
-import { ProcessdExecutionService } from "../child-processes/process-execution-service";
+import { ProcessdExecutionService } from "../processes/process-execution-service";
 
 /**
  * Linux implementation for IShutdownService

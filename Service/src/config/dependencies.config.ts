@@ -4,7 +4,7 @@ import { ShutdownSimulationService } from "../lib/shutdown/shutdown-simulation-s
 import { Container, interfaces } from "inversify";
 import { Logger } from "../lib/util/logger";
 import { config } from "./service.config";
-import { ProcessdExecutionService } from "../lib/child-processes/process-execution-service";
+import { ProcessdExecutionService } from "../lib/processes/process-execution-service";
 import { IDeviceDetector } from "../lib/devices/i-device-detector";
 import { LinuxDeviceDetector } from "../lib/devices/linux-device-detector";
 import { DataService } from "../lib/data/data-service";

@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { ProcessdExecutionService } from "./../../../lib/child-processes/process-execution-service";
+import { ProcessdExecutionService } from "../../../lib/processes/process-execution-service";
 
 describe("CommandExecutionService", () => {
 
