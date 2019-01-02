@@ -21,6 +21,7 @@ export class WebsocketServer {
         return new Promise<void>((resolve, reject) => {
             this._websocketServer = socketio(server, { path: "/streams" });
             this._websocketServer.on("connection", this.onConnection);
+            this._logger.info("Websocket server started.");
             resolve();
         });
     }
