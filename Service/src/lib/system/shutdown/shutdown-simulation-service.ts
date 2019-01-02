@@ -1,4 +1,4 @@
-import { injectable } from "inversify";
+import { injectable, inject } from "inversify";
 import { Logger } from "../../util/logger";
 
 /**
@@ -7,10 +7,9 @@ import { Logger } from "../../util/logger";
 @injectable()
 export class ShutdownSimulationService {
 
-    constructor(private logger: Logger) { }
+    constructor(@inject("Logger") private _logger: Logger) { }
 
-    /** @inheritdoc */
     public shutdown(): void {
-        this.logger.info("Simulating shutdown.");
+        this._logger.info("Simulating shutdown in development environment.");
     }
 }

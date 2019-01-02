@@ -22,20 +22,20 @@ export class LinuxDeviceDetector implements IDeviceDetector {
 
     private audioDeviceRegexPattern: RegExp = new RegExp("(card \\d+: )");
 
-    constructor(private logger: Logger,
-        private processExecutionService: ProcessdExecutionService,
-        @inject("DeviceFactory") private deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
+    constructor(@inject("Logger") private _logger: Logger,
+        @inject("ProcessExecutionService") private _processExecutionService: ProcessdExecutionService,
+        @inject("DeviceFactory") private _deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
     }
 
     public async detectDevices(): Promise<void> {
         return await new Promise<void>((resolve, reject) => {
             this.executeListDevicesCommand().then((response) => {
-                this.logger.debug("Detecting audio inputs.");
+                this._logger.debug("Detecting audio inputs.");
 
                 this._devices = this.parseResponse(response);
 
                 if (this._devices.length === 0) {
-                    this.logger.warn("No devices detected. Please check your sound cards.");
+                    this._logger.warn("No devices detected. Please check your sound cards.");
                 }
 
                 resolve();
@@ -45,7 +45,7 @@ export class LinuxDeviceDetector implements IDeviceDetector {
 
     private async executeListDevicesCommand(): Promise<string> {
         return await new Promise<string>((resolve, reject) => {
-            this.processExecutionService.execute(this.listDevicesCommand, (error, stdout, stderr) => {
+            this._processExecutionService.execute(this.listDevicesCommand, (error, stdout, stderr) => {
                 resolve(stdout);
             });
         });
@@ -64,7 +64,7 @@ export class LinuxDeviceDetector implements IDeviceDetector {
         const id = cardPrefix.match(new RegExp("\\d+")).toString();
         const description = line.slice(cardPrefix.length);
 
-        return this.deviceFactory(new DeviceData(id, description), DeviceState.Available);
+        return this._deviceFactory(new DeviceData(id, description), DeviceState.Available);
     }
 
     public getDevice(id: string): Device {
@@ -74,6 +74,6 @@ export class LinuxDeviceDetector implements IDeviceDetector {
     }
 
     private getUnknownDevice(id: string): Device {
-        return this.deviceFactory(new DeviceData(id, ""), DeviceState.UnknownDevice);
+        return this._deviceFactory(new DeviceData(id, ""), DeviceState.UnknownDevice);
     }
 }

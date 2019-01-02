@@ -1,5 +1,5 @@
 import { Logger } from "../util/logger";
-import { injectable } from "inversify";
+import { injectable, inject } from "inversify";
 import * as socketio from "socket.io";
 import { Socket } from "socket.io";
 
@@ -13,7 +13,7 @@ export class WebsocketServer {
      */
     private streams: string[];
 
-    constructor(private logger: Logger) {
+    constructor(@inject("Logger") private _logger: Logger) {
     }
 
     public initialize(server: any): void {
@@ -25,7 +25,7 @@ export class WebsocketServer {
     }
 
     public onConnection(socket: Socket): void {
-        this.logger.info("client connected.");
+        this._logger.info("client connected.");
     }
 
     public addStream(id: string): void {

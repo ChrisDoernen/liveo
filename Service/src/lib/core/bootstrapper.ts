@@ -5,32 +5,40 @@ import { Logger } from "../util/logger";
 import { config } from "../../config/service.config";
 import { WebServer } from "./web-server";
 import { WebsocketServer } from "./websocket-server";
+import { injectable, inject } from "inversify";
 
+@injectable()
 export class Bootstrapper {
 
-    constructor(private logger: Logger,
-        private deviceDetector: IDeviceDetector,
-        private streamService: StreamService,
-        private sessionService: SessionService,
-        private webServer: WebServer,
-        private websocketServer: WebsocketServer) {
+    constructor(@inject("Logger") private _logger: Logger,
+        @inject("IDeviceDetector") private _deviceDetector: IDeviceDetector,
+        @inject("StreamService") private _streamService: StreamService,
+        @inject("SessionService") private _sessionService: SessionService,
+        @inject("WebServer") private _webServer: WebServer,
+        @inject("WebsocketServer") private _websocketServer: WebsocketServer) {
     }
 
     public startServer(): void {
-        this.logger.info("Starting Live server...");
-        this.logger.debug(`Environment: ${config.environment}.`);
-        this.logger.debug(`OS: ${config.os}.`);
-        this.logger.debug(`Architecture: ${config.arch}.`);
+        this._logger.info("Starting Live server...");
+        this._logger.debug(`Environment: ${config.environment}.`);
+        this._logger.debug(`OS: ${config.os}.`);
+        this._logger.debug(`Architecture: ${config.arch}.`);
 
-        this.deviceDetector.detectDevices().then(() => {
-            this.streamService.loadStreams().then(() => {
-                this.sessionService.loadSessions().then(() => {
-                    const server = this.webServer.initialize();
-                    this.websocketServer.initialize(server);
-                    this.webServer.listen();
-                    this.websocketServer.listen();
+        this._deviceDetector.detectDevices().then(() => {
+            this._streamService.loadStreams().then(() => {
+                this._sessionService.loadSessions().then(() => {
+                    const server = this._webServer.initialize();
+                    this._websocketServer.initialize(server);
+                    this._webServer.listen();
+                    this._websocketServer.listen();
+                }, (reason) => {
+                    this._logger.error(`Could not load session: ${reason}.`);
                 });
+            }, (reason) => {
+                this._logger.error(`Could not load streams: ${reason}.`);
             });
+        }, (reason) => {
+            this._logger.error(`Could not detect devices: ${reason}.`);
         });
     }
 }

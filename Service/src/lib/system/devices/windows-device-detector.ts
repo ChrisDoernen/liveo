@@ -1,7 +1,7 @@
 import { ProcessdExecutionService } from "../child-processes/process-execution-service";
 import { IDeviceDetector } from "./i-device-detector";
 import { Logger } from "../../util/logger";
-import { injectable } from "inversify";
+import { injectable, inject } from "inversify";
 import { Device } from "./device";
 
 @injectable()
@@ -13,14 +13,14 @@ export class WindowsDeviceDetector implements IDeviceDetector {
 
     private audioDeviceRegexPattern: string = `(?<="")(.*?)(?="")`;
 
-    constructor(private logger: Logger,
-        private commandExecutionService: ProcessdExecutionService) {
-        this.logger.debug("Detecting audio inputs.");
+    constructor(@inject("Logger") private _logger: Logger,
+        @inject("ProcessExecutionService") private _processExecutionService: ProcessdExecutionService) {
+        this._logger.debug("Detecting audio inputs.");
         this.detectDevices();
     }
 
     public detectDevices(): Promise<void> {
-        const response = this.commandExecutionService.execute(this.listDevicesCommand);
+        const response = this._processExecutionService.execute(this.listDevicesCommand);
         // const lines = response.split("\n");
         // this.devices = lines.filter((line) => this.lineContainsAudioDevice(line))
         //     .map((line) => line.match(this.audioDeviceRegexPattern)[0])

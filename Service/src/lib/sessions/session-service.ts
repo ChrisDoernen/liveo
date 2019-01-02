@@ -24,20 +24,20 @@ export class SessionService {
         return this._activeSession ? this._activeSession.data : undefined;
     }
 
-    constructor(private logger: Logger,
-        private dataService: DataService,
-        private streamService: StreamService,
+    constructor(@inject("Logger") private _logger: Logger,
+        @inject("DataService") private _dataService: DataService,
+        @inject("StreamService") private _streamService: StreamService,
         @inject("SessionFactory") private sessionFactory: (sessionData: SessionData, streams: Stream[]) => Session) {
     }
 
     public async loadSessions(): Promise<void> {
         return await new Promise<void>((resolve, reject) => {
-            this.logger.debug("Loading sessions.");
+            this._logger.debug("Loading sessions.");
 
-            const sessionsData = this.dataService.loadSessions();
+            const sessionsData = this._dataService.loadSessions();
 
             if (sessionsData.length === 0) {
-                this.logger.warn("No session available for loading.");
+                this._logger.warn("No session available for loading.");
             } else {
                 this._sessions = sessionsData.map((sessionData) => this.convertSession(sessionData));
             }
@@ -48,7 +48,7 @@ export class SessionService {
 
     private convertSession(sessionData: SessionData): Session {
         const ids = sessionData.streams;
-        const availableStreams = this.streamService.streams;
+        const availableStreams = this._streamService.streams;
         let matchingStreams = [];
 
         if (availableStreams) {
@@ -59,7 +59,7 @@ export class SessionService {
         const missingStreamIds = ids.filter((id) => matchingStreamsIds.indexOf(id) === -1);
 
         if (missingStreamIds.length > 0) {
-            this.logger.warn(`Missing stream for ids ${JSON.stringify(missingStreamIds)}.`);
+            this._logger.warn(`Missing stream for ids ${JSON.stringify(missingStreamIds)}.`);
         }
 
         return this.sessionFactory(sessionData, matchingStreams);

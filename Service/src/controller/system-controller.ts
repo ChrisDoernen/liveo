@@ -1,17 +1,16 @@
 import { controller, httpPost } from "inversify-express-utils";
 import { IShutdownService } from "../lib/system/shutdown/i-shutdown-service";
-import { inject } from "inversify";
-import { Types } from "../config/types.config";
 import express = require("express");
+import { inject } from "inversify";
 
 @controller("/api/system")
 export class SystemController {
 
-  constructor(@inject(Types.IShutdownService) private shutdownService: IShutdownService) { }
+  constructor(@inject("IShutdownService") private _shutdownService: IShutdownService) { }
 
   @httpPost("/shutdown")
   public shutdown(request: express.Request, response: express.Response): void {
-    this.shutdownService.shutdown();
+    this._shutdownService.shutdown();
     response.sendStatus(200);
   }
 }

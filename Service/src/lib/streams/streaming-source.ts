@@ -1,6 +1,6 @@
 import { Logger } from "../util/logger";
 import { ProcessdExecutionService } from "../system/child-processes/process-execution-service";
-import { injectable } from "inversify";
+import { injectable, inject } from "inversify";
 import { Device } from "../system/devices/device";
 import { DeviceState } from "../system/devices/device-state";
 
@@ -10,19 +10,17 @@ import { DeviceState } from "../system/devices/device-state";
 @injectable()
 export class StreamingSource {
 
-    private device: Device;
-
-    constructor(private logger: Logger,
-        private processExecutionService: ProcessdExecutionService,
-        device: Device) {
+    constructor(@inject("Logger") private _logger: Logger,
+        @inject("ProcessExecutionService") private _processExecutionService: ProcessdExecutionService,
+        private _device: Device) {
     }
 
     public get hasValidDevice(): boolean {
-        return this.device.state !== DeviceState.UnknownDevice;
+        return this._device.state !== DeviceState.UnknownDevice;
     }
 
     public startStreaming(): void {
-        this.processExecutionService.spawn("command");
+        this._processExecutionService.spawn("command");
     }
 
     public stopStreaming(): void {

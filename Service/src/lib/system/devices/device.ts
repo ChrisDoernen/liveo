@@ -1,19 +1,16 @@
 import { DeviceData } from "./device-data";
 import { Logger } from "../../util/logger";
 import { DeviceState } from "./device-state";
+import { inject } from "inversify";
 
 /**
  * Represents a device in the system
  */
 export class Device {
 
-    private _deviceData: DeviceData;
-
     public get data(): DeviceData {
         return this._deviceData;
     }
-
-    private _deviceState: DeviceState;
 
     public get state(): DeviceState {
         return this._deviceState;
@@ -23,19 +20,15 @@ export class Device {
         return this._deviceData.id;
     }
 
-    constructor(private logger: Logger,
-        deviceData: DeviceData,
-        deviceState: DeviceState
-    ) {
-        this._deviceData = deviceData;
-        this._deviceState = deviceState;
-
-        if (deviceState === DeviceState.Available) {
-            this.logger.debug(`Detected device ${JSON.stringify(this._deviceData)}.`);
+    constructor(@inject("Logger") private _logger: Logger,
+        private _deviceData: DeviceData,
+        private _deviceState: DeviceState) {
+        if (this._deviceState === DeviceState.Available) {
+            this._logger.debug(`Detected device ${JSON.stringify(this._deviceData)}.`);
         }
 
-        if (deviceState === DeviceState.UnknownDevice) {
-            this.logger.warn(`Device with id ${this._deviceData.id} was not detected in the system.`);
+        if (this._deviceState === DeviceState.UnknownDevice) {
+            this._logger.warn(`Device with id ${this._deviceData.id} was not detected in the system.`);
         }
     }
 }

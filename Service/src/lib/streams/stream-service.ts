@@ -16,19 +16,19 @@ export class StreamService {
         return this._streams;
     }
 
-    constructor(private logger: Logger,
-        private dataService: DataService,
+    constructor(@inject("Logger") private _logger: Logger,
+        @inject("DataService") private _dataService: DataService,
         @inject("StreamFactory") private streamFactory: (streamData: StreamData) => Stream) {
     }
 
     public async loadStreams(): Promise<void> {
         return await new Promise<void>((resolve, reject) => {
-            this.logger.debug("Loading streams.");
+            this._logger.debug("Loading streams.");
 
-            const streamsData = this.dataService.loadStreams();
+            const streamsData = this._dataService.loadStreams();
 
             if (streamsData.length === 0) {
-                this.logger.warn("No streams available for loading.");
+                this._logger.warn("No streams available for loading.");
             } else {
                 this._streams = streamsData.map((streamData) => this.convertStream(streamData));
             }
@@ -47,6 +47,6 @@ export class StreamService {
 
     public createStream(streamData: StreamData): void {
         this._streams.push(this.convertStream(streamData));
-        this.logger.info(`Created stream ${JSON.stringify(streamData)}.`);
+        this._logger.info(`Created stream ${JSON.stringify(streamData)}.`);
     }
 }

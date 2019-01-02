@@ -1,4 +1,4 @@
-import { injectable } from "inversify";
+import { injectable, inject } from "inversify";
 import { Logger } from "../../util/logger";
 import { ProcessdExecutionService } from "../child-processes/process-execution-service";
 
@@ -8,12 +8,11 @@ import { ProcessdExecutionService } from "../child-processes/process-execution-s
 @injectable()
 export class LinuxShutdownService {
 
-    constructor(private logger: Logger,
-        private commandExecutionService: ProcessdExecutionService) { }
+    constructor(@inject("Logger") private _logger: Logger,
+        @inject("ProcessExecutionService") private _processExecutionService: ProcessdExecutionService) { }
 
-    /** @inheritdoc */
     public shutdown(): void {
-        this.logger.info("Shutting down server now.");
-        this.commandExecutionService.execute("shutdown now");
+        this._logger.info("Shutting down server now.");
+        this._processExecutionService.execute("shutdown now");
     }
 }

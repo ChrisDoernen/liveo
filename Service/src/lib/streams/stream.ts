@@ -9,8 +9,6 @@ import { WebsocketServer } from "../core/websocket-server";
  */
 export class Stream {
 
-    private _streamData: StreamData;
-
     public get id(): string {
         return this._streamData.id;
     }
@@ -27,34 +25,33 @@ export class Stream {
         return this._source.hasValidDevice;
     }
 
-    constructor(private logger: Logger,
-        private websocketService: WebsocketServer,
+    constructor(@inject("Logger") private _logger: Logger,
+        @inject("WebsocketService") private _websocketService: WebsocketServer,
         @inject("StreamingSourceFactory") streamingSourceFactory: (deviceId: string) => StreamingSource,
-        streamData: StreamData) {
-        this._streamData = streamData;
-        this._source = streamingSourceFactory(streamData.deviceId);
+        private _streamData: StreamData) {
+        this._source = streamingSourceFactory(_streamData.deviceId);
 
         if (!this._source.hasValidDevice) {
-            this.logger.warn(`Stream ${this.id} has invalid device and will not be startable.`);
+            this._logger.warn(`Stream ${this.id} has invalid device and will not be startable.`);
         }
 
-        logger.debug(`Loaded stream ${JSON.stringify(streamData)}.`);
+        _logger.debug(`Loaded stream ${JSON.stringify(_streamData)}.`);
     }
 
     public start(): void {
         if (!this._isStarted && this.hasValidSource) {
-            this.websocketService.addStream(this.id);
+            this._websocketService.addStream(this.id);
             this._source.startStreaming();
-            this.logger.info(`Started stream ${this._streamData.id}.`);
+            this._logger.info(`Started stream ${this._streamData.id}.`);
             this._isStarted = true;
         }
     }
 
     public stop(): void {
         if (this._isStarted) {
-            this.websocketService.removeStream(this.id);
+            this._websocketService.removeStream(this.id);
             this._source.stopStreaming();
-            this.logger.info(`Stopped stream ${this._streamData.id}.`);
+            this._logger.info(`Stopped stream ${this._streamData.id}.`);
             this._isStarted = false;
         }
     }
