@@ -1,5 +1,5 @@
 import { controller, httpPost } from "inversify-express-utils";
-import { IShutdownService } from "../lib/system/shutdown/i-shutdown-service";
+import { IShutdownService } from "../lib/shutdown/i-shutdown-service";
 import express = require("express");
 import { inject } from "inversify";
 

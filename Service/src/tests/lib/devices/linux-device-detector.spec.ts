@@ -2,12 +2,12 @@ import "reflect-metadata";
 import * as appRoot from "app-root-path";
 import * as fs from "fs";
 import createMockInstance from "jest-create-mock-instance";
-import { Logger } from "../../../../lib/util/logger";
-import { ProcessdExecutionService } from "../../../../lib/system/child-processes/process-execution-service";
-import { LinuxDeviceDetector } from "../../../../lib/system/devices/linux-device-detector";
-import { DeviceData } from "../../../../lib/system/devices/device-data";
-import { Device } from "../../../../lib/system/devices/device";
-import { DeviceState } from "../../../../lib/system/devices/device-state";
+import { Logger } from "./../../../lib/util/logger";
+import { ProcessdExecutionService } from "./../../../lib/child-processes/process-execution-service";
+import { LinuxDeviceDetector } from "./../../../lib/devices/linux-device-detector";
+import { DeviceData } from "./../../../lib/devices/device-data";
+import { Device } from "./../../../lib/devices/device";
+import { DeviceState } from "./../../../lib/devices/device-state";
 
 describe("LinuxDeviceDetector", () => {
 

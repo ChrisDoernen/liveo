@@ -1,6 +1,6 @@
 import { ProcessdExecutionService } from "../child-processes/process-execution-service";
 import { IDeviceDetector } from "./i-device-detector";
-import { Logger } from "../../util/logger";
+import { Logger } from "./../util/logger";
 import { injectable, inject } from "inversify";
 import { Device } from "./device";
 import { DeviceData } from "./device-data";

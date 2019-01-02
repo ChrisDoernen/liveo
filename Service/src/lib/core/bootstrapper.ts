@@ -1,4 +1,4 @@
-import { IDeviceDetector } from "../system/devices/i-device-detector";
+import { IDeviceDetector } from "../devices/i-device-detector";
 import { StreamService } from "../streams/stream-service";
 import { SessionService } from "../sessions/session-service";
 import { Logger } from "../util/logger";
@@ -24,21 +24,28 @@ export class Bootstrapper {
         this._logger.debug(`OS: ${config.os}.`);
         this._logger.debug(`Architecture: ${config.arch}.`);
 
-        this._deviceDetector.detectDevices().then(() => {
-            this._streamService.loadStreams().then(() => {
-                this._sessionService.loadSessions().then(() => {
-                    const server = this._webServer.initialize();
-                    this._websocketServer.initialize(server);
-                    this._webServer.listen();
-                    this._websocketServer.listen();
-                }, (reason) => {
-                    this._logger.error(`Could not load session: ${reason}.`);
-                });
-            }, (reason) => {
-                this._logger.error(`Could not load streams: ${reason}.`);
+        this._deviceDetector.detectDevices()
+            .then(() => {
+                this._streamService.loadStreams()
+                    .then(() => {
+                        this._sessionService.loadSessions()
+                            .then(() => {
+                                this.startWebAndWebsocketServer();
+                            }).catch((error) => {
+                                this._logger.error(`Could not load session: ${error}.`);
+                            });
+                    }).catch((error) => {
+                        this._logger.error(`Could not load streams: ${error}.`);
+                    });
+            }).catch((error) => {
+                this._logger.error(`Could not detect devices: ${error}.`);
             });
-        }, (reason) => {
-            this._logger.error(`Could not detect devices: ${reason}.`);
-        });
+    }
+
+    private startWebAndWebsocketServer(): void {
+        const server = this._webServer.initialize();
+        this._websocketServer.initialize(server);
+        this._webServer.listen();
+        this._websocketServer.listen();
     }
 }

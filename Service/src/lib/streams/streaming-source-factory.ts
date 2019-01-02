@@ -1,8 +1,8 @@
 import { interfaces } from "inversify";
 import { Logger } from "../util/logger";
-import { ProcessdExecutionService } from "../system/child-processes/process-execution-service";
+import { ProcessdExecutionService } from "../child-processes/process-execution-service";
 import { StreamingSource } from "./streaming-source";
-import { IDeviceDetector } from "../system/devices/i-device-detector";
+import { IDeviceDetector } from "../devices/i-device-detector";
 
 export const StreamingSourceFactory = (context: interfaces.Context) =>
     (deviceId: string) => {

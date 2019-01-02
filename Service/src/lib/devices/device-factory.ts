@@ -1,5 +1,5 @@
 import { DeviceData } from "./device-data";
-import { Logger } from "../../util/logger";
+import { Logger } from "./../util/logger";
 import { interfaces } from "inversify";
 import { Device } from "./device";
 import { DeviceState } from "./device-state";

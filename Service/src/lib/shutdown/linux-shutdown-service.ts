@@ -1,5 +1,5 @@
 import { injectable, inject } from "inversify";
-import { Logger } from "../../util/logger";
+import { Logger } from "./../util/logger";
 import { ProcessdExecutionService } from "../child-processes/process-execution-service";
 
 /**

@@ -1,8 +1,8 @@
 import { Logger } from "../util/logger";
-import { ProcessdExecutionService } from "../system/child-processes/process-execution-service";
+import { ProcessdExecutionService } from "../child-processes/process-execution-service";
 import { injectable, inject } from "inversify";
-import { Device } from "../system/devices/device";
-import { DeviceState } from "../system/devices/device-state";
+import { Device } from "../devices/device";
+import { DeviceState } from "../devices/device-state";
 
 /**
  * Class responsible for opening a child process and passing the data to the websocket server
