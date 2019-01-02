@@ -41,6 +41,6 @@ export class WebsocketServer {
     }
 
     public emit(id: string, data: Buffer): void {
-        this._logger.debug(`emit ${data.length}`);
+        this._websocketServer.emit(id, data);
     }
 }
