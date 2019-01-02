@@ -17,8 +17,8 @@ export class WebsocketServer {
     constructor(@inject("Logger") private _logger: Logger) {
     }
 
-    public initializeAndListen(server: InversifyExpressServer): Promise<void> {
-        return new Promise<void>((resolve, reject) => {
+    public async initializeAndListen(server: InversifyExpressServer): Promise<void> {
+        return await new Promise<void>((resolve, reject) => {
             this._websocketServer = socketio(server, { path: "/streams" });
             this._websocketServer.on("connection", this.onConnection);
             this._logger.info("Websocket server started.");
@@ -43,5 +43,6 @@ export class WebsocketServer {
 
     public emit(id: string, data: Buffer): void {
         this._websocketServer.emit(id, data);
+        this._logger.debug(`emit ${data.length}`);
     }
 }

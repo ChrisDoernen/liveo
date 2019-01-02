@@ -17,8 +17,8 @@ export class WebServer {
     constructor(@inject("Logger") private _logger: Logger) {
     }
 
-    public initializeAndListen(): Promise<InversifyExpressServer> {
-        return new Promise<InversifyExpressServer>((resolve, reject) => {
+    public async initializeAndListen(): Promise<InversifyExpressServer> {
+        return await new Promise<InversifyExpressServer>((resolve, reject) => {
             const expressServer = new InversifyExpressServer(container);
 
             expressServer.setConfig((app) => {
