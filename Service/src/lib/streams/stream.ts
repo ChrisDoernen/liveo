@@ -46,7 +46,7 @@ export class Stream {
                 this._logger.warn(`Stream ${this.id} is already started.`);
             }
         } else {
-            this._logger.warn(`Stream ${this.id} has an invald device and can not be started.`);
+            this._logger.warn(`Stream ${this.id} has an invalid device and can not be started.`);
         }
     }
 

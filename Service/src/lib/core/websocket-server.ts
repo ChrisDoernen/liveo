@@ -2,6 +2,7 @@ import { Logger } from "../util/logger";
 import { injectable, inject } from "inversify";
 import * as socketio from "socket.io";
 import { Socket } from "socket.io";
+import { InversifyExpressServer } from "inversify-express-utils";
 
 @injectable()
 export class WebsocketServer {
@@ -16,12 +17,12 @@ export class WebsocketServer {
     constructor(@inject("Logger") private _logger: Logger) {
     }
 
-    public initialize(server: any): void {
-        this._websocketServer = socketio(server, { path: "/streams" });
-    }
-
-    public listen(): void {
-        this._websocketServer.on("connection", this.onConnection);
+    public initializeAndListen(server: InversifyExpressServer): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            this._websocketServer = socketio(server, { path: "/streams" });
+            this._websocketServer.on("connection", this.onConnection);
+            resolve();
+        });
     }
 
     public onConnection(socket: Socket): void {

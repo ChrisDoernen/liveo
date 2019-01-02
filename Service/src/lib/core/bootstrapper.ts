@@ -32,8 +32,13 @@ export class Bootstrapper {
                     .then(() => {
                         this._sessionService.loadSessions()
                             .then(() => {
-                                this.startWebAndWebsocketServer();
-                                this.autostart();
+                                this._webServer.initializeAndListen()
+                                    .then((server) => {
+                                        this._websocketServer.initializeAndListen(server)
+                                            .then(() => {
+                                                this._autostartService.autoStart();
+                                            });
+                                    });
                             }).catch((error) => {
                                 this._logger.error(`Could not load session: ${error}.`);
                             });
@@ -43,16 +48,5 @@ export class Bootstrapper {
             }).catch((error) => {
                 this._logger.error(`Could not detect devices: ${error}.`);
             });
-    }
-
-    private startWebAndWebsocketServer(): void {
-        const server = this._webServer.initialize();
-        this._websocketServer.initialize(server);
-        this._webServer.listen();
-        this._websocketServer.listen();
-    }
-
-    private autostart(): void {
-        this._autostartService.autoStart();
     }
 }
