@@ -1,4 +1,4 @@
-import { ProcessdExecutionService } from "../processes/process-execution-service";
+import { ProcessExecutionService } from "../processes/process-execution-service";
 import { IDeviceDetector } from "./i-device-detector";
 import { Logger } from "./../util/logger";
 import { injectable, inject } from "inversify";
@@ -23,7 +23,7 @@ export class LinuxDeviceDetector implements IDeviceDetector {
     private audioDeviceRegexPattern: RegExp = new RegExp("(card \\d+: )");
 
     constructor(@inject("Logger") private _logger: Logger,
-        @inject("ProcessExecutionService") private _processExecutionService: ProcessdExecutionService,
+        @inject("ProcessExecutionService") private _processExecutionService: ProcessExecutionService,
         @inject("DeviceFactory") private _deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
     }
 

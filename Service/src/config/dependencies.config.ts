@@ -4,7 +4,7 @@ import { ShutdownSimulationService } from "../lib/shutdown/shutdown-simulation-s
 import { Container, interfaces } from "inversify";
 import { Logger } from "../lib/util/logger";
 import { config } from "./service.config";
-import { ProcessdExecutionService } from "../lib/processes/process-execution-service";
+import { ProcessExecutionService } from "../lib/processes/process-execution-service";
 import { IDeviceDetector } from "../lib/devices/i-device-detector";
 import { LinuxDeviceDetector } from "../lib/devices/linux-device-detector";
 import { DataService } from "../lib/data/data-service";
@@ -46,6 +46,6 @@ container.bind<Bootstrapper>("Bootstrapper").to(Bootstrapper);
 container.bind<DataService>("DataService").to(DataService);
 container.bind<StreamService>("StreamService").to(StreamService).inSingletonScope();
 container.bind<SessionService>("SessionService").to(SessionService).inSingletonScope();
-container.bind<ProcessdExecutionService>("ProcessExecutionService").to(ProcessdExecutionService);
+container.bind<ProcessExecutionService>("ProcessExecutionService").to(ProcessExecutionService);
 container.bind<WebServer>("WebServer").to(WebServer).inSingletonScope();
 container.bind<WebsocketServer>("WebsocketServer").to(WebsocketServer).inSingletonScope();

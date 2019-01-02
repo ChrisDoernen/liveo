@@ -1,4 +1,4 @@
-import { ProcessdExecutionService } from "../processes/process-execution-service";
+import { ProcessExecutionService } from "../processes/process-execution-service";
 import { IDeviceDetector } from "./i-device-detector";
 import { Logger } from "./../util/logger";
 import { injectable, inject } from "inversify";
@@ -14,7 +14,7 @@ export class WindowsDeviceDetector implements IDeviceDetector {
     private audioDeviceRegexPattern: string = `(?<="")(.*?)(?="")`;
 
     constructor(@inject("Logger") private _logger: Logger,
-        @inject("ProcessExecutionService") private _processExecutionService: ProcessdExecutionService) {
+        @inject("ProcessExecutionService") private _processExecutionService: ProcessExecutionService) {
         this._logger.debug("Detecting audio inputs.");
         this.detectDevices();
     }

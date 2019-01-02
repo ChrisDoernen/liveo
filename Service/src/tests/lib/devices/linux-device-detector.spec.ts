@@ -3,7 +3,7 @@ import * as appRoot from "app-root-path";
 import * as fs from "fs";
 import createMockInstance from "jest-create-mock-instance";
 import { Logger } from "./../../../lib/util/logger";
-import { ProcessdExecutionService } from "../../../lib/processes/process-execution-service";
+import { ProcessExecutionService } from "../../../lib/processes/process-execution-service";
 import { LinuxDeviceDetector } from "./../../../lib/devices/linux-device-detector";
 import { DeviceData } from "./../../../lib/devices/device-data";
 import { Device } from "./../../../lib/devices/device";
@@ -17,7 +17,7 @@ describe("LinuxDeviceDetector", () => {
 
     beforeEach(() => {
         const logger = createMockInstance(Logger);
-        commandExecutionService = createMockInstance(ProcessdExecutionService);
+        commandExecutionService = createMockInstance(ProcessExecutionService);
         deviceFactory = jest.fn((deviceData: DeviceData, deviceState: DeviceState) => new Device(logger, deviceData, deviceState));
 
         const oneDeviceAvailableResource = `${appRoot}/src/tests/resources/system/devices/arecordTwoAvailable.txt`;

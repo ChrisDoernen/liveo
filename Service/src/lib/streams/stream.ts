@@ -2,7 +2,6 @@ import { StreamData } from "./stream-data";
 import { Logger } from "../util/logger";
 import { StreamingSource } from "./streaming-source";
 import { inject } from "inversify";
-import { WebsocketServer } from "../core/websocket-server";
 
 /**
  * Class representing a live stream
@@ -26,10 +25,9 @@ export class Stream {
     }
 
     constructor(@inject("Logger") private _logger: Logger,
-        @inject("WebsocketService") private _websocketService: WebsocketServer,
-        @inject("StreamingSourceFactory") streamingSourceFactory: (deviceId: string) => StreamingSource,
+        @inject("StreamingSourceFactory") streamingSourceFactory: (deviceId: string, stream: Stream) => StreamingSource,
         private _streamData: StreamData) {
-        this._source = streamingSourceFactory(_streamData.deviceId);
+        this._source = streamingSourceFactory(_streamData.deviceId, this);
 
         if (!this._source.hasValidDevice) {
             this._logger.warn(`Stream ${this.id} has invalid device and will not be startable.`);
@@ -40,7 +38,6 @@ export class Stream {
 
     public start(): void {
         if (!this._isStarted && this.hasValidSource) {
-            this._websocketService.addStream(this.id);
             this._source.startStreaming();
             this._logger.info(`Started stream ${this._streamData.id}.`);
             this._isStarted = true;
@@ -49,7 +46,6 @@ export class Stream {
 
     public stop(): void {
         if (this._isStarted) {
-            this._websocketService.removeStream(this.id);
             this._source.stopStreaming();
             this._logger.info(`Stopped stream ${this._streamData.id}.`);
             this._isStarted = false;
