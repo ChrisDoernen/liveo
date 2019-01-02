@@ -18,7 +18,7 @@ describe("DataService", () => {
 
     it("should load sessions correctly when json is valid", () => {
         config.sessions = `${appRoot}/src/tests/resources/data/valid-sessions.json`;
-        const sessions = dataService.loadSessions();
+        const sessions = dataService.loadSessionData();
 
         const expectedSessionOne = new SessionData("bd34", "Service", ["0ag8"]);
         const expectedSessionTwo = new SessionData("a4re", "Workshop", ["15dd"]);
@@ -29,6 +29,6 @@ describe("DataService", () => {
 
     it("should throw when json is invalid", () => {
         config.sessions = `${appRoot}/src/tests/resources/data/invalid-sessions.json`;
-        expect(dataService.loadSessions).toThrow();
+        expect(dataService.loadSessionData).toThrow();
     });
 });
