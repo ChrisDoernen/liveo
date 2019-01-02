@@ -17,7 +17,7 @@ export class ProcessExecutionService {
         exec(command, callback);
     }
 
-    public spawn(command: string): ChildProcess {
-        return spawn(command);
+    public spawn(command: string, args: string[]): ChildProcess {
+        return spawn(command, args);
     }
 }

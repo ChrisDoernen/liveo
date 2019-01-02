@@ -29,4 +29,9 @@ export class SessionController {
     public startActiveSession(): void {
         this._sessionService.startActiveSession();
     }
+
+    @httpPost("/active/stop")
+    public stopActiveSession(): void {
+        this._sessionService.stopActiveSession();
+    }
 }

@@ -33,7 +33,7 @@ export class Session {
 
     public stop(): void {
         if (this.isStarted) {
-            this._logger.info(`Stopped session ${this._sessionData.id}.`);
+            this._logger.info(`Stopping session ${this._sessionData.id}.`);
             this._streams.forEach((stream) => stream.stop());
             this.isStarted = false;
         }

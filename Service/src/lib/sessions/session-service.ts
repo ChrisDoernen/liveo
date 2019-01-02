@@ -68,12 +68,12 @@ export class SessionService {
     public activateSession(sessionToActivate: SessionData): SessionData {
         const matchingSession = this.sessions.find((session) => session.id == sessionToActivate.id);
 
-        if (matchingSession) {
-            this._activeSession = matchingSession;
-        } else {
+        if (!matchingSession) {
             throw new Error(`Session with id ${sessionToActivate.id} was not found.`);
         }
 
+        this._activeSession = matchingSession;
+        this._logger.info(`Activating session ${this._activeSession.id}.`);
         return matchingSession.data;
     }
 
@@ -87,5 +87,13 @@ export class SessionService {
         }
 
         this._activeSession.start();
+    }
+
+    public stopActiveSession(): void {
+        if (!this._activeSession) {
+            throw new Error("No session was activated.");
+        }
+
+        this._activeSession.stop();
     }
 }

@@ -11,7 +11,7 @@ export class WebsocketServer {
     /**
      * The currently available streams that are represented as rooms in socket.io
      */
-    private streams: string[];
+    private streams: string[] = [];
 
     constructor(@inject("Logger") private _logger: Logger) {
     }
@@ -40,6 +40,6 @@ export class WebsocketServer {
     }
 
     public emit(id: string, data: Buffer): void {
-        //
+        this._logger.debug(`emit ${data.length}`);
     }
 }

@@ -15,6 +15,12 @@ export class StreamingSource {
 
     private _childProcess: ChildProcess;
 
+    private _command: string = "ffmpeg";
+
+    private _args: string[] = ["-y", "-f", "alsa", "-i", "hw:0", "-rtbufsize", "64",
+        "-probesize", "64", "-acodec", "libmp3lame", "-ab", "196k", "-ac", "1",
+        "-reservoir", "0", "-f", "mp3", "-fflags", "+nobuffer", "-"];
+
     constructor(@inject("Logger") private _logger: Logger,
         @inject("WebsocketService") private _websocketService: WebsocketServer,
         @inject("ProcessExecutionService") private _processExecutionService: ProcessExecutionService,
@@ -27,13 +33,14 @@ export class StreamingSource {
     }
 
     public startStreaming(): void {
-        this._childProcess = this._processExecutionService.spawn("command");
-        this._childProcess.on("stdout", (data) => this._websocketService.emit(this._stream.id, data));
         this._websocketService.addStream(this._stream.id);
+        this._childProcess = this._processExecutionService.spawn("ffmpeg", this._args);
+        this._childProcess.stdout.on("data", (data) => this._websocketService.emit(this._stream.id, data));
+        this._childProcess.on("close", () => this._logger.warn("Process exited"));
     }
 
     public stopStreaming(): void {
-        this._websocketService.removeStream(this._stream.id);
         this._childProcess.kill();
+        this._websocketService.removeStream(this._stream.id);
     }
 }

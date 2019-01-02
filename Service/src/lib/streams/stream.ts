@@ -37,10 +37,16 @@ export class Stream {
     }
 
     public start(): void {
-        if (!this._isStarted && this.hasValidSource) {
-            this._source.startStreaming();
-            this._logger.info(`Started stream ${this._streamData.id}.`);
-            this._isStarted = true;
+        if (this.hasValidSource) {
+            if (!this._isStarted) {
+                this._source.startStreaming();
+                this._logger.info(`Started stream ${this._streamData.id}.`);
+                this._isStarted = true;
+            } else {
+                this._logger.warn(`Stream ${this.id} is already started.`);
+            }
+        } else {
+            this._logger.warn(`Stream ${this.id} has an invald device and can not be started.`);
         }
     }
 
@@ -49,6 +55,8 @@ export class Stream {
             this._source.stopStreaming();
             this._logger.info(`Stopped stream ${this._streamData.id}.`);
             this._isStarted = false;
+        } else {
+            this._logger.warn(`Stream ${this.id} is already stopped.`);
         }
     }
 }
