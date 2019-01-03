@@ -35,20 +35,16 @@ export class SessionService {
         @inject("SessionFactory") private sessionFactory: (sessionData: SessionData, streams: Stream[]) => Session) {
     }
 
-    public async loadSessions(): Promise<void> {
-        return await new Promise<void>((resolve, reject) => {
-            this._logger.debug("Loading sessions.");
+    public loadSessions(): void {
+        this._logger.debug("Loading sessions.");
 
-            const sessionsData = this._dataService.loadSessionData();
+        const sessionsData = this._dataService.loadSessionData();
 
-            if (sessionsData.length === 0) {
-                this._logger.warn("No session available for loading.");
-            } else {
-                this._sessions = sessionsData.map((sessionData) => this.convertSession(sessionData));
-            }
-
-            resolve();
-        });
+        if (sessionsData.length === 0) {
+            this._logger.warn("No session available for loading.");
+        } else {
+            this._sessions = sessionsData.map((sessionData) => this.convertSession(sessionData));
+        }
     }
 
     private convertSession(sessionData: SessionData): Session {

@@ -22,20 +22,16 @@ export class StreamService {
         @inject("StreamFactory") private streamFactory: (streamData: StreamData) => Stream) {
     }
 
-    public async loadStreams(): Promise<void> {
-        return await new Promise<void>((resolve, reject) => {
-            this._logger.debug("Loading streams.");
+    public loadStreams(): void {
+        this._logger.debug("Loading streams.");
 
-            const streamsData = this._dataService.loadStreamData();
+        const streamsData = this._dataService.loadStreamData();
 
-            if (streamsData.length === 0) {
-                this._logger.warn("No streams available for loading.");
-            } else {
-                this._streams = streamsData.map((streamData) => this.convertStream(streamData));
-            }
-
-            resolve();
-        });
+        if (streamsData.length === 0) {
+            this._logger.warn("No streams available for loading.");
+        } else {
+            this._streams = streamsData.map((streamData) => this.convertStream(streamData));
+        }
     }
 
     private convertStream(streamData: StreamData): Stream {

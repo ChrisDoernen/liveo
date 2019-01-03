@@ -26,27 +26,12 @@ export class Bootstrapper {
         this._logger.debug(`OS: ${config.os}.`);
         this._logger.debug(`Architecture: ${config.arch}.`);
 
-        this._deviceDetector.detectDevices()
-            .then(() => {
-                this._streamService.loadStreams()
-                    .then(() => {
-                        this._sessionService.loadSessions()
-                            .then(() => {
-                                this._webServer.initializeAndListen()
-                                    .then((server) => {
-                                        this._websocketServer.initializeAndListen(server)
-                                            .then(() => {
-                                                this._autostartService.autoStart();
-                                            });
-                                    });
-                            }).catch((error) => {
-                                this._logger.error(`Could not load session: ${error}.`);
-                            });
-                    }).catch((error) => {
-                        this._logger.error(`Could not load streams: ${error}.`);
-                    });
-            }).catch((error) => {
-                this._logger.error(`Could not detect devices: ${error}.`);
-            });
+        this._deviceDetector.detectDevices().then(() => {
+            this._streamService.loadStreams();
+            this._sessionService.loadSessions();
+            const server = this._webServer.initializeAndListen();
+            this._websocketServer.initializeAndListen(server);
+            this._autostartService.autoStart();
+        });
     }
 }

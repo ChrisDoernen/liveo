@@ -2,7 +2,7 @@ import { controller, httpGet } from "inversify-express-utils";
 import { StreamService } from "../lib/streams/stream-service";
 import { inject } from "inversify";
 import { StreamEntity } from "../lib/streams/stream.entity";
-import express = require("express");
+import { Request } from "express";
 
 @controller("/api/streams")
 export class StreamController {
@@ -15,7 +15,7 @@ export class StreamController {
   }
 
   @httpGet("/:id")
-  public getStream(request: express.Request): StreamEntity {
+  public getStream(request: Request): StreamEntity {
     const id = request.params.id;
     return this._streamService.getStreamEntity(id);
   }
