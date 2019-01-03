@@ -78,7 +78,7 @@ export class SessionService {
         }
 
         this._activeSession = matchingSession;
-        this._logger.info(`Activating session ${this._activeSession.id}.`);
+        this._logger.info(`Activated session ${this._activeSession.id}.`);
         return matchingSession.data;
     }
 

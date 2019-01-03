@@ -2,10 +2,13 @@ export class AutostartData {
 
     public autostart: boolean;
 
-    public sessionId: string;
+    /**
+     * A session id to automatically activate the session
+     */
+    public autoactivate: string;
 
-    constructor(autostart: boolean, sessionId: string) {
+    constructor(autostart: boolean, autoactivate: string) {
         this.autostart = autostart;
-        this.sessionId = sessionId;
+        this.autoactivate = autoactivate;
     }
 }

@@ -13,16 +13,24 @@ export class AutostartService {
 
     public autoStart(): void {
         const autostartData = this._dataService.loadAutostartData();
-        const autostart = autostartData.autostart;
-        const sessionId = autostartData.sessionId;
+        const sessionId = autostartData.autoactivate;
 
-        if (autostart && sessionId) {
+        if (sessionId) {
             try {
-                this._logger.info(`Autostart session ${sessionId}.`);
-                this._sessionService.activateSession(autostartData.sessionId);
+                this._logger.info(`Auto-activating session ${sessionId}.`);
+                this._sessionService.activateSession(sessionId);
+            } catch (error) {
+                this._logger.warn(`Could not auto-activate session ${sessionId}: ${error}.`);
+            }
+        }
+
+        const autostart = autostartData.autostart;
+
+        if (autostart) {
+            try {
                 this._sessionService.startActiveSession();
             } catch (error) {
-                this._logger.warn(`Could not autostart session ${sessionId}: ${error}.`);
+                this._logger.warn(`Could not auto-start session ${sessionId}: ${error}.`);
             }
         }
     }
