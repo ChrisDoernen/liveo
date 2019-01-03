@@ -16,7 +16,7 @@ export class StreamController {
 
   @httpGet("/:id")
   public getStream(request: express.Request): StreamEntity {
-    const id = request.param("id");
+    const id = request.params.id;
     return this._streamService.getStreamEntity(id);
   }
 }
