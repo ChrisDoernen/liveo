@@ -1,9 +1,9 @@
-import { controller, httpGet, httpPost } from "inversify-express-utils";
+import { controller, httpGet, httpPost, httpDelete } from "inversify-express-utils";
 import { SessionService } from "../lib/sessions/session-service";
 import { SessionData } from "../lib/sessions/session-data";
-import express = require("express");
 import { inject } from "inversify";
 import { SessionEntity } from "../lib/sessions/session.entity";
+import * as express from "express";
 
 @controller("/api/sessions")
 export class SessionController {
@@ -26,13 +26,21 @@ export class SessionController {
         return this._sessionService.activeSessionEntity;
     }
 
+    @httpDelete("/active")
+    public resetActiveSession(request: express.Request, response: express.Response): void {
+        this._sessionService.resetActiveSession();
+        response.sendStatus(200);
+    }
+
     @httpPost("/active/start")
-    public startActiveSession(): void {
+    public startActiveSession(request: express.Request, response: express.Response): void {
         this._sessionService.startActiveSession();
+        response.sendStatus(200);
     }
 
     @httpPost("/active/stop")
-    public stopActiveSession(): void {
+    public stopActiveSession(request: express.Request, response: express.Response): void {
         this._sessionService.stopActiveSession();
+        response.sendStatus(200);
     }
 }

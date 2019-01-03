@@ -1,6 +1,6 @@
 import { controller, httpPost } from "inversify-express-utils";
 import { IShutdownService } from "../lib/shutdown/i-shutdown-service";
-import express = require("express");
+import * as express from "express";
 import { inject } from "inversify";
 
 @controller("/api/shutdown")

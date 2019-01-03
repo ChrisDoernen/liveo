@@ -86,6 +86,11 @@ export class SessionService {
         return this.sessions.map((session) => session.entity);
     }
 
+    public resetActiveSession(): void {
+        this._activeSession = null;
+        this._logger.info("Active session was reset.");
+    }
+
     public startActiveSession(): void {
         if (!this._activeSession) {
             throw new Error("No session was activated.");
