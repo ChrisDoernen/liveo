@@ -9,10 +9,10 @@ export class SessionEntity {
         public id: string,
         public title: string,
         public description: string,
-        public timeStarted: Date,
-        public timeEnded: Date,
-        public timeStarting: Date,
-        public timeEnding: Date,
+        public timeStarted: number,
+        public timeEnded: number,
+        public timeStarting: number,
+        public timeEnding: number,
         public streams: StreamEntity[]) {
     }
 }

@@ -20,10 +20,10 @@ export class Session {
             this._sessionData.id,
             this._sessionData.title,
             null,
-            null,
-            null,
-            null,
-            null,
+            this._timeStarted,
+            this._timeEnded,
+            this._timeStarting,
+            this._timeEnding,
             streamEntities
         );
     }
@@ -32,7 +32,15 @@ export class Session {
         return this.data.id;
     }
 
-    private isStarted: boolean;
+    private _isStarted: boolean;
+
+    private _timeStarted: number;
+
+    private _timeEnded: number;
+
+    private _timeStarting: number;
+
+    private _timeEnding: number;
 
     constructor(@inject("Logger") private _logger: Logger,
         private _sessionData: SessionData,
@@ -41,18 +49,20 @@ export class Session {
     }
 
     public start(): void {
-        if (!this.isStarted) {
+        if (!this._isStarted) {
             this._logger.info(`Starting session ${this._sessionData.id}.`);
             this._streams.forEach((stream) => stream.start());
-            this.isStarted = true;
+            this._timeStarted = Date.now();
+            this._isStarted = true;
         }
     }
 
     public stop(): void {
-        if (this.isStarted) {
+        if (this._isStarted) {
             this._logger.info(`Stopping session ${this._sessionData.id}.`);
             this._streams.forEach((stream) => stream.stop());
-            this.isStarted = false;
+            this._timeEnded = Date.now();
+            this._isStarted = false;
         }
     }
 }

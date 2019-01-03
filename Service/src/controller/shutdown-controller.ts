@@ -3,12 +3,12 @@ import { IShutdownService } from "../lib/shutdown/i-shutdown-service";
 import express = require("express");
 import { inject } from "inversify";
 
-@controller("/api/system")
-export class SystemController {
+@controller("/api/shutdown")
+export class ShutdownController {
 
   constructor(@inject("IShutdownService") private _shutdownService: IShutdownService) { }
 
-  @httpPost("/shutdown")
+  @httpPost("/")
   public shutdown(request: express.Request, response: express.Response): void {
     this._shutdownService.shutdown();
     response.sendStatus(200);

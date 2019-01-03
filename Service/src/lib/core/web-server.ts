@@ -6,7 +6,7 @@ import { injectable, inject } from "inversify";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
 import "../../controller/home-controller";
-import "../../controller/system-controller";
+import "../../controller/shutdown-controller";
 import "../../controller/stream-controller";
 import "../../controller/session-controller";
 import "../../controller/client-controller";
