@@ -4,11 +4,11 @@ export class Stream {
         public id: string,
         public title: string,
         public description: string,
-        public countryCode: string){
-        console.debug("Instantiating stream with id " + id)
+        public countryCode: string) {
+        console.debug(`Instantiating stream with id ${id}.`);
     }
 
-    static deserialize(input: any): Stream {
+    public static deserialize(input: any): Stream {
         const id = input.id;
         const title = input.title;
         const description = input.description;

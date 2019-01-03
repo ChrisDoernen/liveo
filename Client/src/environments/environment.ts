@@ -3,6 +3,5 @@ export const environment = {
   production: false,
   protocol: "http",
   ip: "localhost",
-  apiPort: 80,
-  webSocketPort: 3000
+  port: 3000
 };

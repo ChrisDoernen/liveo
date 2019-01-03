@@ -1,10 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { WelcomeComponent } from './welcome.component';
-import { InlineSVGDirective, SVGCacheService } from 'ng-inline-svg';
-import { Router } from '@angular/router';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { WelcomeComponent } from "./welcome.component";
+import { Router } from "@angular/router";
+import { NO_ERRORS_SCHEMA } from "@angular/core";
 
-describe('WelcomeComponent', () => {
+describe("WelcomeComponent", () => {
   let component: WelcomeComponent;
   let fixture: ComponentFixture<WelcomeComponent>;
 
@@ -28,7 +27,7 @@ describe('WelcomeComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

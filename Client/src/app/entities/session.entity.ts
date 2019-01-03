@@ -10,11 +10,11 @@ export class Session {
         public timeEnded: Date,
         public timeStarting: Date,
         public timeEnding: Date,
-        public streams: Stream[]){
-        console.debug("Instantiating session with id " + id);
+        public streams: Stream[]) {
+        console.debug(`Instantiating session with id ${id}`);
     }
 
-    static deserialize(input: any): Session {
+    public static deserialize(input: any): Session {
         const id = input.id;
         const title = input.title;
         const description = input.description;
@@ -23,11 +23,11 @@ export class Session {
         const timeStarting = input.timeStarted;
         const timeEnding = input.timeEnding;
         const streams = [];
-        input.streams.forEach(stream => {
+        input.streams.forEach((stream: any) => {
             streams.push(Stream.deserialize(stream));
         });
-        
-        return new Session(id, title, description, timeStarted, 
+
+        return new Session(id, title, description, timeStarted,
             timeEnded, timeStarting, timeEnding, streams);
     }
 }

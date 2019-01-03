@@ -13,6 +13,6 @@ export class UserAgentInfo {
         public isOpera: boolean,
         public isChrome: boolean,
         public isFirefox: boolean,
-        public isNativeChrome) { 
+        public isNativeChrome: boolean) {
     }
 }

@@ -3,10 +3,10 @@ export class WebsocketConfig {
     constructor(
         public type: string,
         public mimeType: string,
-        public port: number){
+        public port: number) {
     }
 
-    static deserialize(input: any): WebsocketConfig {
+    public static deserialize(input: any): WebsocketConfig {
         const type = input.Type;
         const mimeType = input.MimeType;
         const port = input.Port;

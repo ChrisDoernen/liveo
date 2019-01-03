@@ -1,9 +1,9 @@
-import { TestBed } from '@angular/core/testing';
-import { SessionService } from './session-service';
-import { HttpClient } from '@angular/common/http';
-import { EndpointService } from '../endpoint-service/endpoint.service';
+import { TestBed } from "@angular/core/testing";
+import { SessionService } from "./session-service";
+import { HttpClient } from "@angular/common/http";
+import { EndpointService } from "../endpoint-service/endpoint.service";
 
-describe('SessionService', () => {
+describe("SessionService", () => {
   let sessionService: SessionService;
   let httpClient = jest.fn();
   let endpointService = jest.fn();
@@ -22,7 +22,7 @@ describe('SessionService', () => {
     endpointService = TestBed.get(EndpointService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(sessionService).toBeTruthy();
   });
 });
