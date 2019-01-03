@@ -1,23 +1,4 @@
-.lc-loading {
-    background: var(--main-color);
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    
-    display: -ms-flexbox;
-	display: -webkit-flex;
-	display: flex;
-
-	-ms-flex-align: center;
-	-webkit-align-items: center;
-	-webkit-box-align: center;
-
-    align-items: center;
-}
-
-.lc-loading__logo {
-    width: 100px;
-    margin: 0 auto;
+.lc-container {
+    text-align: center;
+    margin-top: 40px;
 }

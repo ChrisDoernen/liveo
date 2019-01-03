@@ -10,8 +10,8 @@ export class EndpointService {
   private ip: string = environment.ip;
   private port: number = environment.port;
 
-  public getApiEndpoint(path: string): string {
-    const url = `${this.protocol}://${this.ip}:${this.port}/api/${path}`;
+  public getEndpoint(path: string): string {
+    const url = `${this.protocol}://${this.ip}:${this.port}/client/${path}`;
     console.debug(`Returned url ${url}.`);
     return url;
   }

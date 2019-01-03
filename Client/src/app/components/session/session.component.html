@@ -1,9 +1,12 @@
-<header></header>
-<div *ngIf="connectionError">
-    There seems to be a problem with the WiFi connection. 
-    Please check your settings.
+<app-header></app-header>
+<div class="lc-container">
+    <div *ngIf="connectionError">
+        There seems to be a problem with the WiFi connection.
+        Please check your settings.
+    </div>
+    <div *ngIf="noSessionActive">
+        No Session
+    </div>
+    <div>{{session?.title}}</div>
+    <div *ngFor="let stream of session?.streams">{{stream.title}}</div>
 </div>
-<div *ngIf="noSessionActive">
-    No Session
-</div>
-<div>{{session?.title}}</div>

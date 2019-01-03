@@ -3,6 +3,10 @@
     margin: auto;
 }
 
+::ng-deep .lc-welcome__logo .live-logo {
+    fill: white;
+}
+
 .lc-welcome {
     background-color: var(--main-color);
     height: 100vh;

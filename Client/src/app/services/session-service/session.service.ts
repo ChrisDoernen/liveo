@@ -10,16 +10,12 @@ import { Session } from "../../entities/session.entity";
 })
 export class SessionService {
 
-  constructor(private httpClient: HttpClient, private endpointService: EndpointService) { }
+  constructor(private _httpClient: HttpClient, private _endpointService: EndpointService) { }
 
   public getSession(): Observable<Session> {
-    return this.httpClient.get(this.endpointService.getApiEndpoint("session"), { observe: "response" })
+    return this._httpClient.get(this._endpointService.getEndpoint("sessions/active"), { observe: "response", responseType: "json" })
       .pipe(map((response: any) => {
-        if (response.status == 204) {
-          return null;
-        }
-        console.debug(`Retrieved session  ${response.id}.`);
-        return Session.deserialize(response.body);
+        return (response.status == 200) ? response.body as Session : null;
       }));
   }
 }

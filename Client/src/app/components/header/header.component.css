@@ -1,0 +1,8 @@
+::ng-deep .lc-header__logo .live-logo {
+    fill: var(--main-color);
+    width: 90px;
+}
+
+.lc-header__logo {
+    text-align: center;
+}

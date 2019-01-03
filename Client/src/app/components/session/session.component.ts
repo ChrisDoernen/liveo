@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Session } from "../../entities/session.entity";
-import { SessionService } from "../../services/session-service/session-service";
+import { SessionService } from "../../services/session-service/session.service";
 
 @Component({
   selector: "session",
@@ -15,7 +15,7 @@ export class SessionComponent implements OnInit {
   public noSessionActive: boolean = false;
   public connectionError: boolean = false;
 
-  constructor(private sessionService: SessionService) {
+  constructor(private _sessionService: SessionService) {
   }
 
   public ngOnInit(): void {
@@ -23,7 +23,7 @@ export class SessionComponent implements OnInit {
   }
 
   private getSession(): void {
-    this.sessionService.getSession().subscribe((session) => {
+    this._sessionService.getSession().subscribe((session) => {
       if (session != null) {
         this.session = session;
       } else {
