@@ -2,6 +2,7 @@ import { StreamData } from "./stream-data";
 import { Logger } from "../util/logger";
 import { StreamingSource } from "./streaming-source";
 import { inject } from "inversify";
+import { StreamEntity } from "./stream.entity";
 
 /**
  * Class representing a live stream
@@ -14,6 +15,15 @@ export class Stream {
 
     public get data(): StreamData {
         return this._streamData;
+    }
+
+    public get entity(): StreamEntity {
+        return new StreamEntity(
+            this.data.id,
+            this.data.title,
+            null,
+            this.data.countryCode
+        );
     }
 
     private _isStarted: boolean;

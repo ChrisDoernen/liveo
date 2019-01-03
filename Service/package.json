@@ -20,6 +20,7 @@
     "@types/node": "^10.12.9",
     "@types/socket.io": "^2.1.2",
     "app-root-path": "^2.1.0",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "inversify": "^5.0.1",
     "inversify-express-utils": "^6.2.0",

@@ -2,6 +2,7 @@ import { Logger } from "../util/logger";
 import { SessionData } from "./session-data";
 import { Stream } from "../streams/stream";
 import { inject } from "inversify";
+import { SessionEntity } from "./session.entity";
 
 /**
  * Class representing a streaming session
@@ -12,9 +13,25 @@ export class Session {
         return this._sessionData;
     }
 
+    public get entity(): SessionEntity {
+        const streamEntities = this._streams.map((stream) => stream.entity);
+
+        return new SessionEntity(
+            this._sessionData.id,
+            this._sessionData.title,
+            null,
+            null,
+            null,
+            null,
+            null,
+            streamEntities
+        );
+    }
+
     public get id(): string {
         return this.data.id;
     }
+
     private isStarted: boolean;
 
     constructor(@inject("Logger") private _logger: Logger,

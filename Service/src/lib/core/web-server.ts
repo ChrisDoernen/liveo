@@ -4,10 +4,12 @@ import { Logger } from "../util/logger";
 import { config } from "../../config/service.config";
 import { injectable, inject } from "inversify";
 import * as bodyParser from "body-parser";
+import * as cors from "cors";
 import "../../controller/home-controller";
 import "../../controller/system-controller";
 import "../../controller/stream-controller";
 import "../../controller/session-controller";
+import "../../controller/client-controller";
 
 @injectable()
 export class WebServer {
@@ -26,6 +28,10 @@ export class WebServer {
                 app.use(bodyParser.json());
                 app.use((req, res, next) => { this._logger.debug(`${req.method} request on ${req.url}.`); next(); });
                 app.use((err, req, res, next) => { this._logger.error(`${req.method} request on ${req.url} - ${err}.`); next(); });
+
+                if (config.environment === "Development") {
+                    app.use(cors());
+                }
             });
 
             this._expressServerInstance = expressServer.build();

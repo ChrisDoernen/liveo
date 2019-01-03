@@ -42,7 +42,7 @@ export class WebsocketServer {
     }
 
     public emit(id: string, data: Buffer): void {
-        this._websocketServer.emit(id, data);
+        // this._websocketServer.emit(id, data);
         this._logger.debug(`emit ${data.length}`);
     }
 }

@@ -5,6 +5,7 @@ import { DataService } from "../data/data-service";
 import { StreamService } from "../streams/stream-service";
 import { Session } from "./session";
 import { Stream } from "../streams/stream";
+import { SessionEntity } from "./session.entity";
 
 /**
  * A class providing methods to manage streaming sessions
@@ -22,6 +23,10 @@ export class SessionService {
 
     public get activeSessionData(): SessionData {
         return this._activeSession ? this._activeSession.data : undefined;
+    }
+
+    public get activeSessionEntity(): SessionEntity {
+        return this._activeSession ? this._activeSession.entity : undefined;
     }
 
     constructor(@inject("Logger") private _logger: Logger,
