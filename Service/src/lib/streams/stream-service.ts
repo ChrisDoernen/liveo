@@ -3,6 +3,7 @@ import { injectable, inject } from "inversify";
 import { StreamData } from "./stream-data";
 import { DataService } from "../data/data-service";
 import { Stream } from "./stream";
+import { StreamEntity } from "./stream.entity";
 
 /**
  * A class providing methods to manage streams
@@ -41,8 +42,13 @@ export class StreamService {
         return this.streamFactory(streamData);
     }
 
-    public getStreamData(): StreamData[] {
-        return this._streams.map((stream: Stream) => stream.data);
+    public getStreamEntities(): StreamEntity[] {
+        return this._streams.map((stream: Stream) => stream.entity);
+    }
+
+    public getStreamEntity(id: string): StreamEntity {
+        const matchingStream = this._streams.find((stream) => stream.id === id);
+        return matchingStream ? matchingStream.entity : null;
     }
 
     public createStream(streamData: StreamData): void {

@@ -82,8 +82,8 @@ export class SessionService {
         return matchingSession.data;
     }
 
-    public getSessionData(): SessionData[] {
-        return this.sessions.map((session) => session.data);
+    public getSessionData(): SessionEntity[] {
+        return this.sessions.map((session) => session.entity);
     }
 
     public startActiveSession(): void {

@@ -3,6 +3,7 @@ import { SessionService } from "../lib/sessions/session-service";
 import { SessionData } from "../lib/sessions/session-data";
 import express = require("express");
 import { inject } from "inversify";
+import { SessionEntity } from "../lib/sessions/session.entity";
 
 @controller("/api/sessions")
 export class SessionController {
@@ -10,7 +11,7 @@ export class SessionController {
     constructor(@inject("SessionService") private _sessionService: SessionService) { }
 
     @httpGet("/")
-    public getSessions(): SessionData[] {
+    public getSessions(): SessionEntity[] {
         return this._sessionService.getSessionData();
     }
 
@@ -21,8 +22,8 @@ export class SessionController {
     }
 
     @httpGet("/active")
-    public getActiveSessionData(): SessionData {
-        return this._sessionService.activeSessionData;
+    public getActiveSessionEntity(): SessionEntity {
+        return this._sessionService.activeSessionEntity;
     }
 
     @httpPost("/active/start")
