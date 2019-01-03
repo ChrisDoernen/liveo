@@ -7,7 +7,7 @@ import { StreamComponent } from "./components/stream/stream.component";
 const routes: Routes = [
   { path: "", redirectTo: "/welcome", pathMatch: "full" },
   { path: "session", component: SessionComponent },
-  { path: "stream/:id", component: StreamComponent },
+  { path: "streams/:id", component: StreamComponent },
   { path: "welcome", component: WelcomeComponent }
 ];
 
