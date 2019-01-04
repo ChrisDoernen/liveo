@@ -21,7 +21,7 @@ export class WebsocketServer {
         const websocketServer = socketio(server);
 
         if (config.environment === "Development") {
-            // websocketServer.origins("*:*");
+            websocketServer.origins("*:*");
             this._logger.debug("Setting CORS header for websocket server.");
         }
 
@@ -31,13 +31,35 @@ export class WebsocketServer {
     }
 
     private onConnection(socket: Socket): void {
-        this._logger.info("Client connected.");
+        this.onConnect(socket);
 
-        // socket.join(this._streams[0]);
+        socket.on("subscribe", (streamId) => {
+            this.subscribe(socket, streamId);
+        });
 
         socket.on("disconnect", () => {
-            this._logger.info("Client disconnected.");
+            this.onDisconnect(socket);
         });
+    }
+
+    private onConnect(socket: Socket): void {
+        this._logger.info("Client connected.");
+    }
+
+    private onDisconnect(socket: Socket): void {
+        this._logger.info("Client disconnected.");
+    }
+
+    private subscribe(socket: Socket, streamId: any): void {
+        const id = this._streams.find((stream) => stream === streamId);
+
+        if (!id) {
+            this._logger.info(`Subscription for stream ${id} not possible, stream is not started.`);
+            socket.emit("subscription_error", "The stream is not started.");
+        } else {
+            this._logger.info(`Client subscribed to stream ${id}.`);
+            socket.join(id);
+        }
     }
 
     public addStream(id: string): void {

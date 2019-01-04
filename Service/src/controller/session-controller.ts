@@ -16,8 +16,8 @@ export class SessionController {
     }
 
     @httpPost("/active")
-    public setActiveSession(request: Request): SessionData {
-        const session = request.body as SessionData;
+    public setActiveSession(request: Request, response: Request): SessionData {
+        const session = response.body as SessionData;
         return this._sessionService.activateSession(session.id);
     }
 
@@ -27,19 +27,19 @@ export class SessionController {
     }
 
     @httpDelete("/active")
-    public resetActiveSession(response: Response): void {
+    public resetActiveSession(request: Request, response: Response): void {
         this._sessionService.resetActiveSession();
         response.sendStatus(200);
     }
 
     @httpPost("/active/start")
-    public startActiveSession(response: Response): void {
+    public startActiveSession(request: Request, response: Response): void {
         this._sessionService.startActiveSession();
         response.sendStatus(200);
     }
 
     @httpPost("/active/stop")
-    public stopActiveSession(response: Response): void {
+    public stopActiveSession(request: Request, response: Response): void {
         this._sessionService.stopActiveSession();
         response.sendStatus(200);
     }
