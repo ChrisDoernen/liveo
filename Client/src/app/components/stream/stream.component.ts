@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Stream } from "../../entities/stream.entity";
 import { StreamService } from "src/app/services/stream-service/stream.service";
 import { ActivatedRoute } from "@angular/router";
@@ -10,10 +10,8 @@ import { ActivatedRoute } from "@angular/router";
 })
 export class StreamComponent implements OnInit {
 
-  private _stream: Stream;
-
+  public stream: Stream;
   private _isLoading: boolean;
-
   private _connectionError: boolean;
 
   constructor(private _route: ActivatedRoute, private _streamService: StreamService) {
@@ -28,7 +26,7 @@ export class StreamComponent implements OnInit {
 
     this._streamService.getStream(id).subscribe((stream) => {
       if (stream != null) {
-        this._stream = stream;
+        this.stream = stream;
       }
       this._isLoading = false;
     }, (error) => {
