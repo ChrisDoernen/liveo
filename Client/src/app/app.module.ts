@@ -10,6 +10,7 @@ import { EndpointService } from "./services/endpoint-service/endpoint.service";
 import { InlineSVGModule } from "ng-inline-svg";
 import { HeaderComponent } from "./components/header/header.component";
 import { WelcomeComponent } from "./components/welcome/welcome.component";
+import { StreamService } from "./services/stream-service/stream.service";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { WelcomeComponent } from "./components/welcome/welcome.component";
   ],
   providers: [
     EndpointService,
-    SessionService
+    SessionService,
+    StreamService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { Stream } from "../../entities/stream.entity";
 import { StreamService } from "src/app/services/stream-service/stream.service";
 import { ActivatedRoute } from "@angular/router";
@@ -8,7 +8,7 @@ import { ActivatedRoute } from "@angular/router";
   templateUrl: "./stream.component.html",
   styleUrls: ["./stream.component.css"]
 })
-export class StreamComponent {
+export class StreamComponent implements OnInit {
 
   private _stream: Stream;
 
@@ -17,6 +17,9 @@ export class StreamComponent {
   private _connectionError: boolean;
 
   constructor(private _route: ActivatedRoute, private _streamService: StreamService) {
+  }
+
+  public ngOnInit(): void {
     this.getStream();
   }
 
