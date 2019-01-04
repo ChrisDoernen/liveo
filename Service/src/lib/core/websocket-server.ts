@@ -7,7 +7,7 @@ import { Socket } from "socket.io";
 @injectable()
 export class WebsocketServer {
 
-    private _websocketServer: socketio.Server;
+    private _websocketServer: any;
 
     /**
      * The currently available streams that are represented as rooms in socket.io
@@ -18,13 +18,15 @@ export class WebsocketServer {
     }
 
     public initializeAndListen(server: any): void {
-        this._websocketServer = socketio(server, { path: "/streams", transports: ["websocket", "xhr-polling"] });
+        const websocketServer = socketio(server);
 
         if (config.environment === "Development") {
-            this._websocketServer.origins("*:*");
+            // websocketServer.origins("*:*");
+            this._logger.debug("Setting CORS header for websocket server.");
         }
 
-        this._websocketServer.on("connection", this.onConnection);
+        websocketServer.on("connection", this.onConnection.bind(this));
+        this._websocketServer = websocketServer;
         this._logger.info("Websocket server started.");
     }
 

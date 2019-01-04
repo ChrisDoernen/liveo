@@ -26,6 +26,7 @@ export class WebServer {
             app.use((err, req, res, next) => { this._logger.error(`${req.method} request on ${req.url} - ${err}.`); next(); });
 
             if (config.environment === "Development") {
+                this._logger.debug("Setting CORS header for web server.");
                 app.use(cors());
             }
         });
