@@ -3,7 +3,7 @@ import { LinuxShutdownService } from "../lib/shutdown/linux-shutdown-service";
 import { ShutdownSimulationService } from "../lib/shutdown/shutdown-simulation-service";
 import { Container, interfaces } from "inversify";
 import { Logger } from "../lib/util/logger";
-import { config } from "./service.config";
+import { config } from "./service";
 import { ProcessExecutionService } from "../lib/processes/process-execution-service";
 import { IDeviceDetector } from "../lib/devices/i-device-detector";
 import { LinuxDeviceDetector } from "../lib/devices/linux-device-detector";

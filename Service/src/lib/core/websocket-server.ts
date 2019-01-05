@@ -1,6 +1,6 @@
 import { Logger } from "../util/logger";
 import { injectable, inject } from "inversify";
-import { config } from "../../config/service.config";
+import { config } from "../../config/service";
 import * as socketio from "socket.io";
 import { Socket } from "socket.io";
 

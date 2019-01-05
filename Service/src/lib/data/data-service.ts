@@ -1,5 +1,5 @@
 import { SessionData } from "../sessions/session-data";
-import { config } from "../../config/service.config";
+import { config } from "../../config/service";
 import { Logger } from "../util/logger";
 import { injectable, inject } from "inversify";
 import * as fs from "fs";
@@ -35,6 +35,14 @@ export class DataService {
             return JSON.parse(this.readFileSync(config.autostart));
         } catch (error) {
             this._logger.error(`Could not load autostart data from file system: ${error}.`);
+        }
+    }
+
+    public loadFfmpegConfig(): any {
+        try {
+            return JSON.parse(this.readFileSync(config.ffmpeg));
+        } catch (error) {
+            this._logger.error(`Could not load ffmpeg configuration from file system: ${error}.`);
         }
     }
 
