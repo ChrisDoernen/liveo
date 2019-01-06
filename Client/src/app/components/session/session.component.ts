@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Session } from "../../entities/session.entity";
+import { SessionState } from "../../entities/session-state";
 import { SessionService } from "../../services/session-service/session.service";
 
 @Component({
@@ -10,29 +11,50 @@ import { SessionService } from "../../services/session-service/session.service";
 
 export class SessionComponent implements OnInit {
 
-  public session: Session;
+  public session: Session = null;
+  public sessionState: SessionState = null;
   public isLoading: boolean = true;
-  public noSessionActive: boolean = false;
   public connectionError: boolean = false;
+  public SessionState: any = SessionState;
 
   constructor(private _sessionService: SessionService) {
   }
 
   public ngOnInit(): void {
-    this.getSession();
+    this.loadSession();
   }
 
-  private getSession(): void {
+  private loadSession(): void {
+    this.isLoading = true;
+
     this._sessionService.getSession().subscribe((session) => {
-      if (session != null) {
-        this.session = session;
-      } else {
-        this.noSessionActive = true;
-      }
+      this.session = session;
+      this.sessionState = this.session ? this.evaluateSessionState(this.session) : null;
       this.isLoading = false;
+      this.connectionError = false;
     }, (error) => {
-      this.connectionError = true;
       this.isLoading = false;
+      this.connectionError = true;
+      console.debug(`Connection error: ${JSON.stringify(error)}.`);
     });
+  }
+
+  private evaluateSessionState(session: Session): SessionState {
+    let sessionState: SessionState;
+    const now = Date.now();
+
+    if (session.timeStarted < now && this.session.timeEnded > now) {
+      sessionState = SessionState.Started;
+    }
+
+    if (session.timeStarted < now && session.timeEnded < now) {
+      sessionState = SessionState.Ended;
+    }
+
+    if (session.timeStarting > now && !this.session.timeStarted && !this.session.timeEnded) {
+      sessionState = SessionState.Scheduled;
+    }
+
+    return sessionState;
   }
 }

@@ -1,14 +1,30 @@
 <app-header></app-header>
 <div class="lc-container">
-    <div *ngIf="connectionError">
-        There seems to be a problem with the WiFi connection.
-        Please check your settings.
-    </div>
-    <div *ngIf="noSessionActive">
-        There are no scheduled events right now. We're happy to see you later.
-    </div>
-    <div>{{session?.title}}</div>
-    <div *ngFor="let stream of session?.streams">
-        <a routerLink="/streams/{{stream.id}}">{{stream.title}}</a>
+    <div class="lc-content">
+        <ng-container *ngIf="!isLoading && !session; else sessionRetrieved">
+            <div *ngIf="connectionError">
+                There seems to be a problem with the WiFi connection.
+                Please check your settings.
+            </div>
+            <div *ngIf="!connectionError">
+                There are no scheduled events right now. We're happy to see you later.
+            </div>
+        </ng-container>
+        <ng-template #sessionRetrieved>
+            <div *ngIf="sessionState === SessionState.Scheduled">
+                Session is scheduled
+                <div>{{session?.title}}</div>
+            </div>
+            <div *ngIf="sessionState === SessionState.Ended">
+                Session ended
+                <div>{{session?.title}}</div>
+            </div>
+            <div *ngIf="sessionState === SessionState.Started">
+                <div>{{session?.title}}</div>
+                <div *ngFor="let stream of session?.streams">
+                    <a routerLink="/streams/{{stream.id}}">{{stream.title}}</a>
+                </div>
+            </div>
+        </ng-template>
     </div>
 </div>

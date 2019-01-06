@@ -1,3 +1,8 @@
+.lc-header {
+    position: absolute;
+    width: 100vw;
+}
+
 ::ng-deep .lc-header__logo .live-logo {
     fill: var(--main-color);
     width: 90px;
@@ -5,4 +10,5 @@
 
 .lc-header__logo {
     text-align: center;
+    margin-top: 5px;
 }

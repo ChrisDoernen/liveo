@@ -9,6 +9,12 @@ import { SessionEntity } from "./session.entity";
  */
 export class Session {
 
+    private _isStarted: boolean;
+    private _timeStarted: number;
+    private _timeEnded: number;
+    private _timeStarting: number;
+    private _timeEnding: number;
+
     public get data(): SessionData {
         return this._sessionData;
     }
@@ -31,16 +37,6 @@ export class Session {
     public get id(): string {
         return this.data.id;
     }
-
-    private _isStarted: boolean;
-
-    private _timeStarted: number;
-
-    private _timeEnded: number;
-
-    private _timeStarting: number;
-
-    private _timeEnding: number;
 
     constructor(@inject("Logger") private _logger: Logger,
         private _sessionData: SessionData,
