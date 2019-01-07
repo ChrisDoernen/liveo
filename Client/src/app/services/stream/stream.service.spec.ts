@@ -1,6 +1,6 @@
 import { TestBed } from "@angular/core/testing";
 import { HttpClient } from "@angular/common/http";
-import { EndpointService } from "../endpoint-service/endpoint.service";
+import { EndpointService } from "../endpoint/endpoint.service";
 import { StreamService } from "./stream.service";
 
 describe("StreamService", () => {

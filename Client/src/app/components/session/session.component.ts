@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Session } from "../../entities/session.entity";
 import { SessionState } from "../../entities/session-state";
-import { SessionService } from "../../services/session-service/session.service";
+import { SessionService } from "../../services/session/session.service";
 
 @Component({
   selector: "session",
@@ -43,16 +43,14 @@ export class SessionComponent implements OnInit {
     let sessionState: SessionState;
     const now = Date.now();
 
-    if (session.timeStarted < now && this.session.timeEnded > now) {
+    if (session.timeStarted < now && !this.session.timeEnded && !this.session.timeStarting && !this.session.timeEnding) {
       sessionState = SessionState.Started;
-    }
-
-    if (session.timeStarted < now && session.timeEnded < now) {
+    } else if (session.timeStarted < now && this.session.timeEnded < now && !this.session.timeStarting && !this.session.timeEnding) {
       sessionState = SessionState.Ended;
-    }
-
-    if (session.timeStarting > now && !this.session.timeStarted && !this.session.timeEnded) {
+    } else if (!session.timeStarted && !this.session.timeEnded && session.timeStarting > now) {
       sessionState = SessionState.Scheduled;
+    } else {
+      throw new Error("Can not estimate session state.");
     }
 
     return sessionState;

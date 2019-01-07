@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { StreamComponent } from "./stream.component";
-import { StreamService } from "src/app/services/stream-service/stream.service";
+import { StreamService } from "src/app/services/stream/stream.service";
 import { ActivatedRoute, convertToParamMap } from "@angular/router";
 import { HeaderComponent } from "../header/header.component";
 import { InlineSVGDirective } from "ng-inline-svg";

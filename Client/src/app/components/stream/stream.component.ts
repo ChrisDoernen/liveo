@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Stream } from "../../entities/stream.entity";
-import { StreamService } from "src/app/services/stream-service/stream.service";
+import { StreamService } from "src/app/services/stream/stream.service";
 import { ActivatedRoute } from "@angular/router";
 
 @Component({
