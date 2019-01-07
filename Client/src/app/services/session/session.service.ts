@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { EndpointService } from "../endpoint/endpoint.service";
 import { Session } from "../../entities/session.entity";
+import { SessionState } from "src/app/entities/session-state";
 
 @Injectable({
   providedIn: "root"
@@ -17,5 +18,22 @@ export class SessionService {
       .pipe(map((response: any) => {
         return (response.status == 200) ? response.body as Session : null;
       }));
+  }
+
+  public evaluateSessionState(session: Session): SessionState {
+    let sessionState: SessionState;
+    const now = Date.now();
+
+    if (session.timeStarted < now && session.timeEnded && session.timeStarting && session.timeEnding) {
+      sessionState = SessionState.Started;
+    } else if (session.timeStarted < now && session.timeEnded < now && session.timeStarting && session.timeEnding) {
+      sessionState = SessionState.Ended;
+    } else if (!session.timeStarted && session.timeEnded && session.timeStarting > now) {
+      sessionState = SessionState.Scheduled;
+    } else {
+      throw new Error("Can not evaluate session state.");
+    }
+
+    return sessionState;
   }
 }

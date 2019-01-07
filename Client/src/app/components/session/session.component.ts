@@ -29,30 +29,13 @@ export class SessionComponent implements OnInit {
 
     this._sessionService.getSession().subscribe((session) => {
       this.session = session;
-      this.sessionState = this.session ? this.evaluateSessionState(this.session) : null;
+      this.sessionState = this.session ? this._sessionService.evaluateSessionState(this.session) : null;
       this.isLoading = false;
       this.connectionError = false;
     }, (error) => {
       this.isLoading = false;
       this.connectionError = true;
-      console.debug(`Connection error: ${JSON.stringify(error)}.`);
+      console.debug(`Connection error: ${error.toString()}.`);
     });
-  }
-
-  private evaluateSessionState(session: Session): SessionState {
-    let sessionState: SessionState;
-    const now = Date.now();
-
-    if (session.timeStarted < now && !this.session.timeEnded && !this.session.timeStarting && !this.session.timeEnding) {
-      sessionState = SessionState.Started;
-    } else if (session.timeStarted < now && this.session.timeEnded < now && !this.session.timeStarting && !this.session.timeEnding) {
-      sessionState = SessionState.Ended;
-    } else if (!session.timeStarted && !this.session.timeEnded && session.timeStarting > now) {
-      sessionState = SessionState.Scheduled;
-    } else {
-      throw new Error("Can not estimate session state.");
-    }
-
-    return sessionState;
   }
 }

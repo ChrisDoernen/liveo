@@ -8,10 +8,9 @@ import { HttpClient } from "@angular/common/http";
 import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
 import createMockInstance from "jest-create-mock-instance";
 import { Session } from "src/app/entities/session.entity";
-import { of, Observable } from "rxjs";
+import { of, throwError } from "rxjs";
 import { async as _async } from "rxjs/scheduler/async";
 import { SessionState } from "src/app/entities/session-state";
-import "rxjs/add/observable/throw";
 
 describe("SessionComponent", () => {
   let component: SessionComponent;
@@ -42,8 +41,7 @@ describe("SessionComponent", () => {
   });
 
   it("should behave correctly at connection error", fakeAsync(() => {
-    const errorObservable = Observable.create((observer) => observer.error(new Error("SomeError")));
-    sessionService.getSession.mockReturnValue(of(errorObservable, _async));
+    sessionService.getSession.mockReturnValue(throwError(new Error("Error."), _async));
     expect(component.isLoading).toBe(true);
     fixture.detectChanges();
     expect(component.isLoading).toBe(true);
@@ -56,9 +54,10 @@ describe("SessionComponent", () => {
     expect(component.sessionState).toBe(null);
   }));
 
-  it("should load session correctly when a started session is retrieved", fakeAsync(() => {
+  it("should load session correctly when session is retrieved", fakeAsync(() => {
     const session = new Session("6sj7", "English", "Some english stream", 1546875795, null, null, null, null);
     sessionService.getSession.mockReturnValue(of(session, _async));
+    jest.spyOn(sessionService, "evaluateSessionState").mockReturnValue(SessionState.Started);
     expect(component.isLoading).toBe(true);
     fixture.detectChanges();
     expect(component.connectionError).toBe(false);
@@ -67,6 +66,7 @@ describe("SessionComponent", () => {
     expect(component.session).toBeNull();
     tick();
     fixture.detectChanges();
+    expect(sessionService.evaluateSessionState).toHaveBeenCalledTimes(1);
     expect(component.connectionError).toBe(false);
     expect(component.isLoading).toBe(false);
     expect(component.session).toBe(session);
