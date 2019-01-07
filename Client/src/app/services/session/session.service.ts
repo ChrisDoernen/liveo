@@ -24,14 +24,14 @@ export class SessionService {
     let sessionState: SessionState;
     const now = Date.now();
 
-    if (session.timeStarted < now && session.timeEnded && session.timeStarting && session.timeEnding) {
-      sessionState = SessionState.Started;
-    } else if (session.timeStarted < now && session.timeEnded < now && session.timeStarting && session.timeEnding) {
-      sessionState = SessionState.Ended;
-    } else if (!session.timeStarted && session.timeEnded && session.timeStarting > now) {
+    if (!session.timeStarted && !session.timeEnded && session.timeStarting > now) {
       sessionState = SessionState.Scheduled;
+    } else if (session.timeStarted < now && !session.timeEnded && !session.timeStarting && !session.timeEnding) {
+      sessionState = SessionState.Started;
+    } else if (session.timeStarted < now && session.timeEnded < now) {
+      sessionState = SessionState.Ended;
     } else {
-      throw new Error("Can not evaluate session state.");
+      throw new Error(`Can not evaluate session state from session ${JSON.stringify(session)}.`);
     }
 
     return sessionState;
