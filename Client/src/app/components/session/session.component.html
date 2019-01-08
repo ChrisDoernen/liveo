@@ -12,12 +12,10 @@
         </ng-container>
         <ng-template #sessionRetrieved>
             <div *ngIf="sessionState === SessionState.Scheduled">
-                Session is scheduled
-                <div>{{session?.title}}</div>
+                Session {{session?.title}} is scheduled to start at {{session?.timeStarting}}. Stay tuned!
             </div>
             <div *ngIf="sessionState === SessionState.Ended">
-                Session ended
-                <div>{{session?.title}}</div>
+                Session ended. Thanks for joining us.
             </div>
             <div *ngIf="sessionState === SessionState.Started">
                 <div>{{session?.title}}</div>
