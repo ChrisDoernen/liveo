@@ -6,7 +6,7 @@ import { DeviceState } from "../devices/device-state";
 import { ChildProcess } from "child_process";
 import { WebsocketServer } from "../core/websocket-server";
 import { Stream } from "./stream";
-import { DataService } from "../data/data-service";
+import { ffmpeg } from "../../config/ffmpeg";
 
 /**
  * Class responsible for opening a child process and passing the data to the websocket server
@@ -21,15 +21,14 @@ export class StreamingSource {
     constructor(@inject("Logger") private _logger: Logger,
         @inject("WebsocketService") private _websocketService: WebsocketServer,
         @inject("ProcessExecutionService") private _processExecutionService: ProcessExecutionService,
-        @inject("DataService") private _dataService: DataService,
         private _device: Device,
         private _stream: Stream) {
-        this.parseFfmpegConfig(this._dataService.loadFfmpegConfig());
+        this.parseFfmpegConfig();
     }
 
-    private parseFfmpegConfig(ffmpegConfig: any): void {
-        this._command = ffmpegConfig.command;
-        ffmpegConfig.arguments.forEach((argument: string) => {
+    private parseFfmpegConfig(): void {
+        this._command = ffmpeg.command;
+        ffmpeg.arguments.forEach((argument: string) => {
             this._arguments.push(argument.replace("__deviceId__", this._device.id));
         });
     }

@@ -7,7 +7,5 @@ export const config = {
     arch: process.arch,
     sessions: `${appRoot}/dist/data/sessions.json`,
     streams: `${appRoot}/dist/data/streams.json`,
-    autostart: `${appRoot}/dist/data/autostart.json`,
-    ffmpeg: `${appRoot}/dist/data/ffmpeg.json`
+    autostart: `${appRoot}/dist/data/autostart.json`
 };
-

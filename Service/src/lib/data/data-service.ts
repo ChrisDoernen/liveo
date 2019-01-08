@@ -38,14 +38,6 @@ export class DataService {
         }
     }
 
-    public loadFfmpegConfig(): any {
-        try {
-            return JSON.parse(this.readFileSync(config.ffmpeg));
-        } catch (error) {
-            this._logger.error(`Could not load ffmpeg configuration from file system: ${error}.`);
-        }
-    }
-
     private readFileSync(file: string): string {
         return fs.readFileSync(file, "utf8");
     }

@@ -1,6 +1,6 @@
-{
-    "command": "ffmpeg",
-    "arguments": [
+export const ffmpeg = {
+    command: "ffmpeg",
+    arguments: [
         "-y",
         "-f",
         "alsa",
@@ -24,4 +24,4 @@
         "+nobuffer",
         "-"
     ]
-}
+};
