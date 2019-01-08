@@ -15,18 +15,12 @@ export class SessionService {
 
     private _sessions: Session[];
 
-    public get sessions(): Session[] {
-        return this._sessions;
+    public get sessionEntities(): SessionEntity[] {
+        return this._sessions.map((session) => session.entity);
     }
 
-    private _activeSession: Session;
-
-    public get activeSessionData(): SessionData {
-        return this._activeSession ? this._activeSession.data : undefined;
-    }
-
-    public get activeSessionEntity(): SessionEntity {
-        return this._activeSession ? this._activeSession.entity : undefined;
+    public get sessionData(): SessionData[] {
+        return this._sessions.map((session) => session.data);
     }
 
     constructor(@inject("Logger") private _logger: Logger,
@@ -66,40 +60,21 @@ export class SessionService {
         return this.sessionFactory(sessionData, matchingStreams);
     }
 
-    public activateSession(sessionId: string): SessionData {
-        const matchingSession = this.sessions.find((session) => session.id == sessionId);
+    private findSession(id: string): Session {
+        const matchingSession = this._sessions.find((session) => session.id == id);
 
         if (!matchingSession) {
-            throw new Error(`Session with id ${sessionId} was not found.`);
+            throw new Error("The requested session could not be found.");
         }
 
-        this._activeSession = matchingSession;
-        this._logger.info(`Activated session ${this._activeSession.id}.`);
-        return matchingSession.data;
+        return matchingSession;
     }
 
-    public getSessionData(): SessionEntity[] {
-        return this.sessions.map((session) => session.entity);
+    public getSession(id: string): Session {
+        return this.findSession(id);
     }
 
-    public resetActiveSession(): void {
-        this._activeSession = null;
-        this._logger.info("Active session was reset.");
-    }
-
-    public startActiveSession(): void {
-        if (!this._activeSession) {
-            throw new Error("No session was activated.");
-        }
-
-        this._activeSession.start();
-    }
-
-    public stopActiveSession(): void {
-        if (!this._activeSession) {
-            throw new Error("No session was activated.");
-        }
-
-        this._activeSession.stop();
+    public getSessionData(id: string): SessionData {
+        return this.findSession(id).data;
     }
 }
