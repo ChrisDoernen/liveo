@@ -15,14 +15,15 @@ export class ActivationService {
     }
 
     constructor(@inject("Logger") private _logger: Logger,
-        @inject("SessionService") private _sessionService: SessionService) { }
+        @inject("SessionService") private _sessionService: SessionService) {
+    }
 
     public activateSession(activationRequest: ActivationRequest): void {
         this._activeSession = this._sessionService.getSession(activationRequest.sessionId);
         this._logger.info(`Activated session ${this._activeSession.id}.`);
     }
 
-    public resetActiveSession(): void {
+    public resetActivatedSession(): void {
         this._activeSession = null;
         this._logger.info("Active session was reset.");
     }

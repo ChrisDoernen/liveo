@@ -4,7 +4,6 @@ import { Logger } from "../util/logger";
 import { injectable, inject } from "inversify";
 import * as fs from "fs";
 import { StreamData } from "../streams/stream-data";
-import { AutostartData } from "../autostart/autostart-data";
 
 /**
  * Provides access to a file based data source
@@ -27,14 +26,6 @@ export class DataService {
             return JSON.parse(this.readFileSync(config.streams));
         } catch (error) {
             this._logger.error(`Could not load stream data from file system: ${error}.`);
-        }
-    }
-
-    public loadAutostartData(): AutostartData {
-        try {
-            return JSON.parse(this.readFileSync(config.autostart));
-        } catch (error) {
-            this._logger.error(`Could not load autostart data from file system: ${error}.`);
         }
     }
 

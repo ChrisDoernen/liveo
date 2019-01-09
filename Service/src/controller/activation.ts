@@ -12,19 +12,19 @@ export class ActivationController {
     }
 
     @httpPost("/")
-    public setActiveSession(request: Request): void {
+    public activate(request: Request): void {
         const activationRequest = request.body as ActivationRequest;
         return this._activationService.activateSession(activationRequest);
     }
 
     @httpGet("/")
-    public getActiveSessionEntity(): SessionEntity {
+    public getActivatedSessionEntity(): SessionEntity {
         return this._activationService.activeSessionEntity;
     }
 
     @httpDelete("/")
-    public resetActiveSession(request: Request, response: Response): void {
-        this._activationService.resetActiveSession();
+    public resetActivation(request: Request, response: Response): void {
+        this._activationService.resetActivatedSession();
         response.sendStatus(200);
     }
 }

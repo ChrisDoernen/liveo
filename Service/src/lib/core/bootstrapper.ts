@@ -6,7 +6,6 @@ import { config } from "../../config/service";
 import { WebServer } from "./web-server";
 import { WebsocketServer } from "./websocket-server";
 import { injectable, inject } from "inversify";
-import { AutostartService } from "../autostart/autostart-service";
 
 @injectable()
 export class Bootstrapper {
@@ -15,7 +14,6 @@ export class Bootstrapper {
         @inject("IDeviceDetector") private _deviceDetector: IDeviceDetector,
         @inject("StreamService") private _streamService: StreamService,
         @inject("SessionService") private _sessionService: SessionService,
-        @inject("AutostartService") private _autostartService: AutostartService,
         @inject("WebServer") private _webServer: WebServer,
         @inject("WebsocketServer") private _websocketServer: WebsocketServer) {
     }
@@ -31,7 +29,6 @@ export class Bootstrapper {
             this._sessionService.loadSessions();
             const server = this._webServer.initializeAndListen();
             this._websocketServer.initializeAndListen(server);
-            this._autostartService.autoStart();
         });
     }
 }
