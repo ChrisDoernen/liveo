@@ -23,8 +23,8 @@ export class ActivationController {
     }
 
     @httpDelete("/")
-    public resetActivation(request: Request, response: Response): void {
-        this._activationService.resetActivatedSession();
+    public deactivate(request: Request, response: Response): void {
+        this._activationService.deactivateSession();
         response.sendStatus(200);
     }
 }

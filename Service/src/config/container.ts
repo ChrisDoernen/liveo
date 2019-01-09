@@ -22,6 +22,7 @@ import { StreamingSourceFactory } from "../lib/streams/streaming-source-factory"
 import { Bootstrapper } from "../lib/core/bootstrapper";
 import { WebServer } from "../lib/core/web-server";
 import { ActivationService } from "../lib/activation/activation-service";
+import { Scheduler } from "../lib/scheduling/scheduler";
 
 export const container = new Container();
 
@@ -51,3 +52,4 @@ container.bind<ProcessExecutionService>("ProcessExecutionService").to(ProcessExe
 container.bind<WebServer>("WebServer").to(WebServer).inSingletonScope();
 container.bind<WebsocketServer>("WebsocketServer").to(WebsocketServer).inSingletonScope();
 container.bind<ActivationService>("ActivationService").to(ActivationService).inSingletonScope();
+container.bind<Scheduler>("Scheduler").to(Scheduler).inSingletonScope();

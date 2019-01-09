@@ -9,8 +9,8 @@ export class ActivationRequest {
      * @param timeServerShutdown The time an automatic server shutdown shall be executed
      */
     constructor(public sessionId: string,
-        public timeStarting: number,
-        public timeEnding: number,
-        public timeServerShutdown: number) {
+        public timeStarting: Date,
+        public timeEnding: Date,
+        public timeServerShutdown: Date) {
     }
 }
