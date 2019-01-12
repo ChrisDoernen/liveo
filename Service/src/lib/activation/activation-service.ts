@@ -1,8 +1,6 @@
 import { inject, injectable } from "inversify";
 import { SessionService } from "../sessions/session-service";
-import { SessionEntity } from "../sessions/session.entity";
-import { Session } from "../sessions/session";
-import { ActivationRequest } from "./activation-request";
+import { Activation } from "./activation";
 import { Logger } from "../util/logger";
 import { Scheduler } from "../scheduling/scheduler";
 import { ShutdownService } from "../shutdown/shutdown-service";
@@ -11,11 +9,7 @@ import { Shutdown } from "../shutdown/shutdown";
 @injectable()
 export class ActivationService {
 
-    private _activeSession: Session;
-
-    public get activeSessionEntity(): SessionEntity {
-        return this._activeSession ? this._activeSession.entity : undefined;
-    }
+    private _activation: Activation;
 
     private _sessionStartJobId: string = "SESSION_START_JOB";
     private _sessionStopJobId: string = "SESSION_STOP_JOB";
@@ -26,49 +20,73 @@ export class ActivationService {
         @inject("ShutdownService") private _shutdownService: ShutdownService) {
     }
 
-    public activateSession(activationRequest: ActivationRequest): void {
+    public setActivation(activation: Activation): void {
+        this._logger.info(`Received new activation${JSON.stringify(activation)}.`);
 
-        this.validateActivationRequest(activationRequest);
+        if (this._activation) {
+            throw new Error("Can not set new activation before deleting the current.");
+        }
 
-        this._activeSession = this._sessionService.getSession(activationRequest.sessionId);
+        this.validateActivation(activation);
 
-        if (activationRequest.timeStarting) {
-            this._scheduler.schedule(this._sessionStartJobId, activationRequest.timeStarting, this._activeSession.start);
+        const session = this._sessionService.getSession(activation.sessionId);
+
+        if (activation.timeStarting) {
+            this._scheduler.schedule(this._sessionStartJobId, new Date(activation.timeStarting), session.start);
         } else {
-            this._activeSession.start();
+            session.start();
         }
 
-        if (activationRequest.timeEnding) {
-            this._scheduler.schedule(this._sessionStopJobId, activationRequest.timeEnding, this._activeSession.stop);
+        if (activation.timeEnding) {
+            this._scheduler.schedule(this._sessionStopJobId, new Date(activation.timeEnding), session.stop);
         }
 
-        if (activationRequest.timeServerShutdown) {
-            this._shutdownService.setShutdown(new Shutdown(activationRequest.timeServerShutdown));
+        if (activation.timeServerShutdown) {
+            this._shutdownService.setShutdown(new Shutdown(activation.timeServerShutdown));
         }
 
-        this._logger.info(`Activated session ${this._activeSession.id}.`);
+        this._activation = activation;
     }
 
-    private validateActivationRequest(activationRequest: ActivationRequest): void {
-        if (!activationRequest.sessionId) {
-            throw new Error("Session id in activation request is null.");
+    private validateActivation(activation: Activation): void {
+        if (!activation.sessionId) {
+            throw new Error("Session id in activation is null.");
         }
 
-        if (activationRequest.timeEnding < activationRequest.timeStarting) {
-            throw new Error("Time ending is lower than time starting in activation request.");
+        if (activation.timeEnding < activation.timeStarting) {
+            throw new Error("Time ending is lower than time starting in activation.");
         }
 
-        if (activationRequest.timeServerShutdown < activationRequest.timeEnding) {
-            throw new Error("Time server shutdown is lower than time ending in activation request.");
+        if (activation.timeServerShutdown < activation.timeEnding) {
+            throw new Error("Time server shutdown is lower than time ending in activation.");
         }
     }
 
-    public deactivateSession(): void {
-        if (!this._activeSession) {
-            throw new Error("No session was activated.");
+    public deleteActivation(): void {
+        if (!this._activation) {
+            throw new Error("Can not delete activation, no activation existing.");
         }
 
-        this._activeSession.stop();
-        this._activeSession = null;
+        if (this._activation.timeStarting && this._activation.timeStarting > Date.now()) {
+            this._scheduler.cancelJob(this._sessionStartJobId);
+        } else {
+            const session = this._sessionService.getSession(this._activation.sessionId);
+            session.stop();
+        }
+
+        if (this._activation.timeEnding && this._activation.timeEnding > Date.now()) {
+            this._scheduler.cancelJob(this._sessionStopJobId);
+        }
+
+        if (this._activation.timeServerShutdown) {
+            this._shutdownService.cancelShutdown();
+        }
+
+        this._activation = null;
+        this._logger.info("Activation deleted.");
+    }
+
+    public getActivation(): Activation {
+        return this._activation;
     }
 }

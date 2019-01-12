@@ -1,8 +1,7 @@
 import { controller, httpPost, httpGet, httpDelete } from "inversify-express-utils";
 import { inject } from "inversify";
 import { ActivationService } from "../lib/activation/activation-service";
-import { ActivationRequest } from "../lib/activation/activation-request";
-import { SessionEntity } from "../lib/sessions/session.entity";
+import { Activation } from "../lib/activation/activation";
 import { Request, Response } from "express";
 
 @controller("/api/activation")
@@ -13,18 +12,18 @@ export class ActivationController {
 
     @httpPost("/")
     public activate(request: Request): void {
-        const activationRequest = request.body as ActivationRequest;
-        return this._activationService.activateSession(activationRequest);
+        const activationRequest = request.body as Activation;
+        return this._activationService.setActivation(activationRequest);
     }
 
     @httpGet("/")
-    public getActivatedSessionEntity(): SessionEntity {
-        return this._activationService.activeSessionEntity;
+    public getActivatedSessionEntity(): Activation {
+        return this._activationService.getActivation();
     }
 
     @httpDelete("/")
     public deactivate(request: Request, response: Response): void {
-        this._activationService.deactivateSession();
+        this._activationService.deleteActivation();
         response.sendStatus(200);
     }
 }

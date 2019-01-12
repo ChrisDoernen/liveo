@@ -33,9 +33,9 @@ if (ServiceConfig.os === "linux") {
 }
 
 if (ServiceConfig.environment === "Development") {
-    container.bind<ShutdownService>("ShutdownService").to(ShutdownSimulationService);
+    container.bind<ShutdownService>("ShutdownService").to(ShutdownSimulationService).inSingletonScope();
 } else if (ServiceConfig.os === "linux") {
-    container.bind<ShutdownService>("ShutdownService").to(LinuxShutdownService);
+    container.bind<ShutdownService>("ShutdownService").to(LinuxShutdownService).inSingletonScope();
 } else {
     throw new Error("OS is unsupported.");
 }

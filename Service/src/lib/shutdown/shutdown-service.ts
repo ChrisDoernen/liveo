@@ -1,4 +1,4 @@
-import { inject } from "inversify";
+import { inject, injectable } from "inversify";
 import { Logger } from "./../util/logger";
 import { Scheduler } from "../scheduling/scheduler";
 import { Shutdown } from "./shutdown";
@@ -6,6 +6,7 @@ import { Shutdown } from "./shutdown";
 /**
  * Base class for machine shutdown
  */
+@injectable()
 export abstract class ShutdownService {
 
     private _shutdown: Shutdown;
@@ -19,8 +20,13 @@ export abstract class ShutdownService {
     public setShutdown(shutdown: Shutdown): void {
         this.logger.debug(`Receiving new shutdown: ${JSON.stringify(shutdown)}.`);
 
+        if (this._shutdown) {
+            this.cancelShutdown();
+        }
+
         if (shutdown.shutdownTime) {
-            this._scheduler.schedule(this._shutdownJobId, shutdown.shutdownTime, this.executeShutdown);
+            this._scheduler.schedule(this._shutdownJobId, new Date(shutdown.shutdownTime), this.shutdown.bind(this));
+            this._shutdown = shutdown;
         } else {
             this.executeShutdown();
         }
@@ -30,9 +36,20 @@ export abstract class ShutdownService {
         return this._shutdown;
     }
 
+    private shutdown(): void {
+        this._shutdown = null;
+        this.executeShutdown();
+    }
+
     protected abstract executeShutdown(): void;
 
-    public deleteShutdown(): void {
-        throw new Error("Method not implemented.");
+    public cancelShutdown(): void {
+        if (!this._shutdown) {
+            this.logger.warn("Can not cancel shutdown, no shutdown existing.");
+        }
+
+        this._scheduler.cancelJob(this._shutdownJobId);
+        this._shutdown = null;
+        this.logger.info("Shutdown canceled.");
     }
 }

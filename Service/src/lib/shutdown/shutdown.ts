@@ -3,6 +3,6 @@
  */
 export class Shutdown {
 
-    constructor(public shutdownTime: Date) {
+    constructor(public shutdownTime: number) {
     }
 }

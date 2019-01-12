@@ -1,4 +1,4 @@
-export class ActivationRequest {
+export class Activation {
 
     /**
      * The request to activate a session
@@ -9,8 +9,8 @@ export class ActivationRequest {
      * @param timeServerShutdown The time an automatic server shutdown shall be executed
      */
     constructor(public sessionId: string,
-        public timeStarting: Date,
-        public timeEnding: Date,
-        public timeServerShutdown: Date) {
+        public timeStarting: number,
+        public timeEnding: number,
+        public timeServerShutdown: number) {
     }
 }

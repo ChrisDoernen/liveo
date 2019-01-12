@@ -11,8 +11,8 @@ export class ShutdownController {
 
   @httpPost("/")
   public setShutdown(request: Request, response: Response): void {
-    const shutdownRequest = request.body as Shutdown;
-    this._shutdownService.setShutdown(shutdownRequest);
+    const shutdown = request.body as Shutdown;
+    this._shutdownService.setShutdown(shutdown);
     response.sendStatus(200);
   }
 
@@ -22,8 +22,8 @@ export class ShutdownController {
   }
 
   @httpDelete("/")
-  public unscheduleShutdown(request: Request, response: Response): void {
-    this._shutdownService.deleteShutdown();
+  public cancelShutdown(request: Request, response: Response): void {
+    this._shutdownService.cancelShutdown();
     response.sendStatus(200);
   }
 }
