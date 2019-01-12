@@ -5,11 +5,11 @@ import { config } from "../../config/service";
 import { injectable, inject } from "inversify";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
-import "../../controller/home";
-import "../../controller/shutdown";
-import "../../controller/stream";
-import "../../controller/session";
-import "../../controller/activation";
+import "../../controller/home.controller";
+import "../../controller/shutdown.controller";
+import "../../controller/stream.controller";
+import "../../controller/session.controller";
+import "../../controller/activation.controller";
 
 @injectable()
 export class WebServer {
