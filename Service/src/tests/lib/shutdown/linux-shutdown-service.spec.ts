@@ -3,16 +3,20 @@ import createMockInstance from "jest-create-mock-instance";
 import { LinuxShutdownService } from "./../../../lib/shutdown/linux-shutdown-service";
 import { Logger } from "./../../../lib/util/logger";
 import { ProcessExecutionService } from "../../../lib/processes/process-execution-service";
+import { Scheduler } from "../../../lib/scheduling/scheduler";
 
 describe("LinuxShutdownService", () => {
 
+    let logger;
     let linuxShutdownService;
-    let commandExecutionService;
+    let scheduler;
+    let processExecutionService;
 
     beforeEach(() => {
-        commandExecutionService = createMockInstance(ProcessExecutionService);
-        const logger = createMockInstance(Logger);
-        linuxShutdownService = new LinuxShutdownService(logger, commandExecutionService);
+        logger = createMockInstance(Logger);
+        scheduler = createMockInstance(Scheduler);
+        processExecutionService = createMockInstance(ProcessExecutionService);
+        linuxShutdownService = new LinuxShutdownService(logger, processExecutionService, scheduler);
     });
 
     it("should construct", async () => {
@@ -21,6 +25,6 @@ describe("LinuxShutdownService", () => {
 
     it("should call command executor on shutdown correctly", async () => {
         linuxShutdownService.shutdown();
-        expect(commandExecutionService.execute).toHaveBeenCalledWith("shutdown now");
+        expect(processExecutionService.execute).toHaveBeenCalledWith("shutdown now");
     });
 });

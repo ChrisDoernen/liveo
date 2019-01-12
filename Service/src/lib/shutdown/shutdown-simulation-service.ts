@@ -1,24 +1,22 @@
 import { injectable, inject } from "inversify";
 import { Logger } from "./../util/logger";
-import { IShutdownService } from "./i-shutdown-service";
+import { ShutdownService } from "./shutdown-service";
+import { Scheduler } from "../scheduling/scheduler";
+import { ProcessExecutionService } from "../processes/process-execution-service";
 
 /**
  * Implementation for shutdown simulation
  */
 @injectable()
-export class ShutdownSimulationService implements IShutdownService {
+export class ShutdownSimulationService extends ShutdownService {
 
-    constructor(@inject("Logger") private _logger: Logger) { }
-
-    public shutdown(): void {
-        this._logger.info("Simulating shutdown in development environment.");
+    constructor(@inject("Logger") logger: Logger,
+        @inject("Scheduler") scheduler: Scheduler) {
+        super(logger, scheduler);
+        logger.debug("Instantiating shutdown simulation service.");
     }
 
-    public scheduleShutdown(time: Date): void {
-        this._logger.info(`Simulating scheduling shutdown for ${time} in development environment.`);
-    }
-
-    public unscheduleShutdown(): void {
-        this._logger.info("Simulating unscheduling shutdown in development environment.");
+    public executeShutdown(): void {
+        this.logger.info("Simulating server shutdown in development environment");
     }
 }

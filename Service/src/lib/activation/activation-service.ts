@@ -5,7 +5,8 @@ import { Session } from "../sessions/session";
 import { ActivationRequest } from "./activation-request";
 import { Logger } from "../util/logger";
 import { Scheduler } from "../scheduling/scheduler";
-import { IShutdownService } from "../shutdown/i-shutdown-service";
+import { ShutdownService } from "../shutdown/shutdown-service";
+import { Shutdown } from "../shutdown/shutdown";
 
 @injectable()
 export class ActivationService {
@@ -16,10 +17,13 @@ export class ActivationService {
         return this._activeSession ? this._activeSession.entity : undefined;
     }
 
+    private _sessionStartJobId: string = "SESSION_START_JOB";
+    private _sessionStopJobId: string = "SESSION_STOP_JOB";
+
     constructor(@inject("Logger") private _logger: Logger,
         @inject("SessionService") private _sessionService: SessionService,
         @inject("Scheduler") private _scheduler: Scheduler,
-        @inject("IShutdownService") private _shutdownService: IShutdownService) {
+        @inject("ShutdownService") private _shutdownService: ShutdownService) {
     }
 
     public activateSession(activationRequest: ActivationRequest): void {
@@ -29,17 +33,17 @@ export class ActivationService {
         this._activeSession = this._sessionService.getSession(activationRequest.sessionId);
 
         if (activationRequest.timeStarting) {
-            this._scheduler.schedule(activationRequest.timeStarting, this._activeSession.start);
+            this._scheduler.schedule(this._sessionStartJobId, activationRequest.timeStarting, this._activeSession.start);
         } else {
             this._activeSession.start();
         }
 
         if (activationRequest.timeEnding) {
-            this._scheduler.schedule(activationRequest.timeEnding, this._activeSession.stop);
+            this._scheduler.schedule(this._sessionStopJobId, activationRequest.timeEnding, this._activeSession.stop);
         }
 
         if (activationRequest.timeServerShutdown) {
-            this._shutdownService.scheduleShutdown(activationRequest.timeServerShutdown);
+            this._shutdownService.setShutdown(new Shutdown(activationRequest.timeServerShutdown));
         }
 
         this._logger.info(`Activated session ${this._activeSession.id}.`);

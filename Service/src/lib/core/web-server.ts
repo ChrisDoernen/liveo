@@ -9,6 +9,7 @@ import "../../controller/home";
 import "../../controller/shutdown";
 import "../../controller/stream";
 import "../../controller/session";
+import "../../controller/activation";
 
 @injectable()
 export class WebServer {

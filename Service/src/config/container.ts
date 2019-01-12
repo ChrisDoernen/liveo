@@ -1,4 +1,3 @@
-import { IShutdownService } from "../lib/shutdown/i-shutdown-service";
 import { LinuxShutdownService } from "../lib/shutdown/linux-shutdown-service";
 import { ShutdownSimulationService } from "../lib/shutdown/shutdown-simulation-service";
 import { Container, interfaces } from "inversify";
@@ -23,6 +22,7 @@ import { Bootstrapper } from "../lib/core/bootstrapper";
 import { WebServer } from "../lib/core/web-server";
 import { ActivationService } from "../lib/activation/activation-service";
 import { Scheduler } from "../lib/scheduling/scheduler";
+import { ShutdownService } from "../lib/shutdown/shutdown-service";
 
 export const container = new Container();
 
@@ -33,9 +33,9 @@ if (config.os === "linux") {
 }
 
 if (config.environment === "Development") {
-    container.bind<IShutdownService>("IShutdownService").to(ShutdownSimulationService);
+    container.bind<ShutdownService>("ShutdownService").to(ShutdownSimulationService);
 } else {
-    container.bind<IShutdownService>("IShutdownService").to(LinuxShutdownService);
+    container.bind<ShutdownService>("ShutdownService").to(LinuxShutdownService);
 }
 
 container.bind<interfaces.Factory<StreamingSource>>("StreamingSourceFactory").toFactory(StreamingSourceFactory);

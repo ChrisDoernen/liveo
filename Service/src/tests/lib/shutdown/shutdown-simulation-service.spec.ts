@@ -2,15 +2,21 @@ import "reflect-metadata";
 import createMockInstance from "jest-create-mock-instance";
 import { Logger } from "../../../lib/util/logger";
 import { ShutdownSimulationService } from "./../../../lib/shutdown/shutdown-simulation-service";
+import { Scheduler } from "../../../lib/scheduling/scheduler";
+import { ProcessExecutionService } from "../../../lib/processes/process-execution-service";
 
 describe("ShutdownSimulationService", () => {
 
     let logger;
     let shutdownSimulationService;
+    let scheduler;
+    let processExecutionService;
 
     beforeEach(() => {
         logger = createMockInstance(Logger);
-        shutdownSimulationService = new ShutdownSimulationService(logger);
+        scheduler = createMockInstance(Scheduler);
+        processExecutionService = createMockInstance(ProcessExecutionService);
+        shutdownSimulationService = new ShutdownSimulationService(logger, scheduler);
     });
 
     it("should construct", async () => {
