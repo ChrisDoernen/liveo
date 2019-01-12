@@ -1,4 +1,4 @@
-export const ffmpeg = {
+export const FfmpegConfig = {
     command: "ffmpeg",
     arguments: [
         "-y",

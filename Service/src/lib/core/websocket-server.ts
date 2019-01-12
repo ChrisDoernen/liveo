@@ -1,6 +1,6 @@
 import { Logger } from "../util/logger";
 import { injectable, inject } from "inversify";
-import { config } from "../../config/service";
+import { ServiceConfig } from "../../config/service.config";
 import * as socketio from "socket.io";
 import { Socket } from "socket.io";
 
@@ -20,7 +20,7 @@ export class WebsocketServer {
     public initializeAndListen(server: any): void {
         const websocketServer = socketio(server);
 
-        if (config.environment === "Development") {
+        if (ServiceConfig.environment === "Development") {
             websocketServer.origins("*:*");
             this._logger.debug("Setting CORS header for websocket server.");
         }

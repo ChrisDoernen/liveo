@@ -1,6 +1,6 @@
 import * as appRoot from "app-root-path";
 
-export const config = {
+export const ServiceConfig = {
     port: process.env.PORT || 3000,
     environment: process.env.ENVIRONMENT || "Development",
     os: process.platform,

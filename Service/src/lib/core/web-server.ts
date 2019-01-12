@@ -1,7 +1,7 @@
 import { container } from "../../config/container";
 import { InversifyExpressServer } from "inversify-express-utils";
 import { Logger } from "../util/logger";
-import { config } from "../../config/service";
+import { ServiceConfig } from "../../config/service.config";
 import { injectable, inject } from "inversify";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
@@ -26,14 +26,14 @@ export class WebServer {
             app.use((req, res, next) => { this._logger.debug(`${req.method} request on ${req.url}.`); next(); });
             app.use((err, req, res, next) => { this._logger.error(`${req.method} request on ${req.url} - ${err}.`); next(); });
 
-            if (config.environment === "Development") {
+            if (ServiceConfig.environment === "Development") {
                 this._logger.debug("Setting CORS header for web server.");
                 app.use(cors());
             }
         });
 
-        const server = expressServer.build().listen(config.port);
-        this._logger.info(`Web server started, listening on port ${config.port}.`);
+        const server = expressServer.build().listen(ServiceConfig.port);
+        this._logger.info(`Web server started, listening on port ${ServiceConfig.port}.`);
 
         return server;
     }

@@ -2,7 +2,7 @@ import { IDeviceDetector } from "../devices/i-device-detector";
 import { StreamService } from "../streams/stream-service";
 import { SessionService } from "../sessions/session-service";
 import { Logger } from "../util/logger";
-import { config } from "../../config/service";
+import { ServiceConfig } from "../../config/service.config";
 import { WebServer } from "./web-server";
 import { WebsocketServer } from "./websocket-server";
 import { injectable, inject } from "inversify";
@@ -20,9 +20,9 @@ export class Bootstrapper {
 
     public startServer(): void {
         this._logger.info("Starting Live server...");
-        this._logger.debug(`Environment: ${config.environment}.`);
-        this._logger.debug(`OS: ${config.os}.`);
-        this._logger.debug(`Architecture: ${config.arch}.`);
+        this._logger.debug(`Environment: ${ServiceConfig.environment}.`);
+        this._logger.debug(`OS: ${ServiceConfig.os}.`);
+        this._logger.debug(`Architecture: ${ServiceConfig.arch}.`);
 
         this._deviceDetector.detectDevices().then(() => {
             this._streamService.loadStreams();

@@ -2,7 +2,7 @@ import { LinuxShutdownService } from "../lib/shutdown/linux-shutdown-service";
 import { ShutdownSimulationService } from "../lib/shutdown/shutdown-simulation-service";
 import { Container, interfaces } from "inversify";
 import { Logger } from "../lib/util/logger";
-import { config } from "./service";
+import { ServiceConfig } from "./service.config";
 import { ProcessExecutionService } from "../lib/processes/process-execution-service";
 import { IDeviceDetector } from "../lib/devices/i-device-detector";
 import { LinuxDeviceDetector } from "../lib/devices/linux-device-detector";
@@ -26,16 +26,18 @@ import { ShutdownService } from "../lib/shutdown/shutdown-service";
 
 export const container = new Container();
 
-if (config.os === "linux") {
+if (ServiceConfig.os === "linux") {
     container.bind<IDeviceDetector>("IDeviceDetector").to(LinuxDeviceDetector).inSingletonScope();
 } else {
     throw new Error("OS is unsupported.");
 }
 
-if (config.environment === "Development") {
+if (ServiceConfig.environment === "Development") {
     container.bind<ShutdownService>("ShutdownService").to(ShutdownSimulationService);
-} else {
+} else if (ServiceConfig.os === "linux") {
     container.bind<ShutdownService>("ShutdownService").to(LinuxShutdownService);
+} else {
+    throw new Error("OS is unsupported.");
 }
 
 container.bind<interfaces.Factory<StreamingSource>>("StreamingSourceFactory").toFactory(StreamingSourceFactory);

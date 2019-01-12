@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { DataService } from "../../../lib/data/data-service";
-import { config } from "../../../config/service";
+import { ServiceConfig } from "../../../config/service.config";
 import { SessionData } from "../../../lib/sessions/session-data";
 import { Logger } from "../../../lib/util/logger";
 import createMockInstance from "jest-create-mock-instance";
@@ -17,7 +17,7 @@ describe("DataService", () => {
     });
 
     it("should load sessions correctly when json is valid", () => {
-        config.sessions = `${appRoot}/src/tests/resources/data/valid-sessions.json`;
+        ServiceConfig.sessions = `${appRoot}/src/tests/resources/data/valid-sessions.json`;
         const sessions = dataService.loadSessionData();
 
         const expectedSessionOne = new SessionData("bd34", "Service", ["0ag8"]);
@@ -28,7 +28,7 @@ describe("DataService", () => {
     });
 
     it("should throw when json is invalid", () => {
-        config.sessions = `${appRoot}/src/tests/resources/data/invalid-sessions.json`;
+        ServiceConfig.sessions = `${appRoot}/src/tests/resources/data/invalid-sessions.json`;
         expect(dataService.loadSessionData).toThrow();
     });
 });

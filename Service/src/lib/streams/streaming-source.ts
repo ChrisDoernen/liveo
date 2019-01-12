@@ -6,7 +6,7 @@ import { DeviceState } from "../devices/device-state";
 import { ChildProcess } from "child_process";
 import { WebsocketServer } from "../core/websocket-server";
 import { Stream } from "./stream";
-import { ffmpeg } from "../../config/ffmpeg";
+import { FfmpegConfig } from "../../config/ffmpeg.config";
 
 /**
  * Class responsible for opening a child process and passing the data to the websocket server
@@ -27,8 +27,8 @@ export class StreamingSource {
     }
 
     private parseFfmpegConfig(): void {
-        this._command = ffmpeg.command;
-        ffmpeg.arguments.forEach((argument: string) => {
+        this._command = FfmpegConfig.command;
+        FfmpegConfig.arguments.forEach((argument: string) => {
             this._arguments.push(argument.replace("__deviceId__", this._device.id));
         });
     }

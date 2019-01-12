@@ -1,5 +1,5 @@
 import { SessionData } from "../sessions/session-data";
-import { config } from "../../config/service";
+import { ServiceConfig } from "../../config/service.config";
 import { Logger } from "../util/logger";
 import { injectable, inject } from "inversify";
 import * as fs from "fs";
@@ -15,7 +15,7 @@ export class DataService {
 
     public loadSessionData(): SessionData[] {
         try {
-            return JSON.parse(this.readFileSync(config.sessions));
+            return JSON.parse(this.readFileSync(ServiceConfig.sessions));
         } catch (error) {
             this._logger.error(`Could not load session data from file system: ${error}.`);
         }
@@ -23,7 +23,7 @@ export class DataService {
 
     public loadStreamData(): StreamData[] {
         try {
-            return JSON.parse(this.readFileSync(config.streams));
+            return JSON.parse(this.readFileSync(ServiceConfig.streams));
         } catch (error) {
             this._logger.error(`Could not load stream data from file system: ${error}.`);
         }

@@ -1,4 +1,4 @@
-import * as winstonLogger from "../../config/logging";
+import * as winstonLogger from "../../config/logging.config";
 import { injectable } from "inversify";
 
 /**
