@@ -9,8 +9,7 @@ import { Shutdown } from "./shutdown";
 @injectable()
 export abstract class ShutdownService {
 
-    private _shutdown: Shutdown;
-
+    private _shutdown: Shutdown = null;
     private _shutdownJobId: string = "SHUTDOWN_JOB";
 
     constructor(@inject("Logger") protected logger: Logger,
