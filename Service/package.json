@@ -10,7 +10,7 @@
     "buildProd": "tsc --sourceMap false",
     "test": "jest",
     "testWatch": "jest --watch",
-    "start": "npm run build && node dist/app.js",
+    "start": "npm run build && node -r dotenv/config dist/app.js",
     "startWatch": "nodemon './dist/service.js' --watch './dist'"
   },
   "dependencies": {
@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "@types/jest": "^23.3.9",
+    "dotenv": "^6.2.0",
     "jest": "^23.6.0",
     "jest-create-mock-instance": "^1.1.0",
     "ts-jest": "^23.10.5"

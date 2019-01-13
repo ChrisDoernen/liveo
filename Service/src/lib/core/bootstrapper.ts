@@ -20,7 +20,7 @@ export class Bootstrapper {
 
     public startServer(): void {
         this._logger.info("Starting Live server...");
-        this._logger.debug(`Environment: ${ServiceConfig.environment}.`);
+        this._logger.debug(`Development: ${ServiceConfig.development}.`);
         this._logger.debug(`OS: ${ServiceConfig.os}.`);
         this._logger.debug(`Architecture: ${ServiceConfig.arch}.`);
 

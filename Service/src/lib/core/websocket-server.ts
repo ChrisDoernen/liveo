@@ -20,7 +20,7 @@ export class WebsocketServer {
     public initializeAndListen(server: any): void {
         const websocketServer = socketio(server);
 
-        if (ServiceConfig.environment === "Development") {
+        if (ServiceConfig.development) {
             websocketServer.origins("*:*");
             this._logger.debug("Setting CORS header for websocket server.");
         }

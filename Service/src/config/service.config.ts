@@ -2,7 +2,7 @@ import * as appRoot from "app-root-path";
 
 export const ServiceConfig = {
     port: process.env.PORT || 3000,
-    environment: process.env.ENVIRONMENT || "Development",
+    development: process.env.DEVELOPMENT || true,
     os: process.platform,
     arch: process.arch,
     sessions: `${appRoot}/dist/data/sessions.json`,
