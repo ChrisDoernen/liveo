@@ -1,7 +1,8 @@
 {
   "name": "live-service",
   "version": "1.0.0",
-  "description": "",
+  "description": "A service for live streaming",
+  "private": true,
   "scripts": {
     "clean": "rimraf dist",
     "copyData": "mkdir -p dist/data && cp -r -f src/data/* dist/data",
