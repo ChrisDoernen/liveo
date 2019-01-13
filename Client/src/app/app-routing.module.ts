@@ -6,9 +6,9 @@ import { StreamComponent } from "./components/stream/stream.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "/welcome", pathMatch: "full" },
-  { path: "session", component: SessionComponent },
+  { path: "session", component: SessionComponent, data: { animation: "SessionPage" } },
   { path: "streams/:id", component: StreamComponent },
-  { path: "welcome", component: WelcomeComponent }
+  { path: "welcome", component: WelcomeComponent, data: { animation: "WelcomePage" } }
 ];
 
 @NgModule({
