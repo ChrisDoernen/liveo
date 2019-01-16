@@ -74,6 +74,10 @@ export class SessionService {
         return this.findSession(id);
     }
 
+    public getSessionEntity(id: string): SessionEntity {
+        return this.findSession(id).entity;
+    }
+
     public getSessionData(id: string): SessionData {
         return this.findSession(id).data;
     }
