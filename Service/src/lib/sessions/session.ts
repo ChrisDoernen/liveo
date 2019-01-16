@@ -12,25 +12,19 @@ export class Session {
     private _isStarted: boolean = false;
     private _timeStarted: number = null;
     private _timeEnded: number = null;
-    private _timeStarting: number = null;
-    private _timeEnding: number = null;
 
     public get data(): SessionData {
         return this._sessionData;
     }
 
     public get entity(): SessionEntity {
-        const streamEntities = this._streams.map((stream) => stream.entity);
-
         return new SessionEntity(
             this._sessionData.id,
             this._sessionData.title,
             null,
             this._timeStarted,
             this._timeEnded,
-            this._timeStarting,
-            this._timeEnding,
-            streamEntities
+            this._streams.map((stream) => stream.id)
         );
     }
 
@@ -50,7 +44,6 @@ export class Session {
             this._streams.forEach((stream) => stream.start());
             this._timeStarted = Date.now();
             this._timeEnded = null;
-            this._timeStarting = null;
             this._isStarted = true;
         }
     }

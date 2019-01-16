@@ -4,7 +4,7 @@ import { NgModule } from "@angular/core";
 import { AppComponent } from "./app.component";
 import { HttpClientModule } from "@angular/common/http";
 import { SessionService } from "./services/session/session.service";
-import { SessionComponent } from "./components/session/session.component";
+import { HomeComponent } from "./components/home/home.component";
 import { StreamComponent } from "./components/stream/stream.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { EndpointService } from "./services/endpoint/endpoint.service";
@@ -16,7 +16,7 @@ import { StreamService } from "./services/stream/stream.service";
 @NgModule({
   declarations: [
     AppComponent,
-    SessionComponent,
+    HomeComponent,
     StreamComponent,
     HeaderComponent,
     WelcomeComponent

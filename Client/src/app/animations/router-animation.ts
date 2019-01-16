@@ -2,7 +2,7 @@ import { trigger, transition, style, query, animate } from "@angular/animations"
 
 export const routeAnimation =
     trigger("routeAnimations", [
-        transition("WelcomePage <=> SessionPage", [
+        transition("WelcomePage <=> HomePage", [
             style({ position: "relative" }),
             query(":enter, :leave", [
                 style({

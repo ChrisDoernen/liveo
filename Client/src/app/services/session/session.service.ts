@@ -13,11 +13,11 @@ export class SessionService {
 
   constructor(private _httpClient: HttpClient, private _endpointService: EndpointService) { }
 
-  public getSession(): Observable<Session> {
-    return this._httpClient.get(this._endpointService.getEndpoint("sessions/active"), { observe: "response", responseType: "json" })
-      .pipe(map((response: any) => {
-        return (response.status == 200) ? response.body as Session : null;
-      }));
+  public getSession(): Promise<Session> {
+    return this._httpClient
+      .get(this._endpointService.getEndpoint("sessions/active"), { observe: "response", responseType: "json" })
+      .pipe(map((response: any) => (response.status == 200) ? response.body as Session : null))
+      .toPromise();
   }
 
   public evaluateSessionState(session: Session): SessionState {

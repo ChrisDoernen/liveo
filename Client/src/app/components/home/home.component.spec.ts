@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from "@angular/core/testing";
-import { SessionComponent } from "./session.component";
+import { HomeComponent } from "./home.component";
 import { SessionService } from "src/app/services/session/session.service";
 import { HeaderComponent } from "../header/header.component";
 import { RouterModule } from "@angular/router";
@@ -12,9 +12,9 @@ import { of, throwError } from "rxjs";
 import { async as _async } from "rxjs/scheduler/async";
 import { SessionState } from "src/app/entities/session-state";
 
-describe("SessionComponent", () => {
-  let component: SessionComponent;
-  let fixture: ComponentFixture<SessionComponent>;
+describe("HomeComponent", () => {
+  let component: HomeComponent;
+  let fixture: ComponentFixture<HomeComponent>;
   let sessionService: jest.Mocked<SessionService>;
 
   beforeEach(() => {
@@ -23,7 +23,7 @@ describe("SessionComponent", () => {
     const inlineSVGService = jest.fn();
 
     TestBed.configureTestingModule({
-      declarations: [SessionComponent, HeaderComponent, InlineSVGDirective],
+      declarations: [HomeComponent, HeaderComponent, InlineSVGDirective],
       providers: [
         { provide: SessionService, useValue: sessionService },
         { provide: HttpClient, useValue: httpClient },
@@ -32,7 +32,7 @@ describe("SessionComponent", () => {
       imports: [RouterModule]
     });
 
-    fixture = TestBed.createComponent(SessionComponent);
+    fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
   });
 

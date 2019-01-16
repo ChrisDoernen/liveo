@@ -1,10 +1,10 @@
 /**
- * An activation contains a session and eventually some info about the scheduling
+ * Activation entity
  */
 export class Activation {
 
     /**
-     * Constructs an activation
+     * A activation
      *
      * @param sessionId The id of the session to activate
      * @param timeStarting The time the session start shall be scheduled
