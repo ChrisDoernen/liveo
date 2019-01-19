@@ -8,7 +8,7 @@
     "copyData": "mkdir -p dist/data && cp -r -f src/data/* dist/data",
     "build": "tsc && npm run copyData",
     "buildWatch": "tsc --watch",
-    "buildProd": "tsc --sourceMap false",
+    "buildProd": "tsc --sourceMap false && npm run copyData",
     "test": "jest",
     "testWatch": "jest --watch",
     "start": "npm run build && node -r dotenv/config dist/app.js",
