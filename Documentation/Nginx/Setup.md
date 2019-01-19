@@ -29,6 +29,6 @@ Create symlinks
 ln -s /etc/nginx/sites-available/live-service-nginx.conf /etc/nginx/sites-enabled/live-service-nginx.conf
 ```
 
-Configuration for live service: [live-service-nginx.conf](./live-server-nginx.conf).
+Configuration for live service: [live-service-nginx.conf](./live-service-nginx.conf).
 
 Configuration for live client: [live-client-nginx.conf](./live-client-nginx.conf).
