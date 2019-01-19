@@ -29,6 +29,8 @@ export class WebServer {
             if (ServiceConfig.development) {
                 this._logger.debug("Setting CORS header for web server.");
                 app.use(cors());
+            } else {
+                app.enable("trust proxy");
             }
         });
 
