@@ -10,25 +10,24 @@ The idea is to use nginx on linux as the web server for client and backend and a
 
 The configuration can be split up into multiple configs per application which then can easily enabled or disabled by adding or removing symlinks.
 
-Create the directories
+Create the directories for http and rtmp server configs:
 
 ```
-mkdir /etc/nginx/sites-available
-mkdir /etc/nginx/sites-available
+mkdir /etc/nginx/sites-available/http
+mkdir /etc/nginx/sites-available/http
+mkdir /etc/nginx/sites-available/rtmp
+mkdir /etc/nginx/sites-available/rtmp
 ```
 
-Inklude the follwing line in the nginx config
+Include the follwing line in the respective sections in nginx.conf:
 
 ```
-include /etc/nginx/sites-enabled/*;
+include /etc/nginx/sites-enabled/http/*;
+include /etc/nginx/sites-enabled/rtmp/*;
 ```
 
-Create symlinks
+Create symlinks (example):
 
 ```
-ln -s /etc/nginx/sites-available/live-service-nginx.conf /etc/nginx/sites-enabled/live-service-nginx.conf
+ln -s /etc/nginx/sites-available/http/live-service.conf /etc/nginx/sites-enabled/http/live-service.conf
 ```
-
-Configuration for live service: [live-service-nginx.conf](./live-service-nginx.conf).
-
-Configuration for live client: [live-client-nginx.conf](./live-client-nginx.conf).
