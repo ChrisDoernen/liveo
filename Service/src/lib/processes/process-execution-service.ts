@@ -8,9 +8,9 @@ import { exec, ExecException, spawn, ChildProcess } from "child_process";
 export class ProcessExecutionService {
 
     /**
-     * Executes a command and returnes output as string
+     * Executes a command
      * @param command The command to execute
-     * @param callback A callback to be called on error, stout and stderr events
+     * @param callback A callback caled after execution completes with the respective output
      */
     public execute(command: string,
         callback?: (error: ExecException, stdout: string, stderr: string) => void): void {

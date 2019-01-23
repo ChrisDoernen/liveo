@@ -31,6 +31,7 @@ export class StreamingSource {
         FfmpegConfig.arguments.forEach((argument: string) => {
             this._arguments.push(argument.replace("__deviceId__", this._device.id));
         });
+        this._logger.debug(`Parsed command: ${this._command}.`);
     }
 
     public get hasValidDevice(): boolean {
@@ -43,6 +44,7 @@ export class StreamingSource {
         this._childProcess.on("error", (error) => this._logger.error(`Error spawning child process: ${error}.`));
         this._logger.debug(`Started child process from device ${this._device.id} and PID ${this._childProcess.pid}.`);
         this._childProcess.stdout.on("data", (data) => this._websocketService.emit(this._stream.id, data));
+        this._childProcess.stderr.on("data", (data) => this._logger.info(`Data on stderr: ${data}.`));
         this._childProcess.on("close", (code) => this._logger.info(`Child process exited with code ${code}.`));
     }
 
