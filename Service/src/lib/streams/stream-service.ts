@@ -1,4 +1,4 @@
-import { Logger } from "../util/logger";
+import { Logger } from "../logging/logger";
 import { injectable, inject } from "inversify";
 import { StreamData } from "./stream-data";
 import { DataService } from "../data/data-service";

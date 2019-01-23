@@ -1,4 +1,4 @@
-import { Logger } from "../util/logger";
+import { Logger } from "../logging/logger";
 import { ProcessExecutionService } from "../processes/process-execution-service";
 import { injectable, inject } from "inversify";
 import { Device } from "../devices/device";
@@ -19,7 +19,7 @@ export class StreamingSource {
     private _arguments: string[] = [];
 
     constructor(@inject("Logger") private _logger: Logger,
-        @inject("WebsocketService") private _websocketService: WebsocketServer,
+        @inject("WebsocketService") private _websocketServer: WebsocketServer,
         @inject("ProcessExecutionService") private _processExecutionService: ProcessExecutionService,
         private _device: Device,
         private _stream: Stream) {
@@ -28,10 +28,8 @@ export class StreamingSource {
 
     private parseFfmpegConfig(): void {
         this._command = FfmpegConfig.command;
-        FfmpegConfig.arguments.forEach((argument: string) => {
-            this._arguments.push(argument.replace("__deviceId__", this._device.id));
-        });
-        this._logger.debug(`Parsed command: ${this._command}.`);
+        this._arguments = FfmpegConfig.arguments.map((argument: string) => argument.replace("__deviceId__", this._device.id));
+        this._logger.debug(`Parsed command: ${this._command} ${this._arguments.join(" ")}.`);
     }
 
     public get hasValidDevice(): boolean {
@@ -39,11 +37,11 @@ export class StreamingSource {
     }
 
     public startStreaming(): void {
-        this._websocketService.addStream(this._stream.id);
+        this._websocketServer.addStream(this._stream.id);
         this._childProcess = this._processExecutionService.spawn(this._command, this._arguments);
         this._childProcess.on("error", (error) => this._logger.error(`Error spawning child process: ${error}.`));
         this._logger.debug(`Started child process from device ${this._device.id} and PID ${this._childProcess.pid}.`);
-        this._childProcess.stdout.on("data", (data) => this._websocketService.emit(this._stream.id, data));
+        this._childProcess.stdout.on("data", (data) => this._websocketServer.emit(this._stream.id, data));
         this._childProcess.stderr.on("data", (data) => this._logger.info(`Data on stderr: ${data}.`));
         this._childProcess.on("close", (code) => this._logger.info(`Child process exited with code ${code}.`));
     }
@@ -51,6 +49,6 @@ export class StreamingSource {
     public stopStreaming(): void {
         this._childProcess.kill();
         this._logger.debug(`Killing child process with id ${this._childProcess.pid}.`);
-        this._websocketService.removeStream(this._stream.id);
+        this._websocketServer.removeStream(this._stream.id);
     }
 }

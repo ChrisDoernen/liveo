@@ -1,7 +1,7 @@
 import { LinuxShutdownService } from "../lib/shutdown/linux-shutdown-service";
 import { ShutdownSimulationService } from "../lib/shutdown/shutdown-simulation-service";
 import { Container, interfaces } from "inversify";
-import { Logger } from "../lib/util/logger";
+import { Logger } from "../lib/logging/logger";
 import { ServiceConfig } from "./service.config";
 import { ProcessExecutionService } from "../lib/processes/process-execution-service";
 import { IDeviceDetector } from "../lib/devices/i-device-detector";
@@ -23,6 +23,7 @@ import { WebServer } from "../lib/core/web-server";
 import { ActivationService } from "../lib/activation/activation-service";
 import { Scheduler } from "../lib/scheduling/scheduler";
 import { ShutdownService } from "../lib/shutdown/shutdown-service";
+import { ServiceLogger, FfmpegLogger } from "./logging.config";
 
 export const container = new Container();
 
@@ -45,7 +46,8 @@ container.bind<interfaces.Factory<Device>>("DeviceFactory").toFactory(DeviceFact
 container.bind<interfaces.Factory<Stream>>("StreamFactory").toFactory(StreamFactory);
 container.bind<interfaces.Factory<Session>>("SessionFactory").toFactory(SessionFactory);
 
-container.bind<Logger>("Logger").to(Logger);
+container.bind<Logger>("Logger").toConstantValue(new Logger(ServiceLogger));
+container.bind<Logger>("FfmpegLogger").toConstantValue(new Logger(FfmpegLogger));
 container.bind<Bootstrapper>("Bootstrapper").to(Bootstrapper);
 container.bind<DataService>("DataService").to(DataService);
 container.bind<StreamService>("StreamService").to(StreamService).inSingletonScope();

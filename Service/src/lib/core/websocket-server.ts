@@ -1,4 +1,4 @@
-import { Logger } from "../util/logger";
+import { Logger } from "../logging/logger";
 import { injectable, inject } from "inversify";
 import { ServiceConfig } from "../../config/service.config";
 import * as socketio from "socket.io";
@@ -75,6 +75,5 @@ export class WebsocketServer {
 
     public emit(id: string, data: Buffer): void {
         this._websocketServer.to(id).emit(id, data);
-        this._logger.debug(`emit ${data.length}`);
     }
 }

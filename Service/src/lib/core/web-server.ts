@@ -1,6 +1,6 @@
 import { container } from "../../config/container";
 import { InversifyExpressServer } from "inversify-express-utils";
-import { Logger } from "../util/logger";
+import { Logger } from "../logging/logger";
 import { ServiceConfig } from "../../config/service.config";
 import { injectable, inject } from "inversify";
 import * as bodyParser from "body-parser";

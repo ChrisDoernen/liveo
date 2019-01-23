@@ -1,5 +1,5 @@
 import { inject, injectable } from "inversify";
-import { Logger } from "./../util/logger";
+import { Logger } from "../logging/logger";
 import { Scheduler } from "../scheduling/scheduler";
 import { Shutdown } from "./shutdown";
 

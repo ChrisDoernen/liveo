@@ -1,7 +1,7 @@
 import { IDeviceDetector } from "../devices/i-device-detector";
 import { StreamService } from "../streams/stream-service";
 import { SessionService } from "../sessions/session-service";
-import { Logger } from "../util/logger";
+import { Logger } from "../logging/logger";
 import { ServiceConfig } from "../../config/service.config";
 import { WebServer } from "./web-server";
 import { WebsocketServer } from "./websocket-server";

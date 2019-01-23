@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import createMockInstance from "jest-create-mock-instance";
-import { Logger } from "../../../lib/util/logger";
+import { Logger } from "../../../lib/logging/logger";
 import { ShutdownSimulationService } from "./../../../lib/shutdown/shutdown-simulation-service";
 import { Scheduler } from "../../../lib/scheduling/scheduler";
 import { ProcessExecutionService } from "../../../lib/processes/process-execution-service";

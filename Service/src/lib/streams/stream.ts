@@ -1,5 +1,5 @@
 import { StreamData } from "./stream-data";
-import { Logger } from "../util/logger";
+import { Logger } from "../logging/logger";
 import { StreamingSource } from "./streaming-source";
 import { inject } from "inversify";
 import { StreamEntity } from "./stream.entity";

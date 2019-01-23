@@ -1,4 +1,3 @@
-import * as winstonLogger from "../../config/logging.config";
 import { injectable } from "inversify";
 
 /**
@@ -6,19 +5,23 @@ import { injectable } from "inversify";
  */
 @injectable()
 export class Logger {
+
+    constructor(private _logger: any) {
+    }
+
     public debug(message: string): void {
-        winstonLogger.debug(message);
+        this._logger.debug(message);
     }
 
     public info(message: string): void {
-        winstonLogger.info(message);
+        this._logger.info(message);
     }
 
     public warn(message: string): void {
-        winstonLogger.warn(message);
+        this._logger.warn(message);
     }
 
     public error(message: string): void {
-        winstonLogger.error(message);
+        this._logger.error(message);
     }
 }

@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
 import { SessionService } from "../sessions/session-service";
 import { Activation } from "./activation";
-import { Logger } from "../util/logger";
+import { Logger } from "../logging/logger";
 import { Scheduler } from "../scheduling/scheduler";
 import { ShutdownService } from "../shutdown/shutdown-service";
 import { Shutdown } from "../shutdown/shutdown";

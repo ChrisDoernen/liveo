@@ -22,6 +22,7 @@ export const FfmpegConfig = {
         "mp3",
         "-fflags",
         "+nobuffer",
-        "-"
+        "-",
+        "-hide_banner"
     ]
 };

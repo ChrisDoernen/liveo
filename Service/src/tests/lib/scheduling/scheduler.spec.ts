@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { Scheduler } from "../../../lib/scheduling/scheduler";
 import { createMockInstance } from "jest-create-mock-instance";
-import { Logger } from "../../../lib/util/logger";
+import { Logger } from "../../../lib/logging/logger";
 
 describe("Scheduler", () => {
 

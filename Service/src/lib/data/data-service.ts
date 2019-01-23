@@ -1,6 +1,6 @@
 import { SessionData } from "../sessions/session-data";
 import { ServiceConfig } from "../../config/service.config";
-import { Logger } from "../util/logger";
+import { Logger } from "../logging/logger";
 import { injectable, inject } from "inversify";
 import * as fs from "fs";
 import { StreamData } from "../streams/stream-data";

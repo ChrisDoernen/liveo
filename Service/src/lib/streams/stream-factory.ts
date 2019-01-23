@@ -1,6 +1,6 @@
 import { interfaces } from "inversify";
 import { StreamData } from "./stream-data";
-import { Logger } from "../util/logger";
+import { Logger } from "../logging/logger";
 import { Stream } from "./stream";
 import { StreamingSource } from "./streaming-source";
 import { WebsocketServer } from "../core/websocket-server";
