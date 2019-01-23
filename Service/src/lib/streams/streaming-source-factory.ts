@@ -8,10 +8,11 @@ import { Stream } from "./stream";
 export const StreamingSourceFactory = (context: interfaces.Context) =>
     (deviceId: string, stream: Stream) => {
         const logger = context.container.get<Logger>("Logger");
+        const ffmpegLogger = context.container.get<Logger>("FfmpegLogger");
         const processExecutionService = context.container.get<ProcessExecutionService>("ProcessExecutionService");
         const websocketServer = context.container.get<WebsocketServer>("WebsocketServer");
         const deviceDetector = context.container.get<IDeviceDetector>("IDeviceDetector");
         const device = deviceDetector.getDevice(deviceId);
 
-        return new StreamingSource(logger, websocketServer, processExecutionService, device, stream);
+        return new StreamingSource(logger, ffmpegLogger, websocketServer, processExecutionService, device, stream);
     };

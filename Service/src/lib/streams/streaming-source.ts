@@ -19,6 +19,7 @@ export class StreamingSource {
     private _arguments: string[] = [];
 
     constructor(@inject("Logger") private _logger: Logger,
+        @inject("FfmpegLogger") private _ffmpegLogger: Logger,
         @inject("WebsocketService") private _websocketServer: WebsocketServer,
         @inject("ProcessExecutionService") private _processExecutionService: ProcessExecutionService,
         private _device: Device,
@@ -42,7 +43,7 @@ export class StreamingSource {
         this._childProcess.on("error", (error) => this._logger.error(`Error spawning child process: ${error}.`));
         this._logger.debug(`Started child process from device ${this._device.id} and PID ${this._childProcess.pid}.`);
         this._childProcess.stdout.on("data", (data) => this._websocketServer.emit(this._stream.id, data));
-        this._childProcess.stderr.on("data", (data) => this._logger.info(`Data on stderr: ${data}.`));
+        this._childProcess.stderr.on("data", (data) => this._ffmpegLogger.info(`${data}`));
         this._childProcess.on("close", (code) => this._logger.info(`Child process exited with code ${code}.`));
     }
 
