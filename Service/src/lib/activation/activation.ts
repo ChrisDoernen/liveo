@@ -1,5 +1,5 @@
 /**
- * An activation contains a session and eventually some info about the scheduling
+ * An activation contains a session and informations about the scheduling
  */
 export class Activation {
 
@@ -12,8 +12,8 @@ export class Activation {
      * @param timeServerShutdown The time an automatic server shutdown shall be executed
      */
     constructor(public sessionId: string,
-        public timeStarting: number,
-        public timeEnding: number,
-        public timeServerShutdown: number) {
+        public timeStarting?: number,
+        public timeEnding?: number,
+        public timeServerShutdown?: number) {
     }
 }

@@ -10,7 +10,6 @@ import { Shutdown } from "../shutdown/shutdown";
 export class ActivationService {
 
     private _activation: Activation;
-
     private _sessionStartJobId: string = "SESSION_START_JOB";
     private _sessionStopJobId: string = "SESSION_STOP_JOB";
 
@@ -21,7 +20,7 @@ export class ActivationService {
     }
 
     public setActivation(activation: Activation): void {
-        this._logger.info(`Received new activation${JSON.stringify(activation)}.`);
+        this._logger.info(`Received new activation: ${JSON.stringify(activation)}.`);
 
         if (this._activation) {
             throw new Error("Can not set new activation before deleting the current.");
@@ -46,19 +45,20 @@ export class ActivationService {
         }
 
         this._activation = activation;
+        this._logger.debug("Activation set");
     }
 
     private validateActivation(activation: Activation): void {
         if (!activation.sessionId) {
-            throw new Error("Session id in activation is null.");
+            throw new Error("Activation validation error: Session id is null.");
         }
 
         if (activation.timeEnding < activation.timeStarting) {
-            throw new Error("Time ending is lower than time starting in activation.");
+            throw new Error("Activation validation error: Time ending is lower than time starting.");
         }
 
         if (activation.timeServerShutdown < activation.timeEnding) {
-            throw new Error("Time server shutdown is lower than time ending in activation.");
+            throw new Error("Activation validation error: Time server shutdown is lower than time ending.");
         }
     }
 
