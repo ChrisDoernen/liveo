@@ -7,18 +7,19 @@ import { InlineSVGDirective } from "ng-inline-svg";
 import { HttpClient } from "@angular/common/http";
 import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
 import createMockInstance from "jest-create-mock-instance";
-import { Session } from "src/app/entities/session.entity";
-import { of, throwError } from "rxjs";
 import { async as _async } from "rxjs/scheduler/async";
-import { SessionState } from "src/app/entities/session-state";
+import { ActivationService } from "src/app/services/activation/activation.service";
+import { Activation } from "src/app/entities/activation.entity";
 
 describe("HomeComponent", () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
   let sessionService: jest.Mocked<SessionService>;
+  let activationService: jest.Mocked<ActivationService>;
 
   beforeEach(() => {
     sessionService = createMockInstance(SessionService);
+    activationService = createMockInstance(ActivationService);
     const httpClient = jest.fn();
     const inlineSVGService = jest.fn();
 
@@ -26,6 +27,7 @@ describe("HomeComponent", () => {
       declarations: [HomeComponent, HeaderComponent, InlineSVGDirective],
       providers: [
         { provide: SessionService, useValue: sessionService },
+        { provide: ActivationService, useValue: activationService },
         { provide: HttpClient, useValue: httpClient },
         { provide: InlineSVGService, useValue: inlineSVGService }
       ],
@@ -40,36 +42,13 @@ describe("HomeComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  it("should behave correctly at connection error", fakeAsync(() => {
-    sessionService.getSession.mockReturnValue(throwError(new Error("Error."), _async));
-    expect(component.isLoading).toBe(true);
-    fixture.detectChanges();
-    expect(component.isLoading).toBe(true);
-    expect(component.session).toBeNull();
-    tick();
-    fixture.detectChanges();
-    expect(component.connectionError).toBe(true);
-    expect(component.isLoading).toBe(false);
-    expect(component.session).toBe(null);
-    expect(component.sessionState).toBe(null);
-  }));
+  it("should behave correctly at connection error at loading session", async () => {
+    activationService.getActivation.mockReturnValue(Promise.resolve(new Activation("bd34")));
+    // sessionService.getSession.mockReturnValue(Promise.reject("Error."));
 
-  it("should load session correctly when session is retrieved", fakeAsync(() => {
-    const session = new Session("6sj7", "English", "Some english stream", 1546875795, null, null, null, null);
-    sessionService.getSession.mockReturnValue(of(session, _async));
-    jest.spyOn(sessionService, "evaluateSessionState").mockReturnValue(SessionState.Started);
     expect(component.isLoading).toBe(true);
-    fixture.detectChanges();
-    expect(component.connectionError).toBe(false);
-    expect(component.isLoading).toBe(true);
-    expect(component.session).toBeNull();
-    expect(component.session).toBeNull();
-    tick();
-    fixture.detectChanges();
-    expect(sessionService.evaluateSessionState).toHaveBeenCalledTimes(1);
-    expect(component.connectionError).toBe(false);
+
+    await component.load();
     expect(component.isLoading).toBe(false);
-    expect(component.session).toBe(session);
-    expect(component.sessionState).toBe(SessionState.Started);
-  }));
+  });
 });

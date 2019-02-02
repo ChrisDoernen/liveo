@@ -11,7 +11,7 @@ export class ActivationService {
 
     constructor(private _httpClient: HttpClient, private _endpointService: EndpointService) { }
 
-    public getActivation(): Promise<Activation> {
+    public async getActivation(): Promise<Activation> {
         return this._httpClient.get(this._endpointService.getEndpoint("activation"), { observe: "response", responseType: "json" })
             .pipe(map((response: any) => (response.status == 200) ? response.body as Activation : null))
             .toPromise();

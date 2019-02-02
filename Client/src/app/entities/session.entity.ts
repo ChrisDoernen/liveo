@@ -19,8 +19,6 @@ export class Session {
         public description: string,
         public timeStarted: number,
         public timeEnded: number,
-        public timeStarting: number,
-        public timeEnding: number,
         public streams: string[]) {
         console.debug(`Instantiating session ${JSON.stringify(this)}.`);
     }

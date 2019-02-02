@@ -11,13 +11,13 @@
             </div>
         </ng-container>
         <ng-template #sessionRetrieved>
-            <div *ngIf="sessionState === SessionState.Scheduled">
+            <div *ngIf="activationState === ActivationState.ActivatedSessionScheduled">
                 Session {{session?.title}} is scheduled to start at {{session?.timeStarting}}. Stay tuned!
             </div>
-            <div *ngIf="sessionState === SessionState.Ended">
+            <div *ngIf="activationState === ActivationState.ActivatedSessionEnded">
                 Session ended. Thanks for joining us.
             </div>
-            <div *ngIf="sessionState === SessionState.Started">
+            <div *ngIf="activationState === ActivationState.ActivatedSessionStarted">
                 <div>{{session?.title}}</div>
                 <div *ngFor="let stream of session?.streams">
                     <a routerLink="/streams/{{stream.id}}">{{stream.title}}</a>
