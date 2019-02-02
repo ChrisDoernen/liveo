@@ -53,7 +53,7 @@ Create symlinks (example):
 ln -s /etc/nginx/sites-available/http/live-service.conf /etc/nginx/sites-enabled/http/live-service.conf
 ```
 
-# Api testing with Postman
+## Api testing with Postman
 
 [Postman](https://www.getpostman.com/) can be used for api testing. See the corresponding postmal collection.
 
