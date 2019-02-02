@@ -30,15 +30,13 @@ export class HomeComponent implements OnInit {
 
   public ngOnInit(): void {
     this.load().then(() => {
-      this.isLoading = false;
       console.log("Loading done.");
     }).catch((error) => {
       console.log(`Loading error: ${JSON.stringify(error)}.`);
-      this.isLoading = false;
     });
   }
 
-  public async load(): Promise<void> {
+  private async load(): Promise<void> {
     this.isLoading = true;
     this.activation = null;
     this.session = null;
@@ -47,23 +45,10 @@ export class HomeComponent implements OnInit {
     return new Promise<void>((resolve) => {
       this.loadActivation().then(() => {
         this.determineActivationState();
+        this.isLoading = false;
         resolve();
       });
     });
-  }
-
-  private determineActivationState(): void {
-    if (this.activation) {
-      if (this.activation.timeStarting > Date.now()) {
-        this.activationState = ActivationState.ActivatedSessionScheduled;
-      } else if (this.session.timeStarted < Date.now()) {
-        this.activationState = ActivationState.ActivatedSessionStarted;
-      } else if (this.session.timeEnded < Date.now()) {
-        this.activationState = ActivationState.ActivatedSessionEnded;
-      }
-    } else {
-      this.activationState = ActivationState.NoActivation;
-    }
   }
 
   private async loadActivation(): Promise<void> {
@@ -113,5 +98,19 @@ export class HomeComponent implements OnInit {
         resolve();
       });
     });
+  }
+
+  private determineActivationState(): void {
+    if (this.activation) {
+      if (this.activation.timeStarting > Date.now()) {
+        this.activationState = ActivationState.ActivatedSessionScheduled;
+      } else if (this.session.timeStarted < Date.now()) {
+        this.activationState = ActivationState.ActivatedSessionStarted;
+      } else if (this.session.timeEnded < Date.now()) {
+        this.activationState = ActivationState.ActivatedSessionEnded;
+      }
+    } else {
+      this.activationState = ActivationState.NoActivation;
+    }
   }
 }
