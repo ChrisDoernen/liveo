@@ -4,6 +4,8 @@ export const FfmpegConfig = {
         "-y",
         "-f",
         "alsa",
+        "-ac",
+        "1",
         "-i",
         "hw:__deviceId__",
         "-rtbufsize",
@@ -14,15 +16,13 @@ export const FfmpegConfig = {
         "libmp3lame",
         "-ab",
         "196k",
-        "-ac",
-        "1",
         "-reservoir",
         "0",
         "-f",
         "mp3",
         "-fflags",
         "+nobuffer",
-        "-",
-        "-hide_banner"
+        "-hide_banner",
+        "-"
     ]
 };
