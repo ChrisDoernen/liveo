@@ -33,6 +33,24 @@ describe("ActivationService", () => {
     expect(activationService.deleteActivation).toThrow();
   });
 
+  it("should throw on set activation with activation where end time is lower than start time", () => {
+    const activation = new Activation("b8s6", 2, 1);
+
+    expect(() => activationService.setActivation(activation)).toThrow();
+  });
+
+  it("should throw on set activation with activation where session id is null", () => {
+    const activation = new Activation(null);
+
+    expect(() => activationService.setActivation(activation)).toThrow();
+  });
+
+  it("should throw on set activation with activation where shutdown time is lower than end time", () => {
+    const activation = new Activation("b8s6", 2, 4, 3);
+
+    expect(() => activationService.setActivation(activation)).toThrow();
+  });
+
   it("should set and delete activation right when only session id is given", () => {
     const session = createMockInstance(Session);
     sessionService.getSession.mockReturnValue(session);
@@ -48,7 +66,7 @@ describe("ActivationService", () => {
     expect(activationService.getActivation()).toBe(null);
   });
 
-  it("should sst and delete activation right when session id and time starting are given", () => {
+  it("should set and delete activation right when session id and time starting are given", () => {
     const session = createMockInstance(Session);
     sessionService.getSession.mockReturnValue(session);
     const activation = new Activation("b8s6", 1578834025100);
