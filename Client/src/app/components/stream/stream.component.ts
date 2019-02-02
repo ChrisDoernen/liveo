@@ -24,7 +24,7 @@ export class StreamComponent implements OnInit {
   private getStream(): void {
     const id = this._route.snapshot.paramMap.get("id");
 
-    this._streamService.getStream(id).subscribe((stream) => {
+    this._streamService.getStream(id).then((stream) => {
       if (stream != null) {
         this.stream = stream;
       }

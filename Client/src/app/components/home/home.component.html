@@ -7,19 +7,20 @@
                 Please check your settings.
             </div>
             <div *ngIf="!connectionError">
-                There are no scheduled events right now. We're happy to see you later.
+                There is no session scheduled right now. We're happy to see you later.
             </div>
         </ng-container>
         <ng-template #sessionRetrieved>
             <div *ngIf="activationState === ActivationState.ActivatedSessionScheduled">
-                Session {{session?.title}} is scheduled to start at {{session?.timeStarting}}. Stay tuned!
+                Session {{session?.title}} is scheduled to start at {{activation?.timeStarting}}. Stay tuned!
             </div>
             <div *ngIf="activationState === ActivationState.ActivatedSessionEnded">
-                Session ended. Thanks for joining us.
+                The session has ended. Thanks for joining us.
             </div>
             <div *ngIf="activationState === ActivationState.ActivatedSessionStarted">
+                <div>Live now</div>
                 <div>{{session?.title}}</div>
-                <div *ngFor="let stream of session?.streams">
+                <div *ngFor="let stream of streams">
                     <a routerLink="/streams/{{stream.id}}">{{stream.title}}</a>
                 </div>
             </div>

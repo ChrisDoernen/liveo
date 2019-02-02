@@ -16,7 +16,7 @@ export class Scheduler {
     public schedule(id: string, date: Date, callback: () => void): void {
         this.checkId(id);
 
-        const job = scheduleJob(date, (fireDate) => {
+        const job = scheduleJob(id, date, (fireDate) => {
             this._logger.debug(`Running job. Scheduled time was: ${fireDate}.`);
             callback();
         });
@@ -25,9 +25,8 @@ export class Scheduler {
             this._jobs.push(job);
             this._logger.debug(`Scheduled job with id ${id} to be executed on ${date}.`);
         } else {
-            this._logger.warn("date is in past");
+            this._logger.warn("Can not schedule job: Date is in the past.");
         }
-
     }
 
     private checkId(id: string): any {
@@ -43,6 +42,10 @@ export class Scheduler {
             throw new Error(`Job with id ${id} was not found.`);
         }
 
+        const matchingJobIndex = this._jobs.indexOf(matchingJob);
+        this._jobs.splice(matchingJobIndex, 1);
+
         matchingJob.cancel();
+        this._logger.debug(`Canceled job with id ${id}.`);
     }
 }
