@@ -55,5 +55,5 @@ ln -s /etc/nginx/sites-available/http/live-service.conf /etc/nginx/sites-enabled
 
 # Api testing with Postman
 
-[Postman](https://www.getpostman.com/) can be used for api testing.
+[Postman](https://www.getpostman.com/) can be used for api testing. See the corresponding postmal collection.
 
