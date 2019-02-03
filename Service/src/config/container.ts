@@ -16,14 +16,15 @@ import { Device } from "../lib/devices/device";
 import { DeviceFactory } from "../lib/devices/device-factory";
 import { SessionFactory } from "../lib/sessions/session-factory";
 import { StreamFactory } from "../lib/streams/stream-factory";
-import { StreamingSource } from "../lib/streams/streaming-source";
-import { StreamingSourceFactory } from "../lib/streams/streaming-source-factory";
+import { StreamingSourceFactory } from "../lib/streaming-sources/streaming-source-factory";
 import { Bootstrapper } from "../lib/core/bootstrapper";
 import { WebServer } from "../lib/core/web-server";
 import { ActivationService } from "../lib/activation/activation-service";
 import { Scheduler } from "../lib/scheduling/scheduler";
 import { ShutdownService } from "../lib/shutdown/shutdown-service";
 import { ServiceLogger, FfmpegLogger } from "./logging.config";
+import { StreamingSimulationSourceFactory } from "../lib/streaming-sources/streaming-simulation-source-factory";
+import { IStreamingSource } from "../lib/streaming-sources/i-streaming-source";
 
 export const container = new Container();
 
@@ -41,7 +42,12 @@ if (ServiceConfig.development) {
     throw new Error("OS is unsupported.");
 }
 
-container.bind<interfaces.Factory<StreamingSource>>("StreamingSourceFactory").toFactory(StreamingSourceFactory);
+if (ServiceConfig.simulate) {
+    container.bind<interfaces.Factory<IStreamingSource>>("StreamingSourceFactory").toFactory(StreamingSimulationSourceFactory);
+} else {
+    container.bind<interfaces.Factory<IStreamingSource>>("StreamingSourceFactory").toFactory(StreamingSourceFactory);
+}
+
 container.bind<interfaces.Factory<Device>>("DeviceFactory").toFactory(DeviceFactory);
 container.bind<interfaces.Factory<Stream>>("StreamFactory").toFactory(StreamFactory);
 container.bind<interfaces.Factory<Session>>("SessionFactory").toFactory(SessionFactory);

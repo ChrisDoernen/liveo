@@ -1,8 +1,8 @@
 import { StreamData } from "./stream-data";
 import { Logger } from "../logging/logger";
-import { StreamingSource } from "./streaming-source";
 import { inject } from "inversify";
 import { StreamEntity } from "./stream.entity";
+import { IStreamingSource } from "../streaming-sources/i-streaming-source";
 
 /**
  * Class representing a live stream
@@ -28,14 +28,14 @@ export class Stream {
 
     private _isStarted: boolean;
 
-    private _source: StreamingSource;
+    private _source: IStreamingSource;
 
     public get hasValidDevice(): boolean {
         return this._source.hasValidDevice;
     }
 
     constructor(@inject("Logger") private _logger: Logger,
-        @inject("StreamingSourceFactory") streamingSourceFactory: (deviceId: string, stream: Stream) => StreamingSource,
+        @inject("StreamingSourceFactory") streamingSourceFactory: (deviceId: string, stream: Stream) => IStreamingSource,
         private _streamData: StreamData) {
         this._source = streamingSourceFactory(_streamData.deviceId, this);
 

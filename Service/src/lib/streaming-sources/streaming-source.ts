@@ -5,14 +5,15 @@ import { Device } from "../devices/device";
 import { DeviceState } from "../devices/device-state";
 import { ChildProcess } from "child_process";
 import { WebsocketServer } from "../core/websocket-server";
-import { Stream } from "./stream";
+import { Stream } from "../streams/stream";
 import { FfmpegConfig } from "../../config/ffmpeg.config";
+import { IStreamingSource } from "./i-streaming-source";
 
 /**
  * Class responsible for opening a child process and passing the data to the websocket server
  */
 @injectable()
-export class StreamingSource {
+export class StreamingSource implements IStreamingSource {
 
     private _childProcess: ChildProcess;
     private _command: string;

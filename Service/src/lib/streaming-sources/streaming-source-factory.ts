@@ -4,7 +4,8 @@ import { ProcessExecutionService } from "../processes/process-execution-service"
 import { StreamingSource } from "./streaming-source";
 import { IDeviceDetector } from "../devices/i-device-detector";
 import { WebsocketServer } from "../core/websocket-server";
-import { Stream } from "./stream";
+import { Stream } from "../streams/stream";
+
 export const StreamingSourceFactory = (context: interfaces.Context) =>
     (deviceId: string, stream: Stream) => {
         const logger = context.container.get<Logger>("Logger");
