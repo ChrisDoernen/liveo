@@ -51,8 +51,18 @@ describe("ActivationService", () => {
     expect(() => activationService.setActivation(activation)).toThrow();
   });
 
+  it("should throw on set activation with session without valid streams", () => {
+    const session = createMockInstance(Session);
+    Object.defineProperty(session, "hasValidStreams", { get: () => false });
+    sessionService.getSession.mockReturnValue(session);
+    const activation = new Activation("b8s6");
+
+    expect(() => activationService.setActivation(activation)).toThrow();
+  });
+
   it("should set and delete activation right when only session id is given", () => {
     const session = createMockInstance(Session);
+    Object.defineProperty(session, "hasValidStreams", { get: () => true });
     sessionService.getSession.mockReturnValue(session);
     const activation = new Activation("b8s6");
 
@@ -66,8 +76,11 @@ describe("ActivationService", () => {
     expect(activationService.getActivation()).toBe(null);
   });
 
-  it("should set and delete activation right when session id and time starting are given", () => {
+  it("should set and delete activation correctly when session id and time starting are given", () => {
     const session = createMockInstance(Session);
+    // session.allStreamsAreInvalid.mockReturnValue(false);
+    // jest.spyOn(session, "hasValidStreams", "get");
+    Object.defineProperty(session, "hasValidStreams", { get: () => true });
     sessionService.getSession.mockReturnValue(session);
     const activation = new Activation("b8s6", 1578834025100);
 

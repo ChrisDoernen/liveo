@@ -30,7 +30,7 @@ export class Stream {
 
     private _source: StreamingSource;
 
-    public get hasValidSource(): boolean {
+    public get hasValidDevice(): boolean {
         return this._source.hasValidDevice;
     }
 
@@ -47,7 +47,7 @@ export class Stream {
     }
 
     public start(): void {
-        if (this.hasValidSource) {
+        if (this.hasValidDevice) {
             if (!this._isStarted) {
                 this._source.startStreaming();
                 this._logger.info(`Started stream ${this._streamData.id}.`);

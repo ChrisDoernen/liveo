@@ -13,6 +13,16 @@ export class Session {
     private _timeStarted: number = null;
     private _timeEnded: number = null;
 
+    /**
+     * Indicates wether at least one stream of the session
+     * has a valid device and can be started.
+     */
+    private _hasValidStream: boolean = false;
+
+    public get hasValidStreams(): boolean {
+        return this._hasValidStream;
+    }
+
     public get data(): SessionData {
         return this._sessionData;
     }
@@ -36,11 +46,29 @@ export class Session {
         private _sessionData: SessionData,
         private _streams: Stream[]) {
         this._logger.debug(`Loaded session ${JSON.stringify(_sessionData)}.`);
+        this.checkStreamDevices();
+    }
+
+    private checkStreamDevices(): void {
+        this._hasValidStream = false;
+
+        for (const stream of this._streams) {
+            if (stream.hasValidDevice) {
+                this._hasValidStream = true;
+                return;
+            }
+        }
+
+        this._logger.warn(`All streams of session ${this.id} have invalid devices. Session can not be activated.`);
     }
 
     public start(): void {
         if (!this._isStarted) {
-            this._logger.info(`Starting session ${this._sessionData.id}.`);
+            if (!this._hasValidStream) {
+                throw new Error(`Cannot start session ${this.id}: All streams have invalid devices.`);
+            }
+
+            this._logger.info(`Starting session ${this.id}.`);
             this._streams.forEach((stream) => stream.start());
             this._timeStarted = Date.now();
             this._timeEnded = null;
@@ -50,7 +78,7 @@ export class Session {
 
     public stop(): void {
         if (this._isStarted) {
-            this._logger.info(`Stopping session ${this._sessionData.id}.`);
+            this._logger.info(`Stopping session ${this.id}.`);
             this._streams.forEach((stream) => stream.stop());
             this._timeEnded = Date.now();
             this._isStarted = false;

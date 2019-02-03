@@ -30,6 +30,10 @@ export class ActivationService {
 
         const session = this._sessionService.getSession(activation.sessionId);
 
+        if (!session.hasValidStreams) {
+            throw new Error(`Can not set activation: All streams of session ${session.id} have invalid devices.`);
+        }
+
         if (activation.timeStarting) {
             this._scheduler.schedule(this._sessionStartJobId, new Date(activation.timeStarting), session.start);
         } else {

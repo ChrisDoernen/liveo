@@ -28,8 +28,8 @@ describe("SessionService", () => {
         streamService = createMockInstance(StreamService);
         sessionFactory = jest.fn();
         sessionFactory
-            .mockReturnValueOnce(new Session(logger, sessions[0], null))
-            .mockReturnValueOnce(new Session(logger, sessions[1], null));
+            .mockReturnValueOnce(new Session(logger, sessions[0], []))
+            .mockReturnValueOnce(new Session(logger, sessions[1], []));
 
         sessionService = new SessionService(logger, dataService, streamService, sessionFactory);
     });
