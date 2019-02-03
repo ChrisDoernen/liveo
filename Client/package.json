@@ -2,7 +2,7 @@
   "name": "live-client",
   "version": "0.0.0",
   "scripts": {
-    "start": "ng serve --port 4200 --host 0.0.0.0 --disable-host-check",
+    "start": "ng serve --port 4200 --host 0.0.0.0",
     "build": "ng build",
     "buildProd": "ng build --prod --deploy-url /app/ --base-href /app/",
     "test": "jest",
