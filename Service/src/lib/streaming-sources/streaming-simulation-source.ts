@@ -25,11 +25,11 @@ export class StreamingSimulationSource implements IStreamingSource {
 
   public startStreaming(): void {
     this._websocketServer.addStream(this._stream.id);
-    this._logger.info("Simulating start of streaming.");
+    this._logger.warn("Simulating start of streaming.");
   }
 
   public stopStreaming(): void {
-    this._logger.info("Simulating start of streaming.");
+    this._logger.warn("Simulating end of streaming.");
     this._websocketServer.removeStream(this._stream.id);
   }
 }
