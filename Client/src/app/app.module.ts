@@ -5,7 +5,7 @@ import { AppComponent } from "./app.component";
 import { HttpClientModule } from "@angular/common/http";
 import { SessionService } from "./services/session/session.service";
 import { HomeComponent } from "./components/home/home.component";
-import { StreamComponent } from "./components/stream/stream.component";
+import { AudioPlayerComponent } from "./components/audio-player/audio-player.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { EndpointService } from "./services/endpoint/endpoint.service";
 import { InlineSVGModule } from "ng-inline-svg";
@@ -17,7 +17,7 @@ import { StreamService } from "./services/stream/stream.service";
   declarations: [
     AppComponent,
     HomeComponent,
-    StreamComponent,
+    AudioPlayerComponent,
     HeaderComponent,
     WelcomeComponent
   ],

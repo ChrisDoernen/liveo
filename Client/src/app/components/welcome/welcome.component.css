@@ -1,14 +1,14 @@
-.lc-welcome {
-    background-color: var(--main-color);
+.welcome {
+    background-color: var(--primary-color);
     height: 100vh;
     display: flex;
 }
 
-.lc-welcome__logo {
+.welcome__logo {
     width: 100px;
     margin: auto;
 }
 
-::ng-deep .lc-welcome__logo .live-logo {
+::ng-deep .welcome__logo .live-logo {
     fill: white;
 }

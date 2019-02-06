@@ -4,13 +4,13 @@ import { StreamService } from "src/app/services/stream/stream.service";
 import { ActivatedRoute } from "@angular/router";
 
 @Component({
-  selector: "stream",
-  templateUrl: "./stream.component.html",
-  styleUrls: ["./stream.component.css"]
+  selector: "audio-player",
+  templateUrl: "./audio-player.component.html",
+  styleUrls: ["./audio-player.component.css"]
 })
-export class StreamComponent implements OnInit {
+export class AudioPlayerComponent implements OnInit {
 
-  public stream: Stream;
+  public stream: Stream = null;
   private _isLoading: boolean;
   private _connectionError: boolean;
 
@@ -24,14 +24,13 @@ export class StreamComponent implements OnInit {
   private getStream(): void {
     const id = this._route.snapshot.paramMap.get("id");
 
-    this._streamService.getStream(id).then((stream) => {
-      if (stream != null) {
+    this._streamService.getStream(id)
+      .then((stream) => {
         this.stream = stream;
-      }
-      this._isLoading = false;
-    }, (error) => {
-      this._connectionError = true;
-      this._isLoading = false;
-    });
+        this._isLoading = false;
+      }).catch((error) => {
+        this._connectionError = true;
+        this._isLoading = false;
+      });
   }
 }

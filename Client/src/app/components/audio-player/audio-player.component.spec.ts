@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { StreamComponent } from "./stream.component";
+import { AudioPlayerComponent } from "./audio-player.component";
 import { StreamService } from "src/app/services/stream/stream.service";
 import { ActivatedRoute, convertToParamMap } from "@angular/router";
 import { HeaderComponent } from "../header/header.component";
@@ -8,8 +8,8 @@ import { HttpClient } from "@angular/common/http";
 import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
 
 describe("StreamComponent", () => {
-  let component: StreamComponent;
-  let fixture: ComponentFixture<StreamComponent>;
+  let component: AudioPlayerComponent;
+  let fixture: ComponentFixture<AudioPlayerComponent>;
 
   beforeEach(() => {
     const streamService = jest.fn();
@@ -24,7 +24,7 @@ describe("StreamComponent", () => {
     };
 
     TestBed.configureTestingModule({
-      declarations: [StreamComponent, HeaderComponent, InlineSVGDirective],
+      declarations: [AudioPlayerComponent, HeaderComponent, InlineSVGDirective],
       providers: [
         { provide: StreamService, useValue: streamService },
         { provide: ActivatedRoute, useValue: activatedRoute },
@@ -33,7 +33,7 @@ describe("StreamComponent", () => {
       ]
     });
 
-    fixture = TestBed.createComponent(StreamComponent);
+    fixture = TestBed.createComponent(AudioPlayerComponent);
     component = fixture.componentInstance;
   });
 

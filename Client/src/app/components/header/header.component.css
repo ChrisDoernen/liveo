@@ -1,14 +1,17 @@
-.lc-header {
+.header {
     position: absolute;
     width: 100vw;
 }
 
-::ng-deep .lc-header__logo .live-logo {
-    fill: var(--main-color);
-    width: 90px;
+::ng-deep .header__logo.primary .live-logo {
+    fill: var(--primary-color);
 }
 
-.lc-header__logo {
+::ng-deep .header__logo.white .live-logo {
+    fill: whitesmoke;
+}
+
+.header__logo {
     text-align: center;
     margin-top: 5px;
 }

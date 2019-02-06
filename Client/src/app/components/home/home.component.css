@@ -1,8 +1,8 @@
-.lc-container {
+.container {
   text-align: center;
 }
 
-.lc-container:before {
+.container:before {
   content: '';
   display: inline-block;
   height: 100vh;
@@ -10,7 +10,7 @@
   margin-right: -0.25em;
 }
 
-.lc-content {
+.content {
   display: inline-block;
   vertical-align: middle;
   width: 300px;
