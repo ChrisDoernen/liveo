@@ -23,6 +23,7 @@
     "@types/jest": "^23.3.9",
     "chownr": "^1.1.1",
     "core-js": "^2.5.4",
+    "font-awesome": "^4.7.0",
     "jest-create-mock-instance": "^1.1.0",
     "ng-inline-svg": "^8.1.0",
     "rxjs": "^6.3.3",
