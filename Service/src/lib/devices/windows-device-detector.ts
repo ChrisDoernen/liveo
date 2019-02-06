@@ -1,4 +1,4 @@
-import { ProcessExecutionService } from "../processes/process-execution-service";
+import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { IDeviceDetector } from "./i-device-detector";
 import { Logger } from "../logging/logger";
 import { injectable, inject } from "inversify";

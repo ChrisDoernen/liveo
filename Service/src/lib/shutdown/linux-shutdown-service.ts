@@ -1,6 +1,6 @@
 import { injectable, inject } from "inversify";
 import { Logger } from "../logging/logger";
-import { ProcessExecutionService } from "../processes/process-execution-service";
+import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { Scheduler } from "../scheduling/scheduler";
 import { ShutdownService } from "./shutdown-service";
 

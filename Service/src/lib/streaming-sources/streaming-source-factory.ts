@@ -1,6 +1,6 @@
 import { interfaces } from "inversify";
 import { Logger } from "../logging/logger";
-import { ProcessExecutionService } from "../processes/process-execution-service";
+import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { StreamingSource } from "./streaming-source";
 import { IDeviceDetector } from "../devices/i-device-detector";
 import { WebsocketServer } from "../core/websocket-server";

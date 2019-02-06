@@ -2,7 +2,7 @@ import { injectable, inject } from "inversify";
 import { Logger } from "../logging/logger";
 import { ShutdownService } from "./shutdown-service";
 import { Scheduler } from "../scheduling/scheduler";
-import { ProcessExecutionService } from "../processes/process-execution-service";
+import { ProcessExecutionService } from "../process-execution/process-execution-service";
 
 /**
  * Implementation for shutdown simulation

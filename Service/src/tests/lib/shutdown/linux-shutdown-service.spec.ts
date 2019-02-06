@@ -2,7 +2,7 @@ import "reflect-metadata";
 import createMockInstance from "jest-create-mock-instance";
 import { LinuxShutdownService } from "./../../../lib/shutdown/linux-shutdown-service";
 import { Logger } from "../../../lib/logging/logger";
-import { ProcessExecutionService } from "../../../lib/processes/process-execution-service";
+import { ProcessExecutionService } from "../../../lib/process-execution/process-execution-service";
 import { Scheduler } from "../../../lib/scheduling/scheduler";
 import { Shutdown } from "../../../lib/shutdown/shutdown";
 

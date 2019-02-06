@@ -3,7 +3,7 @@ import * as appRoot from "app-root-path";
 import * as fs from "fs";
 import createMockInstance from "jest-create-mock-instance";
 import { Logger } from "../../../lib/logging/logger";
-import { ProcessExecutionService } from "../../../lib/processes/process-execution-service";
+import { ProcessExecutionService } from "../../../lib/process-execution/process-execution-service";
 import { LinuxDeviceDetector } from "./../../../lib/devices/linux-device-detector";
 import { DeviceData } from "./../../../lib/devices/device-data";
 import { Device } from "./../../../lib/devices/device";

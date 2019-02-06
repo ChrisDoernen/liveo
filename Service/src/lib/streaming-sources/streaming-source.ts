@@ -1,5 +1,5 @@
 import { Logger } from "../logging/logger";
-import { ProcessExecutionService } from "../processes/process-execution-service";
+import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { injectable, inject } from "inversify";
 import { Device } from "../devices/device";
 import { DeviceState } from "../devices/device-state";
