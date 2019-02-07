@@ -14,3 +14,26 @@ body {
   color: #424242;
   font-smoothing: antialiased;
 }
+
+.container {
+  text-align: center;
+}
+
+.container:before {
+  content: '';
+  display: inline-block;
+  height: 100vh;
+  vertical-align: middle;
+  margin-right: -0.25em;
+}
+
+.content {
+  display: inline-block;
+  vertical-align: middle;
+  width: 300px;
+}
+
+.icon {
+  color: lightgray;
+  margin: 10px 0;
+}

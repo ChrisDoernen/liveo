@@ -64,6 +64,7 @@ export class HomeComponent implements OnInit {
         }
       }).catch((error) => {
         console.debug(`Error loading activation: ${JSON.stringify(error)}.`);
+        this.connectionError = true;
         resolve();
       });
     });
