@@ -1,3 +1,201 @@
+// Server settings
+var Formats;
+var ServerName;
+var SelectedMIME = "";
+var SelectedPORT = 0;
+
+// Module objects
+var PlayerControls;
+var AudioPlayer;
+var FormatReader;
+var SocketClient;
+
+// Check if page has lost focus (e.g. switching apps on mobile)
+var LastCheckTime;
+var FocusChecker = null;
+
+function StartFocusChecker() {
+  if (FocusChecker == null) {
+    LastCheckTime = Date.now();
+    FocusChecker = window.setInterval(CheckFocus, 2000);
+  }
+}
+
+function StopFocusChecker() {
+  if (FocusChecker != null) {
+    window.clearInterval(FocusChecker);
+    FocusChecker = null;
+  }
+}
+
+function CheckFocus() {
+  var CheckTime = Date.now();
+  // Check if focus was lost
+  if (CheckTime - LastCheckTime > 10000) {
+    // If so, drop all samples in the buffer
+    LogEvent("Focus lost, purging format reader.")
+    FormatReader.PurgeData();
+  }
+  LastCheckTime = CheckTime;
+}
+
+// Initialize modules
+function Initialize3lasPlayer(server, port, streamId) {
+  ServerName = server;
+  Formats = new Array(
+    // Mp3 is prefered
+    { "MIME": "audio/mpeg", "PORT": port }
+  );
+
+  LogEvent("Detected: " +
+    (OSName == "MacOSX" ? "Mac OSX" : (OSName == "Unknown" ? "Unknown OS" : OSName)) + ", " +
+    (BrowserName == "IE" ? "Internet Explorer" : (BrowserName == "NativeChrome" ? "Chrome legacy" : (BrowserName == "Unknown" ? "Unknown Browser" : BrowserName))));
+
+
+  if (typeof WebSocket === "undefined" && typeof webkitWebSocket === "undefined" && typeof mozWebSocket === "undefined") {
+    document.getElementById("socketsunsupported").style.display = "block";
+    return;
+  }
+
+  if (typeof AudioContext === "undefined" && typeof webkitAudioContext === "undefined" && typeof mozAudioContext === "undefined") {
+    document.getElementById("webaudiounsupported").style.display = "block";
+    return;
+  }
+
+  for (var i = 0; i < Formats.length; i++) {
+    var AudioTag = new Audio();
+    var answer = AudioTag.canPlayType(Formats[i]["MIME"]);
+    if (answer === "probably" || answer === "maybe") {
+      SelectedMIME = Formats[i]["MIME"];
+      SelectedPORT = Formats[i]["PORT"];
+      break;
+    }
+  }
+
+  if (SelectedMIME == "" || SelectedPORT == 0) {
+    document.getElementById("typesunsupported").style.display = "block";
+    return;
+  }
+
+  LogEvent("Using MIME: " + SelectedMIME + " on port: " + SelectedPORT);
+
+
+  if (isIOS && !isChrome) {
+    //document.getElementById("chromesuggestion").style.display = "block";
+
+    // For some reason this makes iOS run the stream in the background (with screen off)
+
+    iosSleepPreventInterval = setInterval(function () {
+      //window.location.href = "/new/page";
+      /*window.setTimeout(function () {
+        window.stop();
+      }, 0);*/
+    }, 30000);
+  }
+
+  document.getElementById("viewcontainer").style.display = "block";
+
+  try {
+    PlayerControls = new HTMLPlayerControls("playercontrols");
+    PlayerControls.OnPlayClick = OnControlsPlay;
+    PlayerControls.OnVolumeChange = OnControlsVolumeChange;
+    LogEvent("Init of HTMLPlayerControls succeeded");
+  }
+  catch (e) {
+    LogEvent("Init of HTMLPlayerControls failed: " + e);
+    return;
+  }
+
+  try {
+    AudioPlayer = new PCMAudioPlayer();
+    AudioPlayer.UnderrunCallback = OnPlayerUnderrun;
+    LogEvent("Init of PCMAudioPlayer succeeded");
+  }
+  catch (e) {
+    LogEvent("Init of PCMAudioPlayer failed: " + e);
+    return;
+  }
+
+  try {
+    FormatReader = CreateAudioFormatReader(SelectedMIME, OnReaderError, OnReaderDataReady);
+    LogEvent("Init of AudioFormatReader succeeded");
+  }
+  catch (e) {
+    LogEvent("Init of AudioFormatReader failed: " + e);
+    return;
+  }
+}
+
+
+// Callback function from audio player
+function OnPlayerUnderrun() {
+  LogEvent("Player error: Buffer underrun.");
+}
+
+// Callback function from player controls
+function OnControlsVolumeChange(value) {
+  AudioPlayer.SetVolume(value);
+}
+
+function OnControlsPlay() {
+  AudioPlayer.MobileUnmute();
+  try {
+    SocketClient = new WebSocketClient('ws://' + ServerName + ':' + SelectedPORT.toString(), streamId, OnSocketError, OnSocketConnect, OnSocketDataReady, OnSocketDisconnect);
+    LogEvent("Init of WebSocketClient succeeded");
+    LogEvent("Trying to connect to server.");
+  }
+  catch (e) {
+    LogEvent("Init of WebSocketClient failed: " + e);
+    return;
+  }
+}
+
+
+// Callback functions from format reader
+function OnReaderError() {
+  LogEvent("Reader error: Decoding failed.");
+}
+
+function OnReaderDataReady(data) {
+  while (FormatReader.SamplesAvailable()) {
+    AudioPlayer.PushBuffer(FormatReader.PopSamples());
+  }
+}
+
+// Callback function from socket connection
+function OnSocketError(error) {
+  LogEvent("Network error: " + error);
+}
+
+function OnSocketConnect() {
+  PlayerControls.SetPlaystate(true);
+  StartFocusChecker();
+  LogEvent("Established connection with server.");
+}
+
+function OnSocketDisconnect() {
+  PlayerControls.SetPlaystate(false);
+  StopFocusChecker();
+  while (PlayerControls.ToogleActivityLight());
+  LogEvent("Lost connection to server.");
+}
+
+var PacketModCounter = 0;
+function OnSocketDataReady(data) {
+  PacketModCounter++;
+
+  if (PacketModCounter > 100) {
+    PlayerControls.ToogleActivityLight();
+    PacketModCounter = 0;
+  }
+
+  FormatReader.PushData(data);
+}
+
+function hideChromeBanner() {
+  document.getElementById("chromesuggestion").style.display = "none";
+}
+
 /*
 	Audio-Player is part of 3LAS (Low Latency Live Audio Streaming)
 	https://github.com/JoJoBond/3LAS
@@ -517,7 +715,8 @@ function getOffsetSum(elem) {
 	https://github.com/JoJoBond/3LAS
 */
 
-function WebSocketClient(URI, ErrorCallback, ConnectCallback, DataReadyCallback, DisconnectCallback) {
+
+function WebSocketClient(URI, STREAMID, ErrorCallback, ConnectCallback, DataReadyCallback, DisconnectCallback) {
   // Check callback argument
   if (typeof ErrorCallback !== 'function')
     throw new Error('WebSocketClient: ErrorCallback must be specified');
@@ -537,21 +736,15 @@ function WebSocketClient(URI, ErrorCallback, ConnectCallback, DataReadyCallback,
   this._IsConnected = false;
 
   // Create socket, connect to URI
-  if (typeof WebSocket !== "undefined")
-    this._Socket = new WebSocket(URI);
-  else if (typeof webkitWebSocket !== "undefined")
-    this._Socket = new webkitWebSocket(URI);
-  else if (typeof mozWebSocket !== "undefined")
-    this._Socket = new mozWebSocket(URI);
-  else
-    throw new Error('WebSocketClient: Browser does not support "WebSocket".');
+  this._Socket = io(URI, { reconnectionAttempts: 3 });
 
-  this._Socket.addEventListener("open", this.__Socket_OnOpen.bind(this), false);
-  this._Socket.addEventListener("error", this.__Socket_OnError.bind(this), false);
-  this._Socket.addEventListener("close", this.__Socket_OnClose.bind(this), false);
-  this._Socket.addEventListener("message", this.__Socket_OnMessage.bind(this), false);
+  this._Socket.on("connect", this.__Socket_OnOpen.bind(this));
+  this._Socket.on("error", this.__Socket_OnError.bind(this));
+  this._Socket.on("subscription_error", this.__Socket_OnError.bind(this));
+  this._Socket.on("reconnect_failed", this.__Socket_OnClose.bind(this));
+  this._Socket.on(STREAMID, this.__Socket_OnMessage.bind(this));
 
-  this._Socket.binaryType = 'arraybuffer';
+  this._Socket.emit("subscribe", STREAMID);
 }
 
 
@@ -578,24 +771,23 @@ WebSocketClient.prototype.__Socket_OnError = function (event) {
 
 // Change connetion status once connected
 WebSocketClient.prototype.__Socket_OnOpen = function (event) {
-  if (this._Socket.readyState == 1) {
-    this._IsConnected = true;
-    this._ConnectCallback();
-  }
+  this._ConnectCallback();
+
 };
 
 // Change connetion status on disconnect
 WebSocketClient.prototype.__Socket_OnClose = function (event) {
-  if (this._IsConnected == true && (this._Socket.readyState == 2 || this._Socket.readyState == 3)) {
-    this._IsConnected = false;
-    this._DisconnectCallback();
-  }
+  // if (this._IsConnected == true && (this._Socket.readyState == 2 || this._Socket.readyState == 3)) {
+  //if (this._IsConnected == true ) {
+  //    this._IsConnected = false;
+  this._DisconnectCallback();
+  //}
 };
 
 // Handle incomping data
-WebSocketClient.prototype.__Socket_OnMessage = function (event) {
+WebSocketClient.prototype.__Socket_OnMessage = function (data) {
   // Trigger callback
-  this._DataReadyCallback(event.data);
+  this._DataReadyCallback(data);
 };
 
 /*
