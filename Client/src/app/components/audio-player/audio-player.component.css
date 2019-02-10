@@ -24,17 +24,17 @@
   margin: 10px 0;
 }
 
-.volume-control {
+#volume-control {
   display: grid;
   grid-template-columns: 20px auto 20px;
 }
 
-.volumebar {
+#volumebar {
   margin: 0 10px;
   position: relative;
 }
 
-.volume-total {
+#volume-total {
   position: absolute;
   top: 8px;
   width: 100%;
@@ -42,7 +42,7 @@
   background-color: white;
 }
 
-.volume-current {
+#volume-current {
   position: absolute;
   top: 7px;
   width: 50%;
@@ -50,7 +50,7 @@
   background-color: white;
 }
 
-.volume-handle {
+#volume-handle {
   position: absolute;
   left: 50%;
   background-color: white;

@@ -547,19 +547,19 @@ function HTMLPlayerControls(DivID) {
   this._VolumeDragging = false;
   this._isMuted = false;
 
-  this._VolumeContainer = document.querySelector("div#" + DivID + " > div.volumebar");
+  this._VolumeContainer = document.querySelector("volumebar");
   if (this._VolumeContainer == null)
     throw new Error('HTMLPlayerControls: Could not find volumebar via querySelector.');
 
-  this._VolumeKnob = document.querySelector("div#" + DivID + " > div.volumebar > div.volumeknob");
+  this._VolumeKnob = document.querySelector("volume-handle");
   if (this._VolumeKnob == null)
     throw new Error('HTMLPlayerControls: Could not find volumeknob via querySelector.');
 
-  this._VolumeBar = document.querySelector("div#" + DivID + " > div.volumebar > div.currentvolume");
+  this._VolumeBar = document.querySelector("volume-current");
   if (this._VolumeBar == null)
     throw new Error('HTMLPlayerControls: Could not find currentvolume via querySelector.');
 
-  this._MaximumVolume = document.querySelector("div#" + DivID + " > div.volumebar > div.totalvolume");
+  this._MaximumVolume = document.querySelector("volume-total");
   if (this._MaximumVolume == null)
     throw new Error('HTMLPlayerControls: Could not find totalvolume via querySelector.');
 
@@ -598,7 +598,7 @@ function HTMLPlayerControls(DivID) {
   if (this._ButtonOverlay == null)
     throw new Error('HTMLPlayerControls: Could not find playbuttonoverlay via querySelector.');
 
-  this._PlayButton = document.querySelector("div#" + DivID + " > div.playbuttonoverlay > div.playbutton");
+  this._PlayButton = document.querySelector("play-button");
   if (this._PlayButton == null)
     throw new Error('HTMLPlayerControls: Could not find playbutton via querySelector.');
 

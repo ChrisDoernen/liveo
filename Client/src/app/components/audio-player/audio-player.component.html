@@ -4,16 +4,16 @@
 <div class="container">
   <div class="content">
     <div class="title">{{stream?.title}}</div>
-    <div class="player">
+    <div id="playercontrols" class="player">
       <div class="player-controls">
-        <i class="fa fa-play fa-2x" aria-hidden="true"> </i>
+        <i id="play-button" class="fa fa-play fa-2x" aria-hidden="true"> </i>
       </div>
       <div class="volume-control">
         <i class="fa fa-volume-off" aria-hidden="true"> </i>
-        <div class="volumebar">
-          <div class="volume-total"></div>
-          <div class="volume-current"></div>
-          <div class="volume-handle"></div>
+        <div id="volumebar">
+          <div id="volume-total"></div>
+          <div id="volume-current"></div>
+          <div id="volume-handle"></div>
         </div>
         <i class="fa fa-volume-up" aria-hidden="true"> </i>
       </div>
