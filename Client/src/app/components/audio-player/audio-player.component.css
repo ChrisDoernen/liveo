@@ -1,9 +1,26 @@
+.navigation {
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  margin: var(--container-spacing);
+}
+
+.navigation a {
+  color: whitesmoke;
+  text-decoration: none;
+}
+
 .container {
   background-color: #1f1f1f;
   color: whitesmoke;
 }
 
+.title {
+  text-align: center;
+}
+
 .player-controls {
+  text-align: center;
   margin: 10px 0;
 }
 
