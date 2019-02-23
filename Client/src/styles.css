@@ -4,12 +4,13 @@
 
 html {
   font-size: 14px;
+  height: 100vh;
 }
 
 body {
   margin: 0px;
   padding: 0px;
-  overflow-x: hidden;
+  overflow: hidden;
   min-width: 320px;
   background: #FFFFFF;
   font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
@@ -19,12 +20,12 @@ body {
 }
 
 .container {
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--container-spacing);
+  padding: 0 var(--container-spacing);
 }
 
 .content {

@@ -1,3 +1,8 @@
+:host {
+  height: 100vh;
+  display: block;
+}
+
 .navigation {
   position: absolute;
   top: 0;
