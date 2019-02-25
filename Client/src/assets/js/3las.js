@@ -185,7 +185,7 @@ function OnControlsVolumeChange(value) {
 function OnControlsPlay() {
   AudioPlayer.MobileUnmute();
   try {
-    SocketClient = new WebSocketClient('ws://' + ServerName + ':' + SelectedPORT.toString(), streamId, OnSocketError, OnSocketConnect, OnSocketDataReady, OnSocketDisconnect);
+    SocketClient = new WebSocketClient('ws://' + ServerName + ':' + SelectedPORT.toString(), StreamId, OnSocketError, OnSocketConnect, OnSocketDataReady, OnSocketDisconnect);
     LogEvent("Init of WebSocketClient succeeded");
     LogEvent("Trying to connect to server.");
   } catch (e) {
@@ -636,14 +636,15 @@ HTMLPlayerControls.prototype.ToogleActivityLight = function () {
 
 HTMLPlayerControls.prototype.SetPlaystate = function (state) {
   if (state) {
-    this._VolumeContainer.style.visibility = "visible";
-    this._ButtonBar.style.visibility = "visible";
-    this._PlayButton.style.visibility = "hidden";
+    // this._VolumeContainer.style.visibility = "visible";
+    // this._ButtonBar.style.visibility = "visible";
+    // this._PlayButton.style.visibility = "hidden";
+    // this._PlayButton. = "visible";
   }
   else {
-    this._VolumeContainer.style.visibility = "hidden";
-    this._ButtonBar.style.visibility = "hidden";
-    this._PlayButton.style.visibility = "visible";
+    // this._VolumeContainer.style.visibility = "hidden";
+    // this._ButtonBar.style.visibility = "hidden";
+    // this._PlayButton.style.visibility = "visible";
   }
 };
 
