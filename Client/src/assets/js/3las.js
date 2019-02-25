@@ -53,8 +53,9 @@ else
 // Server settings
 var Formats;
 var ServerName;
-var SelectedMIME = "";
+var SelectedMIME = "audio/mpeg";
 var SelectedPORT = 0;
+var StreamId;
 
 // Module objects
 var PlayerControls;
@@ -94,10 +95,9 @@ function CheckFocus() {
 // Initialize modules
 function Initialize3lasPlayer(server, port, streamId) {
   ServerName = server;
-  Formats = new Array(
-    // Mp3 is prefered
-    { "MIME": "audio/mpeg", "PORT": port }
-  );
+  SelectedPORT = port;
+
+  StreamId = streamId;
 
   LogEvent("Detected: " +
     (OSName == "MacOSX" ? "Mac OSX" : (OSName == "Unknown" ? "Unknown OS" : OSName)) + ", " +
@@ -114,14 +114,10 @@ function Initialize3lasPlayer(server, port, streamId) {
     return;
   }
 
-  for (var i = 0; i < Formats.length; i++) {
-    var AudioTag = new Audio();
-    var answer = AudioTag.canPlayType(Formats[i]["MIME"]);
-    if (answer === "probably" || answer === "maybe") {
-      SelectedMIME = Formats[i]["MIME"];
-      SelectedPORT = Formats[i]["PORT"];
-      break;
-    }
+  var AudioTag = new Audio();
+  var answer = AudioTag.canPlayType(SelectedMIME);
+  if (!(answer === "probably" || answer === "maybe")) {
+    throw new Error("The browser does not supprt the mp3.");
   }
 
   if (SelectedMIME == "" || SelectedPORT == 0) {
@@ -145,15 +141,14 @@ function Initialize3lasPlayer(server, port, streamId) {
     }, 30000);
   }
 
-  document.getElementById("viewcontainer").style.display = "block";
+  // document.getElementById("viewcontainer").style.display = "block";
 
   try {
     PlayerControls = new HTMLPlayerControls("playercontrols");
     PlayerControls.OnPlayClick = OnControlsPlay;
     PlayerControls.OnVolumeChange = OnControlsVolumeChange;
     LogEvent("Init of HTMLPlayerControls succeeded");
-  }
-  catch (e) {
+  } catch (e) {
     LogEvent("Init of HTMLPlayerControls failed: " + e);
     return;
   }
@@ -162,8 +157,7 @@ function Initialize3lasPlayer(server, port, streamId) {
     AudioPlayer = new PCMAudioPlayer();
     AudioPlayer.UnderrunCallback = OnPlayerUnderrun;
     LogEvent("Init of PCMAudioPlayer succeeded");
-  }
-  catch (e) {
+  } catch (e) {
     LogEvent("Init of PCMAudioPlayer failed: " + e);
     return;
   }
@@ -171,8 +165,7 @@ function Initialize3lasPlayer(server, port, streamId) {
   try {
     FormatReader = CreateAudioFormatReader(SelectedMIME, OnReaderError, OnReaderDataReady);
     LogEvent("Init of AudioFormatReader succeeded");
-  }
-  catch (e) {
+  } catch (e) {
     LogEvent("Init of AudioFormatReader failed: " + e);
     return;
   }
@@ -195,8 +188,7 @@ function OnControlsPlay() {
     SocketClient = new WebSocketClient('ws://' + ServerName + ':' + SelectedPORT.toString(), streamId, OnSocketError, OnSocketConnect, OnSocketDataReady, OnSocketDisconnect);
     LogEvent("Init of WebSocketClient succeeded");
     LogEvent("Trying to connect to server.");
-  }
-  catch (e) {
+  } catch (e) {
     LogEvent("Init of WebSocketClient failed: " + e);
     return;
   }
@@ -508,7 +500,7 @@ function CanDecodeTypes(MIMETypes) {
 }
 
 
-function CreateAudioFormatReader(UserAgentInfo, MIME, ErrorCallback, DataReadyCallback) {
+function CreateAudioFormatReader(MIME, ErrorCallback, DataReadyCallback) {
   if (typeof MIME !== "string")
     throw new Error('CreateAudioFormatReader: Invalid MIME-Type, must be string');
 
@@ -521,7 +513,7 @@ function CreateAudioFormatReader(UserAgentInfo, MIME, ErrorCallback, DataReadyCa
       if (!CanDecodeTypes(new Array("audio/mpeg", "audio/MPA", "audio/mpa-robust")))
         throw new Error('CreateAudioFormatReader: Browser can not decode specified MIME-Type (' + MIME + ')');
 
-      return new AudioFormatReader_MPEG(UserAgentInfo, ErrorCallback, DataReadyCallback);
+      return new AudioFormatReader_MPEG(ErrorCallback, DataReadyCallback);
 
     // Unknown codec
     default:
@@ -547,19 +539,19 @@ function HTMLPlayerControls(DivID) {
   this._VolumeDragging = false;
   this._isMuted = false;
 
-  this._VolumeContainer = document.querySelector("volumebar");
+  this._VolumeContainer = document.querySelector("#volumebar");
   if (this._VolumeContainer == null)
     throw new Error('HTMLPlayerControls: Could not find volumebar via querySelector.');
 
-  this._VolumeKnob = document.querySelector("volume-handle");
+  this._VolumeKnob = document.querySelector("#volume-handle");
   if (this._VolumeKnob == null)
     throw new Error('HTMLPlayerControls: Could not find volumeknob via querySelector.');
 
-  this._VolumeBar = document.querySelector("volume-current");
+  this._VolumeBar = document.querySelector("#volume-current");
   if (this._VolumeBar == null)
     throw new Error('HTMLPlayerControls: Could not find currentvolume via querySelector.');
 
-  this._MaximumVolume = document.querySelector("volume-total");
+  this._MaximumVolume = document.querySelector("#volume-total");
   if (this._MaximumVolume == null)
     throw new Error('HTMLPlayerControls: Could not find totalvolume via querySelector.');
 
@@ -568,9 +560,9 @@ function HTMLPlayerControls(DivID) {
 
   this._VolumeStore = this._TotalBarSize;
 
-  this._VolumeKnob.style.left = this._TotalBarSize + "px";
+  // this._VolumeKnob.style.left = this._TotalBarSize + "px";
 
-  this._VolumeContainer.addEventListener("touchstart", this.__hInteractBegin.bind(this));
+  this._VolumeContainer.addEventListener("touchstart", this.__hInteractBegin.bind(this), { passive: true });
   this._VolumeContainer.addEventListener("mousedown", this.__hInteractBegin.bind(this));
 
   this._VolumeContainer.addEventListener("touchend", this.__hInteractEnd.bind(this));
@@ -579,46 +571,46 @@ function HTMLPlayerControls(DivID) {
   this._VolumeContainer.addEventListener("touchleave", this.__hInteractLeave.bind(this));
   this._VolumeContainer.addEventListener("mouseleave", this.__hInteractLeave.bind(this));
 
-  this._VolumeContainer.addEventListener("touchmove", this.__hInteractMove.bind(this));
+  this._VolumeContainer.addEventListener("touchmove", this.__hInteractMove.bind(this), { passive: true });
   this._VolumeContainer.addEventListener("mousemove", this.__hInteractMove.bind(this));
 
-  this._ButtonBar = document.querySelector("div#" + DivID + " > div.controlbar");
-  if (this._ButtonBar == null)
-    throw new Error('HTMLPlayerControls: Could not find controlbar via querySelector.');
+  // this._ButtonBar = document.querySelector("div#" + DivID + " > div.controlbar");
+  // if (this._ButtonBar == null)
+  //   throw new Error('HTMLPlayerControls: Could not find controlbar via querySelector.');
 
-  this._MuteButton = document.querySelector("div#" + DivID + " > div.controlbar > div.mutebutton");
-  if (this._MuteButton == null)
-    throw new Error('HTMLPlayerControls: Could not find mutebutton via querySelector.');
+  // this._MuteButton = document.querySelector("div#" + DivID + " > div.controlbar > div.mutebutton");
+  // if (this._MuteButton == null)
+  //   throw new Error('HTMLPlayerControls: Could not find mutebutton via querySelector.');
 
-  this._UnMuteButton = document.querySelector("div#" + DivID + " > div.controlbar > div.unmutebutton");
-  if (this._UnMuteButton == null)
-    throw new Error('HTMLPlayerControls: Could not find unmutebutton via querySelector.');
+  // this._UnMuteButton = document.querySelector("div#" + DivID + " > div.controlbar > div.unmutebutton");
+  // if (this._UnMuteButton == null)
+  //   throw new Error('HTMLPlayerControls: Could not find unmutebutton via querySelector.');
 
-  this._ButtonOverlay = document.querySelector("div#" + DivID + " > div.playbuttonoverlay");
-  if (this._ButtonOverlay == null)
-    throw new Error('HTMLPlayerControls: Could not find playbuttonoverlay via querySelector.');
+  // this._ButtonOverlay = document.querySelector("div#" + DivID + " > div.playbuttonoverlay");
+  // if (this._ButtonOverlay == null)
+  //   throw new Error('HTMLPlayerControls: Could not find playbuttonoverlay via querySelector.');
 
-  this._PlayButton = document.querySelector("play-button");
+  this._PlayButton = document.querySelector("#play-pause-button");
   if (this._PlayButton == null)
     throw new Error('HTMLPlayerControls: Could not find playbutton via querySelector.');
 
-  this._ActivityIndicator = document.querySelector("div#" + DivID + " > div.activityindicator");
-  if (this._ActivityIndicator == null)
-    throw new Error('HTMLPlayerControls: Could not find activityindicator via querySelector.');
+  // this._ActivityIndicator = document.querySelector("div#" + DivID + " > div.activityindicator");
+  // if (this._ActivityIndicator == null)
+  //   throw new Error('HTMLPlayerControls: Could not find activityindicator via querySelector.');
 
-  this._ActivityLightOn = document.querySelector("div#" + DivID + " > div.activityindicator > div.redlighton");
-  if (this._ActivityLightOn == null)
-    throw new Error('HTMLPlayerControls: Could not find redlighton via querySelector.');
+  // this._ActivityLightOn = document.querySelector("div#" + DivID + " > div.activityindicator > div.redlighton");
+  // if (this._ActivityLightOn == null)
+  //   throw new Error('HTMLPlayerControls: Could not find redlighton via querySelector.');
 
-  this._ActivityLightOff = document.querySelector("div#" + DivID + " > div.activityindicator > div.redlightoff");
-  if (this._ActivityLightOff == null)
-    throw new Error('HTMLPlayerControls: Could not find redlighton via querySelector.');
+  // this._ActivityLightOff = document.querySelector("div#" + DivID + " > div.activityindicator > div.redlightoff");
+  // if (this._ActivityLightOff == null)
+  //   throw new Error('HTMLPlayerControls: Could not find redlighton via querySelector.');
 
   this._ActivityStatus = false;
 
-  this._MuteButton.addEventListener("click", this.__Mute_Click.bind(this));
+  // this._MuteButton.addEventListener("click", this.__Mute_Click.bind(this));
 
-  this._UnMuteButton.addEventListener("click", this.__UnMute_Click.bind(this));
+  // this._UnMuteButton.addEventListener("click", this.__UnMute_Click.bind(this));
 
   this._PlayButton.addEventListener("click", this.__Play_Click.bind(this));
 }
@@ -670,8 +662,8 @@ HTMLPlayerControls.prototype._UpdateVolume = function (value) {
   else if (value < 0)
     value = 0;
 
+  console.debug(`Updating volume to ${value}.`);
   this._UpdateVolumeBar(value);
-
 
   if (this._isMuted) {
     this._isMuted = false;
@@ -696,7 +688,7 @@ HTMLPlayerControls.prototype.__hInteractBegin = function (e) {
     e.pageX = e.changedTouches[0].pageX;
   }
 
-  var mousex = e.pageX - getOffsetSum(this.VolumeContainer).left;
+  var mousex = e.pageX - this._VolumeContainer.offsetLeft;
 
   this._UpdateVolume(mousex - this._KnobRadius);
 };
@@ -848,16 +840,7 @@ WebSocketClient.prototype.__Socket_OnMessage = function (data) {
 */
 
 function LogEvent(info) {
-  var logwindow = document.getElementById("logwindow");
-  var line = document.createElement("p");
-  var datetime = new Date();
-  var linetext = "[" + (datetime.getHours() > 9 ? datetime.getHours() : "0" + datetime.getHours()) + ":" +
-    (datetime.getMinutes() > 9 ? datetime.getMinutes() : "0" + datetime.getMinutes()) + ":" +
-    (datetime.getSeconds() > 9 ? datetime.getSeconds() : "0" + datetime.getSeconds()) +
-    "] " + info;
-  line.innerHTML = linetext;
-
-  logwindow.appendChild(line);
+  console.log(info);
 }
 
 function ToggleLogWindow() {
@@ -875,7 +858,7 @@ function ToggleLogWindow() {
 	https://github.com/JoJoBond/3LAS
 */
 
-function AudioFormatReader_MPEG(UserAgentInfo, ErrorCallback, DataReadyCallback) {
+function AudioFormatReader_MPEG(ErrorCallback, DataReadyCallback) {
   AudioFormatReader.call(this, ErrorCallback, DataReadyCallback);
 
   // Dependencies:
@@ -916,21 +899,21 @@ function AudioFormatReader_MPEG(UserAgentInfo, ErrorCallback, DataReadyCallback)
   // Number of frames to decode together (keyword: byte-reservoir)
   // For live streaming this means that you can push the minimum number of frames
   // on connection to the client to reduce waiting time without effecting the latency.
-  if (UserAgentInfo.isAndroid && UserAgentInfo.isFirefox)
+  if (isAndroid && isFirefox)
     AudioFormatReader_MPEG.prototype._WindowSize = 50;
-  else if (UserAgentInfo.isAndroid && UserAgentInfo.isNativeChrome)
+  else if (isAndroid && isNativeChrome)
     AudioFormatReader_MPEG.prototype._WindowSize = 30;
-  else if (UserAgentInfo.isAndroid)
+  else if (isAndroid)
     AudioFormatReader_MPEG.prototype._WindowSize = 30;
   else
     AudioFormatReader_MPEG.prototype._WindowSize = 25;
 
   // Number of frames to use from one decoded window
-  if (UserAgentInfo.isAndroid && UserAgentInfo.isFirefox)
+  if (isAndroid && isFirefox)
     AudioFormatReader_MPEG.prototype._UseFrames = 40;
-  else if (UserAgentInfo.isAndroid && UserAgentInfo.isNativeChrome)
+  else if (isAndroid && isNativeChrome)
     AudioFormatReader_MPEG.prototype._UseFrames = 20;
-  else if (UserAgentInfo.isAndroid)
+  else if (isAndroid)
     AudioFormatReader_MPEG.prototype._UseFrames = 5;
   else
     AudioFormatReader_MPEG.prototype._UseFrames = 2;

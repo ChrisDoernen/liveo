@@ -28,9 +28,15 @@ export class AudioPlayerComponent implements OnInit {
       .then((stream) => {
         this.stream = stream;
         this._isLoading = false;
+        this.initialize3LasWithStream();
       }).catch((error) => {
         this._connectionError = true;
         this._isLoading = false;
       });
+  }
+
+  private initialize3LasWithStream(): void {
+    console.debug(`Initializing stream with id ${this.stream.id}.`);
+    Initialize3lasPlayer("localhost", 3000, this.stream.id);
   }
 }
