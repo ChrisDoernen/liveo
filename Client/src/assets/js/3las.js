@@ -92,6 +92,12 @@ function CheckFocus() {
   LastCheckTime = CheckTime;
 }
 
+function Destroy3LasPlayer() {
+  LogEvent("Destroying 3Las player.");
+  SocketClient.Disconnect();
+  SocketClient = null;
+}
+
 // Initialize modules
 function Initialize3lasPlayer(server, port, streamId) {
   ServerName = server;
@@ -183,14 +189,17 @@ function OnControlsVolumeChange(value) {
 }
 
 function OnControlsPlay() {
-  AudioPlayer.MobileUnmute();
-  try {
-    SocketClient = new WebSocketClient('ws://' + ServerName + ':' + SelectedPORT.toString(), StreamId, OnSocketError, OnSocketConnect, OnSocketDataReady, OnSocketDisconnect);
-    LogEvent("Init of WebSocketClient succeeded");
-    LogEvent("Trying to connect to server.");
-  } catch (e) {
-    LogEvent("Init of WebSocketClient failed: " + e);
-    return;
+  if (!SocketClient || !SocketClient.GetStatus) {
+    AudioPlayer.MobileUnmute();
+    try {
+      LogEvent("Play was clicked, trying to connect to server.");
+      SocketClient = new WebSocketClient('ws://' + ServerName + ':' + SelectedPORT.toString(), StreamId, OnSocketError, OnSocketConnect, OnSocketDataReady, OnSocketDisconnect);
+      LogEvent("Init of WebSocketClient succeeded");
+      LogEvent("Trying to connect to server.");
+    } catch (e) {
+      LogEvent("Init of WebSocketClient failed: " + e);
+      return;
+    }
   }
 }
 
@@ -537,7 +546,7 @@ function HTMLPlayerControls(DivID) {
   this.OnPlayClick = null;
 
   this._VolumeDragging = false;
-  this._isMuted = false;
+  this._isMuted = true;
 
   this._VolumeContainer = document.querySelector("#volumebar");
   if (this._VolumeContainer == null)
@@ -719,22 +728,30 @@ HTMLPlayerControls.prototype.__hInteractMove = function (e) {
 };
 
 HTMLPlayerControls.prototype.__Mute_Click = function (e) {
+  LogEvent("Mute.");
+
   this._isMuted = true;
-  this._UnMuteButton.style.visibility = "visible";
-  this._MuteButton.style.visibility = "hidden";
+  // this._UnMuteButton.style.visibility = "visible";
+  // this._MuteButton.style.visibility = "hidden";
+  this._PlayButton.classList.remove("fa-stop");
+  this._PlayButton.classList.add("fa-play");
 
   this._VolumeStore = parseInt(this._VolumeKnob.style.left);
-  this._UpdateVolumeBar(0);
+  //this._UpdateVolumeBar(0);
   if (typeof this.OnVolumeChange === 'function')
     this.OnVolumeChange(0.0);
 };
 
 HTMLPlayerControls.prototype.__UnMute_Click = function (e) {
-  this._isMuted = false;
-  this._MuteButton.style.visibility = "visible";
-  this._UnMuteButton.style.visibility = "hidden";
+  LogEvent("Unmute.");
 
-  this._UpdateVolumeBar(this._VolumeStore);
+  this._isMuted = false;
+  // this._MuteButton.style.visibility = "visible";
+  // this._UnMuteButton.style.visibility = "hidden";
+  this._PlayButton.classList.remove("fa-play");
+  this._PlayButton.classList.add("fa-stop");
+
+  //this._UpdateVolumeBar(this._VolumeStore);
   if (typeof this.OnVolumeChange === 'function')
     this.OnVolumeChange(this._VolumeStore / this._TotalBarSize);
 };
@@ -742,8 +759,13 @@ HTMLPlayerControls.prototype.__UnMute_Click = function (e) {
 HTMLPlayerControls.prototype.__Play_Click = function (e) {
   if (typeof this.OnPlayClick === 'function')
     this.OnPlayClick();
-};
 
+  if (this._isMuted) {
+    this.__UnMute_Click();
+  } else {
+    this.__Mute_Click();
+  }
+};
 
 function getOffsetSum(elem) {
   var top = 0, left = 0;
@@ -800,6 +822,13 @@ function WebSocketClient(URI, STREAMID, ErrorCallback, ConnectCallback, DataRead
 WebSocketClient.prototype.GetStatus = function () {
   // Return boolean
   return this._IsConnected;
+};
+
+// Disconnect from the websocket
+WebSocketClient.prototype.Disconnect = function () {
+  this._Socket.close();
+  this._IsConnected = false;
+  LogEvent("Disconnecting from server.");
 };
 
 

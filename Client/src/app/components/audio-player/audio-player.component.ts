@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Stream } from "../../entities/stream.entity";
 import { StreamService } from "src/app/services/stream/stream.service";
 import { ActivatedRoute } from "@angular/router";
@@ -8,7 +8,7 @@ import { ActivatedRoute } from "@angular/router";
   templateUrl: "./audio-player.component.html",
   styleUrls: ["./audio-player.component.css"]
 })
-export class AudioPlayerComponent implements OnInit {
+export class AudioPlayerComponent implements OnInit, OnDestroy {
 
   public stream: Stream = null;
   private _isLoading: boolean;
@@ -38,5 +38,9 @@ export class AudioPlayerComponent implements OnInit {
   private initialize3LasWithStream(): void {
     console.debug(`Initializing stream with id ${this.stream.id}.`);
     Initialize3lasPlayer("localhost", 3000, this.stream.id);
+  }
+
+  public ngOnDestroy(): void {
+    Destroy3LasPlayer();
   }
 }
