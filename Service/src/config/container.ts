@@ -29,23 +29,23 @@ import { IStreamingSource } from "../lib/streaming-sources/i-streaming-source";
 export const container = new Container();
 
 if (ServiceConfig.os === "linux") {
-    container.bind<IDeviceDetector>("IDeviceDetector").to(LinuxDeviceDetector).inSingletonScope();
+  container.bind<IDeviceDetector>("IDeviceDetector").to(LinuxDeviceDetector).inSingletonScope();
 } else {
-    throw new Error("OS is unsupported.");
+  throw new Error("OS is unsupported.");
 }
 
 if (ServiceConfig.development) {
-    container.bind<ShutdownService>("ShutdownService").to(ShutdownSimulationService).inSingletonScope();
+  container.bind<ShutdownService>("ShutdownService").to(ShutdownSimulationService).inSingletonScope();
 } else if (ServiceConfig.os === "linux") {
-    container.bind<ShutdownService>("ShutdownService").to(LinuxShutdownService).inSingletonScope();
+  container.bind<ShutdownService>("ShutdownService").to(LinuxShutdownService).inSingletonScope();
 } else {
-    throw new Error("OS is unsupported.");
+  throw new Error("OS is unsupported.");
 }
 
 if (ServiceConfig.simulate) {
-    container.bind<interfaces.Factory<IStreamingSource>>("StreamingSourceFactory").toFactory(StreamingSimulationSourceFactory);
+  container.bind<interfaces.Factory<IStreamingSource>>("StreamingSourceFactory").toFactory(StreamingSimulationSourceFactory);
 } else {
-    container.bind<interfaces.Factory<IStreamingSource>>("StreamingSourceFactory").toFactory(StreamingSourceFactory);
+  container.bind<interfaces.Factory<IStreamingSource>>("StreamingSourceFactory").toFactory(StreamingSourceFactory);
 }
 
 container.bind<interfaces.Factory<Device>>("DeviceFactory").toFactory(DeviceFactory);
