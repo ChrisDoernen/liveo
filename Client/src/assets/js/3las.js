@@ -630,14 +630,14 @@ function HTMLPlayerControls(DivID) {
 
 HTMLPlayerControls.prototype.ToogleActivityLight = function () {
   if (this._ActivityStatus) {
-    this._ActivityLightOff.style.visibility = "visible";
-    this._ActivityLightOn.style.visibility = "hidden";
+    // this._ActivityLightOff.style.visibility = "visible";
+    // this._ActivityLightOn.style.visibility = "hidden";
     this._ActivityStatus = false;
     return false;
   }
   else {
-    this._ActivityLightOff.style.visibility = "hidden";
-    this._ActivityLightOn.style.visibility = "visible";
+    // this._ActivityLightOff.style.visibility = "hidden";
+    // this._ActivityLightOn.style.visibility = "visible";
     this._ActivityStatus = true;
     return true;
   }
@@ -677,8 +677,8 @@ HTMLPlayerControls.prototype._UpdateVolume = function (value) {
 
   if (this._isMuted) {
     this._isMuted = false;
-    this._MuteButton.style.visibility = "visible";
-    this._UnMuteButton.style.visibility = "hidden";
+    // this._MuteButton.style.visibility = "visible";
+    // this._UnMuteButton.style.visibility = "hidden";
   }
 
   if (typeof this.OnVolumeChange === 'function')
