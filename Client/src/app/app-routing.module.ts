@@ -7,7 +7,7 @@ import { AudioPlayerComponent } from "./components/audio-player/audio-player.com
 const routes: Routes = [
   { path: "", redirectTo: "/welcome", pathMatch: "full" },
   { path: "home", component: HomeComponent, data: { animation: "HomePage" } },
-  { path: "streams/:id", component: AudioPlayerComponent },
+  { path: "streams/audio/:id", component: AudioPlayerComponent },
   { path: "welcome", component: WelcomeComponent, data: { animation: "WelcomePage" } }
 ];
 

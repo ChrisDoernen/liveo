@@ -21,7 +21,7 @@
         <div>Live now</div>
         <div>{{session?.title}}</div>
         <div *ngFor="let stream of streams">
-          <a routerLink="/streams/{{stream.id}}">{{stream.title}}</a>
+          <a routerLink="/streams/audio/{{stream.id}}">{{stream.title}}</a>
         </div>
       </div>
     </ng-template>

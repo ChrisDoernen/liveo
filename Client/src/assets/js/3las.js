@@ -94,8 +94,10 @@ function CheckFocus() {
 
 function Destroy3LasPlayer() {
   LogEvent("Destroying 3Las player.");
-  SocketClient.Disconnect();
-  SocketClient = null;
+  if (SocketClient) {
+    SocketClient.Disconnect();
+    SocketClient = null;
+  }
 }
 
 // Initialize modules
