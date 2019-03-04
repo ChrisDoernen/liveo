@@ -12,6 +12,7 @@ import { InlineSVGModule } from "ng-inline-svg";
 import { HeaderComponent } from "./components/header/header.component";
 import { WelcomeComponent } from "./components/welcome/welcome.component";
 import { StreamService } from "./services/stream/stream.service";
+import { AboutComponent } from './components/about/about.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { StreamService } from "./services/stream/stream.service";
     HomeComponent,
     AudioPlayerComponent,
     HeaderComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,

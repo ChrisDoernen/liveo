@@ -2,3 +2,25 @@
   height: 100vh;
   display: block;
 }
+
+.stream-list {
+  margin: 10px 0 0 0;
+}
+
+.stream-link {
+  color: var(--primary-text-color);
+  text-decoration: none;
+}
+
+.about-link {
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  width: 100vw;
+  margin-bottom: 20px;
+}
+
+.about-link a {
+  color: var(--primary-text-color);
+  text-decoration: none;
+}

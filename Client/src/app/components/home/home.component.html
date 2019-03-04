@@ -20,10 +20,13 @@
       <div *ngIf="activationState === ActivationState.ActivatedSessionStarted">
         <div>Live now</div>
         <div>{{session?.title}}</div>
-        <div *ngFor="let stream of streams">
-          <a routerLink="/streams/audio/{{stream.id}}">{{stream.title}}</a>
+        <div class="stream-list">
+          <div *ngFor="let stream of streams">
+            <a class="stream-link" routerLink="/streams/audio/{{stream.id}}">{{stream.title}}</a>
+          </div>
         </div>
       </div>
     </ng-template>
   </div>
 </div>
+<div class="about-link"><a routerLink="/about">Info/About</a></div>

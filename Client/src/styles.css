@@ -1,5 +1,6 @@
 :root {
   --container-spacing: 35px;
+  --primary-text-color: #424242;
 }
 
 html {
@@ -16,7 +17,7 @@ body {
   font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-size: 17px;
   line-height: 1.4285em;
-  color: #424242;
+  color: var(--primary-text-color);
 }
 
 .container {
