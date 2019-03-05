@@ -91,8 +91,12 @@ export class HomeComponent implements OnInit {
   private async loadStream(id: string): Promise<void> {
     return await new Promise<void>((resolve) => {
       this._streamService.getStream(id).then((stream) => {
-        console.log(`Loaded stream: ${JSON.stringify(stream)}.`);
-        this.streams.push(stream);
+        if (stream.isStarted) {
+          console.log(`Loaded stream: ${JSON.stringify(stream)}.`);
+          this.streams.push(stream);
+        } else {
+          console.log(`Stream ${id} is not started and will not be loaded.`);
+        }
         resolve();
       }).catch((error) => {
         console.debug(`Error loading stream: ${JSON.stringify(error)}.`);

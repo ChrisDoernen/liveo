@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Stream } from "../../entities/stream.entity";
 import { StreamService } from "src/app/services/stream/stream.service";
 import { ActivatedRoute } from "@angular/router";
+import { EndpointService } from "src/app/services/endpoint/endpoint.service";
 
 @Component({
   selector: "audio-player",
@@ -14,7 +15,9 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   private _isLoading: boolean;
   private _connectionError: boolean;
 
-  constructor(private _route: ActivatedRoute, private _streamService: StreamService) {
+  constructor(private _route: ActivatedRoute,
+    private _streamService: StreamService,
+    private _endpointService: EndpointService) {
   }
 
   public ngOnInit(): void {
@@ -37,7 +40,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
 
   private initialize3LasWithStream(): void {
     console.debug(`Initializing stream with id ${this.stream.id}.`);
-    Initialize3lasPlayer("localhost", 3000, this.stream.id);
+    Initialize3lasPlayer(this._endpointService.ip, this._endpointService.port, this.stream.id);
   }
 
   public ngOnDestroy(): void {

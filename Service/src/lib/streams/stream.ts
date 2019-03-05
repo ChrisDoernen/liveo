@@ -24,7 +24,8 @@ export class Stream {
       this.data.title,
       null,
       this.data.countryCode,
-      StreamType.Audio
+      StreamType.Audio,
+      this._isStarted
     );
   }
 

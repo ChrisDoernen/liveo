@@ -10,6 +10,7 @@ export class StreamEntity {
     public title: string,
     public description: string,
     public countryCode: string,
-    public streamType: StreamType) {
+    public streamType: StreamType,
+    public isStarted: boolean) {
   }
 }

@@ -10,7 +10,8 @@ export class Stream {
     public title: string,
     public description: string,
     public countryCode: string,
-    public streamType: StreamType) {
+    public streamType: StreamType,
+    public isStarted: boolean) {
     console.debug(`Instantiating stream with id ${id}.`);
   }
 }
