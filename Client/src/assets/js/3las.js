@@ -310,10 +310,11 @@ PCMAudioPlayer.prototype._OffsetMax = PCMAudioPlayer.prototype._StartOffset + PC
 
 // Sets the playback volome
 PCMAudioPlayer.prototype.SetVolume = function (Value) {
-	// Limit value to [0.0 ; 1.0]
-	/*if (Value > 1.0)
-		Value = 1.0;
-	else */if (Value <= 0.0)
+  // Limit value to [0.0 ; 1.0]
+  LogEvent(`Set volume: Provided value: ${Value}.`);
+  if (Value > 1.0)
+    Value = 1.0;
+  else if (Value <= 0.0)
     Value = 1e-20;
 
   // Cancel any scheduled ramps
@@ -569,7 +570,7 @@ function HTMLPlayerControls(DivID) {
   this._TotalBarSize = this._MaximumVolume.clientWidth - this._VolumeKnob.clientWidth;
   this._KnobRadius = this._VolumeKnob.clientWidth / 2.0;
 
-  this._VolumeStore = this._TotalBarSize;
+  this._VolumeStore = this._TotalBarSize / 2.0;
 
   // this._VolumeKnob.style.left = this._TotalBarSize + "px";
 
@@ -674,6 +675,9 @@ HTMLPlayerControls.prototype._UpdateVolume = function (value) {
   else if (value < 0)
     value = 0;
 
+  this._VolumeStore = parseInt(value);
+  LogEvent(`Setting volume store to ${this._VolumeStore}`);
+
   console.debug(`Updating volume to ${value}.`);
   this._UpdateVolumeBar(value);
 
@@ -724,8 +728,9 @@ HTMLPlayerControls.prototype.__hInteractMove = function (e) {
     }
 
     var mousex = e.pageX - getOffsetSum(this._VolumeContainer).left;
+    var volume = mousex - this._KnobRadius;
 
-    this._UpdateVolume(mousex - this._KnobRadius);
+    this._UpdateVolume(volume);
   }
 };
 
@@ -738,7 +743,8 @@ HTMLPlayerControls.prototype.__Mute_Click = function (e) {
   this._PlayButton.classList.remove("fa-stop");
   this._PlayButton.classList.add("fa-play");
 
-  this._VolumeStore = parseInt(this._VolumeKnob.style.left);
+  //var currentVolume = this._VolumeKnob.style.left;
+
   //this._UpdateVolumeBar(0);
   if (typeof this.OnVolumeChange === 'function')
     this.OnVolumeChange(0.0);
