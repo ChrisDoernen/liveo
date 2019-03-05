@@ -20,6 +20,13 @@ arecord -l  // Linux
 ffmpeg -list_devices true -f dshow -i dummy // Windows
 ```
 
+## Video capturing
+
+To get currently available video devices, the following command can be used:
+```
+ls -ltrh /dev/video*
+```
+
 ## Nginx
 
 Nginx is a high performance web server and reverse proxy. 
