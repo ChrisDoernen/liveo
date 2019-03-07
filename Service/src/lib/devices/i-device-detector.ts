@@ -5,15 +5,15 @@ import { Device } from "./device";
  */
 export interface IDeviceDetector {
 
-    /**
-     * Trigger a new device detection
-     */
-    detectDevices(): Promise<void>;
+  /**
+   * Trigger a new device detection
+   */
+  detectDevices(): Promise<void>;
 
-    /**
-     * Get a device by id. If the id is not found, a device with device state
-     * unknown device is returned.
-     * @param id The id of the device
-     */
-    getDevice(id: string): Device;
+  /**
+   * Get a device by id. If the id is not found, a device with 
+   * device state unknown is returned.
+   * @param id The id of the device
+   */
+  getDevice(id: string): Device;
 }

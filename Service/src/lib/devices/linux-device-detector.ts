@@ -12,68 +12,68 @@ import { DeviceState } from "./device-state";
 @injectable()
 export class LinuxDeviceDetector implements IDeviceDetector {
 
-    private _devices: Device[] = [];
+  private _devices: Device[] = [];
 
-    public get devices(): Device[] {
-        return this._devices;
-    }
+  public get devices(): Device[] {
+    return this._devices;
+  }
 
-    private listDevicesCommand: string = "arecord -l";
+  private listDevicesCommand: string = "arecord -l";
 
-    private audioDeviceRegexPattern: RegExp = new RegExp("(card \\d+: )");
+  private audioDeviceRegexPattern: RegExp = new RegExp("(card \\d+: )");
 
-    constructor(@inject("Logger") private _logger: Logger,
-        @inject("ProcessExecutionService") private _processExecutionService: ProcessExecutionService,
-        @inject("DeviceFactory") private _deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
-    }
+  constructor(@inject("Logger") private _logger: Logger,
+    @inject("ProcessExecutionService") private _processExecutionService: ProcessExecutionService,
+    @inject("DeviceFactory") private _deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
+  }
 
-    public async detectDevices(): Promise<void> {
-        return await new Promise<void>((resolve, reject) => {
-            this.executeListDevicesCommand().then((response) => {
-                this._logger.debug("Detecting audio inputs.");
+  public async detectDevices(): Promise<void> {
+    return await new Promise<void>((resolve, reject) => {
+      this.executeListDevicesCommand().then((response) => {
+        this._logger.debug("Detecting audio inputs.");
 
-                this._devices = this.parseResponse(response);
+        this._devices = this.parseResponse(response);
 
-                if (this._devices.length === 0) {
-                    this._logger.warn("No devices detected. Please check your sound cards.");
-                }
+        if (this._devices.length === 0) {
+          this._logger.warn("No devices detected. Please check your sound cards.");
+        }
 
-                resolve();
-            });
-        });
-    }
+        resolve();
+      });
+    });
+  }
 
-    private async executeListDevicesCommand(): Promise<string> {
-        return await new Promise<string>((resolve, reject) => {
-            this._processExecutionService.execute(this.listDevicesCommand, (error, stdout, stderr) => {
-                resolve(stdout);
-            });
-        });
-    }
+  private async executeListDevicesCommand(): Promise<string> {
+    return await new Promise<string>((resolve, reject) => {
+      this._processExecutionService.execute(this.listDevicesCommand, (error, stdout, stderr) => {
+        resolve(stdout);
+      });
+    });
+  }
 
-    private parseResponse(response: string): Device[] {
-        const lines = response.split("\n");
+  private parseResponse(response: string): Device[] {
+    const lines = response.split("\n");
 
-        return lines
-            .filter((line) => this.audioDeviceRegexPattern.test(line))
-            .map((line) => this.parseDevice(line));
-    }
+    return lines
+      .filter((line) => this.audioDeviceRegexPattern.test(line))
+      .map((line) => this.parseDevice(line));
+  }
 
-    private parseDevice(line: string): Device {
-        const cardPrefix = line.match(this.audioDeviceRegexPattern)[0];
-        const id = cardPrefix.match(new RegExp("\\d+")).toString();
-        const description = line.slice(cardPrefix.length);
+  private parseDevice(line: string): Device {
+    const cardPrefix = line.match(this.audioDeviceRegexPattern)[0];
+    const id = cardPrefix.match(new RegExp("\\d+")).toString();
+    const description = line.slice(cardPrefix.length);
 
-        return this._deviceFactory(new DeviceData(id, description), DeviceState.Available);
-    }
+    return this._deviceFactory(new DeviceData(id, description), DeviceState.Available);
+  }
 
-    public getDevice(id: string): Device {
-        const matchingDevice = this._devices.find((device) => device.id === id);
+  public getDevice(id: string): Device {
+    const matchingDevice = this._devices.find((device) => device.id === id);
 
-        return matchingDevice ? matchingDevice : this.getUnknownDevice(id);
-    }
+    return matchingDevice ? matchingDevice : this.getUnknownDevice(id);
+  }
 
-    private getUnknownDevice(id: string): Device {
-        return this._deviceFactory(new DeviceData(id, ""), DeviceState.UnknownDevice);
-    }
+  private getUnknownDevice(id: string): Device {
+    return this._deviceFactory(new DeviceData(id, ""), DeviceState.UnknownDevice);
+  }
 }

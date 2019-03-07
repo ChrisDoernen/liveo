@@ -6,6 +6,7 @@ import { ServiceConfig } from "./service.config";
 import { ProcessExecutionService } from "../lib/process-execution/process-execution-service";
 import { IDeviceDetector } from "../lib/devices/i-device-detector";
 import { LinuxDeviceDetector } from "../lib/devices/linux-device-detector";
+import { SimulationDeviceDetector } from "../lib/devices/simulation-device-detector";
 import { DataService } from "../lib/data/data-service";
 import { SessionService } from "../lib/sessions/session-service";
 import { StreamService } from "../lib/streams/stream-service";
@@ -28,11 +29,6 @@ import { IStreamingSource } from "../lib/streaming-sources/i-streaming-source";
 
 export const container = new Container();
 
-if (ServiceConfig.os === "linux") {
-  container.bind<IDeviceDetector>("IDeviceDetector").to(LinuxDeviceDetector).inSingletonScope();
-} else {
-  throw new Error("OS is unsupported.");
-}
 
 if (ServiceConfig.development) {
   container.bind<ShutdownService>("ShutdownService").to(ShutdownSimulationService).inSingletonScope();
@@ -43,8 +39,15 @@ if (ServiceConfig.development) {
 }
 
 if (ServiceConfig.simulate) {
+  container.bind<IDeviceDetector>("IDeviceDetector").to(SimulationDeviceDetector).inSingletonScope();
   container.bind<interfaces.Factory<IStreamingSource>>("StreamingSourceFactory").toFactory(StreamingSimulationSourceFactory);
 } else {
+  if (ServiceConfig.os === "linux") {
+    container.bind<IDeviceDetector>("IDeviceDetector").to(LinuxDeviceDetector).inSingletonScope();
+  } else {
+    throw new Error(`Device detection for OS ${ServiceConfig.os} is unsupported.`);
+  }
+
   container.bind<interfaces.Factory<IStreamingSource>>("StreamingSourceFactory").toFactory(StreamingSourceFactory);
 }
 
