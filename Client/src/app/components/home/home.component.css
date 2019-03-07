@@ -3,13 +3,19 @@
   display: block;
 }
 
+.session-title {
+  font-size: 22px;
+  font-weight: 600;
+}
+
 .stream-list {
-  margin: 10px 0 0 0;
+  margin: 25px 0 0 0;
 }
 
 .stream-link {
   color: var(--primary-text-color);
   text-decoration: none;
+  font-size: 20px;
 }
 
 .about-link {

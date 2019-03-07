@@ -18,8 +18,8 @@
         The session has ended. Thanks for joining us.
       </div>
       <div *ngIf="activationState === ActivationState.ActivatedSessionStarted">
-        <div>Live now</div>
-        <div>{{session?.title}}</div>
+        <div>Live now:</div>
+        <div class="session-title">{{session?.title}}</div>
         <div class="stream-list">
           <div *ngFor="let stream of streams">
             <a class="stream-link" routerLink="/streams/audio/{{stream.id}}">{{stream.title}}</a>

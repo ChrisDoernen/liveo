@@ -1,9 +1,12 @@
+<app-header [light]=true></app-header>
 <div class="navigation">
   <a routerLink="/home"><span class="close"></span></a>
 </div>
 <div class="container">
   <div class="content">
     <div class="title">{{stream?.title}}</div>
+  </div>
+  <div class="content">
     <div id="playercontrols" class="player">
       <div class="player-controls">
         <i id="play-pause-button" class="fa fa-play fa-2x" aria-hidden="true"> </i>
@@ -18,6 +21,8 @@
         <i class="fa fa-volume-up" aria-hidden="true"> </i>
       </div>
     </div>
+  </div>
+  <div class="content">
   </div>
 </div>
 <div class="connection-info">
