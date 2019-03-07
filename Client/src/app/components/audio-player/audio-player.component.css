@@ -1,13 +1,15 @@
 :host {
   height: 100vh;
   display: block;
+  color: var(--inverse-text-color);
 }
 
 .navigation {
   position: absolute;
   top: 0;
   width: 100vw;
-  margin: var(--container-spacing);
+  text-align: right;
+  padding: var(--container-spacing);
 }
 
 .navigation a {
@@ -17,7 +19,6 @@
 
 .container {
   background-color: #1f1f1f;
-  color: whitesmoke;
 }
 
 .title {
@@ -62,4 +63,42 @@
   width: 15px;
   height: 15px;
   border-radius: 50%;
+}
+
+.connection-info {
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  width: 100vw;
+  margin-bottom: 20px;
+}
+
+.close {
+  position: absolute;
+  right: 32px;
+  top: 32px;
+  width: 32px;
+  height: 32px;
+  opacity: 0.7;
+}
+
+.close:hover {
+  opacity: 1;
+}
+
+.close:before, .close:after {
+  position: absolute;
+  left: 15px;
+  content: ' ';
+  height: 27px;
+  width: 2px;
+  background-color: white;
+}
+
+.close:before {
+  transform: rotate(45deg);
+}
+
+.close:after {
+  transform: rotate(-45deg);
 }

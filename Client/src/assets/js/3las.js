@@ -574,7 +574,7 @@ function HTMLPlayerControls(DivID) {
 
   // this._VolumeKnob.style.left = this._TotalBarSize + "px";
 
-  this._VolumeContainer.addEventListener("touchstart", this.__hInteractBegin.bind(this), { passive: true });
+  this._VolumeContainer.addEventListener("touchstart", this.__hInteractBegin.bind(this), { passive: false });
   this._VolumeContainer.addEventListener("mousedown", this.__hInteractBegin.bind(this));
 
   this._VolumeContainer.addEventListener("touchend", this.__hInteractEnd.bind(this));
@@ -583,7 +583,7 @@ function HTMLPlayerControls(DivID) {
   this._VolumeContainer.addEventListener("touchleave", this.__hInteractLeave.bind(this));
   this._VolumeContainer.addEventListener("mouseleave", this.__hInteractLeave.bind(this));
 
-  this._VolumeContainer.addEventListener("touchmove", this.__hInteractMove.bind(this), { passive: true });
+  this._VolumeContainer.addEventListener("touchmove", this.__hInteractMove.bind(this), { passive: false });
   this._VolumeContainer.addEventListener("mousemove", this.__hInteractMove.bind(this));
 
   // this._ButtonBar = document.querySelector("div#" + DivID + " > div.controlbar");
