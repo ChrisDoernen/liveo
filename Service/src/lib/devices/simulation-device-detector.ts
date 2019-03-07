@@ -19,6 +19,7 @@ export class SimulationDeviceDetector implements IDeviceDetector {
 
   constructor(@inject("Logger") private _logger: Logger,
     @inject("DeviceFactory") private _deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
+    this._logger.info("Instantiating simulation device detector.");
   }
 
   public async detectDevices(): Promise<void> {
@@ -28,6 +29,7 @@ export class SimulationDeviceDetector implements IDeviceDetector {
   }
 
   public getDevice(id: string): Device {
+    this._logger.info("Simulation device detection.");
     return this._deviceFactory(new DeviceData(id, "Test device"), DeviceState.Available);
   }
 }
