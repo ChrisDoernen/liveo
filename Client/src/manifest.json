@@ -1,16 +1,20 @@
 {
   "short_name": "Live",
   "name": "ARCHE Live",
-  // "icons": [
-  //   {
-  //     "src": "favicon.ico",
-  //     "type": "image/png",
-  //     "sizes": "32x32"
-  //   }
-  // ],
+  "icons": [
+    {
+      "src": "assets/img/live_256x256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "assets/img/live_128x128.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    }
+  ],
   "start_url": "/welcome",
   "background_color": "#3367D6",
   "display": "standalone",
-  // "scope": "/maps/",
   "theme_color": "#3367D6"
 }

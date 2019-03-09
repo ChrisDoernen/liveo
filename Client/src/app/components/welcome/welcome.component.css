@@ -1,14 +1,17 @@
 .welcome {
-    background-color: var(--primary-color);
-    height: 100vh;
-    display: flex;
+  background-color: var(--primary-color);
+  color: var(--inverse-text-color);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-.welcome__logo {
-    width: 100px;
-    margin: auto;
+.welcome-content {
+  width: 300px;
+  margin: auto;
+  text-align: center;
 }
 
-::ng-deep .welcome__logo .live-logo {
-    fill: white;
+::ng-deep .welcome-logo .live-logo {
+  fill: white;
 }

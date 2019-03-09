@@ -74,6 +74,21 @@ function GetUserAgentInfo() {
   }
 }
 
+function CheckBrowserCompatibility() {
+
+  if (typeof AudioContext === "undefined" && typeof webkitAudioContext === "undefined" && typeof mozAudioContext === "undefined") {
+    return false;
+  }
+
+  var AudioTag = new Audio();
+  var answer = AudioTag.canPlayType("audio/mpeg");
+  if (!(answer === "probably" || answer === "maybe")) {
+    return false;
+  }
+
+  return true;
+}
+
 // Server settings
 var Formats;
 var ServerName;
@@ -131,26 +146,15 @@ function Initialize3lasPlayer(server, port, streamId) {
 
   StreamId = streamId;
 
-  if (typeof WebSocket === "undefined" && typeof webkitWebSocket === "undefined" && typeof mozWebSocket === "undefined") {
-    document.getElementById("socketsunsupported").style.display = "block";
-    return;
-  }
+  // if (typeof WebSocket === "undefined" && typeof webkitWebSocket === "undefined" && typeof mozWebSocket === "undefined") {
+  //   document.getElementById("socketsunsupported").style.display = "block";
+  //   return;
+  // }
 
-  if (typeof AudioContext === "undefined" && typeof webkitAudioContext === "undefined" && typeof mozAudioContext === "undefined") {
-    document.getElementById("webaudiounsupported").style.display = "block";
-    return;
-  }
-
-  var AudioTag = new Audio();
-  var answer = AudioTag.canPlayType(SelectedMIME);
-  if (!(answer === "probably" || answer === "maybe")) {
-    throw new Error("The browser does not supprt the mp3.");
-  }
-
-  if (SelectedMIME == "" || SelectedPORT == 0) {
-    document.getElementById("typesunsupported").style.display = "block";
-    return;
-  }
+  // if (SelectedMIME == "" || SelectedPORT == 0) {
+  //   document.getElementById("typesunsupported").style.display = "block";
+  //   return;
+  // }
 
   LogEvent("Using MIME: " + SelectedMIME + " on port: " + SelectedPORT);
 

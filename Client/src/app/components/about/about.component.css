@@ -1,0 +1,54 @@
+.navigation {
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  text-align: right;
+  padding: var(--container-spacing);
+}
+
+.navigation a {
+  color: var(--primary-text-color);
+  text-decoration: none;
+}
+
+.close {
+  position: absolute;
+  right: 32px;
+  top: 32px;
+  width: 32px;
+  height: 32px;
+  opacity: 0.7;
+}
+
+.close:hover {
+  opacity: 1;
+}
+
+.close:before, .close:after {
+  position: absolute;
+  left: 15px;
+  content: ' ';
+  height: 27px;
+  width: 2px;
+  background-color: black;
+}
+
+.close:before {
+  transform: rotate(45deg);
+}
+
+.close:after {
+  transform: rotate(-45deg);
+}
+
+.about {
+  margin-top: 120px;
+}
+
+.about h1 {
+  font-size: 25px;
+}
+
+.about p {
+  font-size: 16px;
+}
