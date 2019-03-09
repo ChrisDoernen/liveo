@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { DataService } from "src/app/services/data/data.service";
+import { UserAgentService } from "src/app/services/user-agent/user-agent.service";
 
 @Component({
   selector: "app-welcome",
@@ -8,11 +10,16 @@ import { Router } from "@angular/router";
 })
 export class WelcomeComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private _router: Router,
+    private _dataService: DataService,
+    private _userAgentService: UserAgentService) { }
 
   public ngOnInit(): void {
+    this._dataService.loadData();
+    this._userAgentService.GetUserAgentInfo();
+
     setTimeout(() => {
-      this.router.navigate(["/home"]);
+      this._router.navigate(["/home"]);
     }, 2000);
   }
 }

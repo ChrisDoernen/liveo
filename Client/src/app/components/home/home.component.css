@@ -4,7 +4,7 @@
 }
 
 .session-title {
-  font-size: 22px;
+  font-size: 25px;
   font-weight: 600;
 }
 
@@ -12,10 +12,14 @@
   margin: 25px 0 0 0;
 }
 
+.stream-list-item {
+  margin: 3px 0 0;
+}
+
 .stream-link {
   color: var(--primary-text-color);
   text-decoration: none;
-  font-size: 20px;
+  font-size: 21px;
 }
 
 .about-link {
