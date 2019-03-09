@@ -20,6 +20,6 @@ export class WelcomeComponent implements OnInit {
 
     setTimeout(() => {
       this._router.navigate(["/home"]);
-    }, 2000);
+    }, 2200);
   }
 }

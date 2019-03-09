@@ -2,9 +2,10 @@
   "name": "live-client",
   "version": "0.0.0",
   "scripts": {
-    "start": "ng serve --port 4200 --host 0.0.0.0",
-    "build": "ng build",
-    "buildProd": "ng build --prod --deploy-url /app/ --base-href /app/",
+    "start": "npm run prebuild && ng serve --port 4200 --host 0.0.0.0",
+    "prebuild": "ts-node -O '{\"module\": \"commonjs\"}' git-version.ts",
+    "build": "npm run prebuild && ng build",
+    "buildProd": "npm run prebuild && ng build --prod --deploy-url /app/ --base-href /app/",
     "test": "jest",
     "lint": "ng lint",
     "e2e": "ng e2e"
