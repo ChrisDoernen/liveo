@@ -10,9 +10,6 @@
 
 .stream-list {
   margin: 33px 0 0 0;
-  border: 1px solid #568289;
-  border-radius: 25px;
-  padding: 4px 20px
 }
 
 .stream-list-item {
@@ -36,4 +33,8 @@
 .about-link a {
   color: var(--primary-text-color);
   text-decoration: none;
+}
+
+.other-selected {
+  opacity: 0.3;
 }

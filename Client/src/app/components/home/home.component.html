@@ -22,11 +22,18 @@
         <div class="session-title">{{_dataService.session?.title}}</div>
         <div class="stream-list">
           <div *ngFor="let stream of _dataService.streams" class="stream-list-item">
-            <a class="stream-link" routerLink="/streams/audio/{{stream.id}}">{{stream.title}}</a>
+            <i *ngIf="this._selectedStream == stream" class="fa fa-check" aria-hidden="true"> </i>
+            <a class="stream-link" (click)="selectStream(stream)"
+              [ngClass]="{'selected': this._selectedStream == stream, 'other-selected': this._selectedStream && this._selectedStream != stream}">
+              {{stream.title}}
+            </a>
           </div>
         </div>
       </div>
     </ng-template>
+  </div>
+  <div class="content">
+    <audio-player [selectedStream]="this._selectedStream"></audio-player>
   </div>
 </div>
 <div class="about-link"><a routerLink="/about">Info/About</a></div>

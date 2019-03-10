@@ -1,49 +1,15 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, Input } from "@angular/core";
 import { Stream } from "../../entities/stream.entity";
-import { StreamService } from "src/app/services/stream/stream.service";
-import { ActivatedRoute } from "@angular/router";
-import { EndpointService } from "src/app/services/endpoint/endpoint.service";
 
 @Component({
   selector: "audio-player",
   templateUrl: "./audio-player.component.html",
   styleUrls: ["./audio-player.component.css"]
 })
-export class AudioPlayerComponent implements OnInit, OnDestroy {
+export class AudioPlayerComponent {
 
-  public stream: Stream = null;
-  private _isLoading: boolean;
-  private _connectionError: boolean;
+  @Input()
+  public selectedStream: Stream = null;
 
-  constructor(private _route: ActivatedRoute,
-    private _streamService: StreamService,
-    private _endpointService: EndpointService) {
-  }
 
-  public ngOnInit(): void {
-    this.getStream();
-  }
-
-  private getStream(): void {
-    const id = this._route.snapshot.paramMap.get("id");
-
-    this._streamService.getStream(id)
-      .then((stream) => {
-        this.stream = stream;
-        this._isLoading = false;
-        this.initialize3LasWithStream();
-      }).catch((error) => {
-        this._connectionError = true;
-        this._isLoading = false;
-      });
-  }
-
-  private initialize3LasWithStream(): void {
-    console.debug(`Initializing stream with id ${this.stream.id}.`);
-    Initialize3lasPlayer(this._endpointService.ip, this._endpointService.port, this.stream.id);
-  }
-
-  public ngOnDestroy(): void {
-    Destroy3LasPlayer();
-  }
 }

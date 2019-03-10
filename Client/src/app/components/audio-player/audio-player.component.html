@@ -1,29 +1,14 @@
-<header [light]=true></header>
-<div class="navigation">
-  <a routerLink="/home"><span class="close"></span></a>
-</div>
-<div class="container">
-  <div class="content">
-    <div class="title">{{stream?.title}}</div>
+<div [ngClass]="{'disabled': this.selectedStream == null}" id="playercontrols" class="player">
+  <div class="player-controls">
+    <i id="play-pause-button" class="fa fa-play fa-2x" aria-hidden="true"> </i>
   </div>
-  <div class="content">
-    <div id="playercontrols" class="player">
-      <div class="player-controls">
-        <i id="play-pause-button" class="fa fa-play fa-2x" aria-hidden="true"> </i>
-      </div>
-      <div id="volume-control">
-        <i class="fa fa-volume-off" aria-hidden="true"> </i>
-        <div id="volumebar">
-          <div id="volume-total"></div>
-          <div id="volume-current"></div>
-          <div id="volume-handle"></div>
-        </div>
-        <i class="fa fa-volume-up" aria-hidden="true"> </i>
-      </div>
+  <div id="volume-control">
+    <i class="fa fa-volume-off" aria-hidden="true"> </i>
+    <div id="volumebar">
+      <div id="volume-total"></div>
+      <div id="volume-current"></div>
+      <div id="volume-handle"></div>
     </div>
-  </div>
-  <div class="content">
+    <i class="fa fa-volume-up" aria-hidden="true"> </i>
   </div>
 </div>
-<div class="connection-info">
-  <span><i class="fa fa-check-circle-o"></i>&nbsp;Connection established</span></div>
