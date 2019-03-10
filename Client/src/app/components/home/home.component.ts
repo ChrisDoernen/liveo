@@ -8,23 +8,22 @@ import { Stream } from "src/app/entities/stream.entity";
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.css"]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
   private _selectedStream: Stream = null;
 
   constructor(private _dataService: DataService,
-    private _userAgentService: UserAgentService) { }
-
-  public ngOnInit(): void {
-    this._dataService.loadData();
+    private _userAgentService: UserAgentService) {
   }
 
-  public selectStream(stream: Stream): void {
-    console.log(`Click event on stream ${stream.id}.`);
+  public streamOnClick(stream: Stream): void {
+    console.debug(`Click event on stream ${stream.id}.`);
     if (this._selectedStream == stream) {
       this._selectedStream = null;
+      console.debug("Unselecting stream.");
     } else {
       this._selectedStream = stream;
+      console.debug(`Selecting stream ${stream.id}.`);
     }
   }
 }

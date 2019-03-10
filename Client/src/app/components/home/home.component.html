@@ -23,7 +23,7 @@
         <div class="stream-list">
           <div *ngFor="let stream of _dataService.streams" class="stream-list-item">
             <i *ngIf="this._selectedStream == stream" class="fa fa-check" aria-hidden="true"> </i>
-            <a class="stream-link" (click)="selectStream(stream)"
+            <a class="stream-link" (click)="streamOnClick(stream)"
               [ngClass]="{'selected': this._selectedStream == stream, 'other-selected': this._selectedStream && this._selectedStream != stream}">
               {{stream.title}}
             </a>

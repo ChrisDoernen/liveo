@@ -15,9 +15,6 @@ export class WelcomeComponent implements OnInit {
     private _userAgentService: UserAgentService) { }
 
   public ngOnInit(): void {
-    this._dataService.loadData();
-    this._userAgentService.GetUserAgentInfo();
-
     setTimeout(() => {
       this._router.navigate(["/home"]);
     }, 2200);

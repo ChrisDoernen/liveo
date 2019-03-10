@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, OnInit } from "@angular/core";
 import { Session } from "../../entities/session.entity";
 import { ActivationState } from "../../entities/activation-state";
 import { SessionService } from "../../services/session/session.service";
@@ -23,6 +23,7 @@ export class DataService {
   constructor(private _activationService: ActivationService,
     private _sessionService: SessionService,
     private _streamService: StreamService) {
+    this.loadData();
   }
 
   public loadData(): void {

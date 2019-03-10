@@ -1,4 +1,8 @@
+var userAgentInfo;
+
 function GetUserAgentInfo() {
+  LogEvent("Evaluating user agent.");
+
   var ua = navigator.userAgent.toLowerCase();
 
   var isAndroid = (ua.match('android') ? true : false);
@@ -55,7 +59,7 @@ function GetUserAgentInfo() {
     (OSName == "MacOSX" ? "Mac OSX" : (OSName == "Unknown" ? "Unknown OS" : OSName)) + ", " +
     (BrowserName == "IE" ? "Internet Explorer" : (BrowserName == "NativeChrome" ? "Chrome legacy" : (BrowserName == "Unknown" ? "Unknown Browser" : BrowserName))));
 
-  return {
+  userAgentInfo = {
     isAndroid,
     isIOS,
     isWindows,
@@ -72,6 +76,8 @@ function GetUserAgentInfo() {
     OSName,
     BrowserName
   }
+
+  return userAgentInfo;
 }
 
 function CheckBrowserCompatibility() {
@@ -133,18 +139,33 @@ function CheckFocus() {
 
 function Destroy3LasPlayer() {
   LogEvent("Destroying 3Las player.");
+  DisposeSocketClient();
+}
+
+function DisposeSocketClient() {
   if (SocketClient) {
+    LogEvent("Disposing socket client.");
     SocketClient.Disconnect();
     SocketClient = null;
   }
 }
 
+function ChangeStream(streamId) {
+  if (PlayerControls) {
+    PlayerControls.Stop();
+  }
+  if (FormatReader) {
+    FormatReader.PurgeData();
+  }
+  StreamId = streamId;
+  LogEvent(`Stream id set to ${streamId}.`);
+  DisposeSocketClient();
+}
+
 // Initialize modules
-function Initialize3lasPlayer(server, port, streamId) {
+function Initialize3lasPlayer(server, port) {
   ServerName = server;
   SelectedPORT = port;
-
-  StreamId = streamId;
 
   // if (typeof WebSocket === "undefined" && typeof webkitWebSocket === "undefined" && typeof mozWebSocket === "undefined") {
   //   document.getElementById("socketsunsupported").style.display = "block";
@@ -158,7 +179,7 @@ function Initialize3lasPlayer(server, port, streamId) {
 
   LogEvent("Using MIME: " + SelectedMIME + " on port: " + SelectedPORT);
 
-  if (isIOS && !isChrome) {
+  if (userAgentInfo.isIOS && !userAgentInfo.isChrome) {
     //document.getElementById("chromesuggestion").style.display = "block";
 
     // For some reason this makes iOS run the stream in the background (with screen off)
@@ -201,7 +222,6 @@ function Initialize3lasPlayer(server, port, streamId) {
   }
 }
 
-
 // Callback function from audio player
 function OnPlayerUnderrun() {
   LogEvent("Player error: Buffer underrun.");
@@ -216,6 +236,10 @@ function OnControlsPlay() {
   if (!SocketClient || !SocketClient.GetStatus) {
     AudioPlayer.MobileUnmute();
     try {
+      if (!StreamId) {
+        throw new Error("No streamId given.");
+      }
+
       LogEvent("Play was clicked, trying to connect to server.");
       SocketClient = new WebSocketClient('ws://' + ServerName + ':' + SelectedPORT.toString(), StreamId, OnSocketError, OnSocketConnect, OnSocketDataReady, OnSocketDisconnect);
       LogEvent("Init of WebSocketClient succeeded");
@@ -269,9 +293,9 @@ function OnSocketDataReady(data) {
   FormatReader.PushData(data);
 }
 
-function hideChromeBanner() {
-  document.getElementById("chromesuggestion").style.display = "none";
-}
+// function hideChromeBanner() {
+//   document.getElementById("chromesuggestion").style.display = "none";
+// }
 
 /*
 	Audio-Player is part of 3LAS (Low Latency Live Audio Streaming)
@@ -682,6 +706,11 @@ HTMLPlayerControls.prototype.SetPlaystate = function (state) {
   }
 };
 
+HTMLPlayerControls.prototype.Stop = function () {
+  if (!this._isMuted) {
+    this.__Mute_Click();
+  }
+}
 
 // Private methods (Internal functions):
 // =====================================
@@ -839,8 +868,8 @@ function WebSocketClient(URI, STREAMID, ErrorCallback, ConnectCallback, DataRead
   this._Socket.on("error", this.__Socket_OnError.bind(this));
   this._Socket.on("subscription_error", this.__Socket_OnError.bind(this));
   this._Socket.on("reconnect_failed", this.__Socket_OnClose.bind(this));
-  this._Socket.on(STREAMID, this.__Socket_OnMessage.bind(this));
 
+  this._Socket.on(STREAMID, this.__Socket_OnMessage.bind(this));
   this._Socket.emit("subscribe", STREAMID);
 }
 
@@ -900,7 +929,7 @@ WebSocketClient.prototype.__Socket_OnMessage = function (data) {
 */
 
 function LogEvent(info) {
-  console.log(info);
+  console.debug(info);
 }
 
 function ToggleLogWindow() {
@@ -959,21 +988,21 @@ function AudioFormatReader_MPEG(ErrorCallback, DataReadyCallback) {
   // Number of frames to decode together (keyword: byte-reservoir)
   // For live streaming this means that you can push the minimum number of frames
   // on connection to the client to reduce waiting time without effecting the latency.
-  if (isAndroid && isFirefox)
+  if (userAgentInfo.isAndroid && userAgentInfo.isFirefox)
     AudioFormatReader_MPEG.prototype._WindowSize = 50;
-  else if (isAndroid && isNativeChrome)
+  else if (userAgentInfo.isAndroid && userAgentInfo.isNativeChrome)
     AudioFormatReader_MPEG.prototype._WindowSize = 30;
-  else if (isAndroid)
+  else if (userAgentInfo.isAndroid)
     AudioFormatReader_MPEG.prototype._WindowSize = 30;
   else
     AudioFormatReader_MPEG.prototype._WindowSize = 25;
 
   // Number of frames to use from one decoded window
-  if (isAndroid && isFirefox)
+  if (userAgentInfo.isAndroid && userAgentInfo.isFirefox)
     AudioFormatReader_MPEG.prototype._UseFrames = 40;
-  else if (isAndroid && isNativeChrome)
+  else if (userAgentInfo.isAndroid && userAgentInfo.isNativeChrome)
     AudioFormatReader_MPEG.prototype._UseFrames = 20;
-  else if (isAndroid)
+  else if (userAgentInfo.isAndroid)
     AudioFormatReader_MPEG.prototype._UseFrames = 5;
   else
     AudioFormatReader_MPEG.prototype._UseFrames = 2;
