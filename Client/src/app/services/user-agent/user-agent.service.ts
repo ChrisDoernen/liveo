@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from "@angular/core";
+import { Injectable } from "@angular/core";
 
 @Injectable({
   providedIn: "root"
@@ -9,10 +9,6 @@ export class UserAgentService {
   public isBrowserCompatible: boolean;
 
   constructor() {
-    this.GetUserAgentInfo();
-  }
-
-  public GetUserAgentInfo(): void {
     this.userAgentInfo = GetUserAgentInfo();
     this.isBrowserCompatible = CheckBrowserCompatibility();
   }
