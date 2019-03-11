@@ -12,6 +12,8 @@ export class HomeComponent {
 
   private _selectedStream: Stream = null;
 
+  public hideAboutOverlay: boolean = true;
+
   constructor(private _dataService: DataService,
     private _userAgentService: UserAgentService) {
   }
@@ -25,5 +27,9 @@ export class HomeComponent {
       this._selectedStream = stream;
       console.debug(`Selecting stream ${stream.id}.`);
     }
+  }
+
+  public showAboutOverlay(): void {
+    this.hideAboutOverlay = false;
   }
 }

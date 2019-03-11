@@ -42,7 +42,9 @@
 }
 
 .about {
-  margin-top: 120px;
+  margin-top: 80px;
+  padding: 0 var(--container-spacing);
+  text-align: center;
 }
 
 .about h1 {
@@ -61,4 +63,20 @@
   text-align: center;
   margin-bottom: 10px;
   width: 100%;
+}
+
+.about-overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  background-color: white;
+}
+
+.hidden {
+  display: none;
 }

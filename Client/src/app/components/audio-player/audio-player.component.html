@@ -1,4 +1,4 @@
-<div [ngClass]="{'disabled': this._selectedStream == null}" id="playercontrols" class="player">
+<div [ngClass]="{'disabled': !this._selectedStreamId}" id="playercontrols" class="player">
   <div class="player-controls">
     <i id="play-pause-button" class="fa fa-play fa-2x" aria-hidden="true"> </i>
   </div>

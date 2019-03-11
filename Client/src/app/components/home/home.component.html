@@ -32,8 +32,9 @@
       </div>
     </ng-template>
   </div>
-  <div class="content">
-    <audio-player [selectedStream]="this._selectedStream"></audio-player>
+  <div *ngIf="!_dataService.isLoading && _dataService.session" class="content">
+    <audio-player [selectedStream]="this._selectedStream?.id"></audio-player>
   </div>
 </div>
-<div class="about-link"><a routerLink="/about">Info/About</a></div>
+<div class="about-link"><a (click)="showAboutOverlay()">Info/About</a></div>
+<about [hidden]="hideAboutOverlay"></about>

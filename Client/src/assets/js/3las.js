@@ -139,33 +139,28 @@ function CheckFocus() {
 
 function Destroy3LasPlayer() {
   LogEvent("Destroying 3Las player.");
-  DisposeSocketClient();
-}
+  if (PlayerControls) {
+    PlayerControls.Stop();
+  }
 
-function DisposeSocketClient() {
   if (SocketClient) {
     LogEvent("Disposing socket client.");
     SocketClient.Disconnect();
     SocketClient = null;
   }
+
+  if (PlayerControls) {
+    PlayerControls = null;
+  }
 }
 
-function ChangeStream(streamId) {
-  if (PlayerControls) {
-    PlayerControls.Stop();
-  }
-  if (FormatReader) {
-    FormatReader.PurgeData();
-  }
-  StreamId = streamId;
-  LogEvent(`Stream id set to ${streamId}.`);
-  DisposeSocketClient();
-}
 
 // Initialize modules
-function Initialize3lasPlayer(server, port) {
+function Initialize3lasPlayer(server, port, streamId) {
   ServerName = server;
   SelectedPORT = port;
+  StreamId = streamId;
+  LogEvent(`Initialize 3las player with stream id ${streamId}, server ${server} and port ${port}.`);
 
   // if (typeof WebSocket === "undefined" && typeof webkitWebSocket === "undefined" && typeof mozWebSocket === "undefined") {
   //   document.getElementById("socketsunsupported").style.display = "block";
@@ -1124,6 +1119,7 @@ AudioFormatReader_MPEG.prototype.Poke = function () {
 
 // Deletes all frames from the databuffer and framearray and all samples from the samplearray
 AudioFormatReader_MPEG.prototype.PurgeData = function () {
+  LogEvent("Purge data from audio format reader.");
   this._DataBuffer = new Uint8Array(0);
 
   this._Frames = new Array();

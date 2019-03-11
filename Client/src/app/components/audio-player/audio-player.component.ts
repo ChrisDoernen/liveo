@@ -7,22 +7,24 @@ import { EndpointService } from "src/app/services/endpoint/endpoint.service";
   templateUrl: "./audio-player.component.html",
   styleUrls: ["./audio-player.component.css"]
 })
-export class AudioPlayerComponent implements OnInit, OnDestroy {
+export class AudioPlayerComponent implements OnDestroy {
 
-  private _selectedStream: Stream;
+  private _selectedStreamId: string;
 
   @Input()
-  public set selectedStream(stream: Stream) {
-    this._selectedStream = stream;
-    const streamId = stream ? stream.id : null;
-    ChangeStream(streamId);
+  public set selectedStream(streamId: string) {
+    console.debug(`Selected stream id: ${streamId}.`);
+    this._selectedStreamId = streamId;
+
+    if (streamId) {
+      Destroy3LasPlayer();
+      Initialize3lasPlayer(this._endpointService.ip, this._endpointService.port, streamId);
+    } else {
+      Destroy3LasPlayer();
+    }
   }
 
   constructor(private _endpointService: EndpointService) {
-  }
-
-  public ngOnInit(): void {
-    Initialize3lasPlayer(this._endpointService.ip, this._endpointService.port);
   }
 
   public ngOnDestroy(): void {

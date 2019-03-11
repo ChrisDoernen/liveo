@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { environment } from "src/environments/environment";
 
 @Component({
@@ -9,4 +9,11 @@ import { environment } from "src/environments/environment";
 export class AboutComponent {
   private _version: string = environment.version;
   private _revision: string = environment.revision;
+
+  @Input()
+  public hidden: boolean = true;
+
+  public hide(): void {
+    this.hidden = true;
+  }
 }
