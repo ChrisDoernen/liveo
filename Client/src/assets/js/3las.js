@@ -141,16 +141,14 @@ function Destroy3LasPlayer() {
   LogEvent("Destroying 3Las player.");
   if (PlayerControls) {
     PlayerControls.Stop();
+    PlayerControls.RemoveEventListener();
+    PlayerControls = null;
   }
 
   if (SocketClient) {
     LogEvent("Disposing socket client.");
     SocketClient.Disconnect();
     SocketClient = null;
-  }
-
-  if (PlayerControls) {
-    PlayerControls = null;
   }
 }
 
@@ -671,6 +669,22 @@ function HTMLPlayerControls(DivID) {
 
 // Pubic methods (external functions):
 // ===================================
+
+
+HTMLPlayerControls.prototype.RemoveEventListener = function () {
+
+  this._VolumeContainer.removeEventListener("touchstart", this.__hInteractBegin.bind(this), { passive: false });
+  this._VolumeContainer.removeEventListener("mousedown", this.__hInteractBegin.bind(this));
+
+  this._VolumeContainer.removeEventListener("touchend", this.__hInteractEnd.bind(this));
+  this._VolumeContainer.removeEventListener("mouseup", this.__hInteractEnd.bind(this));
+
+  this._VolumeContainer.removeEventListener("touchleave", this.__hInteractLeave.bind(this));
+  this._VolumeContainer.removeEventListener("mouseleave", this.__hInteractLeave.bind(this));
+
+  this._VolumeContainer.removeEventListener("touchmove", this.__hInteractMove.bind(this), { passive: false });
+  this._VolumeContainer.removeEventListener("mousemove", this.__hInteractMove.bind(this));
+}
 
 HTMLPlayerControls.prototype.ToogleActivityLight = function () {
   if (this._ActivityStatus) {
