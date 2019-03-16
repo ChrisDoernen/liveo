@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { EndpointService } from '../endpoint/endpoint.service';
-import { Activation } from 'apps/client/src/app/entities/activation.entity';
+import { ActivationEntity } from '@live/entities';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class ActivationService {
     private _endpointService: EndpointService
   ) {}
 
-  public async getActivation(): Promise<Activation> {
+  public async getActivation(): Promise<ActivationEntity> {
     return this._httpClient
       .get(this._endpointService.getEndpoint('activation'), {
         observe: 'response',
@@ -21,7 +21,7 @@ export class ActivationService {
       })
       .pipe(
         map((response: any) =>
-          response.status == 200 ? (response.body as Activation) : null
+          response.status === 200 ? (response.body as ActivationEntity) : null
         )
       )
       .toPromise();

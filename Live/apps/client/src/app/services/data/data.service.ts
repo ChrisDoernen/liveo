@@ -1,19 +1,19 @@
-import { Injectable, OnInit } from '@angular/core';
-import { Session } from '../../entities/session.entity';
-import { ActivationState } from '../../entities/activation-state';
+import { Injectable } from '@angular/core';
+import { ActivationService } from '../../services/activation/activation.service';
+import { StreamService } from '../../services/stream/stream.service';
 import { SessionService } from '../../services/session/session.service';
-import { ActivationService } from 'apps/client/src/app/services/activation/activation.service';
-import { Activation } from 'apps/client/src/app/entities/activation.entity';
-import { Stream } from 'apps/client/src/app/entities/stream.entity';
-import { StreamService } from 'apps/client/src/app/services/stream/stream.service';
+import { SessionEntity } from '@live/entities';
+import { ActivationState } from '@live/entities';
+import { ActivationEntity } from '@live/entities';
+import { StreamEntity } from '@live/entities';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  public session: Session = null;
-  public streams: Stream[] = [];
-  public activation: Activation = null;
+  public session: SessionEntity = null;
+  public streams: StreamEntity[] = [];
+  public activation: ActivationEntity = null;
   public activationState: ActivationState = null;
   public isLoading: boolean = true;
   public connectionError: boolean = false;

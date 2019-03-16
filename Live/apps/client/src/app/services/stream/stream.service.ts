@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { EndpointService } from '../endpoint/endpoint.service';
-import { Stream } from 'apps/client/src/app/entities/stream.entity';
+import { StreamEntity } from '@live/entities';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class StreamService {
     private _endpointService: EndpointService
   ) {}
 
-  public getStream(id: string): Promise<Stream> {
+  public getStream(id: string): Promise<StreamEntity> {
     return this._httpClient
       .get(this._endpointService.getEndpoint(`streams/${id}`), {
         observe: 'response',
@@ -21,7 +21,7 @@ export class StreamService {
       })
       .pipe(
         map((response: any) =>
-          response.status === 200 ? (response.body as Stream) : null
+          response.status === 200 ? (response.body as StreamEntity) : null
         )
       )
       .toPromise();

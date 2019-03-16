@@ -5,7 +5,7 @@ import { SessionService } from '../sessions/session-service';
 import { Scheduler } from '../scheduling/scheduler';
 import { ActivationService } from '../activation/activation-service';
 import { LinuxShutdownService } from '../shutdown/linux-shutdown-service';
-import { Activation } from '../activation/activation';
+import { Activation } from '@live/entities';
 import { Session } from '../sessions/session';
 
 describe('ActivationService', () => {

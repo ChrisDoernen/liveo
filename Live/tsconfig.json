@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@live/entities": ["libs/entities/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

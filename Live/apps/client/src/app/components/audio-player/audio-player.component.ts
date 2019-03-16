@@ -1,5 +1,5 @@
 import { Component, OnDestroy, Input } from '@angular/core';
-import { EndpointService } from 'apps/client/src/app/services/endpoint/endpoint.service';
+import { EndpointService } from '../../services/endpoint/endpoint.service';
 
 @Component({
   selector: 'audio-player',

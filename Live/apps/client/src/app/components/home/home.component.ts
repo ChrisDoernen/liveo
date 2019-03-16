@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { DataService } from 'apps/client/src/app/services/data/data.service';
-import { UserAgentService } from 'apps/client/src/app/services/user-agent/user-agent.service';
-import { Stream } from 'apps/client/src/app/entities/stream.entity';
+import { Component } from '@angular/core';
+import { DataService } from '../../services/data/data.service';
+import { UserAgentService } from '../../services/user-agent/user-agent.service';
+import { StreamEntity } from '@live/entities';
 
 @Component({
   selector: 'home',
@@ -9,7 +9,7 @@ import { Stream } from 'apps/client/src/app/entities/stream.entity';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  private _selectedStream: Stream = null;
+  private _selectedStream: StreamEntity = null;
 
   public hideAboutOverlay: boolean = true;
 
@@ -18,7 +18,7 @@ export class HomeComponent {
     private _userAgentService: UserAgentService
   ) {}
 
-  public streamOnClick(stream: Stream): void {
+  public streamOnClick(stream: StreamEntity): void {
     console.debug(`Click event on stream ${stream.id}.`);
     if (this._selectedStream == stream) {
       this._selectedStream = null;

@@ -27,12 +27,8 @@
               "apps/client/src/manifest.json",
               "apps/client/src/assets"
             ],
-            "styles": [
-              "apps/client/src/styles.scss"
-            ],
-            "scripts": [
-              "apps/client/src/assets/js/3las.js"
-            ],
+            "styles": ["apps/client/src/styles.scss"],
+            "scripts": ["apps/client/src/assets/js/3las.js"],
             "es5BrowserSupport": true
           },
           "configurations": {
@@ -87,9 +83,7 @@
               "apps/client/tsconfig.app.json",
               "apps/client/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "test": {
@@ -124,9 +118,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "apps/client-e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -144,9 +136,7 @@
             "outputPath": "dist/apps/service",
             "main": "apps/service/src/main.ts",
             "tsConfig": "apps/service/tsconfig.app.json",
-            "assets": [
-              "apps/service/src/assets"
-            ]
+            "assets": ["apps/service/src/assets"]
           },
           "configurations": {
             "production": {
@@ -176,9 +166,7 @@
               "apps/service/tsconfig.app.json",
               "apps/service/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "test": {
@@ -187,6 +175,36 @@
             "jestConfig": "apps/service/jest.config.js",
             "tsConfig": "apps/service/tsconfig.spec.json"
           }
+        }
+      }
+    },
+    "entities": {
+      "root": "libs/entities",
+      "sourceRoot": "libs/entities/src",
+      "projectType": "library",
+      "prefix": "live",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/entities/tsconfig.lib.json",
+              "libs/entities/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "libs/entities/jest.config.js",
+            "tsConfig": "libs/entities/tsconfig.spec.json"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/schematics:component": {
+          "styleext": "scss"
         }
       }
     }

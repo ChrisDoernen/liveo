@@ -16,6 +16,9 @@
     },
     "service": {
       "tags": []
+    },
+    "entities": {
+      "tags": []
     }
   }
 }

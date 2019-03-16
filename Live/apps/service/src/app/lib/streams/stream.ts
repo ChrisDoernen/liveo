@@ -1,15 +1,14 @@
-import { StreamData } from "./stream-data";
-import { Logger } from "../logging/logger";
-import { inject } from "inversify";
-import { StreamEntity } from "./stream.entity";
-import { IStreamingSource } from "../streaming-sources/i-streaming-source";
-import { StreamType } from "./stream-type";
+import { StreamData } from './stream-data';
+import { Logger } from '../logging/logger';
+import { inject } from 'inversify';
+import { StreamEntity } from '@live/entities';
+import { IStreamingSource } from '../streaming-sources/i-streaming-source';
+import { StreamType } from './stream-type';
 
 /**
  * Class representing a live stream
  */
 export class Stream {
-
   public get id(): string {
     return this._streamData.id;
   }
@@ -37,13 +36,21 @@ export class Stream {
     return this._source.hasValidDevice;
   }
 
-  constructor(@inject("Logger") private _logger: Logger,
-    @inject("StreamingSourceFactory") streamingSourceFactory: (deviceId: string, stream: Stream) => IStreamingSource,
-    private _streamData: StreamData) {
+  constructor(
+    @inject('Logger') private _logger: Logger,
+    @inject('StreamingSourceFactory')
+    streamingSourceFactory: (
+      deviceId: string,
+      stream: Stream
+    ) => IStreamingSource,
+    private _streamData: StreamData
+  ) {
     this._source = streamingSourceFactory(_streamData.deviceId, this);
 
     if (!this._source.hasValidDevice) {
-      this._logger.warn(`Stream ${this.id} has invalid device and will not be startable.`);
+      this._logger.warn(
+        `Stream ${this.id} has invalid device and will not be startable.`
+      );
     }
 
     _logger.debug(`Loaded stream ${JSON.stringify(_streamData)}.`);
@@ -59,7 +66,9 @@ export class Stream {
         this._logger.warn(`Stream ${this.id} is already started.`);
       }
     } else {
-      this._logger.warn(`Stream ${this.id} has an invalid device and can not be started.`);
+      this._logger.warn(
+        `Stream ${this.id} has an invalid device and can not be started.`
+      );
     }
   }
 
