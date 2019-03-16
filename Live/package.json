@@ -2,6 +2,7 @@
   "name": "live",
   "version": "0.0.0",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -27,7 +28,6 @@
     "dep-graph": "./node_modules/.bin/nx dep-graph",
     "help": "./node_modules/.bin/nx help"
   },
-  "private": true,
   "dependencies": {
     "express": "^4.16.4",
     "@angular/animations": "^7.0.0",
