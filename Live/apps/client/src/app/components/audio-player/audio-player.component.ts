@@ -16,11 +16,7 @@ export class AudioPlayerComponent implements OnDestroy {
 
     if (streamId) {
       Destroy3LasPlayer();
-      Initialize3lasPlayer(
-        this._endpointService.ip,
-        this._endpointService.port,
-        streamId
-      );
+      Initialize3lasPlayer('192.168.178.57', 3000, streamId);
     } else {
       Destroy3LasPlayer();
     }
