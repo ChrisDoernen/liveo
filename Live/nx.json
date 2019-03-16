@@ -13,6 +13,9 @@
     },
     "client-e2e": {
       "tags": []
+    },
+    "service": {
+      "tags": []
     }
   }
 }
