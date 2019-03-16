@@ -1,0 +1,14 @@
+<div class="about-overlay" [ngClass]="{'hidden': this.hidden }">
+  <div class="navigation">
+    <a (click)="hide()"><span class="close"></span></a>
+  </div>
+  <div class="about">
+    <h1>About</h1>
+    <p> This app is developed by Chris Dörnen.
+      It is still in beta stage, which means that it may not be working as intended.
+      If you encounter any issues please report them.</p>
+    <p>Due to technical reasons, the sound signal you hear is delayed around half a second
+      compared to the live audio.</p>
+  </div>
+  <div class="version-info">v{{this._version}}/{{this._revision}}</div>
+</div>

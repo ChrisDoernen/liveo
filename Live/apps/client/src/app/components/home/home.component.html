@@ -1,0 +1,40 @@
+<header></header>
+<div class="container">
+  <div class="content">
+    <ng-container *ngIf="!_dataService.isLoading && !_dataService.session; else sessionRetrieved">
+      <div *ngIf="_dataService.connectionError">
+        <div>There seems to be a problem with the WiFi connection. Please make sure you are connected to the right
+          network.</div>
+      </div>
+      <div *ngIf="!_dataService.connectionError">
+        <div>There is no session scheduled right now. We're happy to see you later.</div>
+      </div>
+    </ng-container>
+    <ng-template #sessionRetrieved>
+      <div *ngIf="_dataService.activationState === _dataService.ActivationState.ActivatedSessionScheduled">
+        Session {{session?.title}} is scheduled to start at {{activation?.timeStarting}}. Stay tuned!
+      </div>
+      <div *ngIf="_dataService.activationState === _dataService.ActivationState.ActivatedSessionEnded">
+        The session has ended. Thanks for joining us.
+      </div>
+      <div *ngIf="_dataService.activationState === _dataService.ActivationState.ActivatedSessionStarted">
+        <div>Live now:</div>
+        <div class="session-title">{{_dataService.session?.title}}</div>
+        <div class="stream-list">
+          <div *ngFor="let stream of _dataService.streams" class="stream-list-item">
+            <i *ngIf="this._selectedStream == stream" class="fa fa-check" aria-hidden="true"> </i>
+            <a class="stream-link" (click)="streamOnClick(stream)"
+              [ngClass]="{'selected': this._selectedStream == stream, 'other-selected': this._selectedStream && this._selectedStream != stream}">
+              {{stream.title}}
+            </a>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+  <div *ngIf="!_dataService.isLoading && _dataService.session" class="content">
+    <audio-player [selectedStream]="this._selectedStream?.id"></audio-player>
+  </div>
+</div>
+<div class="about-link"><a (click)="showAboutOverlay()">Info/About</a></div>
+<about [hidden]="hideAboutOverlay"></about>

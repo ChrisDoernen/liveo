@@ -1,0 +1,17 @@
+.header {
+  position: absolute;
+  width: 100vw;
+}
+
+::ng-deep .header-logo.primary .live-logo {
+  fill: var(--primary-color);
+}
+
+::ng-deep .header-logo.white .live-logo {
+  fill: whitesmoke;
+}
+
+.header-logo {
+  text-align: center;
+  margin-top: 5px;
+}
