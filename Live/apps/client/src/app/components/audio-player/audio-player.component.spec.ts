@@ -1,13 +1,13 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { AudioPlayerComponent } from "./audio-player.component";
-import { StreamService } from "src/app/services/stream/stream.service";
-import { ActivatedRoute, convertToParamMap } from "@angular/router";
-import { HeaderComponent } from "../header/header.component";
-import { InlineSVGDirective } from "ng-inline-svg";
-import { HttpClient } from "@angular/common/http";
-import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AudioPlayerComponent } from './audio-player.component';
+import { StreamService } from 'apps/client/src/app/services/stream/stream.service';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { HeaderComponent } from '../header/header.component';
+import { InlineSVGDirective } from 'ng-inline-svg';
+import { HttpClient } from '@angular/common/http';
+import { InlineSVGService } from 'ng-inline-svg/lib/inline-svg.service';
 
-describe("StreamComponent", () => {
+describe('StreamComponent', () => {
   let component: AudioPlayerComponent;
   let fixture: ComponentFixture<AudioPlayerComponent>;
 
@@ -18,7 +18,7 @@ describe("StreamComponent", () => {
     const activatedRoute = {
       snapshot: {
         paramMap: convertToParamMap({
-          id: "1sfd"
+          id: '1sfd'
         })
       }
     };
@@ -37,7 +37,7 @@ describe("StreamComponent", () => {
     component = fixture.componentInstance;
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

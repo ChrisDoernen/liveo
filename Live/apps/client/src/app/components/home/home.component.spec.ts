@@ -1,18 +1,17 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from "@angular/core/testing";
-import { HomeComponent } from "./home.component";
-import { HeaderComponent } from "../header/header.component";
-import { RouterModule } from "@angular/router";
-import { InlineSVGDirective } from "ng-inline-svg";
-import createMockInstance from "jest-create-mock-instance";
-import { async as _async } from "rxjs/scheduler/async";
-import { DataService } from "src/app/services/data/data.service";
-import { AudioPlayerComponent } from "../audio-player/audio-player.component";
-import { AboutComponent } from "../about/about.component";
-import { UserAgentService } from "src/app/services/user-agent/user-agent.service";
-import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
-import { HttpClient } from "@angular/common/http";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HomeComponent } from './home.component';
+import { HeaderComponent } from '../header/header.component';
+import { RouterModule } from '@angular/router';
+import { InlineSVGDirective } from 'ng-inline-svg';
+import createMockInstance from 'jest-create-mock-instance';
+import { DataService } from 'apps/client/src/app/services/data/data.service';
+import { AudioPlayerComponent } from '../audio-player/audio-player.component';
+import { AboutComponent } from '../about/about.component';
+import { UserAgentService } from 'apps/client/src/app/services/user-agent/user-agent.service';
+import { InlineSVGService } from 'ng-inline-svg/lib/inline-svg.service';
+import { HttpClient } from '@angular/common/http';
 
-describe("HomeComponent", () => {
+describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
   let dataService: jest.Mocked<DataService>;
@@ -43,7 +42,7 @@ describe("HomeComponent", () => {
     component = fixture.componentInstance;
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

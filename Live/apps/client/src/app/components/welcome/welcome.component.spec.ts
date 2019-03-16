@@ -1,13 +1,13 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { WelcomeComponent } from "./welcome.component";
-import { Router } from "@angular/router";
-import { UserAgentService } from "src/app/services/user-agent/user-agent.service";
-import createMockInstance from "jest-create-mock-instance";
-import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
-import { InlineSVGDirective } from "ng-inline-svg";
-import { HttpClient } from "@angular/common/http";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { WelcomeComponent } from './welcome.component';
+import { Router } from '@angular/router';
+import { UserAgentService } from 'apps/client/src/app/services/user-agent/user-agent.service';
+import createMockInstance from 'jest-create-mock-instance';
+import { InlineSVGService } from 'ng-inline-svg/lib/inline-svg.service';
+import { InlineSVGDirective } from 'ng-inline-svg';
+import { HttpClient } from '@angular/common/http';
 
-describe("WelcomeComponent", () => {
+describe('WelcomeComponent', () => {
   let component: WelcomeComponent;
   let fixture: ComponentFixture<WelcomeComponent>;
   let userAgentService: jest.Mocked<UserAgentService>;
@@ -31,7 +31,7 @@ describe("WelcomeComponent", () => {
     component = fixture.componentInstance;
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
