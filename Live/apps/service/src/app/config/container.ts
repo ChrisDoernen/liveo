@@ -29,7 +29,7 @@ import { IStreamingSource } from '../lib/streaming-sources/i-streaming-source';
 
 export const container = new Container();
 
-if (ServiceConfig.development) {
+if (ServiceConfig.production) {
   container
     .bind<ShutdownService>('ShutdownService')
     .to(ShutdownSimulationService)

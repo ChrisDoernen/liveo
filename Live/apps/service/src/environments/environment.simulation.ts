@@ -1,5 +1,5 @@
 export const environment = {
-  production: true,
-  simulate: false,
+  production: false,
+  simulate: true,
   port: 3000
 };

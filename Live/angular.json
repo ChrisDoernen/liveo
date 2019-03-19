@@ -150,6 +150,14 @@
                 }
               ],
               "externalDependencies": "none"
+            },
+            "simulation": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/service/src/environments/environment.ts",
+                  "with": "apps/service/src/environments/environment.simulation.ts"
+                }
+              ]
             }
           }
         },
@@ -157,6 +165,14 @@
           "builder": "@nrwl/builders:node-execute",
           "options": {
             "buildTarget": "service:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "service:build:production"
+            },
+            "simulation": {
+              "buildTarget": "service:build:simulation"
+            }
           }
         },
         "lint": {
