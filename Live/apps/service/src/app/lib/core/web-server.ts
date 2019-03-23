@@ -1,4 +1,3 @@
-import { container } from '../../config/container';
 import { InversifyExpressServer } from 'inversify-express-utils';
 import { Logger } from '../logging/logger';
 import { ServiceConfig } from '../../config/service.config';
@@ -15,7 +14,7 @@ import '../../controller/activation.controller';
 export class WebServer {
   constructor(@inject('Logger') private _logger: Logger) {}
 
-  public initializeAndListen(): any {
+  public initializeAndListen(container: any): any {
     const expressServer = new InversifyExpressServer(container);
 
     expressServer.setConfig(app => {

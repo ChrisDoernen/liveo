@@ -18,7 +18,7 @@ export class Bootstrapper {
     @inject('WebsocketServer') private _websocketServer: WebsocketServer
   ) {}
 
-  public startServer(): void {
+  public startServer(container): void {
     this._logger.info('Starting Live server...');
     this._logger.debug(`Production: ${ServiceConfig.production}.`);
     this._logger.debug(`OS: ${ServiceConfig.os}.`);
@@ -28,7 +28,7 @@ export class Bootstrapper {
     this._deviceDetector.detectDevices().then(() => {
       this._streamService.loadStreams();
       this._sessionService.loadSessions();
-      const server = this._webServer.initializeAndListen();
+      const server = this._webServer.initializeAndListen(container);
       this._websocketServer.initializeAndListen(server);
     });
   }
