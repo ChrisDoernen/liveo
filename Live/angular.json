@@ -241,5 +241,5 @@
       "style": "scss"
     }
   },
-  "defaultProject": ""
+  "defaultProject": "client"
 }
