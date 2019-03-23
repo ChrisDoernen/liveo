@@ -16,7 +16,7 @@ describe('DataService', () => {
   });
 
   it('should load sessions correctly when json is valid', () => {
-    ServiceConfig.sessions = `${appRoot}/src/tests/resources/data/valid-sessions.json`;
+    ServiceConfig.sessions = `${appRoot}/apps/service/src/app/test-resources/data/valid-sessions.json`;
     const sessions = dataService.loadSessionData();
 
     const expectedSessionOne = new SessionData('bd34', 'Service', ['0ag8']);

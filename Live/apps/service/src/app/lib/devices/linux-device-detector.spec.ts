@@ -34,7 +34,7 @@ describe('LinuxDeviceDetector', () => {
   });
 
   it('should parse devices correctly when two devices are available', () => {
-    const oneDeviceAvailableResource = `${appRoot}/src/tests/resources/system/devices/arecordTwoAvailable.txt`;
+    const oneDeviceAvailableResource = `${appRoot}/apps/service/src/app/test-resources/system/devices/arecordTwoAvailable.txt`;
     const response = fs.readFileSync(oneDeviceAvailableResource, 'utf8');
     jest
       .spyOn(processExecutionService, 'execute')

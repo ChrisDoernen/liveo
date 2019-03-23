@@ -5,7 +5,7 @@ import { SessionService } from '../sessions/session-service';
 import { Scheduler } from '../scheduling/scheduler';
 import { ActivationService } from '../activation/activation-service';
 import { LinuxShutdownService } from '../shutdown/linux-shutdown-service';
-import { Activation } from '@live/entities';
+import { ActivationEntity } from '@live/entities';
 import { Session } from '../sessions/session';
 
 describe('ActivationService', () => {
@@ -38,19 +38,19 @@ describe('ActivationService', () => {
   });
 
   it('should throw on set activation with activation where end time is lower than start time', () => {
-    const activation = new Activation('b8s6', 2, 1);
+    const activation = new ActivationEntity('b8s6', 2, 1);
 
     expect(() => activationService.setActivation(activation)).toThrow();
   });
 
   it('should throw on set activation with activation where session id is null', () => {
-    const activation = new Activation(null);
+    const activation = new ActivationEntity(null);
 
     expect(() => activationService.setActivation(activation)).toThrow();
   });
 
   it('should throw on set activation with activation where shutdown time is lower than end time', () => {
-    const activation = new Activation('b8s6', 2, 4, 3);
+    const activation = new ActivationEntity('b8s6', 2, 4, 3);
 
     expect(() => activationService.setActivation(activation)).toThrow();
   });
@@ -59,7 +59,7 @@ describe('ActivationService', () => {
     const session = createMockInstance(Session);
     Object.defineProperty(session, 'hasValidStreams', { get: () => false });
     sessionService.getSession.mockReturnValue(session);
-    const activation = new Activation('b8s6');
+    const activation = new ActivationEntity('b8s6');
 
     expect(() => activationService.setActivation(activation)).toThrow();
   });
@@ -68,7 +68,7 @@ describe('ActivationService', () => {
     const session = createMockInstance(Session);
     Object.defineProperty(session, 'hasValidStreams', { get: () => true });
     sessionService.getSession.mockReturnValue(session);
-    const activation = new Activation('b8s6');
+    const activation = new ActivationEntity('b8s6');
 
     activationService.setActivation(activation);
     expect(sessionService.getSession).toHaveBeenCalledWith('b8s6');
@@ -86,7 +86,7 @@ describe('ActivationService', () => {
     // jest.spyOn(session, "hasValidStreams", "get");
     Object.defineProperty(session, 'hasValidStreams', { get: () => true });
     sessionService.getSession.mockReturnValue(session);
-    const activation = new Activation('b8s6', 1578834025100);
+    const activation = new ActivationEntity('b8s6', 1578834025100);
 
     activationService.setActivation(activation);
     expect(sessionService.getSession).toHaveBeenCalledWith('b8s6');
