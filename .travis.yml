@@ -8,14 +8,10 @@ install:
   - nvm install 8.11.3
   - nvm use 8.11.3
 script:
-  - cd $TRAVIS_BUILD_DIR/Client
+  - cd $TRAVIS_BUILD_DIR
   - npm install
-  - npm run test
-  - npm run buildProd
-  - cd $TRAVIS_BUILD_DIR/Service
-  - npm install
-  - npm run test
-  - npm run buildProd
+  - npm run test-ci
+  - npm run build-prod
 notifications:
   email:
     on_failure: always
