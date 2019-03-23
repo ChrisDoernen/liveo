@@ -7,7 +7,7 @@ import { EndpointService } from '../../services/endpoint/endpoint.service';
   styleUrls: ['./audio-player.component.scss']
 })
 export class AudioPlayerComponent implements OnDestroy {
-  private _selectedStreamId: string;
+  public _selectedStreamId: string;
 
   @Input()
   public set selectedStream(streamId: string) {

@@ -14,7 +14,7 @@ export class HomeComponent {
   public hideAboutOverlay: boolean = true;
 
   constructor(
-    private _dataService: DataService,
+    public _dataService: DataService,
     private _userAgentService: UserAgentService
   ) {}
 

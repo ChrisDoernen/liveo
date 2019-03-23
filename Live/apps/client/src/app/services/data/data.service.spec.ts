@@ -4,10 +4,10 @@ import { SessionService } from '../session/session.service';
 import { StreamService } from '../stream/stream.service';
 import { ActivationService } from '../activation/activation.service';
 import createMockInstance from 'jest-create-mock-instance';
-import { Activation } from 'apps/client/src/app/entities/activation.entity';
-import { Session } from 'apps/client/src/app/entities/session.entity';
-import { Stream } from 'apps/client/src/app/entities/stream.entity';
-import { StreamType } from 'apps/client/src/app/entities/stream-type';
+import { ActivationEntity } from '@live/entities';
+import { SessionEntity } from '@live/entities';
+import { StreamEntity } from '@live/entities';
+import { StreamType } from '@live/entities';
 
 describe('DataService', () => {
   let dataService: DataService;
@@ -15,9 +15,18 @@ describe('DataService', () => {
   let streamService: jest.Mocked<StreamService>;
   let activationService: jest.Mocked<ActivationService>;
 
-  const session = new Session('3edf', 'A title', null, null, null, ['b76s']);
-  const activation = new Activation('3edf');
-  const stream = new Stream('b76s', '', null, 'de', StreamType.Audio, true);
+  const session = new SessionEntity('3edf', 'A title', null, null, null, [
+    'b76s'
+  ]);
+  const activation = new ActivationEntity('3edf');
+  const stream = new StreamEntity(
+    'b76s',
+    '',
+    null,
+    'de',
+    StreamType.Audio,
+    true
+  );
 
   beforeEach(() => {
     sessionService = createMockInstance(SessionService);

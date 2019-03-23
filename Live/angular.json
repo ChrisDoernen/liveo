@@ -149,7 +149,8 @@
                   "with": "apps/service/src/environments/environment.prod.ts"
                 }
               ],
-              "externalDependencies": "none"
+              "externalDependencies": "all",
+              "sourceMap": false
             },
             "simulation": {
               "fileReplacements": [

@@ -7,8 +7,8 @@ import { environment } from 'apps/client/src/environments/environment';
   styleUrls: ['./about.component.scss']
 })
 export class AboutComponent {
-  private _version: string = environment.version;
-  private _revision: string = environment.revision;
+  public _version: string = environment.version;
+  public _revision: string = environment.revision;
 
   @Input()
   public hidden: boolean = true;
