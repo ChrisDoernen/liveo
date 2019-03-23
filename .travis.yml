@@ -8,7 +8,7 @@ install:
   - nvm install 8.11.3
   - nvm use 8.11.3
 script:
-  - cd $TRAVIS_BUILD_DIR
+  - cd $TRAVIS_BUILD_DIR/Live
   - npm install
   - npm run test-ci
   - npm run build-prod
