@@ -10,6 +10,7 @@ install:
 script:
   - cd $TRAVIS_BUILD_DIR/Live
   - npm install
+  - npm run prebuild 
   - npm run test-ci
   - npm run build-prod
 notifications:
