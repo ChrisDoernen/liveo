@@ -9,9 +9,17 @@ import { StreamEntity } from '@live/entities';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  private _selectedStream: StreamEntity = null;
+  public _selectedStream: StreamEntity = null;
 
-  public hideAboutOverlay: boolean = true;
+  private _isAboutOverlayHidden = true;
+
+  public set isAboutOverlayHidden(value: boolean) {
+    this._isAboutOverlayHidden = value;
+  }
+
+  public get isAboutOverlayHidden(): boolean {
+    return this._isAboutOverlayHidden;
+  }
 
   constructor(
     public _dataService: DataService,
@@ -30,6 +38,6 @@ export class HomeComponent {
   }
 
   public showAboutOverlay(): void {
-    this.hideAboutOverlay = false;
+    this.isAboutOverlayHidden = false;
   }
 }
