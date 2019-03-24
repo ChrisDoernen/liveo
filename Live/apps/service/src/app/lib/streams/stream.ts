@@ -24,11 +24,13 @@ export class Stream {
       null,
       this.data.countryCode,
       StreamType.Audio,
-      this._isStarted
+      this.isStarted
     );
   }
 
-  private _isStarted: boolean;
+  private get isStarted(): boolean {
+    return this._source.isStreaming;
+  }
 
   private _source: IStreamingSource;
 
@@ -58,10 +60,9 @@ export class Stream {
 
   public start(): void {
     if (this.hasValidDevice) {
-      if (!this._isStarted) {
+      if (!this.isStarted) {
         this._source.startStreaming();
         this._logger.info(`Started stream ${this._streamData.id}.`);
-        this._isStarted = true;
       } else {
         this._logger.warn(`Stream ${this.id} is already started.`);
       }
@@ -73,10 +74,9 @@ export class Stream {
   }
 
   public stop(): void {
-    if (this._isStarted) {
+    if (this.isStarted) {
       this._source.stopStreaming();
       this._logger.info(`Stopped stream ${this._streamData.id}.`);
-      this._isStarted = false;
     } else {
       this._logger.warn(`Stream ${this.id} is already stopped.`);
     }

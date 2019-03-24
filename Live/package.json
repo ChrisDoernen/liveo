@@ -6,6 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start-client": "ng serve client --port 4200 --host 0.0.0.0",
     "get-version": "ts-node -O '{\"module\": \"commonjs\"}' git-version.ts",
     "build": "ng build",
     "build-prod": "ng build client --prod && ng build service --prod",

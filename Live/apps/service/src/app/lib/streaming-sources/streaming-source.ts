@@ -17,6 +17,7 @@ export class StreamingSource implements IStreamingSource {
   private _childProcess: ChildProcess;
   private _command: string;
   private _arguments: string[] = [];
+  public isStreaming: boolean;
 
   constructor(
     @inject('Logger') private _logger: Logger,
@@ -66,20 +67,22 @@ export class StreamingSource implements IStreamingSource {
     this._childProcess.stderr.on('data', data =>
       this._ffmpegLogger.info(`${data}`)
     );
-    this._childProcess.on('close', code =>
+    this._childProcess.on('close', code => {
+      this.isStreaming = false;
       this._logger.info(
         `Child process for device ${this._device.id} exited code: ${code}.`
-      )
-    );
+      );
+    });
+    this.isStreaming = true;
   }
 
   public stopStreaming(): void {
+    this._websocketServer.removeStream(this._stream.id);
     this._childProcess.kill();
     this._logger.debug(
       `Killing child process for device ${this._device.id} with PID ${
         this._childProcess.pid
       }.`
     );
-    this._websocketServer.removeStream(this._stream.id);
   }
 }
