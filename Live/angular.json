@@ -224,6 +224,66 @@
           "styleext": "scss"
         }
       }
+    },
+    "user-agent": {
+      "root": "libs/user-agent",
+      "sourceRoot": "libs/user-agent/src",
+      "projectType": "library",
+      "prefix": "live",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/user-agent/tsconfig.lib.json",
+              "libs/user-agent/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "libs/user-agent/jest.config.js",
+            "tsConfig": "libs/user-agent/tsconfig.spec.json"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/schematics:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "l3as": {
+      "root": "libs/l3as",
+      "sourceRoot": "libs/l3as/src",
+      "projectType": "library",
+      "prefix": "live",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/l3as/tsconfig.lib.json",
+              "libs/l3as/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "libs/l3as/jest.config.js",
+            "tsConfig": "libs/l3as/tsconfig.spec.json"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/schematics:component": {
+          "styleext": "scss"
+        }
+      }
     }
   },
   "cli": {

@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
+import {
+  UserAgentInfo,
+  GetUserAgentInfo,
+  CheckBrowserCompatibility
+} from '@live/l3as';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserAgentService {
-  public userAgentInfo: any;
+  public userAgentInfo: UserAgentInfo;
   public isBrowserCompatible: boolean;
 
   constructor() {

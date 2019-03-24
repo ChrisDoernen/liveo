@@ -15,7 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@live/entities": ["libs/entities/src/index.ts"]
+      "@live/entities": ["libs/entities/src/index.ts"],
+      "@live/user-agent": ["libs/user-agent/src/index.ts"],
+      "@live/l3as": ["libs/l3as/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
