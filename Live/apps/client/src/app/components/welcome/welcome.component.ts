@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataService } from 'apps/client/src/app/services/data/data.service';
-import { UserAgentService } from 'apps/client/src/app/services/user-agent/user-agent.service';
+import { DataService } from '../../services/data/data.service';
+import { UserAgentService } from '@live/user-agent';
 
 @Component({
   selector: 'app-welcome',

@@ -1,4 +1,4 @@
-function CheckBrowserCompatibility() {
+export function CheckBrowserCompatibility() {
   if (
     typeof AudioContext === 'undefined' &&
     typeof webkitAudioContext === 'undefined' &&

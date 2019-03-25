@@ -1,4 +1,4 @@
-function GetUserAgentInfo() {
+export function GetUserAgentInfo() {
   console.debug('Evaluating user agent.');
 
   var ua = navigator.userAgent.toLowerCase();

@@ -261,6 +261,23 @@
       "projectType": "library",
       "prefix": "live",
       "architect": {
+        "build": {
+          "builder": "@nrwl/builders:node-build",
+          "options": {
+            "outputPath": "dist/libs/l3as",
+            "main": "libs/l3as/src/index.js",
+            "tsConfig": "libs/l3as/tsconfig.lib.json"
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "externalDependencies": "all",
+              "sourceMap": false
+            }
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -277,11 +294,6 @@
             "jestConfig": "libs/l3as/jest.config.js",
             "tsConfig": "libs/l3as/tsconfig.spec.json"
           }
-        }
-      },
-      "schematics": {
-        "@nrwl/schematics:component": {
-          "styleext": "scss"
         }
       }
     }

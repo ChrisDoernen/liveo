@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DataService } from '../../services/data/data.service';
-import { UserAgentService } from '../../services/user-agent/user-agent.service';
+import { UserAgentService } from '@live/user-agent';
 import { StreamEntity } from '@live/entities';
 
 @Component({
