@@ -30,84 +30,40 @@ import { IStreamingSource } from '../lib/streaming-sources/i-streaming-source';
 export const container = new Container();
 
 if (ServiceConfig.production) {
-  container
-    .bind<ShutdownService>('ShutdownService')
-    .to(ShutdownSimulationService)
-    .inSingletonScope();
+  container.bind<ShutdownService>('ShutdownService').to(ShutdownSimulationService).inSingletonScope();
 } else if (ServiceConfig.os === 'linux') {
-  container
-    .bind<ShutdownService>('ShutdownService')
-    .to(LinuxShutdownService)
-    .inSingletonScope();
+  container.bind<ShutdownService>('ShutdownService').to(LinuxShutdownService).inSingletonScope();
 } else {
   throw new Error('OS is unsupported.');
 }
 
 if (ServiceConfig.simulate) {
-  container
-    .bind<IDeviceDetector>('IDeviceDetector')
-    .to(SimulationDeviceDetector)
-    .inSingletonScope();
-  container
-    .bind<interfaces.Factory<IStreamingSource>>('StreamingSourceFactory')
-    .toFactory(StreamingSimulationSourceFactory);
+  container.bind<IDeviceDetector>('IDeviceDetector').to(SimulationDeviceDetector).inSingletonScope();
+  container.bind<interfaces.Factory<IStreamingSource>>('StreamingSourceFactory').toFactory(StreamingSimulationSourceFactory);
 } else {
   if (ServiceConfig.os === 'linux') {
-    container
-      .bind<IDeviceDetector>('IDeviceDetector')
-      .to(LinuxDeviceDetector)
-      .inSingletonScope();
+    container.bind<IDeviceDetector>('IDeviceDetector').to(LinuxDeviceDetector).inSingletonScope();
   } else {
     throw new Error(
       `Device detection for OS ${ServiceConfig.os} is unsupported.`
     );
   }
 
-  container
-    .bind<interfaces.Factory<IStreamingSource>>('StreamingSourceFactory')
-    .toFactory(StreamingSourceFactory);
+  container.bind<interfaces.Factory<IStreamingSource>>('StreamingSourceFactory').toFactory(StreamingSourceFactory);
 }
 
-container
-  .bind<interfaces.Factory<Device>>('DeviceFactory')
-  .toFactory(DeviceFactory);
-container
-  .bind<interfaces.Factory<Stream>>('StreamFactory')
-  .toFactory(StreamFactory);
-container
-  .bind<interfaces.Factory<Session>>('SessionFactory')
-  .toFactory(SessionFactory);
+container.bind<interfaces.Factory<Device>>('DeviceFactory').toFactory(DeviceFactory);
+container.bind<interfaces.Factory<Stream>>('StreamFactory').toFactory(StreamFactory);
+container.bind<interfaces.Factory<Session>>('SessionFactory').toFactory(SessionFactory);
 
 container.bind<Logger>('Logger').toConstantValue(new Logger(ServiceLogger));
-container
-  .bind<Logger>('FfmpegLogger')
-  .toConstantValue(new Logger(FfmpegLogger));
+container.bind<Logger>('FfmpegLogger').toConstantValue(new Logger(FfmpegLogger));
 container.bind<Bootstrapper>('Bootstrapper').to(Bootstrapper);
 container.bind<DataService>('DataService').to(DataService);
-container
-  .bind<StreamService>('StreamService')
-  .to(StreamService)
-  .inSingletonScope();
-container
-  .bind<SessionService>('SessionService')
-  .to(SessionService)
-  .inSingletonScope();
-container
-  .bind<ProcessExecutionService>('ProcessExecutionService')
-  .to(ProcessExecutionService);
-container
-  .bind<WebServer>('WebServer')
-  .to(WebServer)
-  .inSingletonScope();
-container
-  .bind<WebsocketServer>('WebsocketServer')
-  .to(WebsocketServer)
-  .inSingletonScope();
-container
-  .bind<ActivationService>('ActivationService')
-  .to(ActivationService)
-  .inSingletonScope();
-container
-  .bind<Scheduler>('Scheduler')
-  .to(Scheduler)
-  .inSingletonScope();
+container.bind<StreamService>('StreamService').to(StreamService).inSingletonScope();
+container.bind<SessionService>('SessionService').to(SessionService).inSingletonScope();
+container.bind<ProcessExecutionService>('ProcessExecutionService').to(ProcessExecutionService);
+container.bind<WebServer>('WebServer').to(WebServer).inSingletonScope();
+container.bind<WebsocketServer>('WebsocketServer').to(WebsocketServer).inSingletonScope();
+container.bind<ActivationService>('ActivationService').to(ActivationService).inSingletonScope();
+container.bind<Scheduler>('Scheduler').to(Scheduler).inSingletonScope();
