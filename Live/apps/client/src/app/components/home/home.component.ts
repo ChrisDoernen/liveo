@@ -24,7 +24,7 @@ export class HomeComponent {
   constructor(
     public _dataService: DataService,
     private _userAgentService: UserAgentService
-  ) {}
+  ) { }
 
   public streamOnClick(stream: StreamEntity): void {
     console.debug(`Click event on stream ${stream.id}.`);

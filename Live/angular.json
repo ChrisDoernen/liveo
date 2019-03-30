@@ -262,20 +262,10 @@
       "prefix": "live",
       "architect": {
         "build": {
-          "builder": "@nrwl/builders:node-build",
+          "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "outputPath": "dist/libs/l3as",
-            "main": "libs/l3as/src/index.js",
-            "tsConfig": "libs/l3as/tsconfig.lib.json"
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "extractLicenses": true,
-              "inspect": false,
-              "externalDependencies": "all",
-              "sourceMap": false
-            }
+            "tsConfig": "libs/l3as/tsconfig.lib.json",
+            "project": "libs/l3as/ng-package.json"
           }
         },
         "lint": {
@@ -294,6 +284,11 @@
             "jestConfig": "libs/l3as/jest.config.js",
             "tsConfig": "libs/l3as/tsconfig.spec.json"
           }
+        }
+      },
+      "schematics": {
+        "@nrwl/schematics:component": {
+          "styleext": "scss"
         }
       }
     }

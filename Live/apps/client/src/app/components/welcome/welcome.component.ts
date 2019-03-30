@@ -13,7 +13,7 @@ export class WelcomeComponent implements OnInit {
     private _router: Router,
     private _dataService: DataService,
     private _userAgentService: UserAgentService
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     setTimeout(() => {

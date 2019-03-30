@@ -96,6 +96,7 @@
       "double"
     ],
     "newline-per-chained-call": false,
-    "array-element-newline": false
+    "array-element-newline": false,
+    "array-bracket-newline": false
   }
 }

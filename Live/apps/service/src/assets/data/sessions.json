@@ -1,10 +1,9 @@
 [
-    {
-        "id": "bd34",
-        "title": "Gottesdienst",
-        "streams": [
-            "4hdg",
-            "v67d"
-        ]
-    }
+  {
+    "id": "bd34",
+    "title": "Gottesdienst",
+    "streams": [
+      "4hdg"
+    ]
+  }
 ]

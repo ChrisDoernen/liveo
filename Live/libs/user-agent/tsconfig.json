@@ -1,7 +1,12 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "types": ["node", "jest"]
+    "types": [
+      "node",
+      "jest"
+    ]
   },
-  "include": ["**/*.ts", "../l3as/src/lib/index.d.ts"]
+  "include": [
+    "**/*.ts"
+  ]
 }

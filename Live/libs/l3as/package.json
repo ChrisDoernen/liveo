@@ -1,0 +1,6 @@
+{
+  "name": "@live/l3as",
+  "version": "0.0.0",
+  "main": "./src/index",
+  "typings": "./typings/index"
+}

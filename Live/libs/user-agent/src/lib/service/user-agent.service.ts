@@ -1,12 +1,8 @@
-import { Injectable } from '@angular/core';
-import {
-  UserAgentInfo,
-  GetUserAgentInfo,
-  CheckBrowserCompatibility
-} from '@live/l3as';
+import { Injectable } from "@angular/core";
+import { UserAgentInfo, GetUserAgentInfo, CheckBrowserCompatibility } from "@live/l3as";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class UserAgentService {
   public userAgentInfo: UserAgentInfo;

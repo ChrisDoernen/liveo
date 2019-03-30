@@ -16,13 +16,13 @@ export class AudioPlayerComponent implements OnDestroy {
 
     if (streamId) {
       Destroy3LasPlayer();
-      Initialize3lasPlayer('192.168.178.57', 3000, streamId);
+      Initialize3lasPlayer('192.168.2.119', 3000, streamId);
     } else {
       Destroy3LasPlayer();
     }
   }
 
-  constructor(private _endpointService: EndpointService) {}
+  constructor(private _endpointService: EndpointService) { }
 
   public ngOnDestroy(): void {
     Destroy3LasPlayer();

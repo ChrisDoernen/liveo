@@ -9,16 +9,30 @@
     "importHelpers": true,
     "target": "es5",
     "module": "es2015",
-    "typeRoots": ["node_modules/@types"],
-    "lib": ["es2017", "dom"],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@live/entities": ["libs/entities/src/index.ts"],
-      "@live/user-agent": ["libs/user-agent/src/index.ts"],
-      "@live/l3as": ["libs/l3as/src/index.ts"]
+      "@live/entities": [
+        "libs/entities/src/index.ts"
+      ],
+      "@live/user-agent": [
+        "libs/user-agent/src/index.ts"
+      ],
+      "@live/l3as": [
+        "libs/l3as"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }
