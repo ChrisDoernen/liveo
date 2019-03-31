@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { DataService } from '../../services/data/data.service';
-import { UserAgentService } from '@live/user-agent';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { DataService, UserAgentService } from "@live/services";
 
 @Component({
-  selector: 'app-welcome',
-  templateUrl: './welcome.component.html',
-  styleUrls: ['./welcome.component.scss']
+  selector: "app-welcome",
+  templateUrl: "./welcome.component.html",
+  styleUrls: ["./welcome.component.scss"]
 })
 export class WelcomeComponent implements OnInit {
   constructor(
@@ -17,7 +16,7 @@ export class WelcomeComponent implements OnInit {
 
   public ngOnInit(): void {
     setTimeout(() => {
-      this._router.navigate(['/home']);
+      this._router.navigate(["/home"]);
     }, 2200);
   }
 }

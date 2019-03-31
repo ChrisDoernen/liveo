@@ -14,7 +14,7 @@
     "build:app:service": "ng build service",
     "build:lib:l3as": "ng build l3as",
     "test": "ng test",
-    "test-ci": "ng test client && ng test service",
+    "test-ci": "ng test client && ng test service && ng test services",
     "lint": "./node_modules/.bin/nx lint && ng lint",
     "e2e": "ng e2e",
     "affected:apps": "./node_modules/.bin/nx affected:apps",

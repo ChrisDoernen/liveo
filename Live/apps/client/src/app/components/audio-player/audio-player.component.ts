@@ -1,10 +1,10 @@
-import { Component, OnDestroy, Input } from '@angular/core';
-import { EndpointService } from '../../services/endpoint/endpoint.service';
+import { Component, OnDestroy, Input } from "@angular/core";
+import { EndpointService } from "@live/services";
 
 @Component({
-  selector: 'audio-player',
-  templateUrl: './audio-player.component.html',
-  styleUrls: ['./audio-player.component.scss']
+  selector: "audio-player",
+  templateUrl: "./audio-player.component.html",
+  styleUrls: ["./audio-player.component.scss"]
 })
 export class AudioPlayerComponent implements OnDestroy {
   public _selectedStreamId: string;
@@ -16,7 +16,7 @@ export class AudioPlayerComponent implements OnDestroy {
 
     if (streamId) {
       Destroy3LasPlayer();
-      Initialize3lasPlayer('192.168.2.119', 3000, streamId);
+      Initialize3lasPlayer("192.168.2.119", 3000, streamId);
     } else {
       Destroy3LasPlayer();
     }

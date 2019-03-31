@@ -10,7 +10,6 @@ import { InlineSVGModule } from "ng-inline-svg";
 import { HeaderComponent } from "./components/header/header.component";
 import { WelcomeComponent } from "./components/welcome/welcome.component";
 import { AboutComponent } from "./components/about/about.component";
-import { ServicesModule } from "@live/services";
 
 @NgModule({
   declarations: [
@@ -27,7 +26,6 @@ import { ServicesModule } from "@live/services";
     AppRoutingModule,
     HttpClientModule,
     AppRoutingModule,
-    ServicesModule,
     InlineSVGModule.forRoot()
   ],
   providers: [
