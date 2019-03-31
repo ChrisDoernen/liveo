@@ -1,23 +1,23 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { EndpointService } from '../endpoint/endpoint.service';
-import { ActivationEntity } from '@live/entities';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { map } from "rxjs/operators";
+import { EndpointService } from "../endpoint/endpoint.service";
+import { ActivationEntity } from "@live/entities";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class ActivationService {
   constructor(
     private _httpClient: HttpClient,
     private _endpointService: EndpointService
-  ) {}
+  ) { }
 
   public async getActivation(): Promise<ActivationEntity> {
     return this._httpClient
-      .get(this._endpointService.getEndpoint('activation'), {
-        observe: 'response',
-        responseType: 'json'
+      .get(this._endpointService.getEndpoint("activation"), {
+        observe: "response",
+        responseType: "json"
       })
       .pipe(
         map((response: any) =>

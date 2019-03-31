@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc/libs/user-agent",
+    "outDir": "../../dist/out-tsc/libs/services",
     "target": "es2015",
     "module": "es2015",
     "moduleResolution": "node",

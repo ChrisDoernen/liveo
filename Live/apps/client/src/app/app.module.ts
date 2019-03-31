@@ -3,16 +3,14 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from "@angular/core";
 import { AppComponent } from "./app.component";
 import { HttpClientModule } from "@angular/common/http";
-import { SessionService } from "./services/session/session.service";
 import { HomeComponent } from "./components/home/home.component";
 import { AudioPlayerComponent } from "./components/audio-player/audio-player.component";
 import { AppRoutingModule } from "./app-routing.module";
-import { EndpointService } from "./services/endpoint/endpoint.service";
 import { InlineSVGModule } from "ng-inline-svg";
 import { HeaderComponent } from "./components/header/header.component";
 import { WelcomeComponent } from "./components/welcome/welcome.component";
-import { StreamService } from "./services/stream/stream.service";
-import { AboutComponent } from './components/about/about.component';
+import { AboutComponent } from "./components/about/about.component";
+import { ServicesModule } from "@live/services";
 
 @NgModule({
   declarations: [
@@ -29,12 +27,10 @@ import { AboutComponent } from './components/about/about.component';
     AppRoutingModule,
     HttpClientModule,
     AppRoutingModule,
+    ServicesModule,
     InlineSVGModule.forRoot()
   ],
   providers: [
-    EndpointService,
-    SessionService,
-    StreamService
   ],
   bootstrap: [AppComponent]
 })

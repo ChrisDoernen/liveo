@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
-import { ActivationService } from '../../services/activation/activation.service';
-import { StreamService } from '../../services/stream/stream.service';
-import { SessionService } from '../../services/session/session.service';
-import { SessionEntity } from '@live/entities';
-import { ActivationState } from '@live/entities';
-import { ActivationEntity } from '@live/entities';
-import { StreamEntity } from '@live/entities';
+import { Injectable } from "@angular/core";
+import { ActivationService } from "../activation/activation.service";
+import { StreamService } from "../stream/stream.service";
+import { SessionService } from "../session/session.service";
+import { SessionEntity } from "@live/entities";
+import { ActivationState } from "@live/entities";
+import { ActivationEntity } from "@live/entities";
+import { StreamEntity } from "@live/entities";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class DataService {
   public session: SessionEntity = null;
@@ -30,7 +30,7 @@ export class DataService {
   public loadData(): void {
     this.load()
       .then(() => {
-        console.log('Loading done.');
+        console.log("Loading done.");
       })
       .catch(error => {
         console.log(`Loading error: ${JSON.stringify(error)}.`);
@@ -62,7 +62,7 @@ export class DataService {
             console.log(`Loaded activation: ${JSON.stringify(activation)}.`);
             this.loadSession(activation.sessionId).then(resolve);
           } else {
-            console.log('No activation.');
+            console.log("No activation.");
             resolve();
           }
         })

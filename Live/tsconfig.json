@@ -23,11 +23,11 @@
       "@live/entities": [
         "libs/entities/src/index.ts"
       ],
-      "@live/user-agent": [
-        "libs/user-agent/src/index.ts"
-      ],
       "@live/l3as": [
         "libs/l3as"
+      ],
+      "@live/services": [
+        "libs/services/src/index.ts"
       ]
     }
   },
