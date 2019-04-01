@@ -40,3 +40,5 @@ AudioFormatReader.prototype.PurgeData = function () {
 // Force the reader to analyze his data
 AudioFormatReader.prototype.Poke = function () {
 };
+
+export default AudioFormatReader;

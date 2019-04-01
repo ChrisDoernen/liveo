@@ -1,3 +1,4 @@
+import AudioFormatReader from "./audio-format-reader.js";
 
 /*
 	MPEG-Audio-Format-Reader is part of 3LAS (Low Latency Live Audio Streaming)
@@ -467,3 +468,5 @@ function appendBuffer(buffer1, buffer2) {
   tmp.set(buffer2, buffer1.length);
   return tmp;
 }
+
+export default AudioFormatReader_MPEG;

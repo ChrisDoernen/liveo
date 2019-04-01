@@ -203,3 +203,4 @@ PCMAudioPlayer.prototype.PushBuffer = function (AudioBuffer) {
   }
 };
 
+export default PCMAudioPlayer;

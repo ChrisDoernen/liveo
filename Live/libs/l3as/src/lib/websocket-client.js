@@ -85,3 +85,5 @@ WebSocketClient.prototype.__Socket_OnMessage = function (data) {
   // Trigger callback
   this._DataReadyCallback(data);
 };
+
+export default WebSocketClient;
