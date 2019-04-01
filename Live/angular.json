@@ -31,7 +31,7 @@
               "apps/client/src/styles.scss"
             ],
             "scripts": [
-              "apps/client/src/assets/js/3las.js"
+              "apps/client/src/assets/js/pwacompat.min.js"
             ],
             "es5BrowserSupport": true
           },
