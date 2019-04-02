@@ -3,29 +3,33 @@ export declare class L3asPlayer {
   /**
    * Constructs the L3asPlayer instance
    * @param port The port to establish the websocket connection on
-   * @param OnPlayerUnderrun Callback to be called when player underruns
    */
-  constructor(port: string, OnPlayerUnderrun: () => void);
+  constructor(port: string);
 
   /**
-   * Establishes a websocket connection to a audio stream
+   * Establishes a websocket connection to a audio stream and starts playing
    * @param streamId The id of the stream to connect to
    */
-  ConnectToStream(streamId: string): void;
-
-  /**
-   * Start playback
-   */
-  Play(): void;
+  play(streamId: string): void;
 
   /**
    * Stops playback and disconnects from the stream
    */
-  Stop(): void;
+  stop(): void;
 
   /**
    * Sets the volume to the according value
    * @param volume Number between 0 and 1
    */
-  SetVolume(volume: number);
+  setVolume(volume: number);
+
+  /**
+   * Sets the volume to 0
+   */
+  mute();
+
+  /**
+   * Sets the volume to the last value before muting
+   */
+  unmute();
 }

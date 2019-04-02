@@ -246,10 +246,12 @@
       "prefix": "live",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@nrwl/builders:node-build",
           "options": {
+            "outputPath": "dist/libs/l3as",
+            "main": "libs/l3as/src/index.js",
             "tsConfig": "libs/l3as/tsconfig.lib.json",
-            "project": "libs/l3as/ng-package.json"
+            "project": "libs/l3as/package.json"
           }
         },
         "lint": {
