@@ -1,13 +1,16 @@
-import { Component, Input } from "@angular/core";
-import { AudioPlayerService } from "@live/services";
+import { Component, Input, OnInit } from "@angular/core";
+import { L3asPlayer } from "@live/l3as";
 
 @Component({
   selector: "audio-player",
   templateUrl: "./audio-player.component.html",
   styleUrls: ["./audio-player.component.scss"]
 })
-export class AudioPlayerComponent {
+export class AudioPlayerComponent implements OnInit {
+
   public _selectedStreamId: string;
+
+  private l3asPlayer: L3asPlayer;
 
   @Input()
   public set selectedStream(streamId: string) {
@@ -15,11 +18,13 @@ export class AudioPlayerComponent {
     this._selectedStreamId = streamId;
 
     if (streamId) {
-      this.audioPlayerService.play(streamId);
+      this.l3asPlayer.play(streamId);
     } else {
-      this.audioPlayerService.stop();
+      this.l3asPlayer.stop();
     }
   }
 
-  constructor(private audioPlayerService: AudioPlayerService) { }
+  public ngOnInit(): void {
+    this.l3asPlayer = new L3asPlayer();
+  }
 }
