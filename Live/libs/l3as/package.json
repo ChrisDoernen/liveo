@@ -1,6 +1,6 @@
 {
   "name": "@live/l3as",
   "version": "0.0.0",
-  "main": "../../dist/libs/l3as/main",
-  "typings": "./typings/index"
+  "main": "../../dist/libs/l3as/main.js",
+  "typings": "./typings/index.d.ts"
 }
