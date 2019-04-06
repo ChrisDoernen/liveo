@@ -1,7 +1,13 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "types": ["node", "jest"]
+    "types": [
+      "node",
+      "jest"
+    ]
   },
-  "include": ["**/*.ts"]
+  "include": [
+    "**/*.ts",
+    "../entities/src/lib/user-agent-info.ts"
+  ]
 }

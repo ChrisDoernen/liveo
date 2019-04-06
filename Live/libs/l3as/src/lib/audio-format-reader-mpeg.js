@@ -46,26 +46,27 @@ function AudioFormatReader_MPEG(ErrorCallback, DataReadyCallback) {
   // Number of frames to decode together (keyword: byte-reservoir)
   // For live streaming this means that you can push the minimum number of frames
   // on connection to the client to reduce waiting time without effecting the latency.
-  if (userAgentInfo.isAndroid && userAgentInfo.isFirefox)
-    AudioFormatReader_MPEG.prototype._WindowSize = 50;
-  else if (userAgentInfo.isAndroid && userAgentInfo.isNativeChrome)
-    AudioFormatReader_MPEG.prototype._WindowSize = 30;
-  else if (userAgentInfo.isAndroid)
-    AudioFormatReader_MPEG.prototype._WindowSize = 30;
-  else
-    AudioFormatReader_MPEG.prototype._WindowSize = 25;
+  // if (userAgentInfo.isAndroid && userAgentInfo.isFirefox)
+  //   AudioFormatReader_MPEG.prototype._WindowSize = 50;
+  // else if (userAgentInfo.isAndroid && userAgentInfo.isNativeChrome)
+  //   AudioFormatReader_MPEG.prototype._WindowSize = 30;
+  // else if (userAgentInfo.isAndroid)
+  //   AudioFormatReader_MPEG.prototype._WindowSize = 30;
+  // else
+  //   AudioFormatReader_MPEG.prototype._WindowSize = 25;
+  AudioFormatReader_MPEG.prototype._WindowSize = 50;
 
-  // Number of frames to use from one decoded window
-  if (userAgentInfo.isAndroid && userAgentInfo.isFirefox)
-    AudioFormatReader_MPEG.prototype._UseFrames = 40;
-  else if (userAgentInfo.isAndroid && userAgentInfo.isNativeChrome)
-    AudioFormatReader_MPEG.prototype._UseFrames = 20;
-  else if (userAgentInfo.isAndroid)
-    AudioFormatReader_MPEG.prototype._UseFrames = 5;
-  else
-    AudioFormatReader_MPEG.prototype._UseFrames = 2;
+  // // Number of frames to use from one decoded window
+  // if (userAgentInfo.isAndroid && userAgentInfo.isFirefox)
+  //   AudioFormatReader_MPEG.prototype._UseFrames = 40;
+  // else if (userAgentInfo.isAndroid && userAgentInfo.isNativeChrome)
+  //   AudioFormatReader_MPEG.prototype._UseFrames = 20;
+  // else if (userAgentInfo.isAndroid)
+  //   AudioFormatReader_MPEG.prototype._UseFrames = 5;
+  // else
+  //   AudioFormatReader_MPEG.prototype._UseFrames = 2;
+  AudioFormatReader_MPEG.prototype._UseFrames = 40;
 }
-
 
 // Settings:
 // =========

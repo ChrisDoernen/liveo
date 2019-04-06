@@ -1,9 +1,9 @@
+import io from 'socket.io-client';
 
 /*
 	Socket-Client is part of 3LAS (Low Latency Live Audio Streaming)
 	https://github.com/JoJoBond/3LAS
 */
-
 
 function WebSocketClient(URI, STREAMID, ErrorCallback, ConnectCallback, DataReadyCallback, DisconnectCallback) {
   // Check callback argument

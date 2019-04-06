@@ -13,14 +13,11 @@ export class L3asPlayer {
       port = 80;
     }
 
-    this.playerControls;
     this.audioPlayer;
     this.formatReader;
     this.socketClient;
     this.mime = "audio/mpeg";
     this.port = port;
-    this.userAgentInfo;
-    this.isBrowserCompatible;
     this.packetModCounter = 0;
     this.lastVolume;
 
@@ -28,11 +25,7 @@ export class L3asPlayer {
     this.lastCheckTime;
     this.focusChecker = null;
 
-    this.detectUserAgent();
-    this.checkBrowserCompatibility();
-
     this.logEvent(`Initialize 3las player with port ${this.port}.`);
-    this.logEvent(`Browser compatibility ${this.isBrowserCompatible}.`);
   }
 
   // Pubic methods (external functions):
@@ -66,7 +59,7 @@ export class L3asPlayer {
     }
 
     try {
-      this.formatReader = CreateAudioFormatReader(this.mime, this.onReaderError, this.onReaderDataReady);
+      this.formatReader = this.createAudioFormatReader(this.mime, this.onReaderError, this.onReaderDataReady);
       this.logEvent("Init of AudioFormatReader succeeded");
     } catch (e) {
       this.logEvent("Init of AudioFormatReader failed: " + e);
@@ -90,11 +83,6 @@ export class L3asPlayer {
 
   stop() {
     this.logEvent("Disconnecting.");
-    if (this.playerControls) {
-      this.playerControls.Stop();
-      this.playerControls.RemoveEventListener();
-      this.playerControls = null;
-    }
 
     if (this.socketClient) {
       this.logEvent("Disposing socket client.");
@@ -116,7 +104,7 @@ export class L3asPlayer {
       case "audio/mpeg":
       case "audio/MPA":
       case "audio/mpa-robust":
-        if (!CanDecodeTypes(new Array("audio/mpeg", "audio/MPA", "audio/mpa-robust")))
+        if (!this.canDecodeTypes(new Array("audio/mpeg", "audio/MPA", "audio/mpa-robust")))
           throw new Error('CreateAudioFormatReader: Browser can not decode specified mime-Type (' + mime + ')');
 
         return new AudioFormatReader_MPEG(errorCallback, dataReadyCallback);
@@ -125,6 +113,17 @@ export class L3asPlayer {
       default:
         throw new Error('CreateAudioFormatReader: Specified mime-Type (' + mime + ') not supported');
     }
+  }
+
+  canDecodeTypes(MIMETypes) {
+    var AudioTag = new Audio();
+
+    for (var i = 0; i < MIMETypes.length; i++) {
+      var answer = AudioTag.canPlayType(MIMETypes[i]);
+      if (answer === "probably" || answer === "maybe")
+        return true;
+    }
+    return false;
   }
 
   // Callback functions from format reader
@@ -170,7 +169,7 @@ export class L3asPlayer {
     this.formatReader.PushData(data);
   }
 
-  toogleActivityLight = function () {
+  toogleActivityLight() {
   }
 
   startFocusChecker() {

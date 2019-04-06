@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { UserAgentInfo } from "./user-agent-info";
+import { UserAgentInfo } from "@live/entities";
 
 @Injectable({
   providedIn: "root"
