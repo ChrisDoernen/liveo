@@ -2,9 +2,18 @@ export declare class L3asPlayer {
 
   /**
    * Constructs the L3asPlayer instance
-   * @param port The port to establish the websocket connection on
    */
-  constructor(userAgentInfo: any, port?: string);
+  constructor();
+
+  /**
+   * Wheter the state is playing or stopped
+   */
+  playing: boolean;
+
+  /**
+   * Whether the player is muted
+   */
+  muted: boolean;
 
   /**
    * Establishes a websocket connection to a audio stream and starts playing

@@ -12,11 +12,6 @@ export class AudioPlayerComponent implements OnInit {
 
   public _selectedStreamId: string;
   private l3asPlayer: L3asPlayer;
-  private userAgentInfo: UserAgentInfo;
-
-  constructor(userAgentService: UserAgentService) {
-    this.userAgentInfo = userAgentService.userAgentInfo;
-  }
 
   @Input()
   public set selectedStream(streamId: string) {
@@ -33,6 +28,6 @@ export class AudioPlayerComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.l3asPlayer = new L3asPlayer(this.userAgentInfo);
+    this.l3asPlayer = new L3asPlayer();
   }
 }

@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 	https://github.com/JoJoBond/3LAS
 */
 
-function WebSocketClient(URI, STREAMID, ErrorCallback, ConnectCallback, DataReadyCallback, DisconnectCallback) {
+function WebSocketClient(StreamId, ErrorCallback, ConnectCallback, DataReadyCallback, DisconnectCallback) {
   // Check callback argument
   if (typeof ErrorCallback !== 'function')
     throw new Error('WebSocketClient: ErrorCallback must be specified');
@@ -25,15 +25,15 @@ function WebSocketClient(URI, STREAMID, ErrorCallback, ConnectCallback, DataRead
   this._IsConnected = false;
 
   // Create socket, connect to URI
-  this._Socket = io(URI, { reconnectionAttempts: 3 });
+  this._Socket = io({ reconnectionAttempts: 3, path: '/socket' });
 
   this._Socket.on("connect", this.__Socket_OnOpen.bind(this));
   this._Socket.on("error", this.__Socket_OnError.bind(this));
   this._Socket.on("subscription_error", this.__Socket_OnError.bind(this));
   this._Socket.on("reconnect_failed", this.__Socket_OnClose.bind(this));
 
-  this._Socket.on(STREAMID, this.__Socket_OnMessage.bind(this));
-  this._Socket.emit("subscribe", STREAMID);
+  this._Socket.on(StreamId, this.__Socket_OnMessage.bind(this));
+  this._Socket.emit("subscribe", StreamId);
 }
 
 
@@ -50,7 +50,7 @@ WebSocketClient.prototype.GetStatus = function () {
 WebSocketClient.prototype.Disconnect = function () {
   this._Socket.close();
   this._IsConnected = false;
-  LogEvent("Disconnecting from server.");
+  console.debug("Disconnecting from server.");
 };
 
 
@@ -68,7 +68,7 @@ WebSocketClient.prototype.__Socket_OnError = function (event) {
 // Change connetion status once connected
 WebSocketClient.prototype.__Socket_OnOpen = function (event) {
   this._ConnectCallback();
-
+  this._IsConnected = false;
 };
 
 // Change connetion status on disconnect

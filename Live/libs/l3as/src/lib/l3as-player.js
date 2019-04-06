@@ -8,22 +8,15 @@ import AudioFormatReader_MPEG from "./audio-format-reader-mpeg.js";
 */
 export class L3asPlayer {
 
-  constructor(port) {
-    if (typeof port === 'undefined') {
-      port = 80;
-    }
-
+  constructor() {
     this.audioPlayer;
     this.formatReader;
     this.socketClient;
     this.mime = "audio/mpeg";
-    this.port = port;
     this.packetModCounter = 0;
     this.lastVolume;
-
-    // Check if page has lost focus (e.g. switching apps on mobile)
-    this.lastCheckTime;
-    this.focusChecker = null;
+    this.playing;
+    this.muted;
 
     this.logEvent(`Initialize 3las player with port ${this.port}.`);
   }
@@ -38,10 +31,12 @@ export class L3asPlayer {
 
   mute() {
     this.audioPlayer.SetVolume(0);
+    this.muted = true;
   }
 
   unmute() {
     this.audioPlayer.SetVolume(this.lastVolume);
+    this.muted = false;
   }
 
   play(streamId) {
@@ -70,8 +65,7 @@ export class L3asPlayer {
       this.audioPlayer.MobileUnmute();
       try {
         this.logEvent("Play was clicked, trying to connect to server.");
-        this.socketClient = new WebSocketClient('ws://' + ServerName + ':' + SelectedPORT.toString(), streamId,
-          this.onSocketError, this.onSocketConnect, this.onSocketDataReady, this.onSocketDisconnect);
+        this.socketClient = new WebSocketClient(streamId, this.onSocketError, this.onSocketConnect, this.onSocketDataReady, this.onSocketDisconnect);
         this.logEvent("Init of WebSocketClient succeeded");
         this.logEvent("Trying to connect to server.");
       } catch (e) {
@@ -79,6 +73,8 @@ export class L3asPlayer {
         return;
       }
     }
+
+    this.playing = true;
   }
 
   stop() {
@@ -89,6 +85,8 @@ export class L3asPlayer {
       this.socketClient.Disconnect();
       this.socketClient = null;
     }
+
+    this.playing = false;
   }
 
   // Internal callback functions
@@ -147,14 +145,10 @@ export class L3asPlayer {
   }
 
   onSocketConnect() {
-    this.playerControls.SetPlaystate(true);
-    this.startFocusChecker();
     this.logEvent("Established connection with server.");
   }
 
   onSocketDisconnect() {
-    this.playerControls.SetPlaystate(false);
-    this.__StopFocusChecker();
     this.logEvent("Lost connection to server.");
   }
 
@@ -170,31 +164,6 @@ export class L3asPlayer {
   }
 
   toogleActivityLight() {
-  }
-
-  startFocusChecker() {
-    if (FocusChecker == null) {
-      LastCheckTime = Date.now();
-      FocusChecker = window.setInterval(CheckFocus, 2000);
-    }
-  }
-
-  stopFocusChecker() {
-    if (FocusChecker != null) {
-      window.clearInterval(FocusChecker);
-      FocusChecker = null;
-    }
-  }
-
-  checkFocus() {
-    var CheckTime = Date.now();
-    // Check if focus was lost
-    if (CheckTime - LastCheckTime > 10000) {
-      // If so, drop all samples in the buffer
-      LogEvent("Focus lost, purging format reader.")
-      FormatReader.PurgeData();
-    }
-    LastCheckTime = CheckTime;
   }
 
   logEvent(message) {

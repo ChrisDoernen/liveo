@@ -1,18 +1,18 @@
-import { InversifyExpressServer } from 'inversify-express-utils';
-import { Logger } from '../logging/logger';
-import { ServiceConfig } from '../../config/service.config';
-import { injectable, inject } from 'inversify';
-import * as bodyParser from 'body-parser';
-import * as cors from 'cors';
-import '../../controller/home.controller';
-import '../../controller/shutdown.controller';
-import '../../controller/stream.controller';
-import '../../controller/session.controller';
-import '../../controller/activation.controller';
+import { InversifyExpressServer } from "inversify-express-utils";
+import { Logger } from "../logging/logger";
+import { ServiceConfig } from "../../config/service.config";
+import { injectable, inject } from "inversify";
+import * as bodyParser from "body-parser";
+import * as cors from "cors";
+import "../../controller/home.controller";
+import "../../controller/shutdown.controller";
+import "../../controller/stream.controller";
+import "../../controller/session.controller";
+import "../../controller/activation.controller";
 
 @injectable()
 export class WebServer {
-  constructor(@inject('Logger') private _logger: Logger) {}
+  constructor(@inject("Logger") private _logger: Logger) { }
 
   public initializeAndListen(container: any): any {
     const expressServer = new InversifyExpressServer(container);
@@ -29,18 +29,11 @@ export class WebServer {
         next();
       });
 
-      if (!ServiceConfig.production) {
-        this._logger.debug('Setting CORS header for web server.');
-        app.use(cors());
-      } else {
-        app.enable('trust proxy');
-      }
+      app.enable("trust proxy");
     });
 
     const server = expressServer.build().listen(ServiceConfig.port);
-    this._logger.info(
-      `Web server started, listening on port ${ServiceConfig.port}.`
-    );
+    this._logger.info(`Web server started, listening on port ${ServiceConfig.port}.`);
 
     return server;
   }
