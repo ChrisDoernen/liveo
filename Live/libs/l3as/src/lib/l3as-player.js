@@ -1,6 +1,6 @@
-import { WebSocketClient } from "./websocket-client.js";
-import { PCMAudioPlayer } from "./pcm-audio-player.js";
-import { AudioFormatReader_MPEG } from "./audio-format-reader-mpeg.js";
+import WebSocketClient from "./websocket-client.js";
+import PCMAudioPlayer from "./pcm-audio-player.js";
+import AudioFormatReader_MPEG from "./audio-format-reader-mpeg.js";
 
 /*
   L3asPlayer is my wrapper around 3las (https://github.com/JoJoBond/3LAS) to make it a node module.
