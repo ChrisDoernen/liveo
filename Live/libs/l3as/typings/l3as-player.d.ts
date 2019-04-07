@@ -1,9 +1,21 @@
+import { UserAgentInfo } from "./user-agent-info";
+
 export declare class L3asPlayer {
 
   /**
    * Constructs the L3asPlayer instance
    */
   constructor();
+
+  /**
+   * The user agent info
+   */
+  userAgentInfo: UserAgentInfo;
+
+  /**
+   * Whether the browser is compatible for playing mpeg
+   */
+  isBrowserCompatible: boolean;
 
   /**
    * Wheter the state is playing or stopped

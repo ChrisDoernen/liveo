@@ -1,4 +1,4 @@
-export interface UserAgentInfo {
+export declare interface UserAgentInfo {
   isAndroid: boolean;
   isIOS: boolean;
   isWindows: boolean;

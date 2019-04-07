@@ -1,33 +1,29 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { L3asPlayer } from "@live/l3as";
-import { UserAgentService } from "@live/services";
-import { UserAgentInfo } from "@live/entities";
+import { Component, Input } from "@angular/core";
+import { L3asService } from "@live/services";
 
 @Component({
   selector: "audio-player",
   templateUrl: "./audio-player.component.html",
   styleUrls: ["./audio-player.component.scss"]
 })
-export class AudioPlayerComponent implements OnInit {
+export class AudioPlayerComponent {
 
-  public _selectedStreamId: string;
-  private l3asPlayer: L3asPlayer;
+  public selectedStreamId: string;
+
+  constructor(private _l3asService: L3asService) {
+  }
 
   @Input()
   public set selectedStream(streamId: string) {
-    if (this.l3asPlayer) {
+    if (this._l3asService) {
       console.debug(`Selected stream id: ${streamId}.`);
-      this._selectedStreamId = streamId;
+      this.selectedStreamId = streamId;
 
       if (streamId) {
-        this.l3asPlayer.play(streamId);
+        this._l3asService.play(streamId);
       } else {
-        this.l3asPlayer.stop();
+        this._l3asService.stop();
       }
     }
-  }
-
-  public ngOnInit(): void {
-    this.l3asPlayer = new L3asPlayer();
   }
 }

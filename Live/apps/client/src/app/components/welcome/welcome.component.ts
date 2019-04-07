@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { DataService, UserAgentService } from "@live/services";
+import { DataService, L3asService } from "@live/services";
 
 @Component({
   selector: "app-welcome",
@@ -11,7 +11,7 @@ export class WelcomeComponent implements OnInit {
   constructor(
     private _router: Router,
     private _dataService: DataService,
-    private _userAgentService: UserAgentService
+    private _l3asService: L3asService
   ) { }
 
   public ngOnInit(): void {

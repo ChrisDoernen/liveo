@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { DataService, UserAgentService } from "@live/services";
+import { DataService, L3asService } from "@live/services";
 import { StreamEntity } from "@live/entities";
 
 @Component({
@@ -22,7 +22,7 @@ export class HomeComponent {
 
   constructor(
     public _dataService: DataService,
-    private _userAgentService: UserAgentService
+    private _l3asService: L3asService
   ) { }
 
   public streamOnClick(stream: StreamEntity): void {
