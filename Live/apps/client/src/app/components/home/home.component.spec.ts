@@ -4,7 +4,7 @@ import { HeaderComponent } from "../header/header.component";
 import { RouterModule } from "@angular/router";
 import { InlineSVGDirective } from "ng-inline-svg";
 import createMockInstance from "jest-create-mock-instance";
-import { DataService, UserAgentService } from "@live/services";
+import { DataService, L3asService } from "@live/services";
 import { AudioPlayerComponent } from "../audio-player/audio-player.component";
 import { AboutComponent } from "../about/about.component";
 import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
@@ -14,11 +14,11 @@ describe("HomeComponent", () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
   let dataService: jest.Mocked<DataService>;
-  let userAgentService: jest.Mocked<UserAgentService>;
+  let l3asService: jest.Mocked<L3asService>;
 
   beforeEach(() => {
     dataService = createMockInstance(DataService);
-    userAgentService = createMockInstance(UserAgentService);
+    l3asService = createMockInstance(L3asService);
 
     TestBed.configureTestingModule({
       declarations: [
@@ -31,7 +31,7 @@ describe("HomeComponent", () => {
       providers: [
         { provide: DataService, useValue: dataService },
         { provide: HttpClient, useValue: jest.fn() },
-        { provide: UserAgentService, useValue: userAgentService },
+        { provide: L3asService, useValue: l3asService },
         { provide: InlineSVGService, useValue: jest.fn() }
       ],
       imports: [RouterModule]
