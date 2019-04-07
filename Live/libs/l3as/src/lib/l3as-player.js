@@ -1,6 +1,6 @@
-import WebSocketClient from "./websocket-client.js";
-import PCMAudioPlayer from "./pcm-audio-player.js";
-import AudioFormatReader_MPEG from "./audio-format-reader-mpeg.js";
+import { WebSocketClient } from "./websocket-client.js";
+import { PCMAudioPlayer } from "./pcm-audio-player.js";
+import { AudioFormatReader_MPEG } from "./audio-format-reader-mpeg.js";
 
 /*
   L3asPlayer is my wrapper around 3las (https://github.com/JoJoBond/3LAS) to make it a node module.
@@ -18,7 +18,7 @@ export class L3asPlayer {
     this.playing;
     this.muted;
 
-    this.logEvent(`Initialize 3las player with port ${this.port}.`);
+    this.logEvent(`Initialized 3las player.`);
   }
 
   // Pubic methods (external functions):
@@ -46,7 +46,7 @@ export class L3asPlayer {
 
     try {
       this.audioPlayer = new PCMAudioPlayer();
-      this.audioPlayer.UnderrunCallback = this.onPlayerUnderrun;
+      this.audioPlayer.UnderrunCallback = this.onPlayerUnderrun.bind(this);
       this.logEvent("Init of PCMAudioPlayer succeeded");
     } catch (e) {
       this.logEvent("Init of PCMAudioPlayer failed: " + e);
@@ -54,7 +54,8 @@ export class L3asPlayer {
     }
 
     try {
-      this.formatReader = this.createAudioFormatReader(this.mime, this.onReaderError, this.onReaderDataReady);
+      this.formatReader = this.createAudioFormatReader(this.mime, this.onReaderError.bind(this),
+        this.onReaderDataReady.bind(this));
       this.logEvent("Init of AudioFormatReader succeeded");
     } catch (e) {
       this.logEvent("Init of AudioFormatReader failed: " + e);
@@ -65,7 +66,8 @@ export class L3asPlayer {
       this.audioPlayer.MobileUnmute();
       try {
         this.logEvent("Play was clicked, trying to connect to server.");
-        this.socketClient = new WebSocketClient(streamId, this.onSocketError, this.onSocketConnect, this.onSocketDataReady, this.onSocketDisconnect);
+        this.socketClient = new WebSocketClient(streamId, this.onSocketError.bind(this), this.onSocketConnect.bind(this),
+          this.onSocketDataReady.bind(this), this.onSocketDisconnect.bind(this));
         this.logEvent("Init of WebSocketClient succeeded");
         this.logEvent("Trying to connect to server.");
       } catch (e) {

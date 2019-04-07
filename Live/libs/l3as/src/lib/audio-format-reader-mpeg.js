@@ -1,4 +1,4 @@
-import AudioFormatReader from "./audio-format-reader.js";
+import { AudioFormatReader } from "./audio-format-reader.js";
 
 /*
 	MPEG-Audio-Format-Reader is part of 3LAS (Low Latency Live Audio Streaming)

@@ -2,8 +2,10 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc/libs/l3as",
-    "module": "commonjs",
-    "types": ["jest", "node"]
+    "module": "commonjs"
   },
-  "include": ["**/*.spec.ts", "**/*.d.ts"]
+  "include": [
+    "**/*.spec.ts",
+    "**/*.d.ts"
+  ]
 }
