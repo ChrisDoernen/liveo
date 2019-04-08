@@ -9,6 +9,7 @@ import { AudioPlayerComponent } from "../audio-player/audio-player.component";
 import { AboutComponent } from "../about/about.component";
 import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
 import { HttpClient } from "@angular/common/http";
+import { Ng5SliderModule } from 'ng5-slider';
 
 describe("HomeComponent", () => {
   let component: HomeComponent;
@@ -21,6 +22,10 @@ describe("HomeComponent", () => {
     l3asService = createMockInstance(L3asService);
 
     TestBed.configureTestingModule({
+      imports: [
+        RouterModule,
+        Ng5SliderModule
+      ],
       declarations: [
         HomeComponent,
         HeaderComponent,
@@ -33,8 +38,7 @@ describe("HomeComponent", () => {
         { provide: HttpClient, useValue: jest.fn() },
         { provide: L3asService, useValue: l3asService },
         { provide: InlineSVGService, useValue: jest.fn() }
-      ],
-      imports: [RouterModule]
+      ]
     });
 
     fixture = TestBed.createComponent(HomeComponent);

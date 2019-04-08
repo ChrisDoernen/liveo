@@ -2,13 +2,9 @@
   <div class="player-controls">
     <i id="play-pause-button" class="fa fa-play fa-2x" aria-hidden="true"> </i>
   </div>
-  <div id="volume-control">
+  <div class="volume-control">
     <i class="fa fa-volume-off" aria-hidden="true"> </i>
-    <div id="volumebar">
-      <div id="volume-total"></div>
-      <div id="volume-current"></div>
-      <div id="volume-handle"></div>
-    </div>
+    <ng5-slider [(value)]="volume" [options]="options"></ng5-slider>
     <i class="fa fa-volume-up" aria-hidden="true"> </i>
   </div>
 </div>

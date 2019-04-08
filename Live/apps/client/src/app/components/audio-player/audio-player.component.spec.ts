@@ -7,6 +7,7 @@ import { InlineSVGDirective } from "ng-inline-svg";
 import { HttpClient } from "@angular/common/http";
 import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
 import createMockInstance from 'jest-create-mock-instance';
+import { Ng5SliderModule } from 'ng5-slider';
 
 describe("StreamComponent", () => {
   let component: AudioPlayerComponent;
@@ -28,7 +29,14 @@ describe("StreamComponent", () => {
     };
 
     TestBed.configureTestingModule({
-      declarations: [AudioPlayerComponent, HeaderComponent, InlineSVGDirective],
+      imports: [
+        Ng5SliderModule
+      ],
+      declarations: [
+        AudioPlayerComponent,
+        HeaderComponent,
+        InlineSVGDirective
+      ],
       providers: [
         { provide: StreamService, useValue: streamService },
         { provide: ActivatedRoute, useValue: activatedRoute },

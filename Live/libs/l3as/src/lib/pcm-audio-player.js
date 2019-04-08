@@ -59,7 +59,6 @@ PCMAudioPlayer.prototype._OffsetMax = PCMAudioPlayer.prototype._StartOffset + PC
 // Sets the playback volome
 PCMAudioPlayer.prototype.SetVolume = function (Value) {
   // Limit value to [0.0 ; 1.0]
-  LogEvent(`Set volume: Provided value: ${Value}.`);
   if (Value > 1.0)
     Value = 1.0;
   else if (Value <= 0.0)

@@ -1,5 +1,6 @@
 import { Component, Input } from "@angular/core";
 import { L3asService } from "@live/services";
+import { Options } from "ng5-slider";
 
 @Component({
   selector: "audio-player",
@@ -7,8 +8,6 @@ import { L3asService } from "@live/services";
   styleUrls: ["./audio-player.component.scss"]
 })
 export class AudioPlayerComponent {
-
-  public selectedStreamId: string;
 
   constructor(private _l3asService: L3asService) {
   }
@@ -25,5 +24,27 @@ export class AudioPlayerComponent {
         this._l3asService.stop();
       }
     }
+  }
+
+  public selectedStreamId: string;
+
+  private _volume = 0.6;
+
+  public options: Options = {
+    floor: 0,
+    ceil: 1,
+    step: 0.01,
+    hidePointerLabels: true,
+    hideLimitLabels: true
+  };
+
+  @Input()
+  public set volume(value: number) {
+    this._volume = value;
+    this._l3asService.setVolume(value);
+  }
+
+  public get volume(): number {
+    return this._volume;
   }
 }
