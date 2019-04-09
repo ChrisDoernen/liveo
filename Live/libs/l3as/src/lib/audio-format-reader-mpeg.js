@@ -181,7 +181,7 @@ AudioFormatReader_MPEG.prototype.Poke = function () {
 
 // Deletes all frames from the databuffer and framearray and all samples from the samplearray
 AudioFormatReader_MPEG.prototype.PurgeData = function () {
-  LogEvent("Purge data from audio format reader.");
+  console.log("Purge data from audio format reader.");
   this._DataBuffer = new Uint8Array(0);
 
   this._Frames = new Array();

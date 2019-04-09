@@ -20,7 +20,7 @@ export declare class L3asPlayer {
   /**
    * Wheter the state is playing or stopped
    */
-  playing: boolean;
+  isPlaying: boolean;
 
   /**
    * Whether the player is muted

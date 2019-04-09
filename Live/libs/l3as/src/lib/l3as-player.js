@@ -15,7 +15,7 @@ export class L3asPlayer {
     this.mime = "audio/mpeg";
     this.packetModCounter = 0;
     this.lastVolume;
-    this.playing;
+    this.isPlaying;
     this.muted;
     this.userAgentInfo = this.detectUserAgent();
     this.isBrowserCompatible = this.checkBrowserCompatibility();
@@ -28,17 +28,25 @@ export class L3asPlayer {
 
   setVolume(value) {
     this.lastVolume = value;
-    this.audioPlayer.SetVolume(value);
+    if (this.audioPlayer && !this.muted) {
+      this.audioPlayer.SetVolume(value);
+    }
   }
 
   mute() {
-    this.audioPlayer.SetVolume(0);
-    this.muted = true;
+    if (this.audioPlayer) {
+      console.debug("L3asPlayer: mute.");
+      this.audioPlayer.SetVolume(0);
+      this.muted = true;
+    }
   }
 
   unmute() {
-    this.audioPlayer.SetVolume(this.lastVolume);
-    this.muted = false;
+    if (this.audioPlayer) {
+      console.debug(`L3asPlayer: unmute, last volume: ${this.lastVolume}.`);
+      this.audioPlayer.SetVolume(this.lastVolume);
+      this.muted = false;
+    }
   }
 
   play(streamId) {
@@ -48,6 +56,7 @@ export class L3asPlayer {
 
     try {
       this.audioPlayer = new PCMAudioPlayer();
+      this.audioPlayer.SetVolume(this.lastVolume);
       this.audioPlayer.UnderrunCallback = this.onPlayerUnderrun.bind(this);
       this.logEvent("Init of PCMAudioPlayer succeeded");
     } catch (e) {
@@ -78,7 +87,7 @@ export class L3asPlayer {
       }
     }
 
-    this.playing = true;
+    this.isPlaying = true;
   }
 
   stop() {
@@ -90,7 +99,8 @@ export class L3asPlayer {
       this.socketClient = null;
     }
 
-    this.playing = false;
+    this.formatReader.PurgeData();
+    this.isPlaying = false;
   }
 
   // Internal callback functions

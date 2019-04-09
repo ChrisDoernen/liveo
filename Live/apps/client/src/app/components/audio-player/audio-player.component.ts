@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { L3asService } from "@live/services";
 import { Options } from "ng5-slider";
 
@@ -10,6 +10,8 @@ import { Options } from "ng5-slider";
 export class AudioPlayerComponent {
 
   constructor(private _l3asService: L3asService) {
+    this._l3asService.setVolume(this._volume);
+    this._l3asService.mute();
   }
 
   @Input()
@@ -20,8 +22,10 @@ export class AudioPlayerComponent {
 
       if (streamId) {
         this._l3asService.play(streamId);
+        this._l3asService.mute();
       } else {
-        this._l3asService.stop();
+        if (this._l3asService.isPlaying)
+          this._l3asService.stop();
       }
     }
   }
@@ -29,6 +33,8 @@ export class AudioPlayerComponent {
   public selectedStreamId: string;
 
   private _volume = 0.6;
+
+  private _isPlaying = false;
 
   public options: Options = {
     floor: 0,
@@ -46,5 +52,15 @@ export class AudioPlayerComponent {
 
   public get volume(): number {
     return this._volume;
+  }
+
+  public onPlayPauseClick(): void {
+    if (this._isPlaying) {
+      this._isPlaying = false;
+      this._l3asService.mute();
+    } else {
+      this._isPlaying = true;
+      this._l3asService.unmute();
+    }
   }
 }

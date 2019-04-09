@@ -16,6 +16,10 @@ export class L3asService {
     this.isBrowserCompatible = this._l3asPlayer.isBrowserCompatible;
   }
 
+  public get isPlaying(): boolean {
+    return this._l3asPlayer.isPlaying;
+  }
+
   public play(streamId: string): void {
     console.log("play");
     this._l3asPlayer.play(streamId);
