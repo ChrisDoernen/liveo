@@ -34,7 +34,7 @@ export class AudioPlayerComponent {
 
   private _volume = 0.6;
 
-  private _isPlaying = false;
+  public _isPlaying = false;
 
   public options: Options = {
     floor: 0,

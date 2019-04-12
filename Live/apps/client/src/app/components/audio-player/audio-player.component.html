@@ -1,6 +1,6 @@
-<div [ngClass]="{'disabled': !this.selectedStreamId}" id="playercontrols" class="player">
+<div [ngClass]="{'disabled': !selectedStreamId}" id="playercontrols" class="player">
   <div (click)="onPlayPauseClick()" class="player-controls">
-    <i [ngClass]="{'fa-play': !this._isPlaying, 'fa-stop': this._isPlaying}" class="fa fa-2x" aria-hidden="true"> </i>
+    <i [ngClass]="{'fa-play': !_isPlaying, 'fa-stop': _isPlaying}" class="fa fa-2x" aria-hidden="true"> </i>
   </div>
   <div class="volume-control">
     <i class="fa fa-volume-off" aria-hidden="true"> </i>
