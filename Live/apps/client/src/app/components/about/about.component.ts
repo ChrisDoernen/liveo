@@ -1,10 +1,10 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
-import { environment } from '../../../../src/environments/environment';
+import { Component, Input, EventEmitter, Output } from "@angular/core";
+import { environment } from "../../../../src/environments/environment";
 
 @Component({
-  selector: 'about',
-  templateUrl: './about.component.html',
-  styleUrls: ['./about.component.scss']
+  selector: "about",
+  templateUrl: "./about.component.html",
+  styleUrls: ["./about.component.scss"]
 })
 export class AboutComponent {
   public _version: string = environment.version;
