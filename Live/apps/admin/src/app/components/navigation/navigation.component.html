@@ -3,13 +3,17 @@
     <button mat-button (click)="sidenav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    Navigation
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <button mat-button (click)="sidenav.toggle()">
-      <mat-icon>menu</mat-icon>
-    </button>
-    Live
+    <div class="header">
+      <button mat-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      Live
+      <button mat-button>
+        <mat-icon>power_settings_new</mat-icon>
+      </button>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

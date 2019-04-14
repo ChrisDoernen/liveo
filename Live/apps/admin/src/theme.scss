@@ -1,0 +1,7 @@
+// Define 3 theme color, mat-palette accepts $palette-name, main, lighter and darker variants
+$live-theme-primary: mat-palette($mat-red, 600, 300, 900);
+$live-theme-accent: mat-palette($mat-blue-grey, 700, 300, 900);
+$live-theme-warn: mat-palette($mat-pink, 700, 300, 900);
+
+// Create theme (use mat-dark-theme for themes with dark backgrounds)
+$live-theme: mat-dark-theme($live-theme-primary, $live-theme-accent, $live-theme-warn);

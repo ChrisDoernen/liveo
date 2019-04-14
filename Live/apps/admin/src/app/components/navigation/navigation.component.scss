@@ -9,3 +9,11 @@
 mat-sidenav {
   width: 300px;
 }
+
+mat-sidenav-content {
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}

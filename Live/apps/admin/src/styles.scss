@@ -1,3 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "../../../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+/* Add application styles & imports to this file! */
+@import "~@angular/material/theming";
+
+// Always include only once per project
+@include mat-core();
+
+// Import theme
+@import "theme.scss";
+
+// Specify theme class eg: <body class="my-theme"> ... </body>
+.live-theme {
+  // Use our theme with angular-material-theme mixin
+  @include angular-material-theme($live-theme);
+}
