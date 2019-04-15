@@ -1,11 +1,11 @@
-import 'reflect-metadata';
-import createMockInstance from 'jest-create-mock-instance';
-import { Logger } from '../logging/logger';
-import { ShutdownSimulationService } from './shutdown-simulation-service';
-import { Scheduler } from '../scheduling/scheduler';
-import { ProcessExecutionService } from '../process-execution/process-execution-service';
+import "reflect-metadata";
+import createMockInstance from "jest-create-mock-instance";
+import { Logger } from "../logging/logger";
+import { ShutdownSimulationService } from "./shutdown-simulation-service";
+import { Scheduler } from "../scheduling/scheduler";
+import { ProcessExecutionService } from "../process-execution/process-execution-service";
 
-describe('ShutdownSimulationService', () => {
+describe("ShutdownSimulationService", () => {
   let logger;
   let shutdownSimulationService;
   let scheduler;
@@ -21,11 +21,11 @@ describe('ShutdownSimulationService', () => {
     );
   });
 
-  it('should construct', async () => {
+  it("should construct", async () => {
     expect(shutdownSimulationService).toBeDefined();
   });
 
-  it('should only call logger', async () => {
+  it("should only call logger", async () => {
     shutdownSimulationService.shutdown();
     expect(logger.info).toHaveBeenCalled();
   });

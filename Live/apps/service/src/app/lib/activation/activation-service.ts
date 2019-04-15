@@ -1,23 +1,23 @@
-import { inject, injectable } from 'inversify';
-import { SessionService } from '../sessions/session-service';
-import { ActivationEntity } from '@live/entities';
-import { Logger } from '../logging/logger';
-import { Scheduler } from '../scheduling/scheduler';
-import { ShutdownService } from '../shutdown/shutdown-service';
-import { Shutdown } from '../shutdown/shutdown';
+import { inject, injectable } from "inversify";
+import { SessionService } from "../sessions/session-service";
+import { ActivationEntity } from "@live/entities";
+import { Logger } from "../logging/logger";
+import { Scheduler } from "../scheduling/scheduler";
+import { ShutdownService } from "../shutdown/shutdown-service";
+import { Shutdown } from "@live/entities";
 
 @injectable()
 export class ActivationService {
   private _activation: ActivationEntity;
-  private _sessionStartJobId: string = 'SESSION_START_JOB';
-  private _sessionStopJobId: string = 'SESSION_STOP_JOB';
+  private _sessionStartJobId = "SESSION_START_JOB";
+  private _sessionStopJobId = "SESSION_STOP_JOB";
 
   constructor(
-    @inject('Logger') private _logger: Logger,
-    @inject('SessionService') private _sessionService: SessionService,
-    @inject('Scheduler') private _scheduler: Scheduler,
-    @inject('ShutdownService') private _shutdownService: ShutdownService
-  ) {}
+    @inject("Logger") private _logger: Logger,
+    @inject("SessionService") private _sessionService: SessionService,
+    @inject("Scheduler") private _scheduler: Scheduler,
+    @inject("ShutdownService") private _shutdownService: ShutdownService) {
+  }
 
   public setActivation(activation: ActivationEntity): void {
     this._logger.info(
@@ -26,7 +26,7 @@ export class ActivationService {
 
     if (this._activation) {
       throw new Error(
-        'Can not set new activation before deleting the current.'
+        "Can not set new activation before deleting the current."
       );
     }
 
@@ -37,7 +37,7 @@ export class ActivationService {
     if (!session.hasValidStreams) {
       throw new Error(
         `Can not set activation: All streams of session ${
-          session.id
+        session.id
         } have invalid devices.`
       );
     }
@@ -67,30 +67,30 @@ export class ActivationService {
     }
 
     this._activation = activation;
-    this._logger.debug('Activation set');
+    this._logger.debug("Activation set");
   }
 
   private validateActivation(activation: ActivationEntity): void {
     if (!activation.sessionId) {
-      throw new Error('Activation validation error: Session id is null.');
+      throw new Error("Activation validation error: Session id is null.");
     }
 
     if (activation.timeEnding < activation.timeStarting) {
       throw new Error(
-        'Activation validation error: Time ending is lower than time starting.'
+        "Activation validation error: Time ending is lower than time starting."
       );
     }
 
     if (activation.timeServerShutdown < activation.timeEnding) {
       throw new Error(
-        'Activation validation error: Time server shutdown is lower than time ending.'
+        "Activation validation error: Time server shutdown is lower than time ending."
       );
     }
   }
 
   public deleteActivation(): void {
     if (!this._activation) {
-      throw new Error('Can not delete activation, no activation existing.');
+      throw new Error("Can not delete activation, no activation existing.");
     }
 
     if (
@@ -117,7 +117,7 @@ export class ActivationService {
     }
 
     this._activation = null;
-    this._logger.info('Activation deleted.');
+    this._logger.info("Activation deleted.");
   }
 
   public getActivation(): ActivationEntity {

@@ -14,3 +14,17 @@
   // Use our theme with angular-material-theme mixin
   @include angular-material-theme($live-theme);
 }
+
+body {
+  margin: 0px;
+  padding: 0px;
+  overflow: hidden;
+  min-width: 320px;
+  font-family: "Lato", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-size: 17px;
+  line-height: 1.4285em;
+}
+
+* {
+  box-sizing: border-box;
+}

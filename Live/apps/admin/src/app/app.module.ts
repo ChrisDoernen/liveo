@@ -6,18 +6,27 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { AngularMaterialModule } from "./angular-material.module";
 import { NavigationComponent } from "./components/navigation/navigation.component";
+import { ShutdownComponent } from "./components/shutdown/shutdown.component";
+import { ShutdownDialogComponent } from "./components/shutdown/shutdown-dialog.component";
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     AngularMaterialModule,
     BrowserAnimationsModule
   ],
   declarations: [
     AppComponent,
     DashboardComponent,
-    NavigationComponent
+    NavigationComponent,
+    ShutdownComponent,
+    ShutdownDialogComponent
+  ],
+  entryComponents: [
+    ShutdownDialogComponent
   ],
   providers: [],
   bootstrap: [
