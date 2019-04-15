@@ -19,7 +19,7 @@ export class ShutdownComponent implements OnInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(ShutdownDialogComponent, { width: "250px" });
+    const dialogRef = this.dialog.open(ShutdownDialogComponent, { width: "250px", restoreFocus: false });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`The dialog was closed, result: ${result}`);

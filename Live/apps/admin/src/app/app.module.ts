@@ -9,6 +9,8 @@ import { NavigationComponent } from "./components/navigation/navigation.componen
 import { ShutdownComponent } from "./components/shutdown/shutdown.component";
 import { ShutdownDialogComponent } from "./components/shutdown/shutdown-dialog.component";
 import { HttpClientModule } from "@angular/common/http";
+import { StreamsComponent } from "./components/streams/streams.component";
+import { SessionsComponent } from "./components/sessions/sessions.component";
 
 @NgModule({
   imports: [
@@ -23,7 +25,9 @@ import { HttpClientModule } from "@angular/common/http";
     DashboardComponent,
     NavigationComponent,
     ShutdownComponent,
-    ShutdownDialogComponent
+    ShutdownDialogComponent,
+    StreamsComponent,
+    SessionsComponent
   ],
   entryComponents: [
     ShutdownDialogComponent

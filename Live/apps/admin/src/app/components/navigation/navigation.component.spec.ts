@@ -4,6 +4,7 @@ import { AngularMaterialModule } from "../../angular-material.module";
 import { ShutdownComponent } from "../shutdown/shutdown.component";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { RouterTestingModule } from "@angular/router/testing";
 
 describe("NavigationComponent", () => {
   let component: NavigationComponent;
@@ -14,7 +15,8 @@ describe("NavigationComponent", () => {
       imports: [
         AngularMaterialModule,
         NoopAnimationsModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        RouterTestingModule
       ],
       declarations: [
         NavigationComponent,

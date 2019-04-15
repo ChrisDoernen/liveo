@@ -5,6 +5,7 @@ import { NavigationComponent } from "./components/navigation/navigation.componen
 import { ShutdownComponent } from "./components/shutdown/shutdown.component";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { RouterTestingModule } from "@angular/router/testing";
 
 describe("AppComponent", () => {
   beforeEach(async(() => {
@@ -12,7 +13,8 @@ describe("AppComponent", () => {
       imports: [
         AngularMaterialModule,
         NoopAnimationsModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        RouterTestingModule
       ],
       declarations: [
         AppComponent,
