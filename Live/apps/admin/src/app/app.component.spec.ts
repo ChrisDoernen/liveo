@@ -1,10 +1,24 @@
 import { TestBed, async } from "@angular/core/testing";
 import { AppComponent } from "./app.component";
+import { AngularMaterialModule } from "./angular-material.module";
+import { NavigationComponent } from "./components/navigation/navigation.component";
+import { ShutdownComponent } from "./components/shutdown/shutdown.component";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 describe("AppComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AppComponent]
+      imports: [
+        AngularMaterialModule,
+        NoopAnimationsModule,
+        HttpClientTestingModule
+      ],
+      declarations: [
+        AppComponent,
+        NavigationComponent,
+        ShutdownComponent
+      ]
     }).compileComponents();
   }));
 
@@ -12,20 +26,5 @@ describe("AppComponent", () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'admin'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual("admin");
-  });
-
-  it("should render title in a h1 tag", () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector("h1").textContent).toContain(
-      "Welcome to admin!"
-    );
   });
 });

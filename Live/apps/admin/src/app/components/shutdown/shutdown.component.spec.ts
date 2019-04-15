@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-
 import { ShutdownComponent } from "./shutdown.component";
+import { AngularMaterialModule } from "../../angular-material.module";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 describe("ShutdownComponent", () => {
   let component: ShutdownComponent;
@@ -8,9 +9,12 @@ describe("ShutdownComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ShutdownComponent ]
-    })
-    .compileComponents();
+      imports: [
+        AngularMaterialModule,
+        HttpClientTestingModule
+      ],
+      declarations: [ShutdownComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-
 import { NavigationComponent } from "./navigation.component";
+import { AngularMaterialModule } from "../../angular-material.module";
+import { ShutdownComponent } from "../shutdown/shutdown.component";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 describe("NavigationComponent", () => {
   let component: NavigationComponent;
@@ -8,9 +11,16 @@ describe("NavigationComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NavigationComponent ]
-    })
-    .compileComponents();
+      imports: [
+        AngularMaterialModule,
+        NoopAnimationsModule,
+        HttpClientTestingModule
+      ],
+      declarations: [
+        NavigationComponent,
+        ShutdownComponent
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
