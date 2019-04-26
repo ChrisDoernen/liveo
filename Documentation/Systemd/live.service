@@ -1,0 +1,16 @@
+[Unit]
+Description=Live - Server for live streaming
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/nodejs /home/chris/Projects/Livestream-App/Live/dist/apps/service/main.js
+Restart=always
+User=chris
+# Use 'nogroup' group for Ubuntu/Debian, use 'nobody' group for Fedora
+Group=nogroup
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+WorkingDirectory=/home/chris/Projects/Livestream-App/Live/dist/apps/service
+
+[Install]
+WantedBy=multi-user.target

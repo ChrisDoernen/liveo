@@ -62,5 +62,15 @@ ln -s /etc/nginx/sites-available/http/live-service.conf /etc/nginx/sites-enabled
 
 ## Api testing with Postman
 
-[Postman](https://www.getpostman.com/) can be used for api testing. See the corresponding postmal collection.
+[Postman](https://www.getpostman.com/) can be used for api testing. See the corresponding postman collection.
 
+## Starting service as a daemon
+
+The server can be configured to be run on startup in the backgound as a daemon. Systemd can help with that on linux. The place for the service config is `/etc/systemd/system`. Helpful commands are:
+
+```
+sudo systemctl daemon-reload
+sudo systemctl start live
+sudo systemctl stop live
+sudo systemctl status live
+```
