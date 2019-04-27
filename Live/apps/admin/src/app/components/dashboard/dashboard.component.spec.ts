@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-
 import { DashboardComponent } from "./dashboard.component";
+import { ActivationTileComponent } from "../activation-tile/activation-tile.component";
+import { MatDialog } from "@angular/material";
 
 describe("DashboardComponent", () => {
   let component: DashboardComponent;
@@ -8,9 +9,9 @@ describe("DashboardComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DashboardComponent ]
-    })
-    .compileComponents();
+      declarations: [DashboardComponent, ActivationTileComponent],
+      providers: [{ provide: MatDialog, useValue: jest.fn() }]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
