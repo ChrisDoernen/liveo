@@ -10,6 +10,9 @@ User=chris
 Group=nogroup
 Environment=PATH=/usr/bin:/usr/local/bin
 Environment=NODE_ENV=production
+Environment=PRODUCTION=true
+Environment=PORT=3000
+Environment=SIMULATE=true
 WorkingDirectory=/home/chris/Projects/Livestream-App/Live/dist/apps/service
 
 [Install]
