@@ -7,10 +7,14 @@ import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { AngularMaterialModule } from "./angular-material.module";
 import { NavigationComponent } from "./components/navigation/navigation.component";
 import { ShutdownComponent } from "./components/shutdown/shutdown.component";
-import { ShutdownDialogComponent } from "./components/shutdown/shutdown-dialog.component";
+import { ShutdownDialogComponent } from "./components/shutdown-dialog/shutdown-dialog.component";
 import { HttpClientModule } from "@angular/common/http";
 import { StreamsComponent } from "./components/streams/streams.component";
 import { SessionsComponent } from "./components/sessions/sessions.component";
+import { ActivationDialogComponent } from "./components/activation-dialog/activation-dialog.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { MatNativeDateModule } from "@angular/material";
+import { ActivationTileComponent } from "./components/activation-tile/activation-tile.component";
 
 @NgModule({
   imports: [
@@ -18,7 +22,10 @@ import { SessionsComponent } from "./components/sessions/sessions.component";
     AppRoutingModule,
     HttpClientModule,
     AngularMaterialModule,
-    BrowserAnimationsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    MatNativeDateModule,
+    ReactiveFormsModule
   ],
   declarations: [
     AppComponent,
@@ -27,10 +34,13 @@ import { SessionsComponent } from "./components/sessions/sessions.component";
     ShutdownComponent,
     ShutdownDialogComponent,
     StreamsComponent,
-    SessionsComponent
+    SessionsComponent,
+    ActivationDialogComponent,
+    ActivationTileComponent
   ],
   entryComponents: [
-    ShutdownDialogComponent
+    ShutdownDialogComponent,
+    ActivationDialogComponent
   ],
   providers: [],
   bootstrap: [

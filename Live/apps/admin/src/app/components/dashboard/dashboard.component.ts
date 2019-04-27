@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { MatDialog } from "@angular/material";
 
 @Component({
   selector: "dashboard",
@@ -7,9 +8,9 @@ import { Component, OnInit } from "@angular/core";
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
-
 }

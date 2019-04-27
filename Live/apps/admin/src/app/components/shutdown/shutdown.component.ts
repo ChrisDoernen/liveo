@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material";
-import { ShutdownDialogComponent } from "./shutdown-dialog.component";
+import { ShutdownDialogComponent } from "../shutdown-dialog/shutdown-dialog.component";
 import { ShutdownService } from "@live/services";
 import { Shutdown } from "@live/entities";
 
