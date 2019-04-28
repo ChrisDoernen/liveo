@@ -10,8 +10,8 @@ import { ActivationEntity } from "@live/entities";
 export class ActivationService {
   constructor(
     private _httpClient: HttpClient,
-    private _endpointService: EndpointService
-  ) { }
+    private _endpointService: EndpointService) {
+  }
 
   public async getActivation(): Promise<ActivationEntity> {
     return this._httpClient
@@ -24,6 +24,12 @@ export class ActivationService {
           response.status === 200 ? (response.body as ActivationEntity) : null
         )
       )
+      .toPromise();
+  }
+
+  public async setActivation(activation: ActivationEntity): Promise<any> {
+    this._httpClient
+      .post(this._endpointService.getEndpoint("activation"), activation)
       .toPromise();
   }
 }

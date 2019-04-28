@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { SessionEntity, ActivationEntity } from "@live/entities";
+import { SessionService } from "@live/services";
 
 @Component({
   selector: "activation-dialog",
@@ -9,17 +11,28 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 export class ActivationDialogComponent implements OnInit {
 
   public isLinear = true;
-  public firstFormGroup: FormGroup;
-  public secondFormGroup: FormGroup;
+  public sessionFormGroup: FormGroup;
+  public schedulingFormGroup: FormGroup;
+  public sessions: SessionEntity[];
 
-  constructor(private _formBuilder: FormBuilder) { }
+  constructor(private _sessionService: SessionService,
+    private _formBuilder: FormBuilder) {
+  }
 
-  ngOnInit() {
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ["", Validators.required]
+  public ngOnInit() {
+    this._sessionService.getSessions()
+      .then((sessions) => this.sessions = sessions);
+
+    this.sessionFormGroup = this._formBuilder.group({
+      sessionCtrl: ["", Validators.required]
     });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ["", Validators.required]
+    this.schedulingFormGroup = this._formBuilder.group({
+      startTimeCtrl: [""],
+      endTimeCtrl: [""]
     });
+  }
+
+  public get activationDialogResult(): ActivationEntity {
+    return new ActivationEntity(this.sessionFormGroup.value.sessionCtrl);
   }
 }

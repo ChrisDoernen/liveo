@@ -14,6 +14,6 @@ export class ActivationEntity {
     public sessionId: string,
     public timeStarting?: number,
     public timeEnding?: number,
-    public timeServerShutdown?: number
-  ) {}
+    public timeServerShutdown?: number) {
+  }
 }

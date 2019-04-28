@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { ActivationDialogComponent } from "../activation-dialog/activation-dialog.component";
+import { ActivationEntity } from "@live/entities";
+import { ActivationService } from "@live/services";
 
 @Component({
   selector: "activation-tile",
@@ -9,18 +11,25 @@ import { ActivationDialogComponent } from "../activation-dialog/activation-dialo
 })
 export class ActivationTileComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  public activation: ActivationEntity;
+
+  constructor(private _activationService: ActivationService,
+    public dialog: MatDialog) {
+  }
 
   ngOnInit() {
+    this._activationService.getActivation()
+      .then((activation) => this.activation = activation);
   }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(ActivationDialogComponent, { width: "300px", restoreFocus: false });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`The activation dialog was closed, result: ${result}`);
+    dialogRef.afterClosed().subscribe(activationDialogResult => {
+      console.log(`The activation dialog was closed, result: ${activationDialogResult}`);
 
-      if (result) {
+      if (activationDialogResult) {
+        this._activationService.setActivation(activationDialogResult);
       }
     });
   }
