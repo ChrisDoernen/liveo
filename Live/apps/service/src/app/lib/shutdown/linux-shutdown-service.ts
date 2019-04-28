@@ -10,14 +10,15 @@ import { ShutdownService } from "./shutdown-service";
 @injectable()
 export class LinuxShutdownService extends ShutdownService {
 
-    constructor(@inject("Logger") logger: Logger,
-        @inject("ProcessExecutionService") private _processExecutionService: ProcessExecutionService,
-        @inject("Scheduler") scheduler: Scheduler) {
-        super(logger, scheduler);
-    }
+  constructor(@inject("Logger") logger: Logger,
+    @inject("ProcessExecutionService") private _processExecutionService: ProcessExecutionService,
+    @inject("Scheduler") scheduler: Scheduler) {
+    super(logger, scheduler);
+    logger.debug("Instantiating linux shutdown service.");
+  }
 
-    public executeShutdown(): void {
-        this.logger.info("Shutting down server now.");
-        this._processExecutionService.execute("shutdown now");
-    }
+  public executeShutdown(): void {
+    this.logger.info("Shutting down server now.");
+    this._processExecutionService.execute("shutdown -P now");
+  }
 }

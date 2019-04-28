@@ -5,14 +5,16 @@ After=network.target
 [Service]
 ExecStart=/usr/bin/nodejs /home/chris/Projects/Livestream-App/Live/dist/apps/service/main.js
 Restart=always
+RestartSec=1
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=live
 User=chris
-# Use 'nogroup' group for Ubuntu/Debian, use 'nobody' group for Fedora
+# Use 'nogroup' group for Ubuntu/Debian
+# use 'nobody' group for Fedora
 Group=nogroup
 Environment=PATH=/usr/bin:/usr/local/bin
-Environment=NODE_ENV=production
-Environment=PRODUCTION=true
-Environment=PORT=3000
-Environment=SIMULATE=true
+Environment=NODE_ENV=production PRODUCTION=true PORT=3000 SIMULATE=true
 WorkingDirectory=/home/chris/Projects/Livestream-App/Live/dist/apps/service
 
 [Install]

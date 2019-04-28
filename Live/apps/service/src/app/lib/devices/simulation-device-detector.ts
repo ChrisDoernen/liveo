@@ -29,7 +29,7 @@ export class SimulationDeviceDetector implements IDeviceDetector {
   }
 
   public getDevice(id: string): Device {
-    this._logger.info("Simulation device detection.");
+    this._logger.info("Simulating device detection, returning available test device.");
     return this._deviceFactory(new DeviceData(id, "Test device"), DeviceState.Available);
   }
 }
