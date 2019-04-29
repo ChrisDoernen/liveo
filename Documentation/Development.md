@@ -74,3 +74,4 @@ sudo systemctl start live
 sudo systemctl stop live
 sudo systemctl status live
 ```
+Please note that the shutdown function only works if the user which is running the service has the rights to execute the shutdown command, e.g. with `chris ALL=NOPASSWD: /sbin/shutdown, /sbin/reboot` in `/etc/sudoers`.

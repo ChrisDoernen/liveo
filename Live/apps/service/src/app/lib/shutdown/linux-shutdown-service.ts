@@ -19,6 +19,6 @@ export class LinuxShutdownService extends ShutdownService {
 
   public executeShutdown(): void {
     this.logger.info("Shutting down server now.");
-    this._processExecutionService.execute("shutdown -P now");
+    this._processExecutionService.execute("sudo shutdown -h now");
   }
 }
