@@ -20,16 +20,20 @@ export class ActivationService {
         responseType: "json"
       })
       .pipe(
-        map((response: any) =>
-          response.status === 200 ? (response.body as ActivationEntity) : null
-        )
+        map((response: any) => response.status === 200 ? (response.body as ActivationEntity) : null)
       )
       .toPromise();
   }
 
-  public async setActivation(activation: ActivationEntity): Promise<any> {
-    this._httpClient
-      .post(this._endpointService.getEndpoint("activation"), activation)
+  public async setActivation(activation: ActivationEntity): Promise<ActivationEntity> {
+    return this._httpClient
+      .post(this._endpointService.getEndpoint("activation"), activation, {
+        observe: "response",
+        responseType: "json"
+      })
+      .pipe(
+        map((response: any) => response.status === 200 ? (response.body as ActivationEntity) : null)
+      )
       .toPromise();
   }
 }

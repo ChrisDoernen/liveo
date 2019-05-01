@@ -19,15 +19,11 @@ export class ActivationService {
     @inject("ShutdownService") private _shutdownService: ShutdownService) {
   }
 
-  public setActivation(activation: ActivationEntity): void {
-    this._logger.info(
-      `Received new activation: ${JSON.stringify(activation)}.`
-    );
+  public setActivation(activation: ActivationEntity): ActivationEntity {
+    this._logger.info(`Received new activation: ${JSON.stringify(activation)}.`);
 
     if (this._activation) {
-      throw new Error(
-        "Can not set new activation before deleting the current."
-      );
+      throw new Error("Can not set new activation before deleting the current.");
     }
 
     this.validateActivation(activation);
@@ -35,29 +31,17 @@ export class ActivationService {
     const session = this._sessionService.getSession(activation.sessionId);
 
     if (!session.hasValidStreams) {
-      throw new Error(
-        `Can not set activation: All streams of session ${
-        session.id
-        } have invalid devices.`
-      );
+      throw new Error(`Can not set activation: All streams of session ${session.id} have invalid devices.`);
     }
 
     if (activation.timeStarting) {
-      this._scheduler.schedule(
-        this._sessionStartJobId,
-        new Date(activation.timeStarting),
-        session.start
-      );
+      this._scheduler.schedule(this._sessionStartJobId, new Date(activation.timeStarting), session.start);
     } else {
       session.start();
     }
 
     if (activation.timeEnding) {
-      this._scheduler.schedule(
-        this._sessionStopJobId,
-        new Date(activation.timeEnding),
-        session.stop
-      );
+      this._scheduler.schedule(this._sessionStopJobId, new Date(activation.timeEnding), session.stop);
     }
 
     if (activation.timeServerShutdown) {
@@ -68,6 +52,8 @@ export class ActivationService {
 
     this._activation = activation;
     this._logger.debug("Activation set");
+
+    return this._activation;
   }
 
   private validateActivation(activation: ActivationEntity): void {
@@ -76,15 +62,11 @@ export class ActivationService {
     }
 
     if (activation.timeEnding < activation.timeStarting) {
-      throw new Error(
-        "Activation validation error: Time ending is lower than time starting."
-      );
+      throw new Error("Activation validation error: Time ending is lower than time starting.");
     }
 
     if (activation.timeServerShutdown < activation.timeEnding) {
-      throw new Error(
-        "Activation validation error: Time server shutdown is lower than time ending."
-      );
+      throw new Error("Activation validation error: Time server shutdown is lower than time ending.");
     }
   }
 

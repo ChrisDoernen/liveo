@@ -11,7 +11,7 @@ export class ActivationController {
   }
 
   @httpPost("/")
-  public activate(request: Request): void {
+  public activate(request: Request): ActivationEntity {
     const activationRequest = request.body as ActivationEntity;
     return this._activationService.setActivation(activationRequest);
   }

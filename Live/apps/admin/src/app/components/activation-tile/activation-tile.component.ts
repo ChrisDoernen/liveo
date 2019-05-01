@@ -29,7 +29,9 @@ export class ActivationTileComponent implements OnInit {
       console.log(`The activation dialog was closed, result: ${activationDialogResult}`);
 
       if (activationDialogResult) {
-        this._activationService.setActivation(activationDialogResult);
+        this._activationService.setActivation(activationDialogResult)
+          .then((activation) => this.activation = activation)
+          .catch((error) => console.error(error));
       }
     });
   }
