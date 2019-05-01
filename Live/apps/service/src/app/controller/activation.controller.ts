@@ -24,6 +24,5 @@ export class ActivationController {
   @httpDelete("/")
   public deactivate(request: Request, response: Response): void {
     this._activationService.deleteActivation();
-    response.sendStatus(200);
   }
 }

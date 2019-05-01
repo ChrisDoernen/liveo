@@ -70,7 +70,7 @@ export class ActivationService {
     }
   }
 
-  public deleteActivation(): void {
+  public deleteActivation(): ActivationEntity {
     if (!this._activation) {
       throw new Error("Can not delete activation, no activation existing.");
     }
@@ -100,6 +100,8 @@ export class ActivationService {
 
     this._activation = null;
     this._logger.info("Activation deleted.");
+
+    return this._activation;
   }
 
   public getActivation(): ActivationEntity {

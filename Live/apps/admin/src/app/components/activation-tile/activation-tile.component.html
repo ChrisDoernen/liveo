@@ -1,8 +1,14 @@
 <div *ngIf="!activation; else activationexisting">
-  <p (click)="openDialog()">
-    Start session
+  <p (click)="openActivationDialog()">
+    Activate session
   </p>
 </div>
 <ng-template #activationexisting>
-  <div>activation</div>
+  <div class="activation-details">
+    <h3 class="title">Current activity</h3>
+    <div>Active session: {{session?.title}}</div>
+    <div>Activated: {{session?.timeStarted}}</div>
+    <div>Deactivation: {{activation?.timeEnding}}</div>
+    <button mat-button (click)="deleteActivation()">Deactivate session</button>
+  </div>
 </ng-template>

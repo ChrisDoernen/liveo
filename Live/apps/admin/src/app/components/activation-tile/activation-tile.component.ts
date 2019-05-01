@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { ActivationDialogComponent } from "../activation-dialog/activation-dialog.component";
-import { ActivationEntity } from "@live/entities";
-import { ActivationService } from "@live/services";
+import { ActivationEntity, SessionEntity } from "@live/entities";
+import { ActivationService, SessionService } from "@live/services";
 
 @Component({
   selector: "activation-tile",
@@ -11,28 +11,49 @@ import { ActivationService } from "@live/services";
 })
 export class ActivationTileComponent implements OnInit {
 
-  public activation: ActivationEntity;
+  private _activation: ActivationEntity;
+  public session: SessionEntity;
+
+  public get activation(): ActivationEntity {
+    return this._activation;
+  }
+
+  public set activation(activation: ActivationEntity) {
+    this._activation = activation;
+
+    if (activation) {
+      this._sessionService.getSession(activation.sessionId)
+        .subscribe((session) => this.session = session);
+    }
+  }
 
   constructor(private _activationService: ActivationService,
+    private _sessionService: SessionService,
     public dialog: MatDialog) {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this._activationService.getActivation()
-      .then((activation) => this.activation = activation);
+      .subscribe((activation) => this.activation = activation);
   }
 
-  openDialog(): void {
+  public openActivationDialog(): void {
     const dialogRef = this.dialog.open(ActivationDialogComponent, { width: "300px", restoreFocus: false });
+    dialogRef.afterClosed().subscribe(this.setActivation.bind(this));
+  }
 
-    dialogRef.afterClosed().subscribe(activationDialogResult => {
-      console.log(`The activation dialog was closed, result: ${activationDialogResult}`);
+  public deleteActivation(): void {
+    this._activationService.deleteActivation()
+      .subscribe((activation) => this.activation = activation);
+  }
 
-      if (activationDialogResult) {
-        this._activationService.setActivation(activationDialogResult)
-          .then((activation) => this.activation = activation)
-          .catch((error) => console.error(error));
-      }
-    });
+  private setActivation(newActivation: ActivationEntity): void {
+    if (!newActivation) {
+      return;
+    }
+
+    console.log(`Setting new activation: ${newActivation}.`);
+    this._activationService.setActivation(newActivation)
+      .subscribe((activation) => this.activation = activation);
   }
 }

@@ -21,7 +21,7 @@ export class ActivationDialogComponent implements OnInit {
 
   public ngOnInit() {
     this._sessionService.getSessions()
-      .then((sessions) => this.sessions = sessions);
+      .subscribe((sessions) => this.sessions = sessions);
 
     this.sessionFormGroup = this._formBuilder.group({
       sessionCtrl: ["", Validators.required]

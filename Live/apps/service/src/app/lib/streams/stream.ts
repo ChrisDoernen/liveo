@@ -1,9 +1,9 @@
-import { StreamData } from './stream-data';
-import { Logger } from '../logging/logger';
-import { inject } from 'inversify';
-import { StreamEntity } from '@live/entities';
-import { IStreamingSource } from '../streaming-sources/i-streaming-source';
-import { StreamType } from './stream-type';
+import { StreamData } from "./stream-data";
+import { Logger } from "../logging/logger";
+import { inject } from "inversify";
+import { StreamEntity } from "@live/entities";
+import { IStreamingSource } from "../streaming-sources/i-streaming-source";
+import { StreamType } from "./stream-type";
 
 /**
  * Class representing a live stream
@@ -39,8 +39,8 @@ export class Stream {
   }
 
   constructor(
-    @inject('Logger') private _logger: Logger,
-    @inject('StreamingSourceFactory')
+    @inject("Logger") private _logger: Logger,
+    @inject("StreamingSourceFactory")
     streamingSourceFactory: (
       deviceId: string,
       stream: Stream

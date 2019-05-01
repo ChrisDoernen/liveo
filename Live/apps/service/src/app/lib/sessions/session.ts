@@ -1,8 +1,8 @@
-import { Logger } from '../logging/logger';
-import { SessionData } from './session-data';
-import { Stream } from '../streams/stream';
-import { inject } from 'inversify';
-import { SessionEntity } from '@live/entities';
+import { Logger } from "../logging/logger";
+import { SessionData } from "./session-data";
+import { Stream } from "../streams/stream";
+import { inject } from "inversify";
+import { SessionEntity } from "@live/entities";
 
 /**
  * Class representing a streaming session
@@ -42,7 +42,7 @@ export class Session {
   }
 
   constructor(
-    @inject('Logger') private _logger: Logger,
+    @inject("Logger") private _logger: Logger,
     private _sessionData: SessionData,
     private _streams: Stream[]
   ) {
@@ -62,7 +62,7 @@ export class Session {
 
     this._logger.warn(
       `All streams of session ${
-        this.id
+      this.id
       } have invalid devices. Session can not be activated.`
     );
   }

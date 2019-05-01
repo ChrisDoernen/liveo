@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { map } from "rxjs/operators";
 import { EndpointService } from "../endpoint/endpoint.service";
 import { ActivationEntity } from "@live/entities";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root"
@@ -13,27 +13,15 @@ export class ActivationService {
     private _endpointService: EndpointService) {
   }
 
-  public async getActivation(): Promise<ActivationEntity> {
-    return this._httpClient
-      .get(this._endpointService.getEndpoint("activation"), {
-        observe: "response",
-        responseType: "json"
-      })
-      .pipe(
-        map((response: any) => response.status === 200 ? (response.body as ActivationEntity) : null)
-      )
-      .toPromise();
+  public getActivation(): Observable<ActivationEntity> {
+    return this._httpClient.get<ActivationEntity>(this._endpointService.getEndpoint("activation"));
   }
 
-  public async setActivation(activation: ActivationEntity): Promise<ActivationEntity> {
-    return this._httpClient
-      .post(this._endpointService.getEndpoint("activation"), activation, {
-        observe: "response",
-        responseType: "json"
-      })
-      .pipe(
-        map((response: any) => response.status === 200 ? (response.body as ActivationEntity) : null)
-      )
-      .toPromise();
+  public setActivation(activation: ActivationEntity): Observable<ActivationEntity> {
+    return this._httpClient.post<ActivationEntity>(this._endpointService.getEndpoint("activation"), activation);
+  }
+
+  public deleteActivation(): Observable<ActivationEntity> {
+    return this._httpClient.delete<ActivationEntity>(this._endpointService.getEndpoint("activation"));
   }
 }
