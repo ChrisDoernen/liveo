@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { ActivationTileComponent } from "./activation-tile.component";
-import { MatDialog } from "@angular/material";
-import { HttpClientModule } from "@angular/common/http";
+import { MatDialog, MatDialogModule, MatCardModule } from "@angular/material";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 describe("ActivationTileComponent", () => {
   let component: ActivationTileComponent;
@@ -9,7 +9,11 @@ describe("ActivationTileComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule],
+      imports: [
+        HttpClientTestingModule,
+        MatDialogModule,
+        MatCardModule
+      ],
       declarations: [ActivationTileComponent],
       providers: [{ provide: MatDialog, useValue: jest.fn() }]
     })

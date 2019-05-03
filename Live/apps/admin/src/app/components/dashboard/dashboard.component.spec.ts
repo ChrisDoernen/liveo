@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { DashboardComponent } from "./dashboard.component";
 import { ActivationTileComponent } from "../activation-tile/activation-tile.component";
-import { MatDialog } from "@angular/material";
+import { MatDialog, MatDialogModule, MatCardModule } from "@angular/material";
 import { HttpClientModule } from "@angular/common/http";
 
 describe("DashboardComponent", () => {
@@ -10,11 +10,12 @@ describe("DashboardComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule],
-      declarations: [DashboardComponent, ActivationTileComponent],
-      providers: [
-        { provide: MatDialog, useValue: jest.fn() }
-      ]
+      imports: [
+        HttpClientModule,
+        MatDialogModule,
+        MatCardModule
+      ],
+      declarations: [DashboardComponent, ActivationTileComponent]
     }).compileComponents();
   }));
 
