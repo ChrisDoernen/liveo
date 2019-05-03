@@ -1,28 +1,28 @@
 <header></header>
 <div class="container">
   <div class="content">
-    <ng-container *ngIf="!_dataService.isLoading && !_dataService.session; else: sessionRetrieved">
-      <div *ngIf="_dataService.connectionError">
+    <ng-container *ngIf="!activity; else: sessionRetrieved">
+      <div *ngIf="connectionError">
         <div>
           There seems to be a problem with the WiFi connection. Please make sure
           you are connected to the right network.
         </div>
       </div>
-      <div *ngIf="!_dataService.connectionError">
+      <div *ngIf="!connectionError">
         <div>
           There is no session scheduled right now. We're happy to see you later.
         </div>
       </div>
     </ng-container>
     <ng-template #sessionRetrieved>
-      <div *ngIf="_dataService.activationState === _dataService.ActivationState.ActivatedSessionScheduled">
+      <div *ngIf="activity.activationState === activationState.ActivatedSessionScheduled">
         Session {{ _dataService.session?.title }} is scheduled to start at
         {{ _dataService.activation?.timeStarting }}. Stay tuned!
       </div>
-      <div *ngIf="_dataService.activationState === _dataService.ActivationState.ActivatedSessionEnded">
+      <div *ngIf="activity.activationState === activationState.ActivatedSessionEnded">
         The session has ended. Thanks for joining us.
       </div>
-      <div *ngIf="_dataService.activationState === _dataService.ActivationState.ActivatedSessionStarted">
+      <div *ngIf="activity.activationState === activationState.ActivatedSessionStarted">
         <div>Live now:</div>
         <div class="session-title">{{ _dataService.session?.title }}</div>
         <div class="stream-list">
@@ -39,7 +39,7 @@
       </div>
     </ng-template>
   </div>
-  <div *ngIf="!_dataService.isLoading && _dataService.session" class="content">
+  <div *ngIf="activation" class="content">
     <audio-player [selectedStream]="this._selectedStream?.id"></audio-player>
   </div>
 </div>

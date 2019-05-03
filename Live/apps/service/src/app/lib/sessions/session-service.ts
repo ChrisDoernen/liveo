@@ -1,11 +1,11 @@
-import { Logger } from '../logging/logger';
-import { injectable, inject } from 'inversify';
-import { SessionData } from './session-data';
-import { DataService } from '../data/data-service';
-import { StreamService } from '../streams/stream-service';
-import { Session } from './session';
-import { Stream } from '../streams/stream';
-import { SessionEntity } from '@live/entities';
+import { Logger } from "../logging/logger";
+import { injectable, inject } from "inversify";
+import { SessionData } from "./session-data";
+import { DataService } from "../data/data-service";
+import { StreamService } from "../streams/stream-service";
+import { Session } from "./session";
+import { Stream } from "../streams/stream";
+import { SessionEntity } from "@live/entities";
 
 /**
  * A class providing methods to manage streaming sessions
@@ -23,23 +23,19 @@ export class SessionService {
   }
 
   constructor(
-    @inject('Logger') private _logger: Logger,
-    @inject('DataService') private _dataService: DataService,
-    @inject('StreamService') private _streamService: StreamService,
-    @inject('SessionFactory')
-    private sessionFactory: (
-      sessionData: SessionData,
-      streams: Stream[]
-    ) => Session
-  ) {}
+    @inject("Logger") private _logger: Logger,
+    @inject("DataService") private _dataService: DataService,
+    @inject("StreamService") private _streamService: StreamService,
+    @inject("SessionFactory") private sessionFactory: (sessionData: SessionData, streams: Stream[]) => Session) {
+  }
 
   public loadSessions(): void {
-    this._logger.debug('Loading sessions.');
+    this._logger.debug("Loading sessions.");
 
     const sessionsData = this._dataService.loadSessionData();
 
     if (sessionsData.length === 0) {
-      this._logger.warn('No session available for loading.');
+      this._logger.warn("No session available for loading.");
     } else {
       this._sessions = sessionsData.map(sessionData =>
         this.convertSession(sessionData)
@@ -76,7 +72,7 @@ export class SessionService {
     const matchingSession = this._sessions.find(session => session.id == id);
 
     if (!matchingSession) {
-      throw new Error('The requested session could not be found.');
+      throw new Error("The requested session could not be found.");
     }
 
     return matchingSession;

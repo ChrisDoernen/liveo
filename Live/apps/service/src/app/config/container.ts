@@ -26,6 +26,7 @@ import { ShutdownService } from "../lib/shutdown/shutdown-service";
 import { ServiceLogger, FfmpegLogger } from "./logging.config";
 import { StreamingSimulationSourceFactory } from "../lib/streaming-sources/streaming-simulation-source-factory";
 import { IStreamingSource } from "../lib/streaming-sources/i-streaming-source";
+import { ActivityService } from "../lib/activity/activity.service";
 
 export const container = new Container();
 
@@ -66,4 +67,5 @@ container.bind<ProcessExecutionService>("ProcessExecutionService").to(ProcessExe
 container.bind<WebServer>("WebServer").to(WebServer).inSingletonScope();
 container.bind<WebsocketServer>("WebsocketServer").to(WebsocketServer).inSingletonScope();
 container.bind<ActivationService>("ActivationService").to(ActivationService).inSingletonScope();
+container.bind<ActivityService>("ActivityService").to(ActivityService);
 container.bind<Scheduler>("Scheduler").to(Scheduler).inSingletonScope();

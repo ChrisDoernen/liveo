@@ -1,14 +1,15 @@
-<div *ngIf="!activation; else activationexisting">
-  <p (click)="openActivationDialog()">
-    Activate session
-  </p>
-</div>
-<ng-template #activationexisting>
+<mat-card>
   <div class="activation-details">
     <h3 class="title">Current activity</h3>
-    <div>Active session: {{session?.title}}</div>
-    <div>Activated: {{session?.timeStarted}}</div>
-    <div>Deactivation: {{activation?.timeEnding}}</div>
-    <button mat-button (click)="deleteActivation()">Deactivate session</button>
+    <div *ngIf="!activation; else activationexisting">
+      <p>There is no session activated.</p>
+      <button mat-raised-button color="primary" (click)="openActivationDialog()">Activate session </button>
+    </div>
+    <ng-template #activationexisting>
+      <div>Active session: {{session?.title}}</div>
+      <div>Activated: {{session?.timeStarted}}</div>
+      <div>Deactivation: {{activation?.timeEnding}}</div>
+      <button mat-button (click)="deleteActivation()">Deactivate session</button>
+    </ng-template>
   </div>
-</ng-template>
+</mat-card>

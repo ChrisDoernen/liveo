@@ -75,22 +75,14 @@ export class ActivationService {
       throw new Error("Can not delete activation, no activation existing.");
     }
 
-    if (
-      this._activation.timeStarting &&
-      this._activation.timeStarting > Date.now()
-    ) {
+    if (this._activation.timeStarting && this._activation.timeStarting > Date.now()) {
       this._scheduler.cancelJob(this._sessionStartJobId);
     } else {
-      const session = this._sessionService.getSession(
-        this._activation.sessionId
-      );
+      const session = this._sessionService.getSession(this._activation.sessionId);
       session.stop();
     }
 
-    if (
-      this._activation.timeEnding &&
-      this._activation.timeEnding > Date.now()
-    ) {
+    if (this._activation.timeEnding && this._activation.timeEnding > Date.now()) {
       this._scheduler.cancelJob(this._sessionStopJobId);
     }
 
@@ -104,7 +96,7 @@ export class ActivationService {
     return this._activation;
   }
 
-  public getActivation(): ActivationEntity {
+  public getActivationEntity(): ActivationEntity {
     return this._activation;
   }
 }

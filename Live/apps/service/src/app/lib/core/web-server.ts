@@ -3,12 +3,12 @@ import { Logger } from "../logging/logger";
 import { ServiceConfig } from "../../config/service.config";
 import { injectable, inject } from "inversify";
 import * as bodyParser from "body-parser";
-import * as cors from "cors";
 import "../../controller/home.controller";
 import "../../controller/shutdown.controller";
 import "../../controller/stream.controller";
 import "../../controller/session.controller";
 import "../../controller/activation.controller";
+import "../../controller/activity.controller";
 
 @injectable()
 export class WebServer {

@@ -6,8 +6,7 @@ import { Request, Response } from "express";
 
 @controller("/api/activation")
 export class ActivationController {
-  constructor(
-    @inject("ActivationService") private _activationService: ActivationService) {
+  constructor(@inject("ActivationService") private _activationService: ActivationService) {
   }
 
   @httpPost("/")
@@ -18,7 +17,7 @@ export class ActivationController {
 
   @httpGet("/")
   public getActivatedSessionEntity(): ActivationEntity {
-    return this._activationService.getActivation();
+    return this._activationService.getActivationEntity();
   }
 
   @httpDelete("/")

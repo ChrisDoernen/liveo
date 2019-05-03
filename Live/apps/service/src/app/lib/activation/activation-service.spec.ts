@@ -73,11 +73,11 @@ describe('ActivationService', () => {
     activationService.setActivation(activation);
     expect(sessionService.getSession).toHaveBeenCalledWith('b8s6');
     expect(session.start).toHaveBeenCalled();
-    expect(activationService.getActivation()).toBe(activation);
+    expect(activationService.getActivationEntity()).toBe(activation);
 
     activationService.deleteActivation();
     expect(session.stop).toHaveBeenCalled();
-    expect(activationService.getActivation()).toBe(null);
+    expect(activationService.getActivationEntity()).toBe(null);
   });
 
   it('should set and delete activation correctly when session id and time starting are given', () => {
@@ -96,10 +96,10 @@ describe('ActivationService', () => {
       new Date(activation.timeStarting),
       session.start
     );
-    expect(activationService.getActivation()).toBe(activation);
+    expect(activationService.getActivationEntity()).toBe(activation);
 
     activationService.deleteActivation();
     expect(scheduler.cancelJob).toBeCalledWith('SESSION_START_JOB');
-    expect(activationService.getActivation()).toBe(null);
+    expect(activationService.getActivationEntity()).toBe(null);
   });
 });

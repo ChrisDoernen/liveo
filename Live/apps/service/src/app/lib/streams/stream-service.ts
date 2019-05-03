@@ -1,9 +1,9 @@
-import { Logger } from '../logging/logger';
-import { injectable, inject } from 'inversify';
-import { StreamData } from './stream-data';
-import { DataService } from '../data/data-service';
-import { Stream } from './stream';
-import { StreamEntity } from '@live/entities';
+import { Logger } from "../logging/logger";
+import { injectable, inject } from "inversify";
+import { StreamData } from "./stream-data";
+import { DataService } from "../data/data-service";
+import { Stream } from "./stream";
+import { StreamEntity } from "@live/entities";
 
 /**
  * A class providing methods to manage streams
@@ -17,19 +17,19 @@ export class StreamService {
   }
 
   constructor(
-    @inject('Logger') private _logger: Logger,
-    @inject('DataService') private _dataService: DataService,
-    @inject('StreamFactory')
-    private streamFactory: (streamData: StreamData) => Stream
-  ) {}
+    @inject("Logger") private _logger: Logger,
+    @inject("DataService") private _dataService: DataService,
+    @inject("StreamFactory")
+    private streamFactory: (streamData: StreamData) => Stream) {
+  }
 
   public loadStreams(): void {
-    this._logger.debug('Loading streams.');
+    this._logger.debug("Loading streams.");
 
     const streamsData = this._dataService.loadStreamData();
 
     if (streamsData.length === 0) {
-      this._logger.warn('No streams available for loading.');
+      this._logger.warn("No streams available for loading.");
     } else {
       this._streams = streamsData.map(streamData =>
         this.convertStream(streamData)

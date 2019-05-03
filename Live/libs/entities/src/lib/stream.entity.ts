@@ -1,8 +1,5 @@
-import { StreamType } from './stream-type';
+import { StreamType } from "./stream-type";
 
-/**
- * Stream data transfer object
- */
 export class StreamEntity {
   constructor(
     public id: string,
@@ -11,5 +8,5 @@ export class StreamEntity {
     public countryCode: string,
     public streamType: StreamType,
     public isStarted: boolean
-  ) {}
+  ) { }
 }

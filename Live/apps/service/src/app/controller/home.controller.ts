@@ -1,10 +1,10 @@
 import { controller, httpGet } from "inversify-express-utils";
 
-@controller("/home")
-export class HomeController {
+@controller("/hello")
+export class HelloController {
 
   @httpGet("/")
   public get(): string {
-    return "Hello World";
+    return "Live";
   }
 }

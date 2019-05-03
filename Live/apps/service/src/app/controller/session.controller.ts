@@ -1,21 +1,20 @@
-import { controller, httpGet } from 'inversify-express-utils';
-import { SessionService } from '../lib/sessions/session-service';
-import { inject } from 'inversify';
-import { SessionEntity } from '@live/entities';
-import { Request, Response } from 'express';
+import { controller, httpGet } from "inversify-express-utils";
+import { SessionService } from "../lib/sessions/session-service";
+import { inject } from "inversify";
+import { SessionEntity } from "@live/entities";
+import { Request, Response } from "express";
 
-@controller('/api/sessions')
+@controller("/api/sessions")
 export class SessionController {
-  constructor(
-    @inject('SessionService') private _sessionService: SessionService
-  ) {}
+  constructor(@inject("SessionService") private _sessionService: SessionService) {
+  }
 
-  @httpGet('/')
+  @httpGet("/")
   public getSessions(): SessionEntity[] {
     return this._sessionService.sessionEntities;
   }
 
-  @httpGet('/:id')
+  @httpGet("/:id")
   public getSession(request: Request, response: Response): SessionEntity {
     const id = request.params.id;
     return this._sessionService.getSessionEntity(id);

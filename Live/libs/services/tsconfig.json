@@ -8,6 +8,7 @@
   },
   "include": [
     "**/*.ts",
-    "../entities/src/lib/user-agent-info.ts"
+    "../entities/src/lib/user-agent-info.ts",
+    "../../apps/service/src/app/lib/activity/data.service.spec.ts"
   ]
 }

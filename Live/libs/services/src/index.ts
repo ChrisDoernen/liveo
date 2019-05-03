@@ -1,5 +1,5 @@
 export { ActivationService } from "./lib/activation/activation.service";
-export { DataService } from "./lib/data/data.service";
+export { ActivityService } from "./lib/activity/activity.service";
 export { StreamService } from "./lib/stream/stream.service";
 export { SessionService } from "./lib/session/session.service";
 export { EndpointService } from "./lib/endpoint/endpoint.service";
