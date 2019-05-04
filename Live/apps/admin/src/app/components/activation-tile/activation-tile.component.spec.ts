@@ -16,8 +16,7 @@ describe("ActivationTileComponent", () => {
       ],
       declarations: [ActivationTileComponent],
       providers: [{ provide: MatDialog, useValue: jest.fn() }]
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { SessionEntity, ActivationEntity } from "@live/entities";
 import { SessionService } from "@live/services";
+import { TimeService } from "../../services/time.service";
 
 @Component({
   selector: "activation-dialog",
@@ -16,7 +17,8 @@ export class ActivationDialogComponent implements OnInit {
   public sessions: SessionEntity[];
 
   constructor(private _sessionService: SessionService,
-    private _formBuilder: FormBuilder) {
+    private _formBuilder: FormBuilder,
+    private _timeService: TimeService) {
   }
 
   public ngOnInit() {
@@ -33,6 +35,12 @@ export class ActivationDialogComponent implements OnInit {
   }
 
   public get activationDialogResult(): ActivationEntity {
-    return new ActivationEntity(this.sessionFormGroup.value.sessionCtrl);
+    const sessionId = this.sessionFormGroup.value.sessionCtrl;
+    const startTimeInput = this.schedulingFormGroup.value.startTimeCtrl;
+    const startTime = this._timeService.getTimestampFromTimeString(startTimeInput);
+    const endTimeInput = this.schedulingFormGroup.value.endTimeCtrl;
+    const endTime = this._timeService.getTimestampFromTimeString(endTimeInput);
+
+    return new ActivationEntity(sessionId, startTime, endTime);
   }
 }

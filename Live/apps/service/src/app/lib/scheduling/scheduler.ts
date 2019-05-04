@@ -8,44 +8,51 @@ import { Job, scheduleJob } from "node-schedule";
 @injectable()
 export class Scheduler {
 
-    private _jobs: Job[] = [];
+  private _jobs: Map<string, Job> = new Map<string, Job>();
 
-    constructor(@inject("Logger") private _logger: Logger) {
+  constructor(@inject("Logger") private _logger: Logger) {
+  }
+
+  public schedule(id: string, time: number, callback: () => void): void {
+    this.checkIfJobWithIdAlreadyExists(id);
+    const timestampInMs = time * 1000;
+    const dateTime = new Date(timestampInMs);
+
+    const job = scheduleJob(id, dateTime, (fireDate) => {
+      this._logger.debug(`Running scheduled job. Scheduled time was: ${fireDate}.`);
+      callback();
+      this.removeJob(id);
+    });
+
+    if (job) {
+      this._jobs.set(id, job);
+      this._logger.debug(`Scheduled job with id ${id} to be executed on ${dateTime}.`);
+    } else {
+      this._logger.warn("Can not schedule job: Date is in the past.");
+    }
+  }
+
+  private checkIfJobWithIdAlreadyExists(id: string): any {
+    if (this._jobs.get(id)) {
+      throw new Error(`A job with id ${id} is already existing.`);
+    }
+  }
+
+  public cancelJob(id: string): void {
+    const job = this._jobs.get(id);
+
+    if (!job) {
+      throw new Error(`Job with id ${id} was not found.`);
     }
 
-    public schedule(id: string, date: Date, callback: () => void): void {
-        this.checkId(id);
+    job.cancel();
+    this.removeJob(id);
 
-        const job = scheduleJob(id, date, (fireDate) => {
-            this._logger.debug(`Running job. Scheduled time was: ${fireDate}.`);
-            callback();
-        });
+    this._logger.debug(`Canceled job with id ${id}.`);
+  }
 
-        if (job) {
-            this._jobs.push(job);
-            this._logger.debug(`Scheduled job with id ${id} to be executed on ${date}.`);
-        } else {
-            this._logger.warn("Can not schedule job: Date is in the past.");
-        }
-    }
-
-    private checkId(id: string): any {
-        if (this._jobs.find((job) => job.name === id)) {
-            throw new Error(`A job with id ${id} is already existing.`);
-        }
-    }
-
-    public cancelJob(id: string): void {
-        const matchingJob = this._jobs.find((job) => job.name === id);
-
-        if (!matchingJob) {
-            throw new Error(`Job with id ${id} was not found.`);
-        }
-
-        const matchingJobIndex = this._jobs.indexOf(matchingJob);
-        this._jobs.splice(matchingJobIndex, 1);
-
-        matchingJob.cancel();
-        this._logger.debug(`Canceled job with id ${id}.`);
-    }
+  private removeJob(id: string): void {
+    this._jobs.delete(id);
+    this._logger.debug(`Removed job with id ${id}.`);
+  }
 }

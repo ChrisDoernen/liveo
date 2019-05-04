@@ -24,7 +24,7 @@ export abstract class ShutdownService {
     }
 
     if (shutdown.shutdownTime) {
-      this._scheduler.schedule(this._shutdownJobId, new Date(shutdown.shutdownTime), this.shutdown.bind(this));
+      this._scheduler.schedule(this._shutdownJobId, shutdown.shutdownTime, this.shutdown.bind(this));
       this._shutdown = shutdown;
     } else {
       this.executeShutdown();

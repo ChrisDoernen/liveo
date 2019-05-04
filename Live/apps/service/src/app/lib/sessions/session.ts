@@ -8,7 +8,7 @@ import { SessionEntity } from "@live/entities";
  * Class representing a streaming session
  */
 export class Session {
-  private _isStarted: boolean = false;
+  private _isStarted = false;
   private _timeStarted: number = null;
   private _timeEnded: number = null;
 
@@ -16,7 +16,7 @@ export class Session {
    * Indicates wether at least one stream of the session
    * has a valid device and can be started.
    */
-  private _hasValidStream: boolean = false;
+  private _hasValidStream = false;
 
   public get hasValidStreams(): boolean {
     return this._hasValidStream;
@@ -41,11 +41,9 @@ export class Session {
     return this.data.id;
   }
 
-  constructor(
-    @inject("Logger") private _logger: Logger,
+  constructor(@inject("Logger") private _logger: Logger,
     private _sessionData: SessionData,
-    private _streams: Stream[]
-  ) {
+    private _streams: Stream[]) {
     this._logger.debug(`Loaded session ${JSON.stringify(_sessionData)}.`);
     this.checkStreamDevices();
   }
@@ -61,18 +59,13 @@ export class Session {
     }
 
     this._logger.warn(
-      `All streams of session ${
-      this.id
-      } have invalid devices. Session can not be activated.`
-    );
+      `All streams of session ${this.id} have invalid devices. Session can not be activated.`);
   }
 
   public start(): void {
     if (!this._isStarted) {
       if (!this._hasValidStream) {
-        throw new Error(
-          `Cannot start session ${this.id}: All streams have invalid devices.`
-        );
+        throw new Error(`Cannot start session ${this.id}: All streams have invalid devices.`);
       }
 
       this._logger.info(`Starting session ${this.id}.`);
@@ -80,6 +73,8 @@ export class Session {
       this._timeStarted = Date.now();
       this._timeEnded = null;
       this._isStarted = true;
+    } else {
+      this._logger.warn(`Session ${this.id} is already started.`);
     }
   }
 

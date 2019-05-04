@@ -2,14 +2,14 @@
   <div class="activation-details">
     <h3 class="title">Current activity</h3>
     <div *ngIf="!activation; else activationexisting">
-      <p>There is no session activated.</p>
+      <p>There is no session activated.<br>Activate a session to start streaming.</p>
       <button mat-raised-button color="primary" (click)="openActivationDialog()">Activate session </button>
     </div>
     <ng-template #activationexisting>
       <div>Active session: {{session?.title}}</div>
       <div>Activated: {{session?.timeStarted}}</div>
       <div>Deactivation: {{activation?.timeEnding}}</div>
-      <button mat-button (click)="deleteActivation()">Deactivate session</button>
+      <button mat-raised-button (click)="deleteActivation()">Deactivate session</button>
     </ng-template>
   </div>
 </mat-card>

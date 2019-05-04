@@ -12,6 +12,10 @@ export class ActivationService {
   private _sessionStartJobId = "SESSION_START_JOB";
   private _sessionStopJobId = "SESSION_STOP_JOB";
 
+  private get now(): number {
+    return Math.floor(new Date().getTime() / 1000)
+  }
+
   constructor(
     @inject("Logger") private _logger: Logger,
     @inject("SessionService") private _sessionService: SessionService,
@@ -35,19 +39,17 @@ export class ActivationService {
     }
 
     if (activation.timeStarting) {
-      this._scheduler.schedule(this._sessionStartJobId, new Date(activation.timeStarting), session.start);
+      this._scheduler.schedule(this._sessionStartJobId, activation.timeStarting, () => session.start());
     } else {
       session.start();
     }
 
     if (activation.timeEnding) {
-      this._scheduler.schedule(this._sessionStopJobId, new Date(activation.timeEnding), session.stop);
+      this._scheduler.schedule(this._sessionStopJobId, activation.timeEnding, () => session.stop());
     }
 
     if (activation.timeServerShutdown) {
-      this._shutdownService.setShutdown(
-        new Shutdown(activation.timeServerShutdown)
-      );
+      this._shutdownService.setShutdown(new Shutdown(activation.timeServerShutdown));
     }
 
     this._activation = activation;
@@ -61,11 +63,15 @@ export class ActivationService {
       throw new Error("Activation validation error: Session id is null.");
     }
 
-    if (activation.timeEnding < activation.timeStarting) {
+    if (activation.timeStarting && activation.timeStarting < this.now) {
+      throw new Error("Activation validation error: The start time is not in the furure.");
+    }
+
+    if (activation.timeEnding && activation.timeEnding < activation.timeStarting) {
       throw new Error("Activation validation error: Time ending is lower than time starting.");
     }
 
-    if (activation.timeServerShutdown < activation.timeEnding) {
+    if (activation.timeServerShutdown && activation.timeServerShutdown < activation.timeEnding) {
       throw new Error("Activation validation error: Time server shutdown is lower than time ending.");
     }
   }
@@ -75,14 +81,14 @@ export class ActivationService {
       throw new Error("Can not delete activation, no activation existing.");
     }
 
-    if (this._activation.timeStarting && this._activation.timeStarting > Date.now()) {
+    if (this._activation.timeStarting && this._activation.timeStarting > this.now) {
       this._scheduler.cancelJob(this._sessionStartJobId);
     } else {
       const session = this._sessionService.getSession(this._activation.sessionId);
       session.stop();
     }
 
-    if (this._activation.timeEnding && this._activation.timeEnding > Date.now()) {
+    if (this._activation.timeEnding && this._activation.timeEnding > this.now) {
       this._scheduler.cancelJob(this._sessionStopJobId);
     }
 
