@@ -1,9 +1,9 @@
-import 'reflect-metadata';
-import { Scheduler } from '../scheduling/scheduler';
-import { createMockInstance } from 'jest-create-mock-instance';
-import { Logger } from '../logging/logger';
+import "reflect-metadata";
+import { Scheduler } from "../scheduling/scheduler";
+import { createMockInstance } from "jest-create-mock-instance";
+import { Logger } from "../logging/logger";
 
-describe('Scheduler', () => {
+describe("Scheduler", () => {
   let scheduler;
   let logger;
 
@@ -13,7 +13,7 @@ describe('Scheduler', () => {
     scheduler = new Scheduler(logger);
   });
 
-  it('should construct', async () => {
+  it("should construct", async () => {
     expect(scheduler).toBeDefined();
   });
 });

@@ -37,7 +37,7 @@ describe("LinuxShutdownService", () => {
   it("should set shutdown correctly when shutdown has shutdown time", async () => {
     const shutdown = new Shutdown(1983201);
     linuxShutdownService.setShutdown(shutdown);
-    expect(scheduler.schedule).toHaveBeenCalledWith("SHUTDOWN_JOB", new Date(shutdown.shutdownTime), expect.any(Function));
+    expect(scheduler.schedule).toHaveBeenCalledWith("SHUTDOWN_JOB", 1983201, expect.any(Function));
     expect(linuxShutdownService.getShutdown()).toBe(shutdown);
   });
 
