@@ -6,9 +6,11 @@
       <button mat-raised-button color="primary" (click)="openActivationDialog()">Activate session </button>
     </div>
     <ng-template #activationexisting>
-      <div>Active session: {{session?.title}}</div>
-      <div>Activated: {{session?.timeStarted}}</div>
-      <div>Deactivation: {{activation?.timeEnding}}</div>
+      <div>Active session</div>
+      <div class="session-title">{{session?.title}}</div>
+      <div>Started</div>
+      <div>{{session?.timeStarted * 1000 | date:'H:m'}} Uhr</div>
+      <div *ngIf="activation?.timeEnding">Ending: {{activation?.timeEnding * 1000 | date:'H:m'}}</div>
       <button mat-raised-button (click)="deleteActivation()">Deactivate session</button>
     </ng-template>
   </div>

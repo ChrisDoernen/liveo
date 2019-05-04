@@ -18,6 +18,10 @@ export class Session {
    */
   private _hasValidStream = false;
 
+  private get _currentTimestamp(): number {
+    return Math.floor(new Date().getTime() / 1000);
+  }
+
   public get hasValidStreams(): boolean {
     return this._hasValidStream;
   }
@@ -70,7 +74,7 @@ export class Session {
 
       this._logger.info(`Starting session ${this.id}.`);
       this._streams.forEach(stream => stream.start());
-      this._timeStarted = Date.now();
+      this._timeStarted = this._currentTimestamp;
       this._timeEnded = null;
       this._isStarted = true;
     } else {
@@ -82,7 +86,7 @@ export class Session {
     if (this._isStarted) {
       this._logger.info(`Stopping session ${this.id}.`);
       this._streams.forEach(stream => stream.stop());
-      this._timeEnded = Date.now();
+      this._timeEnded = this._currentTimestamp;
       this._isStarted = false;
     }
   }
