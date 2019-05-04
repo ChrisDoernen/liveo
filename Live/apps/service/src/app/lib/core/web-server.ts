@@ -15,7 +15,7 @@ export class WebServer {
   constructor(@inject("Logger") private _logger: Logger) { }
 
   public initializeAndListen(container: any): any {
-    const expressServer = new InversifyExpressServer(container);
+    const expressServer = new InversifyExpressServer(container, null, { rootPath: "/api" });
 
     expressServer.setConfig(app => {
       app.use(bodyParser.urlencoded({ extended: true }));

@@ -4,7 +4,7 @@ import { inject } from "inversify";
 import { StreamEntity } from "@live/entities";
 import { Request } from "express";
 
-@controller("/api/streams")
+@controller("/streams")
 export class StreamController {
   constructor(@inject("StreamService") private _streamService: StreamService) {
   }

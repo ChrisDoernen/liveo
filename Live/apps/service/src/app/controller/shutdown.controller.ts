@@ -4,7 +4,7 @@ import { inject } from "inversify";
 import { Shutdown } from "@live/entities";
 import { ShutdownService } from "../lib/shutdown/shutdown-service";
 
-@controller("/api/shutdown")
+@controller("/shutdown")
 export class ShutdownController {
 
   constructor(@inject("ShutdownService") private _shutdownService: ShutdownService) { }

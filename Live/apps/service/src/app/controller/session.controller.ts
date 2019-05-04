@@ -4,7 +4,7 @@ import { inject } from "inversify";
 import { SessionEntity } from "@live/entities";
 import { Request, Response } from "express";
 
-@controller("/api/sessions")
+@controller("/sessions")
 export class SessionController {
   constructor(@inject("SessionService") private _sessionService: SessionService) {
   }

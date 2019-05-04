@@ -4,7 +4,7 @@ import { ActivationService } from "../lib/activation/activation-service";
 import { ActivationEntity } from "@live/entities";
 import { Request, Response } from "express";
 
-@controller("/api/activation")
+@controller("/activation")
 export class ActivationController {
   constructor(@inject("ActivationService") private _activationService: ActivationService) {
   }

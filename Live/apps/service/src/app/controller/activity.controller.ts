@@ -3,7 +3,7 @@ import { inject } from "inversify";
 import { ActivityEntity } from "@live/entities";
 import { ActivityService } from "../lib/activity/activity.service";
 
-@controller("/api/activity")
+@controller("/activity")
 export class ActivityController {
   constructor(
     @inject("ActivityService") private _activityService: ActivityService) {
