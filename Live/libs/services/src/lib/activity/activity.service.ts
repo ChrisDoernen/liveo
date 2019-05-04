@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { EndpointService } from "../endpoint/endpoint.service";
 import { ActivityEntity } from "@live/entities";
-import { resolve } from "dns";
 
 /**
  * Service that gets activity and stores it in an internal cache.

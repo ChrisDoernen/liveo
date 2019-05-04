@@ -13,11 +13,11 @@ import { WelcomeComponent } from "./components/welcome/welcome.component";
 import { AboutComponent } from "./components/about/about.component";
 import { ActivityService, L3asService } from "@live/services";
 
-function activityServiceFactory(activityService: ActivityService) {
+export function activityServiceFactory(activityService: ActivityService) {
   return () => activityService.getActivity();
 }
 
-function l3asServiceFactory(l3asService: L3asService) {
+export function l3asServiceFactory(l3asService: L3asService) {
   return () => l3asService.initialize();
 }
 
