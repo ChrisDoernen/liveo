@@ -10,7 +10,7 @@ import { StreamEntity, ActivityEntity, ActivationState } from "@live/entities";
 export class HomeComponent implements OnInit {
   public activity: ActivityEntity;
   public activationState = ActivationState;
-  public _selectedStream: StreamEntity = null;
+  public selectedStream: StreamEntity = null;
   private _isAboutOverlayHidden = true;
   public connectionError: boolean;
 
@@ -22,8 +22,7 @@ export class HomeComponent implements OnInit {
     return this._isAboutOverlayHidden;
   }
 
-  constructor(public _activityService: ActivityService,
-    private _l3asService: L3asService) {
+  constructor(private _activityService: ActivityService) {
   }
 
   public ngOnInit() {
@@ -32,16 +31,14 @@ export class HomeComponent implements OnInit {
 
   private loadActivity() {
     this.activity = this._activityService.activity;
-    this.connectionError = this._activityService.connectionError;
   }
 
-  public streamOnClick(stream: StreamEntity): void {
-    console.debug(`Click event on stream ${stream.id}.`);
-    if (this._selectedStream === stream) {
-      this._selectedStream = null;
+  public selectStream(stream: StreamEntity): void {
+    if (this.selectedStream === stream) {
+      this.selectedStream = null;
       console.debug("Unselecting stream.");
     } else {
-      this._selectedStream = stream;
+      this.selectedStream = stream;
       console.debug(`Selecting stream ${stream.id}.`);
     }
   }

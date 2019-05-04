@@ -7,13 +7,18 @@ import { L3asPlayer, UserAgentInfo } from "@live/l3as";
 export class L3asService {
   public userAgentInfo: UserAgentInfo;
   public isBrowserCompatible: boolean;
-
-  private _l3asPlayer;
+  private _l3asPlayer: L3asPlayer;
 
   constructor() {
-    this._l3asPlayer = new L3asPlayer();
-    this.userAgentInfo = this._l3asPlayer.userAgentInfo;
-    this.isBrowserCompatible = this._l3asPlayer.isBrowserCompatible;
+  }
+
+  public initialize(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this._l3asPlayer = new L3asPlayer();
+      this.userAgentInfo = this._l3asPlayer.userAgentInfo;
+      this.isBrowserCompatible = this._l3asPlayer.isBrowserCompatible;
+      resolve();
+    });
   }
 
   public get isPlaying(): boolean {

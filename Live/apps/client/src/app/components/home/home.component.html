@@ -1,7 +1,7 @@
 <header></header>
 <div class="container">
   <div class="content">
-    <ng-container *ngIf="!activity; else: sessionRetrieved">
+    <ng-container *ngIf="!activity; else: activityretrieved">
       <div *ngIf="connectionError">
         <div>
           There seems to be a problem with the WiFi connection. Please make sure
@@ -14,24 +14,23 @@
         </div>
       </div>
     </ng-container>
-    <ng-template #sessionRetrieved>
+    <ng-template #activityretrieved>
       <div *ngIf="activity.activationState === activationState.ActivatedSessionScheduled">
-        Session {{ _dataService.session?.title }} is scheduled to start at
-        {{ _dataService.activation?.timeStarting }}. Stay tuned!
+        Session {{ activity.session?.title }} is scheduled to start at
+        {{ activity.activation?.timeStarting }}. Stay tuned!
       </div>
       <div *ngIf="activity.activationState === activationState.ActivatedSessionEnded">
         The session has ended. Thanks for joining us.
       </div>
       <div *ngIf="activity.activationState === activationState.ActivatedSessionStarted">
         <div>Live now:</div>
-        <div class="session-title">{{ _dataService.session?.title }}</div>
+        <div class="session-title">{{ activity.session?.title }}</div>
         <div class="stream-list">
-          <div *ngFor="let stream of _dataService.streams" class="stream-list-item">
-            <i *ngIf="this._selectedStream == stream" class="fa fa-check" aria-hidden="true">
+          <div *ngFor="let stream of activity.streams" class="stream-list-item">
+            <i *ngIf="selectedStream == stream" class="fa fa-check" aria-hidden="true">
             </i>
-            <a class="stream-link" (click)="streamOnClick(stream)" [ngClass]="{
-                selected: this._selectedStream == stream,
-                'other-selected': this._selectedStream && this._selectedStream != stream}">
+            <a class="stream-link" (click)="selectStream(stream)" [ngClass]="{selected: selectedStream == stream,
+                'other-selected': selectedStream && selectedStream != stream}">
               {{ stream.title }}
             </a>
           </div>
@@ -39,8 +38,8 @@
       </div>
     </ng-template>
   </div>
-  <div *ngIf="activation" class="content">
-    <audio-player [selectedStream]="this._selectedStream?.id"></audio-player>
+  <div *ngIf="activity" class="content">
+    <audio-player [selectedStream]="selectedStream?.id"></audio-player>
   </div>
 </div>
 <div class="about-link"><a (click)="showAboutOverlay()">Info/About</a></div>
