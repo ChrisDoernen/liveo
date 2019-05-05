@@ -37,27 +37,14 @@ The idea is to use nginx on linux as the web server for client and backend and a
 ### Nginx configuration
 
 The configuration can be split up into multiple configs per application which then can easily enabled or disabled by adding or removing symlinks.
+The directory for the configs are `/etc/nginx/sites-available` and `mkdir /etc/nginx/sites-enabled`.
 
-Create the directories for http and rtmp server configs:
-
-```
-mkdir /etc/nginx/sites-available/http
-mkdir /etc/nginx/sites-available/http
-mkdir /etc/nginx/sites-available/rtmp
-mkdir /etc/nginx/sites-available/rtmp
-```
-
-Include the follwing line in the respective sections in nginx.conf:
-
-```
-include /etc/nginx/sites-enabled/http/*;
-include /etc/nginx/sites-enabled/rtmp/*;
-```
+Include the follwing line in the respective sections in nginx.conf: `include /etc/nginx/sites-enabled/*;`
 
 Create symlinks (example):
 
 ```
-ln -s /etc/nginx/sites-available/http/live-service.conf /etc/nginx/sites-enabled/http/live-service.conf
+ln -s /etc/nginx/sites-available/live.conf /etc/nginx/sites-enabled/live.conf
 ```
 
 ## Api testing with Postman
