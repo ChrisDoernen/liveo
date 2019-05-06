@@ -329,6 +329,8 @@
           "options": {
             "outputPath": "dist/apps/admin",
             "index": "apps/admin/src/index.html",
+            "baseHref": "/admin/",
+            "deployUrl": "/admin/",
             "main": "apps/admin/src/main.ts",
             "polyfills": "apps/admin/src/polyfills.ts",
             "tsConfig": "apps/admin/tsconfig.app.json",
