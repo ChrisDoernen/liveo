@@ -23,7 +23,7 @@ describe("SessionService", () => {
   beforeEach(() => {
     logger = createMockInstance(Logger);
     dataService = createMockInstance(DataService);
-    dataService.loadSessionData.mockReturnValue(sessions);
+    dataService.loadSessionEntities.mockReturnValue(sessions);
     streamService = createMockInstance(StreamService);
     sessionFactory = jest.fn();
     sessionFactory
@@ -39,7 +39,7 @@ describe("SessionService", () => {
 
   it("should have loaded sessions when load session is called", async () => {
     sessionService.loadSessions();
-    expect(dataService.loadSessionData).toBeCalled();
+    expect(dataService.loadSessionEntities).toBeCalled();
     expect(sessionService.sessionEntities.length).toBe(2);
   });
 

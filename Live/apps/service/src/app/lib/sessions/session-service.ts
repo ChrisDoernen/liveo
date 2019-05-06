@@ -20,13 +20,13 @@ export class SessionService {
   constructor(@inject("Logger") private _logger: Logger,
     @inject("DataService") private _dataService: DataService,
     @inject("StreamService") private _streamService: StreamService,
-    @inject("SessionFactory") private sessionFactory: (sessionData: SessionEntity, streams: Stream[]) => Session) {
+    @inject("SessionFactory") private sessionFactory: (sessionEntity: SessionEntity, streams: Stream[]) => Session) {
   }
 
   public loadSessions(): void {
     this._logger.debug("Loading sessions.");
 
-    const sessionEntities = this._dataService.loadSessionData();
+    const sessionEntities = this._dataService.loadSessionEntities();
 
     if (sessionEntities.length === 0) {
       this._logger.warn("No session available for loading.");

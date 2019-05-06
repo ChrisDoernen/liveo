@@ -13,7 +13,7 @@ export class DataService {
   constructor(@inject("Logger") private _logger: Logger) {
   }
 
-  public loadSessionData(): SessionEntity[] {
+  public loadSessionEntities(): SessionEntity[] {
     try {
       return JSON.parse(this.readFileSync(ServiceConfig.sessions));
     } catch (error) {
@@ -21,7 +21,7 @@ export class DataService {
     }
   }
 
-  public loadStreamData(): StreamEntity[] {
+  public loadStreamEntities(): StreamEntity[] {
     try {
       return JSON.parse(this.readFileSync(ServiceConfig.streams));
     } catch (error) {

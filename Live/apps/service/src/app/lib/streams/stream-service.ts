@@ -1,6 +1,5 @@
 import { Logger } from "../logging/logger";
 import { injectable, inject } from "inversify";
-import { StreamData } from "./stream-data";
 import { DataService } from "../data/data-service";
 import { Stream } from "./stream";
 import { StreamEntity } from "@live/entities";
@@ -18,25 +17,23 @@ export class StreamService {
 
   constructor(@inject("Logger") private _logger: Logger,
     @inject("DataService") private _dataService: DataService,
-    @inject("StreamFactory") private streamFactory: (streamData: StreamData) => Stream) {
+    @inject("StreamFactory") private streamFactory: (streamEntity: StreamEntity) => Stream) {
   }
 
   public loadStreams(): void {
     this._logger.debug("Loading streams.");
 
-    const streamsData = this._dataService.loadStreamData();
+    const streamEntities = this._dataService.loadStreamEntities();
 
-    if (streamsData.length === 0) {
+    if (streamEntities.length === 0) {
       this._logger.warn("No streams available for loading.");
     } else {
-      this._streams = streamsData.map(streamData =>
-        this.convertStream(streamData)
-      );
+      this._streams = streamEntities.map(entities => this.convertStream(entities));
     }
   }
 
-  private convertStream(streamData: StreamData): Stream {
-    return this.streamFactory(streamData);
+  private convertStream(streamEntity: StreamEntity): Stream {
+    return this.streamFactory(streamEntity);
   }
 
   public getStreamEntities(): StreamEntity[] {
@@ -48,8 +45,8 @@ export class StreamService {
     return matchingStream ? matchingStream.entity : null;
   }
 
-  public createStream(streamData: StreamData): void {
-    this._streams.push(this.convertStream(streamData));
-    this._logger.info(`Created stream ${JSON.stringify(streamData)}.`);
+  public createStream(streamEntity: StreamEntity): void {
+    this._streams.push(this.convertStream(streamEntity));
+    this._logger.info(`Created stream ${JSON.stringify(streamEntity)}.`);
   }
 }

@@ -7,7 +7,7 @@ import * as appRoot from "app-root-path";
 import { SessionEntity } from "@live/entities";
 
 describe("DataService", () => {
-  let dataService;
+  let dataService: DataService;
   let logger;
 
   beforeEach(() => {
@@ -17,7 +17,7 @@ describe("DataService", () => {
 
   it("should load sessions correctly when json is valid", () => {
     ServiceConfig.sessions = `${appRoot}/apps/service/src/app/test-resources/data/valid-sessions.json`;
-    const sessions = dataService.loadSessionData();
+    const sessions = dataService.loadSessionEntities();
 
     const expectedSessionOne = new SessionEntity("bd34", "Service", "", ["0ag8"]);
     const expectedSessionTwo = new SessionEntity("a4re", "Workshop", "", ["15dd"]);
@@ -28,6 +28,6 @@ describe("DataService", () => {
 
   it("should throw when json is invalid", () => {
     ServiceConfig.sessions = `${appRoot}/src/tests/resources/data/invalid-sessions.json`;
-    expect(dataService.loadSessionData).toThrow();
+    expect(dataService.loadSessionEntities).toThrow();
   });
 });

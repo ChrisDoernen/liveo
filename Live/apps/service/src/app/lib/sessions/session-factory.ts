@@ -5,8 +5,8 @@ import { Session } from "./session";
 import { SessionEntity } from "@live/entities";
 
 export const SessionFactory = (context: interfaces.Context) => (
-  sessionData: SessionEntity, streams: Stream[]) => {
+  sessionEntity: SessionEntity, streams: Stream[]) => {
   const logger = context.container.get<Logger>("Logger");
 
-  return new Session(logger, sessionData, streams);
+  return new Session(logger, sessionEntity, streams);
 };
