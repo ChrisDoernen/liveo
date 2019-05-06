@@ -25,7 +25,7 @@ function WebSocketClient(StreamId, ErrorCallback, ConnectCallback, DataReadyCall
   this._IsConnected = false;
 
   // Create socket, connect to URI
-  this._Socket = io({ reconnectionAttempts: 3, path: '/socket' });
+  this._Socket = io({ reconnectionAttempts: 3, path: '/api/socket' });
 
   this._Socket.on("connect", this.__Socket_OnOpen.bind(this));
   this._Socket.on("error", this.__Socket_OnError.bind(this));

@@ -16,7 +16,7 @@ export class WebsocketServer {
   constructor(@inject("Logger") private _logger: Logger) { }
 
   public initializeAndListen(server: any): void {
-    const websocketServer = socketio(server, { path: "/socket" });
+    const websocketServer = socketio(server, { path: "/api/socket" });
 
     websocketServer.on("connection", this.onConnection.bind(this));
     this._websocketServer = websocketServer;
