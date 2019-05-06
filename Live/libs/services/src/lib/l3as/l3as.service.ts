@@ -12,13 +12,10 @@ export class L3asService {
   constructor() {
   }
 
-  public initialize(): Promise<boolean> {
-    return new Promise<boolean>((resolve, reject) => {
-      this._l3asPlayer = new L3asPlayer();
-      this.userAgentInfo = this._l3asPlayer.userAgentInfo;
-      this.isBrowserCompatible = this._l3asPlayer.isBrowserCompatible;
-      resolve();
-    });
+  public initialize(): void {
+    this._l3asPlayer = new L3asPlayer();
+    this.userAgentInfo = this._l3asPlayer.userAgentInfo;
+    this.isBrowserCompatible = this._l3asPlayer.isBrowserCompatible;
   }
 
   public get isPlaying(): boolean {

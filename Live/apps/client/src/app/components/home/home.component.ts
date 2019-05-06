@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivityService, L3asService } from "@live/services";
+import { ActivityService } from "@live/services";
 import { StreamEntity, ActivityEntity, ActivationState } from "@live/entities";
 
 @Component({
@@ -7,12 +7,10 @@ import { StreamEntity, ActivityEntity, ActivationState } from "@live/entities";
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.scss"]
 })
-export class HomeComponent implements OnInit {
-  public activity: ActivityEntity;
+export class HomeComponent {
   public activationState = ActivationState;
   public selectedStream: StreamEntity = null;
   private _isAboutOverlayHidden = true;
-  public connectionError: boolean;
 
   public set isAboutOverlayHidden(value: boolean) {
     this._isAboutOverlayHidden = value;
@@ -22,15 +20,7 @@ export class HomeComponent implements OnInit {
     return this._isAboutOverlayHidden;
   }
 
-  constructor(private _activityService: ActivityService) {
-  }
-
-  public ngOnInit() {
-    this.loadActivity();
-  }
-
-  private loadActivity() {
-    this.activity = this._activityService.activity;
+  constructor(public _activityService: ActivityService) {
   }
 
   public selectStream(stream: StreamEntity): void {

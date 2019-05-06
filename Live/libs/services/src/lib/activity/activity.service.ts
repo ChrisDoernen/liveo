@@ -12,6 +12,7 @@ import { ActivityEntity } from "@live/entities";
 })
 export class ActivityCacheService {
   public activity: ActivityEntity;
+  public connectionError: boolean;
 
   constructor(private _httpClient: HttpClient,
     private _endpointService: EndpointService) {
@@ -21,14 +22,9 @@ export class ActivityCacheService {
     this.getActivity();
   }
 
-  public getActivity(): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      this._httpClient
-        .get<ActivityEntity>(this._endpointService.getEndpoint("activity"))
-        .subscribe((activity) => {
-          this.activity = activity;
-          resolve(true);
-        }, (error) => reject());
-    });
+  public getActivity(): void {
+    this._httpClient
+      .get<ActivityEntity>(this._endpointService.getEndpoint("activity"))
+      .subscribe((activity) => this.activity = activity, (error) => this.connectionError = true);
   }
 }
