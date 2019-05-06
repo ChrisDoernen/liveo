@@ -1,8 +1,7 @@
 export class ActivationEntity {
-  constructor(
-    public sessionId: string,
-    public timeStarting?: number,
-    public timeEnding?: number,
+  constructor(public sessionId: string,
+    public startTime?: number,
+    public endTime?: number,
     public timeServerShutdown?: number) {
   }
 }

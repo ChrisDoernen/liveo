@@ -16,11 +16,9 @@ export class StreamService {
     return this._streams;
   }
 
-  constructor(
-    @inject("Logger") private _logger: Logger,
+  constructor(@inject("Logger") private _logger: Logger,
     @inject("DataService") private _dataService: DataService,
-    @inject("StreamFactory")
-    private streamFactory: (streamData: StreamData) => Stream) {
+    @inject("StreamFactory") private streamFactory: (streamData: StreamData) => Stream) {
   }
 
   public loadStreams(): void {

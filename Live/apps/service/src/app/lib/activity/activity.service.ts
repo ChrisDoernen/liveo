@@ -27,21 +27,21 @@ export class ActivityService {
       streams = session.streams.map((streamId) => this._streamService.getStreamEntity(streamId));
     }
 
-    const activationState = this.determineActivationState(activation, session);
+    const activationState = this.determineActivationState(activation);
 
     return new ActivityEntity(activationState, activation, session, streams);
   }
 
-  private determineActivationState(activation: ActivationEntity, session: SessionEntity): ActivationState {
+  private determineActivationState(activation: ActivationEntity): ActivationState {
     let activationState: ActivationState;
 
     if (activation) {
-      if (activation.timeStarting > Date.now()) {
-        activationState = ActivationState.ActivatedSessionScheduled;
-      } else if (session.timeStarted < Date.now()) {
-        activationState = ActivationState.ActivatedSessionStarted;
-      } else if (session.timeEnded < Date.now()) {
-        activationState = ActivationState.ActivatedSessionEnded;
+      if (activation.startTime > Date.now()) {
+        activationState = ActivationState.Scheduled;
+      } else if (activation.startTime < Date.now()) {
+        activationState = ActivationState.Started;
+      } else if (activation.endTime < Date.now()) {
+        activationState = ActivationState.Ended;
       }
     } else {
       activationState = ActivationState.NoActivation;

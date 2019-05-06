@@ -1,5 +1,4 @@
 import { Logger } from "../logging/logger";
-import { SessionData } from "./session-data";
 import { Stream } from "../streams/stream";
 import { inject } from "inversify";
 import { SessionEntity } from "@live/entities";
@@ -9,8 +8,6 @@ import { SessionEntity } from "@live/entities";
  */
 export class Session {
   private _isStarted = false;
-  private _timeStarted: number = null;
-  private _timeEnded: number = null;
 
   /**
    * Indicates wether at least one stream of the session
@@ -18,37 +15,22 @@ export class Session {
    */
   private _hasValidStream = false;
 
-  private get _currentTimestamp(): number {
-    return Math.floor(new Date().getTime() / 1000);
-  }
-
   public get hasValidStreams(): boolean {
     return this._hasValidStream;
   }
 
-  public get data(): SessionData {
-    return this._sessionData;
-  }
-
   public get entity(): SessionEntity {
-    return new SessionEntity(
-      this._sessionData.id,
-      this._sessionData.title,
-      null,
-      this._timeStarted,
-      this._timeEnded,
-      this._streams.map(stream => stream.id)
-    );
+    return this._sessionEntity;
   }
 
   public get id(): string {
-    return this.data.id;
+    return this._sessionEntity.id;
   }
 
   constructor(@inject("Logger") private _logger: Logger,
-    private _sessionData: SessionData,
+    private _sessionEntity: SessionEntity,
     private _streams: Stream[]) {
-    this._logger.debug(`Loaded session ${JSON.stringify(_sessionData)}.`);
+    this._logger.debug(`Loaded session ${JSON.stringify(_sessionEntity)}.`);
     this.checkStreamDevices();
   }
 
@@ -62,8 +44,7 @@ export class Session {
       }
     }
 
-    this._logger.warn(
-      `All streams of session ${this.id} have invalid devices. Session can not be activated.`);
+    this._logger.warn(`All streams of session ${this.id} have invalid devices. Session can not be activated.`);
   }
 
   public start(): void {
@@ -74,8 +55,6 @@ export class Session {
 
       this._logger.info(`Starting session ${this.id}.`);
       this._streams.forEach(stream => stream.start());
-      this._timeStarted = this._currentTimestamp;
-      this._timeEnded = null;
       this._isStarted = true;
     } else {
       this._logger.warn(`Session ${this.id} is already started.`);
@@ -86,7 +65,6 @@ export class Session {
     if (this._isStarted) {
       this._logger.info(`Stopping session ${this.id}.`);
       this._streams.forEach(stream => stream.stop());
-      this._timeEnded = this._currentTimestamp;
       this._isStarted = false;
     }
   }

@@ -21,12 +21,7 @@ describe("ActivationService", () => {
     scheduler = createMockInstance(Scheduler);
     linuxShutdownService = createMockInstance(LinuxShutdownService);
 
-    activationService = new ActivationService(
-      logger,
-      sessionService,
-      scheduler,
-      linuxShutdownService
-    );
+    activationService = new ActivationService(logger, sessionService, scheduler, linuxShutdownService);
   });
 
   it("should construct", () => {
@@ -74,6 +69,7 @@ describe("ActivationService", () => {
     expect(sessionService.getSession).toHaveBeenCalledWith("b8s6");
     expect(session.start).toHaveBeenCalled();
     expect(activationService.getActivationEntity()).toBe(activation);
+    expect(activationService.getActivationEntity().startTime).toBeDefined();
 
     activationService.deleteActivation();
     expect(session.stop).toHaveBeenCalled();

@@ -8,9 +8,10 @@
     <ng-template #activationexisting>
       <div>Active session</div>
       <div class="session-title">{{session?.title}}</div>
-      <div>Started</div>
-      <div>{{session?.timeStarted * 1000 | date:'H:m'}} Uhr</div>
-      <div *ngIf="activation?.timeEnding">Ending: {{activation?.timeEnding * 1000 | date:'H:m'}}</div>
+      <div>Start time</div>
+      <div>{{activation.startTime * 1000 | date:'H:mm'}} Uhr</div>
+      <div *ngIf="activation.endTime">End time</div>
+      <div>{{activation.endTime * 1000 | date:'H:mm'}}</div>
       <button mat-raised-button (click)="deleteActivation()">Deactivate session</button>
     </ng-template>
   </div>

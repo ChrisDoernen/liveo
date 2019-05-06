@@ -16,8 +16,7 @@ export class ActivationService {
     return Math.floor(new Date().getTime() / 1000)
   }
 
-  constructor(
-    @inject("Logger") private _logger: Logger,
+  constructor(@inject("Logger") private _logger: Logger,
     @inject("SessionService") private _sessionService: SessionService,
     @inject("Scheduler") private _scheduler: Scheduler,
     @inject("ShutdownService") private _shutdownService: ShutdownService) {
@@ -38,14 +37,15 @@ export class ActivationService {
       throw new Error(`Can not set activation: All streams of session ${session.id} have invalid devices.`);
     }
 
-    if (activation.timeStarting) {
-      this._scheduler.schedule(this._sessionStartJobId, activation.timeStarting, () => session.start());
+    if (activation.startTime) {
+      this._scheduler.schedule(this._sessionStartJobId, activation.startTime, () => session.start());
     } else {
       session.start();
+      activation.startTime = this.now;
     }
 
-    if (activation.timeEnding) {
-      this._scheduler.schedule(this._sessionStopJobId, activation.timeEnding, () => session.stop());
+    if (activation.endTime) {
+      this._scheduler.schedule(this._sessionStopJobId, activation.endTime, () => session.stop());
     }
 
     if (activation.timeServerShutdown) {
@@ -53,7 +53,7 @@ export class ActivationService {
     }
 
     this._activation = activation;
-    this._logger.debug("Activation set");
+    this._logger.debug("Activation set.");
 
     return this._activation;
   }
@@ -63,15 +63,15 @@ export class ActivationService {
       throw new Error("Activation validation error: Session id is null.");
     }
 
-    if (activation.timeStarting && activation.timeStarting < this.now) {
-      throw new Error("Activation validation error: The start time is not in the furure.");
+    if (activation.startTime && activation.startTime < this.now) {
+      throw new Error("Activation validation error: The start time is not in the future.");
     }
 
-    if (activation.timeEnding && activation.timeEnding < activation.timeStarting) {
+    if (activation.endTime && activation.endTime < activation.startTime) {
       throw new Error("Activation validation error: Time ending is lower than time starting.");
     }
 
-    if (activation.timeServerShutdown && activation.timeServerShutdown < activation.timeEnding) {
+    if (activation.timeServerShutdown && activation.timeServerShutdown < activation.endTime) {
       throw new Error("Activation validation error: Time server shutdown is lower than time ending.");
     }
   }
@@ -81,14 +81,14 @@ export class ActivationService {
       throw new Error("Can not delete activation, no activation existing.");
     }
 
-    if (this._activation.timeStarting && this._activation.timeStarting > this.now) {
+    if (this._activation.startTime && this._activation.startTime > this.now) {
       this._scheduler.cancelJob(this._sessionStartJobId);
     } else {
       const session = this._sessionService.getSession(this._activation.sessionId);
       session.stop();
     }
 
-    if (this._activation.timeEnding && this._activation.timeEnding > this.now) {
+    if (this._activation.endTime && this._activation.endTime > this.now) {
       this._scheduler.cancelJob(this._sessionStopJobId);
     }
 

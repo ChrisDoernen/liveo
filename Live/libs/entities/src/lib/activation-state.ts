@@ -1,6 +1,6 @@
 export enum ActivationState {
-    NoActivation,
-    ActivatedSessionScheduled,
-    ActivatedSessionStarted,
-    ActivatedSessionEnded
+  NoActivation,
+  Scheduled,
+  Started,
+  Ended
 }

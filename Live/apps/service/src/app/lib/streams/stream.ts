@@ -1,31 +1,18 @@
-import { StreamData } from "./stream-data";
 import { Logger } from "../logging/logger";
 import { inject } from "inversify";
 import { StreamEntity } from "@live/entities";
 import { IStreamingSource } from "../streaming-sources/i-streaming-source";
-import { StreamType } from "./stream-type";
 
 /**
  * Class representing a live stream
  */
 export class Stream {
   public get id(): string {
-    return this._streamData.id;
-  }
-
-  public get data(): StreamData {
-    return this._streamData;
+    return this._streamEntity.id;
   }
 
   public get entity(): StreamEntity {
-    return new StreamEntity(
-      this.data.id,
-      this.data.title,
-      null,
-      this.data.countryCode,
-      StreamType.Audio,
-      this.isStarted
-    );
+    return this._streamEntity;
   }
 
   private get isStarted(): boolean {
@@ -38,45 +25,36 @@ export class Stream {
     return this._source.hasValidDevice;
   }
 
-  constructor(
-    @inject("Logger") private _logger: Logger,
+  constructor(@inject("Logger") private _logger: Logger,
     @inject("StreamingSourceFactory")
-    streamingSourceFactory: (
-      deviceId: string,
-      stream: Stream
-    ) => IStreamingSource,
-    private _streamData: StreamData
-  ) {
-    this._source = streamingSourceFactory(_streamData.deviceId, this);
+    streamingSourceFactory: (deviceId: string, stream: Stream) => IStreamingSource,
+    private _streamEntity: StreamEntity) {
+    this._source = streamingSourceFactory(_streamEntity.deviceId, this);
 
     if (!this._source.hasValidDevice) {
-      this._logger.warn(
-        `Stream ${this.id} has invalid device and will not be startable.`
-      );
+      this._logger.warn(`Stream ${this.id} has invalid device and will not be startable.`);
     }
 
-    _logger.debug(`Loaded stream ${JSON.stringify(_streamData)}.`);
+    _logger.debug(`Loaded stream ${JSON.stringify(_streamEntity)}.`);
   }
 
   public start(): void {
     if (this.hasValidDevice) {
       if (!this.isStarted) {
         this._source.startStreaming();
-        this._logger.info(`Started stream ${this._streamData.id}.`);
+        this._logger.info(`Started stream ${this._streamEntity.id}.`);
       } else {
         this._logger.warn(`Stream ${this.id} is already started.`);
       }
     } else {
-      this._logger.warn(
-        `Stream ${this.id} has an invalid device and can not be started.`
-      );
+      this._logger.warn(`Stream ${this.id} has an invalid device and can not be started.`);
     }
   }
 
   public stop(): void {
     if (this.isStarted) {
       this._source.stopStreaming();
-      this._logger.info(`Stopped stream ${this._streamData.id}.`);
+      this._logger.info(`Stopped stream ${this._streamEntity.id}.`);
     } else {
       this._logger.warn(`Stream ${this.id} is already stopped.`);
     }

@@ -17,9 +17,9 @@ describe("ActivityService", () => {
   let streamService: jest.Mocked<StreamService>;
   let activationService: jest.Mocked<ActivationService>;
 
-  const activation = new ActivationEntity("3edf");
-  const session = new SessionEntity("5ksa", "A title", null, null, null, ["b76s"]);
-  const stream = new StreamEntity("b76s", "", null, "de", StreamType.Audio, true);
+  const activation = new ActivationEntity("3edf", 999999999999);
+  const session = new SessionEntity("5ksa", "A title", null, ["b76s"]);
+  const stream = new StreamEntity("b76s", "", null, "de", "1", StreamType.Audio);
 
   beforeEach(() => {
     logger = createMockInstance(Logger);
@@ -40,7 +40,7 @@ describe("ActivityService", () => {
     streamService.getStreamEntity.mockReturnValue(stream);
 
     const expectedActivity =
-      new ActivityEntity(ActivationState.ActivatedSessionStarted, activation, session, [stream]);
+      new ActivityEntity(ActivationState.Started, activation, session, [stream]);
 
     const activity = activityService.getActivity();
 
@@ -55,7 +55,7 @@ describe("ActivityService", () => {
     streamService.getStreamEntity.mockReturnValue(stream);
 
     const expectedActivity =
-      new ActivityEntity(ActivationState.ActivatedSessionScheduled, scheduledActivation, session, [stream]);
+      new ActivityEntity(ActivationState.Scheduled, scheduledActivation, session, [stream]);
 
     const activity = activityService.getActivity();
 

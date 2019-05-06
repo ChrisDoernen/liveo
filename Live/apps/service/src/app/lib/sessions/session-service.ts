@@ -1,6 +1,5 @@
 import { Logger } from "../logging/logger";
 import { injectable, inject } from "inversify";
-import { SessionData } from "./session-data";
 import { DataService } from "../data/data-service";
 import { StreamService } from "../streams/stream-service";
 import { Session } from "./session";
@@ -18,54 +17,41 @@ export class SessionService {
     return this._sessions.map(session => session.entity);
   }
 
-  public get sessionData(): SessionData[] {
-    return this._sessions.map(session => session.data);
-  }
-
-  constructor(
-    @inject("Logger") private _logger: Logger,
+  constructor(@inject("Logger") private _logger: Logger,
     @inject("DataService") private _dataService: DataService,
     @inject("StreamService") private _streamService: StreamService,
-    @inject("SessionFactory") private sessionFactory: (sessionData: SessionData, streams: Stream[]) => Session) {
+    @inject("SessionFactory") private sessionFactory: (sessionData: SessionEntity, streams: Stream[]) => Session) {
   }
 
   public loadSessions(): void {
     this._logger.debug("Loading sessions.");
 
-    const sessionsData = this._dataService.loadSessionData();
+    const sessionEntities = this._dataService.loadSessionData();
 
-    if (sessionsData.length === 0) {
+    if (sessionEntities.length === 0) {
       this._logger.warn("No session available for loading.");
     } else {
-      this._sessions = sessionsData.map(sessionData =>
-        this.convertSession(sessionData)
-      );
+      this._sessions = sessionEntities.map(entities => this.convertSession(entities));
     }
   }
 
-  private convertSession(sessionData: SessionData): Session {
-    const ids = sessionData.streams;
+  private convertSession(sessionEntity: SessionEntity): Session {
+    const streamIds = sessionEntity.streams;
     const availableStreams = this._streamService.streams;
     let matchingStreams = [];
 
     if (availableStreams) {
-      matchingStreams = availableStreams.filter(
-        stream => ids.indexOf(stream.id) !== -1
-      );
+      matchingStreams = availableStreams.filter(stream => streamIds.indexOf(stream.id) !== -1);
     }
 
     const matchingStreamsIds = matchingStreams.map(stream => stream.id);
-    const missingStreamIds = ids.filter(
-      id => matchingStreamsIds.indexOf(id) === -1
-    );
+    const missingStreamIds = streamIds.filter(id => matchingStreamsIds.indexOf(id) === -1);
 
     if (missingStreamIds.length > 0) {
-      this._logger.warn(
-        `Missing stream for ids ${JSON.stringify(missingStreamIds)}.`
-      );
+      this._logger.warn(`Missing stream for ids ${JSON.stringify(missingStreamIds)}.`);
     }
 
-    return this.sessionFactory(sessionData, matchingStreams);
+    return this.sessionFactory(sessionEntity, matchingStreams);
   }
 
   private findSession(id: string): Session {
@@ -84,9 +70,5 @@ export class SessionService {
 
   public getSessionEntity(id: string): SessionEntity {
     return this.findSession(id).entity;
-  }
-
-  public getSessionData(id: string): SessionData {
-    return this.findSession(id).data;
   }
 }

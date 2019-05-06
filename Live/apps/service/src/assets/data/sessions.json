@@ -2,6 +2,7 @@
   {
     "id": "bd34",
     "title": "Gottesdienst",
+    "description": "Live stream of the sunday service",
     "streams": [
       "v67d"
     ]
