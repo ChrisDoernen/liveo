@@ -10,9 +10,8 @@ install:
 script:
   - cd $TRAVIS_BUILD_DIR/Live
   - npm install
-  - npm run get-version 
-  - npm run test-ci
-  - npm run build-prod
+  - npm run test
+  - npm run build
 notifications:
   email:
     on_failure: always
