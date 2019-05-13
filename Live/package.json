@@ -12,7 +12,7 @@
     "clean": "rimraf dist",
     "get-version": "ts-node -O '{\"module\": \"commonjs\"}' git-version.ts",
     "build": "npm-run-all clean get-version build:**",
-    "build:lib:l3as": "ng build l3as",
+    "build:lib:l3as": "ng build l3as --prod",
     "build:app:admin": "ng build admin --prod",
     "build:app:client": "ng build client --prod",
     "build:app:service": "ng build service --prod",
@@ -68,7 +68,8 @@
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
-    "@angular/cli": "7.3.9",
+    "@angular-devkit/build-angular": "^0.13.9",
+    "@angular/cli": "^7.3.9",
     "@angular/compiler-cli": "^7.2.15",
     "@angular/language-service": "^7.2.15",
     "@nrwl/builders": "^7.8.5",

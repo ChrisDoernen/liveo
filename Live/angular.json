@@ -252,6 +252,12 @@
             "main": "libs/l3as/src/index.js",
             "tsConfig": "libs/l3as/tsconfig.lib.json",
             "project": "libs/l3as/package.json"
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "sourceMap": false
+            }
           }
         },
         "lint": {
