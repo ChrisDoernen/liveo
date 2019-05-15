@@ -1,32 +1,28 @@
 <header></header>
 <div class="container">
   <div class="content">
-    <ng-container *ngIf="!_activityService.activity; else: activityretrieved">
-      <div *ngIf="_activityService.connectionError">
-        <div>
-          There seems to be a problem with the WiFi connection. Please make sure
-          you are connected to the right network.
-        </div>
-      </div>
-      <div *ngIf="!_activityService.connectionError">
-        <div>
-          There is no session scheduled right now. We're happy to see you later.
-        </div>
+    <ng-container *ngIf="!activity && connectionError; else activityretrieved">
+      <div>
+        There seems to be a problem with the WiFi connection. Please make sure
+        you are connected to the right network.
       </div>
     </ng-container>
     <ng-template #activityretrieved>
-      <div *ngIf="_activityService.activity.activationState === activationState.ActivatedSessionScheduled">
-        Session {{ _activityService.activity.session?.title }} is scheduled to start at
-        {{ _activityService.activity.activation?.timeStarting }}. Stay tuned!
+      <div *ngIf="activity?.activationState === activationState.NoActivation">
+        There is no session scheduled right now. We're happy to see you later.
       </div>
-      <div *ngIf="_activityService.activity.activationState === activationState.ActivatedSessionEnded">
+      <div *ngIf="activity?.activationState === activationState.Scheduled">
+        Session {{ activity.session?.title }} is scheduled to start at
+        {{ activity.activation?.startTime }}. Stay tuned!
+      </div>
+      <div *ngIf="activity?.activationState === activationState.Ended">
         The session has ended. Thanks for joining us.
       </div>
-      <div *ngIf="_activityService.activity.activationState === activationState.ActivatedSessionStarted">
+      <div *ngIf="activity?.activationState === activationState.Started">
         <div>Live now:</div>
-        <div class="session-title">{{ _activityService.activity.session?.title }}</div>
+        <div class="session-title">{{ activity.session?.title }}</div>
         <div class="stream-list">
-          <div *ngFor="let stream of _activityService.activity.streams" class="stream-list-item">
+          <div *ngFor="let stream of activity.streams" class="stream-list-item">
             <i *ngIf="selectedStream == stream" class="fa fa-check" aria-hidden="true">
             </i>
             <a class="stream-link" (click)="selectStream(stream)" [ngClass]="{selected: selectedStream == stream,
@@ -38,7 +34,7 @@
       </div>
     </ng-template>
   </div>
-  <div *ngIf="_activityService.activity" class="content">
+  <div *ngIf="activity && activity.activationState === activationState.Started" class="content">
     <audio-player [selectedStream]="selectedStream?.id"></audio-player>
   </div>
 </div>

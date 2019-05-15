@@ -11,7 +11,8 @@ import { Ng5SliderModule } from "ng5-slider";
 import { HeaderComponent } from "./components/header/header.component";
 import { WelcomeComponent } from "./components/welcome/welcome.component";
 import { AboutComponent } from "./components/about/about.component";
-import { ActivityService, L3asService } from "@live/services";
+import { L3asService } from "@live/services";
+import { ActivityService } from "./services/activity/activity.service";
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { ActivityService, L3asService } from "@live/services";
     {
       provide: APP_BOOTSTRAP_LISTENER,
       useFactory: (activityService: ActivityService) => {
-        return () => activityService.getActivity();
+        return () => activityService.loadActivity();
       },
       deps: [ActivityService],
       multi: true
