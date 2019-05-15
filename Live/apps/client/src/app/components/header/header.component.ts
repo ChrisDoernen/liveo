@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input } from "@angular/core";
 
 @Component({
-  selector: 'header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  selector: "header",
+  templateUrl: "./header.component.html",
+  styleUrls: ["./header.component.scss"]
 })
 export class HeaderComponent {
   @Input()
-  public light: boolean = false;
+  public light = false;
 }

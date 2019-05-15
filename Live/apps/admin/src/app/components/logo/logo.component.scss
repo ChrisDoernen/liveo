@@ -1,0 +1,9 @@
+.logo {
+  position: relative;
+  text-align: center;
+  height: 10px;
+}
+
+::ng-deep .logo {
+  fill: whitesmoke;
+}

@@ -15,6 +15,8 @@ import { ActivationDialogComponent } from "./components/activation-dialog/activa
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatNativeDateModule } from "@angular/material";
 import { ActivationTileComponent } from "./components/activation-tile/activation-tile.component";
+import { LogoComponent } from "./components/logo/logo.component";
+import { InlineSVGModule } from "ng-inline-svg";
 
 @NgModule({
   imports: [
@@ -25,10 +27,12 @@ import { ActivationTileComponent } from "./components/activation-tile/activation
     FormsModule,
     BrowserAnimationsModule,
     MatNativeDateModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    InlineSVGModule.forRoot()
   ],
   declarations: [
     AppComponent,
+    LogoComponent,
     DashboardComponent,
     NavigationComponent,
     ShutdownComponent,
