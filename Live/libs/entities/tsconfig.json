@@ -8,6 +8,6 @@
   },
   "include": [
     "**/*.ts",
-    "../../apps/client/src/app/entities/activity.entity.ts"
+    "src/lib/activity.entity.ts"
   ]
 }

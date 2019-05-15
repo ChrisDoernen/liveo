@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed, async, inject } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { HomeComponent } from "./home.component";
 import { HeaderComponent } from "../header/header.component";
 import { RouterModule } from "@angular/router";
 import { InlineSVGDirective } from "ng-inline-svg";
 import createMockInstance from "jest-create-mock-instance";
-import { ActivityService, L3asService, EndpointService } from "@live/services";
+import { L3asService, EndpointService } from "@live/services";
 import { AudioPlayerComponent } from "../audio-player/audio-player.component";
 import { AboutComponent } from "../about/about.component";
 import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
-import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { Ng5SliderModule } from "ng5-slider";
-import { HttpClient } from "@angular/common/http";
+import { ActivityService } from "../../services/activity/activity.service";
 
 describe("HomeComponent", () => {
   let component: HomeComponent;
@@ -20,7 +20,6 @@ describe("HomeComponent", () => {
   let l3asService: jest.Mocked<L3asService>;
 
   beforeEach(() => {
-    activityService = createMockInstance(ActivityService);
     endpointService = createMockInstance(EndpointService);
     l3asService = createMockInstance(L3asService);
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { StreamEntity, ActivationState } from "@live/entities";
-import { ActivityEntity } from "../../entities/activity.entity";
+import { ActivityEntity } from "@live/entities";
 import { ActivityService } from "../../services/activity/activity.service";
 
 @Component({

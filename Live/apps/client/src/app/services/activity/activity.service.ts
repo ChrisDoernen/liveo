@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { shareReplay } from "rxjs/operators";
 import { EndpointService } from "@live/services";
-import { ActivityEntity } from "../../entities/activity.entity";
+import { ActivityEntity } from "@live/entities";
 
 /**
  * Service that gets activity and stores it in an internal cache.
