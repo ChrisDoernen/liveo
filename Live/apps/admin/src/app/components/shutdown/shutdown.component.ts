@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { ShutdownDialogComponent } from "../shutdown-dialog/shutdown-dialog.component";
 import { ShutdownService } from "@live/services";
@@ -9,13 +9,10 @@ import { Shutdown } from "@live/entities";
   templateUrl: "./shutdown.component.html",
   styleUrls: ["./shutdown.component.scss"]
 })
-export class ShutdownComponent implements OnInit {
+export class ShutdownComponent {
 
   constructor(public dialog: MatDialog,
     private _shutdownService: ShutdownService) {
-  }
-
-  ngOnInit() {
   }
 
   openDialog(): void {

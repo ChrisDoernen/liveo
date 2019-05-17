@@ -8,13 +8,17 @@
     <ng-template #activationexisting>
       <div>Active session</div>
       <div class="session-title">{{session?.title}}</div>
-      <div *ngIf="activation?.startTime">Start time
+      <div>Start time
         <div>{{activation?.startTime * 1000 | date:'H:mm'}} Uhr</div>
       </div>
-      <div *ngIf="activation.endTime">End time
-        <div>{{activation?.endTime * 1000 | date:'H:mm'}}</div>
+      <div>End time
+        <div *ngIf="activation.endTime; else noendtime">{{activation?.endTime * 1000 | date:'H:mm'}}</div>
+        <ng-template #noendtime>
+          <div>Not scheduled</div>
+        </ng-template>
       </div>
-      <button mat-raised-button (click)="deleteActivation()">Deactivate session</button>
+      <button class="delete-activation" mat-raised-button (click)="openActivationDeletionDialog()">Deactivate
+        session</button>
     </ng-template>
   </div>
 </mat-card>

@@ -10,7 +10,7 @@ export class ShutdownDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<ShutdownDialogComponent>) { }
 
-  onNoClick(): void {
+  onCancelClick(): void {
     this.dialogRef.close();
   }
 }

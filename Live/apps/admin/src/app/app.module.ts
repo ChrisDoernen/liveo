@@ -17,6 +17,7 @@ import { MatNativeDateModule } from "@angular/material";
 import { ActivationTileComponent } from "./components/activation-tile/activation-tile.component";
 import { LogoComponent } from "./components/logo/logo.component";
 import { InlineSVGModule } from "ng-inline-svg";
+import { ActivationDeletionDialogComponent } from "./components/activation-deletion-dialog/activation-deletion-dialog.component";
 
 @NgModule({
   imports: [
@@ -40,11 +41,13 @@ import { InlineSVGModule } from "ng-inline-svg";
     StreamsComponent,
     SessionsComponent,
     ActivationDialogComponent,
-    ActivationTileComponent
+    ActivationTileComponent,
+    ActivationDeletionDialogComponent
   ],
   entryComponents: [
     ShutdownDialogComponent,
-    ActivationDialogComponent
+    ActivationDialogComponent,
+    ActivationDeletionDialogComponent
   ],
   providers: [],
   bootstrap: [

@@ -3,6 +3,7 @@ import { MatDialog } from "@angular/material";
 import { ActivationDialogComponent } from "../activation-dialog/activation-dialog.component";
 import { ActivationEntity, SessionEntity } from "@live/entities";
 import { ActivationService, SessionService } from "@live/services";
+import { ActivationDeletionDialogComponent } from "../activation-deletion-dialog/activation-deletion-dialog.component";
 
 @Component({
   selector: "activation-tile",
@@ -29,7 +30,8 @@ export class ActivationTileComponent implements OnInit {
 
   constructor(private _activationService: ActivationService,
     private _sessionService: SessionService,
-    public dialog: MatDialog) {
+    public activationDialog: MatDialog,
+    public activationDeletionDialog: MatDialog) {
   }
 
   public ngOnInit() {
@@ -38,8 +40,20 @@ export class ActivationTileComponent implements OnInit {
   }
 
   public openActivationDialog(): void {
-    const dialogRef = this.dialog.open(ActivationDialogComponent, { width: "300px", restoreFocus: false });
+    const dialogRef = this.activationDialog.open(ActivationDialogComponent, { width: "300px", restoreFocus: false });
     dialogRef.afterClosed().subscribe(this.setActivation.bind(this));
+  }
+
+  public openActivationDeletionDialog(): void {
+    const dialogRef = this.activationDeletionDialog.open(ActivationDeletionDialogComponent, { width: "250px", restoreFocus: false });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`The dialog was closed, result: ${result}`);
+
+      if (result) {
+        this.deleteActivation();
+      }
+    });
   }
 
   public deleteActivation(): void {
@@ -52,7 +66,7 @@ export class ActivationTileComponent implements OnInit {
       return;
     }
 
-    console.log(`Setting new activation: ${newActivation}.`);
+    console.log(`Setting new activation: ${JSON.stringify(newActivation)}.`);
     this._activationService.setActivation(newActivation)
       .subscribe((activation) => this.activation = activation);
   }
