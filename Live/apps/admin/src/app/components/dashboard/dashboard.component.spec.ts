@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { DashboardComponent } from "./dashboard.component";
 import { ActivationTileComponent } from "../activation-tile/activation-tile.component";
-import { MatDialog, MatDialogModule, MatCardModule } from "@angular/material";
+import { MatDialog, MatDialogModule, MatCardModule, MatGridListModule } from "@angular/material";
 import { HttpClientModule } from "@angular/common/http";
 
 describe("DashboardComponent", () => {
@@ -13,7 +13,8 @@ describe("DashboardComponent", () => {
       imports: [
         HttpClientModule,
         MatDialogModule,
-        MatCardModule
+        MatCardModule,
+        MatGridListModule
       ],
       declarations: [DashboardComponent, ActivationTileComponent]
     }).compileComponents();
