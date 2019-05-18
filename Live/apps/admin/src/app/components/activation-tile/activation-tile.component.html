@@ -1,24 +1,23 @@
-<mat-card>
-  <div class="activation-details">
-    <h3 class="title">Current activity</h3>
-    <div *ngIf="!activation; else activationexisting">
-      <p>There is no session activated.<br>Activate a session to start streaming.</p>
-      <button mat-raised-button color="primary" (click)="openActivationDialog()">Activate session </button>
-    </div>
-    <ng-template #activationexisting>
-      <div>Active session</div>
-      <div class="session-title">{{session?.title}}</div>
-      <div>Start time
-        <div>{{activation?.startTime * 1000 | date:'H:mm'}} Uhr</div>
-      </div>
-      <div>End time
-        <div *ngIf="activation.endTime; else noendtime">{{activation?.endTime * 1000 | date:'H:mm'}}</div>
-        <ng-template #noendtime>
-          <div>Not scheduled</div>
-        </ng-template>
-      </div>
-      <button class="delete-activation" mat-raised-button (click)="openActivationDeletionDialog()">Deactivate
-        session</button>
-    </ng-template>
+<mat-card class="activation-details">
+  <div *ngIf="!activation; else activationexisting">
+    <p>There is no session activated.<br>Activate a session to start streaming.</p>
+    <button mat-raised-button color="primary" (click)="openActivationDialog()">Activate session </button>
   </div>
+  <ng-template #activationexisting>
+    <div class="tile-subheading">Active session</div>
+    <div class="session-title">{{session?.title}}</div>
+    <div>
+      <div class="tile-subheading">Start time</div>
+      <div>{{activation?.startTime * 1000 | date:'H:mm'}} Uhr</div>
+    </div>
+    <div>
+      <div class="tile-subheading">End time</div>
+      <div *ngIf="activation.endTime; else noendtime">{{activation?.endTime * 1000 | date:'H:mm'}}</div>
+      <ng-template #noendtime>
+        <div>-</div>
+      </ng-template>
+    </div>
+    <button class="delete-activation" mat-raised-button (click)="openActivationDeletionDialog()">Deactivate
+      session</button>
+  </ng-template>
 </mat-card>
