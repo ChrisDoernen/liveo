@@ -24,8 +24,11 @@ export class AudioPlayerComponent {
         this._l3asService.play(streamId);
         this._l3asService.mute();
       } else {
-        if (this._l3asService.isPlaying)
+        if (this._l3asService.isPlaying) {
           this._l3asService.stop();
+          this._isPlaying = false;
+          this._l3asService.mute();
+        }
       }
     }
   }
