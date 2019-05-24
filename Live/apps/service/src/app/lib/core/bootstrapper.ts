@@ -1,4 +1,4 @@
-import { IDeviceDetector } from "../devices/i-device-detector";
+import { DeviceDetector } from "../devices/device-detector";
 import { StreamService } from "../streams/stream-service";
 import { SessionService } from "../sessions/session-service";
 import { Logger } from "../logging/logger";
@@ -11,7 +11,7 @@ import { injectable, inject } from "inversify";
 export class Bootstrapper {
   constructor(
     @inject("Logger") private _logger: Logger,
-    @inject("IDeviceDetector") private _deviceDetector: IDeviceDetector,
+    @inject("IDeviceDetector") private _deviceDetector: DeviceDetector,
     @inject("StreamService") private _streamService: StreamService,
     @inject("SessionService") private _sessionService: SessionService,
     @inject("WebServer") private _webServer: WebServer,

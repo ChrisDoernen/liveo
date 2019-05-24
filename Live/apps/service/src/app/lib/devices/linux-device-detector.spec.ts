@@ -22,11 +22,7 @@ describe("LinuxDeviceDetector", () => {
         new Device(logger, deviceData, deviceState)
     );
 
-    linuxDeviceDetector = new LinuxDeviceDetector(
-      logger,
-      processExecutionService,
-      deviceFactory
-    );
+    linuxDeviceDetector = new LinuxDeviceDetector(logger, processExecutionService, deviceFactory);
   });
 
   it("should construct", async () => {
@@ -36,8 +32,7 @@ describe("LinuxDeviceDetector", () => {
   it("should parse devices correctly when two devices are available", () => {
     const oneDeviceAvailableResource = `${appRoot}/apps/service/src/app/test-resources/system/devices/arecordTwoAvailable.txt`;
     const response = fs.readFileSync(oneDeviceAvailableResource, "utf8");
-    jest
-      .spyOn(processExecutionService, "execute")
+    jest.spyOn(processExecutionService, "execute")
       .mockImplementation((command: string, callback: any) => callback(null, response, null));
 
     const promise = linuxDeviceDetector.detectDevices();

@@ -1,35 +1,34 @@
-import { IDeviceDetector } from "./i-device-detector";
+import { DeviceDetector } from "./device-detector";
 import { Logger } from "../logging/logger";
 import { injectable, inject } from "inversify";
 import { Device } from "./device";
 import { DeviceData } from "./device-data";
 import { DeviceState } from "./device-state";
+import { ProcessExecutionService } from '../process-execution/process-execution-service';
 
 /**
  * Implementation of device detection that always returnes valid devices
  */
 @injectable()
-export class SimulationDeviceDetector implements IDeviceDetector {
+export class SimulationDeviceDetector extends DeviceDetector {
 
-  private _devices: Device[] = [];
-
-  public get devices(): Device[] {
-    return this._devices;
-  }
-
-  constructor(@inject("Logger") private _logger: Logger,
-    @inject("DeviceFactory") private _deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
-    this._logger.info("Instantiating simulation device detector.");
+  constructor(@inject("Logger") logger: Logger,
+    @inject("ProcessExecutionService") processExecutionService: ProcessExecutionService,
+    @inject("DeviceFactory") deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
+    logger.warn("Instantiating simulation device detector.");
+    super(logger, processExecutionService, deviceFactory);
   }
 
   public async detectDevices(): Promise<void> {
-    return await new Promise<void>((resolve, reject) => {
-      resolve();
-    });
+    return Promise.resolve();
+  }
+
+  protected parseResponse(response: string): Device[] {
+    return null;
   }
 
   public getDevice(id: string): Device {
-    this._logger.info("Simulating device detection, returning available test device.");
-    return this._deviceFactory(new DeviceData(id, "Test device"), DeviceState.Available);
+    this.logger.info("Simulating device detection, returning available test device.");
+    return this.instantiateDevice(id, "Test device", DeviceState.Available);
   }
 }

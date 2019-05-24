@@ -4,7 +4,7 @@ import { Container, interfaces } from "inversify";
 import { Logger } from "../lib/logging/logger";
 import { ServiceConfig } from "./service.config";
 import { ProcessExecutionService } from "../lib/process-execution/process-execution-service";
-import { IDeviceDetector } from "../lib/devices/i-device-detector";
+import { DeviceDetector } from "../lib/devices/device-detector";
 import { LinuxDeviceDetector } from "../lib/devices/linux-device-detector";
 import { SimulationDeviceDetector } from "../lib/devices/simulation-device-detector";
 import { DataService } from "../lib/data/data-service";
@@ -39,15 +39,13 @@ if (!ServiceConfig.production) {
 }
 
 if (ServiceConfig.simulate) {
-  container.bind<IDeviceDetector>("IDeviceDetector").to(SimulationDeviceDetector).inSingletonScope();
+  container.bind<DeviceDetector>("DeviceDetector").to(SimulationDeviceDetector).inSingletonScope();
   container.bind<interfaces.Factory<IStreamingSource>>("StreamingSourceFactory").toFactory(StreamingSimulationSourceFactory);
 } else {
   if (ServiceConfig.os === "linux") {
-    container.bind<IDeviceDetector>("IDeviceDetector").to(LinuxDeviceDetector).inSingletonScope();
+    container.bind<DeviceDetector>("DeviceDetector").to(LinuxDeviceDetector).inSingletonScope();
   } else {
-    throw new Error(
-      `Device detection for OS ${ServiceConfig.os} is unsupported.`
-    );
+    throw new Error(`Device detection for OS ${ServiceConfig.os} is unsupported.`);
   }
 
   container.bind<interfaces.Factory<IStreamingSource>>("StreamingSourceFactory").toFactory(StreamingSourceFactory);

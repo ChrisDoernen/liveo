@@ -1,38 +1,36 @@
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
-import { IDeviceDetector } from "./i-device-detector";
+import { DeviceDetector } from "./device-detector";
 import { Logger } from "../logging/logger";
 import { injectable, inject } from "inversify";
 import { Device } from "./device";
+import { DeviceData } from './device-data';
+import { DeviceState } from './device-state';
 
 @injectable()
-export class WindowsDeviceDetector implements IDeviceDetector {
+export class WindowsDeviceDetector extends DeviceDetector {
+  private listDevicesCommand: string = "ffmpeg -list_devices true -f dshow -i dummy -hide_banner";
+  private audioDeviceRegexPattern: string = `(?<="")(.*?)(?="")`;
 
-    public devices: Device[];
+  constructor(@inject("Logger") logger: Logger,
+    @inject("ProcessExecutionService") processExecutionService: ProcessExecutionService,
+    @inject("DeviceFactory") deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
+    super(logger, processExecutionService, deviceFactory);
+  }
 
-    private listDevicesCommand: string = "ffmpeg -list_devices true -f dshow -i dummy -hide_banner";
+  public async detectDevices(): Promise<void> {
+    return this.runDetection(this.listDevicesCommand);
+  }
 
-    private audioDeviceRegexPattern: string = `(?<="")(.*?)(?="")`;
+  protected parseResponse(response: string): Device[] {
+    const lines = response.split("\n");
+    return null;
+  }
 
-    constructor(@inject("Logger") private _logger: Logger,
-        @inject("ProcessExecutionService") private _processExecutionService: ProcessExecutionService) {
-        this._logger.debug("Detecting audio inputs.");
-        this.detectDevices();
-    }
+  private lineContainsAudioDevice(line: string): boolean {
+    return line.includes("(") && line.includes(")") && line.includes("\"");
+  }
 
-    public detectDevices(): Promise<void> {
-        const response = this._processExecutionService.execute(this.listDevicesCommand);
-        // const lines = response.split("\n");
-        // this.devices = lines.filter((line) => this.lineContainsAudioDevice(line))
-        //     .map((line) => line.match(this.audioDeviceRegexPattern)[0])
-        //     .map((id) => new Device(id, ""));
-        throw new Error("Not implemented");
-    }
-
-    private lineContainsAudioDevice(line: string): boolean {
-        return line.includes("(") && line.includes(")") && line.includes("\"");
-    }
-
-    public getDevice(id: string): Device {
-        throw new Error("Method not implemented.");
-    }
+  public getDevice(id: string): Device {
+    throw new Error("Method not implemented.");
+  }
 }
