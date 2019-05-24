@@ -25,7 +25,7 @@ export class LinuxDeviceDetector extends DeviceDetector {
   }
 
   protected parseResponse(response: string): Device[] {
-    const lines = response.split("\n");
+    const lines = response.split("\r\n");
 
     return lines
       .filter((line) => this.audioDeviceRegexPattern.test(line))

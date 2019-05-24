@@ -9,7 +9,6 @@ import { DeviceState } from './device-state';
 @injectable()
 export class WindowsDeviceDetector extends DeviceDetector {
   private listDevicesCommand: string = "ffmpeg -list_devices true -f dshow -i dummy -hide_banner";
-  private audioDeviceRegexPattern: string = `(?<="")(.*?)(?="")`;
 
   constructor(@inject("Logger") logger: Logger,
     @inject("ProcessExecutionService") processExecutionService: ProcessExecutionService,
@@ -22,15 +21,23 @@ export class WindowsDeviceDetector extends DeviceDetector {
   }
 
   protected parseResponse(response: string): Device[] {
-    const lines = response.split("\n");
-    return null;
+    const lines = response.split("\r\n");
+
+    return lines
+      .filter((line) => this.lineContainsAudioDevice(line))
+      .map((line) => this.parseDevice(line));
   }
 
   private lineContainsAudioDevice(line: string): boolean {
     return line.includes("(") && line.includes(")") && line.includes("\"");
   }
 
-  public getDevice(id: string): Device {
-    throw new Error("Method not implemented.");
+  private parseDevice(line: string): Device {
+    const cardTrimStart = line.substr(29, line.length);
+    const cardTrimEnd = cardTrimStart.substr(0, cardTrimStart.length - 1);
+    const id = cardTrimEnd;
+    const description = cardTrimEnd;
+
+    return this.instantiateDevice(id, description, DeviceState.Available);
   }
 }
