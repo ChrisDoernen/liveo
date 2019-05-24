@@ -5,6 +5,7 @@ import { injectable, inject } from "inversify";
 import { Device } from "./device";
 import { DeviceData } from './device-data';
 import { DeviceState } from './device-state';
+import { EOL } from 'os';
 
 @injectable()
 export class WindowsDeviceDetector extends DeviceDetector {
@@ -21,7 +22,7 @@ export class WindowsDeviceDetector extends DeviceDetector {
   }
 
   protected parseResponse(response: string): Device[] {
-    const lines = response.split("\r\n");
+    const lines = response.split(EOL);
 
     return lines
       .filter((line) => this.lineContainsAudioDevice(line))
