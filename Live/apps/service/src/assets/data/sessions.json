@@ -1,10 +1,18 @@
 [
   {
     "id": "bd34",
-    "title": "Gottesdienst",
+    "title": "Gottesdienst Linux",
     "description": "Live stream of the sunday service",
     "streams": [
-      "v67d"
+      "4hdg"
+    ]
+  },
+  {
+    "id": "bd35",
+    "title": "Gottesdienst Windows",
+    "description": "Live stream of the sunday service",
+    "streams": [
+      "ge1r"
     ]
   }
 ]

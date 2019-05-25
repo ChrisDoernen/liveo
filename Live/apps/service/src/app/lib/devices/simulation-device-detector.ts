@@ -12,7 +12,8 @@ import { ProcessExecutionService } from '../process-execution/process-execution-
 @injectable()
 export class SimulationDeviceDetector extends DeviceDetector {
 
-  constructor(@inject("Logger") logger: Logger,
+  constructor(
+    @inject("Logger") logger: Logger,
     @inject("ProcessExecutionService") processExecutionService: ProcessExecutionService,
     @inject("DeviceFactory") deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
     logger.warn("Instantiating simulation device detector.");
@@ -21,6 +22,10 @@ export class SimulationDeviceDetector extends DeviceDetector {
 
   public async detectDevices(): Promise<void> {
     return Promise.resolve();
+  }
+
+  protected async executeListDevicesCommand(command: string): Promise<string> {
+    return Promise.resolve("Fake returned data");
   }
 
   protected parseResponse(response: string): Device[] {

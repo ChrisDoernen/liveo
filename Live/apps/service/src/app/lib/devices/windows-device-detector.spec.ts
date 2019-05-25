@@ -33,7 +33,7 @@ describe("WindowsDeviceDetector", () => {
     const twoDevicesAvailableResponse = `${appRoot}/apps/service/src/app/test-resources/system/devices/listDevicesTwoAvailable.txt`;
     const response = fs.readFileSync(twoDevicesAvailableResponse, "utf8");
     jest.spyOn(processExecutionService, "execute")
-      .mockImplementation((command: string, callback: any) => callback(null, response, null));
+      .mockImplementation((command: string, callback: any) => callback(null, null, response));
 
     const promise = windowsDeviceDetector.detectDevices();
 

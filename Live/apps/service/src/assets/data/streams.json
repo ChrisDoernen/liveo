@@ -10,5 +10,11 @@
         "title": "Deutsch",
         "countryCode": "de",
         "deviceId": "1"
+    },
+    {
+        "id": "ge1r",
+        "title": "Deutsch",
+        "countryCode": "de",
+        "deviceId": "Mikrofon (USB Audio Device)"
     }
 ]

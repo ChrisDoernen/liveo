@@ -16,7 +16,8 @@ export class ActivationService {
     return Math.floor(new Date().getTime() / 1000)
   }
 
-  constructor(@inject("Logger") private _logger: Logger,
+  constructor(
+    @inject("Logger") private _logger: Logger,
     @inject("SessionService") private _sessionService: SessionService,
     @inject("Scheduler") private _scheduler: Scheduler,
     @inject("ShutdownService") private _shutdownService: ShutdownService) {

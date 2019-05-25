@@ -6,7 +6,7 @@ export const WindowStreamingCommand: ICommand = {
     "-y",
     "-f",
     "dshow",
-    "-i audio=__DEVICEID__",
+    "-i audio=\"__DEVICEID__\"",
     "-rtbufsize 64",
     "-probesize 64",
     "-acodec libmp3lame",

@@ -17,8 +17,9 @@ export abstract class DeviceDetector {
     return this.devices;
   }
 
-  constructor(protected logger: Logger,
-    private _processExecutionService: ProcessExecutionService,
+  constructor(
+    protected logger: Logger,
+    protected _processExecutionService: ProcessExecutionService,
     private _deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
   }
 
@@ -40,13 +41,7 @@ export abstract class DeviceDetector {
     });
   }
 
-  private async executeListDevicesCommand(command: string): Promise<string> {
-    return await new Promise<string>((resolve, reject) => {
-      this._processExecutionService.execute(command, (error, stdout, stderr) => {
-        resolve(stdout);
-      });
-    });
-  }
+  protected abstract executeListDevicesCommand(command: string): Promise<string>;
 
   protected abstract parseResponse(response: string): Device[];
 

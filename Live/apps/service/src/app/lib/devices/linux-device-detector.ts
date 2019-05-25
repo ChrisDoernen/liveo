@@ -15,7 +15,8 @@ export class LinuxDeviceDetector extends DeviceDetector {
   private listDevicesCommand: string = "arecord -l";
   private audioDeviceRegexPattern: RegExp = new RegExp("(card \\d+: )");
 
-  constructor(@inject("Logger") logger: Logger,
+  constructor(
+    @inject("Logger") logger: Logger,
     @inject("ProcessExecutionService") processExecutionService: ProcessExecutionService,
     @inject("DeviceFactory") deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
     super(logger, processExecutionService, deviceFactory);
@@ -23,6 +24,14 @@ export class LinuxDeviceDetector extends DeviceDetector {
 
   public async detectDevices(): Promise<void> {
     return this.runDetection(this.listDevicesCommand);
+  }
+
+  protected async executeListDevicesCommand(command: string): Promise<string> {
+    return await new Promise<string>((resolve, reject) => {
+      this._processExecutionService.execute(command, (error, stdout, stderr) => {
+        resolve(stdout);
+      });
+    });
   }
 
   protected parseResponse(response: string): Device[] {

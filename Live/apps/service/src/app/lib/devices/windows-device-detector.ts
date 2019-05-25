@@ -11,7 +11,8 @@ import { EOL } from 'os';
 export class WindowsDeviceDetector extends DeviceDetector {
   private listDevicesCommand: string = "ffmpeg -list_devices true -f dshow -i dummy -hide_banner";
 
-  constructor(@inject("Logger") logger: Logger,
+  constructor(
+    @inject("Logger") logger: Logger,
     @inject("ProcessExecutionService") processExecutionService: ProcessExecutionService,
     @inject("DeviceFactory") deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
     super(logger, processExecutionService, deviceFactory);
@@ -19,6 +20,15 @@ export class WindowsDeviceDetector extends DeviceDetector {
 
   public async detectDevices(): Promise<void> {
     return this.runDetection(this.listDevicesCommand);
+  }
+
+  protected async executeListDevicesCommand(command: string): Promise<string> {
+    return await new Promise<string>((resolve, reject) => {
+      this._processExecutionService.execute(command, (error, stdout, stderr) => {
+        // FFMPEG writes to stderr
+        resolve(stderr);
+      });
+    });
   }
 
   protected parseResponse(response: string): Device[] {
