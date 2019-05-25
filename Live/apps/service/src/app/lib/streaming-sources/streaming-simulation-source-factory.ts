@@ -9,7 +9,7 @@ export const StreamingSimulationSourceFactory = (context: interfaces.Context) =>
   (deviceId: string, stream: Stream) => {
     const logger = context.container.get<Logger>("Logger");
     const websocketServer = context.container.get<WebsocketServer>("WebsocketServer");
-    const deviceDetector = context.container.get<DeviceDetector>("IDeviceDetector");
+    const deviceDetector = context.container.get<DeviceDetector>("DeviceDetector");
     const device = deviceDetector.getDevice(deviceId);
 
     return new StreamingSimulationSource(logger, websocketServer, device, stream);

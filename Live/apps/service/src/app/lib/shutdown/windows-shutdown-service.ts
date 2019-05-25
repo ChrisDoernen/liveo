@@ -5,21 +5,20 @@ import { Scheduler } from "../scheduling/scheduler";
 import { ShutdownService } from "./shutdown-service";
 
 /**
- * Linux implementation for ShutdownService
+ * Windows implementation for ShutdownService
  */
 @injectable()
-export class LinuxShutdownService extends ShutdownService {
+export class WindowsShutdownService extends ShutdownService {
 
-  constructor(
-    @inject("Logger") logger: Logger,
+  constructor(@inject("Logger") logger: Logger,
     @inject("ProcessExecutionService") private _processExecutionService: ProcessExecutionService,
     @inject("Scheduler") scheduler: Scheduler) {
     super(logger, scheduler);
-    logger.debug("Instantiating linux shutdown service.");
+    logger.debug("Instantiating windows shutdown service.");
   }
 
   public executeShutdown(): void {
     this.logger.info("Shutting down server now.");
-    this._processExecutionService.execute("sudo shutdown -h now");
+    this._processExecutionService.execute("shutdown \s");
   }
 }

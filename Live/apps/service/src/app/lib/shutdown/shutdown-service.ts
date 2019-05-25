@@ -12,7 +12,8 @@ export abstract class ShutdownService {
   private _shutdown: Shutdown = null;
   private _shutdownJobId = "SHUTDOWN_JOB";
 
-  constructor(@inject("Logger") protected logger: Logger,
+  constructor(
+    @inject("Logger") protected logger: Logger,
     @inject("Scheduler") private _scheduler: Scheduler) {
   }
 

@@ -11,7 +11,8 @@ import { ActivationService } from "../activation/activation-service";
 @injectable()
 export class ActivityService {
 
-  constructor(@inject("Logger") private _logger: Logger,
+  constructor(
+    @inject("Logger") private _logger: Logger,
     @inject("ActivationService") private _activationService: ActivationService,
     @inject("SessionService") private _sessionService: SessionService,
     @inject("StreamService") private _streamService: StreamService) {

@@ -3,10 +3,12 @@ import { DeviceData } from './device-data';
 import { DeviceState } from './device-state';
 import { Logger } from '../logging/logger';
 import { ProcessExecutionService } from '../process-execution/process-execution-service';
+import { injectable } from 'inversify';
 
 /**
  * A abstract class for device detection
  */
+@injectable()
 export abstract class DeviceDetector {
 
   protected devices: Device[];
