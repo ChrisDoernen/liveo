@@ -11,7 +11,7 @@ script:
   - cd $TRAVIS_BUILD_DIR/Live
   - npm install
   - npm run test
-  - npm run build
+  - npm run build-prod
 notifications:
   email:
     on_failure: always
