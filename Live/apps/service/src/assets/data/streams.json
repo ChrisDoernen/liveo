@@ -16,5 +16,11 @@
         "title": "Deutsch",
         "countryCode": "de",
         "deviceId": "Mikrofon (USB Audio Device)"
+    },
+    {
+        "id": "ge1r",
+        "title": "Englisch",
+        "countryCode": "de",
+        "deviceId": "Mikrofonarray (Realtek High Definition Audio)"
     }
 ]

@@ -24,6 +24,7 @@ export class Bootstrapper {
     this._logger.debug(`OS: ${ServiceConfig.os}.`);
     this._logger.debug(`Architecture: ${ServiceConfig.arch}.`);
     this._logger.debug(`Simulate streaming: ${ServiceConfig.simulate}.`);
+    this._logger.debug(`Standalone mode: ${ServiceConfig.standalone}.`);
 
     this._deviceDetector.detectDevices().then(() => {
       this._streamService.loadStreams();

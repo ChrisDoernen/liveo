@@ -3,7 +3,7 @@ import { ICommand } from "./i-command";
 export const WindowStreamingCommand: ICommand = {
   command: "ffmpeg",
   arguments: [
-    "-y",
+    // "-y",
     "-f",
     "dshow",
     "-i audio=\"__DEVICEID__\"",
