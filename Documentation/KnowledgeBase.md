@@ -1,7 +1,6 @@
-# Development Documentation
+# Knowledge Base
 
-
-## Audio capturing
+## Ffmpeg
 
 [Ffmpeg](https://www.ffmpeg.org/) is a powerful cross-platform solution to record, convert and stream audio and video.
 
@@ -20,8 +19,6 @@ arecord -l  // Linux
 ffmpeg -list_devices true -f dshow -i dummy // Windows
 ```
 
-## Video capturing
-
 To get currently available video devices, the following command can be used:
 ```
 ls -ltrh /dev/video*
@@ -34,8 +31,6 @@ Additionally there is a module existing which offers video live streaming functi
 
 The idea is to use nginx on linux as the web server for client and backend and as reverse proxy for the service. The nginx rtmp module can be used to support video streaming over mpeg dash like described in [this post](https://isrv.pw/html5-live-streaming-with-mpeg-dash).
 
-### Nginx configuration
-
 The configuration can be split up into multiple configs per application which then can easily enabled or disabled by adding or removing symlinks.
 The directory for the configs are `/etc/nginx/sites-available` and `mkdir /etc/nginx/sites-enabled`.
 
@@ -47,11 +42,7 @@ Create symlinks (example):
 ln -s /etc/nginx/sites-available/live.conf /etc/nginx/sites-enabled/live.conf
 ```
 
-## Api testing with Postman
-
-[Postman](https://www.getpostman.com/) can be used for api testing. See the corresponding postman collection.
-
-## Starting service as a daemon
+## Systemd
 
 The server can be configured to be run on startup in the backgound as a daemon. Systemd can help with that on linux. The place for the service config is `/etc/systemd/system`. Helpful commands are:
 

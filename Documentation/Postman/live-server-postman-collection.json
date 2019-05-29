@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "f431a088-4894-45b2-8f8a-7c220699f62d",
-		"name": "Live Server localhost",
+		"name": "Live Service",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -53,7 +53,7 @@
 			"response": []
 		},
 		{
-			"name": "/home",
+			"name": "/api/hello",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -62,13 +62,13 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{hostname}}:{{port}}/home",
+					"raw": "{{hostname}}:{{port}}/hello",
 					"host": [
 						"{{hostname}}"
 					],
 					"port": "{{port}}",
 					"path": [
-						"home"
+						"hello"
 					]
 				}
 			},
@@ -258,6 +258,36 @@
 			"response": []
 		},
 		{
+			"name": "/api/activation sessionId und timestamp",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"sessionId\": \"bd34\",\n\t\"timeStarting\": 1556969471\n}"
+				},
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/activation",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"activation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "/api/activation",
 			"request": {
 				"method": "DELETE",
@@ -286,6 +316,51 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "/api/activity",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/activity",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"activity"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "44454d38-8425-4c12-9130-f7ae3d40ec55",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "d0ad3a07-9cf1-4a22-9e22-43fc97fa2aab",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }
