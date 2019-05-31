@@ -32,6 +32,7 @@ import { LinuxStreamingCommand } from '../lib/streaming-command/linux-streaming-
 import { WindowsDeviceDetector } from '../lib/devices/windows-device-detector';
 import { WindowStreamingCommand } from '../lib/streaming-command/windows-streaming-command';
 import { WindowsShutdownService } from '../lib/shutdown/windows-shutdown-service';
+import { TimeService } from "../lib/time/time.service";
 
 export const container = new Container();
 
@@ -84,6 +85,7 @@ container.bind<DataService>("DataService").to(DataService);
 container.bind<Bootstrapper>("Bootstrapper").to(Bootstrapper);
 container.bind<ActivityService>("ActivityService").to(ActivityService);
 container.bind<ProcessExecutionService>("ProcessExecutionService").to(ProcessExecutionService);
+container.bind<TimeService>("TimeService").to(TimeService);
 
 container.bind<Logger>("Logger").toConstantValue(new Logger(ServiceLogger));
 container.bind<Logger>("FfmpegLogger").toConstantValue(new Logger(FfmpegLogger));
