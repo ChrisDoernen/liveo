@@ -12,7 +12,7 @@
     </div>
     <div>
       <div class="tile-subheading">End time</div>
-      <div *ngIf="activation.endTime; else noendtime">{{activation?.endTime * 1000 | date:'H:mm'}}</div>
+      <div *ngIf="activation.endTime; else noendtime">{{activation?.endTime * 1000 | date:'H:mm'}} Uhr</div>
       <ng-template #noendtime>
         <div>-</div>
       </ng-template>

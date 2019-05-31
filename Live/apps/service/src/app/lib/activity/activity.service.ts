@@ -20,8 +20,6 @@ export class ActivityService {
     @inject("StreamService") private _streamService: StreamService) {
   }
 
-  private currentTimestamp = Date.now() / 1000;
-
   public getActivity(): ActivityEntity {
     const activation = this._activationService.getActivationEntity();
     let session: SessionEntity;
@@ -42,11 +40,11 @@ export class ActivityService {
     const now = this._timeService.now();
 
     if (activation) {
-      if (activation.startTime > now) {
+      if (activation.startTime > now && (!activation.endTime || activation.endTime > now)) {
         activationState = ActivationState.Scheduled;
-      } else if (activation.startTime < now && activation.endTime > now) {
+      } else if (activation.startTime < now && (!activation.endTime || activation.endTime > now)) {
         activationState = ActivationState.Started;
-      } else if (activation.startTime < now && activation.endTime < now) {
+      } else if (activation.startTime < now && (!activation.endTime || activation.endTime < now)) {
         activationState = ActivationState.Ended;
       }
     } else {
