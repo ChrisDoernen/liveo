@@ -1,13 +1,11 @@
 import { ICommand } from "./i-command";
 
-export const LinuxStreamingCommand: ICommand = {
+export const FileStreamingCommand: ICommand = {
   command: "ffmpeg",
   arguments: [
-    "-y",
-    "-f",
-    "alsa",
+    "-re",
     "-i",
-    "hw:__DEVICEID__",
+    "__FILENAME__",
     "-rtbufsize",
     "64",
     "-probesize",

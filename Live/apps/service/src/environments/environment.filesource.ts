@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
-  simulate: true,
-  filesource: false,
+  simulate: false,
+  filesource: true,
   port: 3000,
-  standalone: false
+  standalone: true
 };

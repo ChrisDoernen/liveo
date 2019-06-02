@@ -25,7 +25,8 @@ export class Stream {
     return this._source.hasValidDevice;
   }
 
-  constructor(@inject("Logger") private _logger: Logger,
+  constructor(
+    @inject("Logger") private _logger: Logger,
     @inject("StreamingSourceFactory")
     streamingSourceFactory: (deviceId: string, stream: Stream) => IStreamingSource,
     private _streamEntity: StreamEntity) {

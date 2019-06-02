@@ -169,6 +169,14 @@
                   "with": "apps/service/src/environments/environment.simulation.ts"
                 }
               ]
+            },
+            "filesource": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/service/src/environments/environment.ts",
+                  "with": "apps/service/src/environments/environment.filesource.ts"
+                }
+              ]
             }
           }
         },
@@ -183,6 +191,9 @@
             },
             "simulation": {
               "buildTarget": "service:build:simulation"
+            },
+            "filesource": {
+              "buildTarget": "service:build:filesource"
             }
           }
         },

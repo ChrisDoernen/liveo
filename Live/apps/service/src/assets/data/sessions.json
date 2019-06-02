@@ -14,5 +14,13 @@
     "streams": [
       "ge1r"
     ]
+  },
+  {
+    "id": "ag7s",
+    "title": "Stream from file",
+    "description": "Live stream of the sunday service",
+    "streams": [
+      "bgu7"
+    ]
   }
 ]

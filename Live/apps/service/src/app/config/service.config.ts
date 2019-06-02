@@ -7,6 +7,7 @@ export const ServiceConfig = {
   port: process.env.PORT ? process.env.PORT : environment.port,
   production: process.env.PRODUCTION ? process.env.PRODUCTION === "true" : environment.production,
   simulate: process.env.SIMULATE ? process.env.SIMULATE === "true" : environment.simulate,
+  filesource: process.env.FILESOURCE ? process.env.FILESOURCE === "true" : environment.filesource,
   standalone: process.env.STANDALONE ? process.env.STANDALONE === "true" : environment.standalone,
   sessions: `${appRoot}/dist/apps/service/assets/data/sessions.json`,
   streams: `${appRoot}/dist/apps/service/assets/data/streams.json`,
