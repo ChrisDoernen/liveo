@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { AudioPlayerComponent } from "./audio-player.component";
-import { StreamService, L3asService } from "@live/services";
+import { StreamService, L3asService, UserAgentService } from "@live/services";
 import { ActivatedRoute, convertToParamMap } from "@angular/router";
 import { HeaderComponent } from "../header/header.component";
 import { InlineSVGDirective } from "ng-inline-svg";
 import { HttpClient } from "@angular/common/http";
 import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
-import createMockInstance from 'jest-create-mock-instance';
-import { Ng5SliderModule } from 'ng5-slider';
+import createMockInstance from "jest-create-mock-instance";
+import { Ng5SliderModule } from "ng5-slider";
 
 describe("StreamComponent", () => {
   let component: AudioPlayerComponent;
@@ -42,7 +42,8 @@ describe("StreamComponent", () => {
         { provide: ActivatedRoute, useValue: activatedRoute },
         { provide: HttpClient, useValue: httpClient },
         { provide: InlineSVGService, useValue: inlineSVGService },
-        { provide: L3asService, useValue: l3asService }
+        { provide: L3asService, useValue: l3asService },
+        UserAgentService
       ]
     });
 

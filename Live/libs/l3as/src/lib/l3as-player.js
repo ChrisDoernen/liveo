@@ -8,7 +8,7 @@ import AudioFormatReader_MPEG from "./audio-format-reader-mpeg.js";
 */
 export class L3asPlayer {
 
-  constructor(StreamEndedExpectedCallback, StreamEndedUnexpectedCallback) {
+  constructor(UserAgentInfo, StreamEndedExpectedCallback, StreamEndedUnexpectedCallback) {
     this.audioPlayer;
     this.formatReader;
     this.socketClient;
@@ -18,8 +18,16 @@ export class L3asPlayer {
     this.isPlaying;
     this.muted;
 
+    if (!UserAgentInfo)
+      throw new Error('User agent info is not defined');
+    if (typeof StreamEndedExpectedCallback !== 'function')
+      throw new Error('WebSocketClient: StreamEndedExpectedCallback must be specified');
+    if (typeof StreamEndedUnexpectedCallback !== 'function')
+      throw new Error('WebSocketClient: StreamEndedUnexpectedCallback must be specified');
+
     this._StreamEndedExpectedCallback = StreamEndedExpectedCallback;
     this._StreamEndedUnexpectedCallback = StreamEndedUnexpectedCallback;
+    this._UserAgentInfo = UserAgentInfo;
 
     this.logEvent(`Initialized 3las player.`);
   }
@@ -121,7 +129,7 @@ export class L3asPlayer {
         if (!this.canDecodeTypes(new Array("audio/mpeg", "audio/MPA", "audio/mpa-robust")))
           throw new Error('CreateAudioFormatReader: Browser can not decode specified mime-Type (' + mime + ')');
 
-        return new AudioFormatReader_MPEG(this.userAgentInfo, errorCallback, dataReadyCallback);
+        return new AudioFormatReader_MPEG(this._UserAgentInfo, errorCallback, dataReadyCallback);
 
       // Unknown codec
       default:

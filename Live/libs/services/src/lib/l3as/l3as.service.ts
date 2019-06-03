@@ -12,8 +12,10 @@ export class L3asService {
   constructor() {
   }
 
-  public initialize(onStreamEndedExpected: () => void, onStreamEndedUnexpected: () => void): void {
-    this._l3asPlayer = new L3asPlayer(onStreamEndedExpected, onStreamEndedUnexpected);
+  public initialize(userAgentInfo: UserAgentInfo,
+    onStreamEndedExpected: () => void,
+    onStreamEndedUnexpected: () => void): void {
+    this._l3asPlayer = new L3asPlayer(userAgentInfo, onStreamEndedExpected, onStreamEndedUnexpected);
   }
 
   public get isPlaying(): boolean {

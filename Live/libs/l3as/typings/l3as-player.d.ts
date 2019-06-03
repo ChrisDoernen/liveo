@@ -5,7 +5,9 @@ export declare class L3asPlayer {
   /**
    * Constructs the L3asPlayer instance
    */
-  constructor(streamEndedExpectedCallback: () => void, streamEndedUnexpectedCallback: () => void);
+  constructor(UserAgentInfo,
+    streamEndedExpectedCallback: () => void,
+    streamEndedUnexpectedCallback: () => void);
 
   /**
    * Wheter the state is playing or stopped

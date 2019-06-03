@@ -48,7 +48,7 @@ import { ActivityService } from "./services/activity/activity.service";
       useFactory: (userAgentService: UserAgentService) => {
         return () => userAgentService.initialize();
       },
-      deps: [L3asService],
+      deps: [UserAgentService],
       multi: true
     }
   ],
