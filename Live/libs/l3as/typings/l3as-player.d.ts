@@ -8,16 +8,6 @@ export declare class L3asPlayer {
   constructor(streamEndedExpectedCallback: () => void, streamEndedUnexpectedCallback: () => void);
 
   /**
-   * The user agent info
-   */
-  userAgentInfo: UserAgentInfo;
-
-  /**
-   * Whether the browser is compatible for playing mpeg
-   */
-  isBrowserCompatible: boolean;
-
-  /**
    * Wheter the state is playing or stopped
    */
   isPlaying: boolean;
