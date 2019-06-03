@@ -8,7 +8,7 @@ import AudioFormatReader_MPEG from "./audio-format-reader-mpeg.js";
 */
 export class L3asPlayer {
 
-  constructor() {
+  constructor(StreamEndedExpectedCallback, StreamEndedUnexpectedCallback) {
     this.audioPlayer;
     this.formatReader;
     this.socketClient;
@@ -19,6 +19,9 @@ export class L3asPlayer {
     this.muted;
     this.userAgentInfo = this.detectUserAgent();
     this.isBrowserCompatible = this.checkBrowserCompatibility();
+
+    this._StreamEndedExpectedCallback = StreamEndedExpectedCallback;
+    this._StreamEndedUnexpectedCallback = StreamEndedUnexpectedCallback;
 
     this.logEvent(`Initialized 3las player.`);
   }
@@ -78,7 +81,8 @@ export class L3asPlayer {
       try {
         this.logEvent("Play was clicked, trying to connect to server.");
         this.socketClient = new WebSocketClient(streamId, this.onSocketError.bind(this), this.onSocketConnect.bind(this),
-          this.onSocketDataReady.bind(this), this.onSocketDisconnect.bind(this));
+          this.onSocketDataReady.bind(this), this.onSocketDisconnect.bind(this),
+          this.onStreamEndedExpected.bind(this), this.onStreamEndedUnexpected.bind(this));
         this.logEvent("Init of WebSocketClient succeeded");
         this.logEvent("Trying to connect to server.");
       } catch (e) {
@@ -156,6 +160,16 @@ export class L3asPlayer {
   // Callback function from socket connection
   onSocketError(error) {
     this.logEvent("Network error: " + error);
+  }
+
+  onStreamEndedExpected() {
+    this._StreamEndedExpectedCallback();
+    this.logEvent("Stream ended as expected.");
+  }
+
+  onStreamEndedUnexpected() {
+    this._StreamEndedUnexpectedCallback();
+    this.logEvent("Stream ended unexpected.");
   }
 
   onSocketConnect() {

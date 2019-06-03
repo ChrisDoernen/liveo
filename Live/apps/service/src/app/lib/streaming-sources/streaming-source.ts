@@ -8,6 +8,7 @@ import { WebsocketServer } from "../core/websocket-server";
 import { Stream } from "../streams/stream";
 import { ICommand } from "../streaming-command/i-command";
 import { IStreamingCommandProvider } from "../streaming-command/i-streaming-command-provider";
+import { EVENTS } from "@live/constants";
 
 /**
  * Class responsible for opening a child process and passing the data to the websocket server
@@ -40,11 +41,21 @@ export class StreamingSource {
       this._logger.error(`Error spawning child process for device ${this._device.id}: ${error}.`)
     });
     this._logger.debug(`Started child process for device ${this._device.id} with PID ${this._childProcess.pid}.`);
-    this._childProcess.stdout.on("data", (data: Buffer) => this._websocketServer.emit(this._stream.id, data));
+    this._childProcess.stdout.on("data", (data: Buffer) => {
+      this._websocketServer.emitStreamData(this._stream.id, data);
+    });
     this._childProcess.stderr.on("data", data => this._ffmpegLogger.info(`${data}`));
     this._childProcess.on("close", code => {
       this.isStreaming = false;
+
+      // Code 255 is returned if process was killed manually
+      if (code === 255) {
+        this._websocketServer.emitEventMessage(this._stream.id, EVENTS.streamEndedExpected, "The stream ended as expected.");
+      } else {
+        this._websocketServer.emitEventMessage(this._stream.id, EVENTS.streamEndedUnexpected, "The stream ended unexpected.");
+      }
       this._logger.info(`Child process for device ${this._device.id} exited code: ${code}.`);
+
     });
     this.isStreaming = true;
   }

@@ -1,8 +1,8 @@
 import { Logger } from "../logging/logger";
 import { injectable, inject } from "inversify";
-import { ServiceConfig } from "../../config/service.config";
 import * as socketio from "socket.io";
 import { Socket } from "socket.io";
+import { ENDPOINTS, EVENTS } from "@live/constants";
 
 @injectable()
 export class WebsocketServer {
@@ -16,7 +16,8 @@ export class WebsocketServer {
   constructor(@inject("Logger") private _logger: Logger) { }
 
   public initializeAndListen(server: any): void {
-    const websocketServer = socketio(server, { path: "/api/socket" });
+    const websocketEndpoint = ENDPOINTS.api + ENDPOINTS.websocket;
+    const websocketServer = socketio(server, { path: websocketEndpoint });
 
     websocketServer.on("connection", this.onConnection.bind(this));
     this._websocketServer = websocketServer;
@@ -48,7 +49,7 @@ export class WebsocketServer {
 
     if (!id) {
       this._logger.info(`Subscription for stream ${id} not possible, stream is not started.`);
-      socket.emit("subscription_error", "The stream is not started.");
+      socket.emit(EVENTS.subscriptionError, "The stream is not started.");
     } else {
       this._logger.info(`Client subscribed to stream ${id}.`);
       socket.join(id);
@@ -66,7 +67,11 @@ export class WebsocketServer {
     }
   }
 
-  public emit(id: string, data: Buffer): void {
-    this._websocketServer.to(id).emit(id, data);
+  public emitStreamData(streamId: string, data: Buffer): void {
+    this._websocketServer.to(streamId).emit(streamId, data);
+  }
+
+  public emitEventMessage(streamId: string, event: string, message: string): void {
+    this._websocketServer.to(streamId).emit(event, message);
   }
 }

@@ -12,8 +12,8 @@ export class L3asService {
   constructor() {
   }
 
-  public initialize(): void {
-    this._l3asPlayer = new L3asPlayer();
+  public initialize(onStreamEndedExpected: () => void, onStreamEndedUnexpected: () => void): void {
+    this._l3asPlayer = new L3asPlayer(onStreamEndedExpected, onStreamEndedUnexpected);
     this.userAgentInfo = this._l3asPlayer.userAgentInfo;
     this.isBrowserCompatible = this._l3asPlayer.isBrowserCompatible;
   }

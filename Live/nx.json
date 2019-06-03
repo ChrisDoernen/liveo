@@ -31,6 +31,9 @@
     },
     "admin-e2e": {
       "tags": []
+    },
+    "constants": {
+      "tags": []
     }
   }
 }

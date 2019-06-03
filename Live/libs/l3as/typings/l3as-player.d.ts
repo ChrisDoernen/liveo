@@ -5,7 +5,7 @@ export declare class L3asPlayer {
   /**
    * Constructs the L3asPlayer instance
    */
-  constructor();
+  constructor(streamEndedExpectedCallback: () => void, streamEndedUnexpectedCallback: () => void);
 
   /**
    * The user agent info
@@ -47,10 +47,10 @@ export declare class L3asPlayer {
   /**
    * Sets the volume to 0
    */
-  mute();
+  mute(): void;
 
   /**
    * Sets the volume to the last value before muting
    */
-  unmute();
+  unmute(): void;
 }

@@ -1,11 +1,12 @@
 import io from 'socket.io-client';
+import { ENDPOINTS, EVENTS } from "@live/constants";
 
 /*
 	Socket-Client is part of 3LAS (Low Latency Live Audio Streaming)
 	https://github.com/JoJoBond/3LAS
 */
-
-function WebSocketClient(StreamId, ErrorCallback, ConnectCallback, DataReadyCallback, DisconnectCallback) {
+function WebSocketClient(StreamId, ErrorCallback, ConnectCallback,
+  DataReadyCallback, DisconnectCallback, StreamEndedExpectedCallback, StreamEndedUnexpectedCallback) {
   // Check callback argument
   if (typeof ErrorCallback !== 'function')
     throw new Error('WebSocketClient: ErrorCallback must be specified');
@@ -15,21 +16,30 @@ function WebSocketClient(StreamId, ErrorCallback, ConnectCallback, DataReadyCall
     throw new Error('WebSocketClient: DataReadyCallback must be specified');
   if (typeof DisconnectCallback !== 'function')
     throw new Error('WebSocketClient: DisconnectCallback must be specified');
+  if (typeof StreamEndedExpectedCallback !== 'function')
+    throw new Error('WebSocketClient: StreamEndedExpectedCallback must be specified');
+  if (typeof StreamEndedUnexpectedCallback !== 'function')
+    throw new Error('WebSocketClient: StreamEndedUnexpectedCallback must be specified');
 
   this._ErrorCallback = ErrorCallback;
   this._ConnectCallback = ConnectCallback;
   this._DataReadyCallback = DataReadyCallback;
   this._DisconnectCallback = DisconnectCallback;
+  this._StreamEndedExpectedCallback = StreamEndedExpectedCallback;
+  this._StreamEndedUnexpectedCallback = StreamEndedUnexpectedCallback;
 
   // Client is not yet connected
   this._IsConnected = false;
 
   // Create socket, connect to URI
-  this._Socket = io({ reconnectionAttempts: 3, path: '/api/socket' });
+  const websocketEndpoint = ENDPOINTS.api + ENDPOINTS.websocket;
+  this._Socket = io({ reconnectionAttempts: 3, path: websocketEndpoint });
 
   this._Socket.on("connect", this.__Socket_OnOpen.bind(this));
   this._Socket.on("error", this.__Socket_OnError.bind(this));
-  this._Socket.on("subscription_error", this.__Socket_OnError.bind(this));
+  this._Socket.on(EVENTS.subscriptionError, this.__Socket_OnError.bind(this));
+  this._Socket.on(EVENTS.streamEndedExpected, this.__Socket_StreamEndedExpected.bind(this));
+  this._Socket.on(EVENTS.streamEndedUnexpected, this.__Socket_StreamEndedUnexpected.bind(this));
   this._Socket.on("reconnect_failed", this.__Socket_OnClose.bind(this));
 
   this._Socket.on(StreamId, this.__Socket_OnMessage.bind(this));
@@ -63,6 +73,14 @@ WebSocketClient.prototype.__Socket_OnError = function (event) {
     this._ErrorCallback("Socket fault.");
   else
     this._ErrorCallback("Could not connect to server.");
+};
+
+WebSocketClient.prototype.__Socket_StreamEndedExpected = function (event) {
+  this._StreamEndedExpectedCallback();
+};
+
+WebSocketClient.prototype.__Socket_StreamEndedUnexpected = function (event) {
+  this._StreamEndedUnexpectedCallback();
 };
 
 // Change connetion status once connected
