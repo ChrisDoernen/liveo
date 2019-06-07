@@ -4,7 +4,7 @@
     "title": "Gottesdienst Linux",
     "description": "Live stream of the sunday service",
     "streams": [
-      "4hdg"
+      "v67d"
     ]
   },
   {
@@ -13,6 +13,14 @@
     "description": "Live stream of the sunday service",
     "streams": [
       "ge1r"
+    ]
+  },
+  {
+    "id": "ag7s",
+    "title": "Stream from file",
+    "description": "Live stream of the sunday service",
+    "streams": [
+      "bgu7"
     ]
   }
 ]

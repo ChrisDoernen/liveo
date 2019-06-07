@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { L3asService } from "@live/services";
+import { Component, Input } from "@angular/core";
+import { L3asService, UserAgentService } from "@live/services";
 import { Options } from "ng5-slider";
 
 @Component({
@@ -9,7 +9,12 @@ import { Options } from "ng5-slider";
 })
 export class AudioPlayerComponent {
 
-  constructor(private _l3asService: L3asService) {
+  constructor(
+    private _l3asService: L3asService,
+    userAgentService: UserAgentService) {
+    this._l3asService.initialize(userAgentService.userAgentInfo,
+      this.onStreamEndedExpected.bind(this),
+      this.onStreamEndedUnxpected.bind(this));
     this._l3asService.setVolume(this._volume);
     this._l3asService.mute();
   }
@@ -65,5 +70,11 @@ export class AudioPlayerComponent {
       this._isPlaying = true;
       this._l3asService.unmute();
     }
+  }
+
+  private onStreamEndedExpected(): void {
+  }
+
+  private onStreamEndedUnxpected(): void {
   }
 }

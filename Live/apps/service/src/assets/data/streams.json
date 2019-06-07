@@ -1,26 +1,32 @@
 [
-    {
-        "id": "v67d",
-        "title": "Originalton",
-        "countryCode": "en",
-        "deviceId": "0"
-    },
-    {
-        "id": "4hdg",
-        "title": "Deutsch",
-        "countryCode": "de",
-        "deviceId": "1"
-    },
-    {
-        "id": "ge1r",
-        "title": "Deutsch",
-        "countryCode": "de",
-        "deviceId": "Mikrofon (USB Audio Device)"
-    },
-    {
-        "id": "ge1r",
-        "title": "Englisch",
-        "countryCode": "de",
-        "deviceId": "Mikrofonarray (Realtek High Definition Audio)"
-    }
+  {
+    "id": "v67d",
+    "title": "Originalton",
+    "countryCode": "en",
+    "deviceId": "0"
+  },
+  {
+    "id": "4hdg",
+    "title": "Deutsch",
+    "countryCode": "de",
+    "deviceId": "1"
+  },
+  {
+    "id": "ge1r",
+    "title": "Deutsch",
+    "countryCode": "de",
+    "deviceId": "Mikrofon (USB Audio Device)"
+  },
+  {
+    "id": "ge1r",
+    "title": "Englisch",
+    "countryCode": "de",
+    "deviceId": "Mikrofonarray (Realtek High Definition Audio)"
+  },
+  {
+    "id": "bgu7",
+    "title": "FromMp3",
+    "countryCode": "de",
+    "deviceId": "/home/chris/Music/MadeToLove.mp3"
+  }
 ]

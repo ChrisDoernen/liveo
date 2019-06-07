@@ -13,7 +13,7 @@
       </div>
       <div *ngIf="activity?.activationState === activationState.Scheduled">
         Session {{ activity.session?.title }} is scheduled to start at
-        {{ activity.activation?.startTime }}. Stay tuned!
+        {{ activity.activation?.startTime  * 1000 | date:'H:mm'}} Uhr. Stay tuned!
       </div>
       <div *ngIf="activity?.activationState === activationState.Ended">
         The session has ended. Thanks for joining us.

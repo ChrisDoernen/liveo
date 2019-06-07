@@ -1,6 +1,6 @@
 import { ICommand } from "./i-command";
 
-export const WindowStreamingCommand: ICommand = {
+export const WindowsStreamingCommand: ICommand = {
   command: "ffmpeg",
   arguments: [
     "-y",
@@ -18,7 +18,7 @@ export const WindowStreamingCommand: ICommand = {
     "196k",
     "-reservoir",
     "0",
-    "-f", 
+    "-f",
     "mp3",
     "-fflags",
     "+nobuffer",

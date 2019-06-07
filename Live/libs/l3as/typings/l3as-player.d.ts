@@ -5,17 +5,9 @@ export declare class L3asPlayer {
   /**
    * Constructs the L3asPlayer instance
    */
-  constructor();
-
-  /**
-   * The user agent info
-   */
-  userAgentInfo: UserAgentInfo;
-
-  /**
-   * Whether the browser is compatible for playing mpeg
-   */
-  isBrowserCompatible: boolean;
+  constructor(UserAgentInfo,
+    streamEndedExpectedCallback: () => void,
+    streamEndedUnexpectedCallback: () => void);
 
   /**
    * Wheter the state is playing or stopped
@@ -47,10 +39,10 @@ export declare class L3asPlayer {
   /**
    * Sets the volume to 0
    */
-  mute();
+  mute(): void;
 
   /**
    * Sets the volume to the last value before muting
    */
-  unmute();
+  unmute(): void;
 }

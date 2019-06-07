@@ -12,10 +12,10 @@ export class L3asService {
   constructor() {
   }
 
-  public initialize(): void {
-    this._l3asPlayer = new L3asPlayer();
-    this.userAgentInfo = this._l3asPlayer.userAgentInfo;
-    this.isBrowserCompatible = this._l3asPlayer.isBrowserCompatible;
+  public initialize(userAgentInfo: UserAgentInfo,
+    onStreamEndedExpected: () => void,
+    onStreamEndedUnexpected: () => void): void {
+    this._l3asPlayer = new L3asPlayer(userAgentInfo, onStreamEndedExpected, onStreamEndedUnexpected);
   }
 
   public get isPlaying(): boolean {
