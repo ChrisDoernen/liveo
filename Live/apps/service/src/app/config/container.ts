@@ -37,6 +37,7 @@ import { FileStreamingCommand } from "../lib/streaming-command/file-streaming-co
 import { IStreamingCommandProvider } from "../lib/streaming-command/i-streaming-command-provider";
 import { FileStreamingCommandProvider } from "../lib/streaming-command/file-streaming-command-provider";
 import { StreamingCommandProvider } from "../lib/streaming-command/streaming-command-provider";
+import { ConnectionHistoryService } from "../lib/statistic/connection-history-service";
 
 export const container = new Container();
 
@@ -105,3 +106,4 @@ container.bind<WebServer>("WebServer").to(WebServer).inSingletonScope();
 container.bind<WebsocketServer>("WebsocketServer").to(WebsocketServer).inSingletonScope();
 container.bind<ActivationService>("ActivationService").to(ActivationService).inSingletonScope();
 container.bind<Scheduler>("Scheduler").to(Scheduler).inSingletonScope();
+container.bind<ConnectionHistoryService>("ConnectionHistoryService").to(ConnectionHistoryService).inSingletonScope();

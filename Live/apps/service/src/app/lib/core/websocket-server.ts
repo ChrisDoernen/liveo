@@ -3,6 +3,8 @@ import { injectable, inject } from "inversify";
 import * as socketio from "socket.io";
 import { Socket } from "socket.io";
 import { ENDPOINTS, EVENTS } from "@live/constants";
+import { ConnectionHistoryService } from "../statistic/connection-history-service";
+import { ClientInfo } from "../statistic/client-info";
 
 @injectable()
 export class WebsocketServer {
@@ -13,7 +15,10 @@ export class WebsocketServer {
    */
   private _streams: string[] = [];
 
-  constructor(@inject("Logger") private _logger: Logger) { }
+  constructor(
+    @inject("Logger") private _logger: Logger,
+    @inject("ConnectionHistoryService") private _connectionHistoryService: ConnectionHistoryService) {
+  }
 
   public initializeAndListen(server: any): void {
     const websocketEndpoint = ENDPOINTS.api + ENDPOINTS.websocket;
@@ -37,11 +42,11 @@ export class WebsocketServer {
   }
 
   private onConnect(socket: Socket): void {
-    this._logger.info("Client connected.");
   }
 
   private onDisconnect(socket: Socket): void {
-    this._logger.info("Client disconnected.");
+    const clientInfo = this.getClientInfo(socket);
+    this._connectionHistoryService.clientDisconnected(clientInfo);
   }
 
   private subscribe(socket: Socket, streamId: any): void {
@@ -51,8 +56,10 @@ export class WebsocketServer {
       this._logger.info(`Subscription for stream ${id} not possible, stream is not started.`);
       socket.emit(EVENTS.subscriptionError, "The stream is not started.");
     } else {
-      this._logger.info(`Client subscribed to stream ${id}.`);
       socket.join(id);
+
+      const clientInfo = this.getClientInfo(socket, streamId);
+      this._connectionHistoryService.clientSubscribed(clientInfo);
     }
   }
 
@@ -73,5 +80,16 @@ export class WebsocketServer {
 
   public emitEventMessage(streamId: string, event: string, message: string): void {
     this._websocketServer.to(streamId).emit(event, message);
+  }
+
+  private getClientInfo(socket: Socket, streamId?: string): ClientInfo {
+    const ip = socket.request.connection.remoteAddress;
+    const userAgent = socket.request.headers["user-agent"];
+
+    return {
+      ipAddress: ip,
+      userAgent: userAgent,
+      streamId: streamId
+    }
   }
 }
