@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import createMockInstance from "jest-create-mock-instance";
-import { UnixShutdownService } from "../shutdown/linux-shutdown-service";
+import { UnixShutdownService } from "../shutdown/unix-shutdown-service";
 import { Logger } from "../logging/logger";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { Scheduler } from "../scheduling/scheduler";
