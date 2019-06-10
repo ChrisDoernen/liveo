@@ -1,7 +1,0 @@
-**** List of CAPTURE Hardware Devices ****
-card 0: ICH5 [Intel ICH5], device 0: Intel ICH [Intel ICH5]
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0
-card 1: U0x46d0x809 [USB Device 0x46d:0x809], device 0: USB Audio [USB Audio]
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0

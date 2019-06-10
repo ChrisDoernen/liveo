@@ -2,6 +2,7 @@ import { DeviceData } from "./device-data";
 import { Logger } from "../logging/logger";
 import { DeviceState } from "./device-state";
 import { inject } from "inversify";
+import { DeviceType } from './device-type';
 
 /**
  * Represents a device in the system

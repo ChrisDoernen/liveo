@@ -1,4 +1,4 @@
-import { LinuxShutdownService } from "../lib/shutdown/linux-shutdown-service";
+import { UnixShutdownService } from "../lib/shutdown/linux-shutdown-service";
 import { ShutdownSimulationService } from "../lib/shutdown/shutdown-simulation-service";
 import { Container, interfaces } from "inversify";
 import { Logger } from "../lib/logging/logger";
@@ -38,6 +38,8 @@ import { IStreamingCommandProvider } from "../lib/streaming-command/i-streaming-
 import { FileStreamingCommandProvider } from "../lib/streaming-command/file-streaming-command-provider";
 import { StreamingCommandProvider } from "../lib/streaming-command/streaming-command-provider";
 import { ConnectionHistoryService } from "../lib/statistic/connection-history-service";
+import { MacOSDeviceDetector } from '../lib/devices/macos-device-detector';
+import { MacOSStreamingCommand } from '../lib/streaming-command/macos-streaming-command';
 
 export const container = new Container();
 
@@ -45,8 +47,9 @@ if (!ServiceConfig.production) {
   container.bind<ShutdownService>("ShutdownService").to(ShutdownSimulationService).inSingletonScope();
 } else {
   switch (ServiceConfig.os) {
-    case "linux": {
-      container.bind<ShutdownService>("ShutdownService").to(LinuxShutdownService).inSingletonScope();
+    case "linux":
+    case "darwin": {
+      container.bind<ShutdownService>("ShutdownService").to(UnixShutdownService).inSingletonScope();
       break;
     }
     case "win32": {
@@ -79,6 +82,11 @@ if (ServiceConfig.simulate) {
     case "win32": {
       container.bind<DeviceDetector>("DeviceDetector").to(WindowsDeviceDetector).inSingletonScope();
       container.bind<ICommand>("StreamingCommand").toConstantValue(WindowsStreamingCommand);
+      break;
+    }
+    case "darwin": {
+      container.bind<DeviceDetector>("DeviceDetector").to(MacOSDeviceDetector).inSingletonScope();
+      container.bind<ICommand>("StreamingCommand").toConstantValue(MacOSStreamingCommand);
       break;
     }
     default: {

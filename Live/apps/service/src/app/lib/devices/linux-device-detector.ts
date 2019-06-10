@@ -6,6 +6,7 @@ import { Device } from "./device";
 import { DeviceData } from "./device-data";
 import { DeviceState } from "./device-state";
 import { EOL } from 'os';
+import { DeviceType } from './device-type';
 
 /**
  * Implementation of device detection on linux machines
@@ -47,6 +48,6 @@ export class LinuxDeviceDetector extends DeviceDetector {
     const id = cardPrefix.match(new RegExp("\\d+")).toString();
     const description = line.slice(cardPrefix.length);
 
-    return this.instantiateDevice(id, description, DeviceState.Available);
+    return this.instantiateDevice(id, description, DeviceType.Audio, DeviceState.Available);
   }
 }
