@@ -16,11 +16,27 @@
     ]
   },
   {
+    "id": "1b30",
+    "title": "Gottesdienst Mac",
+    "description": "Live stream of the sunday service",
+    "streams": [
+      "v67d"
+    ]
+  },
+  {
     "id": "ag7s",
-    "title": "Stream from file",
+    "title": "Stream from file Linux",
     "description": "Live stream of the sunday service",
     "streams": [
       "bgu7"
+    ]
+  },
+  {
+    "id": "bb65",
+    "title": "Mp3 Mac",
+    "description": "Live stream of the sunday service",
+    "streams": [
+      "bgu9"
     ]
   }
 ]

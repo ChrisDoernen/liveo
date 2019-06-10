@@ -25,8 +25,14 @@
   },
   {
     "id": "bgu7",
-    "title": "FromMp3",
+    "title": "Made to Love",
     "countryCode": "de",
     "deviceId": "/home/chris/Music/MadeToLove.mp3"
+  },
+  {
+    "id": "bgu9",
+    "title": "Made to Love",
+    "countryCode": "de",
+    "deviceId": "/Users/christiandoernen/Music/MadeToLove.mp3"
   }
 ]
