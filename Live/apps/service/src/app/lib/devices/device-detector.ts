@@ -4,14 +4,14 @@ import { DeviceState } from './device-state';
 import { Logger } from '../logging/logger';
 import { ProcessExecutionService } from '../process-execution/process-execution-service';
 import { injectable } from 'inversify';
+import { DeviceType } from './device-type';
 
 /**
  * A abstract class for device detection
  */
 @injectable()
 export abstract class DeviceDetector {
-
-  protected devices: Device[];
+  public devices: Device[];
 
   public getDevices(): Device[] {
     return this.devices;
@@ -43,15 +43,17 @@ export abstract class DeviceDetector {
 
   protected abstract executeListDevicesCommand(command: string): Promise<string>;
 
-  protected abstract parseResponse(response: string): Device[];
+  protected abstract parseResponse(output: string): Device[];
 
   public getDevice(id: string): Device {
     const matchingDevice = this.devices.find((device) => device.id === id);
 
-    return matchingDevice ? matchingDevice : this.instantiateDevice(id, null, DeviceState.UnknownDevice);
+    return matchingDevice
+      ? matchingDevice
+      : this.instantiateDevice(id, null, DeviceType.Unknown, DeviceState.UnknownDevice);
   }
 
-  protected instantiateDevice(id: string, description: string, deviceState: DeviceState): Device {
-    return this._deviceFactory(new DeviceData(id, description), deviceState);
+  protected instantiateDevice(id: string, description: string, deviceType: DeviceType, deviceState: DeviceState): Device {
+    return this._deviceFactory(new DeviceData(id, description, deviceType), deviceState);
   }
 }

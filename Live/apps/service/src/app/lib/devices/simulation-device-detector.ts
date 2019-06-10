@@ -5,6 +5,7 @@ import { Device } from "./device";
 import { DeviceData } from "./device-data";
 import { DeviceState } from "./device-state";
 import { ProcessExecutionService } from '../process-execution/process-execution-service';
+import { DeviceType } from './device-type';
 
 /**
  * Implementation of device detection that always returnes valid devices
@@ -34,6 +35,6 @@ export class SimulationDeviceDetector extends DeviceDetector {
 
   public getDevice(id: string): Device {
     this.logger.info("Simulating device detection, returning available test device.");
-    return this.instantiateDevice(id, "Test device", DeviceState.Available);
+    return this.instantiateDevice(id, "Test device", DeviceType.Unknown, DeviceState.Available);
   }
 }

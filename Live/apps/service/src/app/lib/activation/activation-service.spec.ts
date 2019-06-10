@@ -4,7 +4,7 @@ import { Logger } from "../logging/logger";
 import { SessionService } from "../sessions/session-service";
 import { Scheduler } from "../scheduling/scheduler";
 import { ActivationService } from "../activation/activation-service";
-import { LinuxShutdownService } from "../shutdown/linux-shutdown-service";
+import { UnixShutdownService } from "../shutdown/unix-shutdown-service";
 import { ActivationEntity } from "@live/entities";
 import { Session } from "../sessions/session";
 
@@ -13,13 +13,13 @@ describe("ActivationService", () => {
   let logger: jest.Mocked<Logger>;
   let sessionService: jest.Mocked<SessionService>;
   let scheduler: jest.Mocked<Scheduler>;
-  let linuxShutdownService: jest.Mocked<LinuxShutdownService>;
+  let linuxShutdownService: jest.Mocked<UnixShutdownService>;
 
   beforeEach(() => {
     logger = createMockInstance(Logger);
     sessionService = createMockInstance(SessionService);
     scheduler = createMockInstance(Scheduler);
-    linuxShutdownService = createMockInstance(LinuxShutdownService);
+    linuxShutdownService = createMockInstance(UnixShutdownService);
 
     activationService = new ActivationService(logger, sessionService, scheduler, linuxShutdownService);
   });

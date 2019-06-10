@@ -3,14 +3,17 @@ import { DeviceDetector } from "./device-detector";
 import { Logger } from "../logging/logger";
 import { injectable, inject } from "inversify";
 import { Device } from "./device";
-import { DeviceData } from './device-data';
-import { DeviceState } from './device-state';
+import { DeviceData } from "./device-data";
+import { DeviceState } from "./device-state";
 import { EOL } from 'os';
 import { DeviceType } from './device-type';
 
+/**
+ * Implementation of device detection on mac os
+ */
 @injectable()
-export class WindowsDeviceDetector extends DeviceDetector {
-  private listDevicesCommand: string = "ffmpeg -f dshow -list_devices true -i ''";
+export class MacOSDeviceDetector extends DeviceDetector {
+  private listDevicesCommand: string = "ffmpeg -f avfoundation -list_devices true -i ''";
 
   constructor(
     @inject("Logger") logger: Logger,
@@ -26,20 +29,17 @@ export class WindowsDeviceDetector extends DeviceDetector {
   protected async executeListDevicesCommand(command: string): Promise<string> {
     return await new Promise<string>((resolve, reject) => {
       this._processExecutionService.execute(command, (error, stdout, stderr) => {
-        // FFMPEG writes to stderr
         resolve(stderr);
       });
     });
   }
 
   protected parseResponse(response: string): Device[] {
-    const prefix = /\[dshow/;
-    const audioSeparator = /DirectShow\saudio\sdevices/;
-    const alternativeName = /Alternative\sname\s*?\"(.*?)\"/;
-    const deviceParams = /\"(.*?)\"/;
+    const prefix = /^\[AVFoundation/;
+    const audioSeparator = /AVFoundation\saudio\sdevices/;
+    const deviceParams = /^\[AVFoundation.*?\]\s\[(\d*?)\]\s(.*)$/;
     const searchPrefix = (line: string) => (line.search(prefix) > -1);
     const searchAudioSeparator = (line: string) => isVideo && (line.search(audioSeparator) > -1);
-    const searchAlternativeName = (line) => (line.search(/Alternative\sname/) > -1);
 
     let devices = [];
     let isVideo = true;
@@ -49,11 +49,6 @@ export class WindowsDeviceDetector extends DeviceDetector {
       .forEach((line) => {
         if (searchAudioSeparator(line)) {
           isVideo = false;
-          return;
-        }
-        if (searchAlternativeName(line)) {
-          const lastDevice = devices[devices.length - 1];
-          lastDevice.alternativeName = line.match(alternativeName)[1];
           return;
         }
         const params = line.match(deviceParams);

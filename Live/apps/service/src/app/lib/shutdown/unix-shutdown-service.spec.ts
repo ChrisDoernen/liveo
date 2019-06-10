@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import createMockInstance from "jest-create-mock-instance";
-import { LinuxShutdownService } from "../shutdown/linux-shutdown-service";
+import { UnixShutdownService } from "../shutdown/unix-shutdown-service";
 import { Logger } from "../logging/logger";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { Scheduler } from "../scheduling/scheduler";
@@ -16,7 +16,7 @@ describe("LinuxShutdownService", () => {
     logger = createMockInstance(Logger);
     scheduler = createMockInstance(Scheduler);
     processExecutionService = createMockInstance(ProcessExecutionService);
-    linuxShutdownService = new LinuxShutdownService(logger, processExecutionService, scheduler);
+    linuxShutdownService = new UnixShutdownService(logger, processExecutionService, scheduler);
   });
 
   it("should construct", async () => {
