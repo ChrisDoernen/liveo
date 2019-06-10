@@ -4,7 +4,7 @@ import { Logger } from "../logging/logger";
 import { SessionService } from "../sessions/session-service";
 import { Scheduler } from "../scheduling/scheduler";
 import { ActivationService } from "../activation/activation-service";
-import { UnixShutdownService } from "../shutdown/linux-shutdown-service";
+import { UnixShutdownService } from "../shutdown/unix-shutdown-service";
 import { ActivationEntity } from "@live/entities";
 import { Session } from "../sessions/session";
 

@@ -13,7 +13,7 @@ import { DeviceType } from './device-type';
  */
 @injectable()
 export class MacOSDeviceDetector extends DeviceDetector {
-  private listDevicesCommand: string = "ffmpeg -f avfoundation-list_devices true -i ''";
+  private listDevicesCommand: string = "ffmpeg -f avfoundation -list_devices true -i ''";
 
   constructor(
     @inject("Logger") logger: Logger,
@@ -29,7 +29,7 @@ export class MacOSDeviceDetector extends DeviceDetector {
   protected async executeListDevicesCommand(command: string): Promise<string> {
     return await new Promise<string>((resolve, reject) => {
       this._processExecutionService.execute(command, (error, stdout, stderr) => {
-        resolve(stdout);
+        resolve(stderr);
       });
     });
   }

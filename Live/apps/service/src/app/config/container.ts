@@ -1,4 +1,4 @@
-import { UnixShutdownService } from "../lib/shutdown/linux-shutdown-service";
+import { UnixShutdownService } from "../lib/shutdown/unix-shutdown-service";
 import { ShutdownSimulationService } from "../lib/shutdown/shutdown-simulation-service";
 import { Container, interfaces } from "inversify";
 import { Logger } from "../lib/logging/logger";

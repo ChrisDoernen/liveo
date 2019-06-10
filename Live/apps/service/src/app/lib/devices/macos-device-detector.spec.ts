@@ -28,7 +28,7 @@ describe("MacOSDeviceDetector", () => {
 
   it("should parse devices correctly", (done) => {
     jest.spyOn(processExecutionService, "execute")
-      .mockImplementation((command: string, callback: any) => callback(null, output, null));
+      .mockImplementation((command: string, callback: any) => callback(null, null, output));
 
     const promise = macOsDeviceDetector.detectDevices();
 
