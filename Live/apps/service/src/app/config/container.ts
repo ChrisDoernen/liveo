@@ -37,9 +37,10 @@ import { FileStreamingCommand } from "../lib/streaming-command/file-streaming-co
 import { IStreamingCommandProvider } from "../lib/streaming-command/i-streaming-command-provider";
 import { FileStreamingCommandProvider } from "../lib/streaming-command/file-streaming-command-provider";
 import { StreamingCommandProvider } from "../lib/streaming-command/streaming-command-provider";
-import { ConnectionHistoryService } from "../lib/statistic/connection-history-service";
+import { ConnectionHistoryService } from "../lib/statistics/connection-history-service";
 import { MacOSDeviceDetector } from '../lib/devices/macos-device-detector';
 import { MacOSStreamingCommand } from '../lib/streaming-command/macos-streaming-command';
+import { SystemMonitoringService } from "../lib/system-monitoring/system-monitoring-service";
 
 export const container = new Container();
 
@@ -115,3 +116,4 @@ container.bind<WebsocketServer>("WebsocketServer").to(WebsocketServer).inSinglet
 container.bind<ActivationService>("ActivationService").to(ActivationService).inSingletonScope();
 container.bind<Scheduler>("Scheduler").to(Scheduler).inSingletonScope();
 container.bind<ConnectionHistoryService>("ConnectionHistoryService").to(ConnectionHistoryService).inSingletonScope();
+container.bind<SystemMonitoringService>("SystemMonitoringService").to(SystemMonitoringService);

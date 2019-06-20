@@ -32,7 +32,7 @@ export class ConnectionHistoryService {
     this._connectionHistory.push(connectionInfo);
   }
 
-  public clientDisconnected(clientInfo: ClientInfo): void {
+  public clientUnsubscribed(clientInfo: ClientInfo): void {
     this._connectionCounter--;
 
     this._logger.debug(`Client ${clientInfo.ipAddress} disconnected.`);

@@ -43,7 +43,7 @@ function WebSocketClient(StreamId, ErrorCallback, ConnectCallback,
   this._Socket.on("reconnect_failed", this.__Socket_OnClose.bind(this));
 
   this._Socket.on(StreamId, this.__Socket_OnMessage.bind(this));
-  this._Socket.emit("subscribe", StreamId);
+  this._Socket.emit(EVENTS.subscribe, StreamId);
 }
 
 
@@ -58,6 +58,7 @@ WebSocketClient.prototype.GetStatus = function () {
 
 // Disconnect from the websocket
 WebSocketClient.prototype.Disconnect = function () {
+  this._Socket.emit(EVENTS.unsubscribe);
   this._Socket.close();
   this._IsConnected = false;
   console.debug("Disconnecting from server.");
