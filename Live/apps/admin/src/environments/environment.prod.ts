@@ -1,3 +1,7 @@
+import { version } from "../../../../version";
+
 export const environment = {
-  production: true
+  production: true,
+  revision: version.revision,
+  version: version.version
 };

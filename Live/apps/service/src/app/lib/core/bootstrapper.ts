@@ -7,6 +7,7 @@ import { WebServer } from "./web-server";
 import { WebsocketServer } from "./websocket-server";
 import { injectable, inject } from "inversify";
 import { SystemMonitoringService } from "../system-monitoring/system-monitoring-service";
+import { environment } from "../../../environments/environment";
 
 @injectable()
 export class Bootstrapper {
@@ -22,6 +23,7 @@ export class Bootstrapper {
 
   public startServer(container): void {
     this._logger.info("Starting Live server...");
+    this._logger.info(`Version: v${environment.version}/${environment.revision}`);
     this._logger.debug(`Production: ${ServiceConfig.production}.`);
     this._logger.debug(`Operating system: ${ServiceConfig.os}.`);
     this._logger.debug(`Architecture: ${ServiceConfig.arch}.`);

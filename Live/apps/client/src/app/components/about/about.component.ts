@@ -7,8 +7,8 @@ import { environment } from "../../../../src/environments/environment";
   styleUrls: ["./about.component.scss"]
 })
 export class AboutComponent {
-  public _version: string = environment.version;
-  public _revision: string = environment.revision;
+  public version: string = environment.version;
+  public revision: string = environment.revision;
 
   private _isHidden = true;
 
