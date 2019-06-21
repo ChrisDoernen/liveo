@@ -32,8 +32,7 @@ function WebSocketClient(StreamId, ErrorCallback, ConnectCallback,
   this._IsConnected = false;
 
   // Create socket, connect to URI
-  const websocketEndpoint = ENDPOINTS.api + ENDPOINTS.websocket;
-  this._Socket = io({ reconnectionAttempts: 3, path: websocketEndpoint });
+  this._Socket = io(ENDPOINTS.root, { reconnectionAttempts: 3, path: ENDPOINTS.websocket });
 
   this._Socket.on("connect", this.__Socket_OnOpen.bind(this));
   this._Socket.on("error", this.__Socket_OnError.bind(this));

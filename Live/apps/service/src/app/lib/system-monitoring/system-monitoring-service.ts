@@ -17,7 +17,11 @@ export class SystemMonitoringService {
     }, 2000);
   }
 
-  private logCPUUsage(cpuUsage: string): void {
-    this._websocketServer.emitAdminEventMessage(EVENTS.cpuUsage, cpuUsage);
+  private logCPUUsage(cpuUsage: number): void {
+    if(cpuUsage > 50 ) {
+      this._logger.warn("High CPU usage.");
+    }
+    const cpuUsageRounded = cpuUsage.toFixed(2)
+    this._websocketServer.emitAdminEventMessage(EVENTS.cpuUsage, cpuUsageRounded);
   }
 }

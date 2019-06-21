@@ -1,5 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
+import { NgModule, APP_BOOTSTRAP_LISTENER } from "@angular/core";
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -18,6 +18,9 @@ import { ActivationTileComponent } from "./components/activation-tile/activation
 import { LogoComponent } from "./components/logo/logo.component";
 import { InlineSVGModule } from "ng-inline-svg";
 import { ActivationDeletionDialogComponent } from "./components/activation-deletion-dialog/activation-deletion-dialog.component";
+import { FooterComponent } from "./components/footer/footer.component"
+import { WebsocketService } from "./services/websocket/websocket.service";
+import { SocketIoModule } from "ngx-socket-io";
 
 @NgModule({
   imports: [
@@ -29,6 +32,7 @@ import { ActivationDeletionDialogComponent } from "./components/activation-delet
     BrowserAnimationsModule,
     MatNativeDateModule,
     ReactiveFormsModule,
+    SocketIoModule,
     InlineSVGModule.forRoot()
   ],
   declarations: [
@@ -42,14 +46,17 @@ import { ActivationDeletionDialogComponent } from "./components/activation-delet
     SessionsComponent,
     ActivationDialogComponent,
     ActivationTileComponent,
-    ActivationDeletionDialogComponent
+    ActivationDeletionDialogComponent,
+    FooterComponent
   ],
   entryComponents: [
     ShutdownDialogComponent,
     ActivationDialogComponent,
     ActivationDeletionDialogComponent
   ],
-  providers: [],
+  providers: [
+    WebsocketService
+    ],
   bootstrap: [
     AppComponent
   ]

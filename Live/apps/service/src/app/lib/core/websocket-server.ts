@@ -19,8 +19,7 @@ export class WebsocketServer {
   }
 
   public initializeAndListen(server: any): void {
-    const websocketEndpoint = ENDPOINTS.api + ENDPOINTS.websocket;
-    const websocketServer = socketio(server, { path: websocketEndpoint });
+    const websocketServer = socketio(server, { path: ENDPOINTS.websocket });
 
     websocketServer.on("connection", this.onConnection.bind(this));
     this._websocketServer = websocketServer;
@@ -37,7 +36,15 @@ export class WebsocketServer {
     });
 
     socket.on(EVENTS.unsubscribe, streamId => {
-      this.onUnsubscribeFromStream(socket);
+      this.onUnsubscribeFromStream(socket, streamId);
+    });
+
+    socket.on(EVENTS.subscribeAdmin, () => {
+      this.onSubscribeAdmin(socket);
+    });
+
+    socket.on(EVENTS.unsubscribeAdmin, () => {
+      this.onUnsubscribeAdmin(socket);
     });
 
     socket.on("disconnect", () => {
@@ -58,9 +65,20 @@ export class WebsocketServer {
     }
   }
 
-  private onUnsubscribeFromStream(socket: Socket): void {
+  private onUnsubscribeFromStream(socket: Socket, streamId: string): void {
+    socket.leave(streamId);
     const clientInfo = this.getClientInfo(socket);
     this._connectionHistoryService.clientUnsubscribed(clientInfo);
+  }
+
+  private onSubscribeAdmin(socket: Socket): void {
+    socket.join("admin");
+    this._logger.debug("Admin subscribed.");
+  }
+
+  private onUnsubscribeAdmin(socket: Socket): void {
+    socket.leave("admin");
+    this._logger.debug("Admin unsubscribed.");
   }
 
   public addStream(id: string): void {

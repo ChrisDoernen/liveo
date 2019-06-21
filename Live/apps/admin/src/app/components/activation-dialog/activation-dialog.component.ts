@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { SessionEntity, ActivationEntity } from "@live/entities";
 import { SessionService } from "@live/services";
-import { TimeService } from "../../services/time.service";
+import { TimeService } from "../../services/time/time.service";
 
 @Component({
   selector: "activation-dialog",

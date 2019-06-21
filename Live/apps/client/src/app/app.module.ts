@@ -11,7 +11,7 @@ import { Ng5SliderModule } from "ng5-slider";
 import { HeaderComponent } from "./components/header/header.component";
 import { WelcomeComponent } from "./components/welcome/welcome.component";
 import { AboutComponent } from "./components/about/about.component";
-import { L3asService, UserAgentService } from "@live/services";
+import { UserAgentService } from "@live/services";
 import { ActivityService } from "./services/activity/activity.service";
 
 @NgModule({
