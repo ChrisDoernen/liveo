@@ -1,7 +1,6 @@
-import * as appRoot from 'app-root-path';
-import * as winston from 'winston';
-import { Logger } from 'winston';
-import { ServiceConfig } from './service.config';
+import * as winston from "winston";
+import { Logger } from "winston";
+import { config } from "./service.config";
 
 const timeLevelMessage = winston.format.combine(
   winston.format.timestamp(),
@@ -13,8 +12,8 @@ const timeLevelMessage = winston.format.combine(
 
 const options = {
   serviceLogFile: {
-    level: 'debug',
-    filename: ServiceConfig.logfilename,
+    level: "debug",
+    filename: config.logfilename,
     handleExceptions: true,
     json: true,
     maxsize: 5242880, // 5MB
@@ -23,8 +22,8 @@ const options = {
     format: timeLevelMessage
   },
   ffmpegLogFile: {
-    level: 'debug',
-    filename: ServiceConfig.ffmpeglogfilename,
+    level: "debug",
+    filename: config.ffmpeglogfilename,
     handleExceptions: true,
     json: true,
     maxsize: 5242880, // 5MB
@@ -33,7 +32,7 @@ const options = {
     format: timeLevelMessage
   },
   console: {
-    level: 'debug',
+    level: "debug",
     handleExceptions: true,
     json: false,
     colorize: true,

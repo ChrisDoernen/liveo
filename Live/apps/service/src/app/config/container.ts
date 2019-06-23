@@ -2,12 +2,12 @@ import { UnixShutdownService } from "../lib/shutdown/unix-shutdown-service";
 import { ShutdownSimulationService } from "../lib/shutdown/shutdown-simulation-service";
 import { Container, interfaces } from "inversify";
 import { Logger } from "../lib/logging/logger";
-import { ServiceConfig } from "./service.config";
+import { config } from "./service.config";
 import { ProcessExecutionService } from "../lib/process-execution/process-execution-service";
 import { DeviceDetector } from "../lib/devices/device-detector";
 import { LinuxDeviceDetector } from "../lib/devices/linux-device-detector";
 import { SimulationDeviceDetector } from "../lib/devices/simulation-device-detector";
-import { DataService } from "../lib/data/data-service";
+import DataService from "../lib/data/data-service";
 import { SessionService } from "../lib/sessions/session-service";
 import { StreamService } from "../lib/streams/stream-service";
 import { WebsocketServer } from "../lib/core/websocket-server";
@@ -38,16 +38,18 @@ import { IStreamingCommandProvider } from "../lib/streaming-command/i-streaming-
 import { FileStreamingCommandProvider } from "../lib/streaming-command/file-streaming-command-provider";
 import { StreamingCommandProvider } from "../lib/streaming-command/streaming-command-provider";
 import { ConnectionHistoryService } from "../lib/statistics/connection-history-service";
-import { MacOSDeviceDetector } from '../lib/devices/macos-device-detector';
-import { MacOSStreamingCommand } from '../lib/streaming-command/macos-streaming-command';
+import { MacOSDeviceDetector } from "../lib/devices/macos-device-detector";
+import { MacOSStreamingCommand } from "../lib/streaming-command/macos-streaming-command";
 import { SystemMonitoringService } from "../lib/system-monitoring/system-monitoring-service";
+import { ISessionRepository } from "../lib/sessions/i-session-repository";
+import { IStreamRepository } from "../lib/streams/i-stream-repository";
 
 export const container = new Container();
 
-if (!ServiceConfig.production) {
+if (!config.production) {
   container.bind<ShutdownService>("ShutdownService").to(ShutdownSimulationService).inSingletonScope();
 } else {
-  switch (ServiceConfig.os) {
+  switch (config.os) {
     case "linux":
     case "darwin": {
       container.bind<ShutdownService>("ShutdownService").to(UnixShutdownService).inSingletonScope();
@@ -58,15 +60,15 @@ if (!ServiceConfig.production) {
       break;
     }
     default: {
-      throw new Error(`OS ${ServiceConfig.os} is unsupported.`);
+      throw new Error(`OS ${config.os} is unsupported.`);
     }
   }
 }
 
-if (ServiceConfig.simulate) {
+if (config.simulate) {
   container.bind<DeviceDetector>("DeviceDetector").to(SimulationDeviceDetector).inSingletonScope();
   container.bind<interfaces.Factory<IStreamingSource>>("StreamingSourceFactory").toFactory(StreamingSimulationSourceFactory);
-} else if (ServiceConfig.filesource) {
+} else if (config.filesource) {
   container.bind<interfaces.Factory<IStreamingSource>>("StreamingSourceFactory").toFactory(StreamingSourceFactory);
   container.bind<DeviceDetector>("DeviceDetector").to(SimulationDeviceDetector).inSingletonScope();
   container.bind<ICommand>("StreamingCommand").toConstantValue(FileStreamingCommand);
@@ -74,7 +76,7 @@ if (ServiceConfig.simulate) {
 } else {
   container.bind<interfaces.Factory<IStreamingSource>>("StreamingSourceFactory").toFactory(StreamingSourceFactory);
   container.bind<IStreamingCommandProvider>("IStreamingCommandProvider").to(StreamingCommandProvider);
-  switch (ServiceConfig.os) {
+  switch (config.os) {
     case "linux": {
       container.bind<DeviceDetector>("DeviceDetector").to(LinuxDeviceDetector).inSingletonScope();
       container.bind<ICommand>("StreamingCommand").toConstantValue(LinuxStreamingCommand);
@@ -91,7 +93,7 @@ if (ServiceConfig.simulate) {
       break;
     }
     default: {
-      throw new Error(`Device detection for OS ${ServiceConfig.os} is unsupported.`);
+      throw new Error(`Device detection for OS ${config.os} is unsupported.`);
     }
   }
 }
@@ -100,7 +102,10 @@ container.bind<interfaces.Factory<Device>>("DeviceFactory").toFactory(DeviceFact
 container.bind<interfaces.Factory<Stream>>("StreamFactory").toFactory(StreamFactory);
 container.bind<interfaces.Factory<Session>>("SessionFactory").toFactory(SessionFactory);
 
-container.bind<DataService>("DataService").to(DataService);
+const dataService = new DataService(new Logger(ServiceLogger));
+container.bind<DataService>("DataService").toConstantValue(dataService);
+container.bind<ISessionRepository>("ISessionRepository").toConstantValue(dataService);
+container.bind<IStreamRepository>("IStreamRepository").toConstantValue(dataService);
 container.bind<Bootstrapper>("Bootstrapper").to(Bootstrapper);
 container.bind<ActivityService>("ActivityService").to(ActivityService);
 container.bind<ProcessExecutionService>("ProcessExecutionService").to(ProcessExecutionService);

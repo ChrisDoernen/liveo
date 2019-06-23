@@ -7,21 +7,24 @@ import { ActivationService } from "../activation/activation-service";
 import { UnixShutdownService } from "../shutdown/unix-shutdown-service";
 import { ActivationEntity } from "@live/entities";
 import { Session } from "../sessions/session";
+import { TimeService } from "../time/time.service";
 
 describe("ActivationService", () => {
   let activationService: ActivationService;
   let logger: jest.Mocked<Logger>;
   let sessionService: jest.Mocked<SessionService>;
   let scheduler: jest.Mocked<Scheduler>;
+  let timeService: jest.Mocked<TimeService>;
   let linuxShutdownService: jest.Mocked<UnixShutdownService>;
 
   beforeEach(() => {
     logger = createMockInstance(Logger);
     sessionService = createMockInstance(SessionService);
     scheduler = createMockInstance(Scheduler);
+    timeService = createMockInstance(TimeService);
     linuxShutdownService = createMockInstance(UnixShutdownService);
 
-    activationService = new ActivationService(logger, sessionService, scheduler, linuxShutdownService);
+    activationService = new ActivationService(logger, sessionService, scheduler, linuxShutdownService, timeService);
   });
 
   it("should construct", () => {
@@ -59,7 +62,8 @@ describe("ActivationService", () => {
     expect(() => activationService.setActivation(activation)).toThrow();
   });
 
-  it("should set and delete activation right when only session id is given", () => {
+  it("should set and delete activation correctly when only session id is given", () => {
+    timeService.now.mockReturnValue(10);
     const session = createMockInstance(Session);
     Object.defineProperty(session, "hasValidStreams", { get: () => true });
     sessionService.getSession.mockReturnValue(session);
@@ -77,12 +81,13 @@ describe("ActivationService", () => {
   });
 
   it("should set and delete activation correctly when session id and time starting are given", () => {
+    timeService.now.mockReturnValue(10);
     const session = createMockInstance(Session);
     // session.allStreamsAreInvalid.mockReturnValue(false);
     // jest.spyOn(session, "hasValidStreams", "get");
     Object.defineProperty(session, "hasValidStreams", { get: () => true });
     sessionService.getSession.mockReturnValue(session);
-    const activation = new ActivationEntity("b8s6", 1578834025100);
+    const activation = new ActivationEntity("b8s6", 11);
 
     activationService.setActivation(activation);
     expect(sessionService.getSession).toHaveBeenCalledWith("b8s6");

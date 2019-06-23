@@ -23,7 +23,7 @@ describe("SystemMonitoringService", () => {
 
   it("should have emit cpu usage every 2 seconds", () => {
     const spy = jest.spyOn(websocketServer, "emitAdminEventMessage");
-    systemMonitoringService.startCPUMonitoring();
+    systemMonitoringService.startMonitoring();
 
     // I dont know why the test does not pass with 4000ms...
     jest.advanceTimersByTime(5000);

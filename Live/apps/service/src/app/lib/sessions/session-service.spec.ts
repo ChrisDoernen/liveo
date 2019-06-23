@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import createMockInstance from "jest-create-mock-instance";
-import { DataService } from "../data/data-service";
+import DataService from "../data/data-service";
 import { Logger } from "../logging/logger";
 import { SessionService } from "../sessions/session-service";
 import { StreamService } from "../streams/stream-service";
@@ -11,7 +11,7 @@ import { SessionEntity } from "@live/entities";
 describe("SessionService", () => {
   let sessionService;
   let logger;
-  let dataService;
+  let sessionRepository;
   let streamService;
   let sessionFactory;
 
@@ -22,15 +22,15 @@ describe("SessionService", () => {
 
   beforeEach(() => {
     logger = createMockInstance(Logger);
-    dataService = createMockInstance(DataService);
-    dataService.loadSessionEntities.mockReturnValue(sessions);
+    sessionRepository = createMockInstance(DataService);
+    sessionRepository.loadSessionEntities.mockReturnValue(sessions);
     streamService = createMockInstance(StreamService);
     sessionFactory = jest.fn();
     sessionFactory
       .mockReturnValueOnce(new Session(logger, sessions[0], []))
       .mockReturnValueOnce(new Session(logger, sessions[1], []));
 
-    sessionService = new SessionService(logger, dataService, streamService, sessionFactory);
+    sessionService = new SessionService(logger, sessionRepository, streamService, sessionFactory);
   });
 
   it("should construct", async () => {
@@ -39,7 +39,7 @@ describe("SessionService", () => {
 
   it("should have loaded sessions when load session is called", async () => {
     sessionService.loadSessions();
-    expect(dataService.loadSessionEntities).toBeCalled();
+    expect(sessionRepository.loadSessionEntities).toBeCalled();
     expect(sessionService.sessionEntities.length).toBe(2);
   });
 

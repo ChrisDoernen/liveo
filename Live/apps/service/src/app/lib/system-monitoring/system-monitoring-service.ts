@@ -11,7 +11,7 @@ export class SystemMonitoringService {
     @inject("WebsocketServer") private _websocketServer: WebsocketServer) {
   }
 
-  public startCPUMonitoring(): void {
+  public startMonitoring(): void {
     setInterval(() => {
       os.cpuUsage(this.logCPUUsage.bind(this));
     }, 2000);
