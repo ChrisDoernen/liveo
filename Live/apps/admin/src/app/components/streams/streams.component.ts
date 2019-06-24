@@ -9,14 +9,14 @@ import { StreamEntity } from "@live/entities";
 })
 export class StreamsComponent implements OnInit {
 
-  private _streams: StreamEntity[];
+  public streams: StreamEntity[];
 
   constructor(private _streamService: StreamService) {
   }
 
   ngOnInit() {
     this._streamService.getStreams().then((streams) => {
-      this._streams = streams;
+      this.streams = streams;
     });
   }
 }
