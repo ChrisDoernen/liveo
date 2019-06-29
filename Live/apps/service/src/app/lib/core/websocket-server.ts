@@ -3,16 +3,14 @@ import { injectable, inject } from "inversify";
 import * as socketio from "socket.io";
 import { Socket } from "socket.io";
 import { ENDPOINTS, EVENTS } from "@live/constants";
-import { ConnectionHistoryService } from "../statistic/connection-history-service";
-import { ClientInfo } from "../statistic/client-info";
+import { ConnectionHistoryService } from "../statistics/connection-history-service";
+import { ClientInfo } from "../statistics/client-info";
 
 @injectable()
 export class WebsocketServer {
   private _websocketServer: any;
 
-  /**
-   * The currently available streams that are represented as rooms in socket.io
-   */
+  /** The currently available streams that are represented as rooms in socket.io */
   private _streams: string[] = [];
 
   constructor(
@@ -21,8 +19,7 @@ export class WebsocketServer {
   }
 
   public initializeAndListen(server: any): void {
-    const websocketEndpoint = ENDPOINTS.api + ENDPOINTS.websocket;
-    const websocketServer = socketio(server, { path: websocketEndpoint });
+    const websocketServer = socketio(server, { path: ENDPOINTS.websocket });
 
     websocketServer.on("connection", this.onConnection.bind(this));
     this._websocketServer = websocketServer;
@@ -31,25 +28,30 @@ export class WebsocketServer {
 
   private onConnection(socket: Socket): void {
     this.onConnect(socket);
-
-    socket.on("subscribe", streamId => {
-      this.subscribe(socket, streamId);
-    });
-
-    socket.on("disconnect", () => {
-      this.onDisconnect(socket);
-    });
   }
 
   private onConnect(socket: Socket): void {
+    socket.on(EVENTS.subscribe, streamId => {
+      this.onSubscribeToStream(socket, streamId);
+    });
+
+    socket.on(EVENTS.unsubscribe, streamId => {
+      this.onUnsubscribeFromStream(socket, streamId);
+    });
+
+    socket.on(EVENTS.subscribeAdmin, () => {
+      this.onSubscribeAdmin(socket);
+    });
+
+    socket.on(EVENTS.unsubscribeAdmin, () => {
+      this.onUnsubscribeAdmin(socket);
+    });
+
+    socket.on("disconnect", () => {
+    });
   }
 
-  private onDisconnect(socket: Socket): void {
-    const clientInfo = this.getClientInfo(socket);
-    this._connectionHistoryService.clientDisconnected(clientInfo);
-  }
-
-  private subscribe(socket: Socket, streamId: any): void {
+  private onSubscribeToStream(socket: Socket, streamId: any): void {
     const id = this._streams.find(stream => stream === streamId);
 
     if (!id) {
@@ -61,6 +63,22 @@ export class WebsocketServer {
       const clientInfo = this.getClientInfo(socket, streamId);
       this._connectionHistoryService.clientSubscribed(clientInfo);
     }
+  }
+
+  private onUnsubscribeFromStream(socket: Socket, streamId: string): void {
+    socket.leave(streamId);
+    const clientInfo = this.getClientInfo(socket);
+    this._connectionHistoryService.clientUnsubscribed(clientInfo);
+  }
+
+  private onSubscribeAdmin(socket: Socket): void {
+    socket.join("admin");
+    this._logger.debug("Admin subscribed.");
+  }
+
+  private onUnsubscribeAdmin(socket: Socket): void {
+    socket.leave("admin");
+    this._logger.debug("Admin unsubscribed.");
   }
 
   public addStream(id: string): void {
@@ -80,6 +98,10 @@ export class WebsocketServer {
 
   public emitEventMessage(streamId: string, event: string, message: string): void {
     this._websocketServer.to(streamId).emit(event, message);
+  }
+
+  public emitAdminEventMessage(event: string, message: string): void {
+    this._websocketServer.to("admin").emit(event, message);
   }
 
   private getClientInfo(socket: Socket, streamId?: string): ClientInfo {

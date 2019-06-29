@@ -32,8 +32,7 @@ function WebSocketClient(StreamId, ErrorCallback, ConnectCallback,
   this._IsConnected = false;
 
   // Create socket, connect to URI
-  const websocketEndpoint = ENDPOINTS.api + ENDPOINTS.websocket;
-  this._Socket = io({ reconnectionAttempts: 3, path: websocketEndpoint });
+  this._Socket = io(ENDPOINTS.root, { reconnectionAttempts: 3, path: ENDPOINTS.websocket });
 
   this._Socket.on("connect", this.__Socket_OnOpen.bind(this));
   this._Socket.on("error", this.__Socket_OnError.bind(this));
@@ -43,7 +42,7 @@ function WebSocketClient(StreamId, ErrorCallback, ConnectCallback,
   this._Socket.on("reconnect_failed", this.__Socket_OnClose.bind(this));
 
   this._Socket.on(StreamId, this.__Socket_OnMessage.bind(this));
-  this._Socket.emit("subscribe", StreamId);
+  this._Socket.emit(EVENTS.subscribe, StreamId);
 }
 
 
@@ -58,6 +57,7 @@ WebSocketClient.prototype.GetStatus = function () {
 
 // Disconnect from the websocket
 WebSocketClient.prototype.Disconnect = function () {
+  this._Socket.emit(EVENTS.unsubscribe);
   this._Socket.close();
   this._IsConnected = false;
   console.debug("Disconnecting from server.");

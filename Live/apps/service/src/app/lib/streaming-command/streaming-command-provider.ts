@@ -13,7 +13,7 @@ export class StreamingCommandProvider implements IStreamingCommandProvider {
   }
 
   public getStreamingCommand(deviceId: string): ICommand {
-    this._logger.warn(`Returning streaming command for device: ${deviceId}.`);
+    this._logger.debug(`Returning streaming command for device: ${deviceId}.`);
 
     return {
       command: this._streamingCommand.command,

@@ -7,6 +7,8 @@ import { IStreamingSource } from "../streaming-sources/i-streaming-source";
  * Class representing a live stream
  */
 export class Stream {
+  private _source: IStreamingSource;
+
   public get id(): string {
     return this._streamEntity.id;
   }
@@ -19,8 +21,6 @@ export class Stream {
     return this._source.isStreaming;
   }
 
-  private _source: IStreamingSource;
-
   public get hasValidDevice(): boolean {
     return this._source.hasValidDevice;
   }
@@ -28,9 +28,9 @@ export class Stream {
   constructor(
     @inject("Logger") private _logger: Logger,
     @inject("StreamingSourceFactory")
-    streamingSourceFactory: (deviceId: string, stream: Stream) => IStreamingSource,
+    streamingSourceFactory: (deviceId: string, streamId: string) => IStreamingSource,
     private _streamEntity: StreamEntity) {
-    this._source = streamingSourceFactory(_streamEntity.deviceId, this);
+    this._source = streamingSourceFactory(_streamEntity.deviceId, this.id);
 
     if (!this._source.hasValidDevice) {
       this._logger.warn(`Stream ${this.id} has invalid device and will not be startable.`);

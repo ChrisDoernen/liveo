@@ -1,6 +1,6 @@
 import { InversifyExpressServer } from "inversify-express-utils";
 import { Logger } from "../logging/logger";
-import { ServiceConfig } from "../../config/service.config";
+import { config } from "../../config/service.config";
 import { injectable, inject } from "inversify";
 import * as bodyParser from "body-parser";
 import { ENDPOINTS } from "@live/constants";
@@ -41,7 +41,7 @@ export class WebServer {
 
     const app = expressServer.build();
 
-    if (ServiceConfig.standalone) {
+    if (config.standalone) {
       this._logger.info(`Serving static files in standalone mode.`);
       app.use("/", express.static(path.resolve(__dirname + "/../client")));
       app.use("/admin", express.static(path.resolve(__dirname + "/../admin")));
@@ -51,8 +51,8 @@ export class WebServer {
       app.get("/*", (req, res) => res.sendFile(path.resolve(__dirname + "/../client/index.html")));
     }
 
-    const serverInstance = app.listen(ServiceConfig.port);
-    this._logger.info(`Web server started, listening on port ${ServiceConfig.port}.`);
+    const serverInstance = app.listen(config.port);
+    this._logger.info(`Web server started, listening on port ${config.port}.`);
 
     return serverInstance;
   }

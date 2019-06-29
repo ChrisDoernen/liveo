@@ -5,6 +5,7 @@ import { Logger } from "../logging/logger";
 import { Scheduler } from "../scheduling/scheduler";
 import { ShutdownService } from "../shutdown/shutdown-service";
 import { Shutdown } from "@live/entities";
+import { TimeService } from "../time/time.service";
 
 @injectable()
 export class ActivationService {
@@ -12,15 +13,12 @@ export class ActivationService {
   private _sessionStartJobId = "SESSION_START_JOB";
   private _sessionStopJobId = "SESSION_STOP_JOB";
 
-  private get now(): number {
-    return Math.floor(new Date().getTime() / 1000)
-  }
-
   constructor(
     @inject("Logger") private _logger: Logger,
     @inject("SessionService") private _sessionService: SessionService,
     @inject("Scheduler") private _scheduler: Scheduler,
-    @inject("ShutdownService") private _shutdownService: ShutdownService) {
+    @inject("ShutdownService") private _shutdownService: ShutdownService,
+    @inject("TimeService") private _timeService: TimeService) {
   }
 
   public setActivation(activation: ActivationEntity): ActivationEntity {
@@ -42,7 +40,7 @@ export class ActivationService {
       this._scheduler.schedule(this._sessionStartJobId, activation.startTime, () => session.start());
     } else {
       session.start();
-      activation.startTime = this.now;
+      activation.startTime = this._timeService.now();
     }
 
     if (activation.endTime) {
@@ -64,7 +62,7 @@ export class ActivationService {
       throw new Error("Activation validation error: Session id is null.");
     }
 
-    if (activation.startTime && activation.startTime < this.now) {
+    if (activation.startTime && activation.startTime < this._timeService.now()) {
       throw new Error("Activation validation error: The start time is not in the future.");
     }
 
@@ -82,14 +80,16 @@ export class ActivationService {
       throw new Error("Can not delete activation, no activation existing.");
     }
 
-    if (this._activation.startTime && this._activation.startTime > this.now) {
+    const now = this._timeService.now();
+
+    if (this._activation.startTime && this._activation.startTime > now) {
       this._scheduler.cancelJob(this._sessionStartJobId);
     } else {
       const session = this._sessionService.getSession(this._activation.sessionId);
       session.stop();
     }
 
-    if (this._activation.endTime && this._activation.endTime > this.now) {
+    if (this._activation.endTime && this._activation.endTime > now) {
       this._scheduler.cancelJob(this._sessionStopJobId);
     }
 

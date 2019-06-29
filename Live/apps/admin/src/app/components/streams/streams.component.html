@@ -1,3 +1,17 @@
-<p>
-  streams works!
-</p>
+<h2>Edit Streams</h2>
+<div class="stream-list">
+  <mat-card class="stream" *ngFor="let stream of streams">
+    <div class="label">Title</div>
+    <div class="title">{{stream.title}}</div>
+    <div class="label">Device id</div>
+    <div>{{stream.deviceId}}</div>
+    <button class="more" matTooltip="More actions">
+      <i class="material-icons">more_vert</i>
+    </button>
+  </mat-card>
+  <mat-card class="add-stream">
+    <button mat-mini-fab class="add" matTooltip="Add stream">
+      <i class="material-icons">add</i>
+    </button>
+  </mat-card>
+</div>

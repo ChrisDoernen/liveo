@@ -1,10 +1,10 @@
 import { Logger } from "../logging/logger";
 import { injectable, inject } from "inversify";
-import { DataService } from "../data/data-service";
 import { StreamService } from "../streams/stream-service";
 import { Session } from "./session";
 import { Stream } from "../streams/stream";
 import { SessionEntity } from "@live/entities";
+import { ISessionRepository } from "./i-session-repository";
 
 /**
  * A class providing methods to manage streaming sessions
@@ -17,8 +17,9 @@ export class SessionService {
     return this._sessions.map(session => session.entity);
   }
 
-  constructor(@inject("Logger") private _logger: Logger,
-    @inject("DataService") private _dataService: DataService,
+  constructor(
+    @inject("Logger") private _logger: Logger,
+    @inject("ISessionRepository") private _sessionRepository: ISessionRepository,
     @inject("StreamService") private _streamService: StreamService,
     @inject("SessionFactory") private sessionFactory: (sessionEntity: SessionEntity, streams: Stream[]) => Session) {
   }
@@ -26,7 +27,7 @@ export class SessionService {
   public loadSessions(): void {
     this._logger.debug("Loading sessions.");
 
-    const sessionEntities = this._dataService.loadSessionEntities();
+    const sessionEntities = this._sessionRepository.loadSessionEntities();
 
     if (sessionEntities.length === 0) {
       this._logger.warn("No session available for loading.");
@@ -55,7 +56,7 @@ export class SessionService {
   }
 
   private findSession(id: string): Session {
-    const matchingSession = this._sessions.find(session => session.id == id);
+    const matchingSession = this._sessions.find(session => session.id === id);
 
     if (!matchingSession) {
       throw new Error("The requested session could not be found.");

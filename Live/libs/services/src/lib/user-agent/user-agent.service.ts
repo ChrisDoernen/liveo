@@ -1,14 +1,10 @@
 import { UserAgentInfo, UserAgentDetector } from "@live/l3as";
 
 export class UserAgentService {
-  /**
-   * The user agent info
-   */
+  /** The user agent info */
   userAgentInfo: UserAgentInfo;
 
-  /**
-   * Whether the browser is compatible for playing mpeg
-   */
+  /** Whether the browser is compatible for playing mpeg */
   isBrowserCompatible: boolean;
 
   initialize(): void {

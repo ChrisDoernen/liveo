@@ -1,8 +1,8 @@
 import { Logger } from "../logging/logger";
 import { injectable, inject } from "inversify";
-import { DataService } from "../data/data-service";
 import { Stream } from "./stream";
 import { StreamEntity } from "@live/entities";
+import { IStreamRepository } from "./i-stream-repository";
 
 /**
  * A class providing methods to manage streams
@@ -15,15 +15,16 @@ export class StreamService {
     return this._streams;
   }
 
-  constructor(@inject("Logger") private _logger: Logger,
-    @inject("DataService") private _dataService: DataService,
+  constructor(
+    @inject("Logger") private _logger: Logger,
+    @inject("IStreamRepository") private _streamRepository: IStreamRepository,
     @inject("StreamFactory") private streamFactory: (streamEntity: StreamEntity) => Stream) {
   }
 
   public loadStreams(): void {
     this._logger.debug("Loading streams.");
 
-    const streamEntities = this._dataService.loadStreamEntities();
+    const streamEntities = this._streamRepository.loadStreamEntities();
 
     if (streamEntities.length === 0) {
       this._logger.warn("No streams available for loading.");

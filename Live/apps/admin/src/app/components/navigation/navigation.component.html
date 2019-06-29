@@ -6,10 +6,11 @@
     <div>
       <ul>
         <li (click)="router.navigate(['dashboard']); sidenav.toggle()">Dashboard</li>
-        <li (click)="router.navigate(['streams']); sidenav.toggle()">Streams</li>
-        <li (click)="router.navigate(['sessions']); sidenav.toggle()">Sessions</li>
+        <!-- <li (click)="router.navigate(['streams']); sidenav.toggle()">Streams</li>
+        <li (click)="router.navigate(['sessions']); sidenav.toggle()">Sessions</li> -->
       </ul>
     </div>
+    <div class="version-info">v{{ this.version }}/{{ this.revision }}</div>
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="header">
@@ -22,5 +23,6 @@
     <div class="content-container">
       <router-outlet></router-outlet>
     </div>
+    <footer class="content-container"></footer>
   </mat-sidenav-content>
 </mat-sidenav-container>
