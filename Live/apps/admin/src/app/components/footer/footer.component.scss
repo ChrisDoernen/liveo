@@ -1,3 +1,7 @@
-.cpu-usage {
-  float: right;
+@import "../../variables.scss";
+
+:host {
+  position: fixed;
+  padding-bottom: $padding-bottom;
+  bottom: 0;
 }
