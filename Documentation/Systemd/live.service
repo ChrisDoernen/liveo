@@ -14,7 +14,7 @@ User=chris
 # use 'nobody' group for Fedora
 Group=nogroup
 Environment=PATH=/usr/bin:/usr/local/bin
-Environment=NODE_ENV=production PRODUCTION=true PORT=3000 SIMULATE=true
+Environment=NODE_ENV=production PRODUCTION=true PORT=8080 SIMULATE=false
 WorkingDirectory=/home/chris/Projects/Livestream-App/Live/dist/apps/service
 
 [Install]

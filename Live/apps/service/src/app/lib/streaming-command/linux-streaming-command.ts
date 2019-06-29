@@ -6,6 +6,8 @@ export const LinuxStreamingCommand: ICommand = {
     "-y",
     "-f",
     "alsa",
+    "-ac",
+    "1",
     "-i",
     "hw:__DEVICEID__",
     "-rtbufsize",
