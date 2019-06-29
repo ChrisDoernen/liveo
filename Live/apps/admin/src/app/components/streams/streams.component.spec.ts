@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { StreamsComponent } from "./streams.component";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { MatCardModule, MatGridListModule } from "@angular/material";
 
 describe("StreamsComponent", () => {
   let component: StreamsComponent;
@@ -8,7 +9,11 @@ describe("StreamsComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [
+        HttpClientTestingModule,
+        MatCardModule,
+        MatGridListModule
+      ],
       declarations: [StreamsComponent]
     }).compileComponents();
   }));
