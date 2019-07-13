@@ -1,32 +1,28 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { NavigationComponent } from "./navigation.component";
+import { HeaderComponent } from "./header.component";
 import { AngularMaterialModule } from "../../angular-material.module";
-import { RouterTestingModule } from "@angular/router/testing";
-import { HeaderComponent } from "../header/header.component";
+import { ShutdownComponent } from "../shutdown/shutdown.component";
 import { LogoComponent } from "../logo/logo.component";
 import { InlineSVGDirective } from "ng-inline-svg";
+import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
-import { ShutdownComponent } from "../shutdown/shutdown.component";
 
-describe("NavigationComponent", () => {
-  let component: NavigationComponent;
-  let fixture: ComponentFixture<NavigationComponent>;
+describe("HeaderComponent", () => {
+  let component: HeaderComponent;
+  let fixture: ComponentFixture<HeaderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         AngularMaterialModule,
-        RouterTestingModule,
         NoopAnimationsModule,
         HttpClientTestingModule
       ],
       declarations: [
-        NavigationComponent,
-        LogoComponent,
         HeaderComponent,
         ShutdownComponent,
+        LogoComponent,
         InlineSVGDirective
       ],
       providers: [
@@ -36,7 +32,7 @@ describe("NavigationComponent", () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NavigationComponent);
+    fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

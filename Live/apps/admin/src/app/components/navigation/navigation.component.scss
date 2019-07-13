@@ -1,6 +1,6 @@
 @import "../../variables.scss";
 
-.header {
+header {
   margin-bottom: 15px;
 }
 
@@ -18,6 +18,8 @@
   ul {
     list-style: none;
     padding-left: 20px;
+    font-size: 18px;
+    font-weight: 600;
   }
 }
 

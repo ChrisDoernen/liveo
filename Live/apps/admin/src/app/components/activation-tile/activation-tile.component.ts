@@ -4,6 +4,7 @@ import { ActivationDialogComponent } from "../activation-dialog/activation-dialo
 import { ActivationEntity, SessionEntity } from "@live/entities";
 import { ActivationService, SessionService } from "@live/services";
 import { ActivationDeletionDialogComponent } from "../activation-deletion-dialog/activation-deletion-dialog.component";
+import { ActivationStateService } from "../../services/activation-state/activation-state.service";
 
 @Component({
   selector: "activation-tile",
@@ -29,6 +30,7 @@ export class ActivationTileComponent implements OnInit {
   }
 
   constructor(private _activationService: ActivationService,
+    private readonly _activationStateService: ActivationStateService,
     private _sessionService: SessionService,
     public activationDialog: MatDialog,
     public activationDeletionDialog: MatDialog) {
@@ -36,6 +38,9 @@ export class ActivationTileComponent implements OnInit {
 
   public ngOnInit() {
     this._activationService.getActivation()
+      .subscribe((activation) => this._activationStateService.activation = activation);
+
+    this._activationStateService.activation$
       .subscribe((activation) => this.activation = activation);
   }
 
@@ -58,7 +63,7 @@ export class ActivationTileComponent implements OnInit {
 
   public deleteActivation(): void {
     this._activationService.deleteActivation()
-      .subscribe((activation) => this.activation = activation);
+      .subscribe((activation) => this._activationStateService.activation = activation);
   }
 
   private setActivation(newActivation: ActivationEntity): void {
@@ -68,6 +73,6 @@ export class ActivationTileComponent implements OnInit {
 
     console.log(`Setting new activation: ${JSON.stringify(newActivation)}.`);
     this._activationService.setActivation(newActivation)
-      .subscribe((activation) => this.activation = activation);
+      .subscribe((activation) => this._activationStateService.activation = activation);
   }
 }
