@@ -21,7 +21,6 @@ import { ActivationDeletionDialogComponent } from "./components/activation-delet
 import { FooterComponent } from "./components/footer/footer.component"
 import { WebsocketService } from "./services/websocket/websocket.service";
 import { SocketIoModule } from "ngx-socket-io";
-import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   imports: [
@@ -48,8 +47,7 @@ import { HeaderComponent } from './components/header/header.component';
     ActivationDialogComponent,
     ActivationTileComponent,
     ActivationDeletionDialogComponent,
-    FooterComponent,
-    HeaderComponent
+    FooterComponent
   ],
   entryComponents: [
     ShutdownDialogComponent,

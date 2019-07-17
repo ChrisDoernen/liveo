@@ -1,14 +1,13 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { NavigationComponent } from "./navigation.component";
 import { AngularMaterialModule } from "../../angular-material.module";
-import { RouterTestingModule } from "@angular/router/testing";
-import { HeaderComponent } from "../header/header.component";
-import { LogoComponent } from "../logo/logo.component";
-import { InlineSVGDirective } from "ng-inline-svg";
+import { ShutdownComponent } from "../shutdown/shutdown.component";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { RouterTestingModule } from "@angular/router/testing";
+import { LogoComponent } from "../logo/logo.component";
+import { InlineSVGDirective } from "ng-inline-svg";
 import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
-import { ShutdownComponent } from "../shutdown/shutdown.component";
 
 describe("NavigationComponent", () => {
   let component: NavigationComponent;
@@ -18,15 +17,14 @@ describe("NavigationComponent", () => {
     TestBed.configureTestingModule({
       imports: [
         AngularMaterialModule,
-        RouterTestingModule,
         NoopAnimationsModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        RouterTestingModule
       ],
       declarations: [
         NavigationComponent,
-        LogoComponent,
-        HeaderComponent,
         ShutdownComponent,
+        LogoComponent,
         InlineSVGDirective
       ],
       providers: [

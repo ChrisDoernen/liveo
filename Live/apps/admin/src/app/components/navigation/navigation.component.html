@@ -13,7 +13,13 @@
     <div class="version-info">v{{ this.version }}/{{ this.revision }}</div>
   </mat-sidenav>
   <mat-sidenav-content>
-    <header (menuIconClicked)=sidenav.toggle()></header>
+    <div class="header">
+      <button mat-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <logo light="true"></logo>
+      <shutdown-button></shutdown-button>
+    </div>
     <div class="content-container">
       <router-outlet></router-outlet>
     </div>
