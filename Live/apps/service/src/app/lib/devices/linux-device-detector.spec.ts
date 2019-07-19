@@ -35,20 +35,28 @@ describe("LinuxDeviceDetector", () => {
     promise.then(() => {
       const devices = linuxDeviceDetector.devices;
       expect(devices.length).toBe(2);
-      expect(devices[0].id).toBe("0");
-      expect(devices[0].data.description).toBe("ICH5 [Intel ICH5], device 0: Intel ICH [Intel ICH5]");
-      expect(devices[1].id).toBe("1");
-      expect(devices[1].data.description).toBe("U0x46d0x809 [USB Device 0x46d:0x809], device 0: USB Audio [USB Audio]");
+      expect(devices[0].id).toBe("hw:CARD=SB,DEV=0");
+      expect(devices[0].data.description).toBe("hw:CARD=SB,DEV=0");
+      expect(devices[1].id).toBe("hw:CARD=USB1,DEV=0");
+      expect(devices[1].data.description).toBe("hw:CARD=USB1,DEV=0");
       done();
     }).catch(fail);
   });
 });
 
-const output = 
-`**** List of CAPTURE Hardware Devices ****
-card 0: ICH5 [Intel ICH5], device 0: Intel ICH [Intel ICH5]
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0
-card 1: U0x46d0x809 [USB Device 0x46d:0x809], device 0: USB Audio [USB Audio]
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0`;
+const output =
+  `dsnoop:CARD=SB,DEV=2
+    HDA ATI SB, ALC892 Alt Analog
+    Direct sample snooping device
+hw:CARD=SB,DEV=0
+    HDA ATI SB, ALC892 Analog
+    Direct hardware device without any conversions
+dsnoop:CARD=USB1,DEV=0
+    USB Advanced Audio Device, USB Audio
+    Direct sample snooping device
+hw:CARD=USB1,DEV=0
+    USB Advanced Audio Device, USB Audio
+    Direct hardware device without any conversions
+plughw:CARD=USB1,DEV=0
+    USB Advanced Audio Device, USB Audio
+    Hardware device with all software conversions`;
