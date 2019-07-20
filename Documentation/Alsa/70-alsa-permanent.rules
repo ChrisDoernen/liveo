@@ -1,0 +1,6 @@
+SUBSYSTEM!="sound", GOTO="my_usb_audio_end"
+ACTION!="add", GOTO="my_usb_audio_end"
+
+DEVPATH=="/devices/pci0000:00/0000:00:09.0/0000:02:00.0/usb8/8-1/8-1:1.0/sound/card?", ATTR{id}="USB1"
+
+LABEL="my_usb_audio_end"
