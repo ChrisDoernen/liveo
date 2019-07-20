@@ -4,7 +4,7 @@ import { Device } from "../devices/device";
 import { DeviceState } from "../devices/device-state";
 import { WebsocketServer } from "../core/websocket-server";
 import { EVENTS } from "@live/constants";
-const FfmpegCommand = require("fluent-ffmpeg");
+import * as Ffmpeg from "fluent-ffmpeg";
 
 /**
  * Class responsible for opening a child process and passing the data to the websocket server
@@ -28,7 +28,7 @@ export class StreamingSource {
   }
 
   private initializeFfmpegCommand(): void {
-    this._command = new FfmpegCommand()
+    this._command = Ffmpeg()
       .input(this._device.id)
       .inputOptions("-y")
       .inputOptions("-f alsa")
