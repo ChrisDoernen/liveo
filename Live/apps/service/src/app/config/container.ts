@@ -27,19 +27,11 @@ import { ServiceLogger, FfmpegLogger } from "./logging.config";
 import { StreamingSimulationSourceFactory } from "../lib/streaming-sources/streaming-simulation-source-factory";
 import { IStreamingSource } from "../lib/streaming-sources/i-streaming-source";
 import { ActivityService } from "../lib/activity/activity.service";
-import { ICommand } from "../lib/streaming-command/i-command";
-import { LinuxStreamingCommand } from "../lib/streaming-command/linux-streaming-command";
 import { WindowsDeviceDetector } from "../lib/devices/windows-device-detector";
-import { WindowsStreamingCommand } from "../lib/streaming-command/windows-streaming-command";
 import { WindowsShutdownService } from "../lib/shutdown/windows-shutdown-service";
 import { TimeService } from "../lib/time/time.service";
-import { FileStreamingCommand } from "../lib/streaming-command/file-streaming-command";
-import { IStreamingCommandProvider } from "../lib/streaming-command/i-streaming-command-provider";
-import { FileStreamingCommandProvider } from "../lib/streaming-command/file-streaming-command-provider";
-import { StreamingCommandProvider } from "../lib/streaming-command/streaming-command-provider";
 import { ConnectionHistoryService } from "../lib/statistics/connection-history-service";
 import { MacOSDeviceDetector } from "../lib/devices/macos-device-detector";
-import { MacOSStreamingCommand } from "../lib/streaming-command/macos-streaming-command";
 import { SystemMonitoringService } from "../lib/system-monitoring/system-monitoring-service";
 import { ISessionRepository } from "../lib/sessions/i-session-repository";
 import { IStreamRepository } from "../lib/streams/i-stream-repository";
@@ -71,25 +63,19 @@ if (config.simulate) {
 } else if (config.filesource) {
   container.bind<interfaces.Factory<IStreamingSource>>("StreamingSourceFactory").toFactory(StreamingSourceFactory);
   container.bind<DeviceDetector>("DeviceDetector").to(SimulationDeviceDetector).inSingletonScope();
-  container.bind<ICommand>("StreamingCommand").toConstantValue(FileStreamingCommand);
-  container.bind<IStreamingCommandProvider>("IStreamingCommandProvider").to(FileStreamingCommandProvider);
 } else {
   container.bind<interfaces.Factory<IStreamingSource>>("StreamingSourceFactory").toFactory(StreamingSourceFactory);
-  container.bind<IStreamingCommandProvider>("IStreamingCommandProvider").to(StreamingCommandProvider);
   switch (config.os) {
     case "linux": {
       container.bind<DeviceDetector>("DeviceDetector").to(LinuxDeviceDetector).inSingletonScope();
-      container.bind<ICommand>("StreamingCommand").toConstantValue(LinuxStreamingCommand);
       break;
     }
     case "win32": {
       container.bind<DeviceDetector>("DeviceDetector").to(WindowsDeviceDetector).inSingletonScope();
-      container.bind<ICommand>("StreamingCommand").toConstantValue(WindowsStreamingCommand);
       break;
     }
     case "darwin": {
       container.bind<DeviceDetector>("DeviceDetector").to(MacOSDeviceDetector).inSingletonScope();
-      container.bind<ICommand>("StreamingCommand").toConstantValue(MacOSStreamingCommand);
       break;
     }
     default: {

@@ -1,6 +1,7 @@
 export const EVENTS = {
   streamEndedExpected: "stream_ended_expected",
   streamEndedUnexpected: "stream_ended_unexpected",
+  streamEnded: "stream_ended",
   subscriptionError: "subscription_error",
   subscribe: "subscribe",
   unsubscribe: "unubscribe",

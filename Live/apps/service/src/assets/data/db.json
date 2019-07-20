@@ -4,13 +4,13 @@
       "id": "v67d",
       "title": "Originalton",
       "countryCode": "en",
-      "deviceId": "hw:CARD=USB1,DEV=0"
+      "deviceId": "hw:CARD=PCH,DEV=0"
     },
     {
       "id": "4hdg",
       "title": "Deutsch",
       "countryCode": "de",
-      "deviceId": "hw:CARD=PCH,DEV=0"
+      "deviceId": "hw:CARD=USB1,DEV=0"
     },
     {
       "id": "ge1r",
