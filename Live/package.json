@@ -90,7 +90,7 @@
     "app-root-path": "^2.1.0",
     "babel-preset-env": "^1.7.0",
     "codelyzer": "~4.5.0",
-    "cypress": "^3.2.0",
+    "cypress": "^3.4.0",
     "jest": "^24.8.0",
     "jest-create-mock-instance": "^1.1.0",
     "jest-preset-angular": "^7.1.0",
