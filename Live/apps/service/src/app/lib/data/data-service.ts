@@ -11,7 +11,7 @@ import * as FileSync from "lowdb/adapters/FileAsync";
  * Provides access to a file based data source
  */
 @injectable()
-export default class DataService implements IStreamRepository, ISessionRepository {
+export class DataService implements IStreamRepository, ISessionRepository {
   private _db: any;
 
   constructor(@inject("Logger") private _logger: Logger) {

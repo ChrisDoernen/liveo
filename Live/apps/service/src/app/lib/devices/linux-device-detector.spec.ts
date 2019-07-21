@@ -35,9 +35,9 @@ describe("LinuxDeviceDetector", () => {
     promise.then(() => {
       const devices = linuxDeviceDetector.devices;
       expect(devices.length).toBe(2);
-      expect(devices[0].id).toBe("hw:CARD=SB,DEV=0");
+      expect(devices[0].id).toBe("CARD=SB,DEV=0");
       expect(devices[0].data.description).toBe("hw:CARD=SB,DEV=0");
-      expect(devices[1].id).toBe("hw:CARD=USB1,DEV=0");
+      expect(devices[1].id).toBe("CARD=USB1,DEV=0");
       expect(devices[1].data.description).toBe("hw:CARD=USB1,DEV=0");
       done();
     }).catch(fail);

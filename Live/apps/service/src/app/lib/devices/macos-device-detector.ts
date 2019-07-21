@@ -5,15 +5,15 @@ import { injectable, inject } from "inversify";
 import { Device } from "./device";
 import { DeviceData } from "./device-data";
 import { DeviceState } from "./device-state";
-import { EOL } from 'os';
-import { DeviceType } from './device-type';
+import { EOL } from "os";
+import { DeviceType } from "./device-type";
 
 /**
  * Implementation of device detection on mac os
  */
 @injectable()
 export class MacOSDeviceDetector extends DeviceDetector {
-  private listDevicesCommand: string = "ffmpeg -f avfoundation -list_devices true -i ''";
+  private listDevicesCommand = "ffmpeg -f avfoundation -list_devices true -i ''";
 
   constructor(
     @inject("Logger") logger: Logger,
@@ -41,7 +41,7 @@ export class MacOSDeviceDetector extends DeviceDetector {
     const searchPrefix = (line: string) => (line.search(prefix) > -1);
     const searchAudioSeparator = (line: string) => isVideo && (line.search(audioSeparator) > -1);
 
-    let devices = [];
+    const devices = [];
     let isVideo = true;
 
     response.split(EOL)

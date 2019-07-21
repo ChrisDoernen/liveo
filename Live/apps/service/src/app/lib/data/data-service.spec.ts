@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import DataService from "./data-service";
+import { DataService } from "./data-service";
 import { Logger } from "../logging/logger";
 import createMockInstance from "jest-create-mock-instance";
 

@@ -43,7 +43,7 @@ export class LinuxDeviceDetector extends DeviceDetector {
   }
 
   private parseDevice(line: string): Device {
-    const id = line;
+    const id = line.replace("hw:", "");
     const description = line;
 
     return this.instantiateDevice(id, description, DeviceType.Audio, DeviceState.Available);

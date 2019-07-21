@@ -3,14 +3,14 @@ import { DeviceDetector } from "./device-detector";
 import { Logger } from "../logging/logger";
 import { injectable, inject } from "inversify";
 import { Device } from "./device";
-import { DeviceData } from './device-data';
-import { DeviceState } from './device-state';
-import { EOL } from 'os';
-import { DeviceType } from './device-type';
+import { DeviceData } from "./device-data";
+import { DeviceState } from "./device-state";
+import { EOL } from "os";
+import { DeviceType } from "./device-type";
 
 @injectable()
 export class WindowsDeviceDetector extends DeviceDetector {
-  private listDevicesCommand: string = "ffmpeg -f dshow -list_devices true -i ''";
+  private listDevicesCommand = "ffmpeg -f dshow -list_devices true -i ''";
 
   constructor(
     @inject("Logger") logger: Logger,
@@ -41,7 +41,7 @@ export class WindowsDeviceDetector extends DeviceDetector {
     const searchAudioSeparator = (line: string) => isVideo && (line.search(audioSeparator) > -1);
     const searchAlternativeName = (line) => (line.search(/Alternative\sname/) > -1);
 
-    let devices = [];
+    const devices = [];
     let isVideo = true;
 
     response.split(EOL)

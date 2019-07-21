@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import createMockInstance from "jest-create-mock-instance";
-import DataService from "../data/data-service";
+import { DataService } from "../data/data-service";
 import { Logger } from "../logging/logger";
 import { SessionService } from "../sessions/session-service";
 import { StreamService } from "../streams/stream-service";

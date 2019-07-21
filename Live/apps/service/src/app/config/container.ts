@@ -7,7 +7,7 @@ import { ProcessExecutionService } from "../lib/process-execution/process-execut
 import { DeviceDetector } from "../lib/devices/device-detector";
 import { LinuxDeviceDetector } from "../lib/devices/linux-device-detector";
 import { SimulationDeviceDetector } from "../lib/devices/simulation-device-detector";
-import DataService from "../lib/data/data-service";
+import { DataService } from "../lib/data/data-service";
 import { SessionService } from "../lib/sessions/session-service";
 import { StreamService } from "../lib/streams/stream-service";
 import { WebsocketServer } from "../lib/core/websocket-server";
@@ -35,6 +35,8 @@ import { MacOSDeviceDetector } from "../lib/devices/macos-device-detector";
 import { SystemMonitoringService } from "../lib/system-monitoring/system-monitoring-service";
 import { ISessionRepository } from "../lib/sessions/i-session-repository";
 import { IStreamRepository } from "../lib/streams/i-stream-repository";
+import { AudioSystem } from "../lib/audio-system/audio-system";
+import { AudioSystems } from "../lib/audio-system/audio-systems";
 
 export const container = new Container();
 
@@ -68,14 +70,17 @@ if (config.simulate) {
   switch (config.os) {
     case "linux": {
       container.bind<DeviceDetector>("DeviceDetector").to(LinuxDeviceDetector).inSingletonScope();
+      container.bind<AudioSystem>("AudioSystem").toConstantValue(AudioSystems.linux);
       break;
     }
     case "win32": {
       container.bind<DeviceDetector>("DeviceDetector").to(WindowsDeviceDetector).inSingletonScope();
+      container.bind<AudioSystem>("AudioSystem").toConstantValue(AudioSystems.win32);
       break;
     }
     case "darwin": {
       container.bind<DeviceDetector>("DeviceDetector").to(MacOSDeviceDetector).inSingletonScope();
+      container.bind<AudioSystem>("AudioSystem").toConstantValue(AudioSystems.darwin);
       break;
     }
     default: {

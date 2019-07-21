@@ -8,7 +8,7 @@ import { WebsocketServer } from "./websocket-server";
 import { injectable, inject } from "inversify";
 import { SystemMonitoringService } from "../system-monitoring/system-monitoring-service";
 import { environment } from "../../../environments/environment";
-import DataService from "../data/data-service";
+import { DataService } from "../data/data-service";
 
 @injectable()
 export class Bootstrapper {

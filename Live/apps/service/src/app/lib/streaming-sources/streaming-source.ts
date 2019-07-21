@@ -5,6 +5,7 @@ import { DeviceState } from "../devices/device-state";
 import { WebsocketServer } from "../core/websocket-server";
 import { EVENTS } from "@live/constants";
 import * as Ffmpeg from "fluent-ffmpeg";
+import { AudioSystem } from "../audio-system/audio-system";
 
 /**
  * Class responsible for opening a child process and passing the data to the websocket server
@@ -13,11 +14,13 @@ import * as Ffmpeg from "fluent-ffmpeg";
 export class StreamingSource {
   private _command: any;
   public isStreaming: boolean;
+  private _input = this._audioSystem.devicePrefix + this._device.id;
 
   constructor(
     @inject("Logger") private _logger: Logger,
     @inject("FfmpegLogger") private _ffmpegLogger: Logger,
     @inject("WebsocketService") private _websocketServer: WebsocketServer,
+    @inject("AudioSystem") private _audioSystem: AudioSystem,
     private _device: Device,
     private _streamId: string) {
     this.initializeFfmpegCommand();
@@ -29,9 +32,9 @@ export class StreamingSource {
 
   private initializeFfmpegCommand(): void {
     this._command = Ffmpeg()
-      .input(this._device.id)
+      .input(this._input)
       .inputOptions("-y")
-      .inputOptions("-f alsa")
+      .inputOptions(`-f ${this._audioSystem.audioSystem}`)
       .audioChannels(2)
       .audioBitrate("196k")
       .audioCodec("libmp3lame")
