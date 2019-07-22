@@ -5,23 +5,21 @@ import { DeviceState } from "../devices/device-state";
 import { WebsocketServer } from "../core/websocket-server";
 import { EVENTS } from "@live/constants";
 import * as Ffmpeg from "fluent-ffmpeg";
-import { AudioSystem } from "../audio-system/audio-system";
 import { IStreamingSource } from "./i-streaming-source";
 
 /**
- * Class responsible for opening a child process and passing the data to the websocket server
+ * Streams from a file source for testing purposes
  */
 @injectable()
-export class StreamingSource implements IStreamingSource {
+export class FileStreamingSource implements IStreamingSource {
   private _command: any;
   public isStreaming: boolean;
-  private _input = this._audioSystem.devicePrefix + this._device.id;
+  private _input = this._device.id;
 
   constructor(
     @inject("Logger") private _logger: Logger,
     @inject("FfmpegLogger") private _ffmpegLogger: Logger,
     @inject("WebsocketService") private _websocketServer: WebsocketServer,
-    @inject("AudioSystem") private _audioSystem: AudioSystem,
     @inject("FfmpegPath") ffmpegPath: string,
     private _device: Device,
     private _streamId: string) {
@@ -38,9 +36,7 @@ export class StreamingSource implements IStreamingSource {
   private initializeFfmpegCommand(): void {
     this._command = Ffmpeg()
       .input(this._input)
-      .inputOptions("-y")
-      .inputOptions(`-f ${this._audioSystem.audioSystem}`)
-      .audioChannels(2)
+      .inputOptions("-re")
       .audioBitrate("196k")
       .audioCodec("libmp3lame")
       .format("mp3")
@@ -62,11 +58,14 @@ export class StreamingSource implements IStreamingSource {
       .on("stderr", (data: string) => {
         this._ffmpegLogger.info(`${data}`);
       })
-      .on("end", () => { });
+      .on("end", () => {
+        this._logger.debug(`Streaming ended for device ${this._device.id}.`);
+      });
   }
 
+
   public startStreaming(): void {
-    this._logger.debug(`Start streaming for device ${this._device.id}.`);
+    this._logger.debug(`Start file streaming for device ${this._device.id}.`);
     this._websocketServer.addStream(this._streamId);
     this._command
       .pipe()
@@ -81,4 +80,4 @@ export class StreamingSource implements IStreamingSource {
     this._websocketServer.emitEventMessage(this._streamId, EVENTS.streamEnded, "The stream ended.");
     this.isStreaming = false;
   }
-}
+} 

@@ -1,10 +1,10 @@
 import { Device } from "./device";
-import { DeviceData } from './device-data';
-import { DeviceState } from './device-state';
-import { Logger } from '../logging/logger';
-import { ProcessExecutionService } from '../process-execution/process-execution-service';
-import { injectable } from 'inversify';
-import { DeviceType } from './device-type';
+import { DeviceData } from "./device-data";
+import { DeviceState } from "./device-state";
+import { Logger } from "../logging/logger";
+import { ProcessExecutionService } from "../process-execution/process-execution-service";
+import { injectable } from "inversify";
+import { DeviceType } from "./device-type";
 
 /**
  * A abstract class for device detection
@@ -44,9 +44,7 @@ export abstract class DeviceDetector {
   public getDevice(id: string): Device {
     const matchingDevice = this.devices.find((device) => device.id === id);
 
-    return matchingDevice
-      ? matchingDevice
-      : this.instantiateDevice(id, null, DeviceType.Unknown, DeviceState.UnknownDevice);
+    return matchingDevice || this.instantiateDevice(id, null, DeviceType.Unknown, DeviceState.UnknownDevice);
   }
 
   protected instantiateDevice(id: string, description: string, deviceType: DeviceType, deviceState: DeviceState): Device {

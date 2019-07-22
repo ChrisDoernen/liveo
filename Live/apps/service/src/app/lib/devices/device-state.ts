@@ -1,5 +1,5 @@
 export enum DeviceState {
-    UnknownDevice,
-    Available,
-    InUse
+  UnknownDevice,
+  Available,
+  InUse
 }

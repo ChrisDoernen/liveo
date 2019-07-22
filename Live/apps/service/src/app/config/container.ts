@@ -37,56 +37,49 @@ import { ISessionRepository } from "../lib/sessions/i-session-repository";
 import { IStreamRepository } from "../lib/streams/i-stream-repository";
 import { AudioSystem } from "../lib/audio-system/audio-system";
 import { AudioSystems } from "../lib/audio-system/audio-systems";
+import { FileStreamingSourceFactory } from "../lib/streaming-sources/file-streaming-source-factory";
 
 export const container = new Container();
 
-if (!config.production) {
-  container.bind<ShutdownService>("ShutdownService").to(ShutdownSimulationService).inSingletonScope();
-} else {
-  switch (config.os) {
-    case "linux":
-    case "darwin": {
-      container.bind<ShutdownService>("ShutdownService").to(UnixShutdownService).inSingletonScope();
-      break;
-    }
-    case "win32": {
-      container.bind<ShutdownService>("ShutdownService").to(WindowsShutdownService).inSingletonScope();
-      break;
-    }
-    default: {
-      throw new Error(`OS ${config.os} is unsupported.`);
-    }
+switch (config.os) {
+  case "linux": {
+    container.bind<ShutdownService>("ShutdownService").to(UnixShutdownService).inSingletonScope();
+    container.bind<DeviceDetector>("DeviceDetector").to(MacOSDeviceDetector).inSingletonScope();
+    container.bind<AudioSystem>("AudioSystem").toConstantValue(AudioSystems.darwin);
+    container.bind<string>("FfmpegPath").toConstantValue(config.ffmpegPath);
+    break;
+  }
+  case "darwin": {
+    container.bind<ShutdownService>("ShutdownService").to(UnixShutdownService).inSingletonScope();
+    container.bind<DeviceDetector>("DeviceDetector").to(LinuxDeviceDetector).inSingletonScope();
+    container.bind<AudioSystem>("AudioSystem").toConstantValue(AudioSystems.linux);
+    container.bind<string>("FfmpegPath").toConstantValue(null);
+    break;
+  }
+  case "win32": {
+    container.bind<ShutdownService>("ShutdownService").to(WindowsShutdownService).inSingletonScope();
+    container.bind<DeviceDetector>("DeviceDetector").to(WindowsDeviceDetector).inSingletonScope();
+    container.bind<AudioSystem>("AudioSystem").toConstantValue(AudioSystems.win32);
+    container.bind<string>("FfmpegPath").toConstantValue(config.ffmpegPath);
+    break;
+  }
+  default: {
+    throw new Error(`OS ${config.os} is unsupported.`);
   }
 }
 
+if (!config.production) {
+  container.rebind<ShutdownService>("ShutdownService").to(ShutdownSimulationService).inSingletonScope();
+}
+
 if (config.simulate) {
-  container.bind<DeviceDetector>("DeviceDetector").to(SimulationDeviceDetector).inSingletonScope();
+  container.rebind<DeviceDetector>("DeviceDetector").to(SimulationDeviceDetector).inSingletonScope();
   container.bind<interfaces.Factory<IStreamingSource>>("StreamingSourceFactory").toFactory(StreamingSimulationSourceFactory);
 } else if (config.filesource) {
-  container.bind<interfaces.Factory<IStreamingSource>>("StreamingSourceFactory").toFactory(StreamingSourceFactory);
-  container.bind<DeviceDetector>("DeviceDetector").to(SimulationDeviceDetector).inSingletonScope();
+  container.rebind<DeviceDetector>("DeviceDetector").to(SimulationDeviceDetector).inSingletonScope();
+  container.bind<interfaces.Factory<IStreamingSource>>("StreamingSourceFactory").toFactory(FileStreamingSourceFactory);
 } else {
   container.bind<interfaces.Factory<IStreamingSource>>("StreamingSourceFactory").toFactory(StreamingSourceFactory);
-  switch (config.os) {
-    case "linux": {
-      container.bind<DeviceDetector>("DeviceDetector").to(LinuxDeviceDetector).inSingletonScope();
-      container.bind<AudioSystem>("AudioSystem").toConstantValue(AudioSystems.linux);
-      break;
-    }
-    case "win32": {
-      container.bind<DeviceDetector>("DeviceDetector").to(WindowsDeviceDetector).inSingletonScope();
-      container.bind<AudioSystem>("AudioSystem").toConstantValue(AudioSystems.win32);
-      break;
-    }
-    case "darwin": {
-      container.bind<DeviceDetector>("DeviceDetector").to(MacOSDeviceDetector).inSingletonScope();
-      container.bind<AudioSystem>("AudioSystem").toConstantValue(AudioSystems.darwin);
-      break;
-    }
-    default: {
-      throw new Error(`Device detection for OS ${config.os} is unsupported.`);
-    }
-  }
 }
 
 container.bind<interfaces.Factory<Device>>("DeviceFactory").toFactory(DeviceFactory);

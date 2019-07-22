@@ -20,7 +20,8 @@ export class Device {
     return this._deviceData.id;
   }
 
-  constructor(@inject("Logger") private _logger: Logger,
+  constructor(
+    @inject("Logger") private _logger: Logger,
     private _deviceData: DeviceData,
     private _deviceState: DeviceState) {
     if (this._deviceState === DeviceState.Available) {

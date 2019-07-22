@@ -1,5 +1,5 @@
 export enum DeviceType {
-    Unknown,
-    Video,
-    Audio
+  Unknown,
+  Video,
+  Audio
 }
