@@ -9,6 +9,7 @@ import { injectable, inject } from "inversify";
 import { SystemMonitoringService } from "../system-monitoring/system-monitoring-service";
 import { environment } from "../../../environments/environment";
 import { DataService } from "../data/data-service";
+import * as Ffmpeg from "fluent-ffmpeg";
 
 @injectable()
 export class Bootstrapper {
@@ -33,6 +34,11 @@ export class Bootstrapper {
     this._logger.debug(`Filesource: ${config.filesource}.`);
     this._logger.debug(`Standalone: ${config.standalone}.`);
     this._logger.debug(`Database: ${config.database}.`);
+    this._logger.debug(`Ffmpeg: ${config.ffmpegPath}.`);
+
+    if (config.ffmpegPath) {
+      Ffmpeg.setFfmpegPath(config.ffmpegPath);
+    }
 
     await this._dataService.initializeDatabase();
     await this._deviceDetector.detectDevices();

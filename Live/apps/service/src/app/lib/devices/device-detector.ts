@@ -19,14 +19,13 @@ export abstract class DeviceDetector {
 
   constructor(
     protected logger: Logger,
-    protected _processExecutionService: ProcessExecutionService,
     private _deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
   }
 
   public abstract async detectDevices(): Promise<void>;
 
-  protected async runDetection(command: string): Promise<void> {
-    await this.executeListDevicesCommand(command).then((response) => {
+  protected async runDetection(): Promise<void> {
+    await this.executeListDevicesCommand().then((response) => {
       this.logger.debug("Detecting audio inputs.");
 
       this.devices = this.parseResponse(response);
@@ -37,7 +36,7 @@ export abstract class DeviceDetector {
     });
   }
 
-  protected abstract executeListDevicesCommand(command: string): Promise<string>;
+  protected abstract executeListDevicesCommand(): Promise<string>;
 
   protected abstract parseResponse(output: string): Device[];
 

@@ -27,7 +27,7 @@ import { ServiceLogger, FfmpegLogger } from "./logging.config";
 import { StreamingSimulationSourceFactory } from "../lib/streaming-sources/streaming-simulation-source-factory";
 import { IStreamingSource } from "../lib/streaming-sources/i-streaming-source";
 import { ActivityService } from "../lib/activity/activity.service";
-import { WindowsDeviceDetector } from "../lib/devices/windows-device-detector";
+import { FfmpegDeviceDetector } from "../lib/devices/windows-device-detector";
 import { WindowsShutdownService } from "../lib/shutdown/windows-shutdown-service";
 import { TimeService } from "../lib/time/time.service";
 import { ConnectionHistoryService } from "../lib/statistics/connection-history-service";
@@ -46,21 +46,18 @@ switch (config.os) {
     container.bind<ShutdownService>("ShutdownService").to(UnixShutdownService).inSingletonScope();
     container.bind<DeviceDetector>("DeviceDetector").to(MacOSDeviceDetector).inSingletonScope();
     container.bind<AudioSystem>("AudioSystem").toConstantValue(AudioSystems.darwin);
-    container.bind<string>("FfmpegPath").toConstantValue(config.ffmpegPath);
     break;
   }
   case "darwin": {
     container.bind<ShutdownService>("ShutdownService").to(UnixShutdownService).inSingletonScope();
     container.bind<DeviceDetector>("DeviceDetector").to(LinuxDeviceDetector).inSingletonScope();
     container.bind<AudioSystem>("AudioSystem").toConstantValue(AudioSystems.linux);
-    container.bind<string>("FfmpegPath").toConstantValue(null);
     break;
   }
   case "win32": {
     container.bind<ShutdownService>("ShutdownService").to(WindowsShutdownService).inSingletonScope();
-    container.bind<DeviceDetector>("DeviceDetector").to(WindowsDeviceDetector).inSingletonScope();
+    container.bind<DeviceDetector>("DeviceDetector").to(FfmpegDeviceDetector).inSingletonScope();
     container.bind<AudioSystem>("AudioSystem").toConstantValue(AudioSystems.win32);
-    container.bind<string>("FfmpegPath").toConstantValue(config.ffmpegPath);
     break;
   }
   default: {

@@ -5,10 +5,10 @@ import { ProcessExecutionService } from "../process-execution/process-execution-
 import { DeviceData } from "../devices/device-data";
 import { Device } from "../devices/device";
 import { DeviceState } from "../devices/device-state";
-import { WindowsDeviceDetector } from './windows-device-detector';
+import { FfmpegDeviceDetector } from './windows-device-detector';
 
 describe("WindowsDeviceDetector", () => {
-  let windowsDeviceDetector: WindowsDeviceDetector;
+  let windowsDeviceDetector: FfmpegDeviceDetector;
   let processExecutionService: jest.Mocked<ProcessExecutionService>;
   let deviceFactory: any;
 
@@ -19,7 +19,7 @@ describe("WindowsDeviceDetector", () => {
       (deviceData: DeviceData, deviceState: DeviceState) => new Device(logger, deviceData, deviceState)
     );
 
-    windowsDeviceDetector = new WindowsDeviceDetector(logger, processExecutionService, deviceFactory);
+    windowsDeviceDetector = new FfmpegDeviceDetector(logger, processExecutionService, deviceFactory);
   });
 
   it("should construct", async () => {

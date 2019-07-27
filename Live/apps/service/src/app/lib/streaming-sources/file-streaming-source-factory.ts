@@ -10,8 +10,7 @@ export const FileStreamingSourceFactory = (context: interfaces.Context) =>
     const ffmpegLogger = context.container.get<Logger>("FfmpegLogger");
     const websocketServer = context.container.get<WebsocketServer>("WebsocketServer");
     const deviceDetector = context.container.get<DeviceDetector>("DeviceDetector");
-    const ffmpegPath = context.container.get<string>("FfmpegPath");
     const device = deviceDetector.getDevice(deviceId);
 
-    return new FileStreamingSource(logger, ffmpegLogger, websocketServer, ffmpegPath, device, streamId);
+    return new FileStreamingSource(logger, ffmpegLogger, websocketServer, device, streamId);
   };

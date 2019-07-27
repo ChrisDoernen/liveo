@@ -1,4 +1,3 @@
-import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { DeviceDetector } from "./device-detector";
 import { Logger } from "../logging/logger";
 import { injectable, inject } from "inversify";
@@ -7,28 +6,25 @@ import { DeviceData } from "./device-data";
 import { DeviceState } from "./device-state";
 import { EOL } from "os";
 import { DeviceType } from "./device-type";
+import * as Ffmpeg from "fluent-ffmpeg"
 
 @injectable()
 export class WindowsDeviceDetector extends DeviceDetector {
-  private listDevicesCommand = "ffmpeg -f dshow -list_devices true -i ''";
 
   constructor(
     @inject("Logger") logger: Logger,
-    @inject("ProcessExecutionService") processExecutionService: ProcessExecutionService,
     @inject("DeviceFactory") deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
-    super(logger, processExecutionService, deviceFactory);
+    super(logger, deviceFactory);
   }
 
   public async detectDevices(): Promise<void> {
-    return this.runDetection(this.listDevicesCommand);
+    return this.runDetection();
   }
 
-  protected async executeListDevicesCommand(command: string): Promise<string> {
+  protected async executeListDevicesCommand(): Promise<string> {
     return await new Promise<string>((resolve, reject) => {
-      this._processExecutionService.execute(command, (error, stdout, stderr) => {
-        // FFMPEG writes to stderr
-        resolve(stderr);
-      });
+      const command = Ffmpeg()
+      .input("''")
     });
   }
 

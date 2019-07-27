@@ -17,18 +17,18 @@ export class LinuxDeviceDetector extends DeviceDetector {
 
   constructor(
     @inject("Logger") logger: Logger,
-    @inject("ProcessExecutionService") processExecutionService: ProcessExecutionService,
+    @inject("ProcessExecutionService") private _processExecutionService: ProcessExecutionService,
     @inject("DeviceFactory") deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
-    super(logger, processExecutionService, deviceFactory);
+    super(logger, deviceFactory);
   }
 
   public async detectDevices(): Promise<void> {
-    return this.runDetection(this.listDevicesCommand);
+    return this.runDetection();
   }
 
-  protected async executeListDevicesCommand(command: string): Promise<string> {
+  protected async executeListDevicesCommand(): Promise<string> {
     return await new Promise<string>((resolve, reject) => {
-      this._processExecutionService.execute(command, (error, stdout, stderr) => {
+      this._processExecutionService.execute(this.listDevicesCommand, (error, stdout, stderr) => {
         resolve(stdout);
       });
     });

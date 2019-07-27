@@ -1,11 +1,10 @@
 # Development Quick Start Guide
 
 ## 1. Install required software
-[Ffmpeg](https://www.ffmpeg.org/) is the tool for converting audio signals. [Node.js](https://nodejs.org/en/) is the Javascript runtime environmen with its package manager npm. [Git](https://git-scm.com/download/win) is used as source control management system.
+[Node.js](https://nodejs.org/en/) is the Javascript runtime environmen with its package manager npm. [Git](https://git-scm.com/download/win) is used as source control management system.
 
 Download and install the tools if you are on Windows or run the following commands if you are on Linux/Ubuntu/Debian. Make sure to add them to the path variables on Windows.
 ```
-apt install ffmpeg
 apt install nodejs npm
 apt install git-core
 ```
@@ -64,6 +63,7 @@ Next to Angular and Nx, other 3rd party libraries (among few smaller ones) are:
 * [Socket.io](https://socket.io/) for websocket connections
 * [Winston](https://www.npmjs.com/package/winston) for logging
 * [3LAS](https://github.com/JoJoBond/3LAS) for client side mp3 decoding
+* [Ffmpeg](https://www.ffmpeg.org/) is the tool for converting audio signals. 
 * [Jest](https://jestjs.io/) for testing
 
 ### Tooling

@@ -22,12 +22,8 @@ export class StreamingSource implements IStreamingSource {
     @inject("FfmpegLogger") private _ffmpegLogger: Logger,
     @inject("WebsocketService") private _websocketServer: WebsocketServer,
     @inject("AudioSystem") private _audioSystem: AudioSystem,
-    @inject("FfmpegPath") ffmpegPath: string,
     private _device: Device,
     private _streamId: string) {
-    if (ffmpegPath) {
-      Ffmpeg.setFfmpegPath(ffmpegPath);
-    }
     this.initializeFfmpegCommand();
   }
 
