@@ -21,14 +21,6 @@ export class SimulationDeviceDetector extends DeviceDetector {
     super(logger, processExecutionService, deviceFactory);
   }
 
-  public async detectDevices(): Promise<void> {
-    return Promise.resolve();
-  }
-
-  protected async executeListDevicesCommand(command: string): Promise<string> {
-    return Promise.resolve("Fake returned data");
-  }
-
   protected parseResponse(response: string): Device[] {
     return null;
   }

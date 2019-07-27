@@ -17,26 +17,38 @@ export abstract class DeviceDetector {
     return this.devices;
   }
 
+  protected listDevicesCommand: string;
+
   constructor(
     protected logger: Logger,
+    protected processExecutionService: ProcessExecutionService,
     private _deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
   }
 
-  public abstract async detectDevices(): Promise<void>;
+  public async runDetection(): Promise<void> {
+    await this.executeListDevicesCommand()
+      .then((response) => {
+        this.logger.debug("Detecting audio inputs.");
 
-  protected async runDetection(): Promise<void> {
-    await this.executeListDevicesCommand().then((response) => {
-      this.logger.debug("Detecting audio inputs.");
+        this.devices = this.parseResponse(response);
 
-      this.devices = this.parseResponse(response);
-
-      if (this.devices.length === 0) {
-        this.logger.warn("No devices detected. Please check your sound cards.");
-      }
-    });
+        if (this.devices.length === 0) {
+          this.logger.warn("No devices detected. Please check your sound cards.");
+        }
+      });
   }
 
-  protected abstract executeListDevicesCommand(): Promise<string>;
+  private async executeListDevicesCommand(): Promise<string> {
+    return await new Promise<string>((resolve, reject) => {
+      this.processExecutionService.execute(this.listDevicesCommand, (error, stdout, stderr) => {
+        if (stdout) {
+          resolve(stdout);
+        } else {
+          resolve(stderr);
+        }
+      });
+    });
+  }
 
   protected abstract parseResponse(output: string): Device[];
 

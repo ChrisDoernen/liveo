@@ -6,26 +6,20 @@ import { DeviceData } from "./device-data";
 import { DeviceState } from "./device-state";
 import { EOL } from "os";
 import { DeviceType } from "./device-type";
-import * as Ffmpeg from "fluent-ffmpeg"
+import { AudioSystem } from '../audio-system/audio-system';
+import { ProcessExecutionService } from '../process-execution/process-execution-service';
 
 @injectable()
 export class WindowsDeviceDetector extends DeviceDetector {
 
   constructor(
     @inject("Logger") logger: Logger,
+    @inject("AudioSystem") audioSystem: AudioSystem,
+    @inject("FfmpegPath") ffmpegPath: string,
+    @inject("ProcessExecutionService") processExecutionService: ProcessExecutionService,
     @inject("DeviceFactory") deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
-    super(logger, deviceFactory);
-  }
-
-  public async detectDevices(): Promise<void> {
-    return this.runDetection();
-  }
-
-  protected async executeListDevicesCommand(): Promise<string> {
-    return await new Promise<string>((resolve, reject) => {
-      const command = Ffmpeg()
-      .input("''")
-    });
+    super(logger, processExecutionService, deviceFactory);
+    this.listDevicesCommand = `${ffmpegPath} -f ${audioSystem.audioSystem} -list_devices true -i '' -hide_banner`;
   }
 
   protected parseResponse(response: string): Device[] {

@@ -5,46 +5,46 @@ import { ProcessExecutionService } from "../process-execution/process-execution-
 import { DeviceData } from "../devices/device-data";
 import { Device } from "../devices/device";
 import { DeviceState } from "../devices/device-state";
-import { FfmpegDeviceDetector } from './windows-device-detector';
+import { WindowsDeviceDetector } from './windows-device-detector';
+import { AudioSystem } from '../audio-system/audio-system';
 
 describe("WindowsDeviceDetector", () => {
-  let windowsDeviceDetector: FfmpegDeviceDetector;
+  let windowsDeviceDetector: WindowsDeviceDetector;
   let processExecutionService: jest.Mocked<ProcessExecutionService>;
+  let audioSystem: AudioSystem = { audioSystem: "dshow", devicePrefix: "audio=" };
   let deviceFactory: any;
+  const ffmpegPath = "ffmpeg";
 
   beforeEach(() => {
     const logger = createMockInstance(Logger);
     processExecutionService = createMockInstance(ProcessExecutionService);
-    deviceFactory = jest.fn(
-      (deviceData: DeviceData, deviceState: DeviceState) => new Device(logger, deviceData, deviceState)
-    );
+    deviceFactory = jest.fn((deviceData: DeviceData, deviceState: DeviceState) => new Device(logger, deviceData, deviceState));
 
-    windowsDeviceDetector = new FfmpegDeviceDetector(logger, processExecutionService, deviceFactory);
+    windowsDeviceDetector = new WindowsDeviceDetector(logger, audioSystem, ffmpegPath, processExecutionService, deviceFactory);
   });
 
   it("should construct", async () => {
     expect(windowsDeviceDetector).toBeDefined();
   });
 
-  it("should parse devices correctly", (done) => {
+  it("should parse devices correctly", async () => {
     jest.spyOn(processExecutionService, "execute")
       .mockImplementation((command: string, callback: any) => callback(null, null, output));
+    const expectedCommand = `${ffmpegPath} -f  ${audioSystem.audioSystem} -list_devices true -i '' -hide_banner`;
 
-    const promise = windowsDeviceDetector.detectDevices();
+    await windowsDeviceDetector.runDetection();
 
-    promise.then(() => {
-      const devices = windowsDeviceDetector.devices;
-      expect(devices.length).toBe(3);
-      expect(devices[0].data.id).toBe("USB Boot");
-      expect(devices[1].data.id).toBe("Mikrofon (USB Audio Device)");
-      expect(devices[2].data.id).toBe("Mikrofonarray (Realtek High Definition Audio)");
-      done();
-    }).catch(fail);
+    const devices = windowsDeviceDetector.devices;
+    expect(devices.length).toBe(3);
+    expect(devices[0].data.id).toBe("USB Boot");
+    expect(devices[1].data.id).toBe("Mikrofon (USB Audio Device)");
+    expect(devices[2].data.id).toBe("Mikrofonarray (Realtek High Definition Audio)");
+    expect(processExecutionService.execute).toHaveBeenCalledWith(expectedCommand);
   });
 });
 
-const output = 
-`[dshow @ 000001d80f589d80] DirectShow video devices (some may be both video and audio devices)
+const output =
+  `[dshow @ 000001d80f589d80] DirectShow video devices (some may be both video and audio devices)
 [dshow @ 000001d80f589d80]  "USB Boot"
 [dshow @ 000001d80f589d80]     Alternative name "@device_pnp_\\?\\usb#vid_0bda&pid_5846&mi_00#6&18d0fbe5&0&0000#{65e8773d-8f56-11d0-a3b9-00a0c9223196}\\global"
 [dshow @ 000001d80f589d80] DirectShow audio devices

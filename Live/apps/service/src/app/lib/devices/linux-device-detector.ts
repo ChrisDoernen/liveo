@@ -13,25 +13,13 @@ import { DeviceType } from "./device-type";
  */
 @injectable()
 export class LinuxDeviceDetector extends DeviceDetector {
-  private listDevicesCommand = "arecord -L";
 
   constructor(
     @inject("Logger") logger: Logger,
-    @inject("ProcessExecutionService") private _processExecutionService: ProcessExecutionService,
+    @inject("ProcessExecutionService") processExecutionService: ProcessExecutionService,
     @inject("DeviceFactory") deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
-    super(logger, deviceFactory);
-  }
-
-  public async detectDevices(): Promise<void> {
-    return this.runDetection();
-  }
-
-  protected async executeListDevicesCommand(): Promise<string> {
-    return await new Promise<string>((resolve, reject) => {
-      this._processExecutionService.execute(this.listDevicesCommand, (error, stdout, stderr) => {
-        resolve(stdout);
-      });
-    });
+    super(logger, processExecutionService, deviceFactory);
+    this.listDevicesCommand = "arecord -L";
   }
 
   protected parseResponse(response: string): Device[] {

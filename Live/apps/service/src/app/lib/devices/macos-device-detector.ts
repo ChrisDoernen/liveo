@@ -7,31 +7,22 @@ import { DeviceData } from "./device-data";
 import { DeviceState } from "./device-state";
 import { EOL } from "os";
 import { DeviceType } from "./device-type";
+import { AudioSystem } from '../audio-system/audio-system';
 
 /**
  * Implementation of device detection on mac os
  */
 @injectable()
 export class MacOSDeviceDetector extends DeviceDetector {
-  private listDevicesCommand = "ffmpeg -f avfoundation -list_devices true -i ''";
 
   constructor(
     @inject("Logger") logger: Logger,
+    @inject("AudioSystem") audioSystem: AudioSystem,
+    @inject("FfmpegPath") ffmpegPath: string,
     @inject("ProcessExecutionService") processExecutionService: ProcessExecutionService,
     @inject("DeviceFactory") deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
     super(logger, processExecutionService, deviceFactory);
-  }
-
-  public async detectDevices(): Promise<void> {
-    return this.runDetection(this.listDevicesCommand);
-  }
-
-  protected async executeListDevicesCommand(command: string): Promise<string> {
-    return await new Promise<string>((resolve, reject) => {
-      this._processExecutionService.execute(command, (error, stdout, stderr) => {
-        resolve(stderr);
-      });
-    });
+    this.listDevicesCommand = `${ffmpegPath} -f ${audioSystem.audioSystem} -list_devices true -i '' -hide_banner`;
   }
 
   protected parseResponse(response: string): Device[] {

@@ -27,7 +27,7 @@ import { ServiceLogger, FfmpegLogger } from "./logging.config";
 import { StreamingSimulationSourceFactory } from "../lib/streaming-sources/streaming-simulation-source-factory";
 import { IStreamingSource } from "../lib/streaming-sources/i-streaming-source";
 import { ActivityService } from "../lib/activity/activity.service";
-import { FfmpegDeviceDetector } from "../lib/devices/windows-device-detector";
+import { WindowsDeviceDetector } from "../lib/devices/windows-device-detector";
 import { WindowsShutdownService } from "../lib/shutdown/windows-shutdown-service";
 import { TimeService } from "../lib/time/time.service";
 import { ConnectionHistoryService } from "../lib/statistics/connection-history-service";
@@ -56,7 +56,7 @@ switch (config.os) {
   }
   case "win32": {
     container.bind<ShutdownService>("ShutdownService").to(WindowsShutdownService).inSingletonScope();
-    container.bind<DeviceDetector>("DeviceDetector").to(FfmpegDeviceDetector).inSingletonScope();
+    container.bind<DeviceDetector>("DeviceDetector").to(WindowsDeviceDetector).inSingletonScope();
     container.bind<AudioSystem>("AudioSystem").toConstantValue(AudioSystems.win32);
     break;
   }
@@ -85,6 +85,7 @@ container.bind<interfaces.Factory<Session>>("SessionFactory").toFactory(SessionF
 
 const dataService = new DataService(new Logger(ServiceLogger));
 container.bind<DataService>("DataService").toConstantValue(dataService);
+container.bind<string>("FfmpegPath").toConstantValue(config.ffmpegPath);
 container.bind<ISessionRepository>("ISessionRepository").toConstantValue(dataService);
 container.bind<IStreamRepository>("IStreamRepository").toConstantValue(dataService);
 container.bind<Bootstrapper>("Bootstrapper").to(Bootstrapper);
