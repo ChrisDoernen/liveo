@@ -7,7 +7,7 @@ import { DeviceData } from "./device-data";
 import { DeviceState } from "./device-state";
 import { EOL } from "os";
 import { DeviceType } from "./device-type";
-import { AudioSystem } from '../audio-system/audio-system';
+import { AudioSystem } from "../audio-system/audio-system";
 
 /**
  * Implementation of device detection on mac os

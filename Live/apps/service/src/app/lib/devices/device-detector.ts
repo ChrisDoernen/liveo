@@ -11,13 +11,14 @@ import { DeviceType } from "./device-type";
  */
 @injectable()
 export abstract class DeviceDetector {
+
+  protected listDevicesCommand: string;
+
   public devices: Device[];
 
   public getDevices(): Device[] {
     return this.devices;
   }
-
-  protected listDevicesCommand: string;
 
   constructor(
     protected logger: Logger,
