@@ -44,13 +44,13 @@ export const container = new Container();
 switch (config.os) {
   case "linux": {
     container.bind<ShutdownService>("ShutdownService").to(UnixShutdownService).inSingletonScope();
-    container.bind<DeviceDetector>("DeviceDetector").to(MacOSDeviceDetector).inSingletonScope();
+    container.bind<DeviceDetector>("DeviceDetector").to(LinuxDeviceDetector).inSingletonScope();
     container.bind<AudioSystem>("AudioSystem").toConstantValue(AudioSystems.darwin);
     break;
   }
   case "darwin": {
     container.bind<ShutdownService>("ShutdownService").to(UnixShutdownService).inSingletonScope();
-    container.bind<DeviceDetector>("DeviceDetector").to(LinuxDeviceDetector).inSingletonScope();
+    container.bind<DeviceDetector>("DeviceDetector").to(MacOSDeviceDetector).inSingletonScope();
     container.bind<AudioSystem>("AudioSystem").toConstantValue(AudioSystems.linux);
     break;
   }
