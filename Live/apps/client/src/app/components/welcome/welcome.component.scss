@@ -1,15 +1,20 @@
-.welcome {
+:host {
   background-color: var(--primary-color);
   color: var(--inverse-text-color);
   height: 100vh;
   display: flex;
   flex-direction: column;
-}
 
-.welcome-content {
-  width: 300px;
-  margin: auto;
-  text-align: center;
+  .welcome {
+    width: 300px;
+    margin: auto;
+    text-align: center;
+  }
+
+  .welcome-logo {
+    width: 130px;
+    margin: 0 auto;
+  }
 }
 
 ::ng-deep .welcome-logo .live-logo {

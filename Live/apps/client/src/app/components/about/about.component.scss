@@ -24,10 +24,11 @@
   opacity: 1;
 }
 
-.close:before, .close:after {
+.close:before,
+.close:after {
   position: absolute;
   left: 15px;
-  content: ' ';
+  content: " ";
   height: 27px;
   width: 2px;
   background-color: black;
@@ -42,9 +43,10 @@
 }
 
 .about {
-  margin-top: 80px;
   padding: 0 var(--container-spacing);
   text-align: center;
+  margin: 80px auto;
+  max-width: 300px;
 }
 
 .about h1 {
