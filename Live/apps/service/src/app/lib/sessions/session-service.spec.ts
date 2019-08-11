@@ -5,10 +5,10 @@ import { Logger } from "../logging/logger";
 import { SessionService } from "../sessions/session-service";
 import { StreamService } from "../streams/stream-service";
 import { Stream } from "../streams/stream";
-import { SessionEntity } from "@live/entities";
 import { Container, interfaces } from "inversify";
 import { Session } from "./session";
 import { SessionFactory } from "./session-factory";
+import { SessionEntityBuilder } from "@live/test-utilities";
 
 describe("SessionService", () => {
   let sessionService: SessionService;
@@ -16,9 +16,15 @@ describe("SessionService", () => {
   let sessionRepository: jest.Mocked<DataService>;
   let streamService: jest.Mocked<StreamService>;
 
+  const firstSessionId = "bcf4";
+  const secondSessionId = "43kv";
+
+  const firstStreamId = "vfg3";
+  const secondStreamId = "2gus";
+
   const sessions = [
-    new SessionEntity("bcf4", "Service", "", ["vfg3"]),
-    new SessionEntity("43kv", "Service2", "", ["2gus"])
+    new SessionEntityBuilder().withId(firstSessionId).withStreams([firstStreamId]).build(),
+    new SessionEntityBuilder().withId(secondSessionId).withStreams([secondStreamId]).build()
   ];
 
   beforeEach(() => {
