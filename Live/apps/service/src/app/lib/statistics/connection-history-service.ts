@@ -10,6 +10,7 @@ export class ConnectionHistoryService {
 
   private _connectionHistory: ConnectionInfo[] = [];
   private _connectionCounter = 0;
+  private _listeningCounter = 0;
 
   constructor(
     @inject("Logger") private _logger: Logger,
@@ -17,10 +18,10 @@ export class ConnectionHistoryService {
   }
 
   public clientSubscribed(clientInfo: ClientInfo): void {
-    this._connectionCounter++;
+    this._listeningCounter++;
 
     this._logger.debug(`Client ${clientInfo.ipAddress} subscribed to stream ${clientInfo.streamId}.`);
-    this._logger.debug(`Number of clients connected: ${this._connectionCounter}.`);
+    this._logger.debug(`Number of clients listening: ${this._listeningCounter}.`);
 
     const connectionInfo = {
       clientInfo: clientInfo,
@@ -33,10 +34,10 @@ export class ConnectionHistoryService {
   }
 
   public clientUnsubscribed(clientInfo: ClientInfo): void {
-    this._connectionCounter--;
+    this._listeningCounter--;
 
-    this._logger.debug(`Client ${clientInfo.ipAddress} disconnected.`);
-    this._logger.debug(`Number of clients connected: ${this._connectionCounter}.`);
+    this._logger.debug(`Client ${clientInfo.ipAddress} unsubscribed.`);
+    this._logger.debug(`Number of clients listening: ${this._listeningCounter}.`);
 
     const connectionInfo = {
       clientInfo: clientInfo,
@@ -46,5 +47,13 @@ export class ConnectionHistoryService {
     }
 
     this._connectionHistory.push(connectionInfo);
+  }
+
+  public clientConnected(clientInfo: ClientInfo): void {
+    this._connectionCounter++;
+  }
+
+  public clientDisconnected(clientInfo: ClientInfo): void {
+    this._connectionCounter--;
   }
 }

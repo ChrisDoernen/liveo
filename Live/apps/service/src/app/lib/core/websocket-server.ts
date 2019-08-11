@@ -28,9 +28,7 @@ export class WebsocketServer {
 
   private onConnection(socket: Socket): void {
     this.onConnect(socket);
-  }
 
-  private onConnect(socket: Socket): void {
     socket.on(EVENTS.subscribe, streamId => {
       this.onSubscribeToStream(socket, streamId);
     });
@@ -48,6 +46,7 @@ export class WebsocketServer {
     });
 
     socket.on("disconnect", () => {
+      this.onDisconnect(socket);
     });
   }
 
@@ -81,6 +80,16 @@ export class WebsocketServer {
     this._logger.debug("Admin unsubscribed.");
   }
 
+  private onConnect(socket: Socket): void {
+    const clientInfo = this.getClientInfo(socket);
+    this._connectionHistoryService.clientConnected(clientInfo);
+  }
+
+  private onDisconnect(socket: Socket): void {
+    const clientInfo = this.getClientInfo(socket);
+    this._connectionHistoryService.clientDisconnected(clientInfo);
+  }
+
   public addStream(id: string): void {
     this._streams.push(id);
   }
@@ -96,7 +105,7 @@ export class WebsocketServer {
     this._websocketServer.to(streamId).emit(streamId, data);
   }
 
-  public emitEventMessage(streamId: string, event: string, message: string): void {
+  public emitStreamEventMessage(streamId: string, event: string, message: string): void {
     this._websocketServer.to(streamId).emit(event, message);
   }
 
@@ -105,11 +114,11 @@ export class WebsocketServer {
   }
 
   private getClientInfo(socket: Socket, streamId?: string): ClientInfo {
-    const ip = socket.request.connection.remoteAddress;
+    const clientIpAddress = socket.handshake.address;
     const userAgent = socket.request.headers["user-agent"];
 
     return {
-      ipAddress: ip,
+      ipAddress: clientIpAddress,
       userAgent: userAgent,
       streamId: streamId
     }

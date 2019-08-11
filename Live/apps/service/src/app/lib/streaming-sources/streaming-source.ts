@@ -74,7 +74,7 @@ export class StreamingSource implements IStreamingSource {
     this._logger.debug(`Killing child process for device ${this._device.id}.`);
     this._command.kill("SIGKILL");
     this._websocketServer.removeStream(this._streamId);
-    this._websocketServer.emitEventMessage(this._streamId, EVENTS.streamEnded, "The stream ended.");
+    this._websocketServer.emitStreamEventMessage(this._streamId, EVENTS.streamEnded, "The stream ended.");
     this.isStreaming = false;
   }
 }
