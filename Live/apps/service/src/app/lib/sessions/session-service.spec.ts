@@ -5,15 +5,16 @@ import { Logger } from "../logging/logger";
 import { SessionService } from "../sessions/session-service";
 import { StreamService } from "../streams/stream-service";
 import { Stream } from "../streams/stream";
-import { Session } from "../sessions/session";
 import { SessionEntity } from "@live/entities";
+import { Container, interfaces } from "inversify";
+import { Session } from "./session";
+import { SessionFactory } from "./session-factory";
 
 describe("SessionService", () => {
-  let sessionService;
-  let logger;
-  let sessionRepository;
-  let streamService;
-  let sessionFactory;
+  let sessionService: SessionService;
+  let logger: jest.Mocked<Logger>;
+  let sessionRepository: jest.Mocked<DataService>;
+  let streamService: jest.Mocked<StreamService>;
 
   const sessions = [
     new SessionEntity("bcf4", "Service", "", ["vfg3"]),
@@ -21,16 +22,20 @@ describe("SessionService", () => {
   ];
 
   beforeEach(() => {
+    const container = new Container();
+
     logger = createMockInstance(Logger);
     sessionRepository = createMockInstance(DataService);
     sessionRepository.loadSessionEntities.mockReturnValue(sessions);
     streamService = createMockInstance(StreamService);
-    sessionFactory = jest.fn();
-    sessionFactory
-      .mockReturnValueOnce(new Session(logger, sessions[0], []))
-      .mockReturnValueOnce(new Session(logger, sessions[1], []));
 
-    sessionService = new SessionService(logger, sessionRepository, streamService, sessionFactory);
+    container.bind<Logger>("Logger").toConstantValue(logger);
+    container.bind<DataService>("ISessionRepository").toConstantValue(sessionRepository);
+    container.bind<StreamService>("StreamService").toConstantValue(streamService);
+    container.bind<interfaces.Factory<Session>>("SessionFactory").toFactory(SessionFactory);
+    container.bind<SessionService>("SessionService").to(SessionService).inSingletonScope();
+
+    sessionService = container.get<SessionService>("SessionService");
   });
 
   it("should construct", async () => {
