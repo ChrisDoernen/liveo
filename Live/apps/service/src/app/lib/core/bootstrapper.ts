@@ -36,9 +36,7 @@ export class Bootstrapper {
     this._logger.debug(`Database: ${config.database}.`);
     this._logger.debug(`Ffmpeg: ${config.ffmpegPath}.`);
 
-    if (config.ffmpegPath) {
-      Ffmpeg.setFfmpegPath(config.ffmpegPath);
-    }
+    Ffmpeg.setFfmpegPath(config.ffmpegPath);
 
     await this._dataService.initializeDatabase();
     await this._deviceDetector.runDetection();

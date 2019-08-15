@@ -21,6 +21,7 @@ import { ActivationDeletionDialogComponent } from "./components/activation-delet
 import { FooterComponent } from "./components/footer/footer.component"
 import { WebsocketService } from "./services/websocket/websocket.service";
 import { SocketIoModule } from "ngx-socket-io";
+import { InitializationService } from "./services/initialization/initialization.service";
 
 @NgModule({
   imports: [
@@ -55,8 +56,16 @@ import { SocketIoModule } from "ngx-socket-io";
     ActivationDeletionDialogComponent
   ],
   providers: [
-    WebsocketService
-    ],
+    WebsocketService,
+    {
+      provide: APP_BOOTSTRAP_LISTENER,
+      useFactory: (initializationService: InitializationService) => {
+        return () => initializationService.initialize();
+      },
+      deps: [InitializationService],
+      multi: true
+    },
+  ],
   bootstrap: [
     AppComponent
   ]

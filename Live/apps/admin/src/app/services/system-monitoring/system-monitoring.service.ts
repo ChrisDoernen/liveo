@@ -12,7 +12,6 @@ export class SystemMonitoringService {
   }
 
   public getCPUUsage(): Observable<string> {
-    
     return this._websocketService.fromEvent<string>(EVENTS.cpuUsage);
   }
 }

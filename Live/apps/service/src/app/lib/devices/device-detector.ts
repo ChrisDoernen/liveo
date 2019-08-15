@@ -27,16 +27,14 @@ export abstract class DeviceDetector {
   }
 
   public async runDetection(): Promise<void> {
-    await this.executeListDevicesCommand()
-      .then((response) => {
-        this.logger.debug("Detecting audio inputs.");
+    const response = await this.executeListDevicesCommand()
 
-        this.devices = this.parseResponse(response);
+    this.logger.debug("Detecting audio inputs.");
+    this.devices = this.parseResponse(response);
 
-        if (this.devices.length === 0) {
-          this.logger.warn("No devices detected. Please check your sound cards.");
-        }
-      });
+    if (this.devices.length === 0) {
+      this.logger.warn("No devices detected. Please check your sound cards.");
+    }
   }
 
   private async executeListDevicesCommand(): Promise<string> {

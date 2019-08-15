@@ -4,8 +4,8 @@ import { injectable, inject } from "inversify";
 import { Device } from "./device";
 import { DeviceData } from "./device-data";
 import { DeviceState } from "./device-state";
-import { ProcessExecutionService } from '../process-execution/process-execution-service';
-import { DeviceType } from './device-type';
+import { ProcessExecutionService } from "../process-execution/process-execution-service";
+import { DeviceType } from "./device-type";
 
 /**
  * Implementation of device detection that always returnes valid devices
@@ -19,10 +19,11 @@ export class SimulationDeviceDetector extends DeviceDetector {
     @inject("DeviceFactory") deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
     logger.warn("Instantiating simulation device detector.");
     super(logger, processExecutionService, deviceFactory);
+    this.listDevicesCommand = "echo simulation";
   }
 
   protected parseResponse(response: string): Device[] {
-    return null;
+    return [];
   }
 
   public getDevice(id: string): Device {
