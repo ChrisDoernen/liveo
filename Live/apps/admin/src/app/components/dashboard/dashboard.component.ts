@@ -1,33 +1,14 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
+import { ActivationService } from "../../services/activation/activation.service";
 
 @Component({
   selector: "dashboard",
   templateUrl: "./dashboard.component.html",
   styleUrls: ["./dashboard.component.scss"]
 })
-export class DashboardComponent implements OnInit {
-  public breakpoint: number;
-  public activationTileColspan: number;
-  private _windowWidthBreakpoint = 400;
+export class DashboardComponent {
 
-  constructor() {
-  }
-
-  public ngOnInit() {
-    this.calculateGridSizes(window.innerWidth);
-  }
-
-  public onResize(event) {
-    this.calculateGridSizes(event.target.innerWidth);
-  }
-
-  private calculateGridSizes(windowWidth: number): void {
-    if (windowWidth <= this._windowWidthBreakpoint) {
-      this.breakpoint = 1;
-      this.activationTileColspan = 1;
-    } else {
-      this.breakpoint = 4;
-      this.activationTileColspan = 2;
-    }
+  constructor(
+    public activationService: ActivationService) {
   }
 }

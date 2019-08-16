@@ -14,7 +14,6 @@ import { SessionsComponent } from "./components/sessions/sessions.component";
 import { ActivationDialogComponent } from "./components/activation-dialog/activation-dialog.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatNativeDateModule } from "@angular/material";
-import { ActivationTileComponent } from "./components/activation-tile/activation-tile.component";
 import { LogoComponent } from "./components/logo/logo.component";
 import { InlineSVGModule } from "ng-inline-svg";
 import { ActivationDeletionDialogComponent } from "./components/activation-deletion-dialog/activation-deletion-dialog.component";
@@ -23,6 +22,8 @@ import { WebsocketService } from "./services/websocket/websocket.service";
 import { SocketIoModule } from "ngx-socket-io";
 import { InitializationService } from "./services/initialization/initialization.service";
 import { NotficationsComponent } from "./components/notfications/notfications.component";
+import { DashboardActivationComponent } from "./components/dashboard-activation/dashboard-activation.component";
+import { DashboardNoActivationComponent } from "./components/dashboard-no-activation/dashboard-no-activation.component";
 
 @NgModule({
   imports: [
@@ -47,10 +48,11 @@ import { NotficationsComponent } from "./components/notfications/notfications.co
     StreamsComponent,
     SessionsComponent,
     ActivationDialogComponent,
-    ActivationTileComponent,
     ActivationDeletionDialogComponent,
     FooterComponent,
-    NotficationsComponent
+    NotficationsComponent,
+    DashboardActivationComponent,
+    DashboardNoActivationComponent
   ],
   entryComponents: [
     ShutdownDialogComponent,

@@ -1,26 +1,33 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { DashboardComponent } from "./dashboard.component";
-import { ActivationTileComponent } from "../activation-tile/activation-tile.component";
-import { MatDialog, MatDialogModule, MatCardModule, MatGridListModule } from "@angular/material";
-import { HttpClientModule } from "@angular/common/http";
+import { ActivationService } from "../../services/activation/activation.service";
+import createMockInstance from "jest-create-mock-instance";
+import { DashboardActivationComponent } from "../dashboard-activation/dashboard-activation.component";
+import { DashboardNoActivationComponent } from "../dashboard-no-activation/dashboard-no-activation.component";
+import { AngularMaterialModule } from "../../angular-material.module";
 
 describe("DashboardComponent", () => {
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        HttpClientModule,
-        MatDialogModule,
-        MatCardModule,
-        MatGridListModule
-      ],
-      declarations: [DashboardComponent, ActivationTileComponent]
-    }).compileComponents();
-  }));
+  let activationService: jest.Mocked<ActivationService>;
 
   beforeEach(() => {
+    activationService = createMockInstance(ActivationService);
+
+    TestBed.configureTestingModule({
+      imports: [
+        AngularMaterialModule
+      ],
+      declarations: [
+        DashboardComponent,
+        DashboardActivationComponent,
+        DashboardNoActivationComponent
+      ],
+      providers: [
+        { provide: ActivationService, useValue: activationService }
+      ]
+    }).compileComponents();
+
     fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

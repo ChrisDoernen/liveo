@@ -1,8 +1,3 @@
 <h2>Dashboard</h2>
-<mat-grid-list [cols]="breakpoint" rowHeight="200px" (window:resize)="onResize($event)">
-  <mat-grid-tile [colspan]="activationTileColspan" [rowspan]="1">
-    <activation-tile></activation-tile>
-  </mat-grid-tile>
-  <!-- <mat-grid-tile [colspan]="1" [rowspan]="1">2</mat-grid-tile>
-  <mat-grid-tile [colspan]="1" [rowspan]="1">3</mat-grid-tile> -->
-</mat-grid-list>
+<dashboard-activation *ngIf="activationService.activation$ | async"></dashboard-activation>
+<dashboard-no-activation *ngIf="!(activationService.activation$ | async)"></dashboard-no-activation>
