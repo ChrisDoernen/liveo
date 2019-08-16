@@ -9,12 +9,14 @@ import { Container, interfaces } from "inversify";
 import { Session } from "./session";
 import { SessionFactory } from "./session-factory";
 import { SessionEntityBuilder } from "@live/test-utilities";
+import { NotificationService } from "../notifications/notification-service";
 
 describe("SessionService", () => {
   let sessionService: SessionService;
   let logger: jest.Mocked<Logger>;
   let sessionRepository: jest.Mocked<DataService>;
   let streamService: jest.Mocked<StreamService>;
+  let notificationService: jest.Mocked<NotificationService>;
 
   const firstSessionId = "bcf4";
   const secondSessionId = "43kv";
@@ -34,12 +36,14 @@ describe("SessionService", () => {
     sessionRepository = createMockInstance(DataService);
     sessionRepository.loadSessionEntities.mockReturnValue(sessions);
     streamService = createMockInstance(StreamService);
+    notificationService = createMockInstance(NotificationService);
 
     container.bind<Logger>("Logger").toConstantValue(logger);
     container.bind<DataService>("ISessionRepository").toConstantValue(sessionRepository);
     container.bind<StreamService>("StreamService").toConstantValue(streamService);
     container.bind<interfaces.Factory<Session>>("SessionFactory").toFactory(SessionFactory);
     container.bind<SessionService>("SessionService").to(SessionService).inSingletonScope();
+    container.bind<NotificationService>("NotificationService").to(NotificationService);
 
     sessionService = container.get<SessionService>("SessionService");
   });

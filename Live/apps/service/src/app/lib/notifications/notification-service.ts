@@ -1,11 +1,12 @@
-import { injectable } from "inversify";
+import { injectable, inject } from "inversify";
 import { WebsocketServer } from "../core/websocket-server";
 import { NotificationEntity } from "@live/entities";
 import { EVENTS } from "@live/constants";
 
 @injectable()
 export class NotificationService {
-  constructor(private _websocketServer: WebsocketServer) {
+  constructor(
+    @inject("WebsocketServer") private _websocketServer: WebsocketServer) {
   }
 
   public sendNotification(notification: NotificationEntity): void {

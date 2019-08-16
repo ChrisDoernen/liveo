@@ -22,6 +22,7 @@ import { FooterComponent } from "./components/footer/footer.component"
 import { WebsocketService } from "./services/websocket/websocket.service";
 import { SocketIoModule } from "ngx-socket-io";
 import { InitializationService } from "./services/initialization/initialization.service";
+import { NotficationsComponent } from "./components/notfications/notfications.component";
 
 @NgModule({
   imports: [
@@ -48,7 +49,8 @@ import { InitializationService } from "./services/initialization/initialization.
     ActivationDialogComponent,
     ActivationTileComponent,
     ActivationDeletionDialogComponent,
-    FooterComponent
+    FooterComponent,
+    NotficationsComponent
   ],
   entryComponents: [
     ShutdownDialogComponent,

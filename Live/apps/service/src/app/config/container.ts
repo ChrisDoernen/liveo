@@ -38,6 +38,7 @@ import { IStreamRepository } from "../lib/streams/i-stream-repository";
 import { AudioSystem } from "../lib/audio-system/audio-system";
 import { AudioSystems } from "../lib/audio-system/audio-systems";
 import { FileStreamingSourceFactory } from "../lib/streaming-sources/file-streaming-source-factory";
+import { NotificationService } from "../lib/notifications/notification-service";
 
 export const container = new Container();
 
@@ -92,6 +93,7 @@ container.bind<Bootstrapper>("Bootstrapper").to(Bootstrapper);
 container.bind<ActivityService>("ActivityService").to(ActivityService);
 container.bind<ProcessExecutionService>("ProcessExecutionService").to(ProcessExecutionService);
 container.bind<TimeService>("TimeService").to(TimeService);
+container.bind<NotificationService>("NotificationService").to(NotificationService);
 
 container.bind<Logger>("Logger").toConstantValue(new Logger(ServiceLogger));
 container.bind<Logger>("FfmpegLogger").toConstantValue(new Logger(FfmpegLogger));

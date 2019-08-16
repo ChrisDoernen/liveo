@@ -12,29 +12,30 @@ import * as FileSync from "lowdb/adapters/FileAsync";
  */
 @injectable()
 export class DataService implements IStreamRepository, ISessionRepository {
-  private _db: any;
+  private _database: any;
 
-  constructor(@inject("Logger") private _logger: Logger) {
+  constructor(
+    @inject("Logger") private _logger: Logger) {
   }
 
   public async initializeDatabase(): Promise<void> {
     const adapter = new FileSync(config.database);
     await low(adapter)
-      .then((db) => this._db = db)
+      .then((database) => this._database = database)
       .catch((error) => this._logger.error(`Error reading database: ${error}.`));
-    this._db.defaults({ "streams": {}, "sessions": {} });
+    this._database.defaults({ "streams": {}, "sessions": {} });
   }
 
   public loadSessionEntities(): SessionEntity[] {
-    const sessions = this._db.get("sessions").value() as SessionEntity[];
-    this._logger.info(`Read ${sessions.length} session entities from db.`);
+    const sessions = this._database.get("sessions").value() as SessionEntity[];
+    this._logger.info(`Read ${sessions.length} session entities from database.`);
 
     return sessions;
   }
 
   public loadStreamEntities(): StreamEntity[] {
-    const streams = this._db.get("streams").value() as StreamEntity[];
-    this._logger.info(`Read ${streams.length} session entities from db.`);
+    const streams = this._database.get("streams").value() as StreamEntity[];
+    this._logger.info(`Read ${streams.length} stream entities from database.`);
 
     return streams;
   }

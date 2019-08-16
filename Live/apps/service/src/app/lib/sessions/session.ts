@@ -1,7 +1,8 @@
 import { Logger } from "../logging/logger";
 import { Stream } from "../streams/stream";
 import { inject } from "inversify";
-import { SessionEntity } from "@live/entities";
+import { SessionEntity, NotificationEntity, NotificationType } from "@live/entities";
+import { NotificationService } from "../notifications/notification-service";
 
 /**
  * Class representing a streaming session
@@ -27,7 +28,9 @@ export class Session {
     return this._sessionEntity.id;
   }
 
-  constructor(@inject("Logger") private _logger: Logger,
+  constructor(
+    @inject("Logger") private _logger: Logger,
+    @inject("NotificationService") private _notificationService: NotificationService,
     private _sessionEntity: SessionEntity,
     private _streams: Stream[]) {
     this._logger.debug(`Loaded session ${JSON.stringify(_sessionEntity)}.`);
@@ -55,6 +58,8 @@ export class Session {
 
       this._logger.info(`Starting session ${this.id}.`);
       this._streams.forEach(stream => stream.start());
+      const notification = new NotificationEntity("Started streaming simulation", NotificationType.Info);
+      this._notificationService.sendNotification(notification);
       this._isStarted = true;
     } else {
       this._logger.warn(`Session ${this.id} is already started.`);
@@ -65,6 +70,8 @@ export class Session {
     if (this._isStarted) {
       this._logger.info(`Stopping session ${this.id}.`);
       this._streams.forEach(stream => stream.stop());
+      const notification = new NotificationEntity("Stopping streaming simulation", NotificationType.Info);
+      this._notificationService.sendNotification(notification);
       this._isStarted = false;
     }
   }

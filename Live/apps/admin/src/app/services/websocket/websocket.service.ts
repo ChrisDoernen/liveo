@@ -11,7 +11,7 @@ export class WebsocketService extends Socket implements OnDestroy {
   }
 
   public initializeConnection(): void {
-    this.on("connect", this.emit(EVENTS.subscribeAdmin));
+    this.on("connect", () => this.emit(EVENTS.subscribeAdmin));
     console.debug("Subscribe to admin.");
   }
 

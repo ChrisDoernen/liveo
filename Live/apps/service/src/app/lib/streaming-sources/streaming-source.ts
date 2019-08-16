@@ -20,7 +20,7 @@ export class StreamingSource implements IStreamingSource {
   constructor(
     @inject("Logger") private _logger: Logger,
     @inject("FfmpegLogger") private _ffmpegLogger: Logger,
-    @inject("WebsocketService") private _websocketServer: WebsocketServer,
+    @inject("WebsocketServer") private _websocketServer: WebsocketServer,
     @inject("AudioSystem") private _audioSystem: AudioSystem,
     private _device: Device,
     private _streamId: string) {

@@ -9,6 +9,7 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { LogoComponent } from "./components/logo/logo.component";
 import { InlineSVGDirective } from "ng-inline-svg";
 import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
+import { NotficationsComponent } from "./components/notfications/notfications.component";
 
 describe("AppComponent", () => {
   beforeEach(async(() => {
@@ -24,7 +25,8 @@ describe("AppComponent", () => {
         NavigationComponent,
         ShutdownComponent,
         LogoComponent,
-        InlineSVGDirective
+        InlineSVGDirective,
+        NotficationsComponent
       ],
       providers: [
         { provide: InlineSVGService, useValue: jest.fn() }

@@ -12,6 +12,7 @@ export const StreamingSourceFactory = (context: interfaces.Context) =>
     const websocketServer = context.container.get<WebsocketServer>("WebsocketServer");
     const deviceDetector = context.container.get<DeviceDetector>("DeviceDetector");
     const audioSystem = context.container.get<AudioSystem>("AudioSystem");
+
     const device = deviceDetector.getDevice(deviceId);
 
     return new StreamingSource(logger, ffmpegLogger, websocketServer, audioSystem, device, streamId);

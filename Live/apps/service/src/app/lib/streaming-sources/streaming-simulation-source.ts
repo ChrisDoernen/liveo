@@ -14,10 +14,9 @@ export class StreamingSimulationSource implements IStreamingSource {
 
   constructor(
     @inject("Logger") private _logger: Logger,
-    @inject("WebsocketService") private _websocketServer: WebsocketServer,
+    @inject("WebsocketServer") private _websocketServer: WebsocketServer,
     private _device: Device,
-    private _streamId: string
-  ) {
+    private _streamId: string) {
     this._logger.info("Instantiating StreamingSimulationSource");
   }
 
