@@ -43,7 +43,7 @@ describe("SessionService", () => {
     container.bind<StreamService>("StreamService").toConstantValue(streamService);
     container.bind<interfaces.Factory<Session>>("SessionFactory").toFactory(SessionFactory);
     container.bind<SessionService>("SessionService").to(SessionService).inSingletonScope();
-    container.bind<NotificationService>("NotificationService").to(NotificationService);
+    container.bind<NotificationService>("NotificationService").toConstantValue(notificationService);
 
     sessionService = container.get<SessionService>("SessionService");
   });
