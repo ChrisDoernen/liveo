@@ -5,4 +5,5 @@ export { SessionEntity } from "./lib/session.entity";
 export { StreamType } from "./lib/stream-type";
 export { StreamEntity } from "./lib/stream.entity";
 export { Shutdown } from "./lib/shutdown";
-
+export { NotificationEntity } from "./lib/notification.entity";
+export { NotificationType } from "./lib/notification-type";

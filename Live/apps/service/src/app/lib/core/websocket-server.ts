@@ -5,10 +5,11 @@ import { Socket } from "socket.io";
 import { ENDPOINTS, EVENTS } from "@live/constants";
 import { ConnectionHistoryService } from "../statistics/connection-history-service";
 import { ClientInfo } from "../statistics/client-info";
+import { NotificationEntity } from "@live/entities";
 
 @injectable()
 export class WebsocketServer {
-  private _websocketServer: any;
+  private _websocketServer: socketio.Server;
 
   /** The currently available streams that are represented as rooms in socket.io */
   private _streams: string[] = [];
@@ -109,7 +110,7 @@ export class WebsocketServer {
     this._websocketServer.to(streamId).emit(event, message);
   }
 
-  public emitAdminEventMessage(event: string, message: string): void {
+  public emitAdminEventMessage(event: string, message: string | NotificationEntity): void {
     this._websocketServer.to("admin").emit(event, message);
   }
 

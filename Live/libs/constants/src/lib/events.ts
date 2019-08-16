@@ -7,5 +7,6 @@ export const EVENTS = {
   unsubscribe: "unubscribe",
   subscribeAdmin: "subscribe_admin",
   unsubscribeAdmin: "unsubscribe_admin",
-  cpuUsage: "cpuUsage"
+  cpuUsage: "cpu_usage",
+  adminNotification: "admin_notification"
 }
