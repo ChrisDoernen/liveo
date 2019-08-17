@@ -5,6 +5,8 @@ import createMockInstance from "jest-create-mock-instance";
 import { DashboardActivationComponent } from "../dashboard-activation/dashboard-activation.component";
 import { DashboardNoActivationComponent } from "../dashboard-no-activation/dashboard-no-activation.component";
 import { AngularMaterialModule } from "../../angular-material.module";
+import { ActivatedSessionTileComponent } from "../activated-session-tile/activated-session-tile.component";
+import { ActivationStateTileComponent } from "../activation-state-tile/activation-state-tile.component";
 
 describe("DashboardComponent", () => {
   let component: DashboardComponent;
@@ -20,6 +22,8 @@ describe("DashboardComponent", () => {
       ],
       declarations: [
         DashboardComponent,
+        ActivatedSessionTileComponent,
+        ActivationStateTileComponent,
         DashboardActivationComponent,
         DashboardNoActivationComponent
       ],
