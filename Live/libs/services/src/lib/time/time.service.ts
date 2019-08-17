@@ -5,7 +5,7 @@ import { Injectable } from "@angular/core";
 })
 export class TimeService {
   public now(): number {
-    return Date.now() / 1000;
+    return Date.now();
   }
 
   public getTimestampFromTimeString(time: string): number {

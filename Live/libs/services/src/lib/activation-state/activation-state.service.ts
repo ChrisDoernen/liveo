@@ -1,6 +1,10 @@
 import { ActivationState, ActivationEntity } from "@live/entities";
 import { TimeService } from "../time/time.service";
+import { Injectable } from "@angular/core";
 
+@Injectable({
+  providedIn: "root"
+})
 export class ActivationStateService {
   constructor(
     private _timeService: TimeService) {

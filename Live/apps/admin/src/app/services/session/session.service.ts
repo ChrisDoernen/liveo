@@ -12,7 +12,7 @@ export class SessionService {
 
   private _activatedSession = new Subject<SessionEntity>();
 
-  public activatedSession = this._activatedSession.asObservable();
+  public activatedSession$ = this._activatedSession.asObservable();
 
   constructor(
     private _httpClient: HttpClient,
@@ -21,14 +21,12 @@ export class SessionService {
   }
 
   public subscribeToActivations(): void {
-    this._activationService.activation$
-      .subscribe((activation: ActivationEntity) => this.actualizeActivatedSession(activation));
+    this._activationService.activation$.subscribe((activation) => this.actualizeActivatedSession(activation));
   }
 
   private actualizeActivatedSession(activation: ActivationEntity): void {
     if (activation) {
-      this.getSession(activation.sessionId).toPromise()
-        .then((session) => this._activatedSession.next(session));
+      this.getSession(activation.sessionId).subscribe((session) => this._activatedSession.next(session));
     } else {
       this._activatedSession.next(null);
     }
