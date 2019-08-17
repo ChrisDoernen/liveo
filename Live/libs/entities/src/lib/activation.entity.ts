@@ -3,6 +3,6 @@ export class ActivationEntity {
     public sessionId: string,
     public startTime?: number,
     public endTime?: number,
-    public timeServerShutdown?: number) {
+    public shutdownTime?: number) {
   }
 }

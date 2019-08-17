@@ -17,7 +17,7 @@ export class NotificationService {
     private _websocketService: WebsocketService) {
   }
 
-  public getServerNotifications(): void {
+  public subscribeToServerNotifications(): void {
     console.log("Start getting notifications.");
     this._websocketService.fromEvent<NotificationEntity>(EVENTS.adminNotification)
       .subscribe((notification: NotificationEntity) => {

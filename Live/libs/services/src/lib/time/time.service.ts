@@ -4,8 +4,9 @@ import { Injectable } from "@angular/core";
   providedIn: "root"
 })
 export class TimeService {
-
-  constructor() { }
+  public now(): number {
+    return Date.now() / 1000;
+  }
 
   public getTimestampFromTimeString(time: string): number {
     if (!time) {

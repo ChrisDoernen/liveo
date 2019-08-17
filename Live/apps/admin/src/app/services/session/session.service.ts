@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { EndpointService } from "../../../../../../libs/services/src/lib/endpoint/endpoint.service";
 import { SessionEntity, ActivationEntity } from "@live/entities";
 import { Observable, Subject } from "rxjs";
 import { ActivationService } from "../activation/activation.service";
+import { EndpointService } from "@live/services";
 
 @Injectable({
   providedIn: "root"
@@ -18,6 +18,9 @@ export class SessionService {
     private _httpClient: HttpClient,
     private _endpointService: EndpointService,
     private _activationService: ActivationService) {
+  }
+
+  public subscribeToActivations(): void {
     this._activationService.activation$
       .subscribe((activation: ActivationEntity) => this.actualizeActivatedSession(activation));
   }

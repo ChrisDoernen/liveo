@@ -47,8 +47,8 @@ export class ActivationService {
       this._scheduler.schedule(this._sessionStopJobId, activation.endTime, () => session.stop());
     }
 
-    if (activation.timeServerShutdown) {
-      this._shutdownService.setShutdown(new Shutdown(activation.timeServerShutdown));
+    if (activation.shutdownTime) {
+      this._shutdownService.setShutdown(new Shutdown(activation.shutdownTime));
     }
 
     this._activation = activation;
@@ -70,7 +70,7 @@ export class ActivationService {
       throw new Error("Activation validation error: Time ending is lower than time starting.");
     }
 
-    if (activation.timeServerShutdown && activation.timeServerShutdown < activation.endTime) {
+    if (activation.shutdownTime && activation.shutdownTime < activation.endTime) {
       throw new Error("Activation validation error: Time server shutdown is lower than time ending.");
     }
   }
@@ -93,7 +93,7 @@ export class ActivationService {
       this._scheduler.cancelJob(this._sessionStopJobId);
     }
 
-    if (this._activation.timeServerShutdown) {
+    if (this._activation.shutdownTime) {
       this._shutdownService.cancelShutdown();
     }
 

@@ -52,19 +52,19 @@ describe("SessionService", () => {
     expect(sessionService).toBeDefined();
   });
 
-  it("should have loaded sessions when load session is called", async () => {
+  it("should have loaded sessions when load session is called", () => {
     sessionService.loadSessions();
     expect(sessionRepository.loadSessionEntities).toBeCalled();
     expect(sessionService.sessionEntities.length).toBe(2);
   });
 
-  it("should have called logger warn if no streams are available", async () => {
+  it("should have called logger warn if no streams are available", () => {
     sessionService.loadSessions();
     expect(sessionService.sessionEntities.length).toBe(2);
     expect(logger.warn).toHaveBeenCalled();
   });
 
-  it("should have loaded the streams of the sessions correctly when streams are available", async () => {
+  it("should have loaded the streams of the sessions correctly when streams are available", () => {
     const stream = createMockInstance(Stream);
     sessionService.loadSessions();
     const streams = [stream];
@@ -76,7 +76,7 @@ describe("SessionService", () => {
     expect(sessionService.sessionEntities.length).toBe(2);
   });
 
-  it("should return correct session on get session when session is available", async () => {
+  it("should return correct session on get session when session is available", () => {
     sessionService.loadSessions();
     expect(sessionService.sessionEntities.length).toBe(2);
     expect(logger.warn).toHaveBeenCalled();
@@ -84,7 +84,7 @@ describe("SessionService", () => {
     expect(sessionEntity).toBe(sessions[1]);
   });
 
-  it("should throw on get session when session is not available", async () => {
+  it("should throw on get session when session is not available", () => {
     sessionService.loadSessions();
     expect(sessionService.getSessionEntity.bind(null, "83kv")).toThrowError();
   });
