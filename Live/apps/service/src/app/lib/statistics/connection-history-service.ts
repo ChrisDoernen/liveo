@@ -23,9 +23,9 @@ export class ConnectionHistoryService {
     this._logger.debug(`Client ${clientInfo.ipAddress} subscribed to stream ${clientInfo.streamId}.`);
     this._logger.debug(`Number of clients listening: ${this._listeningCounter}.`);
 
-    const connectionInfo = {
+    const connectionInfo: ConnectionInfo = {
       clientInfo: clientInfo,
-      timestamp: this._timeService.now(),
+      timestamp: this._timeService.now().toISOString(),
       connectionInfoType: ConnectionInfoType.Connected,
       newConnectionCounterValue: this._connectionCounter
     }
@@ -39,9 +39,9 @@ export class ConnectionHistoryService {
     this._logger.debug(`Client ${clientInfo.ipAddress} unsubscribed.`);
     this._logger.debug(`Number of clients listening: ${this._listeningCounter}.`);
 
-    const connectionInfo = {
+    const connectionInfo: ConnectionInfo = {
       clientInfo: clientInfo,
-      timestamp: this._timeService.now(),
+      timestamp: this._timeService.now().toISOString(),
       connectionInfoType: ConnectionInfoType.Disconnected,
       newConnectionCounterValue: this._connectionCounter
     }

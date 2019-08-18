@@ -15,17 +15,17 @@ export class ActivationEntityBuilder {
     return this;
   }
 
-  public withStartTime(startTime: number): ActivationEntityBuilder {
+  public withStartTime(startTime: string): ActivationEntityBuilder {
     this._activation.startTime = startTime;
     return this;
   }
 
-  public withEndTime(endTime: number): ActivationEntityBuilder {
+  public withEndTime(endTime: string): ActivationEntityBuilder {
     this._activation.endTime = endTime;
     return this;
   }
 
-  public withShutdownTime(shutdownTime: number): ActivationEntityBuilder {
+  public withShutdownTime(shutdownTime: string): ActivationEntityBuilder {
     this._activation.shutdownTime = shutdownTime;
     return this;
   }

@@ -15,8 +15,8 @@ describe("ActivationStateService", () => {
   });
 
   it("should determine activation state correctly when session is scheduled", () => {
-    const activation = new ActivationEntityBuilder().withStartTime(5).build();
-    timeService.now.mockReturnValue(4);
+    const activation = new ActivationEntityBuilder().withStartTime("2019-08-18T12:30:13+02:00").build();
+    timeService.now.mockReturnValue(new Date("2019-08-18T12:27:13+02:00"));
 
     const activationState = activationStateService.determineActivationState(activation);
 
@@ -24,8 +24,8 @@ describe("ActivationStateService", () => {
   });
 
   it("should determine activation state correctly when session is started", () => {
-    const activation = new ActivationEntityBuilder().withStartTime(5).build();
-    timeService.now.mockReturnValue(6);
+    const activation = new ActivationEntityBuilder().withStartTime("2019-08-18T12:30:13+02:00").build();
+    timeService.now.mockReturnValue(new Date("2019-08-18T12:40:13+02:00"));
 
     const activationState = activationStateService.determineActivationState(activation);
 
@@ -33,8 +33,11 @@ describe("ActivationStateService", () => {
   });
 
   it("should determine activation state correctly when session is ended", () => {
-    const activation = new ActivationEntityBuilder().withStartTime(4).withEndTime(5).build();
-    timeService.now.mockReturnValue(6);
+    const activation = new ActivationEntityBuilder()
+      .withStartTime("2019-08-18T12:30:13+02:00")
+      .withEndTime("2019-08-18T12:50:13+02:00")
+      .build();
+    timeService.now.mockReturnValue(new Date("2019-08-18T12:55:13+02:00"));
 
     const activationState = activationStateService.determineActivationState(activation);
 

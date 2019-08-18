@@ -22,26 +22,36 @@ export class ActivationDialogComponent implements OnInit {
     private _timeService: TimeService) {
   }
 
-  public ngOnInit() {
-    this._sessionService.getSessions()
-      .subscribe((sessions) => this.sessions = sessions);
+  public ngOnInit(): void {
+    this._sessionService.getSessions().subscribe((sessions) => this.sessions = sessions);
 
     this.sessionFormGroup = this._formBuilder.group({
       sessionCtrl: ["", Validators.required]
     });
     this.schedulingFormGroup = this._formBuilder.group({
-      startTimeCtrl: [""],
-      endTimeCtrl: [""]
+      startTimeCtrl: [null],
+      endTimeCtrl: [null]
     });
   }
 
   public get activationDialogResult(): ActivationEntity {
     const sessionId = this.sessionFormGroup.value.sessionCtrl;
     const startTimeInput = this.schedulingFormGroup.value.startTimeCtrl;
-    const startTime = this._timeService.getTimestampFromTimeString(startTimeInput);
     const endTimeInput = this.schedulingFormGroup.value.endTimeCtrl;
-    const endTime = this._timeService.getTimestampFromTimeString(endTimeInput);
+
+    const startTime = this.getDateFromTimeInput(startTimeInput);
+    const endTime = this.getDateFromTimeInput(endTimeInput);
 
     return new ActivationEntity(sessionId, startTime, endTime);
+  }
+
+  private getDateFromTimeInput(time: string): string {
+    if (!time) {
+      return null;
+    }
+
+    const now = this._timeService.now();
+    const timeSplit = time.split(":");
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate(), +timeSplit[0], +timeSplit[1]).toISOString();
   }
 }

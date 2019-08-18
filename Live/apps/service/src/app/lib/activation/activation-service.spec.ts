@@ -36,7 +36,7 @@ describe("ActivationService", () => {
   });
 
   it("should throw on set activation with activation where end time is lower than start time", () => {
-    const activation = new ActivationEntity("b8s6", 2, 1);
+    const activation = new ActivationEntity("b8s6", "2019-08-18T12:27:13+02:00", "2019-08-18T12:26:13+02:00");
 
     expect(() => activationService.setActivation(activation)).toThrow();
   });
@@ -48,7 +48,7 @@ describe("ActivationService", () => {
   });
 
   it("should throw on set activation with activation where shutdown time is lower than end time", () => {
-    const activation = new ActivationEntity("b8s6", 2, 4, 3);
+    const activation = new ActivationEntity("b8s6", "2019-08-18T12:27:13+02:00", "2019-08-18T12:29:13+02:00", "2019-08-18T12:28:13+02:00");
 
     expect(() => activationService.setActivation(activation)).toThrow();
   });
@@ -63,7 +63,7 @@ describe("ActivationService", () => {
   });
 
   it("should set and delete activation correctly when only session id is given", () => {
-    timeService.now.mockReturnValue(10);
+    timeService.now.mockReturnValue(new Date("2019-08-18T12:27:13+02:00"));
     const session = createMockInstance(Session);
     Object.defineProperty(session, "hasValidStreams", { get: () => true });
     sessionService.getSession.mockReturnValue(session);
@@ -81,18 +81,16 @@ describe("ActivationService", () => {
   });
 
   it("should set and delete activation correctly when session id and time starting are given", () => {
-    timeService.now.mockReturnValue(10);
+    timeService.now.mockReturnValue(new Date("2019-08-18T12:26:13+02:00"));
     const session = createMockInstance(Session);
-    // session.allStreamsAreInvalid.mockReturnValue(false);
-    // jest.spyOn(session, "hasValidStreams", "get");
     Object.defineProperty(session, "hasValidStreams", { get: () => true });
     sessionService.getSession.mockReturnValue(session);
-    const activation = new ActivationEntity("b8s6", 11);
+    const activation = new ActivationEntity("b8s6", "2019-08-18T12:27:13+02:00");
 
     activationService.setActivation(activation);
     expect(sessionService.getSession).toHaveBeenCalledWith("b8s6");
     expect(session.start).toHaveBeenCalledTimes(0);
-    // expect(scheduler.schedule).toHaveBeenCalledWith("SESSION_START_JOB", 1578834025100, () => session.start());
+    // expect(scheduler.schedule).toHaveBeenCalledWith("SESSION_START_JOB", new Date("2019-08-18T12:27:13+02:00"), () => session.start());
     expect(activationService.getActivationEntity()).toBe(activation);
 
     activationService.deleteActivation();

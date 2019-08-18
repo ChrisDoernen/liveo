@@ -1,6 +1,6 @@
 export enum ActivationState {
-  NoActivation,
-  Scheduled,
-  Started,
-  Ended
+  NoActivation = "No session activated",
+  Scheduled = "Scheduled",
+  Started = "Started",
+  Ended = "Ended"
 }

@@ -3,7 +3,7 @@ import { ConnectionInfoType } from "./connection-info-type";
 
 export interface ConnectionInfo {
   clientInfo: ClientInfo;
-  timestamp: number;
+  timestamp: string;
   connectionInfoType: ConnectionInfoType;
   newConnectionCounterValue: number;
 }

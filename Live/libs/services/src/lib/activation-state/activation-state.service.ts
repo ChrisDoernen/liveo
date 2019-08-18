@@ -15,11 +15,11 @@ export class ActivationStateService {
     const now = this._timeService.now();
 
     if (activation) {
-      if (activation.startTime > now && (!activation.endTime || activation.endTime > now)) {
+      if (new Date(activation.startTime) > now && (!activation.endTime || new Date(activation.endTime) > now)) {
         activationState = ActivationState.Scheduled;
-      } else if (activation.startTime < now && (!activation.endTime || activation.endTime > now)) {
+      } else if (new Date(activation.startTime) < now && (!activation.endTime || new Date(activation.endTime) > now)) {
         activationState = ActivationState.Started;
-      } else if (activation.startTime < now && (!activation.endTime || activation.endTime < now)) {
+      } else if (new Date(activation.startTime) < now && (!activation.endTime || new Date(activation.endTime) < now)) {
         activationState = ActivationState.Ended;
       }
     } else {

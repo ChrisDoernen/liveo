@@ -1,4 +1,5 @@
 export class Shutdown {
-  constructor(public shutdownTime: number) {
+  constructor(
+    public shutdownTime: string) {
   }
 }

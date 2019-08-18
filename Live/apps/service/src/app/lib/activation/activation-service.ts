@@ -37,14 +37,14 @@ export class ActivationService {
     }
 
     if (activation.startTime) {
-      this._scheduler.schedule(this._sessionStartJobId, activation.startTime, () => session.start());
+      this._scheduler.schedule(this._sessionStartJobId, new Date(activation.startTime), () => session.start());
     } else {
       session.start();
-      activation.startTime = this._timeService.now();
+      activation.startTime = new Date(this._timeService.now()).toISOString();
     }
 
     if (activation.endTime) {
-      this._scheduler.schedule(this._sessionStopJobId, activation.endTime, () => session.stop());
+      this._scheduler.schedule(this._sessionStopJobId, new Date(activation.endTime), () => session.stop());
     }
 
     if (activation.shutdownTime) {
@@ -62,15 +62,15 @@ export class ActivationService {
       throw new Error("Activation validation error: Session id is null.");
     }
 
-    if (activation.startTime && activation.startTime < this._timeService.now()) {
+    if (activation.startTime && new Date(activation.startTime) < this._timeService.now()) {
       throw new Error("Activation validation error: The start time is not in the future.");
     }
 
-    if (activation.endTime && activation.endTime < activation.startTime) {
+    if (activation.endTime && new Date(activation.endTime) < new Date(activation.startTime)) {
       throw new Error("Activation validation error: Time ending is lower than time starting.");
     }
 
-    if (activation.shutdownTime && activation.shutdownTime < activation.endTime) {
+    if (activation.shutdownTime && new Date(activation.shutdownTime) < new Date(activation.endTime)) {
       throw new Error("Activation validation error: Time server shutdown is lower than time ending.");
     }
   }
@@ -82,14 +82,14 @@ export class ActivationService {
 
     const now = this._timeService.now();
 
-    if (this._activation.startTime && this._activation.startTime > now) {
+    if (this._activation.startTime && new Date(this._activation.startTime) > now) {
       this._scheduler.cancelJob(this._sessionStartJobId);
     } else {
       const session = this._sessionService.getSession(this._activation.sessionId);
       session.stop();
     }
 
-    if (this._activation.endTime && this._activation.endTime > now) {
+    if (this._activation.endTime && new Date(this._activation.endTime) > now) {
       this._scheduler.cancelJob(this._sessionStopJobId);
     }
 

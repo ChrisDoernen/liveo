@@ -10,15 +10,14 @@ export class Scheduler {
 
   private _jobs: Map<string, Job> = new Map<string, Job>();
 
-  constructor(@inject("Logger") private _logger: Logger) {
+  constructor(
+    @inject("Logger") private _logger: Logger) {
   }
 
-  public schedule(id: string, time: number, callback: () => void): void {
+  public schedule(id: string, date: Date, callback: () => void): void {
     this.checkIfJobWithIdAlreadyExists(id);
-    const timestampInMs = time * 1000;
-    const dateTime = new Date(timestampInMs);
 
-    const job = scheduleJob(id, dateTime, (fireDate) => {
+    const job = scheduleJob(id, date, (fireDate) => {
       this._logger.debug(`Running scheduled job. Scheduled time was: ${fireDate}.`);
       callback();
       this.removeJob(id);
@@ -26,7 +25,7 @@ export class Scheduler {
 
     if (job) {
       this._jobs.set(id, job);
-      this._logger.debug(`Scheduled job with id ${id} to be executed on ${dateTime}.`);
+      this._logger.debug(`Scheduled job with id ${id} to be executed on ${date}.`);
     } else {
       this._logger.warn("Can not schedule job: Date is in the past.");
     }
@@ -53,6 +52,6 @@ export class Scheduler {
 
   private removeJob(id: string): void {
     this._jobs.delete(id);
-    this._logger.debug(`Removed job with id ${id}.`);
+    this._logger.debug(`Removed job with id ${id} from job list.`);
   }
 }
