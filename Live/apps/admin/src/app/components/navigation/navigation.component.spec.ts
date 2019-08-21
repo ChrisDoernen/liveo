@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { NavigationComponent } from "./navigation.component";
 import { AngularMaterialModule } from "../../angular-material.module";
 import { ShutdownComponent } from "../shutdown/shutdown.component";
@@ -8,12 +8,17 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { LogoComponent } from "../logo/logo.component";
 import { InlineSVGDirective } from "ng-inline-svg";
 import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
+import { EndpointService } from "@live/services";
+import createMockInstance from "jest-create-mock-instance";
 
 describe("NavigationComponent", () => {
   let component: NavigationComponent;
   let fixture: ComponentFixture<NavigationComponent>;
+  let endpointService: jest.Mocked<EndpointService>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
+    endpointService = createMockInstance(EndpointService);
+
     TestBed.configureTestingModule({
       imports: [
         AngularMaterialModule,
@@ -28,12 +33,11 @@ describe("NavigationComponent", () => {
         InlineSVGDirective
       ],
       providers: [
-        { provide: InlineSVGService, useValue: jest.fn() }
+        { provide: InlineSVGService, useValue: jest.fn() },
+        { provide: EndpointService, useValue: endpointService }
       ]
     }).compileComponents();
-  }));
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(NavigationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

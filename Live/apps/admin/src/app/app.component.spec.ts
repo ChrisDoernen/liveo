@@ -1,4 +1,4 @@
-import { TestBed, async } from "@angular/core/testing";
+import { TestBed } from "@angular/core/testing";
 import { AppComponent } from "./app.component";
 import { AngularMaterialModule } from "./angular-material.module";
 import { NavigationComponent } from "./components/navigation/navigation.component";
@@ -10,9 +10,15 @@ import { LogoComponent } from "./components/logo/logo.component";
 import { InlineSVGDirective } from "ng-inline-svg";
 import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
 import { NotficationsComponent } from "./components/notfications/notfications.component";
+import { EndpointService } from "@live/services";
+import createMockInstance from "jest-create-mock-instance";
 
 describe("AppComponent", () => {
-  beforeEach(async(() => {
+  let endpointService: jest.Mocked<EndpointService>;
+
+  beforeEach(() => {
+    endpointService = createMockInstance(EndpointService);
+
     TestBed.configureTestingModule({
       imports: [
         AngularMaterialModule,
@@ -29,10 +35,11 @@ describe("AppComponent", () => {
         NotficationsComponent
       ],
       providers: [
+        { provide: EndpointService, useValue: endpointService },
         { provide: InlineSVGService, useValue: jest.fn() }
       ]
     }).compileComponents();
-  }));
+  });
 
   it("should create the app", () => {
     const fixture = TestBed.createComponent(AppComponent);
