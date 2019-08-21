@@ -1,28 +1,28 @@
 <header></header>
 <div class="container">
   <div class="content">
-    <ng-container *ngIf="!activity && connectionError; else activityretrieved">
+    <ng-container *ngIf="applicationStateService.connectionError | async; else activityretrieved">
       <div>
         There seems to be a problem with the WiFi connection. Please make sure
         you are connected to the right network.
       </div>
     </ng-container>
     <ng-template #activityretrieved>
-      <div *ngIf="activity?.activationState === activationState.NoActivation">
+      <div *ngIf="(applicationStateService.activationState$ | async) === activationState.NoActivation">
         There is no session scheduled right now. We're happy to see you later.
       </div>
-      <div *ngIf="activity?.activationState === activationState.Scheduled">
+      <div *ngIf="(applicationStateService.activationState$ | async) === activationState.Scheduled">
         Session {{ activity.session?.title }} is scheduled to start at
         {{ activity.activation?.startTime  * 1000 | date:'H:mm'}} Uhr. Stay tuned!
       </div>
-      <div *ngIf="activity?.activationState === activationState.Ended">
+      <div *ngIf="(applicationStateService.activationState$ | async) === activationState.Ended">
         The session has ended. Thanks for joining us.
       </div>
-      <div *ngIf="activity?.activationState === activationState.Started">
+      <div *ngIf="(applicationStateService.activationState$ | async) === activationState.Started">
         <div>Live now:</div>
-        <div class="session-title">{{ activity.session?.title }}</div>
+        <div class="session-title">{{ (applicationStateService.session$ | async)?.title }}</div>
         <div class="stream-list">
-          <div *ngFor="let stream of activity.streams" class="stream-list-item">
+          <div *ngFor="let stream of (applicationStateService.streams$ | async)" class="stream-list-item">
             <i *ngIf="selectedStream == stream" class="fa fa-check" aria-hidden="true">
             </i>
             <a class="stream-link" (click)="selectStream(stream)" [ngClass]="{selected: selectedStream == stream,
@@ -34,7 +34,7 @@
       </div>
     </ng-template>
   </div>
-  <div *ngIf="activity && activity.activationState === activationState.Started" class="content">
+  <div *ngIf="(applicationStateService.activationState$ | async) === activationState.Started" class="content">
     <audio-player [selectedStream]="selectedStream?.id"></audio-player>
   </div>
 </div>

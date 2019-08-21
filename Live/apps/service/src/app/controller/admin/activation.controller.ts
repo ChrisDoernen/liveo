@@ -1,12 +1,14 @@
 import { controller, httpPost, httpGet, httpDelete } from "inversify-express-utils";
 import { inject } from "inversify";
-import { ActivationService } from "../lib/activation/activation-service";
+import { ActivationService } from "../../lib/activation/activation-service";
 import { ActivationEntity } from "@live/entities";
 import { Request, Response } from "express";
+import { ROUTES } from "@live/constants";
 
-@controller("/activation")
+@controller(`/${ROUTES.admin}/activation`)
 export class ActivationController {
-  constructor(@inject("ActivationService") private _activationService: ActivationService) {
+  constructor(
+    @inject("ActivationService") private _activationService: ActivationService) {
   }
 
   @httpPost("/")
@@ -16,7 +18,7 @@ export class ActivationController {
   }
 
   @httpGet("/")
-  public getActivatedSessionEntity(): ActivationEntity {
+  public getActivation(): ActivationEntity {
     return this._activationService.getActivationEntity();
   }
 

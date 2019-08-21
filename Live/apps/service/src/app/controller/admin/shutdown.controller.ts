@@ -2,9 +2,10 @@ import { controller, httpPost, httpDelete, httpGet } from "inversify-express-uti
 import { Request, Response } from "express";
 import { inject } from "inversify";
 import { Shutdown } from "@live/entities";
-import { ShutdownService } from "../lib/shutdown/shutdown-service";
+import { ShutdownService } from "../../lib/shutdown/shutdown-service";
+import { ROUTES } from "@live/constants";
 
-@controller("/shutdown")
+@controller(`/${ROUTES.admin}/shutdown`)
 export class ShutdownController {
 
   constructor(@inject("ShutdownService") private _shutdownService: ShutdownService) { }

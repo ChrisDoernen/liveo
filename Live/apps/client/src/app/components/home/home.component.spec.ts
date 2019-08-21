@@ -10,12 +10,12 @@ import { AboutComponent } from "../about/about.component";
 import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { Ng5SliderModule } from "ng5-slider";
-import { ActivityService } from "../../services/activity/activity.service";
+import { ApplicationStateService } from "../../services/activity/application-state.service";
 
 describe("HomeComponent", () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
-  let activityService: jest.Mocked<ActivityService>;
+  let activityService: jest.Mocked<ApplicationStateService>;
   let endpointService: jest.Mocked<EndpointService>;
   let l3asService: jest.Mocked<L3asService>;
 
@@ -37,7 +37,7 @@ describe("HomeComponent", () => {
         AboutComponent
       ],
       providers: [
-        { provide: ActivityService, useValue: activityService },
+        { provide: ApplicationStateService, useValue: activityService },
         { provide: EndpointService, useValue: endpointService },
         { provide: L3asService, useValue: l3asService },
         { provide: InlineSVGService, useValue: jest.fn() }

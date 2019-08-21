@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "/api/streams/v67d",
+			"name": "/api/admin/streams/v67d",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -15,13 +15,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{hostname}}:{{port}}/api/streams/v67d",
+					"raw": "{{hostname}}:{{port}}/api/admin/streams/v67d",
 					"host": [
 						"{{hostname}}"
 					],
 					"port": "{{port}}",
 					"path": [
 						"api",
+						"admin",
 						"streams",
 						"v67d"
 					]
@@ -39,13 +40,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{hostname}}:{{port}}/api/streams",
+					"raw": "{{hostname}}:{{port}}/api/admin/streams",
 					"host": [
 						"{{hostname}}"
 					],
 					"port": "{{port}}",
 					"path": [
 						"api",
+						"admin",
 						"streams"
 					]
 				}
@@ -75,7 +77,7 @@
 			"response": []
 		},
 		{
-			"name": "/api/sessions",
+			"name": "/api/admin/sessions",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -84,13 +86,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{hostname}}:{{port}}/api/sessions",
+					"raw": "{{hostname}}:{{port}}/api/admin/sessions",
 					"host": [
 						"{{hostname}}"
 					],
 					"port": "{{port}}",
 					"path": [
 						"api",
+						"admin",
 						"sessions"
 					]
 				}
@@ -98,7 +101,7 @@
 			"response": []
 		},
 		{
-			"name": "/api/sessions/bd34",
+			"name": "/api/admin/sessions/bd34",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -107,13 +110,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{hostname}}:{{port}}/api/sessions/bd34",
+					"raw": "{{hostname}}:{{port}}/api/admin/sessions/bd34",
 					"host": [
 						"{{hostname}}"
 					],
 					"port": "{{port}}",
 					"path": [
 						"api",
+						"admin",
 						"sessions",
 						"bd34"
 					]
@@ -131,13 +135,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{hostname}}:{{port}}/api/shutdown",
+					"raw": "{{hostname}}:{{port}}/api/admin/shutdown",
 					"host": [
 						"{{hostname}}"
 					],
 					"port": "{{port}}",
 					"path": [
 						"api",
+						"admin",
 						"shutdown"
 					]
 				}
@@ -145,7 +150,7 @@
 			"response": []
 		},
 		{
-			"name": "/api/shutdown mit timestamp",
+			"name": "/api/admin/shutdown mit timestamp",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -158,7 +163,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"shutdownTime\": 1578834025100\n}"
+					"raw": "{\n\t\"shutdownTime\": \"2019-08-18T16:30:13+02:00\"\n}"
 				},
 				"url": {
 					"raw": "{{hostname}}:{{port}}/api/shutdown",
@@ -175,7 +180,7 @@
 			"response": []
 		},
 		{
-			"name": "/api/shutdown ohne timestamp",
+			"name": "/api/admin/shutdown ohne timestamp",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -191,13 +196,14 @@
 					"raw": "{\n\t\"shutdownTime\": null\n}"
 				},
 				"url": {
-					"raw": "{{hostname}}:{{port}}/api/shutdown",
+					"raw": "{{hostname}}:{{port}}/api/admin/shutdown",
 					"host": [
 						"{{hostname}}"
 					],
 					"port": "{{port}}",
 					"path": [
 						"api",
+						"admin",
 						"shutdown"
 					]
 				}
@@ -205,7 +211,7 @@
 			"response": []
 		},
 		{
-			"name": "/api/activation",
+			"name": "/api/admin/activation",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -214,13 +220,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{hostname}}:{{port}}/api/activation",
+					"raw": "{{hostname}}:{{port}}/api/admin/activation",
 					"host": [
 						"{{hostname}}"
 					],
 					"port": "{{port}}",
 					"path": [
 						"api",
+						"admin",
 						"activation"
 					]
 				}
@@ -228,7 +235,7 @@
 			"response": []
 		},
 		{
-			"name": "/api/activation nur sessionId",
+			"name": "/api/admin/activation nur sessionId",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -244,13 +251,14 @@
 					"raw": "{\n\t\"sessionId\": \"bd34\"\n}"
 				},
 				"url": {
-					"raw": "{{hostname}}:{{port}}/api/activation",
+					"raw": "{{hostname}}:{{port}}/api/admin/activation",
 					"host": [
 						"{{hostname}}"
 					],
 					"port": "{{port}}",
 					"path": [
 						"api",
+						"admin",
 						"activation"
 					]
 				}
@@ -258,7 +266,7 @@
 			"response": []
 		},
 		{
-			"name": "/api/activation sessionId und timestamp",
+			"name": "/api/admin/activation sessionId und timestamp",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -271,16 +279,17 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"sessionId\": \"bd34\",\n\t\"timeStarting\": 1556969471\n}"
+					"raw": "{\n\t\"sessionId\": \"bd34\",\n\t\"startTime\": \"2019-08-18T14:30:13+02:00\"\n}"
 				},
 				"url": {
-					"raw": "{{hostname}}:{{port}}/api/activation",
+					"raw": "{{hostname}}:{{port}}/api/admin/activation",
 					"host": [
 						"{{hostname}}"
 					],
 					"port": "{{port}}",
 					"path": [
 						"api",
+						"admin",
 						"activation"
 					]
 				}
@@ -304,13 +313,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{hostname}}:{{port}}/api/activation",
+					"raw": "{{hostname}}:{{port}}/api/admin/activation",
 					"host": [
 						"{{hostname}}"
 					],
 					"port": "{{port}}",
 					"path": [
 						"api",
+						"admin",
 						"activation"
 					]
 				}
@@ -318,7 +328,7 @@
 			"response": []
 		},
 		{
-			"name": "/api/activity",
+			"name": "/api/client/application-state",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -327,14 +337,15 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{hostname}}:{{port}}/api/activity",
+					"raw": "{{hostname}}:{{port}}/api/client/application-state",
 					"host": [
 						"{{hostname}}"
 					],
 					"port": "{{port}}",
 					"path": [
 						"api",
-						"activity"
+						"client",
+						"application-state"
 					]
 				}
 			},

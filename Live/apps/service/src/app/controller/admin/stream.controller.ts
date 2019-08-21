@@ -1,12 +1,14 @@
 import { controller, httpGet } from "inversify-express-utils";
-import { StreamService } from "../lib/streams/stream-service";
+import { StreamService } from "../../lib/streams/stream-service";
 import { inject } from "inversify";
 import { StreamEntity } from "@live/entities";
 import { Request } from "express";
+import { ROUTES } from "@live/constants";
 
-@controller("/streams")
+@controller(`/${ROUTES.admin}/streams`)
 export class StreamController {
-  constructor(@inject("StreamService") private _streamService: StreamService) {
+  constructor(
+    @inject("StreamService") private _streamService: StreamService) {
   }
 
   @httpGet("/")

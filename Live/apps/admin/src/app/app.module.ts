@@ -18,7 +18,6 @@ import { LogoComponent } from "./components/logo/logo.component";
 import { InlineSVGModule } from "ng-inline-svg";
 import { ActivationDeletionDialogComponent } from "./components/activation-deletion-dialog/activation-deletion-dialog.component";
 import { FooterComponent } from "./components/footer/footer.component"
-import { WebsocketService } from "./services/websocket/websocket.service";
 import { SocketIoModule } from "ngx-socket-io";
 import { InitializationService } from "./services/initialization/initialization.service";
 import { NotficationsComponent } from "./components/notfications/notfications.component";
@@ -26,6 +25,8 @@ import { DashboardActivationComponent } from "./components/dashboard-activation/
 import { DashboardNoActivationComponent } from "./components/dashboard-no-activation/dashboard-no-activation.component";
 import { ActivatedSessionTileComponent } from "./components/activated-session-tile/activated-session-tile.component";
 import { ActivationStateTileComponent } from "./components/activation-state-tile/activation-state-tile.component";
+import { EndpointService } from "@live/services";
+import { ROUTES } from "@live/constants";
 
 @NgModule({
   imports: [
@@ -64,7 +65,6 @@ import { ActivationStateTileComponent } from "./components/activation-state-tile
     ActivationDeletionDialogComponent
   ],
   providers: [
-    WebsocketService,
     {
       provide: APP_BOOTSTRAP_LISTENER,
       useFactory: (initializationService: InitializationService) => {
@@ -73,6 +73,10 @@ import { ActivationStateTileComponent } from "./components/activation-state-tile
       deps: [InitializationService],
       multi: true
     },
+    {
+      provide: EndpointService,
+      useValue: new EndpointService(ROUTES.admin)
+    }
   ],
   bootstrap: [
     AppComponent

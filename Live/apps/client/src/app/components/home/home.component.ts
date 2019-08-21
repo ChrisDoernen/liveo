@@ -1,18 +1,17 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { StreamEntity, ActivationState } from "@live/entities";
-import { ActivityEntity } from "@live/entities";
-import { ActivityService } from "../../services/activity/activity.service";
+import { ApplicationStateEntity } from "@live/entities";
+import { ApplicationStateService } from "../../services/activity/application-state.service";
 
 @Component({
   selector: "home",
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.scss"]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   public activationState = ActivationState;
   public selectedStream: StreamEntity = null;
-  public activity: ActivityEntity;
-  public connectionError = false;
+  public applicationState: ApplicationStateEntity;
   private _isAboutOverlayHidden = true;
 
   public set isAboutOverlayHidden(value: boolean) {
@@ -23,16 +22,8 @@ export class HomeComponent implements OnInit {
     return this._isAboutOverlayHidden;
   }
 
-  constructor(public _activityService: ActivityService) {
-  }
-
-  public ngOnInit(): void {
-    this._activityService.getActivity()
-      .then((activity) => this.activity = activity)
-      .catch((error) => {
-        this.connectionError = true;
-        console.error(error);
-      });
+  constructor(
+    public applicationStateService: ApplicationStateService) {
   }
 
   public selectStream(stream: StreamEntity): void {

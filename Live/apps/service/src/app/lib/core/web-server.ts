@@ -7,11 +7,11 @@ import { ENDPOINTS } from "@live/constants";
 import * as express from "express";
 import * as path from "path";
 import "../../controller/home.controller";
-import "../../controller/shutdown.controller";
-import "../../controller/stream.controller";
-import "../../controller/session.controller";
-import "../../controller/activation.controller";
-import "../../controller/activity.controller";
+import "../../controller/admin/shutdown.controller";
+import "../../controller/admin/stream.controller";
+import "../../controller/admin/session.controller";
+import "../../controller/admin/activation.controller";
+import "../../controller/client/application-state.controller";
 
 @injectable()
 export class WebServer {

@@ -8,6 +8,6 @@
   },
   "include": [
     "**/*.ts",
-    "src/lib/activity.entity.ts"
+    "src/lib/application-state.entity.ts"
   ]
 }
