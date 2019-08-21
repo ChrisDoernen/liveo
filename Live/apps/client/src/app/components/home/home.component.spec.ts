@@ -15,13 +15,14 @@ import { ApplicationStateService } from "../../services/activity/application-sta
 describe("HomeComponent", () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
-  let activityService: jest.Mocked<ApplicationStateService>;
+  let applicationStateService: jest.Mocked<ApplicationStateService>;
   let endpointService: jest.Mocked<EndpointService>;
   let l3asService: jest.Mocked<L3asService>;
 
   beforeEach(() => {
     endpointService = createMockInstance(EndpointService);
     l3asService = createMockInstance(L3asService);
+    applicationStateService = createMockInstance(ApplicationStateService);
 
     TestBed.configureTestingModule({
       imports: [
@@ -37,7 +38,7 @@ describe("HomeComponent", () => {
         AboutComponent
       ],
       providers: [
-        { provide: ApplicationStateService, useValue: activityService },
+        { provide: ApplicationStateService, useValue: applicationStateService },
         { provide: EndpointService, useValue: endpointService },
         { provide: L3asService, useValue: l3asService },
         { provide: InlineSVGService, useValue: jest.fn() }
