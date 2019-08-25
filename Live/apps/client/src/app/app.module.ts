@@ -11,7 +11,7 @@ import { Ng5SliderModule } from "ng5-slider";
 import { HeaderComponent } from "./components/header/header.component";
 import { WelcomeComponent } from "./components/welcome/welcome.component";
 import { AboutComponent } from "./components/about/about.component";
-import { UserAgentService, EndpointService } from "@live/services";
+import { UserAgentService, EndpointService, ROUTE } from "@live/services";
 import { ApplicationStateService } from "./services/application-state/application-state.service";
 import { ROUTES } from "@live/constants";
 
@@ -52,8 +52,8 @@ import { ROUTES } from "@live/constants";
       multi: true
     },
     {
-      provide: EndpointService,
-      useValue: new EndpointService(ROUTES.client)
+      provide: ROUTE,
+      useValue: ROUTES.client
     }
   ],
   bootstrap: [AppComponent]

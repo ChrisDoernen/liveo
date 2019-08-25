@@ -1,10 +1,14 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Inject, InjectionToken } from "@angular/core";
 import { ENDPOINTS } from "@live/constants";
 
-@Injectable()
+export const ROUTE = new InjectionToken<string>("ROUTE");
+
+@Injectable({
+  providedIn: "root"
+})
 export class EndpointService {
   constructor(
-    private _route: string) {
+    @Inject(ROUTE) private _route: string) {
   }
 
   public getEndpoint(path: string): string {

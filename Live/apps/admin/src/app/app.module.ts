@@ -25,7 +25,7 @@ import { DashboardActivationComponent } from "./components/dashboard-activation/
 import { DashboardNoActivationComponent } from "./components/dashboard-no-activation/dashboard-no-activation.component";
 import { ActivatedSessionTileComponent } from "./components/activated-session-tile/activated-session-tile.component";
 import { ActivationStateTileComponent } from "./components/activation-state-tile/activation-state-tile.component";
-import { EndpointService } from "@live/services";
+import { EndpointService, ROUTE } from "@live/services";
 import { ROUTES } from "@live/constants";
 
 @NgModule({
@@ -74,8 +74,8 @@ import { ROUTES } from "@live/constants";
       multi: true
     },
     {
-      provide: EndpointService,
-      useValue: new EndpointService(ROUTES.admin)
+      provide: ROUTE,
+      useValue: ROUTES.admin
     }
   ],
   bootstrap: [
