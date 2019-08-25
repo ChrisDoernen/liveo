@@ -28,9 +28,9 @@ export class Stream {
   constructor(
     @inject("Logger") private _logger: Logger,
     @inject("StreamingSourceFactory")
-    streamingSourceFactory: (deviceId: string, streamId: string) => IStreamingSource,
+    streamingSourceFactory: (deviceId: string, streamId: string, onError: (error: Error) => void) => IStreamingSource,
     private _streamEntity: StreamEntity) {
-    this._source = streamingSourceFactory(_streamEntity.deviceId, this.id);
+    this._source = streamingSourceFactory(_streamEntity.deviceId, this.id, this.onStreamingSourceError.bind(this));
 
     if (!this._source.hasValidDevice) {
       this._logger.warn(`Stream ${this.id} has invalid device and will not be startable.`);
@@ -59,5 +59,9 @@ export class Stream {
     } else {
       this._logger.warn(`Stream ${this.id} is already stopped.`);
     }
+  }
+
+  public onStreamingSourceError(error: Error): void {
+    this._logger.error(`bbbb ${error.message}`);
   }
 }

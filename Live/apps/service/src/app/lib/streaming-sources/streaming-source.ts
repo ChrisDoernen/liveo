@@ -23,7 +23,8 @@ export class StreamingSource implements IStreamingSource {
     @inject("WebsocketServer") private _websocketServer: WebsocketServer,
     @inject("AudioSystem") private _audioSystem: AudioSystem,
     private _device: Device,
-    private _streamId: string) {
+    private _streamId: string,
+    private _errorCallback: (error: Error) => void) {
     this.initializeFfmpegCommand();
   }
 
@@ -51,8 +52,9 @@ export class StreamingSource implements IStreamingSource {
       })
       .on("error", (error: Error) => {
         // We killed the stream manually to stop streaming, no real error
-        if (!error.message.includes("SIGKILL")) {
+        if (!error.message.includes("SIGTERM")) {
           this._logger.error(`Error ffmpeg command for device ${this._device.id}: ${error}.`);
+          this.onStreamingError(error);
         }
       })
       .on("stderr", (data: string) => {
@@ -72,9 +74,14 @@ export class StreamingSource implements IStreamingSource {
 
   public stopStreaming(): void {
     this._logger.debug(`Killing child process for device ${this._device.id}.`);
-    this._command.kill("SIGKILL");
+    this._command.kill("SIGTERM");
     this._websocketServer.removeStream(this._streamId);
     this._websocketServer.emitStreamEventMessage(this._streamId, EVENTS.streamEnded, "The stream ended.");
     this.isStreaming = false;
+  }
+
+  private onStreamingError(error: Error): void {
+    this.isStreaming = false;
+    this._errorCallback(error);
   }
 }

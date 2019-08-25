@@ -47,7 +47,7 @@ export class FileStreamingSource implements IStreamingSource {
       })
       .on("error", (error: Error) => {
         // We killed the stream manually to stop streaming, no real error
-        if (!error.message.includes("SIGKILL")) {
+        if (!error.message.includes("SIGTERM")) {
           this._logger.error(`Error ffmpeg command for device ${this._device.id}: ${error}.`);
         }
       })
@@ -71,7 +71,7 @@ export class FileStreamingSource implements IStreamingSource {
 
   public stopStreaming(): void {
     this._logger.debug(`Killing child process for device ${this._device.id}.`);
-    this._command.kill("SIGKILL");
+    this._command.kill("SIGTERM");
     this._websocketServer.removeStream(this._streamId);
     this._websocketServer.emitStreamEventMessage(this._streamId, EVENTS.streamEnded, "The stream ended.");
     this.isStreaming = false;
