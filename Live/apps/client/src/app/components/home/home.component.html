@@ -1,7 +1,7 @@
 <header></header>
 <div class="container">
   <div class="content">
-    <ng-container *ngIf="applicationStateService.connectionError | async; else activityretrieved">
+    <ng-container *ngIf="applicationStateService.connectionError$ | async; else activityretrieved">
       <div>
         There seems to be a problem with the WiFi connection. Please make sure
         you are connected to the right network.

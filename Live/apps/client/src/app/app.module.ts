@@ -12,7 +12,7 @@ import { HeaderComponent } from "./components/header/header.component";
 import { WelcomeComponent } from "./components/welcome/welcome.component";
 import { AboutComponent } from "./components/about/about.component";
 import { UserAgentService, EndpointService } from "@live/services";
-import { ApplicationStateService } from "./services/activity/application-state.service";
+import { ApplicationStateService } from "./services/application-state/application-state.service";
 import { ROUTES } from "@live/constants";
 
 @NgModule({

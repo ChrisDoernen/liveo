@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { StreamEntity, ActivationState } from "@live/entities";
 import { ApplicationStateEntity } from "@live/entities";
-import { ApplicationStateService } from "../../services/activity/application-state.service";
+import { ApplicationStateService } from "../../services/application-state/application-state.service";
 
 @Component({
   selector: "home",

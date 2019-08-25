@@ -10,7 +10,7 @@ import { AboutComponent } from "../about/about.component";
 import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { Ng5SliderModule } from "ng5-slider";
-import { ApplicationStateService } from "../../services/activity/application-state.service";
+import { ApplicationStateService } from "../../services/application-state/application-state.service";
 
 describe("HomeComponent", () => {
   let component: HomeComponent;
