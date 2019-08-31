@@ -41,18 +41,18 @@ export class StreamingSource implements IStreamingSource {
       .audioBitrate("196k")
       .audioCodec("libmp3lame")
       .format("mp3")
-      .outputOptions(["-probesize 64"])
-      .outputOptions(["-rtbufsize 64"])
-      .outputOptions(["-reservoir 0"])
-      .outputOptions(["-fflags"])
-      .outputOptions(["+nobuffer"])
-      .outputOptions(["-hide_banner"])
+      .outputOptions("-probesize 64")
+      .outputOptions("-rtbufsize 64")
+      .outputOptions("-reservoir 0")
+      .outputOptions("-fflags")
+      .outputOptions("+nobuffer")
+      .outputOptions("-hide_banner")
       .on("start", (command: string) => {
         this._logger.debug(`Started streaming for device ${this._device.id} with command ${command}.`);
       })
       .on("error", (error: Error) => {
-        // We killed the stream manually to stop streaming, no real error
-        if (!error.message.includes("SIGTERM")) {
+        // We terminated the stream manually to stop streaming, no real error
+        if (!error.message.includes("SIGKILL")) {
           this._logger.error(`Error ffmpeg command for device ${this._device.id}: ${error}.`);
           this.onStreamingError(error);
         }
@@ -74,7 +74,7 @@ export class StreamingSource implements IStreamingSource {
 
   public stopStreaming(): void {
     this._logger.debug(`Killing child process for device ${this._device.id}.`);
-    this._command.kill("SIGTERM");
+    this._command.kill("SIGKILL");
     this._websocketServer.removeStream(this._streamId);
     this._websocketServer.emitStreamEventMessage(this._streamId, EVENTS.streamEnded, "The stream ended.");
     this.isStreaming = false;
