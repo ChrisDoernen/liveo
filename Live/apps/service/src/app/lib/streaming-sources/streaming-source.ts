@@ -25,7 +25,6 @@ export class StreamingSource implements IStreamingSource {
     private _device: Device,
     private _streamId: string,
     private _errorCallback: (error: Error) => void) {
-    this.initializeFfmpegCommand();
   }
 
   public get hasValidDevice(): boolean {
@@ -64,6 +63,7 @@ export class StreamingSource implements IStreamingSource {
   }
 
   public startStreaming(): void {
+    this.initializeFfmpegCommand();
     this._logger.debug(`Start streaming for device ${this._device.id}.`);
     this._websocketServer.addStream(this._streamId);
     this._command
