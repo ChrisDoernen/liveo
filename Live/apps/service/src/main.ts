@@ -4,3 +4,6 @@ import { Bootstrapper } from "./app/lib/core/bootstrapper";
 
 const bootstrapper = container.get<Bootstrapper>("Bootstrapper");
 bootstrapper.startServer(container);
+
+process.on("exit", () => bootstrapper.stopServer());
+process.on("SIGINT", () => bootstrapper.stopServer());

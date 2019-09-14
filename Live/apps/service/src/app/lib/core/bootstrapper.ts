@@ -5,7 +5,7 @@ import { Logger } from "../logging/logger";
 import { config } from "../../config/service.config";
 import { WebServer } from "./web-server";
 import { WebsocketServer } from "./websocket-server";
-import { injectable, inject } from "inversify";
+import { injectable, inject, Container } from "inversify";
 import { SystemMonitoringService } from "../system-monitoring/system-monitoring-service";
 import { environment } from "../../../environments/environment";
 import { DataService } from "../data/data-service";
@@ -24,8 +24,8 @@ export class Bootstrapper {
     @inject("SystemMonitoringService") private _systemMonitoringServcie: SystemMonitoringService) {
   }
 
-  public async startServer(container): Promise<void> {
-    this._logger.info("Starting Live server...");
+  public async startServer(container: Container): Promise<void> {
+    this._logger.info("STARTING LIVE SERVER");
     this._logger.info(`Version: v${environment.version}/${environment.revision}`);
     this._logger.debug(`Production: ${config.production}.`);
     this._logger.debug(`Operating system: ${config.os}.`);
@@ -46,5 +46,10 @@ export class Bootstrapper {
     const server = this._webServer.initializeAndListen(container);
     this._websocketServer.initializeAndListen(server);
     this._systemMonitoringServcie.startMonitoring();
+  }
+
+  public stopServer(): void {
+    this._logger.info("STOPPING LIVE SERVER");
+    this._webServer.shutdown();
   }
 }

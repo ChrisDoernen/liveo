@@ -6,6 +6,9 @@ import * as bodyParser from "body-parser";
 import { ENDPOINTS } from "@live/constants";
 import * as express from "express";
 import * as path from "path";
+import { Server } from "http";
+
+// Controllers have to be registered here
 import "../../controller/home.controller";
 import "../../controller/admin/shutdown.controller";
 import "../../controller/admin/stream.controller";
@@ -15,10 +18,12 @@ import "../../controller/client/application-state.controller";
 
 @injectable()
 export class WebServer {
+  private _serverInstance: Server;
+
   constructor(@inject("Logger") private _logger: Logger) {
   }
 
-  public initializeAndListen(container: any): any {
+  public initializeAndListen(container: any): Server {
     const expressServer = new InversifyExpressServer(container, null, { rootPath: ENDPOINTS.api });
 
     expressServer.setConfig(server => {
@@ -54,6 +59,11 @@ export class WebServer {
     const serverInstance = app.listen(config.port);
     this._logger.info(`Web server started, listening on port ${config.port}.`);
 
+    this._serverInstance = serverInstance;
     return serverInstance;
+  }
+
+  public shutdown(): void {
+    this._serverInstance.close(() => this._logger.info("Web server stopped."));
   }
 }
