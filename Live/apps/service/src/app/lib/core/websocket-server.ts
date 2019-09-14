@@ -115,7 +115,7 @@ export class WebsocketServer {
   }
 
   private getClientInfo(socket: Socket, streamId?: string): ClientInfo {
-    const clientIpAddress = socket.handshake.address;
+    const clientIpAddress = socket.handshake.headers["X-Real-IP"] || socket.handshake.address;
     const userAgent = socket.request.headers["user-agent"];
 
     return {

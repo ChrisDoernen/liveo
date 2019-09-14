@@ -5,7 +5,7 @@ export const environment = {
   simulate: true,
   filesource: false,
   port: 3000,
-  standalone: false,
+  standalone: true,
   revision: version.revision,
   version: version.version
 };
