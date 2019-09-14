@@ -58,7 +58,7 @@ export class Session {
 
       this._logger.info(`Starting session ${this.id}.`);
       this._streams.forEach(stream => stream.start());
-      const notification = new NotificationEntity("Started streaming simulation", NotificationType.Info);
+      const notification = new NotificationEntity("Started streaming", NotificationType.Info);
       this._notificationService.sendNotification(notification);
       this._isStarted = true;
     } else {
@@ -70,7 +70,7 @@ export class Session {
     if (this._isStarted) {
       this._logger.info(`Stopping session ${this.id}.`);
       this._streams.forEach(stream => stream.stop());
-      const notification = new NotificationEntity("Stopping streaming simulation", NotificationType.Info);
+      const notification = new NotificationEntity("Stoped streaming", NotificationType.Info);
       this._notificationService.sendNotification(notification);
       this._isStarted = false;
     }

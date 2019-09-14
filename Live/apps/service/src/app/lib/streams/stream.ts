@@ -62,6 +62,6 @@ export class Stream {
   }
 
   public onStreamingSourceError(error: Error): void {
-    this._logger.error(`bbbb ${error.message}`);
+    this._logger.error(`Straming source error: ${error.message}`);
   }
 }

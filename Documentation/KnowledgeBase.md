@@ -55,6 +55,8 @@ sudo systemctl status live
 Please note that the shutdown function only works if the user which is running the service has the rights to execute the shutdown command, e.g. with `chris ALL=NOPASSWD: /sbin/shutdown, /sbin/reboot` in `/etc/sudoers`.
 
 
-## Alsa
+## Alsa and Pulseaudio
 
 Alsa does not give sound devices the same card id on system boot. To prevent this, we can add a .rules file to `/etc/udev/rules.d/`, e.g. `70-alsa-permanent.rules`. It contains a papping between usb port path and sound device id's. To find the usb port path, we can run the command `udevadm monitor --kernel --subsystem-match=sound` and plug in the soud device. The corresponding path will be given in the "change" entry of the output. The device id can be an arbitrary string (most special characters are not allowed). Audio USB devices plugged in at any USB port mapped in this file can be used in the app.
+
+Occasionally the error "device or resouce busy" was thrown when trying to start streaming after system boot. Deleting pulseaudio resoved this issue.
