@@ -10,6 +10,7 @@ import { SystemMonitoringService } from "../system-monitoring/system-monitoring-
 import { environment } from "../../../environments/environment";
 import { DataService } from "../data/data-service";
 import * as Ffmpeg from "fluent-ffmpeg";
+import { AutoActivationService } from "../activation/auto-activation-service";
 
 @injectable()
 export class Bootstrapper {
@@ -18,6 +19,7 @@ export class Bootstrapper {
     @inject("DeviceDetector") private _deviceDetector: DeviceDetector,
     @inject("StreamService") private _streamService: StreamService,
     @inject("SessionService") private _sessionService: SessionService,
+    @inject("AutoActivationService") private _autoActivationService: AutoActivationService,
     @inject("WebServer") private _webServer: WebServer,
     @inject("WebsocketServer") private _websocketServer: WebsocketServer,
     @inject("DataService") private _dataService: DataService,
@@ -46,6 +48,7 @@ export class Bootstrapper {
     const server = this._webServer.initializeAndListen(container);
     this._websocketServer.initializeAndListen(server);
     this._systemMonitoringServcie.startMonitoring();
+    this._autoActivationService.performAutoActivation();
   }
 
   public stopServer(): void {

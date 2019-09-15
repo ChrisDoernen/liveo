@@ -80,6 +80,7 @@
     }
   ],
   "settings": {
-    "defaultSession": "bd34"
+    "defaultSession": "bd34",
+    "enableAutoActivation": true
   }
 }

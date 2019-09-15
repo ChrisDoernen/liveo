@@ -1,5 +1,6 @@
 export class SettingsEntity {
   constructor(
-    public defaultSession: string) {
+    public defaultSession: string,
+    public enableAutoActivation: boolean) {
   }
 }

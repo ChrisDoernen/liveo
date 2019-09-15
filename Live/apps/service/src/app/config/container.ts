@@ -41,6 +41,7 @@ import { FileStreamingSourceFactory } from "../lib/streaming-sources/file-stream
 import { NotificationService } from "../lib/notifications/notification-service";
 import { ISettingsProvider } from "../lib/settings/i-settings-provider";
 import { SettingsService } from "../lib/settings/settings-service";
+import { AutoActivationService } from "../lib/activation/auto-activation-service";
 
 export const container = new Container();
 
@@ -110,3 +111,4 @@ container.bind<ActivationService>("ActivationService").to(ActivationService).inS
 container.bind<Scheduler>("Scheduler").to(Scheduler).inSingletonScope();
 container.bind<ConnectionHistoryService>("ConnectionHistoryService").to(ConnectionHistoryService).inSingletonScope();
 container.bind<SystemMonitoringService>("SystemMonitoringService").to(SystemMonitoringService);
+container.bind<AutoActivationService>("AutoActivationService").to(AutoActivationService);
