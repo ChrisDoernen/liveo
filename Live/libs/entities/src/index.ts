@@ -7,3 +7,4 @@ export { StreamEntity } from "./lib/stream.entity";
 export { Shutdown } from "./lib/shutdown";
 export { NotificationEntity } from "./lib/notification.entity";
 export { NotificationType } from "./lib/notification-type";
+export { SettingsEntity } from "./lib/settings.entity";

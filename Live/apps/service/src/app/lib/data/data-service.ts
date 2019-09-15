@@ -1,17 +1,18 @@
 import { config } from "../../config/service.config";
 import { Logger } from "../logging/logger";
 import { injectable, inject } from "inversify";
-import { SessionEntity, StreamEntity } from "@live/entities";
+import { SessionEntity, StreamEntity, SettingsEntity } from "@live/entities";
 import { IStreamRepository } from "../streams/i-stream-repository";
 import { ISessionRepository } from "../sessions/i-session-repository";
 import * as low from "lowdb";
 import * as FileSync from "lowdb/adapters/FileAsync";
+import { ISettingsProvider } from "../settings/i-settings-provider";
 
 /**
  * Provides access to a file based data source
  */
 @injectable()
-export class DataService implements IStreamRepository, ISessionRepository {
+export class DataService implements IStreamRepository, ISessionRepository, ISettingsProvider {
   private _database: any;
 
   constructor(
@@ -38,5 +39,11 @@ export class DataService implements IStreamRepository, ISessionRepository {
     this._logger.info(`Read ${streams.length} stream entities from database.`);
 
     return streams;
+  }
+
+  public getSettings(): SettingsEntity {
+    const settings = this._database.get("settings").value() as SettingsEntity;
+
+    return settings;
   }
 }

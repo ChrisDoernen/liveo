@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { SessionEntity, ActivationEntity } from "@live/entities";
 import { SessionService } from "../../services/session/session.service";
 import { TimeService } from "@live/services";
+import { SettingsService } from "../../services/settings/settings.service";
 
 @Component({
   selector: "activation-dialog",
@@ -18,12 +19,14 @@ export class ActivationDialogComponent implements OnInit {
 
   constructor(
     private _sessionService: SessionService,
+    private _settingsService: SettingsService,
     private _formBuilder: FormBuilder,
     private _timeService: TimeService) {
   }
 
   public ngOnInit(): void {
     this._sessionService.getSessions().subscribe((sessions) => this.sessions = sessions);
+    const defaultSession = this._settingsService.getDefaultSession();
 
     this.sessionFormGroup = this._formBuilder.group({
       sessionCtrl: ["", Validators.required]

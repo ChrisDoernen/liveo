@@ -39,6 +39,8 @@ import { AudioSystem } from "../lib/audio-system/audio-system";
 import { AudioSystems } from "../lib/audio-system/audio-systems";
 import { FileStreamingSourceFactory } from "../lib/streaming-sources/file-streaming-source-factory";
 import { NotificationService } from "../lib/notifications/notification-service";
+import { ISettingsProvider } from "../lib/settings/i-settings-provider";
+import { SettingsService } from "../lib/settings/settings-service";
 
 export const container = new Container();
 
@@ -89,6 +91,7 @@ container.bind<DataService>("DataService").toConstantValue(dataService);
 container.bind<string>("FfmpegPath").toConstantValue(config.ffmpegPath);
 container.bind<ISessionRepository>("ISessionRepository").toConstantValue(dataService);
 container.bind<IStreamRepository>("IStreamRepository").toConstantValue(dataService);
+container.bind<ISettingsProvider>("ISettingsProvider").toConstantValue(dataService);
 container.bind<Bootstrapper>("Bootstrapper").to(Bootstrapper);
 container.bind<ApplicationStateService>("ActivityService").to(ApplicationStateService);
 container.bind<ProcessExecutionService>("ProcessExecutionService").to(ProcessExecutionService);
@@ -100,6 +103,7 @@ container.bind<Logger>("FfmpegLogger").toConstantValue(new Logger(FfmpegLogger))
 
 container.bind<StreamService>("StreamService").to(StreamService).inSingletonScope();
 container.bind<SessionService>("SessionService").to(SessionService).inSingletonScope();
+container.bind<SettingsService>("SettingsService").to(SettingsService);
 container.bind<WebServer>("WebServer").to(WebServer).inSingletonScope();
 container.bind<WebsocketServer>("WebsocketServer").to(WebsocketServer).inSingletonScope();
 container.bind<ActivationService>("ActivationService").to(ActivationService).inSingletonScope();

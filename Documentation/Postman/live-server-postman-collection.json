@@ -31,7 +31,7 @@
 			"response": []
 		},
 		{
-			"name": "/api/streams",
+			"name": "/api/admin/streams",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -64,13 +64,38 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{hostname}}:{{port}}/hello",
+					"raw": "{{hostname}}:{{port}}/api/hello",
 					"host": [
 						"{{hostname}}"
 					],
 					"port": "{{port}}",
 					"path": [
+						"api",
 						"hello"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/settings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/admin/settings",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"admin",
+						"settings"
 					]
 				}
 			},
@@ -248,7 +273,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"sessionId\": \"bd34\"\n}"
+					"raw": "{\n\t\"sessionId\": \"ag7s\"\n}"
 				},
 				"url": {
 					"raw": "{{hostname}}:{{port}}/api/admin/activation",

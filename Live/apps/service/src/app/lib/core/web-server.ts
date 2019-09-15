@@ -14,6 +14,7 @@ import "../../controller/admin/shutdown.controller";
 import "../../controller/admin/stream.controller";
 import "../../controller/admin/session.controller";
 import "../../controller/admin/activation.controller";
+import "../../controller/admin/settings.controller";
 import "../../controller/client/application-state.controller";
 
 @injectable()

@@ -5,7 +5,7 @@ import createMockInstance from "jest-create-mock-instance";
 
 describe("DataService", () => {
   let dataService: DataService;
-  let logger;
+  let logger: jest.Mocked<Logger>;
 
   beforeEach(() => {
     logger = createMockInstance(Logger);
