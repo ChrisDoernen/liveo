@@ -25,10 +25,11 @@ import { DashboardActivationComponent } from "./components/dashboard-activation/
 import { DashboardNoActivationComponent } from "./components/dashboard-no-activation/dashboard-no-activation.component";
 import { ActivatedSessionTileComponent } from "./components/activated-session-tile/activated-session-tile.component";
 import { ActivationStateTileComponent } from "./components/activation-state-tile/activation-state-tile.component";
-import { EndpointService, ROUTE } from "@live/services";
+import { ROUTE } from "@live/services";
 import { ROUTES } from "@live/constants";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from "../environments/environment";
+import { OfflineComponent } from "./components/offline/offline.component";
 
 @NgModule({
   imports: [
@@ -60,7 +61,8 @@ import { environment } from "../environments/environment";
     DashboardActivationComponent,
     DashboardNoActivationComponent,
     ActivatedSessionTileComponent,
-    ActivationStateTileComponent
+    ActivationStateTileComponent,
+    OfflineComponent
   ],
   entryComponents: [
     ShutdownDialogComponent,

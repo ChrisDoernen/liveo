@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { ConnectionStateService } from "./services/connection-state/connection-state-service";
 
 @Component({
   selector: "app-root",
@@ -6,5 +7,6 @@ import { Component } from "@angular/core";
   styleUrls: ["./app.component.scss"]
 })
 export class AppComponent {
-  title = "admin";
+  constructor(private _connectionStateService: ConnectionStateService) {
+  }
 }
