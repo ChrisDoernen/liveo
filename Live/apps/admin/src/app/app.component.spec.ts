@@ -12,6 +12,7 @@ import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
 import { NotficationsComponent } from "./components/notfications/notfications.component";
 import { EndpointService } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
+import { OfflineMessageComponent } from "./components/offline-message/offline-message.component";
 
 describe("AppComponent", () => {
   let endpointService: jest.Mocked<EndpointService>;
@@ -32,7 +33,8 @@ describe("AppComponent", () => {
         ShutdownComponent,
         LogoComponent,
         InlineSVGDirective,
-        NotficationsComponent
+        NotficationsComponent,
+        OfflineMessageComponent
       ],
       providers: [
         { provide: EndpointService, useValue: endpointService },

@@ -10,6 +10,7 @@ import { InlineSVGDirective } from "ng-inline-svg";
 import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
 import { EndpointService } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
+import { OfflineMessageComponent } from "../offline-message/offline-message.component";
 
 describe("NavigationComponent", () => {
   let component: NavigationComponent;
@@ -30,7 +31,8 @@ describe("NavigationComponent", () => {
         NavigationComponent,
         ShutdownComponent,
         LogoComponent,
-        InlineSVGDirective
+        InlineSVGDirective,
+        OfflineMessageComponent
       ],
       providers: [
         { provide: InlineSVGService, useValue: jest.fn() },

@@ -3,6 +3,7 @@ import { TestBed, fakeAsync } from "@angular/core/testing";
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import { EndpointService } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
+import { ConnectionState } from "./connection-state";
 
 describe("ConnectionStateService", () => {
   let connectionStateService: ConnectionStateService;
@@ -37,10 +38,11 @@ describe("ConnectionStateService", () => {
   });
 
   it("should emit correctly when online", fakeAsync(() => {
-    connectionStateService.checkConnectionState();
+    connectionStateService.checkConnectionState("Shutdown");
 
-    connectionStateService.isOnline$.subscribe((isOnline) => {
-      expect(isOnline).toBe(true);
+    connectionStateService.connectionState$.subscribe((connectionState: ConnectionState) => {
+      expect(connectionState.online).toBe(true);
+      expect(connectionState.lifecycleState).toBe("Shutdown");
     });
 
     const req = httpTestingController.expectOne("connection");
@@ -49,10 +51,11 @@ describe("ConnectionStateService", () => {
   }));
 
   it("should emit correctly when offline", fakeAsync(() => {
-    connectionStateService.checkConnectionState();
+    connectionStateService.checkConnectionState("Shutdown");
 
-    connectionStateService.isOnline$.subscribe((isOnline) => {
-      expect(isOnline).toBe(false);
+    connectionStateService.connectionState$.subscribe((connectionState: ConnectionState) => {
+      expect(connectionState.online).toBe(false);
+      expect(connectionState.lifecycleState).toBe("Shutdown");
     });
 
     const req = httpTestingController.expectOne("connection");

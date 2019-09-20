@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { WebsocketService } from "../websocket/websocket.service";
 import { NotificationService } from "../notification/notification.service";
 import { SessionService } from "../session/session.service";
+import { ConnectionStateService } from "../connection-state/connection-state-service";
 
 @Injectable({
   providedIn: "root"
@@ -12,10 +13,12 @@ export class InitializationService {
     private _activationService: ActivationService,
     private _websocketService: WebsocketService,
     private _notificationService: NotificationService,
-    private _sessionService: SessionService) {
+    private _sessionService: SessionService,
+    private _connectionStateService: ConnectionStateService) {
   }
 
   public initialize(): void {
+    this._connectionStateService.checkConnectionState("Startup");
     this._activationService.getActivation();
     this._websocketService.initializeConnection();
     this._notificationService.subscribeToServerNotifications();

@@ -14,15 +14,16 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="header">
-      <button mat-button (click)="sidenav.toggle()">
+      <button [hidden]="!online" mat-button (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
       <logo light="true"></logo>
-      <shutdown-button></shutdown-button>
+      <shutdown-button [hidden]="!online"></shutdown-button>
     </div>
-    <div class="content-container">
+    <offline-message *ngIf="!online; else content" [lifecycleState]="lifecycleState"></offline-message>
+    <ng-template #content class="content-container">
       <router-outlet></router-outlet>
-    </div>
-    <footer class="content-container"></footer>
+    </ng-template>
+    <footer [hidden]="!online" class="content-container"></footer>
   </mat-sidenav-content>
 </mat-sidenav-container>

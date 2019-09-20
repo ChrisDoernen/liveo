@@ -2,24 +2,31 @@ import { Injectable } from "@angular/core";
 import { ReplaySubject } from "rxjs";
 import { EndpointService } from "@live/services";
 import { HttpClient } from "@angular/common/http";
+import { ConnectionState } from "./connection-state";
+import { LifecycleState } from "./lifecycle-state";
 
 @Injectable({
   providedIn: "root"
 })
 export class ConnectionStateService {
 
-  private _isOnline = new ReplaySubject<boolean>();
+  private _connectionState = new ReplaySubject<ConnectionState>();
 
-  public isOnline$ = this._isOnline.asObservable();
+  public connectionState$ = this._connectionState.asObservable();
 
   constructor(
     private _httpClient: HttpClient,
     private _endpointService: EndpointService) {
   }
 
-  public checkConnectionState(): void {
-    this._httpClient.get<string[]>(this._endpointService.getEndpoint(`connection`)).toPromise()
-      .then(() => this._isOnline.next(true))
-      .catch(() => this._isOnline.next(false));
+  private emitConnectionState(connectionState: ConnectionState) {
+    console.log(`Emitting connection state: ${JSON.stringify(connectionState)}.`);
+    this._connectionState.next(connectionState);
+  }
+
+  public checkConnectionState(lifecycleState: LifecycleState): void {
+    this._httpClient.get(this._endpointService.getEndpoint(`connection`), { responseType: "text" }).toPromise()
+      .then(() => this.emitConnectionState({ online: true, lifecycleState: lifecycleState }))
+      .catch((error) => this.emitConnectionState({ online: false, lifecycleState: lifecycleState }));
   }
 }
