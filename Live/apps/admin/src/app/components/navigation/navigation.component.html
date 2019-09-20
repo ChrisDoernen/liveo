@@ -20,10 +20,14 @@
       <logo light="true"></logo>
       <shutdown-button [hidden]="!online"></shutdown-button>
     </div>
-    <offline-message *ngIf="!online; else content" [lifecycleState]="lifecycleState"></offline-message>
-    <ng-template #content class="content-container">
-      <router-outlet></router-outlet>
-    </ng-template>
+    <div class="main content-container">
+      <offline-message *ngIf="!online; else content" [lifecycleState]="lifecycleState"
+        (checkConnection)="checkConnectionState()">
+      </offline-message>
+      <ng-template #content class="content-container">
+        <router-outlet></router-outlet>
+      </ng-template>
+    </div>
     <footer [hidden]="!online" class="content-container"></footer>
   </mat-sidenav-content>
 </mat-sidenav-container>

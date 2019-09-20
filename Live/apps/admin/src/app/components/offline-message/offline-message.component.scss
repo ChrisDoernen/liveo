@@ -1,10 +1,11 @@
 :host {
-  display: block;
+  display: flex;
+  height: 100%;
 }
 
 .container {
-  max-width: 250px;
-  margin: 0 auto;
+  max-width: 260px;
+  margin: auto auto;
   text-align: center;
 }
 

@@ -4,6 +4,7 @@ import { EndpointService } from "@live/services";
 import { HttpClient } from "@angular/common/http";
 import { ConnectionState } from "./connection-state";
 import { LifecycleState } from "./lifecycle-state";
+import { WebsocketService } from "../websocket/websocket.service";
 
 @Injectable({
   providedIn: "root"

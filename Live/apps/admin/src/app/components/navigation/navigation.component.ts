@@ -5,6 +5,8 @@ import { ConnectionStateService } from "../../services/connection-state/connecti
 import { Subscription } from "rxjs";
 import { ConnectionState } from "../../services/connection-state/connection-state";
 import { LifecycleState } from "../../services/connection-state/lifecycle-state";
+import { InitializationService } from "../../services/initialization/initialization.service";
+import { WebsocketService } from "../../services/websocket/websocket.service";
 
 @Component({
   selector: "navigation",
@@ -22,7 +24,8 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   constructor(
     public router: Router,
-    public connectionStateService: ConnectionStateService) {
+    public connectionStateService: ConnectionStateService,
+    private _websocketService: WebsocketService) {
   }
 
   public ngOnInit(): void {
@@ -35,5 +38,10 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this._connectionStateSubscription.unsubscribe();
+  }
+
+  public checkConnectionState(): void {
+    this.connectionStateService.checkConnectionState("Unknown");
+    this._websocketService.reconnect();
   }
 }

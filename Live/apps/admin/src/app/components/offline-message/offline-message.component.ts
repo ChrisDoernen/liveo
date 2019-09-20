@@ -1,5 +1,6 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, Output } from "@angular/core";
 import { LifecycleState } from "../../services/connection-state/lifecycle-state";
+import { EventEmitter } from "@angular/core";
 
 @Component({
   selector: "offline-message",
@@ -10,4 +11,6 @@ export class OfflineMessageComponent {
   @Input()
   public lifecycleState: LifecycleState;
 
+  @Output()
+  public checkConnection: EventEmitter<any> = new EventEmitter();
 }

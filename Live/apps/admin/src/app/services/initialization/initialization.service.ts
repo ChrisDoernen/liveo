@@ -4,6 +4,7 @@ import { WebsocketService } from "../websocket/websocket.service";
 import { NotificationService } from "../notification/notification.service";
 import { SessionService } from "../session/session.service";
 import { ConnectionStateService } from "../connection-state/connection-state-service";
+import { SystemMonitoringService } from "../system-monitoring/system-monitoring.service";
 
 @Injectable({
   providedIn: "root"
@@ -14,14 +15,19 @@ export class InitializationService {
     private _websocketService: WebsocketService,
     private _notificationService: NotificationService,
     private _sessionService: SessionService,
-    private _connectionStateService: ConnectionStateService) {
+    private _connectionStateService: ConnectionStateService,
+    private _systemMonitoringService: SystemMonitoringService) {
   }
 
   public initialize(): void {
+    console.log("Initializing...");
     this._connectionStateService.checkConnectionState("Startup");
     this._activationService.getActivation();
-    this._websocketService.initializeConnection();
-    this._notificationService.subscribeToServerNotifications();
     this._sessionService.subscribeToActivations();
+    this._websocketService.initializeConnection();
+
+    // These are actually subscriptions on events from the websocket client
+    this._notificationService.subscribeServerNotifications();
+    this._systemMonitoringService.subscribeCpuUsage();
   }
 }
