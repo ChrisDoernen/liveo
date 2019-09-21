@@ -12,6 +12,14 @@ export class ConnectionHistoryService {
   private _connectionCounter = 0;
   private _listeningCounter = 0;
 
+  public get connectionCounter(): number {
+    return this._connectionCounter;
+  }
+
+  public get listeningCounter(): number {
+    return this._listeningCounter;
+  }
+
   constructor(
     @inject("Logger") private _logger: Logger,
     @inject("TimeService") private _timeService: TimeService) {
@@ -54,6 +62,11 @@ export class ConnectionHistoryService {
   }
 
   public clientDisconnected(clientInfo: ClientInfo): void {
+    // Did the client subscribe to any stream?
+    // If yes, decrease the listening counter and push a new Connection history
+    // Maybe connection history is not the right term because we are counting 
+    // subscriptions or listeners
+
     this._connectionCounter--;
   }
 }
