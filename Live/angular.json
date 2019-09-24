@@ -25,7 +25,8 @@
             "assets": [
               "apps/client/src/favicon.ico",
               "apps/client/src/manifest.json",
-              "apps/client/src/assets"
+              "apps/client/src/assets",
+              "apps/client/src/manifest.json"
             ],
             "styles": [
               "apps/client/src/styles.scss"
@@ -58,7 +59,8 @@
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
                 }
-              ]
+              ],
+              "serviceWorker": true
             }
           }
         },
