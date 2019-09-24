@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "7ed558ea-a585-48fb-bc53-fef7e5f5f98d",
-		"name": "Live Service API",
+		"_postman_id": "2f6f0c76-b268-443b-b6d4-91eb98e973eb",
+		"name": "Live Service API Systemtests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -152,36 +152,6 @@
 			"response": []
 		},
 		{
-			"name": "/api/admin/shutdown mit timestamp",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"shutdownTime\": \"2019-08-18T16:30:13+02:00\"\n}"
-				},
-				"url": {
-					"raw": "{{hostname}}:{{port}}/api/shutdown",
-					"host": [
-						"{{hostname}}"
-					],
-					"port": "{{port}}",
-					"path": [
-						"api",
-						"shutdown"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "/api/admin/shutdown ohne timestamp",
 			"request": {
 				"method": "POST",
@@ -251,37 +221,6 @@
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"sessionId\": \"bd34\"\n}"
-				},
-				"url": {
-					"raw": "{{hostname}}:{{port}}/api/admin/activation",
-					"host": [
-						"{{hostname}}"
-					],
-					"port": "{{port}}",
-					"path": [
-						"api",
-						"admin",
-						"activation"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "/api/admin/activation sessionId und timestamp",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"sessionId\": \"bd34\",\n\t\"startTime\": \"2019-08-18T14:30:13+02:00\"\n}"
 				},
 				"url": {
 					"raw": "{{hostname}}:{{port}}/api/admin/activation",
