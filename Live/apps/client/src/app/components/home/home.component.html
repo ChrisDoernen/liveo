@@ -12,8 +12,8 @@
         There is no session scheduled right now. We're happy to see you later.
       </div>
       <div *ngIf="(applicationStateService.activationState$ | async) === activationState.Scheduled">
-        Session {{ activity.session?.title }} is scheduled to start at
-        {{ activity.activation?.startTime  * 1000 | date:'H:mm'}} Uhr. Stay tuned!
+        Session {{ (applicationStateService.session$ | async)?.title }} is scheduled to start at
+        {{ (applicationStateService.activation$ | async)?.startTime | date:'H:mm'}} Uhr. Stay tuned!
       </div>
       <div *ngIf="(applicationStateService.activationState$ | async) === activationState.Ended">
         The session has ended. Thanks for joining us.
@@ -33,6 +33,8 @@
         </div>
       </div>
     </ng-template>
+    <div *ngIf="(applicationStateService.activationState$ | async) !== activationState.Started" class="refresh-btn"
+      (click)="refresh()">Refresh</div>
   </div>
   <div *ngIf="(applicationStateService.activationState$ | async) === activationState.Started" class="content">
     <audio-player [selectedStream]="selectedStream?.id"></audio-player>
