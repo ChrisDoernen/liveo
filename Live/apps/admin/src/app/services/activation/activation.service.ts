@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { ActivationEntity, ActivationState } from "@live/entities";
-import { Subject, ReplaySubject } from "rxjs";
+import { ReplaySubject } from "rxjs";
 import { EndpointService, ActivationStateService } from "@live/services";
 
 @Injectable({
@@ -30,19 +30,21 @@ export class ActivationService {
 
   public getActivation(): void {
     this._httpClient
-      .get<ActivationEntity>(this._endpointService.getEndpoint("activation"))
-      .subscribe((activation) => this.activation = activation);
+      .get<ActivationEntity>(this._endpointService.getEndpoint("activation")).toPromise()
+      .then((activation) => this.activation = activation);
   }
 
   public setActivation(newActivation: ActivationEntity): void {
     console.log(`Setting new activation: ${JSON.stringify(newActivation)}.`);
-    this._httpClient.post<ActivationEntity>(this._endpointService.getEndpoint("activation"), newActivation).toPromise()
+    this._httpClient
+      .post<ActivationEntity>(this._endpointService.getEndpoint("activation"), newActivation).toPromise()
       .then((activation) => this.activation = activation);
   }
 
   public deleteActivation(): void {
     console.log(`Deleting activation.`);
-    this._httpClient.delete<ActivationEntity>(this._endpointService.getEndpoint("activation")).toPromise()
+    this._httpClient
+      .delete<ActivationEntity>(this._endpointService.getEndpoint("activation")).toPromise()
       .then((activation) => this.activation = activation);
   }
 }

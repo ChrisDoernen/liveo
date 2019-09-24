@@ -36,6 +36,10 @@ export class HomeComponent {
     }
   }
 
+  public refresh(): void {
+    this.applicationStateService.loadApplicationState();
+  }
+
   public showAboutOverlay(): void {
     this.isAboutOverlayHidden = false;
   }

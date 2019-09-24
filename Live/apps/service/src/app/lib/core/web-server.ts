@@ -9,7 +9,7 @@ import * as path from "path";
 import { Server } from "http";
 
 // Controllers have to be registered here
-import "../../controller/home.controller";
+import "../../controller/admin/connection.controller";
 import "../../controller/admin/shutdown.controller";
 import "../../controller/admin/stream.controller";
 import "../../controller/admin/session.controller";

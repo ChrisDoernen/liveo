@@ -1,8 +1,8 @@
 import { Component } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { ShutdownDialogComponent } from "../shutdown-dialog/shutdown-dialog.component";
-import { ShutdownService } from "@live/services";
 import { Shutdown } from "@live/entities";
+import { ShutdownService } from "../../services/shutdown/shutdown.service";
 
 @Component({
   selector: "shutdown-button",

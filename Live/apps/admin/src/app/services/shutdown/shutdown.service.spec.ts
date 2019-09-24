@@ -1,7 +1,7 @@
 import { TestBed } from "@angular/core/testing";
 import { HttpClient } from "@angular/common/http";
-import { EndpointService } from "../endpoint/endpoint.service";
 import { ShutdownService } from "./shutdown.service";
+import { EndpointService } from "@live/services";
 
 describe("ShutdownService", () => {
   let shutdownService: ShutdownService;
