@@ -13,4 +13,10 @@ export class SettingsService {
   public getSettings(): SettingsEntity {
     return this._settingsProvider.getSettings();
   }
+
+  public async updateSettings(settings: SettingsEntity): Promise<SettingsEntity> {
+    this._logger.info(`Received new settings: ${JSON.stringify(settings)}.`);
+
+    return await this._settingsProvider.updateSettings(settings);
+  }
 }

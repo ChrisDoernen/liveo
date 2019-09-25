@@ -30,6 +30,7 @@ import { ROUTES } from "@live/constants";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from "../environments/environment";
 import { OfflineMessageComponent } from "./components/offline-message/offline-message.component";
+import { SettingsComponent } from "./components/settings/settings.component";
 
 @NgModule({
   imports: [
@@ -62,7 +63,8 @@ import { OfflineMessageComponent } from "./components/offline-message/offline-me
     DashboardNoActivationComponent,
     ActivatedSessionTileComponent,
     ActivationStateTileComponent,
-    OfflineMessageComponent
+    OfflineMessageComponent,
+    SettingsComponent
   ],
   entryComponents: [
     ShutdownDialogComponent,

@@ -1,0 +1,8 @@
+<h2>Settings</h2>
+<h4>Default session and auto activation</h4>
+<mat-card>
+  <span>Enable auto activation</span>
+  <mat-slide-toggle [disabled]="false" [checked]="settings?.enableAutoActivation"
+    (change)="enableAutoActivationChanged($event)" class="setting-ctrl">
+  </mat-slide-toggle>
+</mat-card>

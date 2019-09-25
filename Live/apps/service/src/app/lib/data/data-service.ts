@@ -13,7 +13,7 @@ import { ISettingsProvider } from "../settings/i-settings-provider";
  */
 @injectable()
 export class DataService implements IStreamRepository, ISessionRepository, ISettingsProvider {
-  private _database: any;
+  private _database: low.LowdbAsync<any>;
 
   constructor(
     @inject("Logger") private _logger: Logger) {
@@ -21,9 +21,11 @@ export class DataService implements IStreamRepository, ISessionRepository, ISett
 
   public async initializeDatabase(): Promise<void> {
     const adapter = new FileSync(config.database);
-    await low(adapter)
-      .then((database) => this._database = database)
-      .catch((error) => this._logger.error(`Error reading database: ${error}.`));
+    try {
+      this._database = await low(adapter);
+    } catch (error) {
+      this._logger.error(`Error reading database: ${error}.`);
+    }
     this._database.defaults({ "streams": {}, "sessions": {} });
   }
 
@@ -45,5 +47,11 @@ export class DataService implements IStreamRepository, ISessionRepository, ISett
     const settings = this._database.get("settings").value() as SettingsEntity;
 
     return settings;
+  }
+
+  public async updateSettings(settings: SettingsEntity): Promise<SettingsEntity> {
+    const updated = await this._database.update("settings", () => settings).write();
+
+    return updated.settings;
   }
 }
