@@ -26,7 +26,7 @@ export class ActivationDialogComponent implements OnInit {
 
   public ngOnInit(): void {
     this._sessionService.getSessions().subscribe((sessions) => this.sessions = sessions);
-    const defaultSession = this._settingsService.getDefaultSession();
+    // Maybe get default session from settings and preselect in dropdown
 
     this.sessionFormGroup = this._formBuilder.group({
       sessionCtrl: ["", Validators.required]
