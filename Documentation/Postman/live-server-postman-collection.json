@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7ed558ea-a585-48fb-bc53-fef7e5f5f98d",
+		"_postman_id": "e660e673-c8bc-4770-a9cd-ed00928f6f86",
 		"name": "Live Service API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -79,13 +79,44 @@
 			"response": []
 		},
 		{
-			"name": "/api/settings",
+			"name": "/api/admin/settings",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": ""
+				},
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/admin/settings",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"admin",
+						"settings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/settings",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"defaultSession\": \"bdd1\",\n    \"enableAutoActivation\": false\n}"
 				},
 				"url": {
 					"raw": "{{hostname}}:{{port}}/api/admin/settings",
