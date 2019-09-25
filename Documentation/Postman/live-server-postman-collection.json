@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "f431a088-4894-45b2-8f8a-7c220699f62d",
-		"name": "Live Service",
+		"_postman_id": "7ed558ea-a585-48fb-bc53-fef7e5f5f98d",
+		"name": "Live Service API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -55,7 +55,7 @@
 			"response": []
 		},
 		{
-			"name": "/api/hello",
+			"name": "/api/admin/connection",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -64,14 +64,15 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{hostname}}:{{port}}/api/hello",
+					"raw": "{{hostname}}:{{port}}/api/admin/connection",
 					"host": [
 						"{{hostname}}"
 					],
 					"port": "{{port}}",
 					"path": [
 						"api",
-						"hello"
+						"admin",
+						"connection"
 					]
 				}
 			},
@@ -151,7 +152,7 @@
 			"response": []
 		},
 		{
-			"name": "/api/shutdown",
+			"name": "/api/admin/shutdown",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -322,7 +323,7 @@
 			"response": []
 		},
 		{
-			"name": "/api/activation",
+			"name": "/api/admin/activation",
 			"request": {
 				"method": "DELETE",
 				"header": [

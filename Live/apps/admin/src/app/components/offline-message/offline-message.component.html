@@ -1,0 +1,20 @@
+<div class="container">
+  <div *ngIf="lifecycleState === 'Startup'">
+    <div class="message">
+      Could not connect to the LIVE server. Please turn on the server and make sure you are connected to the right
+      network.
+    </div>
+  </div>
+  <div *ngIf="lifecycleState === 'Shutdown'">
+    <div class="message">The server has been shut down. You can close the window now.
+    </div>
+  </div>
+  <div *ngIf="lifecycleState === 'Unknown'">
+    <div class="message">Could not connect to the LIVE server. Please make sure the server is running and you are
+      connected to the right network.
+    </div>
+  </div>
+  <button mat-raised-button color="primary" (click)="checkConnection.emit($event)">
+    Reconnect
+  </button>
+</div>

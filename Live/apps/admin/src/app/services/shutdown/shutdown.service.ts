@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { EndpointService } from "../endpoint/endpoint.service";
 import { Shutdown } from "@live/entities";
+import { EndpointService } from "@live/services";
+import { ConnectionStateService } from "../connection-state/connection-state-service";
 
 @Injectable({
   providedIn: "root"
@@ -9,12 +10,14 @@ import { Shutdown } from "@live/entities";
 export class ShutdownService {
   constructor(
     private _httpClient: HttpClient,
-    private _endpointService: EndpointService) {
+    private _endpointService: EndpointService,
+    private _connectionStateService: ConnectionStateService) {
   }
 
   public async setShutdown(shutdown: Shutdown): Promise<any> {
     this._httpClient
       .post(this._endpointService.getEndpoint("shutdown"), shutdown)
       .toPromise();
+    this._connectionStateService.checkConnectionState("Shutdown");
   }
 }

@@ -1,0 +1,1 @@
+export type LifecycleState = "Startup" | "Shutdown" | "Unknown";

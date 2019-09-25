@@ -1,9 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Subject, ReplaySubject } from "rxjs";
+import { ReplaySubject } from "rxjs";
 import { EndpointService, ActivationStateService } from "@live/services";
 import { ApplicationStateEntity, ActivationState, ActivationEntity, SessionEntity, StreamEntity } from "@live/entities";
-import { take } from "rxjs/operators";
 
 /**
  * Service that hols the application state.

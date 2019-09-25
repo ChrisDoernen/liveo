@@ -7,12 +7,16 @@ import { ENDPOINTS, EVENTS } from "@live/constants";
 })
 export class WebsocketService extends Socket implements OnDestroy {
   constructor() {
-    super({ url: ENDPOINTS.root, options: { reconnectionAttempts: 6, path: ENDPOINTS.websocket } });
+    super({ url: ENDPOINTS.root, options: { reconnectionAttempts: 3, path: ENDPOINTS.websocket } });
   }
 
   public initializeConnection(): void {
     this.on("connect", () => this.emit(EVENTS.subscribeAdmin));
     console.debug("Subscribe to admin.");
+  }
+
+  public reconnect(): void {
+    this.ioSocket.open();
   }
 
   public ngOnDestroy(): void {

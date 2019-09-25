@@ -25,8 +25,11 @@ import { DashboardActivationComponent } from "./components/dashboard-activation/
 import { DashboardNoActivationComponent } from "./components/dashboard-no-activation/dashboard-no-activation.component";
 import { ActivatedSessionTileComponent } from "./components/activated-session-tile/activated-session-tile.component";
 import { ActivationStateTileComponent } from "./components/activation-state-tile/activation-state-tile.component";
-import { EndpointService, ROUTE } from "@live/services";
+import { ROUTE } from "@live/services";
 import { ROUTES } from "@live/constants";
+import { ServiceWorkerModule } from "@angular/service-worker";
+import { environment } from "../environments/environment";
+import { OfflineMessageComponent } from "./components/offline-message/offline-message.component";
 
 @NgModule({
   imports: [
@@ -39,7 +42,8 @@ import { ROUTES } from "@live/constants";
     MatNativeDateModule,
     ReactiveFormsModule,
     SocketIoModule,
-    InlineSVGModule.forRoot()
+    InlineSVGModule.forRoot(),
+    ServiceWorkerModule.register("ngsw-worker.js", { enabled: environment.production })
   ],
   declarations: [
     AppComponent,
@@ -57,7 +61,8 @@ import { ROUTES } from "@live/constants";
     DashboardActivationComponent,
     DashboardNoActivationComponent,
     ActivatedSessionTileComponent,
-    ActivationStateTileComponent
+    ActivationStateTileComponent,
+    OfflineMessageComponent
   ],
   entryComponents: [
     ShutdownDialogComponent,

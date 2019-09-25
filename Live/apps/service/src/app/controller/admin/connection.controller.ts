@@ -1,10 +1,11 @@
 import { controller, httpGet } from "inversify-express-utils";
+import { ROUTES } from "@live/constants";
 
-@controller("/hello")
+@controller(`/${ROUTES.admin}/connection`)
 export class HelloController {
 
   @httpGet("/")
   public get(): string {
-    return "Live";
+    return "Online";
   }
 }
