@@ -1,19 +1,31 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { SettingsService } from "../../services/settings/settings.service";
-import { SettingsEntity } from "@live/entities";
-import { MatSlideToggleChange } from "@angular/material";
+import { SettingsEntity, SessionEntity } from "@live/entities";
+import { MatSlideToggleChange, MatSelectChange } from "@angular/material";
+import { Subscription } from "rxjs";
+import { SessionService } from "../../services/session/session.service";
 
 @Component({
   selector: "settings",
   templateUrl: "./settings.component.html",
   styleUrls: ["./settings.component.scss"]
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent implements OnInit, OnDestroy {
 
+  public sessions: SessionEntity[];
   public settings: SettingsEntity;
+  private _sessionsSubscription: Subscription;
 
   constructor(
+    private _sessionService: SessionService,
     private _settingsService: SettingsService) {
+  }
+
+  public ngOnInit(): void {
+    this._settingsService.settings$.subscribe((settings) => this.settings = settings);
+    this._sessionsSubscription = this._sessionService.getSessions().subscribe((sessions) => this.sessions = sessions);
+    // Maybe get default session from settings and preselect in dropdown
+
   }
 
   public enableAutoActivationChanged(change: MatSlideToggleChange): void {
@@ -28,8 +40,19 @@ export class SettingsComponent implements OnInit {
     this._settingsService.updateSettings(updatedSettings);
   }
 
-  public ngOnInit() {
-    this._settingsService.settings$.subscribe((settings) => this.settings = settings);
+  public setSelectedSession(change: MatSelectChange): void {
+    // Check if the state really changed, otherwise it was the update
+    if (change.value === this.settings.defaultSession) {
+      return;
+    }
+
+    const updatedSettings = this.settings;
+    updatedSettings.defaultSession = change.value;
+
+    this._settingsService.updateSettings(updatedSettings);
   }
 
+  public ngOnDestroy(): void {
+    this._sessionsSubscription.unsubscribe();
+  }
 }

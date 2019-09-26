@@ -1,8 +1,22 @@
 <h2>Settings</h2>
 <h4>Default session and auto activation</h4>
 <mat-card>
-  <span>Enable auto activation</span>
-  <mat-slide-toggle [disabled]="false" [checked]="settings?.enableAutoActivation"
-    (change)="enableAutoActivationChanged($event)" class="setting-ctrl">
-  </mat-slide-toggle>
+  <div class="setting-row">
+    <div>Default session</div>
+    <mat-form-field>
+      <mat-select [value]="settings?.defaultSession" (selectionChange)="setSelectedSession($event)">
+        <mat-option [value]="''">None </mat-option>
+        <mat-option *ngFor="let session of sessions" [value]="session.id">
+          {{session.title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <mat-divider class="settings-divider"></mat-divider>
+  <div class="setting-row" [class.setting-row-disabled]="!settings?.defaultSession">
+    <div>Enable auto activation</div>
+    <mat-slide-toggle [disabled]="!settings?.defaultSession" [checked]="settings?.enableAutoActivation"
+      (change)="enableAutoActivationChanged($event)">
+    </mat-slide-toggle>
+  </div>
 </mat-card>

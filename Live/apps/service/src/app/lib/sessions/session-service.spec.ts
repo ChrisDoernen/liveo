@@ -88,4 +88,10 @@ describe("SessionService", () => {
     sessionService.loadSessions();
     expect(sessionService.getSessionEntity.bind(null, "83kv")).toThrowError();
   });
+
+  it("should validate session existence correctly", () => {
+    sessionService.loadSessions();
+    expect(() => sessionService.validateSessionExists("83kv")).toThrowError();
+    sessionService.validateSessionExists("bcf4");
+  });
 });

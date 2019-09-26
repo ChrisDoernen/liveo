@@ -65,6 +65,10 @@ export class SessionService {
     return matchingSession;
   }
 
+  public validateSessionExists(sessionId: string): void {
+    this.findSession(sessionId);
+  }
+
   public getSession(id: string): Session {
     return this.findSession(id);
   }
