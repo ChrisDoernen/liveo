@@ -356,7 +356,12 @@
             "assets": [
               "apps/admin/src/favicon.ico",
               "apps/admin/src/assets",
-              "apps/admin/src/manifest.json"
+              "apps/admin/src/manifest.json",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/material-icons/iconfont/",
+                "output": "./assets/iconfont"
+              }
             ],
             "styles": [
               "apps/admin/src/styles.scss"
