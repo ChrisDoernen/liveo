@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { StreamEntity, ActivationState } from "@live/entities";
 import { ApplicationStateEntity } from "@live/entities";
 import { ApplicationStateService } from "../../services/application-state/application-state.service";
+import { Logger } from "@live/services";
 
 @Component({
   selector: "home",
@@ -23,16 +24,17 @@ export class HomeComponent {
   }
 
   constructor(
+    private _logger: Logger,
     public applicationStateService: ApplicationStateService) {
   }
 
   public selectStream(stream: StreamEntity): void {
     if (this.selectedStream === stream) {
       this.selectedStream = null;
-      console.debug("Unselecting stream.");
+      this._logger.info("Unselecting stream.");
     } else {
       this.selectedStream = stream;
-      console.debug(`Selecting stream ${stream.id}.`);
+      this._logger.info(`Selecting stream ${stream.id}.`);
     }
   }
 

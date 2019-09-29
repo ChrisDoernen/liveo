@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { ReplaySubject } from "rxjs";
-import { EndpointService, ActivationStateService } from "@live/services";
+import { EndpointService, ActivationStateService, Logger } from "@live/services";
 import { ApplicationStateEntity, ActivationState, ActivationEntity, SessionEntity, StreamEntity } from "@live/entities";
 
 /**
@@ -24,6 +24,7 @@ export class ApplicationStateService {
   public connectionError$ = this._connectonError.asObservable();
 
   constructor(
+    private _logger: Logger,
     private _httpClient: HttpClient,
     private _endpointService: EndpointService,
     private _activationStateService: ActivationStateService) {
@@ -35,11 +36,11 @@ export class ApplicationStateService {
       .then((applicationState: ApplicationStateEntity) => {
         const activationState = this._activationStateService.determineActivationState(applicationState.activation);
         this._activationState.next(activationState);
-        console.log(`Emitting new activation state: ${activationState}.`);
+        this._logger.info(`Emitting new activation state: ${activationState}.`);
         this._activation.next(applicationState.activation);
-        console.log(`Emitting new activation: ${JSON.stringify(applicationState.activation)}.`);
+        this._logger.info(`Emitting new activation: ${JSON.stringify(applicationState.activation)}.`);
         this._session.next(applicationState.session);
-        console.log(`Emitting new session: ${JSON.stringify(applicationState.session)}.`);
+        this._logger.info(`Emitting new session: ${JSON.stringify(applicationState.session)}.`);
         this._streams.next(applicationState.streams);
         this._connectonError.next(false);
       })
