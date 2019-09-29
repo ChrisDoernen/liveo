@@ -8,7 +8,7 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { LogoComponent } from "../logo/logo.component";
 import { InlineSVGDirective } from "ng-inline-svg";
 import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
-import { EndpointService } from "@live/services";
+import { EndpointService, Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
 import { OfflineMessageComponent } from "../offline-message/offline-message.component";
 
@@ -25,7 +25,7 @@ describe("NavigationComponent", () => {
         AngularMaterialModule,
         NoopAnimationsModule,
         HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule,
       ],
       declarations: [
         NavigationComponent,
@@ -36,7 +36,8 @@ describe("NavigationComponent", () => {
       ],
       providers: [
         { provide: InlineSVGService, useValue: jest.fn() },
-        { provide: EndpointService, useValue: endpointService }
+        { provide: EndpointService, useValue: endpointService },
+        { provide: Logger, useValue: jest.fn() }
       ]
     }).compileComponents();
 

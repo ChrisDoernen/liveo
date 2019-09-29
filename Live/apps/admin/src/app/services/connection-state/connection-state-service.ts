@@ -1,10 +1,9 @@
 import { Injectable } from "@angular/core";
 import { ReplaySubject } from "rxjs";
-import { EndpointService } from "@live/services";
+import { EndpointService, Logger } from "@live/services";
 import { HttpClient } from "@angular/common/http";
 import { ConnectionState } from "./connection-state";
 import { LifecycleState } from "./lifecycle-state";
-import { WebsocketService } from "../websocket/websocket.service";
 
 @Injectable({
   providedIn: "root"
@@ -16,12 +15,13 @@ export class ConnectionStateService {
   public connectionState$ = this._connectionState.asObservable();
 
   constructor(
+    private _logger: Logger,
     private _httpClient: HttpClient,
     private _endpointService: EndpointService) {
   }
 
   private emitConnectionState(connectionState: ConnectionState) {
-    console.log(`Emitting connection state: ${JSON.stringify(connectionState)}.`);
+    this._logger.info(`Emitting connection state: ${JSON.stringify(connectionState)}.`);
     this._connectionState.next(connectionState);
   }
 

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { EndpointService } from "@live/services";
+import { EndpointService, Logger } from "@live/services";
 import { SettingsEntity } from "@live/entities";
 import { ReplaySubject } from "rxjs";
 
@@ -14,11 +14,12 @@ export class SettingsService {
   public settings$ = this._settings.asObservable();
 
   private set settings(settings: SettingsEntity) {
-    console.debug(`Emitting settings: ${JSON.stringify(settings)}.`);
+    this._logger.info(`Emitting settings: ${JSON.stringify(settings)}.`);
     this._settings.next(settings);
   }
 
   constructor(
+    private _logger: Logger,
     private _httpClient: HttpClient,
     private _endpointService: EndpointService) {
   }

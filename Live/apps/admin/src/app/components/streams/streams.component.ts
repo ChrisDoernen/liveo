@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { StreamService } from "@live/services";
 import { StreamEntity } from "@live/entities";
+import { StreamService } from "../../services/stream/stream.service";
 
 @Component({
   selector: "streams",
@@ -11,10 +11,11 @@ export class StreamsComponent implements OnInit {
 
   public streams: StreamEntity[];
 
-  constructor(private _streamService: StreamService) {
+  constructor(
+    private _streamService: StreamService) {
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this._streamService.getStreams().then((streams) => {
       this.streams = streams;
     });

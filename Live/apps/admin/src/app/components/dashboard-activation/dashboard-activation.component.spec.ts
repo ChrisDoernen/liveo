@@ -6,6 +6,7 @@ import { ActivationService } from "../../services/activation/activation.service"
 import { ActivatedSessionTileComponent } from "../activated-session-tile/activated-session-tile.component";
 import { ActivationStateTileComponent } from "../activation-state-tile/activation-state-tile.component";
 import { SessionService } from "../../services/session/session.service";
+import { Logger } from "@live/services";
 
 describe("DashboardActivationComponent", () => {
   let component: DashboardActivationComponent;
@@ -28,7 +29,8 @@ describe("DashboardActivationComponent", () => {
       ],
       providers: [
         { provide: ActivationService, useValue: activationService },
-        { provide: SessionService, useValue: sessionService }
+        { provide: SessionService, useValue: sessionService },
+        { provide: Logger, useValue: jest.fn() }
       ]
     }).compileComponents();
 

@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { map } from "rxjs/operators";
-import { EndpointService } from "../endpoint/endpoint.service";
 import { StreamEntity } from "@live/entities";
+import { EndpointService } from "@live/services";
 
 @Injectable({
   providedIn: "root"
@@ -10,8 +10,8 @@ import { StreamEntity } from "@live/entities";
 export class StreamService {
   constructor(
     private _httpClient: HttpClient,
-    private _endpointService: EndpointService
-  ) { }
+    private _endpointService: EndpointService) {
+  }
 
   public getStream(id: string): Promise<StreamEntity> {
     return this._httpClient

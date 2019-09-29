@@ -10,7 +10,7 @@ import { LogoComponent } from "./components/logo/logo.component";
 import { InlineSVGDirective } from "ng-inline-svg";
 import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
 import { NotficationsComponent } from "./components/notfications/notfications.component";
-import { EndpointService } from "@live/services";
+import { EndpointService, Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
 import { OfflineMessageComponent } from "./components/offline-message/offline-message.component";
 
@@ -38,7 +38,8 @@ describe("AppComponent", () => {
       ],
       providers: [
         { provide: EndpointService, useValue: endpointService },
-        { provide: InlineSVGService, useValue: jest.fn() }
+        { provide: InlineSVGService, useValue: jest.fn() },
+        { provide: Logger, useValue: jest.fn() }
       ]
     }).compileComponents();
   });

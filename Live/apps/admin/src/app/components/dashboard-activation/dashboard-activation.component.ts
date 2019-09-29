@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { ActivationService } from "../../services/activation/activation.service";
 import { ActivationDeletionDialogComponent } from "../activation-deletion-dialog/activation-deletion-dialog.component";
+import { Logger } from "@live/services";
 
 @Component({
   selector: "dashboard-activation",
@@ -11,6 +12,7 @@ import { ActivationDeletionDialogComponent } from "../activation-deletion-dialog
 export class DashboardActivationComponent {
 
   constructor(
+    private _logger: Logger,
     public activationService: ActivationService,
     public activationDeletionDialog: MatDialog) {
   }
@@ -19,7 +21,7 @@ export class DashboardActivationComponent {
     const dialogRef = this.activationDeletionDialog.open(ActivationDeletionDialogComponent, { width: "250px", restoreFocus: false });
 
     dialogRef.afterClosed().toPromise().then((result) => {
-      console.log(`The dialog was closed, result: ${result}`);
+      this._logger.info(`The dialog was closed, result: ${result}`);
 
       if (result) {
         this.activationService.deleteActivation();

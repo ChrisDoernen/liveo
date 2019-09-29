@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { ShutdownComponent } from "./shutdown.component";
 import { AngularMaterialModule } from "../../angular-material.module";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { EndpointService } from "@live/services";
+import { EndpointService, Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
 
 describe("ShutdownComponent", () => {
@@ -22,7 +22,8 @@ describe("ShutdownComponent", () => {
         ShutdownComponent
       ],
       providers: [
-        { provide: EndpointService, useValue: endpointService }
+        { provide: EndpointService, useValue: endpointService },
+        { provide: Logger, useValue: jest.fn() }
       ]
     }).compileComponents();
 

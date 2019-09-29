@@ -7,7 +7,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { AngularMaterialModule } from "../../angular-material.module";
 import { SessionService } from "../../services/session/session.service";
 import createMockInstance from "jest-create-mock-instance";
-import { EndpointService } from "@live/services";
+import { EndpointService, Logger } from "@live/services";
 
 describe("ActivationDialogComponent", () => {
   let component: ActivationDialogComponent;
@@ -37,7 +37,8 @@ describe("ActivationDialogComponent", () => {
       providers: [
         { provide: MatDialog, useValue: jest.fn() },
         { provide: SessionService, useValue: sessionService },
-        { provide: EndpointService, useValue: endpointService }
+        { provide: EndpointService, useValue: endpointService },
+        { provide: Logger, useValue: jest.fn() }
       ]
     }).compileComponents();
 

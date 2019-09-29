@@ -6,12 +6,14 @@ import { SessionService } from "../session/session.service";
 import { ConnectionStateService } from "../connection-state/connection-state-service";
 import { SystemMonitoringService } from "../system-monitoring/system-monitoring.service";
 import { SettingsService } from "../settings/settings.service";
+import { Logger } from "@live/services";
 
 @Injectable({
   providedIn: "root"
 })
 export class InitializationService {
   constructor(
+    private _logger: Logger,
     private _activationService: ActivationService,
     private _websocketService: WebsocketService,
     private _notificationService: NotificationService,
@@ -22,7 +24,7 @@ export class InitializationService {
   }
 
   public initialize(): void {
-    console.log("Initializing...");
+    this._logger.info("Initializing...");
     this._connectionStateService.checkConnectionState("Startup");
     this._activationService.getActivation();
     this._sessionService.subscribeToActivations();
