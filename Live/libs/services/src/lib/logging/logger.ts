@@ -10,7 +10,7 @@ const noop = (message: string) => undefined;
 export class Logger {
 
   constructor(
-    @Inject(ENABLECONSOLELOGGING) private _enableConsoleLogging: boolean = false) {
+    @Inject(ENABLECONSOLELOGGING) private _enableConsoleLogging: boolean) {
   }
 
   get info(): (message: string) => void {
