@@ -83,6 +83,11 @@
     "@angular/cli": "8.1.1",
     "@angular/compiler-cli": "^8.2.8",
     "@angular/language-service": "^8.2.8",
+    "@nrwl/workspace": "8.4.8",
+    "@nrwl/express": "8.4.8",
+    "@nrwl/node": "8.4.8",
+    "@nrwl/jest": "8.4.8",
+    "@nrwl/cypress": "8.4.8",
     "@types/app-root-path": "^1.2.4",
     "@types/express": "4.16.0",
     "@types/faker": "^4.1.5",
@@ -110,11 +115,6 @@
     "ts-jest": "^24.0.2",
     "ts-node": "^7.0.1",
     "tslint": "~5.11.0",
-    "typescript": "3.4.5",
-    "@nrwl/workspace": "8.4.8",
-    "@nrwl/express": "8.4.8",
-    "@nrwl/node": "8.4.8",
-    "@nrwl/jest": "8.4.8",
-    "@nrwl/cypress": "8.4.8"
+    "typescript": "3.4.5"
   }
 }
