@@ -23,7 +23,7 @@
     "test:app:client": "ng test client",
     "test:app:service": "ng test service",
     "systemtests": "node_modules/.bin/newman run apps/service-systemtests/live-server-systemtests-postman-collection.json -e apps/service-systemtests/localhost-3000.postman-environment.json",
-    "lint": "./node_modules/.bin/nx lint && ng lint",
+    "lint": "./node_modules/.bin/nx workspace-lint && ng lint",
     "e2e": "ng e2e",
     "affected:apps": "./node_modules/.bin/nx affected:apps",
     "affected:libs": "./node_modules/.bin/nx affected:libs",
@@ -40,7 +40,8 @@
     "update:check": "ng update",
     "workspace-schematic": "./node_modules/.bin/nx workspace-schematic",
     "dep-graph": "./node_modules/.bin/nx dep-graph",
-    "help": "./node_modules/.bin/nx help"
+    "help": "./node_modules/.bin/nx help",
+    "nx": "nx"
   },
   "dependencies": {
     "@angular/animations": "^8.2.8",
@@ -75,11 +76,11 @@
     "socket.io-client": "^2.2.0",
     "winston": "^3.1.0",
     "zone.js": "^0.9.1",
-    "@nrwl/angular": "8.0.0"
+    "@nrwl/angular": "8.4.8"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.803.6",
-    "@angular/cli": "^8.3.6",
+    "@angular-devkit/build-angular": "^0.801.1",
+    "@angular/cli": "8.1.1",
     "@angular/compiler-cli": "^8.2.8",
     "@angular/language-service": "^8.2.8",
     "@types/app-root-path": "^1.2.4",
@@ -97,7 +98,7 @@
     "app-root-path": "^2.1.0",
     "babel-preset-env": "^1.7.0",
     "codelyzer": "~4.5.0",
-    "cypress": "^3.4.0",
+    "cypress": "~3.3.1",
     "faker": "^4.1.0",
     "jest": "^24.8.0",
     "jest-create-mock-instance": "^1.1.0",
@@ -110,10 +111,10 @@
     "ts-node": "^7.0.1",
     "tslint": "~5.11.0",
     "typescript": "3.4.5",
-    "@nrwl/workspace": "8.0.0",
-    "@nrwl/express": "8.0.0",
-    "@nrwl/node": "8.0.0",
-    "@nrwl/jest": "8.0.0",
-    "@nrwl/cypress": "8.0.0"
+    "@nrwl/workspace": "8.4.8",
+    "@nrwl/express": "8.4.8",
+    "@nrwl/node": "8.4.8",
+    "@nrwl/jest": "8.4.8",
+    "@nrwl/cypress": "8.4.8"
   }
 }

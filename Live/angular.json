@@ -85,7 +85,7 @@
               "apps/client/tsconfig.app.json",
               "apps/client/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": ["**/node_modules/**", "!apps/client/**"]
           }
         },
         "test": {
@@ -120,7 +120,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "apps/client-e2e/tsconfig.e2e.json",
-            "exclude": ["**/node_modules/**"]
+            "exclude": ["**/node_modules/**", "!apps/client-e2e/**"]
           }
         }
       }
@@ -196,7 +196,7 @@
               "apps/service/tsconfig.app.json",
               "apps/service/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": ["**/node_modules/**", "!apps/service/**"]
           }
         },
         "test": {
@@ -221,7 +221,7 @@
               "libs/entities/tsconfig.lib.json",
               "libs/entities/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": ["**/node_modules/**", "!libs/entities/**"]
           }
         },
         "test": {
@@ -266,7 +266,7 @@
               "libs/l3as/tsconfig.lib.json",
               "libs/l3as/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": ["**/node_modules/**", "!libs/l3as/**"]
           }
         },
         "test": {
@@ -296,7 +296,7 @@
               "libs/services/tsconfig.lib.json",
               "libs/services/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": ["**/node_modules/**", "!libs/services/**"]
           }
         },
         "test": {
@@ -402,7 +402,7 @@
               "apps/admin/tsconfig.app.json",
               "apps/admin/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": ["**/node_modules/**", "!apps/admin/**"]
           }
         },
         "test": {
@@ -437,7 +437,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "apps/admin-e2e/tsconfig.e2e.json",
-            "exclude": ["**/node_modules/**"]
+            "exclude": ["**/node_modules/**", "!apps/admin-e2e/**"]
           }
         }
       }
@@ -455,7 +455,7 @@
               "libs/constants/tsconfig.lib.json",
               "libs/constants/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": ["**/node_modules/**", "!libs/constants/**"]
           }
         },
         "test": {
@@ -485,7 +485,7 @@
               "libs/test-utilities/tsconfig.lib.json",
               "libs/test-utilities/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": ["**/node_modules/**", "!libs/test-utilities/**"]
           }
         }
       },
