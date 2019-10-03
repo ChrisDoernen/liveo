@@ -22,7 +22,7 @@
     "test:app:admin": "ng test admin",
     "test:app:client": "ng test client",
     "test:app:service": "ng test service",
-    "systemtests": "node_modules/.bin/newman run apps/service-systemtests/live-server-systemtests-postman-collection.json -e apps/service-systemtests/localhost-3000.postman-environment.json",
+    "apitests": "node_modules/.bin/newman run apps/service-apitests/live-server-apitests-postman-collection.json -e apps/service-apitests/localhost-3000.postman-environment.json",
     "lint": "./node_modules/.bin/nx workspace-lint && ng lint",
     "e2e": "ng e2e",
     "affected:apps": "./node_modules/.bin/nx affected:apps",
