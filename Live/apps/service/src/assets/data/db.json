@@ -81,6 +81,12 @@
   ],
   "settings": {
     "defaultSession": "bd34",
-    "enableAutoActivation": true
-  }
+    "enableAutoActivation": false
+  },
+  "users": [
+    {
+      "username": "admin",
+      "password": "admin"
+    }
+  ]
 }

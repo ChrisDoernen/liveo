@@ -8,7 +8,7 @@ import { AngularMaterialModule } from "./angular-material.module";
 import { NavigationComponent } from "./components/navigation/navigation.component";
 import { ShutdownComponent } from "./components/shutdown/shutdown.component";
 import { ShutdownDialogComponent } from "./components/shutdown-dialog/shutdown-dialog.component";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { StreamsComponent } from "./components/streams/streams.component";
 import { SessionsComponent } from "./components/sessions/sessions.component";
 import { ActivationDialogComponent } from "./components/activation-dialog/activation-dialog.component";
@@ -31,6 +31,10 @@ import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from "../environments/environment";
 import { OfflineMessageComponent } from "./components/offline-message/offline-message.component";
 import { SettingsComponent } from "./components/settings/settings.component";
+import { LoginComponent } from "./components/login/login.component";
+import { AuthenticationInterceptor } from "./interceptors/authentication.interceptor";
+import { ErrorInterceptor } from "./interceptors/error.interceptor";
+import { WelcomeComponent } from "./components/welcome/welcome.component";
 
 @NgModule({
   imports: [
@@ -64,7 +68,9 @@ import { SettingsComponent } from "./components/settings/settings.component";
     ActivatedSessionTileComponent,
     ActivationStateTileComponent,
     OfflineMessageComponent,
-    SettingsComponent
+    SettingsComponent,
+    LoginComponent,
+    WelcomeComponent
   ],
   entryComponents: [
     ShutdownDialogComponent,
@@ -72,6 +78,14 @@ import { SettingsComponent } from "./components/settings/settings.component";
     ActivationDeletionDialogComponent
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthenticationInterceptor, multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor, multi: true
+    },
     {
       provide: APP_BOOTSTRAP_LISTENER,
       useFactory: (initializationService: InitializationService) => {

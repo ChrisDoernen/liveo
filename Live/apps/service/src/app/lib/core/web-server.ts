@@ -16,6 +16,7 @@ import "../../controller/admin/session.controller";
 import "../../controller/admin/activation.controller";
 import "../../controller/admin/settings.controller";
 import "../../controller/client/application-state.controller";
+import "../../controller/admin/authentication.controller"
 
 @injectable()
 export class WebServer {

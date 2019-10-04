@@ -1,0 +1,14 @@
+:host {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  background-color: var(--primary-color);
+  z-index: 100;
+}
+
+logo {
+  width: 100px;
+}

@@ -8,7 +8,9 @@ import { ROUTES } from "@live/constants";
 @controller(`/${ROUTES.admin}/shutdown`)
 export class ShutdownController {
 
-  constructor(@inject("ShutdownService") private _shutdownService: ShutdownService) { }
+  constructor(
+    @inject("ShutdownService") private _shutdownService: ShutdownService) {
+  }
 
   @httpPost("/")
   public setShutdown(request: Request, response: Response): Shutdown {

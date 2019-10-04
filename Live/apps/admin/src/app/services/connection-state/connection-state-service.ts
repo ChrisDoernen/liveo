@@ -1,7 +1,7 @@
-import { Injectable } from "@angular/core";
-import { ReplaySubject } from "rxjs";
-import { EndpointService, Logger } from "@live/services";
 import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { EndpointService, Logger } from "@live/services";
+import { ReplaySubject } from "rxjs";
 import { ConnectionState } from "./connection-state";
 import { LifecycleState } from "./lifecycle-state";
 
@@ -14,6 +14,8 @@ export class ConnectionStateService {
 
   public connectionState$ = this._connectionState.asObservable();
 
+  public isOnline: boolean;
+
   constructor(
     private _logger: Logger,
     private _httpClient: HttpClient,
@@ -23,6 +25,7 @@ export class ConnectionStateService {
   private emitConnectionState(connectionState: ConnectionState) {
     this._logger.info(`Emitting connection state: ${JSON.stringify(connectionState)}.`);
     this._connectionState.next(connectionState);
+    this.isOnline = connectionState.online;
   }
 
   public checkConnectionState(lifecycleState: LifecycleState): void {

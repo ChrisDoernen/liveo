@@ -1,11 +1,10 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { environment } from "../../../../src/environments/environment";
-import { ConnectionStateService } from "../../services/connection-state/connection-state-service";
 import { Subscription } from "rxjs";
+import { environment } from "../../../../src/environments/environment";
 import { ConnectionState } from "../../services/connection-state/connection-state";
+import { ConnectionStateService } from "../../services/connection-state/connection-state-service";
 import { LifecycleState } from "../../services/connection-state/lifecycle-state";
-import { InitializationService } from "../../services/initialization/initialization.service";
 import { WebsocketService } from "../../services/websocket/websocket.service";
 
 @Component({
