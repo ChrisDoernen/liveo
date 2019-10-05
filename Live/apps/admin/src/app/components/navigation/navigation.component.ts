@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { environment } from "../../../../src/environments/environment";
 
 @Component({
@@ -12,6 +12,7 @@ export class NavigationComponent {
   public revision: string = environment.revision;
 
   constructor(
+    public route: ActivatedRoute,
     public router: Router) {
   }
 }

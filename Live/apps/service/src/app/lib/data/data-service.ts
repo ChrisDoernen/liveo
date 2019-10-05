@@ -1,12 +1,12 @@
-import { config } from "../../config/service.config";
-import { Logger } from "../logging/logger";
-import { injectable, inject } from "inversify";
-import { SessionEntity, StreamEntity, SettingsEntity } from "@live/entities";
-import { IStreamRepository } from "../streams/i-stream-repository";
-import { ISessionRepository } from "../sessions/i-session-repository";
+import { SessionEntity, SettingsEntity, StreamEntity, UserEntity } from "@live/entities";
+import { inject, injectable } from "inversify";
 import * as low from "lowdb";
 import * as FileSync from "lowdb/adapters/FileAsync";
+import { config } from "../../config/service.config";
+import { Logger } from "../logging/logger";
+import { ISessionRepository } from "../sessions/i-session-repository";
 import { ISettingsProvider } from "../settings/i-settings-provider";
+import { IStreamRepository } from "../streams/i-stream-repository";
 
 /**
  * Provides access to a file based data source
@@ -53,5 +53,12 @@ export class DataService implements IStreamRepository, ISessionRepository, ISett
     const updated = await this._database.update("settings", () => settings).write();
 
     return updated.settings;
+  }
+
+  public getUsers(): UserEntity[] {
+    const users = this._database.get("users").value() as UserEntity[];
+    this._logger.info(`Read ${users.length} user entities from database.`);
+
+    return users;
   }
 }

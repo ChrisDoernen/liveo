@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Params, Router } from "@angular/router";
 import { EndpointService, Logger } from "@live/services";
+import { WebsocketService } from "../websocket/websocket.service";
 
 export type ConnectionStateCheckContext = "Shutdown" | "Navigation";
 
@@ -10,18 +11,20 @@ export type ConnectionStateCheckContext = "Shutdown" | "Navigation";
 })
 export class ConnectionStateService {
 
-  private _currentConnectionState: Promise<boolean> = new Promise<boolean>();
+  private _currentConnectionState: Promise<boolean>;
 
   constructor(
     private _logger: Logger,
     private _router: Router,
+    private _websocketService: WebsocketService,
     private _httpClient: HttpClient,
     private _endpointService: EndpointService) {
   }
 
   public checkConnectionState(): Promise<boolean> {
     this._currentConnectionState =
-      this._httpClient.get(this._endpointService.getEndpoint(`connection`), { responseType: "text" }).toPromise().then(() => true);
+      this._httpClient.get(this._endpointService.getEndpoint(`connection`), { responseType: "text" }).toPromise()
+        .then(() => true);
 
     return this._currentConnectionState;
   }
@@ -32,7 +35,8 @@ export class ConnectionStateService {
       params = { "shutdown": true };
     }
 
-    this.checkConnectionState().catch(() => this.navigateToOfflinePage(params));
+    this.checkConnectionState()
+      .catch(() => this.navigateToOfflinePage(params));
   }
 
   public async checkOfflineWhenNavigating(): Promise<boolean> {
@@ -52,6 +56,7 @@ export class ConnectionStateService {
   }
 
   private navigateToUrlOrHome(url?: string): void {
+    this._websocketService.reconnect();
     if (url) {
       this._router.navigate([url]);
     } else {
@@ -60,6 +65,7 @@ export class ConnectionStateService {
   }
 
   private navigateToOfflinePage(params?: Params): void {
+    this._logger.info("Navigating to offline page.");
     this._router.navigate(["/offline"], { queryParams: params });
   }
 }
