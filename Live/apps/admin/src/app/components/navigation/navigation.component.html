@@ -5,10 +5,10 @@
     </button>
     <div>
       <ul>
-        <li (click)="router.navigate(['dashboard']); sidenav.toggle()">
+        <li (click)="router.navigate(['./dashboard']); sidenav.toggle()">
           <mat-icon>dashboard</mat-icon> <span class="menu-item">Dashboard</span>
         </li>
-        <li (click)="router.navigate(['settings']); sidenav.toggle()">
+        <li (click)="router.navigate(['./settings']); sidenav.toggle()">
           <mat-icon>more_vert</mat-icon> <span class="menu-item">Settings</span>
         </li>
         <!-- <li (click)="router.navigate(['streams']); sidenav.toggle()">Streams</li>
@@ -19,20 +19,15 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="header">
-      <button [hidden]="!online" mat-button (click)="sidenav.toggle()">
+      <button mat-button (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
-      <logo light="true"></logo>
-      <shutdown-button [hidden]="!online"></shutdown-button>
+      <logo-header></logo-header>
+      <shutdown-button></shutdown-button>
     </div>
     <div class="main content-container">
-      <offline-message *ngIf="!online; else content" [lifecycleState]="lifecycleState"
-        (checkConnection)="checkConnectionState()">
-      </offline-message>
-      <ng-template #content class="content-container">
-        <router-outlet></router-outlet>
-      </ng-template>
+      <router-outlet></router-outlet>
     </div>
-    <footer [hidden]="!online" class="content-container"></footer>
+    <footer class="content-container"></footer>
   </mat-sidenav-content>
 </mat-sidenav-container>

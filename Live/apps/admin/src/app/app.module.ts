@@ -35,6 +35,7 @@ import { LoginComponent } from "./components/login/login.component";
 import { AuthenticationInterceptor } from "./interceptors/authentication.interceptor";
 import { ErrorInterceptor } from "./interceptors/error.interceptor";
 import { WelcomeComponent } from "./components/welcome/welcome.component";
+import { LogoHeaderComponent } from "./components/logo-header/logo-header.component";
 
 @NgModule({
   imports: [
@@ -70,7 +71,8 @@ import { WelcomeComponent } from "./components/welcome/welcome.component";
     OfflineMessageComponent,
     SettingsComponent,
     LoginComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    LogoHeaderComponent
   ],
   entryComponents: [
     ShutdownDialogComponent,

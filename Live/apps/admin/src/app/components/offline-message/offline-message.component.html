@@ -1,20 +1,15 @@
+<logo-header></logo-header>
 <div class="container">
-  <div *ngIf="lifecycleState === 'Startup'">
+  <div *ngIf="shutdown; else noshutdown" class="message">
+    The server has been shut down. You can close the window now.
+  </div>
+  <ng-template #noshutdown>
     <div class="message">
-      Could not connect to the LIVE server. Please turn on the server and make sure you are connected to the right
-      network.
+      Could not connect to the LIVE server. Please make sure the server is running
+      and you are connected to the right network.
     </div>
-  </div>
-  <div *ngIf="lifecycleState === 'Shutdown'">
-    <div class="message">The server has been shut down. You can close the window now.
-    </div>
-  </div>
-  <div *ngIf="lifecycleState === 'Unknown'">
-    <div class="message">Could not connect to the LIVE server. Please make sure the server is running and you are
-      connected to the right network.
-    </div>
-  </div>
-  <button mat-raised-button color="primary" (click)="checkConnection.emit($event)">
+  </ng-template>
+  <button mat-raised-button color="primary" (click)="reconnect()">
     Reconnect
   </button>
 </div>

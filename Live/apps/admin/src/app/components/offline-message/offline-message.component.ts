@@ -1,16 +1,27 @@
-import { Component, Input, Output } from "@angular/core";
-import { LifecycleState } from "../../services/connection-state/lifecycle-state";
-import { EventEmitter } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { ConnectionStateService } from "../../services/connection-state/connection-state-service";
 
 @Component({
   selector: "offline-message",
   templateUrl: "./offline-message.component.html",
   styleUrls: ["./offline-message.component.scss"]
 })
-export class OfflineMessageComponent {
-  @Input()
-  public lifecycleState: LifecycleState;
+export class OfflineMessageComponent implements OnInit {
 
-  @Output()
-  public checkConnection: EventEmitter<any> = new EventEmitter();
+  public shutdown = false;
+
+  constructor(
+    private _route: ActivatedRoute,
+    private _connectionStateService: ConnectionStateService) {
+  }
+
+  public ngOnInit(): void {
+    this.shutdown = this._route.snapshot.queryParams.shutdown === "true";
+  }
+
+  public reconnect(): void {
+    this.shutdown = false;
+    this._connectionStateService.checkOnlineAndNavigate();
+  }
 }
