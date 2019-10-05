@@ -9,6 +9,7 @@ import { SettingsComponent } from "./components/settings/settings.component";
 import { StreamsComponent } from "./components/streams/streams.component";
 import { WelcomeComponent } from "./components/welcome/welcome.component";
 import { AuthenticationGuard } from "./guards/authentication.guard";
+import { ConnectionStateGuard } from "./guards/connection-state.guard";
 
 const routes: Routes = [
   {
@@ -40,7 +41,7 @@ const routes: Routes = [
       {
         path: "dashboard",
         component: DashboardComponent,
-        canActivate: [AuthenticationGuard]
+        canActivate: [ConnectionStateGuard, AuthenticationGuard]
       },
       {
         path: "streams",
@@ -55,7 +56,7 @@ const routes: Routes = [
       {
         path: "settings",
         component: SettingsComponent,
-        canActivate: [AuthenticationGuard]
+        canActivate: [ConnectionStateGuard, AuthenticationGuard]
       }
     ]
   }

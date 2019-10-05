@@ -20,8 +20,8 @@ export class OfflineMessageComponent implements OnInit {
     this.shutdown = this._route.snapshot.queryParams.shutdown === "true";
   }
 
-  public reconnect(): void {
+  public async reconnect(): Promise<void> {
+    await this._connectionStateService.checkOnlineAndNavigate();
     this.shutdown = false;
-    this._connectionStateService.checkOnlineAndNavigate();
   }
 }

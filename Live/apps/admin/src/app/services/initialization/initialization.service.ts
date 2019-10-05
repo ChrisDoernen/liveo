@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Logger } from "@live/services";
 import { ActivationService } from "../activation/activation.service";
+import { ConnectionStateService } from "../connection-state/connection-state-service";
 import { NotificationService } from "../notification/notification.service";
 import { SessionService } from "../session/session.service";
 import { SettingsService } from "../settings/settings.service";
@@ -13,6 +14,7 @@ import { WebsocketService } from "../websocket/websocket.service";
 export class InitializationService {
   constructor(
     private _logger: Logger,
+    private _connectionStateService: ConnectionStateService,
     private _activationService: ActivationService,
     private _websocketService: WebsocketService,
     private _notificationService: NotificationService,
@@ -23,6 +25,7 @@ export class InitializationService {
 
   public initialize(): void {
     this._logger.info("Initializing...");
+    this._connectionStateService.checkConnectionState();
     this._activationService.getActivation();
     this._sessionService.subscribeToActivations();
     this._websocketService.initializeConnection();

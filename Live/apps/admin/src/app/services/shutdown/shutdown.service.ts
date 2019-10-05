@@ -18,6 +18,6 @@ export class ShutdownService {
     this._httpClient
       .post(this._endpointService.getEndpoint("shutdown"), shutdown)
       .toPromise();
-    this._connectionStateService.("Shutdown");
+    this._connectionStateService.checkOfflineAndNavigate("Shutdown");
   }
 }

@@ -1,1 +1,0 @@
-export type LifecycleState = "Inital" | "Navigation" | "Shutdown" | "Unknown";
