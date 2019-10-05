@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 import { Shutdown } from "@live/entities";
 import { EndpointService } from "@live/services";
 import { ConnectionStateService } from "../connection-state/connection-state-service";
@@ -18,6 +18,6 @@ export class ShutdownService {
     this._httpClient
       .post(this._endpointService.getEndpoint("shutdown"), shutdown)
       .toPromise();
-    this._connectionStateService.checkConnectionState("Shutdown");
+    this._connectionStateService.("Shutdown");
   }
 }
