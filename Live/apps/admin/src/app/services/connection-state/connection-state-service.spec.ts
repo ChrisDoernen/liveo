@@ -1,27 +1,32 @@
-import { ConnectionStateService } from "./connection-state-service";
-import { TestBed, fakeAsync } from "@angular/core/testing";
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
+import { TestBed } from "@angular/core/testing";
+import { RouterTestingModule } from "@angular/router/testing";
 import { EndpointService, Logger } from "@live/services";
-import createMockInstance from "jest-create-mock-instance";
-import { ConnectionState } from "./connection-state";
 import { LoggerMock } from "@live/test-utilities";
+import createMockInstance from "jest-create-mock-instance";
+import { WebsocketService } from "../websocket/websocket.service";
+import { ConnectionStateService } from "./connection-state-service";
 
 describe("ConnectionStateService", () => {
   let connectionStateService: ConnectionStateService;
   let endpointService: jest.Mocked<EndpointService>;
   let httpTestingController: HttpTestingController;
+  let websocketService: jest.Mocked<WebsocketService>;
 
   const connectionEndpoint = "connection";
 
   beforeEach(() => {
     endpointService = createMockInstance(EndpointService);
+    websocketService = createMockInstance(WebsocketService);
 
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        RouterTestingModule
       ],
       providers: [
         ConnectionStateService,
+        { provide: WebsocketService, useValue: WebsocketService },
         { provide: EndpointService, useValue: endpointService },
         { provide: Logger, useClass: LoggerMock }
       ]
@@ -33,37 +38,7 @@ describe("ConnectionStateService", () => {
     endpointService.getEndpoint.mockReturnValue(connectionEndpoint);
   });
 
-  afterEach(() => {
-    httpTestingController.verify();
-  });
-
   it("should construct", () => {
     expect(connectionStateService).toBeTruthy();
   });
-
-  it("should emit correctly when online", fakeAsync(() => {
-    connectionStateService.checkConnectionState("Shutdown");
-
-    connectionStateService.connectionState$.subscribe((connectionState: ConnectionState) => {
-      expect(connectionState.online).toBe(true);
-      expect(connectionState.lifecycleState).toBe("Shutdown");
-    });
-
-    const req = httpTestingController.expectOne(connectionEndpoint);
-    expect(req.request.method).toBe("GET");
-    req.flush("online");
-  }));
-
-  it("should emit correctly when offline", fakeAsync(() => {
-    connectionStateService.checkConnectionState("Shutdown");
-
-    connectionStateService.connectionState$.subscribe((connectionState: ConnectionState) => {
-      expect(connectionState.online).toBe(false);
-      expect(connectionState.lifecycleState).toBe("Shutdown");
-    });
-
-    const req = httpTestingController.expectOne(connectionEndpoint);
-    expect(req.request.method).toBe("GET");
-    req.error(new ErrorEvent("No connection"));
-  }));
 });

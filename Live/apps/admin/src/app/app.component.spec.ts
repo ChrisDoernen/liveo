@@ -1,18 +1,19 @@
-import { TestBed } from "@angular/core/testing";
-import { AppComponent } from "./app.component";
-import { AngularMaterialModule } from "./angular-material.module";
-import { NavigationComponent } from "./components/navigation/navigation.component";
-import { ShutdownComponent } from "./components/shutdown/shutdown.component";
-import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { TestBed } from "@angular/core/testing";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
-import { LogoComponent } from "./components/logo/logo.component";
-import { InlineSVGDirective } from "ng-inline-svg";
-import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
-import { NotficationsComponent } from "./components/notfications/notfications.component";
 import { EndpointService, Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
+import { InlineSVGDirective } from "ng-inline-svg";
+import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
+import { AngularMaterialModule } from "./angular-material.module";
+import { AppComponent } from "./app.component";
+import { LogoHeaderComponent } from "./components/logo-header/logo-header.component";
+import { LogoComponent } from "./components/logo/logo.component";
+import { NavigationComponent } from "./components/navigation/navigation.component";
+import { NotficationsComponent } from "./components/notfications/notfications.component";
 import { OfflineMessageComponent } from "./components/offline-message/offline-message.component";
+import { ShutdownComponent } from "./components/shutdown/shutdown.component";
 
 describe("AppComponent", () => {
   let endpointService: jest.Mocked<EndpointService>;
@@ -34,7 +35,8 @@ describe("AppComponent", () => {
         LogoComponent,
         InlineSVGDirective,
         NotficationsComponent,
-        OfflineMessageComponent
+        OfflineMessageComponent,
+        LogoHeaderComponent
       ],
       providers: [
         { provide: EndpointService, useValue: endpointService },

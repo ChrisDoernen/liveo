@@ -1,28 +1,27 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { LogoComponent } from "./logo.component";
-import { InlineSVGDirective } from "ng-inline-svg";
 import { HttpClient } from "@angular/common/http";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { InlineSVGDirective } from "ng-inline-svg";
 import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
+import { LogoComponent } from "./logo.component";
 
 describe("LogoComponent", () => {
   let component: LogoComponent;
   let fixture: ComponentFixture<LogoComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     const httpClient = jest.fn();
-    const inlineSVGService = jest.fn();
 
     TestBed.configureTestingModule({
-      declarations: [LogoComponent, InlineSVGDirective],
+      declarations: [
+        LogoComponent,
+        InlineSVGDirective
+      ],
       providers: [
         { provide: HttpClient, useValue: httpClient },
-        { provide: InlineSVGService, useValue: inlineSVGService }
+        { provide: InlineSVGService, useValue: jest.fn() }
       ]
-    })
-      .compileComponents();
-  }));
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(LogoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
