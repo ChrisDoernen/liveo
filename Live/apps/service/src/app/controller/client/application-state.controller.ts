@@ -1,8 +1,8 @@
-import { controller, httpGet } from "inversify-express-utils";
-import { inject } from "inversify";
-import { ApplicationStateEntity } from "@live/entities";
-import { ApplicationStateService } from "../../lib/application-state/application-state.service";
 import { ROUTES } from "@live/constants";
+import { ApplicationStateEntity } from "@live/entities";
+import { inject } from "inversify";
+import { controller, httpGet } from "inversify-express-utils";
+import { ApplicationStateService } from "../../services/application-state/application-state.service";
 
 @controller(`/${ROUTES.client}/application-state`)
 export class ApplicationStateController {

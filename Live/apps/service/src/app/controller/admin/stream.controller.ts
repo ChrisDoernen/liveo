@@ -1,9 +1,9 @@
-import { controller, httpGet } from "inversify-express-utils";
-import { StreamService } from "../../lib/streams/stream-service";
-import { inject } from "inversify";
+import { ROUTES } from "@live/constants";
 import { StreamEntity } from "@live/entities";
 import { Request } from "express";
-import { ROUTES } from "@live/constants";
+import { inject } from "inversify";
+import { controller, httpGet } from "inversify-express-utils";
+import { StreamService } from "../../services/streams/stream-service";
 
 @controller(`/${ROUTES.admin}/streams`)
 export class StreamController {

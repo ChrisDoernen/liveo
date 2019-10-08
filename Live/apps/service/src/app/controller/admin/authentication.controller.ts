@@ -1,9 +1,9 @@
-import { controller, httpPost } from "inversify-express-utils";
 import { ROUTES } from "@live/constants";
-import { Request, Response } from "express";
-import { AuthenticationService } from "../../lib/authentication/authentication-service";
 import { UserEntity } from "@live/entities";
+import { Request, Response } from "express";
 import { inject } from "inversify";
+import { controller, httpPost } from "inversify-express-utils";
+import { AuthenticationService } from "../../services/authentication/authentication-service";
 
 @controller(`/${ROUTES.admin}/authentication`)
 export class AuthenticationController {

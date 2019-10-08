@@ -1,9 +1,9 @@
-import { controller, httpPost, httpGet, httpDelete } from "inversify-express-utils";
-import { inject } from "inversify";
-import { ActivationService } from "../../lib/activation/activation-service";
+import { ROUTES } from "@live/constants";
 import { ActivationEntity } from "@live/entities";
 import { Request, Response } from "express";
-import { ROUTES } from "@live/constants";
+import { inject } from "inversify";
+import { controller, httpDelete, httpGet, httpPost } from "inversify-express-utils";
+import { ActivationService } from "../../services/activation/activation-service";
 
 @controller(`/${ROUTES.admin}/activation`)
 export class ActivationController {

@@ -1,4 +1,10 @@
+import { Roles } from "./roles";
+
 export class UserEntity {
-  username: string;
-  password: string;
+  constructor(
+    public username: string,
+    public password: string,
+    public roles?: Roles[]) {
+  }
 }
+

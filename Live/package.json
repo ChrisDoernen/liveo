@@ -63,7 +63,7 @@
     "ffmpeg-static": "^2.5.0",
     "fluent-ffmpeg": "^2.1.2",
     "inversify": "^5.0.1",
-    "inversify-express-utils": "^6.2.0",
+    "inversify-express-utils": "^6.3.2",
     "logform": "^1.10.0",
     "lowdb": "^1.0.0",
     "ng-inline-svg": "^8.1.0",
