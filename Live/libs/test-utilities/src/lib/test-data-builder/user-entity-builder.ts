@@ -5,9 +5,9 @@ export class UserEntityBuilder {
   private _userEntity: UserEntity;
 
   constructor() {
-    this._userEntity = new UserEntity();
-    this._userEntity.username = faker.random.word();
-    this._userEntity.password = faker.random.word();
+    const username = faker.random.word();
+    const password = faker.random.word();
+    this._userEntity = new UserEntity(username, password);
   }
 
   public withUsername(username: string): UserEntityBuilder {
