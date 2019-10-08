@@ -1,12 +1,16 @@
 import { NextFunction, Request, Response } from "express";
+import { injectable } from "inversify";
+import { BaseMiddleware } from "inversify-express-utils";
 
-export const authenticate = (req: Request, res: Response, next: NextFunction) => {
-  console.log("b")
-  if (!this.httpContext.user.isAuthenticated()) {
-    console.log("hallllo");
-    res.sendStatus(401);
-    return;
+@injectable()
+export class AuthenticationMiddleware extends BaseMiddleware {
+  public async handler(req: Request, res: Response, next: NextFunction) {
+    const isAuthenticated = await this.httpContext.user.isAuthenticated();
+    if (!isAuthenticated) {
+      res.sendStatus(401);
+      return;
+    }
+
+    next();
   }
-  console.log("hallo;")
-  next();
 }

@@ -31,8 +31,9 @@ export class AuthenticationService {
 
     if (!matchingUser || matchingUser.password !== userToAuthenticate.password) {
       this._logger.warn(`User ${userToAuthenticate.username} could not be authenticated.`);
+      throw new Error("Wrong credentials, user is unauthorized.");
     }
 
-    return null;
+    return matchingUser;
   }
 }

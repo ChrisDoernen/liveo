@@ -2,6 +2,7 @@ import { Container, interfaces } from "inversify";
 import { Bootstrapper } from "../core/bootstrapper";
 import { WebServer } from "../core/web-server";
 import { WebsocketServer } from "../core/websocket-server";
+import { AuthenticationMiddleware } from "../middleware/authentication/authentication.middleware";
 import { ActivationService } from "../services/activation/activation-service";
 import { AutoActivationService } from "../services/activation/auto-activation-service";
 import { ApplicationStateService } from "../services/application-state/application-state.service";
@@ -115,3 +116,4 @@ container.bind<SystemMonitoringService>("SystemMonitoringService").to(SystemMoni
 container.bind<AutoActivationService>("AutoActivationService").to(AutoActivationService);
 
 container.bind<AuthenticationService>("AuthenticationService").to(AuthenticationService).inSingletonScope();
+container.bind<AuthenticationMiddleware>(AuthenticationMiddleware).to(AuthenticationMiddleware);

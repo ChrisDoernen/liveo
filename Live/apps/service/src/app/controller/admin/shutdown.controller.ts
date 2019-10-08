@@ -2,15 +2,15 @@ import { ROUTES } from "@live/constants";
 import { Shutdown } from "@live/entities";
 import { Request, Response } from "express";
 import { inject } from "inversify";
-import { BaseHttpController, controller, httpDelete, httpGet, httpPost } from "inversify-express-utils";
+import { controller, httpDelete, httpGet, httpPost } from "inversify-express-utils";
+import { AuthenticationMiddleware } from "../../middleware/authentication/authentication.middleware";
 import { ShutdownService } from "../../services/shutdown/shutdown-service";
 
-@controller(`/${ROUTES.admin}/shutdown`)
-export class ShutdownController extends BaseHttpController {
+@controller(`/${ROUTES.admin}/shutdown`, AuthenticationMiddleware)
+export class ShutdownController {
 
   constructor(
     @inject("ShutdownService") private _shutdownService: ShutdownService) {
-    super();
   }
 
   @httpPost("/")

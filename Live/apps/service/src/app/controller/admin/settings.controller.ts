@@ -3,6 +3,7 @@ import { SettingsEntity } from "@live/entities";
 import { Request } from "express";
 import { inject } from "inversify";
 import { controller, httpGet, httpPut } from "inversify-express-utils";
+import { AuthenticationMiddleware } from "../../middleware/authentication/authentication.middleware";
 import { SettingsService } from "../../services/settings/settings-service";
 
 @controller(`/${ROUTES.admin}/settings`)
@@ -16,7 +17,7 @@ export class SettingsController {
     return this._settingsService.getSettings();
   }
 
-  @httpPut("/")
+  @httpPut("/", AuthenticationMiddleware)
   public async putSettings(request: Request): Promise<SettingsEntity> {
     return await this._settingsService.updateSettings(request.body as SettingsEntity);
   }

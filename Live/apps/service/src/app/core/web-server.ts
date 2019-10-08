@@ -39,8 +39,6 @@ export class WebServer {
         this._logger.debug(`${req.method} request on ${req.url}.`);
         next();
       });
-
-      // server.use(ENDPOINTS.api, authenticate);
     });
 
     expressServer.setErrorConfig(server => {
