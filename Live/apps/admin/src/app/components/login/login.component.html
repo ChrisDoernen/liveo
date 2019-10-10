@@ -11,9 +11,10 @@
         <input matInput placeholder="Password" formControlName="password" type="password" name="password"
           autocomplete="current-password" required>
       </mat-form-field>
+      <mat-card-actions>
+        <button type="submit" mat-raised-button (click)="login()" color="primary"
+          [disabled]="loginForm.invalid">Login</button>
+      </mat-card-actions>
     </form>
   </mat-card-content>
-  <mat-card-actions>
-    <button mat-raised-button (click)="login()" color="primary">Login</button>
-  </mat-card-actions>
 </mat-card>

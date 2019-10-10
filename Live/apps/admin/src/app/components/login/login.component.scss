@@ -15,9 +15,13 @@ mat-card {
 }
 
 mat-card-title {
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 
 mat-form-field {
   display: block;
+}
+
+mat-card-actions {
+  margin: 15px 0 0 0;
 }
