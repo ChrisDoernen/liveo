@@ -78,5 +78,15 @@
         "bgu9"
       ]
     }
+  ],
+  "settings": {
+    "defaultSession": "bd34",
+    "enableAutoActivation": false
+  },
+  "users": [
+    {
+      "username": "admin",
+      "password": "admin"
+    }
   ]
 }

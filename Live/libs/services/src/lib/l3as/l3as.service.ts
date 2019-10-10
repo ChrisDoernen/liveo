@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { L3asPlayer, UserAgentInfo } from "@live/l3as";
+import { Logger } from "../logging/logger";
 
 @Injectable({
   providedIn: "root"
@@ -9,7 +10,8 @@ export class L3asService {
   public isBrowserCompatible: boolean;
   private _l3asPlayer: L3asPlayer;
 
-  constructor() {
+  constructor(
+    private _logger: Logger) {
   }
 
   public initialize(userAgentInfo: UserAgentInfo,
@@ -23,7 +25,7 @@ export class L3asService {
   }
 
   public play(streamId: string): void {
-    console.log("play");
+    this._logger.info("play");
     this._l3asPlayer.play(streamId);
   }
 

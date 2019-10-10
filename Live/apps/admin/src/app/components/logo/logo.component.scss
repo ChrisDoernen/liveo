@@ -1,8 +1,6 @@
-.logo {
-  position: relative;
-  text-align: center;
-  margin-top: 7px;
-  width: 80px;
+:host {
+  display: block;
+  margin: auto;
 }
 
 ::ng-deep .logo {

@@ -1,17 +1,10 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc/libs/l3as",
+    "outDir": "../../dist/out-tsc",
     "allowJs": true,
-    "types": [
-      "node",
-      "jest"
-    ]
+    "types": ["node", "jest"]
   },
-  "include": [
-    "**/*.js"
-  ],
-  "exclude": [
-    "jest.config.js"
-  ]
+  "include": ["**/*.js"],
+  "exclude": ["jest.config.js"]
 }

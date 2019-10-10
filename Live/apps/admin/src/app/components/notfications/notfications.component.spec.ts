@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { NotficationsComponent } from "./notfications.component";
 import { AngularMaterialModule } from "../../angular-material.module";
+import { Logger } from "@live/services";
 
 describe("NotficationsComponent", () => {
   let component: NotficationsComponent;
@@ -13,6 +14,9 @@ describe("NotficationsComponent", () => {
       ],
       declarations: [
         NotficationsComponent
+      ],
+      providers: [
+        { provide: Logger, useValue: jest.fn() }
       ]
     }).compileComponents();
 

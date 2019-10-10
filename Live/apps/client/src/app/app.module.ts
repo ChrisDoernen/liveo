@@ -11,9 +11,11 @@ import { Ng5SliderModule } from "ng5-slider";
 import { HeaderComponent } from "./components/header/header.component";
 import { WelcomeComponent } from "./components/welcome/welcome.component";
 import { AboutComponent } from "./components/about/about.component";
-import { UserAgentService, EndpointService, ROUTE } from "@live/services";
+import { UserAgentService, ROUTE, ENABLECONSOLELOGGING } from "@live/services";
 import { ApplicationStateService } from "./services/application-state/application-state.service";
 import { ROUTES } from "@live/constants";
+import { ServiceWorkerModule } from "@angular/service-worker";
+import { environment } from "../environments/environment";
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { ROUTES } from "@live/constants";
     HttpClientModule,
     AppRoutingModule,
     Ng5SliderModule,
-    InlineSVGModule.forRoot()
+    InlineSVGModule.forRoot(),
+    ServiceWorkerModule.register("ngsw-worker.js", { enabled: environment.production })
   ],
   providers: [
     {
@@ -54,6 +57,10 @@ import { ROUTES } from "@live/constants";
     {
       provide: ROUTE,
       useValue: ROUTES.client
+    },
+    {
+      provide: ENABLECONSOLELOGGING,
+      useValue: !environment.production
     }
   ],
   bootstrap: [AppComponent]

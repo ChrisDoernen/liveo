@@ -1,17 +1,20 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { ShutdownComponent } from "./shutdown.component";
-import { AngularMaterialModule } from "../../angular-material.module";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { EndpointService } from "@live/services";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { EndpointService, Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
+import { AngularMaterialModule } from "../../angular-material.module";
+import { ShutdownService } from "../../services/shutdown/shutdown.service";
+import { ShutdownComponent } from "./shutdown.component";
 
 describe("ShutdownComponent", () => {
   let component: ShutdownComponent;
   let fixture: ComponentFixture<ShutdownComponent>;
   let endpointService: jest.Mocked<EndpointService>;
+  let shutdownService: jest.Mocked<ShutdownService>;
 
   beforeEach(() => {
     endpointService = createMockInstance(EndpointService);
+    shutdownService = createMockInstance(ShutdownService);
 
     TestBed.configureTestingModule({
       imports: [
@@ -22,7 +25,9 @@ describe("ShutdownComponent", () => {
         ShutdownComponent
       ],
       providers: [
-        { provide: EndpointService, useValue: endpointService }
+        { provide: EndpointService, useValue: endpointService },
+        { provide: ShutdownService, useValue: shutdownService },
+        { provide: Logger, useValue: jest.fn() }
       ]
     }).compileComponents();
 

@@ -1,0 +1,27 @@
+:host {
+  display: flex;
+  height: 100%;
+}
+
+logo-header {
+  position: absolute;
+}
+
+mat-card {
+  width: 300px;
+  margin: auto;
+  padding: 25px;
+  text-align: center;
+}
+
+mat-card-title {
+  margin-bottom: 30px;
+}
+
+mat-form-field {
+  display: block;
+}
+
+mat-card-actions {
+  margin: 15px 0 0 0;
+}

@@ -1,0 +1,20 @@
+<logo-header></logo-header>
+<mat-card>
+  <mat-card-title>Login</mat-card-title>
+  <mat-card-content fxLayout="column">
+    <form [formGroup]="loginForm">
+      <mat-form-field>
+        <input matInput placeholder="Username" formControlName="username" name="username" autocomplete="username"
+          required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Password" formControlName="password" type="password" name="password"
+          autocomplete="current-password" required>
+      </mat-form-field>
+      <mat-card-actions>
+        <button type="submit" mat-raised-button (click)="login()" color="primary"
+          [disabled]="loginForm.invalid">Login</button>
+      </mat-card-actions>
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -8,7 +8,7 @@ import { AngularMaterialModule } from "./angular-material.module";
 import { NavigationComponent } from "./components/navigation/navigation.component";
 import { ShutdownComponent } from "./components/shutdown/shutdown.component";
 import { ShutdownDialogComponent } from "./components/shutdown-dialog/shutdown-dialog.component";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { StreamsComponent } from "./components/streams/streams.component";
 import { SessionsComponent } from "./components/sessions/sessions.component";
 import { ActivationDialogComponent } from "./components/activation-dialog/activation-dialog.component";
@@ -25,8 +25,17 @@ import { DashboardActivationComponent } from "./components/dashboard-activation/
 import { DashboardNoActivationComponent } from "./components/dashboard-no-activation/dashboard-no-activation.component";
 import { ActivatedSessionTileComponent } from "./components/activated-session-tile/activated-session-tile.component";
 import { ActivationStateTileComponent } from "./components/activation-state-tile/activation-state-tile.component";
-import { EndpointService, ROUTE } from "@live/services";
+import { ROUTE, ENABLECONSOLELOGGING } from "@live/services";
 import { ROUTES } from "@live/constants";
+import { ServiceWorkerModule } from "@angular/service-worker";
+import { environment } from "../environments/environment";
+import { OfflineMessageComponent } from "./components/offline-message/offline-message.component";
+import { SettingsComponent } from "./components/settings/settings.component";
+import { LoginComponent } from "./components/login/login.component";
+import { AuthenticationInterceptor } from "./interceptors/authentication.interceptor";
+import { ErrorInterceptor } from "./interceptors/error.interceptor";
+import { WelcomeComponent } from "./components/welcome/welcome.component";
+import { LogoHeaderComponent } from "./components/logo-header/logo-header.component";
 
 @NgModule({
   imports: [
@@ -39,7 +48,8 @@ import { ROUTES } from "@live/constants";
     MatNativeDateModule,
     ReactiveFormsModule,
     SocketIoModule,
-    InlineSVGModule.forRoot()
+    InlineSVGModule.forRoot(),
+    ServiceWorkerModule.register("ngsw-worker.js", { enabled: environment.production })
   ],
   declarations: [
     AppComponent,
@@ -57,7 +67,12 @@ import { ROUTES } from "@live/constants";
     DashboardActivationComponent,
     DashboardNoActivationComponent,
     ActivatedSessionTileComponent,
-    ActivationStateTileComponent
+    ActivationStateTileComponent,
+    OfflineMessageComponent,
+    SettingsComponent,
+    LoginComponent,
+    WelcomeComponent,
+    LogoHeaderComponent
   ],
   entryComponents: [
     ShutdownDialogComponent,
@@ -65,6 +80,14 @@ import { ROUTES } from "@live/constants";
     ActivationDeletionDialogComponent
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthenticationInterceptor, multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor, multi: true
+    },
     {
       provide: APP_BOOTSTRAP_LISTENER,
       useFactory: (initializationService: InitializationService) => {
@@ -76,6 +99,10 @@ import { ROUTES } from "@live/constants";
     {
       provide: ROUTE,
       useValue: ROUTES.admin
+    },
+    {
+      provide: ENABLECONSOLELOGGING,
+      useValue: !environment.production
     }
   ],
   bootstrap: [

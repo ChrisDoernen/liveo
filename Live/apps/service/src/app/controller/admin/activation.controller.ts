@@ -1,9 +1,10 @@
-import { controller, httpPost, httpGet, httpDelete } from "inversify-express-utils";
-import { inject } from "inversify";
-import { ActivationService } from "../../lib/activation/activation-service";
+import { ROUTES } from "@live/constants";
 import { ActivationEntity } from "@live/entities";
 import { Request, Response } from "express";
-import { ROUTES } from "@live/constants";
+import { inject } from "inversify";
+import { controller, httpDelete, httpGet, httpPost } from "inversify-express-utils";
+import { AuthenticationMiddleware } from "../../middleware/authentication/authentication.middleware";
+import { ActivationService } from "../../services/activation/activation-service";
 
 @controller(`/${ROUTES.admin}/activation`)
 export class ActivationController {
@@ -11,7 +12,7 @@ export class ActivationController {
     @inject("ActivationService") private _activationService: ActivationService) {
   }
 
-  @httpPost("/")
+  @httpPost("/", AuthenticationMiddleware)
   public activate(request: Request): ActivationEntity {
     const activationRequest = request.body as ActivationEntity;
     return this._activationService.setActivation(activationRequest);
@@ -22,7 +23,7 @@ export class ActivationController {
     return this._activationService.getActivationEntity();
   }
 
-  @httpDelete("/")
+  @httpDelete("/", AuthenticationMiddleware)
   public deactivate(request: Request, response: Response): void {
     this._activationService.deleteActivation();
   }

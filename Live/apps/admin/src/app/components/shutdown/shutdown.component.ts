@@ -1,8 +1,9 @@
 import { Component } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { ShutdownDialogComponent } from "../shutdown-dialog/shutdown-dialog.component";
-import { ShutdownService } from "@live/services";
 import { Shutdown } from "@live/entities";
+import { ShutdownService } from "../../services/shutdown/shutdown.service";
+import { Logger } from "@live/services";
 
 @Component({
   selector: "shutdown-button",
@@ -11,7 +12,9 @@ import { Shutdown } from "@live/entities";
 })
 export class ShutdownComponent {
 
-  constructor(public dialog: MatDialog,
+  constructor(
+    private _logger: Logger,
+    public dialog: MatDialog,
     private _shutdownService: ShutdownService) {
   }
 
@@ -19,7 +22,7 @@ export class ShutdownComponent {
     const dialogRef = this.dialog.open(ShutdownDialogComponent, { width: "250px", restoreFocus: false });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`The dialog was closed, result: ${result}`);
+      this._logger.info(`The dialog was closed, result: ${result}`);
 
       if (result) {
         const shutdown = new Shutdown(null);

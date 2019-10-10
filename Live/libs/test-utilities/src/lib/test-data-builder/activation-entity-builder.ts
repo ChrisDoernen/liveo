@@ -1,4 +1,4 @@
-import { SessionEntity, ActivationEntity } from "@live/entities";
+import { ActivationEntity } from "@live/entities";
 import * as faker from "faker";
 
 export class ActivationEntityBuilder {

@@ -5,7 +5,12 @@
     </button>
     <div>
       <ul>
-        <li (click)="router.navigate(['dashboard']); sidenav.toggle()">Dashboard</li>
+        <li (click)="router.navigate(['home/dashboard']); sidenav.toggle()">
+          <mat-icon>dashboard</mat-icon> <span class="menu-item">Dashboard</span>
+        </li>
+        <li (click)="router.navigate(['home/settings']); sidenav.toggle()">
+          <mat-icon>more_vert</mat-icon> <span class="menu-item">Settings</span>
+        </li>
         <!-- <li (click)="router.navigate(['streams']); sidenav.toggle()">Streams</li>
         <li (click)="router.navigate(['sessions']); sidenav.toggle()">Sessions</li> -->
       </ul>
@@ -17,10 +22,10 @@
       <button mat-button (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
-      <logo light="true"></logo>
+      <logo-header></logo-header>
       <shutdown-button></shutdown-button>
     </div>
-    <div class="content-container">
+    <div class="main content-container">
       <router-outlet></router-outlet>
     </div>
     <footer class="content-container"></footer>

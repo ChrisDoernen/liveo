@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "f431a088-4894-45b2-8f8a-7c220699f62d",
-		"name": "Live Service",
+		"_postman_id": "e660e673-c8bc-4770-a9cd-ed00928f6f86",
+		"name": "Live Service API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -31,7 +31,7 @@
 			"response": []
 		},
 		{
-			"name": "/api/streams",
+			"name": "/api/admin/streams",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -55,7 +55,7 @@
 			"response": []
 		},
 		{
-			"name": "/api/hello",
+			"name": "/api/admin/connection",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -64,13 +64,85 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{hostname}}:{{port}}/hello",
+					"raw": "{{hostname}}:{{port}}/api/admin/connection",
 					"host": [
 						"{{hostname}}"
 					],
 					"port": "{{port}}",
 					"path": [
-						"hello"
+						"api",
+						"admin",
+						"connection"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/settings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/admin/settings",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"admin",
+						"settings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/settings",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"defaultSession\": \"bdd1\",\n    \"enableAutoActivation\": false\n}"
+				},
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/admin/settings",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"admin",
+						"settings"
 					]
 				}
 			},
@@ -126,8 +198,23 @@
 			"response": []
 		},
 		{
-			"name": "/api/shutdown",
+			"name": "/api/admin/shutdown",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -152,6 +239,21 @@
 		{
 			"name": "/api/admin/shutdown mit timestamp",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -182,6 +284,21 @@
 		{
 			"name": "/api/admin/shutdown ohne timestamp",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -237,6 +354,21 @@
 		{
 			"name": "/api/admin/activation nur sessionId",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -248,7 +380,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"sessionId\": \"bd34\"\n}"
+					"raw": "{\n\t\"sessionId\": \"ag7s\"\n}"
 				},
 				"url": {
 					"raw": "{{hostname}}:{{port}}/api/admin/activation",
@@ -268,6 +400,21 @@
 		{
 			"name": "/api/admin/activation sessionId und timestamp",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -297,7 +444,7 @@
 			"response": []
 		},
 		{
-			"name": "/api/activation",
+			"name": "/api/admin/activation",
 			"request": {
 				"method": "DELETE",
 				"header": [
@@ -346,6 +493,37 @@
 						"api",
 						"client",
 						"application-state"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/authentication",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"admin\",\n\t\"password\": \"admin\"\n}"
+				},
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/admin/authentication",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"admin",
+						"authentication"
 					]
 				}
 			},

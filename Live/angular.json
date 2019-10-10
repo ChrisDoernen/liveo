@@ -25,14 +25,11 @@
             "assets": [
               "apps/client/src/favicon.ico",
               "apps/client/src/manifest.json",
-              "apps/client/src/assets"
+              "apps/client/src/assets",
+              "apps/client/src/manifest.json"
             ],
-            "styles": [
-              "apps/client/src/styles.scss"
-            ],
-            "scripts": [
-              "apps/client/src/assets/js/pwacompat.min.js"
-            ],
+            "styles": ["apps/client/src/styles.scss"],
+            "scripts": ["apps/client/src/assets/js/pwacompat.min.js"],
             "es5BrowserSupport": true
           },
           "configurations": {
@@ -58,7 +55,8 @@
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
                 }
-              ]
+              ],
+              "serviceWorker": true
             }
           }
         },
@@ -87,13 +85,11 @@
               "apps/client/tsconfig.app.json",
               "apps/client/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/client/**"]
           }
         },
         "test": {
-          "builder": "@nrwl/builders:jest",
+          "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/client/jest.config.js",
             "tsConfig": "apps/client/tsconfig.spec.json",
@@ -108,7 +104,7 @@
       "prefix": "",
       "architect": {
         "e2e": {
-          "builder": "@nrwl/builders:cypress",
+          "builder": "@nrwl/cypress:cypress",
           "options": {
             "cypressConfig": "apps/client-e2e/cypress.json",
             "tsConfig": "apps/client-e2e/tsconfig.e2e.json",
@@ -124,9 +120,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "apps/client-e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/client-e2e/**"]
           }
         }
       }
@@ -139,14 +133,12 @@
       "schematics": {},
       "architect": {
         "build": {
-          "builder": "@nrwl/builders:node-build",
+          "builder": "@nrwl/node:build",
           "options": {
             "outputPath": "dist/apps/service",
             "main": "apps/service/src/main.ts",
             "tsConfig": "apps/service/tsconfig.app.json",
-            "assets": [
-              "apps/service/src/assets"
-            ]
+            "assets": ["apps/service/src/assets"]
           },
           "configurations": {
             "production": {
@@ -181,7 +173,7 @@
           }
         },
         "serve": {
-          "builder": "@nrwl/builders:node-execute",
+          "builder": "@nrwl/node:execute",
           "options": {
             "buildTarget": "service:build"
           },
@@ -204,13 +196,11 @@
               "apps/service/tsconfig.app.json",
               "apps/service/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/service/**"]
           }
         },
         "test": {
-          "builder": "@nrwl/builders:jest",
+          "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/service/jest.config.js",
             "tsConfig": "apps/service/tsconfig.spec.json"
@@ -231,13 +221,11 @@
               "libs/entities/tsconfig.lib.json",
               "libs/entities/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/entities/**"]
           }
         },
         "test": {
-          "builder": "@nrwl/builders:jest",
+          "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/entities/jest.config.js",
             "tsConfig": "libs/entities/tsconfig.spec.json"
@@ -257,7 +245,7 @@
       "prefix": "live",
       "architect": {
         "build": {
-          "builder": "@nrwl/builders:node-build",
+          "builder": "@nrwl/node:build",
           "options": {
             "outputPath": "dist/libs/l3as",
             "main": "libs/l3as/src/index.js",
@@ -278,13 +266,11 @@
               "libs/l3as/tsconfig.lib.json",
               "libs/l3as/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/l3as/**"]
           }
         },
         "test": {
-          "builder": "@nrwl/builders:jest",
+          "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/l3as/jest.config.js",
             "tsConfig": "libs/l3as/tsconfig.spec.json"
@@ -310,13 +296,11 @@
               "libs/services/tsconfig.lib.json",
               "libs/services/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/services/**"]
           }
         },
         "test": {
-          "builder": "@nrwl/builders:jest",
+          "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/services/jest.config.js",
             "tsConfig": "libs/services/tsconfig.spec.json",
@@ -353,11 +337,15 @@
             "tsConfig": "apps/admin/tsconfig.app.json",
             "assets": [
               "apps/admin/src/favicon.ico",
-              "apps/admin/src/assets"
+              "apps/admin/src/assets",
+              "apps/admin/src/manifest.json",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/material-icons/iconfont/",
+                "output": "./assets/iconfont"
+              }
             ],
-            "styles": [
-              "apps/admin/src/styles.scss"
-            ],
+            "styles": ["apps/admin/src/styles.scss"],
             "scripts": [],
             "es5BrowserSupport": true
           },
@@ -384,7 +372,8 @@
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
                 }
-              ]
+              ],
+              "serviceWorker": true
             }
           }
         },
@@ -413,13 +402,11 @@
               "apps/admin/tsconfig.app.json",
               "apps/admin/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/admin/**"]
           }
         },
         "test": {
-          "builder": "@nrwl/builders:jest",
+          "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/admin/jest.config.js",
             "tsConfig": "apps/admin/tsconfig.spec.json",
@@ -434,7 +421,7 @@
       "prefix": "",
       "architect": {
         "e2e": {
-          "builder": "@nrwl/builders:cypress",
+          "builder": "@nrwl/cypress:cypress",
           "options": {
             "cypressConfig": "apps/admin-e2e/cypress.json",
             "tsConfig": "apps/admin-e2e/tsconfig.e2e.json",
@@ -450,9 +437,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "apps/admin-e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/admin-e2e/**"]
           }
         }
       }
@@ -470,13 +455,11 @@
               "libs/constants/tsconfig.lib.json",
               "libs/constants/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/constants/**"]
           }
         },
         "test": {
-          "builder": "@nrwl/builders:jest",
+          "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/constants/jest.config.js",
             "tsConfig": "libs/constants/tsconfig.spec.json"
@@ -502,9 +485,7 @@
               "libs/test-utilities/tsconfig.lib.json",
               "libs/test-utilities/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/test-utilities/**"]
           }
         }
       },
@@ -520,7 +501,7 @@
       "typescriptMismatch": false,
       "versionMismatch": false
     },
-    "defaultCollection": "@nrwl/schematics"
+    "defaultCollection": "@nrwl/angular"
   },
   "schematics": {
     "@nrwl/schematics:application": {

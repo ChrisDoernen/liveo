@@ -1,13 +1,14 @@
-import { controller, httpGet } from "inversify-express-utils";
-import { SessionService } from "../../lib/sessions/session-service";
-import { inject } from "inversify";
+import { ROUTES } from "@live/constants";
 import { SessionEntity } from "@live/entities";
 import { Request, Response } from "express";
-import { ROUTES } from "@live/constants";
+import { inject } from "inversify";
+import { controller, httpGet } from "inversify-express-utils";
+import { SessionService } from "../../services/sessions/session-service";
 
 @controller(`/${ROUTES.admin}/sessions`)
 export class SessionController {
-  constructor(@inject("SessionService") private _sessionService: SessionService) {
+  constructor(
+    @inject("SessionService") private _sessionService: SessionService) {
   }
 
   @httpGet("/")

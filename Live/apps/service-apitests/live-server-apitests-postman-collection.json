@@ -1,0 +1,318 @@
+{
+	"info": {
+		"_postman_id": "2f6f0c76-b268-443b-b6d4-91eb98e973eb",
+		"name": "Live Service API Systemtests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/api/admin/streams/v67d",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/admin/streams/v67d",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"admin",
+						"streams",
+						"v67d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/streams",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/admin/streams",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"admin",
+						"streams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/connection",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/admin/connection",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"admin",
+						"connection"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/sessions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/admin/sessions",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"admin",
+						"sessions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/sessions/bd34",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/admin/sessions/bd34",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"admin",
+						"sessions",
+						"bd34"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/shutdown",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/admin/shutdown",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"admin",
+						"shutdown"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/shutdown ohne timestamp",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"shutdownTime\": null\n}"
+				},
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/admin/shutdown",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"admin",
+						"shutdown"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/activation",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/admin/activation",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"admin",
+						"activation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/activation nur sessionId",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"sessionId\": \"bd34\"\n}"
+				},
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/admin/activation",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"admin",
+						"activation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/activation",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/admin/activation",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"admin",
+						"activation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/client/application-state",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/client/application-state",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"client",
+						"application-state"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "44454d38-8425-4c12-9130-f7ae3d40ec55",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "d0ad3a07-9cf1-4a22-9e22-43fc97fa2aab",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
