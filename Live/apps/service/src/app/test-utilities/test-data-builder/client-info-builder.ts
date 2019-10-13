@@ -1,5 +1,5 @@
-import { ClientInfo } from "../../lib/statistics/client-info";
 import * as faker from "faker";
+import { ClientInfo } from "../../services/statistics/client-info";
 
 export class ClientInfoBuilder {
 

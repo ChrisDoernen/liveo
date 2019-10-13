@@ -5,5 +5,5 @@ export interface ConnectionInfo {
   clientInfo: ClientInfo;
   timestamp: string;
   connectionInfoType: ConnectionInfoType;
-  newConnectionCounterValue: number;
+  newListeningCounterValue: number;
 }
