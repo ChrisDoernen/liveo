@@ -7,5 +7,6 @@ export const environment = {
   port: 3000,
   standalone: false,
   revision: version.revision,
-  version: version.version
+  version: version.version,
+  environment: "executable"
 };

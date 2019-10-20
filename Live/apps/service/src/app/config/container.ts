@@ -44,24 +44,25 @@ import { SystemMonitoringService } from "../services/system-monitoring/system-mo
 import { TimeService } from "../services/time/time.service";
 import { FfmpegLogger, ServiceLogger } from "./logging.config";
 import { config } from "./service.config";
+import { ProcessShutdownService } from '../services/shutdown/process-shutdown-service';
 
 export const container = new Container();
 
 switch (config.os) {
   case "linux": {
-    container.bind<ShutdownService>("ShutdownService").to(UnixShutdownService).inSingletonScope();
+    container.bind<ShutdownService>("ShutdownService").to(UnixShutdownService);
     container.bind<DeviceDetector>("DeviceDetector").to(LinuxDeviceDetector).inSingletonScope();
     container.bind<AudioSystem>("AudioSystem").toConstantValue(AudioSystems.linux);
     break;
   }
   case "darwin": {
-    container.bind<ShutdownService>("ShutdownService").to(UnixShutdownService).inSingletonScope();
+    container.bind<ShutdownService>("ShutdownService").to(UnixShutdownService);
     container.bind<DeviceDetector>("DeviceDetector").to(MacOSDeviceDetector).inSingletonScope();
     container.bind<AudioSystem>("AudioSystem").toConstantValue(AudioSystems.darwin);
     break;
   }
   case "win32": {
-    container.bind<ShutdownService>("ShutdownService").to(WindowsShutdownService).inSingletonScope();
+    container.bind<ShutdownService>("ShutdownService").to(WindowsShutdownService);
     container.bind<DeviceDetector>("DeviceDetector").to(WindowsDeviceDetector).inSingletonScope();
     container.bind<AudioSystem>("AudioSystem").toConstantValue(AudioSystems.win32);
     break;
@@ -71,8 +72,12 @@ switch (config.os) {
   }
 }
 
+if (config.environment === "executable") {
+  container.rebind<ShutdownService>("ShutdownService").to(ProcessShutdownService);
+}
+
 if (!config.production) {
-  container.rebind<ShutdownService>("ShutdownService").to(ShutdownSimulationService).inSingletonScope();
+  container.rebind<ShutdownService>("ShutdownService").to(ShutdownSimulationService);
 }
 
 if (config.simulate) {
