@@ -123,12 +123,12 @@ export class ConnectionHistoryService {
     const minutesListened = 0;
     listenersToTimeMs.forEach((listenerTimeMs) => minutesListened + listenerTimeMs * 1000);
 
-    const minutesListenedPerClient = minutesListened * 1000 / uniqueListeners;
+    const minutesListenedPerListener = minutesListened * 1000 / uniqueListeners;
 
     return {
       uniqueListeners,
       minutesListened,
-      minutesListenedPerClient
+      minutesListenedPerListener
     }
   }
 }
