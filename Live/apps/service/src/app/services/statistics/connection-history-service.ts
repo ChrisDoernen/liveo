@@ -4,6 +4,7 @@ import { TimeService } from "../time/time.service";
 import { ClientInfo } from "./client-info";
 import { ConnectionInfo } from "./connection-info";
 import { ConnectionInfoType } from "./connection-info-type";
+import { ConnectionReport } from "./connection-report";
 
 @injectable()
 export class ConnectionHistoryService {
@@ -64,7 +65,7 @@ export class ConnectionHistoryService {
 
     const connectionInfo: ConnectionInfo = {
       clientInfo: clientInfo,
-      timestamp: this._timeService.now().toISOString(),
+      timestamp: this._timeService.now(),
       connectionInfoType: ConnectionInfoType.Connected,
       newListeningCounterValue: this._listeningCounter
     }
@@ -80,11 +81,54 @@ export class ConnectionHistoryService {
 
     const connectionInfo: ConnectionInfo = {
       clientInfo: clientInfo,
-      timestamp: this._timeService.now().toISOString(),
+      timestamp: this._timeService.now(),
       connectionInfoType: ConnectionInfoType.Disconnected,
       newListeningCounterValue: this._listeningCounter
     }
 
     this._connectionHistory.push(connectionInfo);
+  }
+
+  public getConnectionReport(): ConnectionReport {
+    const listenersToTimeMs = new Map<string, number>();
+    const listenerToOpenConnection = new Map<string, Date>();
+
+    this._connectionHistory.forEach((connectionInfo) => {
+      const ipAddress = connectionInfo.clientInfo.ipAddress;
+
+      if (connectionInfo.connectionInfoType === ConnectionInfoType.Connected) {
+        // Add opened connection to map
+        if (!listenerToOpenConnection.get(ipAddress)) {
+          listenerToOpenConnection.set(ipAddress, connectionInfo.timestamp);
+        }
+      } else {
+        // Get the opened connection and calculate the time difference
+        const connectedTimestamp = listenerToOpenConnection.get(ipAddress);
+        let listeningTimeMs = connectionInfo.timestamp.getTime() - connectedTimestamp.getTime();
+
+        // If the already has a entry in the map, add the new listening time and update the entry. 
+        const listenerTimeMs = listenersToTimeMs.get(ipAddress);
+        if (listenerTimeMs) {
+          listeningTimeMs += listenerTimeMs;
+        }
+        listenersToTimeMs.set(ipAddress, listeningTimeMs);
+
+        // Delete the connection from the open connections map
+        listenerToOpenConnection.delete(ipAddress);
+      }
+    });
+
+    const uniqueListeners = listenersToTimeMs.size;
+
+    const minutesListened = 0;
+    listenersToTimeMs.forEach((listenerTimeMs) => minutesListened + listenerTimeMs * 1000);
+
+    const minutesListenedPerClient = minutesListened * 1000 / uniqueListeners;
+
+    return {
+      uniqueListeners,
+      minutesListened,
+      minutesListenedPerClient
+    }
   }
 }
