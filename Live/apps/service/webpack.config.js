@@ -1,7 +1,9 @@
 const CopyPlugin = require('copy-webpack-plugin');
 const GeneratePackageJsonPlugin = require('generate-package-json-webpack-plugin');
 const path = require('path');
-const packageJson = require('./../../package.json');
+
+const pathToRootPackageJson = './../../package.json';
+const packageJson = require(pathToRootPackageJson);
 
 /**
  * Extend the default Webpack configuration from nx / ng.
@@ -66,8 +68,13 @@ function generatePackageJson() {
     "version": packageJson.version,
     "main": "./main.js",
     "bin": "./main.js",
+    "pkg": {
+      "assets": [
+        "node_modules/ffmpeg-static/bin/win32/x64/ffmpeg.exe"
+      ]
+    },
     dependencies
   };
-  const pathToPackageJson = path.join(__dirname, './../../package.json');
+  const pathToPackageJson = path.join(__dirname, pathToRootPackageJson);
   return new GeneratePackageJsonPlugin(basePackageJson, pathToPackageJson);
 }
