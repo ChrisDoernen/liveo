@@ -68,11 +68,6 @@ function generatePackageJson() {
     "version": packageJson.version,
     "main": "./main.js",
     "bin": "./main.js",
-    "pkg": {
-      "assets": [
-        "../../../node_modules/ffmpeg-static/bin/win32/x64/ffmpeg.exe"
-      ]
-    },
     dependencies
   };
   const pathToPackageJson = path.join(__dirname, pathToRootPackageJson);

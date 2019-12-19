@@ -28,6 +28,7 @@ var ffmpegPath = path.join(
 )
 
 const workingDirectory = process.env.EXECUTABLE ? process.cwd() : __dirname;
+const ffmpegExePath = process.env.EXECUTABLE ? path.join(process.cwd(), "ffmpeg/ffmpeg.exe") : ffmpegPath;
 
 export const config = {
   os: process.platform,
@@ -41,5 +42,5 @@ export const config = {
   database: process.env.DBFILE ? process.env.DBFILE : `${workingDirectory}/data/db.json`,
   logfilename: process.env.LOGFILE ? process.env.LOGFILE : `${workingDirectory}/logs/live-service.log`,
   ffmpeglogfilename: process.env.FFMPEGLOGFILE ? process.env.FFMPEGLOGFILE : `${workingDirectory}/logs/live-ffmpeg.log`,
-  ffmpegPath: process.env.FFMPEGPATH ? process.env.FFMPEGPATH : ffmpegPath
+  ffmpegPath: process.env.FFMPEGPATH ? process.env.FFMPEGPATH : ffmpegExePath
 };
