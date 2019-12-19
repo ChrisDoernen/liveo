@@ -5,6 +5,7 @@
 /tmp
 /out-tsc
 /pkg
+/bundle
 
 # dependencies
 /node_modules
