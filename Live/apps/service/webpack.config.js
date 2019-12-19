@@ -70,7 +70,7 @@ function generatePackageJson() {
     "bin": "./main.js",
     "pkg": {
       "assets": [
-        "node_modules/ffmpeg-static/bin/win32/x64/ffmpeg.exe"
+        "../../../node_modules/ffmpeg-static/bin/win32/x64/ffmpeg.exe"
       ]
     },
     dependencies

@@ -9,9 +9,14 @@ install:
   - nvm use 10.16.3
 script:
   - cd $TRAVIS_BUILD_DIR/Live
-  - npm install
+  - yarn install
   - npm run test
   - npm run build-prod
+  - cd $TRAVIS_BUILD_DIR/Live/dist/apps/service
+  - yarn install
+  - cd $TRAVIS_BUILD_DIR/Live
+  - npm run pkg
+  - npm run bundle
 notifications:
   email:
     on_failure: always
