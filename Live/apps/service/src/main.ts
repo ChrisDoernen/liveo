@@ -4,7 +4,7 @@ import { Bootstrapper } from "./app/core/bootstrapper";
 import { join } from "path";
 import { config } from "dotenv";
 
-const envPath = join(process.cwd(), "live.config");
+const envPath = join(process.cwd(), "live.env");
 const dotenv = config({ path: envPath, debug: true });
 if (dotenv.error) {
   throw dotenv.error;

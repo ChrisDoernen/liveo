@@ -1,16 +1,8 @@
 {
   "name": "live",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "license": "MIT",
   "private": true,
-  "bin": "dist/apps/service/main.js",
-  "pkg": {
-    "assets": [
-      "dist/apps/client/**",
-      "dist/apps/admin/**",
-      "dist/apps/service/assets/**"
-    ]
-  },
   "scripts": {
     "ng": "ng",
     "start": "ng build l3as && ng serve",
@@ -33,7 +25,7 @@
     "apitests": "node_modules/.bin/newman run apps/service-apitests/live-server-apitests-postman-collection.json -e apps/service-apitests/localhost-3000.postman-environment.json",
     "lint": "./node_modules/.bin/nx workspace-lint && ng lint",
     "e2e": "ng e2e",
-    "pkg": "pkg . -t node10-win --options max_old_space_size=4096 --out-path pkg",
+    "pkg": "pkg ./dist/apps/service/package.json -t node10-win --options max_old_space_size=4096 --out-path pkg",
     "affected:apps": "./node_modules/.bin/nx affected:apps",
     "affected:libs": "./node_modules/.bin/nx affected:libs",
     "affected:build": "./node_modules/.bin/nx affected:build",
@@ -117,6 +109,7 @@
     "codelyzer": "~4.5.0",
     "cypress": "^3.4.1",
     "faker": "^4.1.0",
+    "generate-package-json-webpack-plugin": "^1.0.1",
     "jest": "^24.8.0",
     "jest-create-mock-instance": "^1.1.0",
     "jest-preset-angular": "^7.1.0",
