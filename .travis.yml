@@ -15,8 +15,7 @@ script:
   - cd $TRAVIS_BUILD_DIR/Live/dist/apps/service
   - yarn install
   - cd $TRAVIS_BUILD_DIR/Live
-  - npm run pkg
-  - npm run bundle
+  - npm run build-exe
 notifications:
   email:
     on_failure: always
