@@ -3962,10 +3962,15 @@ core-js@3.1.4:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.1.4.tgz#3a2837fc48e582e1ae25907afcd6cf03b0cc7a07"
   integrity sha512-YNZN8lt82XIMLnLirj9MhKDFZHalwzzrL9YLt6eb0T5D0EDl4IQ90IGkua8mHbnxNrkj1d8hbdizMc0Qmg1WnQ==
 
-core-js@^2.4.0, core-js@^2.4.1, core-js@^2.5.4:
+core-js@^2.4.0:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.11.tgz#38831469f9922bded8ee21c9dc46985e0399308c"
   integrity sha512-5wjnpaT/3dV+XB4borEsnAYQchn00XSgTAWKDkEqv+K8KevjbzmofK6hfJ9TZIlpj2N0xQpazy7PiRQiWHqzWg==
+
+core-js@^3.0.0, core-js@^3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.6.0.tgz#2b854e451de1967d1e29896025cdc13a2518d9ea"
+  integrity sha512-AHPTNKzyB+YwgDWoSOCaid9PUSEF6781vsfiK8qUz62zRR448/XgK2NtCbpiUGizbep8Lrpt0Du19PpGGZvw3Q==
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -7948,17 +7953,17 @@ ng5-slider@^1.1.14:
     rxjs-compat "^6.5.2"
     tslib "^1.7.1"
 
-ngx-socket-io@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/ngx-socket-io/-/ngx-socket-io-2.1.1.tgz#abf61f6f50fd5e56344f8559026a0d2333a72684"
-  integrity sha512-VYg64N7v6V1zoZIfiqJqEE+y8R7OWUGZUDzbDxqk0wTWZyqyQaWAvyFzThnBjFkxkyj6cFaIDHH+N4k82rst5g==
+ngx-socket-io@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/ngx-socket-io/-/ngx-socket-io-3.0.1.tgz#6dc50144ef4c793ecc597955081ec5c5dd9ce033"
+  integrity sha512-6+99AULDEcdrsFSd9FVo5mUSpQMa2KL6twPbteoEv3qWO0Hh2kdrzTjvPdsC2jeTuEuqa8R9l5/3eGYdiLZyWQ==
   dependencies:
-    core-js "^2.4.1"
+    core-js "^3.0.0"
     reflect-metadata "^0.1.10"
-    rxjs "^6.1.0"
-    socket.io "^2.0.1"
-    socket.io-client "^2.0.1"
-    zone.js "^0.8.11"
+    socket.io "^2.2.0"
+    socket.io-client "^2.2.0"
+    tslib "^1.9.0"
+    zone.js "^0.10.1"
 
 nice-try@^1.0.4:
   version "1.0.5"
@@ -9644,7 +9649,7 @@ rxjs@6.4.0:
   dependencies:
     tslib "^1.9.0"
 
-rxjs@6.5.3, rxjs@^6.1.0, rxjs@^6.4.0:
+rxjs@6.5.3, rxjs@^6.4.0:
   version "6.5.3"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.5.3.tgz#510e26317f4db91a7eb1de77d9dd9ba0a4899a3a"
   integrity sha512-wuYsAYYFdWTAnAaPoKGNhfpWwKZbJW+HgAJ+mImp+Epl7BG8oNWBCTyRM8gba9k4lk8BgWdoYm21Mo/RYhhbgA==
@@ -10068,7 +10073,7 @@ socket.io-adapter@~1.1.0:
   resolved "https://registry.yarnpkg.com/socket.io-adapter/-/socket.io-adapter-1.1.2.tgz#ab3f0d6f66b8fc7fca3959ab5991f82221789be9"
   integrity sha512-WzZRUj1kUjrTIrUKpZLEzFZ1OLj5FwLlAFQs9kuZJzJi5DKdU7FsWc36SNmA8iDOtwBQyT8FkrriRM8vXLYz8g==
 
-socket.io-client@2.3.0, socket.io-client@^2.0.1, socket.io-client@^2.3.0:
+socket.io-client@2.3.0, socket.io-client@^2.2.0, socket.io-client@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/socket.io-client/-/socket.io-client-2.3.0.tgz#14d5ba2e00b9bcd145ae443ab96b3f86cbcc1bb4"
   integrity sha512-cEQQf24gET3rfhxZ2jJ5xzAOo/xhZwK+mOqtGRg5IowZsMgwvHwnf/mCRapAAkadhM26y+iydgwsXGObBB5ZdA==
@@ -10106,7 +10111,7 @@ socket.io-parser@~3.4.0:
     debug "~4.1.0"
     isarray "2.0.1"
 
-socket.io@^2.0.1, socket.io@^2.3.0:
+socket.io@^2.2.0, socket.io@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/socket.io/-/socket.io-2.3.0.tgz#cd762ed6a4faeca59bc1f3e243c0969311eb73fb"
   integrity sha512-2A892lrj0GcgR/9Qk81EaY2gYhCBxurV0PfmmESO6p27QPrUK1J3zdns+5QPqvUYK2q657nSj0guoIil9+7eFg==
@@ -11907,10 +11912,10 @@ yn@^2.0.0:
   resolved "https://registry.yarnpkg.com/yn/-/yn-2.0.0.tgz#e5adabc8acf408f6385fc76495684c88e6af689a"
   integrity sha1-5a2ryKz0CPY4X8dklWhMiOavaJo=
 
-zone.js@^0.8.11:
-  version "0.8.29"
-  resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.8.29.tgz#8dce92aa0dd553b50bc5bfbb90af9986ad845a12"
-  integrity sha512-mla2acNCMkWXBD+c+yeUrBUrzOxYMNFdQ6FGfigGGtEVBPJx07BQeJekjt9DmH1FtZek4E9rE1eRR9qQpxACOQ==
+zone.js@^0.10.1:
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.10.2.tgz#67ca084b3116fc33fc40435e0d5ea40a207e392e"
+  integrity sha512-UAYfiuvxLN4oyuqhJwd21Uxb4CNawrq6fPS/05Su5L4G+1TN+HVDJMUHNMobVQDFJRir2cLAODXwluaOKB7HFg==
 
 zone.js@^0.9.1:
   version "0.9.1"
