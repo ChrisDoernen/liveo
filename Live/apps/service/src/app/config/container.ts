@@ -44,6 +44,7 @@ import { SystemMonitoringService } from "../services/system-monitoring/system-mo
 import { TimeService } from "../services/time/time.service";
 import { FfmpegLogger, ServiceLogger } from "./logging.config";
 import { config } from "./service.config";
+import { ProcessShutdownService } from '../services/shutdown/process-exit.service';
 
 export const container = new Container();
 
@@ -69,6 +70,10 @@ switch (config.os) {
   default: {
     throw new Error(`OS ${config.os} is unsupported.`);
   }
+}
+
+if (config.executable) {
+  container.rebind<ShutdownService>("ShutdownService").to(ProcessShutdownService).inSingletonScope();
 }
 
 if (!config.production) {

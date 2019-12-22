@@ -57,7 +57,7 @@ export class DataService implements IStreamRepository, ISessionRepository, ISett
 
   public getUsers(): UserEntity[] {
     const users = this._database.get("users").value() as UserEntity[];
-    this._logger.info(`Read ${users.length} user entities from database.`);
+    this._logger.debug(`Read ${users.length} user entities from database.`);
 
     return users;
   }
