@@ -1,4 +1,4 @@
-const esModules = ["ngx-socket-io"].join("|");
+const esModules = ["ngx-socket-io", "ng-inline-svg"].join("|");
 
 module.exports = {
   testMatch: ["**/+(*.)+(spec|test).+(ts|js)?(x)"],
