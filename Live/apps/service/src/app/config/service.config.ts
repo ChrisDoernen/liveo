@@ -40,6 +40,7 @@ export const config = {
   standalone: process.env.STANDALONE ? process.env.STANDALONE === "true" : environment.standalone,
   executable: process.env.EXECUTABLE ? process.env.EXECUTABLE === "true" : environment.executable,
   database: process.env.DBFILE ? process.env.DBFILE : `${workingDirectory}/data/db.json`,
+  loglevel: process.env.LOGLEVEL ? process.env.LOGLEVEL : "debug",
   logfilename: process.env.LOGFILE ? process.env.LOGFILE : `${workingDirectory}/logs/live-service.log`,
   ffmpeglogfilename: process.env.FFMPEGLOGFILE ? process.env.FFMPEGLOGFILE : `${workingDirectory}/logs/live-ffmpeg.log`,
   ffmpegPath: process.env.FFMPEGPATH ? process.env.FFMPEGPATH : ffmpegExePath

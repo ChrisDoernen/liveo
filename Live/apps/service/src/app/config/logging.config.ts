@@ -32,7 +32,7 @@ const options = {
     format: timeLevelMessage
   },
   console: {
-    level: "debug",
+    level: config.loglevel,
     handleExceptions: true,
     json: false,
     colorize: true,

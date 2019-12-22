@@ -51,7 +51,7 @@ export class WebServer {
     const app = expressServer.build();
 
     if (config.standalone) {
-      this._logger.info(`Serving static files in standalone mode.`);
+      this._logger.debug(`Serving static files in standalone mode.`);
       app.use("/", express.static(path.resolve(__dirname + "/../client")));
       app.use("/admin", express.static(path.resolve(__dirname + "/../admin")));
 
@@ -61,13 +61,18 @@ export class WebServer {
     }
 
     const serverInstance = app.listen(config.port);
-    this._logger.info(`Web server started, listening on port ${config.port}.`);
+    this._logger.debug(`Web server started, listening on port ${config.port}.`);
+    this._logger.info("LIVE SERVER STARTED");
+
+    if (config.executable) {
+      this._logger.info("Press CTRL+C to exit...");
+    }
 
     this._serverInstance = serverInstance;
     return serverInstance;
   }
 
   public shutdown(): void {
-    this._serverInstance.close(() => this._logger.info("Web server stopped."));
+    this._serverInstance.close(() => this._logger.debug("Web server stopped."));
   }
 }
