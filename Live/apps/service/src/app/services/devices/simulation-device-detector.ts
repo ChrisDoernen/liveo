@@ -27,7 +27,7 @@ export class SimulationDeviceDetector extends DeviceDetector {
   }
 
   public getDevice(id: string): Device {
-    this.logger.info("Simulating device detection, returning available test device.");
+    this.logger.debug("Simulating device detection, returning available test device.");
     return this.instantiateDevice(id, "Test device", DeviceType.Unknown, DeviceState.Available);
   }
 }

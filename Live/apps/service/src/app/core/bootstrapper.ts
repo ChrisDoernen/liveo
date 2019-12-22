@@ -30,6 +30,7 @@ export class Bootstrapper {
     this._logger.info("STARTING LIVE SERVER");
     this._logger.info(`Version: v${environment.version}/${environment.revision}`);
     this._logger.debug(`Production: ${config.production}.`);
+    this._logger.debug(`Executable: ${config.executable}.`);
     this._logger.debug(`Operating system: ${config.os}.`);
     this._logger.debug(`Architecture: ${config.arch}.`);
     this._logger.debug(`Simulate streaming: ${config.simulate}.`);

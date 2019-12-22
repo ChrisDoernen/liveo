@@ -98,7 +98,7 @@ export class ActivationService {
     }
 
     this._activation = null;
-    this._logger.info("Activation deleted.");
+    this._logger.debug("Activation deleted.");
 
     return this._activation;
   }

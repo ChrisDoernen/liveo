@@ -6,17 +6,17 @@ import { inject, injectable } from "inversify";
 import { InversifyExpressServer } from "inversify-express-utils";
 import * as path from "path";
 import { config } from "../config/service.config";
+import { AuthenticationProvider } from "../middleware/authentication/authentication-provider";
+import { Logger } from "../services/logging/logger";
+// Controllers have to be registered here
 import "../controller/admin/activation.controller";
 import "../controller/admin/authentication.controller";
-// Controllers have to be registered here
 import "../controller/admin/connection.controller";
 import "../controller/admin/session.controller";
 import "../controller/admin/settings.controller";
 import "../controller/admin/shutdown.controller";
 import "../controller/admin/stream.controller";
 import "../controller/client/application-state.controller";
-import { AuthenticationProvider } from "../middleware/authentication/authentication-provider";
-import { Logger } from "../services/logging/logger";
 
 @injectable()
 export class WebServer {
@@ -52,12 +52,15 @@ export class WebServer {
 
     if (config.standalone) {
       this._logger.debug(`Serving static files in standalone mode.`);
-      app.use("/", express.static(path.resolve(__dirname + "/../client")));
-      app.use("/admin", express.static(path.resolve(__dirname + "/../admin")));
+
+      const basePath = config.executable ? process.cwd() : path.resolve(__dirname, "/..");
+
+      app.use("/", express.static(path.resolve(basePath + "/client")));
+      app.use("/admin", express.static(path.resolve(basePath + "/admin")));
 
       // Redirect unmatched requests to index files.
-      app.get("/admin/*", (req, res) => res.sendFile(path.resolve(__dirname + "/../admin/index.html")));
-      app.get("/*", (req, res) => res.sendFile(path.resolve(__dirname + "/../client/index.html")));
+      app.get("/admin/*", (req, res) => res.sendFile(path.resolve(basePath + "/admin/index.html")));
+      app.get("/*", (req, res) => res.sendFile(path.resolve(basePath + "/client/index.html")));
     }
 
     const serverInstance = app.listen(config.port);

@@ -19,7 +19,7 @@ export class ProcessShutdownService extends ShutdownService {
   }
 
   public executeShutdown(): void {
-    this.logger.info("Shutting down process now.");
+    this.logger.debug("Shutting down process now.");
     process.exit(0);
   }
 }
