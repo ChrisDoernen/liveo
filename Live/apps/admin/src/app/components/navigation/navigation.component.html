@@ -5,14 +5,24 @@
     </button>
     <div>
       <ul>
-        <li (click)="router.navigate(['home/dashboard']); sidenav.toggle()">
-          <mat-icon>dashboard</mat-icon> <span class="menu-item">Dashboard</span>
+        <li (click)="navigate('dashboard'); sidenav.toggle()">
+          <mat-icon>dashboard</mat-icon>
+          <span class="menu-item">Dashboard</span>
         </li>
-        <li (click)="router.navigate(['home/settings']); sidenav.toggle()">
-          <mat-icon>more_vert</mat-icon> <span class="menu-item">Settings</span>
+        <li class="nav-space"></li>
+        <li (click)="navigate('streams'); sidenav.toggle()">
+          <mat-icon>mic</mat-icon>
+          <span class="menu-item">Streams</span>
         </li>
-        <!-- <li (click)="router.navigate(['streams']); sidenav.toggle()">Streams</li>
-        <li (click)="router.navigate(['sessions']); sidenav.toggle()">Sessions</li> -->
+        <li (click)="navigate('sessions'); sidenav.toggle()">
+          <mat-icon>wifi_tethering</mat-icon>
+          <span class="menu-item">Sessions</span>
+        </li>
+        <li class="nav-space"></li>
+        <li (click)="navigate('settings'); sidenav.toggle()">
+          <mat-icon>more_vert</mat-icon>
+          <span class="menu-item">Settings</span>
+        </li>
       </ul>
     </div>
     <div class="version-info">v{{ this.version }}/{{ this.revision }}</div>

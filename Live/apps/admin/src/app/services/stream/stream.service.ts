@@ -1,8 +1,8 @@
-import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { map } from "rxjs/operators";
+import { Injectable } from "@angular/core";
 import { StreamEntity } from "@live/entities";
 import { EndpointService } from "@live/services";
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root"
@@ -29,15 +29,7 @@ export class StreamService {
 
   public getStreams(): Promise<StreamEntity[]> {
     return this._httpClient
-      .get(this._endpointService.getEndpoint("streams"), {
-        observe: "response",
-        responseType: "json"
-      })
-      .pipe(
-        map((response: any) =>
-          response.status === 200 ? (response.body as StreamEntity[]) : null
-        )
-      )
+      .get<StreamEntity[]>(this._endpointService.getEndpoint("streams"))
       .toPromise();
   }
 }
