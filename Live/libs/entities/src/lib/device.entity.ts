@@ -3,7 +3,7 @@ import { DeviceType } from "./device-type";
 /**
  * Class representing a device data transfer object
  */
-export class DeviceData {
+export class DeviceEntity {
   constructor(
     public id: string,
     public description: string,

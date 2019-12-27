@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { StreamEntity } from "@live/entities";
+import { DeviceEntity, StreamEntity } from "@live/entities";
+import { DevicesService } from "../../services/devices/devices.service";
 import { StreamService } from "../../services/stream/stream.service";
 
 @Component({
@@ -10,14 +11,15 @@ import { StreamService } from "../../services/stream/stream.service";
 export class StreamsComponent implements OnInit {
 
   public streams: StreamEntity[];
+  public devices: DeviceEntity[];
 
   constructor(
-    private _streamService: StreamService) {
+    private readonly _streamService: StreamService,
+    private readonly _devicesService: DevicesService) {
   }
 
   public ngOnInit(): void {
-    this._streamService.getStreams().then((streams) => {
-      this.streams = streams;
-    });
+    this._streamService.getStreams().then((streams) => this.streams = streams);
+    this._devicesService.getDevices().then((devices) => this.devices = devices);
   }
 }

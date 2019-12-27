@@ -1,10 +1,10 @@
+import { DeviceEntity } from "@live/entities";
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
 import { AudioSystem } from "../audio-system/audio-system";
 import { Logger } from "../logging/logger";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { Device } from "./device";
-import { DeviceData } from "./device-data";
 import { DeviceState } from "./device-state";
 import { WindowsDeviceDetector } from "./windows-device-detector";
 
@@ -18,7 +18,7 @@ describe("WindowsDeviceDetector", () => {
   beforeEach(() => {
     const logger = createMockInstance(Logger);
     processExecutionService = createMockInstance(ProcessExecutionService);
-    deviceFactory = jest.fn((deviceData: DeviceData, deviceState: DeviceState) => new Device(logger, deviceData, deviceState));
+    deviceFactory = jest.fn((deviceData: DeviceEntity, deviceState: DeviceState) => new Device(logger, deviceData, deviceState));
 
     windowsDeviceDetector = new WindowsDeviceDetector(logger, audioSystem, ffmpegPath, processExecutionService, deviceFactory);
   });
@@ -36,9 +36,9 @@ describe("WindowsDeviceDetector", () => {
 
     const devices = windowsDeviceDetector.devices;
     expect(devices.length).toBe(3);
-    expect(devices[0].data.id).toBe("USB Boot");
-    expect(devices[1].data.id).toBe("Mikrofon (USB Audio Device)");
-    expect(devices[2].data.id).toBe("Mikrofonarray (Realtek High Definition Audio)");
+    expect(devices[0].entity.id).toBe("USB Boot");
+    expect(devices[1].entity.id).toBe("Mikrofon (USB Audio Device)");
+    expect(devices[2].entity.id).toBe("Mikrofonarray (Realtek High Definition Audio)");
   });
 });
 

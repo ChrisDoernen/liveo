@@ -1,12 +1,11 @@
-import { ProcessExecutionService } from "../process-execution/process-execution-service";
-import { DeviceDetector } from "./device-detector";
-import { Logger } from "../logging/logger";
-import { injectable, inject } from "inversify";
-import { Device } from "./device";
-import { DeviceData } from "./device-data";
-import { DeviceState } from "./device-state";
+import { DeviceEntity, DeviceType } from "@live/entities";
+import { inject, injectable } from "inversify";
 import { EOL } from "os";
-import { DeviceType } from "./device-type";
+import { Logger } from "../logging/logger";
+import { ProcessExecutionService } from "../process-execution/process-execution-service";
+import { Device } from "./device";
+import { DeviceDetector } from "./device-detector";
+import { DeviceState } from "./device-state";
 
 /**
  * Implementation of device detection on linux machines
@@ -17,7 +16,7 @@ export class LinuxDeviceDetector extends DeviceDetector {
   constructor(
     @inject("Logger") logger: Logger,
     @inject("ProcessExecutionService") processExecutionService: ProcessExecutionService,
-    @inject("DeviceFactory") deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
+    @inject("DeviceFactory") deviceFactory: (deviceData: DeviceEntity, deviceState: DeviceState) => Device) {
     super(logger, processExecutionService, deviceFactory);
     this.listDevicesCommand = "arecord -L";
   }
