@@ -1,11 +1,16 @@
-.stream-list {
+.title-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .table-head {
   margin-bottom: 15px;
+  font-weight: 600;
 }
 
 .stream {
   display: grid;
-  grid-template-columns: 25% auto 30px;
+  grid-template-columns: 25% auto 40px 40px;
+  align-items: center;
 }

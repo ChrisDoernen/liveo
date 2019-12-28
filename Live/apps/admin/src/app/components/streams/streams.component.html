@@ -1,4 +1,12 @@
-<h2>Edit Streams</h2>
+<div class="title-bar">
+  <h2>Streams</h2>
+  <div>
+    <button mat-stroked-button color="primary" (click)="openNewStreamDialog()">
+      <i class="material-icons">add</i>
+      New Stream
+    </button>
+  </div>
+</div>
 <div class="stream-list">
   <div class="stream table-head">
     <div>NAME</div>
@@ -8,6 +16,11 @@
   <div class="stream" *ngFor="let stream of streams">
     <div class="title">{{stream.title}}</div>
     <div>{{stream.deviceId}}</div>
-    <i class="material-icons">delete_outline</i>
+    <button mat-icon-button>
+      <i *ngIf="!isDeviceAvailable(stream.deviceId)" class="material-icons">error_outline</i>
+    </button>
+    <button mat-icon-button matTooltip="Delete" [matTooltipPosition]="'left'">
+      <i class="material-icons">delete_outline</i>
+    </button>
   </div>
 </div>
