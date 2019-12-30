@@ -1,5 +1,7 @@
 @import "../../variables.scss";
 
+$nav-padding: 20px;
+
 .sidenav-container {
   position: absolute;
   top: 0;
@@ -9,10 +11,16 @@
 
   ul {
     list-style: none;
-    padding-left: 20px;
+    padding-left: $nav-padding;
 
-    li {
+    a {
       cursor: pointer;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:focus {
+      outline: none;
     }
 
     mat-icon {
@@ -24,10 +32,22 @@
       vertical-align: middle;
       margin: 0 10px;
     }
+
+    .is-active {
+      color: var(--primary-color);
+    }
   }
 }
 
 mat-sidenav {
+  .nav-header {
+    padding: 0 $nav-padding;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   width: 300px;
 
   .version-info {

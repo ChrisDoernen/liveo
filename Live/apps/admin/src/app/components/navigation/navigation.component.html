@@ -1,27 +1,36 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #sidenav>
-    <button mat-button (click)="sidenav.toggle()">
-      <mat-icon>menu</mat-icon>
-    </button>
+    <div class="nav-header">
+      <h3>MENU</h3>
+      <mat-icon class="clickable" (click)="sidenav.close()">close</mat-icon>
+    </div>
     <div>
       <ul>
-        <li (click)="navigate('dashboard'); sidenav.close()">
-          <mat-icon>dashboard</mat-icon>
-          <span class="menu-item">Dashboard</span>
+        <li>
+          <a routerLink="dashboard" routerLinkActive="is-active" (click)="sidenav.close()">
+            <mat-icon>dashboard</mat-icon>
+            <span class="menu-item">Dashboard</span>
+          </a>
         </li>
         <li class="nav-space"></li>
-        <li (click)="navigate('streams'); sidenav.close()">
-          <mat-icon>mic</mat-icon>
-          <span class="menu-item">Streams</span>
+        <li>
+          <a routerLink="streams" routerLinkActive="is-active" (click)="sidenav.close()">
+            <mat-icon>mic</mat-icon>
+            <span class="menu-item">Streams</span>
+          </a>
         </li>
-        <li (click)="navigate('sessions'); sidenav.close()">
-          <mat-icon>wifi_tethering</mat-icon>
-          <span class="menu-item">Sessions</span>
+        <li>
+          <a routerLink="sessions" routerLinkActive="is-active" (click)="sidenav.close()">
+            <mat-icon>wifi_tethering</mat-icon>
+            <span class="menu-item">Sessions</span>
+          </a>
         </li>
         <li class="nav-space"></li>
-        <li (click)="navigate('settings'); sidenav.close()">
-          <mat-icon>more_vert</mat-icon>
-          <span class="menu-item">Settings</span>
+        <li>
+          <a routerLink="settings" routerLinkActive="is-active" (click)="sidenav.close()">
+            <mat-icon>more_vert</mat-icon>
+            <span class="menu-item">Settings</span>
+          </a>
         </li>
       </ul>
     </div>

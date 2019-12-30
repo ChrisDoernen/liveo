@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { MatDialog } from "@angular/material";
+import { DIALOG_CONFIG_STEPPER } from "../../constants/mat-dialog-config-stepper";
 import { ActivationService } from "../../services/activation/activation.service";
 import { ActivationDialogComponent } from "../activation-dialog/activation-dialog.component";
 
@@ -16,13 +17,16 @@ export class DashboardNoActivationComponent {
   }
 
   public openActivationDialog(): void {
-    const dialogRef = this.activationDialog.open(ActivationDialogComponent, { width: "300px", restoreFocus: false });
-    dialogRef.afterClosed().toPromise().then((activation) => {
-      if (!activation) {
-        return;
-      }
+    this.activationDialog
+      .open(ActivationDialogComponent, DIALOG_CONFIG_STEPPER)
+      .afterClosed()
+      .toPromise()
+      .then((activation) => {
+        if (!activation) {
+          return;
+        }
 
-      this.activationService.setActivation(activation);
-    });
+        this.activationService.setActivation(activation);
+      });
   }
 }

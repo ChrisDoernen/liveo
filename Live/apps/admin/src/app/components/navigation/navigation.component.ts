@@ -17,8 +17,4 @@ export class NavigationComponent {
     public route: ActivatedRoute,
     public router: Router) {
   }
-
-  public navigate(route: string): void {
-    this.router.navigate([`home/${route}`]);
-  }
 }
