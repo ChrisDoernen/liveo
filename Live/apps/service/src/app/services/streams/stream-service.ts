@@ -22,12 +22,12 @@ export class StreamService {
   }
 
   public loadStreams(): void {
-    this._logger.debug("Loading streams.");
+    this._logger.debug("Loading streams");
 
     const streamEntities = this._streamRepository.loadStreamEntities();
 
     if (streamEntities.length === 0) {
-      this._logger.warn("No streams available for loading.");
+      this._logger.warn("No streams available for loading");
     } else {
       this._streams = streamEntities.map(entities => this.convertStream(entities));
     }
@@ -43,15 +43,20 @@ export class StreamService {
 
   public getStreamEntity(id: string): StreamEntity {
     const matchingStream = this._streams.find(stream => stream.id === id);
-    
+
     return matchingStream ? matchingStream.entity : null;
   }
 
   public createStream(streamEntity: StreamEntity): StreamEntity {
     const createdStreamEntity = this._streamRepository.createStreamEntity(streamEntity);
     this._streams.push(this.convertStream(createdStreamEntity));
-    this._logger.info(`Created stream ${JSON.stringify(streamEntity)}.`);
+    this._logger.info(`Created stream ${JSON.stringify(streamEntity)}`);
 
     return createdStreamEntity;
+  }
+
+  public deleteStream(streamEntity: StreamEntity): void {
+    this._streamRepository.deleteStream(streamEntity);
+    this._logger.debug(`Deleted stream ${streamEntity.id}`);
   }
 }

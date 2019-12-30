@@ -51,6 +51,10 @@ export class DataService implements IStreamRepository, ISessionRepository, ISett
     return streamEntity;
   }
 
+  public deleteStream(streamEntity: StreamEntity): void {
+    this._database.get("streams").remove(streamEntity).write()
+  }
+
   public getSettings(): SettingsEntity {
     const settings = this._database.get("settings").value() as SettingsEntity;
 
@@ -73,7 +77,7 @@ export class DataService implements IStreamRepository, ISessionRepository, ISett
   private createNewId(): string {
     const alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
     const id = generate(alphabet, 10);
-    
+
     return id;
   }
 }

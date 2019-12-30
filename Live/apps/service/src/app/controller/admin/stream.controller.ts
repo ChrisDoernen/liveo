@@ -2,7 +2,7 @@ import { ROUTES } from "@live/constants";
 import { StreamEntity } from "@live/entities";
 import { Request, Response } from "express";
 import { inject } from "inversify";
-import { controller, httpGet, httpPost } from "inversify-express-utils";
+import { controller, httpDelete, httpGet, httpPost } from "inversify-express-utils";
 import { StreamService } from "../../services/streams/stream-service";
 
 @controller(`/${ROUTES.admin}/streams`)
@@ -32,5 +32,17 @@ export class StreamController {
     const stream = request.body as StreamEntity;
 
     return this._streamService.createStream(stream);
+  }
+
+  @httpDelete("/:id")
+  public deleteStream(request: Request, response: Response): void {
+    const id = request.params.id;
+    const stream = request.body as StreamEntity;
+    if (id !== stream.id) {
+      response.status(400).send("Invalid stream object");
+      return;
+    }
+    this._streamService.deleteStream(stream);
+    response.sendStatus(200);
   }
 }

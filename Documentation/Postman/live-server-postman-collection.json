@@ -6,12 +6,12 @@
 	},
 	"item": [
 		{
-			"name": "/api/admin/streams/v67d",
+			"name": "/api/admin/streams/tx331xqq",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{hostname}}:{{port}}/api/admin/streams/v67d",
+					"raw": "{{hostname}}:{{port}}/api/admin/streams/tx331xqq",
 					"host": [
 						"{{hostname}}"
 					],
@@ -20,7 +20,28 @@
 						"api",
 						"admin",
 						"streams",
-						"v67d"
+						"tx331xqq"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/streams/tx331xqq",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/admin/streams/tx331xqq",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"admin",
+						"streams",
+						"tx331xqq"
 					]
 				}
 			},
@@ -31,6 +52,42 @@
 			"request": {
 				"method": "GET",
 				"header": [],
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/admin/streams",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"admin",
+						"streams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/streams",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"title\": \"Farsi\",\n        \"deviceId\": \"CARD=PCH,DEV=0\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "{{hostname}}:{{port}}/api/admin/streams",
 					"host": [
@@ -158,12 +215,12 @@
 			"response": []
 		},
 		{
-			"name": "/api/admin/sessions/bd34",
+			"name": "/api/admin/sessions/gfxbi7xe",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{hostname}}:{{port}}/api/admin/sessions/bd34",
+					"raw": "{{hostname}}:{{port}}/api/admin/sessions/gfxbi7xe",
 					"host": [
 						"{{hostname}}"
 					],
@@ -172,7 +229,7 @@
 						"api",
 						"admin",
 						"sessions",
-						"bd34"
+						"gfxbi7xe"
 					]
 				}
 			},
@@ -293,7 +350,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"sessionId\": \"ag7s\"\n}"
+					"raw": "{\n\t\"sessionId\": \"gfxbi7xe\"\n}"
 				},
 				"url": {
 					"raw": "{{hostname}}:{{port}}/api/admin/activation",
@@ -324,7 +381,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"sessionId\": \"bd34\",\n\t\"startTime\": \"2019-08-18T14:30:13+02:00\"\n}"
+					"raw": "{\n\t\"sessionId\": \"gfxbi7xe\",\n\t\"startTime\": \"2019-08-18T14:30:13+02:00\"\n}"
 				},
 				"url": {
 					"raw": "{{hostname}}:{{port}}/api/admin/activation",
