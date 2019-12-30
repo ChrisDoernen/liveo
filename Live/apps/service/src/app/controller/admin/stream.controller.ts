@@ -35,14 +35,8 @@ export class StreamController {
   }
 
   @httpDelete("/:id")
-  public deleteStream(request: Request, response: Response): void {
-    const id = request.params.id;
-    const stream = request.body as StreamEntity;
-    if (id !== stream.id) {
-      response.status(400).send("Invalid stream object");
-      return;
-    }
-    this._streamService.deleteStream(stream);
-    response.sendStatus(200);
+  public deleteStream(request: Request): void {
+    const streamId = request.params.id;
+    this._streamService.deleteStream(streamId);
   }
 }

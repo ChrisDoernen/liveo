@@ -1,9 +1,10 @@
 import { Component } from "@angular/core";
 import { MatDialog } from "@angular/material";
-import { ShutdownDialogComponent } from "../shutdown-dialog/shutdown-dialog.component";
 import { Shutdown } from "@live/entities";
-import { ShutdownService } from "../../services/shutdown/shutdown.service";
 import { Logger } from "@live/services";
+import { DIALOG_CONFIG_SMALL } from "../../constants/mat-dialog-config-small";
+import { ShutdownService } from "../../services/shutdown/shutdown.service";
+import { ShutdownDialogComponent } from "../shutdown-dialog/shutdown-dialog.component";
 
 @Component({
   selector: "shutdown-button",
@@ -14,21 +15,22 @@ export class ShutdownComponent {
 
   constructor(
     private _logger: Logger,
-    public dialog: MatDialog,
+    public shutdownDialog: MatDialog,
     private _shutdownService: ShutdownService) {
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(ShutdownDialogComponent, { width: "250px", restoreFocus: false });
+  publicopenDialog(): void {
+    this.shutdownDialog
+      .open(ShutdownDialogComponent, DIALOG_CONFIG_SMALL)
+      .afterClosed()
+      .toPromise()
+      .then((result) => {
+        this._logger.info(`The dialog was closed, result: ${result}`);
 
-    dialogRef.afterClosed().subscribe(result => {
-      this._logger.info(`The dialog was closed, result: ${result}`);
-
-      if (result) {
-        const shutdown = new Shutdown(null);
-
-        this._shutdownService.setShutdown(shutdown);
-      }
-    });
+        if (result) {
+          const shutdown = new Shutdown(null);
+          this._shutdownService.setShutdown(shutdown);
+        }
+      });
   }
 }

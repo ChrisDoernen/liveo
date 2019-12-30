@@ -19,7 +19,8 @@
     <button mat-icon-button>
       <i *ngIf="!isDeviceAvailable(stream.deviceId)" class="material-icons">error_outline</i>
     </button>
-    <button mat-icon-button matTooltip="Delete" [matTooltipPosition]="'left'">
+    <button mat-icon-button matTooltip="Delete" [matTooltipPosition]="'left'"
+      (click)="openStreamDeletionDialog(stream)">
       <i class="material-icons">delete_outline</i>
     </button>
   </div>

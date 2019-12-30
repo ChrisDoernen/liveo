@@ -41,8 +41,12 @@ export class StreamService {
     return this._streams.map((stream: Stream) => stream.entity);
   }
 
+  private getStream(id): Stream {
+    return this._streams.find(stream => stream.id === id);
+  }
+
   public getStreamEntity(id: string): StreamEntity {
-    const matchingStream = this._streams.find(stream => stream.id === id);
+    const matchingStream = this.getStream(id);
 
     return matchingStream ? matchingStream.entity : null;
   }
@@ -55,8 +59,13 @@ export class StreamService {
     return createdStreamEntity;
   }
 
-  public deleteStream(streamEntity: StreamEntity): void {
-    this._streamRepository.deleteStream(streamEntity);
-    this._logger.debug(`Deleted stream ${streamEntity.id}`);
+  public deleteStream(streamId: string): void {
+    const stream = this.getStream(streamId);
+    if (stream) {
+      this._streamRepository.deleteStream(stream.entity);
+      const streamIndex = this._streams.indexOf(stream);
+      this._streams.splice(streamIndex, 1);
+      this._logger.debug(`Deleted stream ${streamId}`);
+    }
   }
 }

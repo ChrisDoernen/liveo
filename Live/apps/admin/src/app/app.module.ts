@@ -32,6 +32,7 @@ import { SessionsComponent } from "./components/sessions/sessions.component";
 import { SettingsComponent } from "./components/settings/settings.component";
 import { ShutdownDialogComponent } from "./components/shutdown-dialog/shutdown-dialog.component";
 import { ShutdownComponent } from "./components/shutdown/shutdown.component";
+import { StreamDeletionDialogComponent } from "./components/stream-deletion-dialog/stream-deletion-dialog.component";
 import { StreamsComponent } from "./components/streams/streams.component";
 import { WelcomeComponent } from "./components/welcome/welcome.component";
 import { AuthenticationInterceptor } from "./interceptors/authentication.interceptor";
@@ -74,13 +75,15 @@ import { InitializationService } from "./services/initialization/initialization.
     LoginComponent,
     WelcomeComponent,
     LogoHeaderComponent,
-    NewStreamDialogComponent
+    NewStreamDialogComponent,
+    StreamDeletionDialogComponent
   ],
   entryComponents: [
     ShutdownDialogComponent,
     ActivationDialogComponent,
     ActivationDeletionDialogComponent,
-    NewStreamDialogComponent
+    NewStreamDialogComponent,
+    StreamDeletionDialogComponent
   ],
   providers: [
     {

@@ -29,4 +29,10 @@ export class StreamService {
       .post<StreamEntity>(this._endpointService.getEndpoint("streams"), streamEntity)
       .toPromise();
   }
+
+  public deleteStream(streamEntity: StreamEntity): Promise<void> {
+    return this._httpClient
+      .delete<void>(this._endpointService.getEndpoint(`streams/${streamEntity.id}`))
+      .toPromise();
+  }
 }

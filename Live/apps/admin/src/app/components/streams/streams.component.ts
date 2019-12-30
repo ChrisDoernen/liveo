@@ -1,9 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { DeviceEntity, StreamEntity } from "@live/entities";
+import { Logger } from "@live/services";
+import { DIALOG_CONFIG_SMALL } from "../../constants/mat-dialog-config-small";
 import { DevicesService } from "../../services/devices/devices.service";
 import { StreamService } from "../../services/stream/stream.service";
 import { NewStreamDialogComponent } from "../new-stream-dialog/new-stream-dialog.component";
+import { StreamDeletionDialogComponent } from "../stream-deletion-dialog/stream-deletion-dialog.component";
 
 @Component({
   selector: "streams",
@@ -16,9 +19,11 @@ export class StreamsComponent implements OnInit {
   public devices: DeviceEntity[];
 
   constructor(
+    private readonly _logger: Logger,
     private readonly _streamService: StreamService,
     private readonly _devicesService: DevicesService,
-    public readonly newStreamDialog: MatDialog) {
+    public readonly newStreamDialog: MatDialog,
+    public readonly streamDeletionDialog: MatDialog) {
   }
 
   public ngOnInit(): void {
@@ -31,13 +36,39 @@ export class StreamsComponent implements OnInit {
   }
 
   public openNewStreamDialog(): void {
-    const dialogRef = this.newStreamDialog.open(NewStreamDialogComponent, { width: "500px", restoreFocus: false });
-    dialogRef.afterClosed().toPromise().then((stream) => {
-      if (!stream) {
-        return;
-      }
+    this.newStreamDialog
+      .open(NewStreamDialogComponent, DIALOG_CONFIG_SMALL)
+      .afterClosed()
+      .toPromise()
+      .then((stream) => {
+        if (!stream) {
+          return;
+        }
 
-      this._streamService.createStream(stream).then((createdStream) => this.streams.push(createdStream));
-    });
+        this._streamService.createStream(stream).then((createdStream) => this.addStream(createdStream));
+      });
+  }
+
+  public openStreamDeletionDialog(stream: StreamEntity): void {
+    this.streamDeletionDialog
+      .open(StreamDeletionDialogComponent, DIALOG_CONFIG_SMALL)
+      .afterClosed()
+      .toPromise()
+      .then((result) => {
+        if (result) {
+          this._streamService.deleteStream(stream).then(() => this.removeStream(stream));
+        }
+      });
+  }
+
+  private addStream(stream: StreamEntity): void {
+    this.streams.push(stream);
+  }
+
+  private removeStream(streamEntity: StreamEntity): void {
+    const streamIndex = this.streams.indexOf(streamEntity);
+    if (streamIndex > -1) {
+      this.streams.splice(streamIndex, 1);
+    }
   }
 }
