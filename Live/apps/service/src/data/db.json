@@ -1,37 +1,37 @@
 {
   "streams": [
     {
-      "id": "v67d",
+      "id": "tx331xqq",
       "title": "Originalton",
       "countryCode": "en",
       "deviceId": "CARD=PCH,DEV=0"
     },
     {
-      "id": "4hdg",
+      "id": "paxdnp3r",
       "title": "Deutsch",
       "countryCode": "de",
       "deviceId": "CARD=USB1,DEV=0"
     },
     {
-      "id": "ge1r",
+      "id": "vqq7ajgb",
       "title": "Deutsch",
       "countryCode": "de",
       "deviceId": "Mikrofon (USB Audio Device)"
     },
     {
-      "id": "ge1r",
+      "id": "lc5wzbl6",
       "title": "Englisch",
       "countryCode": "de",
       "deviceId": "Mikrofonarray (Realtek High Definition Audio)"
     },
     {
-      "id": "bgu7",
+      "id": "6t3y5cew",
       "title": "Made to Love",
       "countryCode": "de",
       "deviceId": "/home/chris/Music/MadeToLove.mp3"
     },
     {
-      "id": "bgu9",
+      "id": "5vo7au6q",
       "title": "Made to Love",
       "countryCode": "de",
       "deviceId": "/Users/christiandoernen/Music/MadeToLove.mp3"
@@ -39,48 +39,48 @@
   ],
   "sessions": [
     {
-      "id": "bd34",
+      "id": "gfxbi7xe",
       "title": "Gottesdienst Linux",
       "description": "Live stream of the sunday service",
       "streams": [
-        "v67d"
+        "tx331xqq"
       ]
     },
     {
-      "id": "bd35",
+      "id": "tnnn4pbx",
       "title": "Gottesdienst Windows",
       "description": "Live stream of the sunday service",
       "streams": [
-        "ge1r"
+        "lc5wzbl6"
       ]
     },
     {
-      "id": "1b30",
+      "id": "tt0gdmqe",
       "title": "Gottesdienst Mac",
       "description": "Live stream of the sunday service",
       "streams": [
-        "v67d"
+        "paxdnp3r"
       ]
     },
     {
-      "id": "ag7s",
+      "id": "qsjltbqe",
       "title": "Stream from file Linux",
       "description": "Live stream of the sunday service",
       "streams": [
-        "bgu7"
+        "6t3y5cew"
       ]
     },
     {
-      "id": "bb65",
+      "id": "uit02arm",
       "title": "Mp3 Mac",
       "description": "Live stream of the sunday service",
       "streams": [
-        "bgu9"
+        "5vo7au6q"
       ]
     }
   ],
   "settings": {
-    "defaultSession": "bd34",
+    "defaultSession": "gfxbi7xe",
     "enableAutoActivation": false
   },
   "users": [

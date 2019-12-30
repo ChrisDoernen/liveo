@@ -1,10 +1,10 @@
-import { Logger } from "../logging/logger";
-import { injectable, inject } from "inversify";
-import { StreamService } from "../streams/stream-service";
-import { Session } from "./session";
-import { Stream } from "../streams/stream";
 import { SessionEntity } from "@live/entities";
+import { inject, injectable } from "inversify";
+import { Logger } from "../logging/logger";
+import { Stream } from "../streams/stream";
+import { StreamService } from "../streams/stream-service";
 import { ISessionRepository } from "./i-session-repository";
+import { Session } from "./session";
 
 /**
  * A class providing methods to manage streaming sessions
@@ -56,17 +56,13 @@ export class SessionService {
   }
 
   private findSession(id: string): Session {
-    const matchingSession = this._sessions.find(session => session.id === id);
-
-    if (!matchingSession) {
-      throw new Error("The requested session could not be found.");
-    }
-
-    return matchingSession;
+    return this._sessions.find(session => session.id === id);
   }
 
   public validateSessionExists(sessionId: string): void {
-    this.findSession(sessionId);
+    if (!this.findSession(sessionId)) {
+      throw new Error(`The session ${sessionId} does not exist`);
+    }
   }
 
   public getSession(id: string): Session {
@@ -74,6 +70,7 @@ export class SessionService {
   }
 
   public getSessionEntity(id: string): SessionEntity {
-    return this.findSession(id).entity;
+    const session = this.findSession(id);
+    return session ? session.entity : null;
   }
 }

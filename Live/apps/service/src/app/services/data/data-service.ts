@@ -1,7 +1,8 @@
 import { SessionEntity, SettingsEntity, StreamEntity, UserEntity } from "@live/entities";
 import { inject, injectable } from "inversify";
 import * as low from "lowdb";
-import * as FileSync from "lowdb/adapters/FileAsync";
+import * as FileSync from "lowdb/adapters/FileSync";
+import generate from "nanoid/non-secure/generate";
 import { config } from "../../config/service.config";
 import { Logger } from "../logging/logger";
 import { ISessionRepository } from "../sessions/i-session-repository";
@@ -13,20 +14,20 @@ import { IStreamRepository } from "../streams/i-stream-repository";
  */
 @injectable()
 export class DataService implements IStreamRepository, ISessionRepository, ISettingsProvider {
-  private _database: low.LowdbAsync<any>;
+
+  private _database: any;
 
   constructor(
     @inject("Logger") private _logger: Logger) {
   }
 
-  public async initializeDatabase(): Promise<void> {
+  public initializeDatabase(): void {
     const adapter = new FileSync(config.database);
     try {
-      this._database = await low(adapter);
+      this._database = low(adapter);
     } catch (error) {
       this._logger.error(`Error reading database: ${error}.`);
     }
-    this._database.defaults({ "streams": {}, "sessions": {} });
   }
 
   public loadSessionEntities(): SessionEntity[] {
@@ -41,6 +42,13 @@ export class DataService implements IStreamRepository, ISessionRepository, ISett
     this._logger.debug(`Read ${streams.length} stream entities from database.`);
 
     return streams;
+  }
+
+  public createStreamEntity(streamEntity: StreamEntity): StreamEntity {
+    streamEntity.id = this.createNewId();
+    this._database.get("streams").push(streamEntity).write();
+
+    return streamEntity;
   }
 
   public getSettings(): SettingsEntity {
@@ -60,5 +68,12 @@ export class DataService implements IStreamRepository, ISessionRepository, ISett
     this._logger.debug(`Read ${users.length} user entities from database.`);
 
     return users;
+  }
+
+  private createNewId(): string {
+    const alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
+    const id = generate(alphabet, 10);
+    
+    return id;
   }
 }

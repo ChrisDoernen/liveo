@@ -19,6 +19,11 @@ export class SessionController {
   @httpGet("/:id")
   public getSession(request: Request, response: Response): SessionEntity {
     const id = request.params.id;
-    return this._sessionService.getSessionEntity(id);
+    const session = this._sessionService.getSessionEntity(id);
+    if (!session) {
+      response.status(404).send("Session not found");
+    }
+    
+    return session;
   }
 }
