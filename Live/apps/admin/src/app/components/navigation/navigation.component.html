@@ -5,21 +5,21 @@
     </button>
     <div>
       <ul>
-        <li (click)="navigate('dashboard'); sidenav.toggle()">
+        <li (click)="navigate('dashboard'); sidenav.close()">
           <mat-icon>dashboard</mat-icon>
           <span class="menu-item">Dashboard</span>
         </li>
         <li class="nav-space"></li>
-        <li (click)="navigate('streams'); sidenav.toggle()">
+        <li (click)="navigate('streams'); sidenav.close()">
           <mat-icon>mic</mat-icon>
           <span class="menu-item">Streams</span>
         </li>
-        <li (click)="navigate('sessions'); sidenav.toggle()">
+        <li (click)="navigate('sessions'); sidenav.close()">
           <mat-icon>wifi_tethering</mat-icon>
           <span class="menu-item">Sessions</span>
         </li>
         <li class="nav-space"></li>
-        <li (click)="navigate('settings'); sidenav.toggle()">
+        <li (click)="navigate('settings'); sidenav.close()">
           <mat-icon>more_vert</mat-icon>
           <span class="menu-item">Settings</span>
         </li>
@@ -28,14 +28,8 @@
     <div class="version-info">v{{ this.version }}/{{ this.revision }}</div>
   </mat-sidenav>
   <mat-sidenav-content>
-    <div class="header">
-      <button mat-button (click)="sidenav.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <logo-header></logo-header>
-      <shutdown-button></shutdown-button>
-    </div>
-    <div class="main content-container">
+    <header (menuButtonClicked)="sidenav.open()"></header>
+    <div class="main">
       <router-outlet></router-outlet>
     </div>
     <footer class="content-container"></footer>

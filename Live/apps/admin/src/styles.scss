@@ -29,6 +29,21 @@ body {
   box-sizing: border-box;
 }
 
+h2 {
+  font-size: 1.4em;
+}
+
 [hidden] {
   display: none !important;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.content-container {
+  padding-left: 20px;
+  padding-right: 20px;
+  max-width: 1000px;
+  margin: auto;
 }

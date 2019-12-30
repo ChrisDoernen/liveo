@@ -19,7 +19,7 @@ export class ShutdownComponent {
     private _shutdownService: ShutdownService) {
   }
 
-  publicopenDialog(): void {
+  public openDialog(): void {
     this.shutdownDialog
       .open(ShutdownDialogComponent, DIALOG_CONFIG_SMALL)
       .afterClosed()

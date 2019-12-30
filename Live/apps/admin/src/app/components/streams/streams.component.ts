@@ -3,6 +3,7 @@ import { MatDialog } from "@angular/material";
 import { DeviceEntity, StreamEntity } from "@live/entities";
 import { Logger } from "@live/services";
 import { DIALOG_CONFIG_SMALL } from "../../constants/mat-dialog-config-small";
+import { DIALOG_CONFIG_STEPPER } from "../../constants/mat-dialog-config-stepper";
 import { DevicesService } from "../../services/devices/devices.service";
 import { StreamService } from "../../services/stream/stream.service";
 import { NewStreamDialogComponent } from "../new-stream-dialog/new-stream-dialog.component";
@@ -37,7 +38,7 @@ export class StreamsComponent implements OnInit {
 
   public openNewStreamDialog(): void {
     this.newStreamDialog
-      .open(NewStreamDialogComponent, DIALOG_CONFIG_SMALL)
+      .open(NewStreamDialogComponent, DIALOG_CONFIG_STEPPER)
       .afterClosed()
       .toPromise()
       .then((stream) => {

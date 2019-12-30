@@ -1,4 +1,4 @@
-<div class="title-bar">
+<title-bar>
   <h2>Streams</h2>
   <div>
     <button mat-stroked-button color="primary" (click)="openNewStreamDialog()">
@@ -6,22 +6,23 @@
       New Stream
     </button>
   </div>
-</div>
-<div class="stream-list">
-  <div class="stream table-head">
-    <div>NAME</div>
-    <div>DEVICE ID</div>
-    <div></div>
-  </div>
-  <div class="stream" *ngFor="let stream of streams">
-    <div class="title">{{stream.title}}</div>
-    <div>{{stream.deviceId}}</div>
-    <button mat-icon-button>
-      <i *ngIf="!isDeviceAvailable(stream.deviceId)" class="material-icons">error_outline</i>
-    </button>
-    <button mat-icon-button matTooltip="Delete" [matTooltipPosition]="'left'"
-      (click)="openStreamDeletionDialog(stream)">
-      <i class="material-icons">delete_outline</i>
-    </button>
+</title-bar>
+<div class="content-container">
+  <div class="stream-list">
+    <div class="table-row table-head">
+      <div>NAME</div>
+      <div>DEVICE ID</div>
+    </div>
+    <div class="table-row stream" *ngFor="let stream of streams">
+      <div class="title">{{stream.title}}</div>
+      <div>{{stream.deviceId}}</div>
+      <button mat-icon-button>
+        <i *ngIf="!isDeviceAvailable(stream.deviceId)" class="material-icons">error_outline</i>
+      </button>
+      <button mat-icon-button matTooltip="Delete" [matTooltipPosition]="'left'"
+        (click)="openStreamDeletionDialog(stream)">
+        <i class="material-icons">delete_outline</i>
+      </button>
+    </div>
   </div>
 </div>

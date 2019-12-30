@@ -38,6 +38,8 @@ import { WelcomeComponent } from "./components/welcome/welcome.component";
 import { AuthenticationInterceptor } from "./interceptors/authentication.interceptor";
 import { ErrorInterceptor } from "./interceptors/error.interceptor";
 import { InitializationService } from "./services/initialization/initialization.service";
+import { TitleBarComponent } from "./components/title-bar/title-bar.component";
+import { HeaderComponent } from "./components/header/header.component";
 
 @NgModule({
   imports: [
@@ -76,7 +78,9 @@ import { InitializationService } from "./services/initialization/initialization.
     WelcomeComponent,
     LogoHeaderComponent,
     NewStreamDialogComponent,
-    StreamDeletionDialogComponent
+    StreamDeletionDialogComponent,
+    TitleBarComponent,
+    HeaderComponent
   ],
   entryComponents: [
     ShutdownDialogComponent,

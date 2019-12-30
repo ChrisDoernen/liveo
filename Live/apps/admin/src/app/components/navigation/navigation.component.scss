@@ -1,14 +1,5 @@
 @import "../../variables.scss";
 
-.content-container {
-  margin: 0 15px;
-}
-
-logo {
-  width: 80px;
-  margin-top: 7px;
-}
-
 .sidenav-container {
   position: absolute;
   top: 0;
@@ -45,23 +36,6 @@ mat-sidenav {
     bottom: 0;
     left: 0;
     padding-left: 20px;
-  }
-}
-
-mat-sidenav-content {
-  .header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    height: 40px;
-    margin-bottom: 15px;
-    position: absolute;
-    width: 100%;
-  }
-
-  .main {
-    height: 100%;
-    padding-top: 50px;
   }
 }
 

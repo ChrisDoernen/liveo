@@ -1,0 +1,11 @@
+:host {
+  height: 45px;
+  background: #232323;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+}
