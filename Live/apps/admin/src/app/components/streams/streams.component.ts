@@ -37,7 +37,7 @@ export class StreamsComponent implements OnInit {
         return;
       }
 
-      // this.activationService.setActivation(stream);
+      this._streamService.createStream(stream).then((createdStream) => this.streams.push(createdStream));
     });
   }
 }

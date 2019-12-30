@@ -32,8 +32,8 @@ export class NewStreamDialogComponent implements OnInit {
   }
 
   public get activationDialogResult(): StreamEntity {
-    const title = this.titleFormGroup.value.sessionCtrl;
-    const deviceId = this.deviceIdFormGroup.value.deviceIdCtlrl;
+    const title = this.titleFormGroup.value.titleCtrl;
+    const deviceId = this.deviceIdFormGroup.value.deviceIdCtrl;
 
     return new StreamEntity(null, title, null, null, deviceId, StreamType.Audio);
   }

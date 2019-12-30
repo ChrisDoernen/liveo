@@ -28,9 +28,9 @@ export class StreamController {
   }
 
   @httpPost("/")
-  public createStream(request: Request): void {
+  public createStream(request: Request): StreamEntity {
     const stream = request.body as StreamEntity;
-    
+
     return this._streamService.createStream(stream);
   }
 }

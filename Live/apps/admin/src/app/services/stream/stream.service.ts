@@ -23,4 +23,10 @@ export class StreamService {
       .get<StreamEntity[]>(this._endpointService.getEndpoint("streams"))
       .toPromise();
   }
+
+  public createStream(streamEntity: StreamEntity): Promise<StreamEntity> {
+    return this._httpClient
+      .post<StreamEntity>(this._endpointService.getEndpoint("streams"), streamEntity)
+      .toPromise();
+  }
 }
