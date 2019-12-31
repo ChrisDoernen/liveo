@@ -11,12 +11,25 @@ $nav-padding: 20px;
 
   ul {
     list-style: none;
-    padding-left: $nav-padding;
+    padding-left: 0;
 
     a {
+      display: block;
       cursor: pointer;
+      padding-top: 10px;
+      padding-bottom: 10px;
       color: inherit;
       text-decoration: none;
+      padding-left: $nav-padding;
+
+      &.is-active {
+        color: var(--primary-color);
+        background: $dark-background;
+      }
+
+      &:hover {
+        background: $dark-background;
+      }
     }
 
     a:focus {
@@ -31,10 +44,6 @@ $nav-padding: 20px;
       font-size: 17px;
       vertical-align: middle;
       margin: 0 10px;
-    }
-
-    .is-active {
-      color: var(--primary-color);
     }
   }
 }
@@ -55,7 +64,6 @@ mat-sidenav {
     padding-bottom: $padding-bottom;
     bottom: 0;
     left: 0;
-    padding-left: 20px;
   }
 }
 

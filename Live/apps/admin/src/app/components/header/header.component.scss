@@ -1,6 +1,8 @@
+@import "../../variables.scss";
+
 :host {
   height: 45px;
-  background: #232323;
+  background: $darkest-background;
 }
 
 .header {
