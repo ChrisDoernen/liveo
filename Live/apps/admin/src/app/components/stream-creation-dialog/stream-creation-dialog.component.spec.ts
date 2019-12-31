@@ -1,17 +1,17 @@
 import { HttpClientModule } from "@angular/common/http";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MatButtonModule, MatDialog, MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatStepperModule } from "@angular/material";
+import { MatDialog } from "@angular/material";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { EndpointService, Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
 import { AngularMaterialModule } from "../../angular-material.module";
 import { SessionService } from "../../services/session/session.service";
-import { NewStreamDialogComponent } from "./new-stream-dialog.component";
+import { StreamCreationDialogComponent } from "./stream-creation-dialog.component";
 
-describe("NewStreamDialogComponent", () => {
-  let component: NewStreamDialogComponent;
-  let fixture: ComponentFixture<NewStreamDialogComponent>;
+describe("StreamCreationDialogComponent", () => {
+  let component: StreamCreationDialogComponent;
+  let fixture: ComponentFixture<StreamCreationDialogComponent>;
   let endpointService: jest.Mocked<EndpointService>;
   let sessionService: SessionService;
 
@@ -26,14 +26,9 @@ describe("NewStreamDialogComponent", () => {
         FormsModule,
         ReactiveFormsModule,
         NoopAnimationsModule,
-        MatInputModule,
-        MatFormFieldModule,
-        MatSelectModule,
-        MatButtonModule,
-        MatDialogModule,
-        MatStepperModule
+        AngularMaterialModule
       ],
-      declarations: [NewStreamDialogComponent],
+      declarations: [StreamCreationDialogComponent],
       providers: [
         { provide: MatDialog, useValue: jest.fn() },
         { provide: SessionService, useValue: sessionService },
@@ -42,7 +37,7 @@ describe("NewStreamDialogComponent", () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(NewStreamDialogComponent);
+    fixture = TestBed.createComponent(StreamCreationDialogComponent);
     component = fixture.componentInstance;
   });
 

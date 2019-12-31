@@ -1,22 +1,8 @@
 @import "../../variables.scss";
 
-.table-head {
-  height: 50px;
-  font-weight: 600;
-}
-
-.stream-list {
-  border: solid 1px $table-grey;
-  border-radius: 3px;
-}
-
-.table-row {
+.stream-row {
   display: grid;
   grid-template-columns: 25% auto 40px 40px;
   align-items: center;
   padding-left: 10px;
-}
-
-.stream {
-  border-top: solid 1px $table-grey;
 }

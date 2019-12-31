@@ -4,11 +4,11 @@ import { DeviceEntity, StreamEntity, StreamType } from "@live/entities";
 import { DevicesService } from "../../services/devices/devices.service";
 
 @Component({
-  selector: "new-stream-dialog",
-  templateUrl: "./new-stream-dialog.component.html",
-  styleUrls: ["./new-stream-dialog.component.scss"]
+  selector: "stream-creation-dialog",
+  templateUrl: "./stream-creation-dialog.component.html",
+  styleUrls: ["./stream-creation-dialog.component.scss"]
 })
-export class NewStreamDialogComponent implements OnInit {
+export class StreamCreationDialogComponent implements OnInit {
 
   public isLinear = true;
   public titleFormGroup: FormGroup;

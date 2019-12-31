@@ -17,29 +17,30 @@ import { ActivatedSessionTileComponent } from "./components/activated-session-ti
 import { ActivationDeletionDialogComponent } from "./components/activation-deletion-dialog/activation-deletion-dialog.component";
 import { ActivationDialogComponent } from "./components/activation-dialog/activation-dialog.component";
 import { ActivationStateTileComponent } from "./components/activation-state-tile/activation-state-tile.component";
+import { ConfirmationDialogComponent } from "./components/confirmation-dialog/confirmation-dialog.component";
 import { DashboardActivationComponent } from "./components/dashboard-activation/dashboard-activation.component";
 import { DashboardNoActivationComponent } from "./components/dashboard-no-activation/dashboard-no-activation.component";
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { FooterComponent } from "./components/footer/footer.component";
+import { HeaderComponent } from "./components/header/header.component";
 import { LoginComponent } from "./components/login/login.component";
 import { LogoHeaderComponent } from "./components/logo-header/logo-header.component";
 import { LogoComponent } from "./components/logo/logo.component";
 import { NavigationComponent } from "./components/navigation/navigation.component";
-import { NewStreamDialogComponent } from "./components/new-stream-dialog/new-stream-dialog.component";
 import { NotficationsComponent } from "./components/notfications/notfications.component";
 import { OfflineMessageComponent } from "./components/offline-message/offline-message.component";
 import { SessionsComponent } from "./components/sessions/sessions.component";
 import { SettingsComponent } from "./components/settings/settings.component";
 import { ShutdownDialogComponent } from "./components/shutdown-dialog/shutdown-dialog.component";
 import { ShutdownComponent } from "./components/shutdown/shutdown.component";
+import { StreamCreationDialogComponent } from "./components/stream-creation-dialog/stream-creation-dialog.component";
 import { StreamDeletionDialogComponent } from "./components/stream-deletion-dialog/stream-deletion-dialog.component";
 import { StreamsComponent } from "./components/streams/streams.component";
+import { TitleBarComponent } from "./components/title-bar/title-bar.component";
 import { WelcomeComponent } from "./components/welcome/welcome.component";
 import { AuthenticationInterceptor } from "./interceptors/authentication.interceptor";
 import { ErrorInterceptor } from "./interceptors/error.interceptor";
 import { InitializationService } from "./services/initialization/initialization.service";
-import { TitleBarComponent } from "./components/title-bar/title-bar.component";
-import { HeaderComponent } from "./components/header/header.component";
 
 @NgModule({
   imports: [
@@ -77,16 +78,17 @@ import { HeaderComponent } from "./components/header/header.component";
     LoginComponent,
     WelcomeComponent,
     LogoHeaderComponent,
-    NewStreamDialogComponent,
+    StreamCreationDialogComponent,
     StreamDeletionDialogComponent,
     TitleBarComponent,
-    HeaderComponent
+    HeaderComponent,
+    ConfirmationDialogComponent
   ],
   entryComponents: [
     ShutdownDialogComponent,
     ActivationDialogComponent,
     ActivationDeletionDialogComponent,
-    NewStreamDialogComponent,
+    StreamCreationDialogComponent,
     StreamDeletionDialogComponent
   ],
   providers: [

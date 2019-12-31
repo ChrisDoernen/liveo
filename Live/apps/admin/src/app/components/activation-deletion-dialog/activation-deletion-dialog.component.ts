@@ -7,10 +7,14 @@ import { MatDialogRef } from "@angular/material";
 })
 export class ActivationDeletionDialogComponent {
 
-  constructor(
+  public confirmationDialogData = {
+    title: "Deactivate Session"
+  }
+
+  public constructor(
     public dialogRef: MatDialogRef<ActivationDeletionDialogComponent>) { }
 
-  onCancelClick(): void {
+  public onCancelClick(): void {
     this.dialogRef.close();
   }
 }

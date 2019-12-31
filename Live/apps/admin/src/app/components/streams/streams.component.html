@@ -8,12 +8,12 @@
   </div>
 </title-bar>
 <div class="content-container">
-  <div class="stream-list">
-    <div class="table-row table-head">
+  <div class="table-border">
+    <div class="stream-row table-head">
       <div>TITLE</div>
       <div>DEVICE ID</div>
     </div>
-    <div class="table-row stream" *ngFor="let stream of streams">
+    <div class="stream-row table-row-border table-row" *ngFor="let stream of streams">
       <div class="title">{{stream.title}}</div>
       <div>{{stream.deviceId}}</div>
       <button mat-icon-button>

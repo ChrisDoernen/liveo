@@ -7,7 +7,11 @@ import { MatDialogRef } from "@angular/material";
 })
 export class StreamDeletionDialogComponent {
 
-  constructor(
+  public confirmationDialogData = {
+    title: "Delete Stream"
+  }
+
+  public constructor(
     public dialogRef: MatDialogRef<StreamDeletionDialogComponent>) {
   }
 

@@ -6,7 +6,7 @@ import { DIALOG_CONFIG_SMALL } from "../../constants/mat-dialog-config-small";
 import { DIALOG_CONFIG_STEPPER } from "../../constants/mat-dialog-config-stepper";
 import { DevicesService } from "../../services/devices/devices.service";
 import { StreamService } from "../../services/stream/stream.service";
-import { NewStreamDialogComponent } from "../new-stream-dialog/new-stream-dialog.component";
+import { StreamCreationDialogComponent } from "../stream-creation-dialog/stream-creation-dialog.component";
 import { StreamDeletionDialogComponent } from "../stream-deletion-dialog/stream-deletion-dialog.component";
 
 @Component({
@@ -28,8 +28,12 @@ export class StreamsComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this._devicesService.getDevices().then((devices) => this.devices = devices);
-    this._streamService.getStreams().then((streams) => this.streams = streams);
+    this._devicesService
+      .getDevices()
+      .then((devices) => this.devices = devices);
+    this._streamService.
+      getStreams()
+      .then((streams) => this.streams = streams);
   }
 
   public isDeviceAvailable(deviceId: string): boolean {
@@ -38,7 +42,7 @@ export class StreamsComponent implements OnInit {
 
   public openNewStreamDialog(): void {
     this.newStreamDialog
-      .open(NewStreamDialogComponent, DIALOG_CONFIG_STEPPER)
+      .open(StreamCreationDialogComponent, DIALOG_CONFIG_STEPPER)
       .afterClosed()
       .toPromise()
       .then((stream) => {
@@ -46,7 +50,9 @@ export class StreamsComponent implements OnInit {
           return;
         }
 
-        this._streamService.createStream(stream).then((createdStream) => this.addStream(createdStream));
+        this._streamService
+          .createStream(stream)
+          .then((createdStream) => this.addStream(createdStream));
       });
   }
 
@@ -57,7 +63,9 @@ export class StreamsComponent implements OnInit {
       .toPromise()
       .then((result) => {
         if (result) {
-          this._streamService.deleteStream(stream).then(() => this.removeStream(stream));
+          this._streamService
+            .deleteStream(stream)
+            .then(() => this.removeStream(stream));
         }
       });
   }
