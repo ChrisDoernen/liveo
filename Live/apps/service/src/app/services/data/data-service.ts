@@ -37,6 +37,17 @@ export class DataService implements IStreamRepository, ISessionRepository, ISett
     return sessions;
   }
 
+  public createSessionEntity(sessionEntity: SessionEntity): SessionEntity {
+    sessionEntity.id = this.createNewId();
+    this._database.get("sessions").push(sessionEntity).write();
+
+    return sessionEntity;
+  }
+
+  public deleteSession(sessionEntity: SessionEntity): void {
+    this._database.get("sessions").remove(sessionEntity).write();
+  }
+
   public loadStreamEntities(): StreamEntity[] {
     const streams = this._database.get("streams").value() as StreamEntity[];
     this._logger.debug(`Read ${streams.length} stream entities from database.`);
@@ -52,7 +63,7 @@ export class DataService implements IStreamRepository, ISessionRepository, ISett
   }
 
   public deleteStream(streamEntity: StreamEntity): void {
-    this._database.get("streams").remove(streamEntity).write()
+    this._database.get("streams").remove(streamEntity).write();
   }
 
   public getSettings(): SettingsEntity {

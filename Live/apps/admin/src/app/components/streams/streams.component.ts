@@ -16,8 +16,8 @@ import { StreamDeletionDialogComponent } from "../stream-deletion-dialog/stream-
 })
 export class StreamsComponent implements OnInit {
 
-  public streams: StreamEntity[];
-  public devices: DeviceEntity[];
+  public streams: StreamEntity[] = [];
+  public devices: DeviceEntity[] = [];
 
   constructor(
     private readonly _logger: Logger,

@@ -236,6 +236,27 @@
 			"response": []
 		},
 		{
+			"name": "/api/admin/sessions/gfxbi7xe",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/admin/sessions/gfxbi7xe",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"admin",
+						"sessions",
+						"gfxbi7xe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "/api/admin/shutdown",
 			"request": {
 				"method": "GET",

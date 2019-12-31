@@ -1,19 +1,45 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-
+import { HttpClient } from "@angular/common/http";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { RouterTestingModule } from "@angular/router/testing";
+import { Logger } from "@live/services";
+import createMockInstance from "jest-create-mock-instance";
+import { InlineSVGDirective } from "ng-inline-svg";
+import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
+import { AngularMaterialModule } from "../../angular-material.module";
+import { ShutdownService } from "../../services/shutdown/shutdown.service";
+import { LogoHeaderComponent } from "../logo-header/logo-header.component";
+import { LogoComponent } from "../logo/logo.component";
+import { ShutdownComponent } from "../shutdown/shutdown.component";
 import { HeaderComponent } from "./header.component";
 
 describe("HeaderComponent", () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ HeaderComponent ]
-    })
-    .compileComponents();
-  }));
+  let shutdownService: jest.Mocked<ShutdownService>;
 
   beforeEach(() => {
+    shutdownService = createMockInstance(ShutdownService);
+
+    TestBed.configureTestingModule({
+      imports: [
+        AngularMaterialModule,
+        RouterTestingModule
+      ],
+      declarations: [
+        HeaderComponent,
+        LogoHeaderComponent,
+        ShutdownComponent,
+        LogoComponent,
+        InlineSVGDirective
+      ],
+      providers: [
+        { provide: HttpClient, useValue: jest.fn() },
+        { provide: ShutdownService, useValue: shutdownService },
+        { provide: InlineSVGService, useValue: jest.fn() },
+        { provide: Logger, useValue: jest.fn() }
+      ]
+    }).compileComponents();
+
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

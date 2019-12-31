@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { EndpointService, Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
 import { AngularMaterialModule } from "../../angular-material.module";
+import { TitleBarComponent } from "../title-bar/title-bar.component";
 import { StreamsComponent } from "./streams.component";
 
 describe("StreamsComponent", () => {
@@ -19,7 +20,8 @@ describe("StreamsComponent", () => {
         AngularMaterialModule
       ],
       declarations: [
-        StreamsComponent
+        StreamsComponent,
+        TitleBarComponent
       ],
       providers: [
         { provide: EndpointService, useValue: endpointService },

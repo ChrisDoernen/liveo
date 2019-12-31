@@ -11,6 +11,7 @@ import { Session } from "./session";
  */
 @injectable()
 export class SessionService {
+
   private _sessions: Session[];
 
   public get sessionEntities(): SessionEntity[] {
@@ -72,5 +73,23 @@ export class SessionService {
   public getSessionEntity(id: string): SessionEntity {
     const session = this.findSession(id);
     return session ? session.entity : null;
+  }
+
+  public createSession(sessionEntity: SessionEntity): SessionEntity {
+    const createdSessionEntity = this._sessionRepository.createSessionEntity(sessionEntity);
+    this._sessions.push(this.convertSession(createdSessionEntity));
+    this._logger.info(`Created session ${JSON.stringify(sessionEntity)}`);
+
+    return createdSessionEntity;
+  }
+
+  public deleteSession(sessionId: string) {
+    const session = this.getSession(sessionId);
+    if (session) {
+      this._sessionRepository.deleteSession(session.entity);
+      const sessionIndex = this._sessions.indexOf(session);
+      this._sessions.splice(sessionIndex, 1);
+      this._logger.debug(`Deleted session ${sessionId}`);
+    }
   }
 }

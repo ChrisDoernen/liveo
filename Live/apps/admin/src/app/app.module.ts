@@ -29,6 +29,7 @@ import { LogoComponent } from "./components/logo/logo.component";
 import { NavigationComponent } from "./components/navigation/navigation.component";
 import { NotficationsComponent } from "./components/notfications/notfications.component";
 import { OfflineMessageComponent } from "./components/offline-message/offline-message.component";
+import { SessionDeletionDialogComponent } from "./components/session-deletion-dialog/session-deletion-dialog.component";
 import { SessionsComponent } from "./components/sessions/sessions.component";
 import { SettingsComponent } from "./components/settings/settings.component";
 import { ShutdownDialogComponent } from "./components/shutdown-dialog/shutdown-dialog.component";
@@ -82,14 +83,16 @@ import { InitializationService } from "./services/initialization/initialization.
     StreamDeletionDialogComponent,
     TitleBarComponent,
     HeaderComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    SessionDeletionDialogComponent
   ],
   entryComponents: [
     ShutdownDialogComponent,
     ActivationDialogComponent,
     ActivationDeletionDialogComponent,
     StreamCreationDialogComponent,
-    StreamDeletionDialogComponent
+    StreamDeletionDialogComponent,
+    SessionDeletionDialogComponent
   ],
   providers: [
     {

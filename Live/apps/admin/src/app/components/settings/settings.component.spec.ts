@@ -1,10 +1,11 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { SettingsComponent } from "./settings.component";
-import { AngularMaterialModule } from "../../angular-material.module";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { EndpointService, Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
-import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { AngularMaterialModule } from "../../angular-material.module";
+import { TitleBarComponent } from "../title-bar/title-bar.component";
+import { SettingsComponent } from "./settings.component";
 
 describe("SettingsComponent", () => {
   let component: SettingsComponent;
@@ -20,7 +21,10 @@ describe("SettingsComponent", () => {
         NoopAnimationsModule,
         HttpClientTestingModule
       ],
-      declarations: [SettingsComponent],
+      declarations: [
+        SettingsComponent,
+        TitleBarComponent
+      ],
       providers: [
         { provide: EndpointService, useValue: endpointService },
         { provide: Logger, useValue: jest.fn() }
