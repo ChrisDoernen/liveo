@@ -1,0 +1,34 @@
+<title-bar>
+  <h2>Streams</h2>
+  <div>
+    <button mat-stroked-button color="primary" routerLink="new">
+      <i class="material-icons">add</i>
+      New Stream
+    </button>
+  </div>
+</title-bar>
+<content>
+  <div class="no-content-message" *ngIf="streams.length === 0; else streamsAvailable">
+    There are no Streams created yet. <br>
+    Click <span class="no-content-action clickable" routerLink="new">here</span> to start.
+  </div>
+  <ng-template #streamsAvailable>
+    <div class="table-border">
+      <div class="stream-row table-head">
+        <div>TITLE</div>
+        <div>DEVICE ID</div>
+      </div>
+      <div class="stream-row table-row-border table-row" *ngFor="let stream of streams">
+        <div class="title">{{stream.title}}</div>
+        <div>{{stream.deviceId}}</div>
+        <button mat-icon-button>
+          <i *ngIf="!isDeviceAvailable(stream.deviceId)" class="material-icons">error_outline</i>
+        </button>
+        <button mat-icon-button matTooltip="Delete" [matTooltipPosition]="'left'"
+          (click)="openStreamDeletionDialog(stream)">
+          <i class="material-icons">delete_outline</i>
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</content>

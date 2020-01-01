@@ -4,11 +4,11 @@ import { EndpointService, Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
 import { AngularMaterialModule } from "../../../angular-material/angular-material.module";
 import { TitleBarComponent } from "../../../shared/components/title-bar/title-bar.component";
-import { StreamsComponent } from "./streams.component";
+import { StreamListComponent } from "./stream-list.component";
 
 describe("StreamsComponent", () => {
-  let component: StreamsComponent;
-  let fixture: ComponentFixture<StreamsComponent>;
+  let component: StreamListComponent;
+  let fixture: ComponentFixture<StreamListComponent>;
   let endpointService: jest.Mocked<EndpointService>;
 
   beforeEach(() => {
@@ -20,7 +20,7 @@ describe("StreamsComponent", () => {
         AngularMaterialModule
       ],
       declarations: [
-        StreamsComponent,
+        StreamListComponent,
         TitleBarComponent
       ],
       providers: [
@@ -29,7 +29,7 @@ describe("StreamsComponent", () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(StreamsComponent);
+    fixture = TestBed.createComponent(StreamListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

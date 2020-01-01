@@ -6,6 +6,7 @@ import { MatNativeDateModule } from "@angular/material";
 import { InlineSVGModule } from "ng-inline-svg";
 import { AngularMaterialModule } from "../angular-material/angular-material.module";
 import { ConfirmationDialogComponent } from "./components/confirmation-dialog/confirmation-dialog.component";
+import { ContentComponent } from "./components/content/content.component";
 import { LogoHeaderComponent } from "./components/logo-header/logo-header.component";
 import { LogoComponent } from "./components/logo/logo.component";
 import { TitleBarComponent } from "./components/title-bar/title-bar.component";
@@ -24,7 +25,8 @@ import { TitleBarComponent } from "./components/title-bar/title-bar.component";
     ConfirmationDialogComponent,
     TitleBarComponent,
     LogoHeaderComponent,
-    LogoComponent
+    LogoComponent,
+    ContentComponent
   ],
   exports: [
     CommonModule,
@@ -37,7 +39,8 @@ import { TitleBarComponent } from "./components/title-bar/title-bar.component";
     ConfirmationDialogComponent,
     TitleBarComponent,
     LogoHeaderComponent,
-    LogoComponent
+    LogoComponent,
+    ContentComponent
   ]
 })
 export class SharedModule { }

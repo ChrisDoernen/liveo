@@ -1,14 +1,16 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
 import { DeviceEntity, StreamEntity, StreamType } from "@live/entities";
+import { StreamService } from "apps/admin/src/app/services/stream/stream.service";
 import { DevicesService } from "../../../../services/devices/devices.service";
 
 @Component({
-  selector: "stream-creation-dialog",
-  templateUrl: "./stream-creation-dialog.component.html",
-  styleUrls: ["./stream-creation-dialog.component.scss"]
+  selector: "stream-creation",
+  templateUrl: "./stream-creation.component.html",
+  styleUrls: ["./stream-creation.component.scss"]
 })
-export class StreamCreationDialogComponent implements OnInit {
+export class StreamCreationComponent implements OnInit {
 
   public isLinear = true;
   public titleFormGroup: FormGroup;
@@ -16,8 +18,11 @@ export class StreamCreationDialogComponent implements OnInit {
   public devices: DeviceEntity[];
 
   constructor(
+    private readonly _streamService: StreamService,
     private readonly _devicesService: DevicesService,
-    private readonly _formBuilder: FormBuilder) {
+    private readonly _formBuilder: FormBuilder,
+    private readonly _activatedRoute: ActivatedRoute,
+    private readonly _router: Router) {
   }
 
   public ngOnInit(): void {
@@ -31,10 +36,17 @@ export class StreamCreationDialogComponent implements OnInit {
     });
   }
 
-  public get activationDialogResult(): StreamEntity {
+  private getStream(): StreamEntity {
     const title = this.titleFormGroup.value.titleCtrl;
     const deviceId = this.deviceIdFormGroup.value.deviceIdCtrl;
 
     return new StreamEntity(null, title, null, null, deviceId, StreamType.Audio);
+  }
+
+  public saveStream(): void {
+    const stream = this.getStream();
+    this._streamService
+      .createStream(stream)
+      .then(() => this._router.navigate([".."], { relativeTo: this._activatedRoute }));
   }
 }

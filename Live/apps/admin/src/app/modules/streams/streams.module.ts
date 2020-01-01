@@ -1,7 +1,8 @@
 import { NgModule } from "@angular/core";
 import { SharedModule } from "../shared/shared.module";
-import { StreamCreationDialogComponent } from "./components/stream-creation-dialog/stream-creation-dialog.component";
+import { StreamCreationComponent } from "./components/stream-creation/stream-creation.component";
 import { StreamDeletionDialogComponent } from "./components/stream-deletion-dialog/stream-deletion-dialog.component";
+import { StreamListComponent } from "./components/stream-list/stream-list.component";
 import { StreamsComponent } from "./components/streams/streams.component";
 import { StreamsRoutingModule } from "./streams-routing.module";
 
@@ -11,12 +12,12 @@ import { StreamsRoutingModule } from "./streams-routing.module";
     StreamsRoutingModule
   ],
   declarations: [
-    StreamsComponent,
+    StreamListComponent,
     StreamDeletionDialogComponent,
-    StreamCreationDialogComponent
+    StreamCreationComponent,
+    StreamsComponent
   ],
   entryComponents: [
-    StreamCreationDialogComponent,
     StreamDeletionDialogComponent
   ]
 })

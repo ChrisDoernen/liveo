@@ -7,11 +7,11 @@ import { EndpointService, Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
 import { SessionService } from "../../../../services/session/session.service";
 import { AngularMaterialModule } from "../../../angular-material/angular-material.module";
-import { StreamCreationDialogComponent } from "./stream-creation-dialog.component";
+import { StreamCreationComponent } from "./stream-creation.component";
 
 describe("StreamCreationDialogComponent", () => {
-  let component: StreamCreationDialogComponent;
-  let fixture: ComponentFixture<StreamCreationDialogComponent>;
+  let component: StreamCreationComponent;
+  let fixture: ComponentFixture<StreamCreationComponent>;
   let endpointService: jest.Mocked<EndpointService>;
   let sessionService: SessionService;
 
@@ -28,7 +28,7 @@ describe("StreamCreationDialogComponent", () => {
         NoopAnimationsModule,
         AngularMaterialModule
       ],
-      declarations: [StreamCreationDialogComponent],
+      declarations: [StreamCreationComponent],
       providers: [
         { provide: MatDialog, useValue: jest.fn() },
         { provide: SessionService, useValue: sessionService },
@@ -37,7 +37,7 @@ describe("StreamCreationDialogComponent", () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(StreamCreationDialogComponent);
+    fixture = TestBed.createComponent(StreamCreationComponent);
     component = fixture.componentInstance;
   });
 

@@ -80,3 +80,9 @@ h2 {
 .no-content-action {
   text-decoration: underline;
 }
+
+.mat-stepper-vertical {
+  background-color: transparent !important;
+  max-width: 400px;
+  margin: auto;
+}
