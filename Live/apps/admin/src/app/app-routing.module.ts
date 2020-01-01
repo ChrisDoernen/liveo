@@ -1,15 +1,15 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { DashboardComponent } from "./components/dashboard/dashboard.component";
-import { LoginComponent } from "./components/login/login.component";
-import { NavigationComponent } from "./components/navigation/navigation.component";
-import { OfflineMessageComponent } from "./components/offline-message/offline-message.component";
-import { SessionsComponent } from "./components/sessions/sessions.component";
-import { SettingsComponent } from "./components/settings/settings.component";
-import { StreamsComponent } from "./components/streams/streams.component";
-import { WelcomeComponent } from "./components/welcome/welcome.component";
 import { AuthenticationGuard } from "./guards/authentication.guard";
 import { ConnectionStateGuard } from "./guards/connection-state.guard";
+import { LoginComponent } from "./modules/base/components/login/login.component";
+import { NavigationComponent } from "./modules/base/components/navigation/navigation.component";
+import { OfflineMessageComponent } from "./modules/base/components/offline-message/offline-message.component";
+import { WelcomeComponent } from "./modules/base/components/welcome/welcome.component";
+import { DashboardComponent } from "./modules/dashboard/components/dashboard/dashboard.component";
+import { SessionsComponent } from "./modules/sessions/components/sessions/sessions.component";
+import { SettingsComponent } from "./modules/settings/components/settings/settings.component";
+import { StreamsComponent } from "./modules/streams/components/streams/streams.component";
 
 const routes: Routes = [
   {
