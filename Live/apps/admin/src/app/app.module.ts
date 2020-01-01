@@ -1,17 +1,20 @@
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { APP_BOOTSTRAP_LISTENER, NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { ROUTES } from "@live/constants";
 import { ENABLECONSOLELOGGING, ROUTE } from "@live/services";
-import { InlineSVGModule } from "ng-inline-svg";
 import { SocketIoModule } from "ngx-socket-io";
 import { environment } from "../environments/environment";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
+import { FooterComponent } from "./components/footer/footer.component";
+import { LoginComponent } from "./components/login/login.component";
+import { NavigationComponent } from "./components/navigation/navigation.component";
+import { NotficationsComponent } from "./components/notfications/notfications.component";
+import { OfflineMessageComponent } from "./components/offline-message/offline-message.component";
+import { WelcomeComponent } from "./components/welcome/welcome.component";
 import { AuthenticationInterceptor } from "./interceptors/authentication.interceptor";
 import { ErrorInterceptor } from "./interceptors/error.interceptor";
-import { BaseModule } from "./modules/base/base.module";
 import { DashboardModule } from "./modules/dashboard/dashboard.module";
 import { HeaderModule } from "./modules/header/header.module";
 import { SessionsModule } from "./modules/sessions/sessions.module";
@@ -22,21 +25,24 @@ import { InitializationService } from "./services/initialization/initialization.
 
 @NgModule({
   imports: [
-    BaseModule,
     StreamsModule,
     SessionsModule,
     SharedModule,
     HeaderModule,
     DashboardModule,
     SettingsModule,
-    BrowserModule,
     AppRoutingModule,
     SocketIoModule,
-    InlineSVGModule.forRoot(),
     ServiceWorkerModule.register("ngsw-worker.js", { enabled: environment.production })
   ],
   declarations: [
-    AppComponent
+    AppComponent,
+    NotficationsComponent,
+    NavigationComponent,
+    FooterComponent,
+    OfflineMessageComponent,
+    LoginComponent,
+    WelcomeComponent
   ],
   providers: [
     {

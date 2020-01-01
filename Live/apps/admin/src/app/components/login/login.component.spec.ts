@@ -4,10 +4,10 @@ import { ActivatedRoute } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
-import { AuthenticationService } from "../../../../services/authentication/authentication.service";
-import { LogoMockModule } from "../../../../test-utilities/mocks/logo-mock.module";
-import { ActivatedRouteBuilder } from "../../../../test-utilities/test-data-builder/activated-route-builder";
-import { AngularMaterialModule } from "../../../angular-material/angular-material.module";
+import { AngularMaterialModule } from "../../modules/angular-material/angular-material.module";
+import { AuthenticationService } from "../../services/authentication/authentication.service";
+import { LogoMockModule } from "../../test-utilities/mocks/logo-mock.module";
+import { ActivatedRouteBuilder } from "../../test-utilities/test-data-builder/activated-route-builder";
 import { LoginComponent } from "./login.component";
 
 describe("LoginComponent", () => {

@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { environment } from "../../../../../environments/environment";
+import { environment } from "../../../environments/environment";
 
 @Component({
   selector: "navigation",

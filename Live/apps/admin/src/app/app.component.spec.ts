@@ -7,12 +7,12 @@ import createMockInstance from "jest-create-mock-instance";
 import { InlineSVGDirective } from "ng-inline-svg";
 import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
 import { AppComponent } from "./app.component";
+import { NavigationComponent } from "./components/navigation/navigation.component";
+import { NotficationsComponent } from "./components/notfications/notfications.component";
+import { OfflineMessageComponent } from "./components/offline-message/offline-message.component";
 import { AngularMaterialModule } from "./modules/angular-material/angular-material.module";
-import { NavigationComponent } from "./modules/base/components/navigation/navigation.component";
-import { NotficationsComponent } from "./modules/base/components/notfications/notfications.component";
-import { OfflineMessageComponent } from "./modules/base/components/offline-message/offline-message.component";
-import { LogoHeaderComponent } from "./modules/header/components/logo-header/logo-header.component";
 import { ShutdownComponent } from "./modules/header/components/shutdown/shutdown.component";
+import { LogoHeaderComponent } from "./modules/shared/components/logo-header/logo-header.component";
 import { LogoComponent } from "./modules/shared/components/logo/logo.component";
 
 describe("AppComponent", () => {

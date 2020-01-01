@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { SystemMonitoringService } from "../../../../services/system-monitoring/system-monitoring.service";
+import { SystemMonitoringService } from "../../services/system-monitoring/system-monitoring.service";
 
 @Component({
   selector: "footer",

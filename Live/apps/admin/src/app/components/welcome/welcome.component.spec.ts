@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
-import { LogoMockModule } from "../../../../test-utilities/mocks/logo-mock.module";
+import { LogoMockModule } from "../../test-utilities/mocks/logo-mock.module";
 import { WelcomeComponent } from "./welcome.component";
 
 describe("WelcomeComponent", () => {
