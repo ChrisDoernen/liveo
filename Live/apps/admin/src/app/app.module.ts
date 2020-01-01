@@ -1,5 +1,7 @@
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { APP_BOOTSTRAP_LISTENER, NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { ROUTES } from "@live/constants";
 import { ENABLECONSOLELOGGING, ROUTE } from "@live/services";
@@ -8,15 +10,17 @@ import { environment } from "../environments/environment";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { FooterComponent } from "./components/footer/footer.component";
+import { HeaderComponent } from "./components/header/header.component";
 import { LoginComponent } from "./components/login/login.component";
 import { NavigationComponent } from "./components/navigation/navigation.component";
 import { NotficationsComponent } from "./components/notfications/notfications.component";
 import { OfflineMessageComponent } from "./components/offline-message/offline-message.component";
+import { ShutdownDialogComponent } from "./components/shutdown-dialog/shutdown-dialog.component";
+import { ShutdownComponent } from "./components/shutdown/shutdown.component";
 import { WelcomeComponent } from "./components/welcome/welcome.component";
 import { AuthenticationInterceptor } from "./interceptors/authentication.interceptor";
 import { ErrorInterceptor } from "./interceptors/error.interceptor";
 import { DashboardModule } from "./modules/dashboard/dashboard.module";
-import { HeaderModule } from "./modules/header/header.module";
 import { SessionsModule } from "./modules/sessions/sessions.module";
 import { SettingsModule } from "./modules/settings/settings.module";
 import { SharedModule } from "./modules/shared/shared.module";
@@ -25,10 +29,11 @@ import { InitializationService } from "./services/initialization/initialization.
 
 @NgModule({
   imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
     StreamsModule,
     SessionsModule,
     SharedModule,
-    HeaderModule,
     DashboardModule,
     SettingsModule,
     AppRoutingModule,
@@ -42,7 +47,10 @@ import { InitializationService } from "./services/initialization/initialization.
     FooterComponent,
     OfflineMessageComponent,
     LoginComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    ShutdownComponent,
+    ShutdownDialogComponent,
+    HeaderComponent
   ],
   providers: [
     {

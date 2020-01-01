@@ -5,9 +5,9 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { EndpointService, Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
 import { AngularMaterialModule } from "../../modules/angular-material/angular-material.module";
-import { ShutdownComponent } from "../../modules/header/components/shutdown/shutdown.component";
 import { LogoMockModule } from "../../test-utilities/mocks/logo-mock.module";
 import { OfflineMessageComponent } from "../offline-message/offline-message.component";
+import { ShutdownComponent } from "../shutdown/shutdown.component";
 import { NavigationComponent } from "./navigation.component";
 
 describe("NavigationComponent", () => {

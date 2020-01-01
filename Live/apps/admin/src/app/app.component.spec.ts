@@ -10,8 +10,8 @@ import { AppComponent } from "./app.component";
 import { NavigationComponent } from "./components/navigation/navigation.component";
 import { NotficationsComponent } from "./components/notfications/notfications.component";
 import { OfflineMessageComponent } from "./components/offline-message/offline-message.component";
+import { ShutdownComponent } from "./components/shutdown/shutdown.component";
 import { AngularMaterialModule } from "./modules/angular-material/angular-material.module";
-import { ShutdownComponent } from "./modules/header/components/shutdown/shutdown.component";
 import { LogoHeaderComponent } from "./modules/shared/components/logo-header/logo-header.component";
 import { LogoComponent } from "./modules/shared/components/logo/logo.component";
 

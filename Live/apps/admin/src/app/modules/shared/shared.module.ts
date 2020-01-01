@@ -1,9 +1,8 @@
+import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatNativeDateModule } from "@angular/material";
-import { BrowserModule } from "@angular/platform-browser";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { InlineSVGModule } from "ng-inline-svg";
 import { AngularMaterialModule } from "../angular-material/angular-material.module";
 import { ConfirmationDialogComponent } from "./components/confirmation-dialog/confirmation-dialog.component";
@@ -13,13 +12,12 @@ import { TitleBarComponent } from "./components/title-bar/title-bar.component";
 
 @NgModule({
   imports: [
+    CommonModule,
     HttpClientModule,
     AngularMaterialModule,
     FormsModule,
-    BrowserAnimationsModule,
     MatNativeDateModule,
     ReactiveFormsModule,
-    BrowserModule,
     InlineSVGModule.forRoot()
   ],
   declarations: [
@@ -29,18 +27,17 @@ import { TitleBarComponent } from "./components/title-bar/title-bar.component";
     LogoComponent
   ],
   exports: [
-    ConfirmationDialogComponent,
-    TitleBarComponent,
-    LogoHeaderComponent,
-    LogoComponent,
+    CommonModule,
     HttpClientModule,
     AngularMaterialModule,
     FormsModule,
-    BrowserAnimationsModule,
     MatNativeDateModule,
     ReactiveFormsModule,
-    BrowserModule,
-    InlineSVGModule
+    InlineSVGModule,
+    ConfirmationDialogComponent,
+    TitleBarComponent,
+    LogoHeaderComponent,
+    LogoComponent
   ]
 })
 export class SharedModule { }

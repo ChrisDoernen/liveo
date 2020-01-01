@@ -7,10 +7,12 @@ import { ActivationStateTileComponent } from "./components/activation-state-tile
 import { DashboardActivationComponent } from "./components/dashboard-activation/dashboard-activation.component";
 import { DashboardNoActivationComponent } from "./components/dashboard-no-activation/dashboard-no-activation.component";
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
+import { DashboardRoutingModule } from "./dashboard-routing.module";
 
 @NgModule({
   imports: [
-    SharedModule
+    SharedModule,
+    DashboardRoutingModule
   ],
   declarations: [
     DashboardComponent,

@@ -6,10 +6,6 @@ import { OfflineMessageComponent } from "./components/offline-message/offline-me
 import { WelcomeComponent } from "./components/welcome/welcome.component";
 import { AuthenticationGuard } from "./guards/authentication.guard";
 import { ConnectionStateGuard } from "./guards/connection-state.guard";
-import { DashboardComponent } from "./modules/dashboard/components/dashboard/dashboard.component";
-import { SessionsComponent } from "./modules/sessions/components/sessions/sessions.component";
-import { SettingsComponent } from "./modules/settings/components/settings/settings.component";
-import { StreamsComponent } from "./modules/streams/components/streams/streams.component";
 
 const routes: Routes = [
   {
@@ -40,22 +36,22 @@ const routes: Routes = [
       },
       {
         path: "dashboard",
-        component: DashboardComponent,
+        loadChildren: () => import("./modules/dashboard/dashboard.module").then((m) => m.DashboardModule),
         canActivate: [ConnectionStateGuard, AuthenticationGuard]
       },
       {
         path: "streams",
-        component: StreamsComponent,
+        loadChildren: () => import("./modules/streams/streams.module").then((m) => m.StreamsModule),
         canActivate: [AuthenticationGuard]
       },
       {
         path: "sessions",
-        component: SessionsComponent,
+        loadChildren: () => import("./modules/sessions/sessions.module").then((m) => m.SessionsModule),
         canActivate: [AuthenticationGuard]
       },
       {
         path: "settings",
-        component: SettingsComponent,
+        loadChildren: () => import("./modules/settings/settings.module").then((m) => m.SettingsModule),
         canActivate: [ConnectionStateGuard, AuthenticationGuard]
       }
     ]

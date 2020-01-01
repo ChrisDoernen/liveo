@@ -2,8 +2,8 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { EndpointService, Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
-import { ShutdownService } from "../../../../services/shutdown/shutdown.service";
-import { AngularMaterialModule } from "../../../angular-material/angular-material.module";
+import { AngularMaterialModule } from "../../modules/angular-material/angular-material.module";
+import { ShutdownService } from "../../services/shutdown/shutdown.service";
 import { ShutdownComponent } from "./shutdown.component";
 
 describe("ShutdownComponent", () => {
