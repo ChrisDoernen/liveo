@@ -5,10 +5,10 @@ import { Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
 import { InlineSVGDirective } from "ng-inline-svg";
 import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
-import { ShutdownService } from "../../../../services/shutdown/shutdown.service";
-import { AngularMaterialModule } from "../../../angular-material/angular-material.module";
-import { LogoHeaderComponent } from "../../../shared/components/logo-header/logo-header.component";
-import { LogoComponent } from "../../../shared/components/logo/logo.component";
+import { AngularMaterialModule } from "../../modules/angular-material/angular-material.module";
+import { LogoHeaderComponent } from "../../modules/shared/components/logo-header/logo-header.component";
+import { LogoComponent } from "../../modules/shared/components/logo/logo.component";
+import { ShutdownService } from "../../services/shutdown/shutdown.service";
 import { ShutdownComponent } from "../shutdown/shutdown.component";
 import { HeaderComponent } from "./header.component";
 

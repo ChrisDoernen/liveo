@@ -20,22 +20,14 @@ import { ShutdownComponent } from "./components/shutdown/shutdown.component";
 import { WelcomeComponent } from "./components/welcome/welcome.component";
 import { AuthenticationInterceptor } from "./interceptors/authentication.interceptor";
 import { ErrorInterceptor } from "./interceptors/error.interceptor";
-import { DashboardModule } from "./modules/dashboard/dashboard.module";
-import { SessionsModule } from "./modules/sessions/sessions.module";
-import { SettingsModule } from "./modules/settings/settings.module";
 import { SharedModule } from "./modules/shared/shared.module";
-import { StreamsModule } from "./modules/streams/streams.module";
 import { InitializationService } from "./services/initialization/initialization.service";
 
 @NgModule({
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    StreamsModule,
-    SessionsModule,
     SharedModule,
-    DashboardModule,
-    SettingsModule,
     AppRoutingModule,
     SocketIoModule,
     ServiceWorkerModule.register("ngsw-worker.js", { enabled: environment.production })
@@ -51,6 +43,9 @@ import { InitializationService } from "./services/initialization/initialization.
     ShutdownComponent,
     ShutdownDialogComponent,
     HeaderComponent
+  ],
+  entryComponents: [
+    ShutdownDialogComponent
   ],
   providers: [
     {
