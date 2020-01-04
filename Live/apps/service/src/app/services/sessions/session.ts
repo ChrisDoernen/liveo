@@ -33,7 +33,7 @@ export class Session {
     @inject("NotificationService") private _notificationService: NotificationService,
     private _sessionEntity: SessionEntity,
     private _streams: Stream[]) {
-    this._logger.debug(`Loaded session ${JSON.stringify(_sessionEntity)}.`);
+    this._logger.debug(`Instantiated session ${JSON.stringify(_sessionEntity)}`);
     this.checkStreamDevices();
   }
 
@@ -56,19 +56,19 @@ export class Session {
         throw new Error(`Cannot start session ${this.id}: All streams have invalid devices.`);
       }
 
-      this._logger.info(`Starting session ${this.id}.`);
+      this._logger.info(`Starting session ${this.id}`);
       this._streams.forEach(stream => stream.start());
       const notification = new NotificationEntity("Started streaming", NotificationType.Info);
       this._notificationService.sendNotification(notification);
       this._isStarted = true;
     } else {
-      this._logger.warn(`Session ${this.id} is already started.`);
+      this._logger.warn(`Session ${this.id} is already started`);
     }
   }
 
   public stop(): void {
     if (this._isStarted) {
-      this._logger.info(`Stopping session ${this.id}.`);
+      this._logger.info(`Stopping session ${this.id}`);
       this._streams.forEach(stream => stream.stop());
       const notification = new NotificationEntity("Stopped streaming", NotificationType.Info);
       this._notificationService.sendNotification(notification);

@@ -1,8 +1,7 @@
 import { ENDPOINTS, EVENTS } from "@live/constants";
 import { NotificationEntity } from "@live/entities";
 import { inject, injectable } from "inversify";
-import * as socketio from "socket.io";
-import { Socket } from "socket.io";
+import socketio, { Socket } from "socket.io";
 import { Logger } from "../services/logging/logger";
 import { ClientInfo } from "../services/statistics/client-info";
 import { ConnectionHistoryService } from "../services/statistics/connection-history-service";

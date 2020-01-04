@@ -1,9 +1,9 @@
-import { injectable, inject } from "inversify";
-import { Logger } from "../logging/logger";
-import { StreamService } from "../streams/stream-service";
-import { SessionService } from "../sessions/session-service";
 import { ApplicationStateEntity, SessionEntity, StreamEntity } from "@live/entities";
+import { inject, injectable } from "inversify";
 import { ActivationService } from "../activation/activation-service";
+import { Logger } from "../logging/logger";
+import { SessionService } from "../sessions/session-service";
+import { StreamService } from "../streams/stream-service";
 
 /**
  * Provides the activation state, e.g. the activation, session entity and streams entities
@@ -24,7 +24,7 @@ export class ApplicationStateService {
     let streams: StreamEntity[];
 
     if (activation) {
-      session = this._sessionService.getSessionEntity(activation.sessionId as string);
+      session = this._sessionService.getSessionEntity(activation.sessionId);
       streams = session.streams.map((streamId) => this._streamService.getStreamEntity(streamId));
     }
 

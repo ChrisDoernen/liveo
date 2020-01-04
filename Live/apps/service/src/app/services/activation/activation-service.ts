@@ -55,7 +55,7 @@ export class ActivationService {
 
     this._activation = activation;
     this._activeSession = session;
-    this._logger.debug("Activation set.");
+    this._logger.debug("Activation set");
 
     return this._activation;
   }
@@ -101,7 +101,7 @@ export class ActivationService {
 
     this._activation = null;
     this._activeSession = null;
-    this._logger.debug("Activation deleted.");
+    this._logger.debug("Activation deleted");
 
     return this._activation;
   }
