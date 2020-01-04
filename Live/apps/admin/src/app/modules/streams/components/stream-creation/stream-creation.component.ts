@@ -2,8 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DeviceEntity, StreamEntity, StreamType } from "@live/entities";
-import { StreamService } from "apps/admin/src/app/services/stream/stream.service";
 import { DevicesService } from "../../../../services/devices/devices.service";
+import { StreamService } from "../../../../services/stream/stream.service";
 
 @Component({
   selector: "stream-creation",
