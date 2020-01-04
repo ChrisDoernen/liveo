@@ -6,16 +6,12 @@
 	},
 	"item": [
 		{
-			"name": "/api/admin/streams/v67d",
+			"name": "/api/admin/streams/tx331xqq",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
-					"raw": "{{hostname}}:{{port}}/api/admin/streams/v67d",
+					"raw": "{{hostname}}:{{port}}/api/admin/streams/tx331xqq",
 					"host": [
 						"{{hostname}}"
 					],
@@ -24,7 +20,28 @@
 						"api",
 						"admin",
 						"streams",
-						"v67d"
+						"tx331xqq"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/streams/tx331xqq",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/admin/streams/tx331xqq",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"admin",
+						"streams",
+						"tx331xqq"
 					]
 				}
 			},
@@ -35,9 +52,41 @@
 			"request": {
 				"method": "GET",
 				"header": [],
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/admin/streams",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"admin",
+						"streams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/streams",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": ""
+					"raw": "{\n        \"title\": \"Farsi\",\n        \"deviceId\": \"CARD=PCH,DEV=0\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
 					"raw": "{{hostname}}:{{port}}/api/admin/streams",
@@ -55,14 +104,30 @@
 			"response": []
 		},
 		{
+			"name": "/api/admin/devices",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/admin/devices",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"admin",
+						"devices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "/api/admin/connection",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "{{hostname}}:{{port}}/api/admin/connection",
 					"host": [
@@ -83,10 +148,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "{{hostname}}:{{port}}/api/admin/settings",
 					"host": [
@@ -105,21 +166,6 @@
 		{
 			"name": "/api/admin/settings",
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "{{password}}",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "{{username}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "PUT",
 				"header": [
 					{
@@ -153,9 +199,62 @@
 			"request": {
 				"method": "GET",
 				"header": [],
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/admin/sessions",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"admin",
+						"sessions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/sessions/gfxbi7xe",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/admin/sessions/gfxbi7xe",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"admin",
+						"sessions",
+						"gfxbi7xe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/sessions",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": ""
+					"raw": "{\n        \"title\": \"NEU\",\n        \"description\": \"Live stream of the sunday service\",\n        \"streams\": [\n            \"tx331xqq\"\n        ]\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
 					"raw": "{{hostname}}:{{port}}/api/admin/sessions",
@@ -173,16 +272,12 @@
 			"response": []
 		},
 		{
-			"name": "/api/admin/sessions/bd34",
+			"name": "/api/admin/sessions/gfxbi7xe",
 			"request": {
-				"method": "GET",
+				"method": "DELETE",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
-					"raw": "{{hostname}}:{{port}}/api/admin/sessions/bd34",
+					"raw": "{{hostname}}:{{port}}/api/admin/sessions/gfxbi7xe",
 					"host": [
 						"{{hostname}}"
 					],
@@ -191,7 +286,7 @@
 						"api",
 						"admin",
 						"sessions",
-						"bd34"
+						"gfxbi7xe"
 					]
 				}
 			},
@@ -200,27 +295,8 @@
 		{
 			"name": "/api/admin/shutdown",
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "{{password}}",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "{{username}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "{{hostname}}:{{port}}/api/admin/shutdown",
 					"host": [
@@ -239,21 +315,6 @@
 		{
 			"name": "/api/admin/shutdown mit timestamp",
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "{{password}}",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "{{username}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "POST",
 				"header": [
 					{
@@ -284,21 +345,6 @@
 		{
 			"name": "/api/admin/shutdown ohne timestamp",
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "{{password}}",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "{{username}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "POST",
 				"header": [
 					{
@@ -332,10 +378,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "{{hostname}}:{{port}}/api/admin/activation",
 					"host": [
@@ -354,21 +396,6 @@
 		{
 			"name": "/api/admin/activation nur sessionId",
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "{{password}}",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "{{username}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "POST",
 				"header": [
 					{
@@ -380,7 +407,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"sessionId\": \"ag7s\"\n}"
+					"raw": "{\n\t\"sessionId\": \"gfxbi7xe\"\n}"
 				},
 				"url": {
 					"raw": "{{hostname}}:{{port}}/api/admin/activation",
@@ -400,21 +427,6 @@
 		{
 			"name": "/api/admin/activation sessionId und timestamp",
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "{{password}}",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "{{username}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "POST",
 				"header": [
 					{
@@ -426,7 +438,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"sessionId\": \"bd34\",\n\t\"startTime\": \"2019-08-18T14:30:13+02:00\"\n}"
+					"raw": "{\n\t\"sessionId\": \"gfxbi7xe\",\n\t\"startTime\": \"2019-08-18T14:30:13+02:00\"\n}"
 				},
 				"url": {
 					"raw": "{{hostname}}:{{port}}/api/admin/activation",
@@ -479,10 +491,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "{{hostname}}:{{port}}/api/client/application-state",
 					"host": [
@@ -499,23 +507,12 @@
 			"response": []
 		},
 		{
-			"name": "/api/admin/authentication",
+			"name": "/api/admin/devices",
 			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"username\": \"admin\",\n\t\"password\": \"admin\"\n}"
-				},
+				"method": "GET",
+				"header": [],
 				"url": {
-					"raw": "{{hostname}}:{{port}}/api/admin/authentication",
+					"raw": "{{hostname}}:{{port}}/api/admin/streams",
 					"host": [
 						"{{hostname}}"
 					],
@@ -523,7 +520,7 @@
 					"path": [
 						"api",
 						"admin",
-						"authentication"
+						"streams"
 					]
 				}
 			},

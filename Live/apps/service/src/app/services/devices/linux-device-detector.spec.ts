@@ -1,9 +1,9 @@
+import { DeviceEntity } from "@live/entities";
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
 import { Logger } from "../logging/logger";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { Device } from "./device";
-import { DeviceData } from "./device-data";
 import { DeviceState } from "./device-state";
 import { LinuxDeviceDetector } from "./linux-device-detector";
 
@@ -15,12 +15,12 @@ describe("LinuxDeviceDetector", () => {
   beforeEach(() => {
     const logger = createMockInstance(Logger);
     processExecutionService = createMockInstance(ProcessExecutionService);
-    deviceFactory = jest.fn((deviceData: DeviceData, deviceState: DeviceState, ) => new Device(logger, deviceData, deviceState));
+    deviceFactory = jest.fn((deviceData: DeviceEntity, deviceState: DeviceState, ) => new Device(logger, deviceData, deviceState));
 
     linuxDeviceDetector = new LinuxDeviceDetector(logger, processExecutionService, deviceFactory);
   });
 
-  it("should construct", async () => {
+  it("should construct", () => {
     expect(linuxDeviceDetector).toBeDefined();
   });
 
@@ -33,9 +33,9 @@ describe("LinuxDeviceDetector", () => {
     const devices = linuxDeviceDetector.devices;
     expect(devices.length).toBe(2);
     expect(devices[0].id).toBe("CARD=SB,DEV=0");
-    expect(devices[0].data.description).toBe("hw:CARD=SB,DEV=0");
+    expect(devices[0].entity.description).toBe("hw:CARD=SB,DEV=0");
     expect(devices[1].id).toBe("CARD=USB1,DEV=0");
-    expect(devices[1].data.description).toBe("hw:CARD=USB1,DEV=0");
+    expect(devices[1].entity.description).toBe("hw:CARD=USB1,DEV=0");
   });
 });
 

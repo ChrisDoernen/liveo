@@ -1,13 +1,12 @@
-import { DeviceDetector } from "./device-detector";
-import { Logger } from "../logging/logger";
-import { injectable, inject } from "inversify";
-import { Device } from "./device";
-import { DeviceData } from "./device-data";
-import { DeviceState } from "./device-state";
+import { DeviceEntity, DeviceType } from "@live/entities";
+import { inject, injectable } from "inversify";
 import { EOL } from "os";
-import { DeviceType } from "./device-type";
-import { AudioSystem } from '../audio-system/audio-system';
-import { ProcessExecutionService } from '../process-execution/process-execution-service';
+import { AudioSystem } from "../audio-system/audio-system";
+import { Logger } from "../logging/logger";
+import { ProcessExecutionService } from "../process-execution/process-execution-service";
+import { Device } from "./device";
+import { DeviceDetector } from "./device-detector";
+import { DeviceState } from "./device-state";
 
 @injectable()
 export class WindowsDeviceDetector extends DeviceDetector {
@@ -17,7 +16,7 @@ export class WindowsDeviceDetector extends DeviceDetector {
     @inject("AudioSystem") audioSystem: AudioSystem,
     @inject("FfmpegPath") ffmpegPath: string,
     @inject("ProcessExecutionService") processExecutionService: ProcessExecutionService,
-    @inject("DeviceFactory") deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
+    @inject("DeviceFactory") deviceFactory: (deviceData: DeviceEntity, deviceState: DeviceState) => Device) {
     super(logger, processExecutionService, deviceFactory);
     this.listDevicesCommand = `${ffmpegPath} -f ${audioSystem.audioSystem} -list_devices true -i '' -hide_banner`;
   }

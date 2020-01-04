@@ -1,6 +1,6 @@
-import { Logger } from "../logging/logger";
-import { inject } from "inversify";
 import { StreamEntity } from "@live/entities";
+import { inject } from "inversify";
+import { Logger } from "../logging/logger";
 import { IStreamingSource } from "../streaming-sources/i-streaming-source";
 
 /**
@@ -27,8 +27,7 @@ export class Stream {
 
   constructor(
     @inject("Logger") private _logger: Logger,
-    @inject("StreamingSourceFactory")
-    streamingSourceFactory: (deviceId: string, streamId: string, onError: (error: Error) => void) => IStreamingSource,
+    @inject("StreamingSourceFactory") streamingSourceFactory: (deviceId: string, streamId: string, onError: (error: Error) => void) => IStreamingSource,
     private _streamEntity: StreamEntity) {
     this._source = streamingSourceFactory(_streamEntity.deviceId, this.id, this.onStreamingSourceError.bind(this));
 

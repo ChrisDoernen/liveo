@@ -4,7 +4,7 @@ import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { EndpointService, Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
-import { AngularMaterialModule } from "../../angular-material.module";
+import { AngularMaterialModule } from "../../modules/angular-material/angular-material.module";
 import { LogoMockModule } from "../../test-utilities/mocks/logo-mock.module";
 import { OfflineMessageComponent } from "../offline-message/offline-message.component";
 import { ShutdownComponent } from "../shutdown/shutdown.component";

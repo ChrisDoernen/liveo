@@ -1,12 +1,8 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { LoginComponent } from "./components/login/login.component";
 import { NavigationComponent } from "./components/navigation/navigation.component";
 import { OfflineMessageComponent } from "./components/offline-message/offline-message.component";
-import { SessionsComponent } from "./components/sessions/sessions.component";
-import { SettingsComponent } from "./components/settings/settings.component";
-import { StreamsComponent } from "./components/streams/streams.component";
 import { WelcomeComponent } from "./components/welcome/welcome.component";
 import { AuthenticationGuard } from "./guards/authentication.guard";
 import { ConnectionStateGuard } from "./guards/connection-state.guard";
@@ -40,22 +36,22 @@ const routes: Routes = [
       },
       {
         path: "dashboard",
-        component: DashboardComponent,
+        loadChildren: () => import("./modules/dashboard/dashboard.module").then((m) => m.DashboardModule),
         canActivate: [ConnectionStateGuard, AuthenticationGuard]
       },
       {
         path: "streams",
-        component: StreamsComponent,
+        loadChildren: () => import("./modules/streams/streams.module").then((m) => m.StreamsModule),
         canActivate: [AuthenticationGuard]
       },
       {
         path: "sessions",
-        component: SessionsComponent,
+        loadChildren: () => import("./modules/sessions/sessions.module").then((m) => m.SessionsModule),
         canActivate: [AuthenticationGuard]
       },
       {
         path: "settings",
-        component: SettingsComponent,
+        loadChildren: () => import("./modules/settings/settings.module").then((m) => m.SettingsModule),
         canActivate: [ConnectionStateGuard, AuthenticationGuard]
       }
     ]
@@ -66,5 +62,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-
 export class AppRoutingModule { }

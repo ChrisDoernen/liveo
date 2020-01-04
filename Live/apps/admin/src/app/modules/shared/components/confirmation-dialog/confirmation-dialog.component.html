@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{data?.title}}</h1>
+<div mat-dialog-content>
+  <ng-content></ng-content>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancelClick()">{{data?.cancelButtonText || "Cancel"}}</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>{{data?.confirmButtonText  || "Ok"}}</button>
+</div>

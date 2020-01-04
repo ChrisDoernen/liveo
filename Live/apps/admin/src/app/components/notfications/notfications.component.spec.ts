@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { NotficationsComponent } from "./notfications.component";
-import { AngularMaterialModule } from "../../angular-material.module";
 import { Logger } from "@live/services";
+import { AngularMaterialModule } from "../../modules/angular-material/angular-material.module";
+import { NotficationsComponent } from "./notfications.component";
 
 describe("NotficationsComponent", () => {
   let component: NotficationsComponent;

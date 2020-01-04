@@ -1,15 +1,15 @@
-import "reflect-metadata";
 import createMockInstance from "jest-create-mock-instance";
+import "reflect-metadata";
 import { Logger } from "../logging/logger";
-import { ShutdownSimulationService } from "./shutdown-simulation-service";
-import { Scheduler } from "../scheduling/scheduler";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
+import { Scheduler } from "../scheduling/scheduler";
+import { ShutdownSimulationService } from "./shutdown-simulation-service";
 
 describe("ShutdownSimulationService", () => {
   let logger;
   let shutdownSimulationService;
   let scheduler;
-  let processExecutionService;
+  let processExecutionService: jest.Mocked<ProcessExecutionService>;
 
   beforeEach(() => {
     logger = createMockInstance(Logger);
@@ -24,6 +24,6 @@ describe("ShutdownSimulationService", () => {
 
   it("should only call logger", async () => {
     shutdownSimulationService.shutdown();
-    expect(logger.info).toHaveBeenCalled();
+    expect(processExecutionService.execute).toHaveBeenCalledTimes(0);
   });
 });

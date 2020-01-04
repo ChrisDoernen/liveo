@@ -1,7 +1,7 @@
-import { OnDestroy, Injectable } from "@angular/core";
-import { Socket } from "ngx-socket-io";
+import { Injectable, OnDestroy } from "@angular/core";
 import { ENDPOINTS, EVENTS } from "@live/constants";
 import { Logger } from "@live/services";
+import { Socket } from "ngx-socket-io";
 
 @Injectable({
   providedIn: "root"

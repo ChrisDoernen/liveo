@@ -1,12 +1,12 @@
-import "reflect-metadata";
+import { DeviceEntity } from "@live/entities";
 import createMockInstance from "jest-create-mock-instance";
+import "reflect-metadata";
+import { AudioSystem } from "../audio-system/audio-system";
 import { Logger } from "../logging/logger";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
-import { MacOSDeviceDetector } from "./macos-device-detector";
-import { DeviceData } from "./device-data";
 import { Device } from "./device";
 import { DeviceState } from "./device-state";
-import { AudioSystem } from "../audio-system/audio-system";
+import { MacOSDeviceDetector } from "./macos-device-detector";
 
 describe("MacOSDeviceDetector", () => {
   let macOsDeviceDetector: MacOSDeviceDetector;
@@ -18,7 +18,7 @@ describe("MacOSDeviceDetector", () => {
   beforeEach(() => {
     const logger = createMockInstance(Logger);
     processExecutionService = createMockInstance(ProcessExecutionService);
-    deviceFactory = jest.fn((deviceData: DeviceData, deviceState: DeviceState) => new Device(logger, deviceData, deviceState));
+    deviceFactory = jest.fn((deviceData: DeviceEntity, deviceState: DeviceState) => new Device(logger, deviceData, deviceState));
 
     macOsDeviceDetector = new MacOSDeviceDetector(logger, audioSystem, ffmpegPath, processExecutionService, deviceFactory);
   });
@@ -37,11 +37,11 @@ describe("MacOSDeviceDetector", () => {
     const devices = macOsDeviceDetector.devices;
     expect(devices.length).toBe(3);
     expect(devices[0].id).toBe("0");
-    expect(devices[0].data.description).toBe("FaceTime HD Camera");
+    expect(devices[0].entity.description).toBe("FaceTime HD Camera");
     expect(devices[1].id).toBe("1");
-    expect(devices[1].data.description).toBe("Capture screen 0");
+    expect(devices[1].entity.description).toBe("Capture screen 0");
     expect(devices[2].id).toBe("0");
-    expect(devices[2].data.description).toBe("Built-in Microphone");
+    expect(devices[2].entity.description).toBe("Built-in Microphone");
   });
 });
 

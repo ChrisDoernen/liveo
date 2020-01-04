@@ -1,10 +1,9 @@
-import { Device } from "./device";
-import { DeviceData } from "./device-data";
-import { DeviceState } from "./device-state";
+import { DeviceEntity, DeviceType } from "@live/entities";
+import { injectable } from "inversify";
 import { Logger } from "../logging/logger";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
-import { injectable } from "inversify";
-import { DeviceType } from "./device-type";
+import { Device } from "./device";
+import { DeviceState } from "./device-state";
 
 /**
  * A abstract class for device detection
@@ -20,10 +19,14 @@ export abstract class DeviceDetector {
     return this.devices;
   }
 
+  public getDeviceEntities(): DeviceEntity[] {
+    return this.devices.map((device) => device.entity);
+  }
+
   constructor(
     protected logger: Logger,
     protected processExecutionService: ProcessExecutionService,
-    private _deviceFactory: (deviceData: DeviceData, deviceState: DeviceState) => Device) {
+    private _deviceFactory: (deviceData: DeviceEntity, deviceState: DeviceState) => Device) {
   }
 
   public async runDetection(): Promise<void> {
@@ -58,6 +61,6 @@ export abstract class DeviceDetector {
   }
 
   protected instantiateDevice(id: string, description: string, deviceType: DeviceType, deviceState: DeviceState): Device {
-    return this._deviceFactory(new DeviceData(id, description, deviceType), deviceState);
+    return this._deviceFactory(new DeviceEntity(id, description, deviceType), deviceState);
   }
 }

@@ -1,14 +1,14 @@
-import { DeviceData } from "./device-data";
+import { DeviceEntity } from "@live/entities";
+import { inject } from "inversify";
 import { Logger } from "../logging/logger";
 import { DeviceState } from "./device-state";
-import { inject } from "inversify";
 
 /**
  * Represents a device in the system
  */
 export class Device {
 
-  public get data(): DeviceData {
+  public get entity(): DeviceEntity {
     return this._deviceData;
   }
 
@@ -22,7 +22,7 @@ export class Device {
 
   constructor(
     @inject("Logger") private _logger: Logger,
-    private _deviceData: DeviceData,
+    private _deviceData: DeviceEntity,
     private _deviceState: DeviceState) {
     if (this._deviceState === DeviceState.Available) {
       this._logger.debug(`Detected device ${JSON.stringify(this._deviceData)}.`);

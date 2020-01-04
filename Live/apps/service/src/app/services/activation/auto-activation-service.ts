@@ -1,11 +1,12 @@
+import { ActivationEntity } from "@live/entities";
 import { inject, injectable } from "inversify";
+import { Logger } from "../logging/logger";
 import { SettingsService } from "../settings/settings-service";
 import { ActivationService } from "./activation-service";
-import { ActivationEntity } from "@live/entities";
-import { Logger } from "../logging/logger";
 
 @injectable()
 export class AutoActivationService {
+  
   constructor(
     @inject("Logger") private _logger: Logger,
     @inject("SettingsService") private _settingsService: SettingsService,

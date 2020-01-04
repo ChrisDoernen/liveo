@@ -1,15 +1,17 @@
+import { ActivationEntity, Shutdown } from "@live/entities";
 import { inject, injectable } from "inversify";
-import { SessionService } from "../sessions/session-service";
-import { ActivationEntity } from "@live/entities";
 import { Logger } from "../logging/logger";
 import { Scheduler } from "../scheduling/scheduler";
+import { Session } from "../sessions/session";
+import { SessionService } from "../sessions/session-service";
 import { ShutdownService } from "../shutdown/shutdown-service";
-import { Shutdown } from "@live/entities";
 import { TimeService } from "../time/time.service";
 
 @injectable()
 export class ActivationService {
+
   private _activation: ActivationEntity;
+  private _activeSession: Session;
   private _sessionStartJobId = "SESSION_START_JOB";
   private _sessionStopJobId = "SESSION_STOP_JOB";
 
@@ -52,6 +54,7 @@ export class ActivationService {
     }
 
     this._activation = activation;
+    this._activeSession = session;
     this._logger.debug("Activation set.");
 
     return this._activation;
@@ -85,8 +88,7 @@ export class ActivationService {
     if (this._activation.startTime && new Date(this._activation.startTime) > now) {
       this._scheduler.cancelJob(this._sessionStartJobId);
     } else {
-      const session = this._sessionService.getSession(this._activation.sessionId);
-      session.stop();
+      this._activeSession.stop();
     }
 
     if (this._activation.endTime && new Date(this._activation.endTime) > now) {
@@ -98,7 +100,8 @@ export class ActivationService {
     }
 
     this._activation = null;
-    this._logger.info("Activation deleted.");
+    this._activeSession = null;
+    this._logger.debug("Activation deleted.");
 
     return this._activation;
   }

@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { environment } from "../../../../src/environments/environment";
+import { environment } from "../../../environments/environment";
 
 @Component({
   selector: "navigation",

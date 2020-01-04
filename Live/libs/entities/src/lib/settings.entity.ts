@@ -1,6 +1,7 @@
 export class SettingsEntity {
   constructor(
     public defaultSession: string,
-    public enableAutoActivation: boolean) {
+    public enableAutoActivation: boolean,
+    public bitrate: number) {
   }
 }

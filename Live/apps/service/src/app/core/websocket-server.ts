@@ -24,7 +24,7 @@ export class WebsocketServer {
 
     websocketServer.on("connection", this.onConnection.bind(this));
     this._websocketServer = websocketServer;
-    this._logger.info("Websocket server started.");
+    this._logger.debug("Websocket server started.");
   }
 
   private onConnection(socket: Socket): void {

@@ -1,83 +1,51 @@
+import { HTTP_INTERCEPTORS } from "@angular/common/http";
+import { APP_BOOTSTRAP_LISTENER, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { NgModule, APP_BOOTSTRAP_LISTENER } from "@angular/core";
-import { AppComponent } from "./app.component";
-import { AppRoutingModule } from "./app-routing.module";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { DashboardComponent } from "./components/dashboard/dashboard.component";
-import { AngularMaterialModule } from "./angular-material.module";
-import { NavigationComponent } from "./components/navigation/navigation.component";
-import { ShutdownComponent } from "./components/shutdown/shutdown.component";
-import { ShutdownDialogComponent } from "./components/shutdown-dialog/shutdown-dialog.component";
-import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { StreamsComponent } from "./components/streams/streams.component";
-import { SessionsComponent } from "./components/sessions/sessions.component";
-import { ActivationDialogComponent } from "./components/activation-dialog/activation-dialog.component";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MatNativeDateModule } from "@angular/material";
-import { LogoComponent } from "./components/logo/logo.component";
-import { InlineSVGModule } from "ng-inline-svg";
-import { ActivationDeletionDialogComponent } from "./components/activation-deletion-dialog/activation-deletion-dialog.component";
-import { FooterComponent } from "./components/footer/footer.component"
-import { SocketIoModule } from "ngx-socket-io";
-import { InitializationService } from "./services/initialization/initialization.service";
-import { NotficationsComponent } from "./components/notfications/notfications.component";
-import { DashboardActivationComponent } from "./components/dashboard-activation/dashboard-activation.component";
-import { DashboardNoActivationComponent } from "./components/dashboard-no-activation/dashboard-no-activation.component";
-import { ActivatedSessionTileComponent } from "./components/activated-session-tile/activated-session-tile.component";
-import { ActivationStateTileComponent } from "./components/activation-state-tile/activation-state-tile.component";
-import { ROUTE, ENABLECONSOLELOGGING } from "@live/services";
-import { ROUTES } from "@live/constants";
 import { ServiceWorkerModule } from "@angular/service-worker";
+import { ROUTES } from "@live/constants";
+import { ENABLECONSOLELOGGING, ROUTE } from "@live/services";
+import { SocketIoModule } from "ngx-socket-io";
 import { environment } from "../environments/environment";
-import { OfflineMessageComponent } from "./components/offline-message/offline-message.component";
-import { SettingsComponent } from "./components/settings/settings.component";
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { FooterComponent } from "./components/footer/footer.component";
+import { HeaderComponent } from "./components/header/header.component";
 import { LoginComponent } from "./components/login/login.component";
+import { NavigationComponent } from "./components/navigation/navigation.component";
+import { NotficationsComponent } from "./components/notfications/notfications.component";
+import { OfflineMessageComponent } from "./components/offline-message/offline-message.component";
+import { ShutdownDialogComponent } from "./components/shutdown-dialog/shutdown-dialog.component";
+import { ShutdownComponent } from "./components/shutdown/shutdown.component";
+import { WelcomeComponent } from "./components/welcome/welcome.component";
 import { AuthenticationInterceptor } from "./interceptors/authentication.interceptor";
 import { ErrorInterceptor } from "./interceptors/error.interceptor";
-import { WelcomeComponent } from "./components/welcome/welcome.component";
-import { LogoHeaderComponent } from "./components/logo-header/logo-header.component";
+import { SharedModule } from "./modules/shared/shared.module";
+import { InitializationService } from "./services/initialization/initialization.service";
 
 @NgModule({
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    AngularMaterialModule,
-    FormsModule,
     BrowserAnimationsModule,
-    MatNativeDateModule,
-    ReactiveFormsModule,
+    SharedModule,
+    AppRoutingModule,
     SocketIoModule,
-    InlineSVGModule.forRoot(),
     ServiceWorkerModule.register("ngsw-worker.js", { enabled: environment.production })
   ],
   declarations: [
     AppComponent,
-    LogoComponent,
-    DashboardComponent,
-    NavigationComponent,
-    ShutdownComponent,
-    ShutdownDialogComponent,
-    StreamsComponent,
-    SessionsComponent,
-    ActivationDialogComponent,
-    ActivationDeletionDialogComponent,
-    FooterComponent,
     NotficationsComponent,
-    DashboardActivationComponent,
-    DashboardNoActivationComponent,
-    ActivatedSessionTileComponent,
-    ActivationStateTileComponent,
+    NavigationComponent,
+    FooterComponent,
     OfflineMessageComponent,
-    SettingsComponent,
     LoginComponent,
     WelcomeComponent,
-    LogoHeaderComponent
+    ShutdownComponent,
+    ShutdownDialogComponent,
+    HeaderComponent
   ],
   entryComponents: [
-    ShutdownDialogComponent,
-    ActivationDialogComponent,
-    ActivationDeletionDialogComponent
+    ShutdownDialogComponent
   ],
   providers: [
     {

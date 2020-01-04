@@ -16,6 +16,6 @@ export class ShutdownSimulationService extends ShutdownService {
   }
 
   public executeShutdown(): void {
-    this.logger.info("Simulating server shutdown in development environment");
+    this.logger.debug("Simulating server shutdown in development environment");
   }
 }

@@ -19,7 +19,7 @@ export class UnixShutdownService extends ShutdownService {
   }
 
   public executeShutdown(): void {
-    this.logger.info("Shutting down server now.");
+    this.logger.debug("Shutting down server now.");
     this._processExecutionService.execute("sudo shutdown -h now");
   }
 }

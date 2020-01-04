@@ -27,6 +27,7 @@ import { SessionFactory } from "../services/sessions/session-factory";
 import { SessionService } from "../services/sessions/session-service";
 import { ISettingsProvider } from "../services/settings/i-settings-provider";
 import { SettingsService } from "../services/settings/settings-service";
+import { ProcessShutdownService } from "../services/shutdown/process-shutdown-service";
 import { ShutdownService } from "../services/shutdown/shutdown-service";
 import { ShutdownSimulationService } from "../services/shutdown/shutdown-simulation-service";
 import { UnixShutdownService } from "../services/shutdown/unix-shutdown-service";
@@ -44,7 +45,6 @@ import { SystemMonitoringService } from "../services/system-monitoring/system-mo
 import { TimeService } from "../services/time/time.service";
 import { FfmpegLogger, ServiceLogger } from "./logging.config";
 import { config } from "./service.config";
-import { ProcessShutdownService } from '../services/shutdown/process-shutdown-service';
 
 export const container = new Container();
 
@@ -72,8 +72,8 @@ switch (config.os) {
   }
 }
 
-if (config.environment === "executable") {
-  container.rebind<ShutdownService>("ShutdownService").to(ProcessShutdownService);
+if (config.executable) {
+  container.rebind<ShutdownService>("ShutdownService").to(ProcessShutdownService).inSingletonScope();
 }
 
 if (!config.production) {

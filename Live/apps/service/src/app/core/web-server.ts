@@ -6,17 +6,9 @@ import { inject, injectable } from "inversify";
 import { InversifyExpressServer } from "inversify-express-utils";
 import * as path from "path";
 import { config } from "../config/service.config";
-import "../controller/admin/activation.controller";
-import "../controller/admin/authentication.controller";
-// Controllers have to be registered here
-import "../controller/admin/connection.controller";
-import "../controller/admin/session.controller";
-import "../controller/admin/settings.controller";
-import "../controller/admin/shutdown.controller";
-import "../controller/admin/stream.controller";
-import "../controller/client/application-state.controller";
 import { AuthenticationProvider } from "../middleware/authentication/authentication-provider";
 import { Logger } from "../services/logging/logger";
+import "./../controller/index";
 
 @injectable()
 export class WebServer {
@@ -51,23 +43,31 @@ export class WebServer {
     const app = expressServer.build();
 
     if (config.standalone) {
-      this._logger.info(`Serving static files in standalone mode.`);
-      app.use("/", express.static(path.resolve(__dirname + "/../client")));
-      app.use("/admin", express.static(path.resolve(__dirname + "/../admin")));
+      this._logger.debug(`Serving static files in standalone mode.`);
+
+      const basePath = config.executable ? process.cwd() : path.resolve(__dirname, "..");
+
+      app.use("/", express.static(path.resolve(basePath + "/client")));
+      app.use("/admin", express.static(path.resolve(basePath + "/admin")));
 
       // Redirect unmatched requests to index files.
-      app.get("/admin/*", (req, res) => res.sendFile(path.resolve(__dirname + "/../admin/index.html")));
-      app.get("/*", (req, res) => res.sendFile(path.resolve(__dirname + "/../client/index.html")));
+      app.get("/admin/*", (req, res) => res.sendFile(path.resolve(basePath + "/admin/index.html")));
+      app.get("/*", (req, res) => res.sendFile(path.resolve(basePath + "/client/index.html")));
     }
 
     const serverInstance = app.listen(config.port);
-    this._logger.info(`Web server started, listening on port ${config.port}.`);
+    this._logger.debug(`Web server started, listening on port ${config.port}.`);
+    this._logger.info("LIVE SERVER STARTED");
+
+    if (config.executable) {
+      this._logger.info("Press CTRL+C to exit...");
+    }
 
     this._serverInstance = serverInstance;
     return serverInstance;
   }
 
   public shutdown(): void {
-    this._serverInstance.close(() => this._logger.info("Web server stopped."));
+    this._serverInstance.close(() => this._logger.debug("Web server stopped."));
   }
 }

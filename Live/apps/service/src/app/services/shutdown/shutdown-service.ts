@@ -50,6 +50,6 @@ export abstract class ShutdownService {
 
     this._scheduler.cancelJob(this._shutdownJobId);
     this._shutdown = null;
-    this.logger.info("Shutdown canceled.");
+    this.logger.debug("Shutdown canceled.");
   }
 }

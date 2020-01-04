@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./app/variables.scss";
 
 /* Add application styles & imports to this file! */
 @import "~@angular/material/theming";
@@ -29,6 +30,59 @@ body {
   box-sizing: border-box;
 }
 
+h2 {
+  font-size: 1.4em;
+}
+
 [hidden] {
   display: none !important;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.content-container {
+  padding-left: 20px;
+  padding-right: 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.mat-dialog-actions {
+  justify-content: flex-end;
+}
+
+.table-border {
+  border: solid 1px $table-grey;
+  border-radius: 3px;
+}
+
+.table-row-border {
+  border-top: solid 1px $table-grey;
+}
+
+.table-head {
+  height: 50px;
+  font-weight: 600;
+}
+
+.table-row {
+  height: 41px;
+}
+
+.no-content-message {
+  text-align: center;
+  padding-top: 40px;
+  font-size: 15px;
+}
+
+.no-content-action {
+  text-decoration: underline;
+}
+
+.mat-stepper-vertical {
+  background-color: transparent !important;
+  max-width: 400px;
+  margin: auto;
 }

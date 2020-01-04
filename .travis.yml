@@ -7,9 +7,13 @@ script:
   - nuget restore $TRAVIS_BUILD_DIR/Integration/WindowsApp/Live.sln
   - msbuild /p:Configuration=Release $TRAVIS_BUILD_DIR/Integration/WindowsApp/Live.sln
   - cd $TRAVIS_BUILD_DIR/Live
-  - npm install
+  - yarn install
   - npm run test
   - npm run build-prod
+  - cd $TRAVIS_BUILD_DIR/Live/dist/apps/service
+  - yarn install
+  - cd $TRAVIS_BUILD_DIR/Live
+  - npm run build-exe
 notifications:
   email:
     on_failure: always

@@ -135,10 +135,11 @@
         "build": {
           "builder": "@nrwl/node:build",
           "options": {
+            "webpackConfig": "apps/service/webpack.config.js",
             "outputPath": "dist/apps/service",
             "main": "apps/service/src/main.ts",
             "tsConfig": "apps/service/tsconfig.app.json",
-            "assets": ["apps/service/src/assets"]
+            "assets": ["apps/service/src/data"]
           },
           "configurations": {
             "production": {

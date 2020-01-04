@@ -13,7 +13,7 @@ import { IStreamingSource } from "./i-streaming-source";
  */
 @injectable()
 export class StreamingSource implements IStreamingSource {
-  private _command: any;
+  private _command: Ffmpeg.FfmpegCommand;
   public isStreaming: boolean;
   private _input = this._audioSystem.devicePrefix + this._device.id;
 
@@ -22,6 +22,7 @@ export class StreamingSource implements IStreamingSource {
     @inject("FfmpegLogger") private _ffmpegLogger: Logger,
     @inject("WebsocketServer") private _websocketServer: WebsocketServer,
     @inject("AudioSystem") private _audioSystem: AudioSystem,
+    private _bitrate: number,
     private _device: Device,
     private _streamId: string,
     private _errorCallback: (error: Error) => void) {
@@ -37,7 +38,7 @@ export class StreamingSource implements IStreamingSource {
       .inputOptions("-y")
       .inputOptions(`-f ${this._audioSystem.audioSystem}`)
       .audioChannels(2)
-      .audioBitrate("196k")
+      .audioBitrate(`${this._bitrate}k`)
       .audioCodec("libmp3lame")
       .format("mp3")
       .outputOptions("-probesize 64")

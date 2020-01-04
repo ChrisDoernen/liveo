@@ -1,0 +1,7 @@
+<title-bar>
+  <h2>Dashboard</h2>
+</title-bar>
+<div class="content-container">
+  <dashboard-activation *ngIf="activationService.activation$ | async"></dashboard-activation>
+  <dashboard-no-activation *ngIf="!(activationService.activation$ | async)"></dashboard-no-activation>
+</div>

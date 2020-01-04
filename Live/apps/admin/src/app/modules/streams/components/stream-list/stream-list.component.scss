@@ -1,0 +1,8 @@
+@import "../../../../variables.scss";
+
+.stream-row {
+  display: grid;
+  grid-template-columns: 25% auto 40px 40px;
+  align-items: center;
+  padding-left: 10px;
+}

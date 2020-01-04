@@ -1,21 +1,16 @@
-import { Logger } from "../logging/logger";
-import { injectable, inject } from "inversify";
-import { StreamService } from "../streams/stream-service";
-import { Session } from "./session";
-import { Stream } from "../streams/stream";
 import { SessionEntity } from "@live/entities";
+import { inject, injectable } from "inversify";
+import { Logger } from "../logging/logger";
+import { Stream } from "../streams/stream";
+import { StreamService } from "../streams/stream-service";
 import { ISessionRepository } from "./i-session-repository";
+import { Session } from "./session";
 
 /**
  * A class providing methods to manage streaming sessions
  */
 @injectable()
 export class SessionService {
-  private _sessions: Session[];
-
-  public get sessionEntities(): SessionEntity[] {
-    return this._sessions.map(session => session.entity);
-  }
 
   constructor(
     @inject("Logger") private _logger: Logger,
@@ -24,56 +19,40 @@ export class SessionService {
     @inject("SessionFactory") private sessionFactory: (sessionEntity: SessionEntity, streams: Stream[]) => Session) {
   }
 
-  public loadSessions(): void {
-    this._logger.debug("Loading sessions.");
-
-    const sessionEntities = this._sessionRepository.loadSessionEntities();
-
-    if (sessionEntities.length === 0) {
-      this._logger.warn("No session available for loading.");
-    } else {
-      this._sessions = sessionEntities.map(entities => this.convertSession(entities));
-    }
+  public getSession(id: string): Session {
+    const sessionEntity = this.getSessionEntity(id);
+    return this.convertSession(sessionEntity);
   }
 
   private convertSession(sessionEntity: SessionEntity): Session {
-    const streamIds = sessionEntity.streams;
-    const availableStreams = this._streamService.streams;
-    let matchingStreams = [];
+    const streams = sessionEntity.streams.map((id) => this._streamService.getStream(id));
 
-    if (availableStreams) {
-      matchingStreams = availableStreams.filter(stream => streamIds.indexOf(stream.id) !== -1);
+    return this.sessionFactory(sessionEntity, streams);
+  }
+  public validateSessionExists(id: string): void {
+    const sessionEntity = this.getSessionEntity(id);
+    if (!sessionEntity) {
+      throw new Error(`The session ${id} does not exist`);
     }
-
-    const matchingStreamsIds = matchingStreams.map(stream => stream.id);
-    const missingStreamIds = streamIds.filter(id => matchingStreamsIds.indexOf(id) === -1);
-
-    if (missingStreamIds.length > 0) {
-      this._logger.warn(`Missing stream for ids ${JSON.stringify(missingStreamIds)}.`);
-    }
-
-    return this.sessionFactory(sessionEntity, matchingStreams);
   }
 
-  private findSession(id: string): Session {
-    const matchingSession = this._sessions.find(session => session.id === id);
-
-    if (!matchingSession) {
-      throw new Error("The requested session could not be found.");
-    }
-
-    return matchingSession;
-  }
-
-  public validateSessionExists(sessionId: string): void {
-    this.findSession(sessionId);
-  }
-
-  public getSession(id: string): Session {
-    return this.findSession(id);
+  public get sessionEntities(): SessionEntity[] {
+    return this._sessionRepository.getSessionEntities();
   }
 
   public getSessionEntity(id: string): SessionEntity {
-    return this.findSession(id).entity;
+    return this._sessionRepository.getSessionEntity(id);
+  }
+
+  public createSession(sessionEntity: SessionEntity): SessionEntity {
+    const createdSessionEntity = this._sessionRepository.createSessionEntity(sessionEntity);
+    this._logger.info(`Created session ${JSON.stringify(createdSessionEntity)}`);
+
+    return createdSessionEntity;
+  }
+
+  public deleteSession(id: string) {
+    this._sessionRepository.deleteSessionEntity(id);
+    this._logger.debug(`Deleted session ${id}`);
   }
 }

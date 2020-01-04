@@ -1,64 +1,92 @@
 import { SessionEntity, SettingsEntity, StreamEntity, UserEntity } from "@live/entities";
 import { inject, injectable } from "inversify";
 import * as low from "lowdb";
-import * as FileSync from "lowdb/adapters/FileAsync";
+import * as FileSync from "lowdb/adapters/FileSync";
+import generate from "nanoid/non-secure/generate";
 import { config } from "../../config/service.config";
 import { Logger } from "../logging/logger";
 import { ISessionRepository } from "../sessions/i-session-repository";
 import { ISettingsProvider } from "../settings/i-settings-provider";
 import { IStreamRepository } from "../streams/i-stream-repository";
+import { DBSchema } from "./data-schema.enum";
 
 /**
  * Provides access to a file based data source
  */
 @injectable()
 export class DataService implements IStreamRepository, ISessionRepository, ISettingsProvider {
-  private _database: low.LowdbAsync<any>;
+
+  private _database: any;
 
   constructor(
     @inject("Logger") private _logger: Logger) {
   }
 
-  public async initializeDatabase(): Promise<void> {
+  public initializeDatabase(): void {
     const adapter = new FileSync(config.database);
     try {
-      this._database = await low(adapter);
+      this._database = low(adapter);
     } catch (error) {
       this._logger.error(`Error reading database: ${error}.`);
     }
-    this._database.defaults({ "streams": {}, "sessions": {} });
   }
 
-  public loadSessionEntities(): SessionEntity[] {
-    const sessions = this._database.get("sessions").value() as SessionEntity[];
-    this._logger.info(`Read ${sessions.length} session entities from database.`);
-
-    return sessions;
+  public getSessionEntities(): SessionEntity[] {
+    return this._database.get(DBSchema.SESSIONS).value() as SessionEntity[];
   }
 
-  public loadStreamEntities(): StreamEntity[] {
-    const streams = this._database.get("streams").value() as StreamEntity[];
-    this._logger.info(`Read ${streams.length} stream entities from database.`);
+  public getSessionEntity(id: string): SessionEntity {
+    return this._database.get(DBSchema.SESSIONS).find({ id }).value() as SessionEntity;
+  }
 
-    return streams;
+  public createSessionEntity(sessionEntity: SessionEntity): SessionEntity {
+    sessionEntity.id = this.createNewId();
+    this._database.get(DBSchema.SESSIONS).push(sessionEntity).write();
+
+    return sessionEntity;
+  }
+
+  public deleteSessionEntity(id: string): void {
+    this._database.get(DBSchema.SESSIONS).remove({ id }).write();
+  }
+
+  public getStreamEntities(): StreamEntity[] {
+    return this._database.get(DBSchema.STREAMS).value() as StreamEntity[];
+  }
+
+  public getStreamEntity(id: string): StreamEntity {
+    return this._database.get(DBSchema.STREAMS).find({ id }).value() as StreamEntity;
+  }
+
+  public createStreamEntity(streamEntity: StreamEntity): StreamEntity {
+    streamEntity.id = this.createNewId();
+    this._database.get(DBSchema.STREAMS).push(streamEntity).write();
+
+    return streamEntity;
+  }
+
+  public deleteStreamEntity(id: string): void {
+    this._database.get(DBSchema.STREAMS).remove({ id }).write();
   }
 
   public getSettings(): SettingsEntity {
-    const settings = this._database.get("settings").value() as SettingsEntity;
-
-    return settings;
+    return this._database.get(DBSchema.SETTINGS).value() as SettingsEntity;
   }
 
   public async updateSettings(settings: SettingsEntity): Promise<SettingsEntity> {
-    const updated = await this._database.update("settings", () => settings).write();
+    const updated = await this._database.update(DBSchema.SETTINGS, () => settings).write();
 
     return updated.settings;
   }
 
   public getUsers(): UserEntity[] {
-    const users = this._database.get("users").value() as UserEntity[];
-    this._logger.info(`Read ${users.length} user entities from database.`);
+    return this._database.get(DBSchema.USERS).value() as UserEntity[];
+  }
 
-    return users;
+  private createNewId(): string {
+    const alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
+    const id = generate(alphabet, 10);
+
+    return id;
   }
 }

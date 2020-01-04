@@ -2,6 +2,7 @@ import { interfaces } from "inversify";
 import { WebsocketServer } from "../../core/websocket-server";
 import { DeviceDetector } from "../devices/device-detector";
 import { Logger } from "../logging/logger";
+import { SettingsService } from "../settings/settings-service";
 import { FileStreamingSource } from "./file-streaming-source";
 
 export const FileStreamingSourceFactory = (context: interfaces.Context) =>
@@ -10,7 +11,10 @@ export const FileStreamingSourceFactory = (context: interfaces.Context) =>
     const ffmpegLogger = context.container.get<Logger>("FfmpegLogger");
     const websocketServer = context.container.get<WebsocketServer>("WebsocketServer");
     const deviceDetector = context.container.get<DeviceDetector>("DeviceDetector");
-    const device = deviceDetector.getDevice(deviceId);
+    const settingsService = context.container.get<SettingsService>("SettingsService");
 
-    return new FileStreamingSource(logger, ffmpegLogger, websocketServer, device, streamId);
+    const device = deviceDetector.getDevice(deviceId);
+    const bitrate = settingsService.getSettings().bitrate;
+
+    return new FileStreamingSource(logger, ffmpegLogger, websocketServer, bitrate, device, streamId);
   };

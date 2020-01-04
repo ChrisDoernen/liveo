@@ -20,6 +20,7 @@ export class FileStreamingSource implements IStreamingSource {
     @inject("Logger") private _logger: Logger,
     @inject("FfmpegLogger") private _ffmpegLogger: Logger,
     @inject("WebsocketServer") private _websocketServer: WebsocketServer,
+    private _bitrate: number,
     private _device: Device,
     private _streamId: string) {
     this.initializeFfmpegCommand();
@@ -33,7 +34,7 @@ export class FileStreamingSource implements IStreamingSource {
     this._command = Ffmpeg()
       .input(this._input)
       .inputOptions("-re")
-      .audioBitrate("196k")
+      .audioBitrate(`${this._bitrate}k`)
       .audioCodec("libmp3lame")
       .format("mp3")
       .outputOptions(["-probesize 64"])

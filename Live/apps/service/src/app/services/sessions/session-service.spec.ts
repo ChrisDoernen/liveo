@@ -5,7 +5,6 @@ import "reflect-metadata";
 import { DataService } from "../data/data-service";
 import { Logger } from "../logging/logger";
 import { NotificationService } from "../notifications/notification-service";
-import { Stream } from "../streams/stream";
 import { StreamService } from "../streams/stream-service";
 import { Session } from "./session";
 import { SessionFactory } from "./session-factory";
@@ -18,11 +17,11 @@ describe("SessionService", () => {
   let streamService: jest.Mocked<StreamService>;
   let notificationService: jest.Mocked<NotificationService>;
 
-  const firstSessionId = "bcf4";
-  const secondSessionId = "43kv";
+  const firstSessionId = "tx331xqq";
+  const secondSessionId = "6t3y5cew";
 
-  const firstStreamId = "vfg3";
-  const secondStreamId = "2gus";
+  const firstStreamId = "lc5wzbl6";
+  const secondStreamId = "5vo7au6q";
 
   const sessions = [
     new SessionEntityBuilder().withId(firstSessionId).withStreams([firstStreamId]).build(),
@@ -34,7 +33,6 @@ describe("SessionService", () => {
 
     logger = createMockInstance(Logger);
     sessionRepository = createMockInstance(DataService);
-    sessionRepository.loadSessionEntities.mockReturnValue(sessions);
     streamService = createMockInstance(StreamService);
     notificationService = createMockInstance(NotificationService);
 
@@ -46,52 +44,31 @@ describe("SessionService", () => {
     container.bind<NotificationService>("NotificationService").toConstantValue(notificationService);
 
     sessionService = container.get<SessionService>("SessionService");
+
+    sessionRepository.getSessionEntities.mockReturnValue(sessions);
   });
 
-  it("should construct", async () => {
+  it("should construct", () => {
     expect(sessionService).toBeDefined();
   });
 
-  it("should have loaded sessions when load session is called", () => {
-    sessionService.loadSessions();
-    expect(sessionRepository.loadSessionEntities).toBeCalled();
-    expect(sessionService.sessionEntities.length).toBe(2);
+  it("should return correct session on get session entity", () => {
+    sessionRepository.getSessionEntity.mockReturnValue(sessions[1]);
+
+    const sessionEntiy = sessionService.getSessionEntity(firstSessionId);
+    
+    expect(sessionEntiy).toBe(sessions[1]);
+  });
+  
+  it("should validate session existence correctly when session exists", () => {
+    sessionRepository.getSessionEntity.mockReturnValue(sessions[1]);
+
+    sessionService.validateSessionExists(firstSessionId);
   });
 
-  it("should have called logger warn if no streams are available", () => {
-    sessionService.loadSessions();
-    expect(sessionService.sessionEntities.length).toBe(2);
-    expect(logger.warn).toHaveBeenCalled();
-  });
-
-  it("should have loaded the streams of the sessions correctly when streams are available", () => {
-    const stream = createMockInstance(Stream);
-    sessionService.loadSessions();
-    const streams = [stream];
-
-    // ToDo
-    // jest.spyOn(streamService, "streams", "get").mockReturnValue(streams);
-    // streamService.streams.mockReturnValue(null);
-
-    expect(sessionService.sessionEntities.length).toBe(2);
-  });
-
-  it("should return correct session on get session when session is available", () => {
-    sessionService.loadSessions();
-    expect(sessionService.sessionEntities.length).toBe(2);
-    expect(logger.warn).toHaveBeenCalled();
-    const sessionEntity = sessionService.getSessionEntity("43kv");
-    expect(sessionEntity).toBe(sessions[1]);
-  });
-
-  it("should throw on get session when session is not available", () => {
-    sessionService.loadSessions();
-    expect(sessionService.getSessionEntity.bind(null, "83kv")).toThrowError();
-  });
-
-  it("should validate session existence correctly", () => {
-    sessionService.loadSessions();
-    expect(() => sessionService.validateSessionExists("83kv")).toThrowError();
-    sessionService.validateSessionExists("bcf4");
+  it("should validate session existence correctly when session does not exist", () => {
+    sessionRepository.getSessionEntity.mockReturnValue(null);
+    
+    expect(() => sessionService.validateSessionExists("5vo7ax6q")).toThrowError();
   });
 });

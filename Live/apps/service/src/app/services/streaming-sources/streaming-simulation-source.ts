@@ -17,7 +17,7 @@ export class StreamingSimulationSource implements IStreamingSource {
     @inject("WebsocketServer") private _websocketServer: WebsocketServer,
     private _device: Device,
     private _streamId: string) {
-    this._logger.info("Instantiating StreamingSimulationSource");
+    this._logger.debug("Instantiating StreamingSimulationSource");
   }
 
   public get hasValidDevice(): boolean {

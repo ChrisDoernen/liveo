@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { SystemMonitoringService } from "../../services/system-monitoring/system-monitoring.service";
 
 @Component({
