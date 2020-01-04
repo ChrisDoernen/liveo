@@ -81,7 +81,8 @@
   ],
   "settings": {
     "defaultSession": "gfxbi7xe",
-    "enableAutoActivation": false
+    "enableAutoActivation": false,
+    "bitrate": 192
   },
   "users": [
     {

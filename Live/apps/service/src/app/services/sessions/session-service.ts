@@ -12,12 +12,6 @@ import { Session } from "./session";
 @injectable()
 export class SessionService {
 
-  private _sessions: Session[];
-
-  public get sessionEntities(): SessionEntity[] {
-    return this._sessions.map(session => session.entity);
-  }
-
   constructor(
     @inject("Logger") private _logger: Logger,
     @inject("ISessionRepository") private _sessionRepository: ISessionRepository,
@@ -25,71 +19,40 @@ export class SessionService {
     @inject("SessionFactory") private sessionFactory: (sessionEntity: SessionEntity, streams: Stream[]) => Session) {
   }
 
-  public loadSessions(): void {
-    this._logger.debug("Loading sessions.");
-
-    const sessionEntities = this._sessionRepository.loadSessionEntities();
-
-    if (sessionEntities.length === 0) {
-      this._logger.warn("No session available for loading.");
-    } else {
-      this._sessions = sessionEntities.map(entities => this.convertSession(entities));
-    }
+  public getSession(id: string): Session {
+    const sessionEntity = this.getSessionEntity(id);
+    return this.convertSession(sessionEntity);
   }
 
   private convertSession(sessionEntity: SessionEntity): Session {
-    const streamIds = sessionEntity.streams;
-    const availableStreams = this._streamService.streams;
-    let matchingStreams = [];
+    const streams = sessionEntity.streams.map((id) => this._streamService.getStream(id));
 
-    if (availableStreams) {
-      matchingStreams = availableStreams.filter(stream => streamIds.indexOf(stream.id) !== -1);
-    }
-
-    const matchingStreamsIds = matchingStreams.map(stream => stream.id);
-    const missingStreamIds = streamIds.filter(id => matchingStreamsIds.indexOf(id) === -1);
-
-    if (missingStreamIds.length > 0) {
-      this._logger.warn(`Missing stream for ids ${JSON.stringify(missingStreamIds)}.`);
-    }
-
-    return this.sessionFactory(sessionEntity, matchingStreams);
+    return this.sessionFactory(sessionEntity, streams);
   }
-
-  private findSession(id: string): Session {
-    return this._sessions.find(session => session.id === id);
-  }
-
-  public validateSessionExists(sessionId: string): void {
-    if (!this.findSession(sessionId)) {
-      throw new Error(`The session ${sessionId} does not exist`);
+  public validateSessionExists(id: string): void {
+    const sessionEntity = this.getSessionEntity(id);
+    if (!sessionEntity) {
+      throw new Error(`The session ${id} does not exist`);
     }
   }
 
-  public getSession(id: string): Session {
-    return this.findSession(id);
+  public get sessionEntities(): SessionEntity[] {
+    return this._sessionRepository.getSessionEntities();
   }
 
   public getSessionEntity(id: string): SessionEntity {
-    const session = this.findSession(id);
-    return session ? session.entity : null;
+    return this._sessionRepository.getSessionEntity(id);
   }
 
   public createSession(sessionEntity: SessionEntity): SessionEntity {
     const createdSessionEntity = this._sessionRepository.createSessionEntity(sessionEntity);
-    this._sessions.push(this.convertSession(createdSessionEntity));
-    this._logger.info(`Created session ${JSON.stringify(sessionEntity)}`);
+    this._logger.info(`Created session ${JSON.stringify(createdSessionEntity)}`);
 
     return createdSessionEntity;
   }
 
-  public deleteSession(sessionId: string) {
-    const session = this.getSession(sessionId);
-    if (session) {
-      this._sessionRepository.deleteSession(session.entity);
-      const sessionIndex = this._sessions.indexOf(session);
-      this._sessions.splice(sessionIndex, 1);
-      this._logger.debug(`Deleted session ${sessionId}`);
-    }
+  public deleteSession(id: string) {
+    this._sessionRepository.deleteSessionEntity(id);
+    this._logger.debug(`Deleted session ${id}`);
   }
 }

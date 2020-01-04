@@ -1,8 +1,8 @@
-import { Logger } from "../logging/logger";
-import { Stream } from "../streams/stream";
+import { NotificationEntity, NotificationType, SessionEntity } from "@live/entities";
 import { inject } from "inversify";
-import { SessionEntity, NotificationEntity, NotificationType } from "@live/entities";
+import { Logger } from "../logging/logger";
 import { NotificationService } from "../notifications/notification-service";
+import { Stream } from "../streams/stream";
 
 /**
  * Class representing a streaming session
@@ -70,7 +70,7 @@ export class Session {
     if (this._isStarted) {
       this._logger.info(`Stopping session ${this.id}.`);
       this._streams.forEach(stream => stream.stop());
-      const notification = new NotificationEntity("Stoped streaming", NotificationType.Info);
+      const notification = new NotificationEntity("Stopped streaming", NotificationType.Info);
       this._notificationService.sendNotification(notification);
       this._isStarted = false;
     }

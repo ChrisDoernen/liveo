@@ -8,6 +8,7 @@ import { Logger } from "../logging/logger";
 import { ISessionRepository } from "../sessions/i-session-repository";
 import { ISettingsProvider } from "../settings/i-settings-provider";
 import { IStreamRepository } from "../streams/i-stream-repository";
+import { DBSchema } from "./data-schema.enum";
 
 /**
  * Provides access to a file based data source
@@ -30,59 +31,56 @@ export class DataService implements IStreamRepository, ISessionRepository, ISett
     }
   }
 
-  public loadSessionEntities(): SessionEntity[] {
-    const sessions = this._database.get("sessions").value() as SessionEntity[];
-    this._logger.debug(`Read ${sessions.length} session entities from database.`);
+  public getSessionEntities(): SessionEntity[] {
+    return this._database.get(DBSchema.SESSIONS).value() as SessionEntity[];
+  }
 
-    return sessions;
+  public getSessionEntity(id: string): SessionEntity {
+    return this._database.get(DBSchema.SESSIONS).find({ id }).value() as SessionEntity;
   }
 
   public createSessionEntity(sessionEntity: SessionEntity): SessionEntity {
     sessionEntity.id = this.createNewId();
-    this._database.get("sessions").push(sessionEntity).write();
+    this._database.get(DBSchema.SESSIONS).push(sessionEntity).write();
 
     return sessionEntity;
   }
 
-  public deleteSession(sessionEntity: SessionEntity): void {
-    this._database.get("sessions").remove(sessionEntity).write();
+  public deleteSessionEntity(id: string): void {
+    this._database.get(DBSchema.SESSIONS).remove({ id }).write();
   }
 
-  public loadStreamEntities(): StreamEntity[] {
-    const streams = this._database.get("streams").value() as StreamEntity[];
-    this._logger.debug(`Read ${streams.length} stream entities from database.`);
+  public getStreamEntities(): StreamEntity[] {
+    return this._database.get(DBSchema.STREAMS).value() as StreamEntity[];
+  }
 
-    return streams;
+  public getStreamEntity(id: string): StreamEntity {
+    return this._database.get(DBSchema.STREAMS).find({ id }).value() as StreamEntity;
   }
 
   public createStreamEntity(streamEntity: StreamEntity): StreamEntity {
     streamEntity.id = this.createNewId();
-    this._database.get("streams").push(streamEntity).write();
+    this._database.get(DBSchema.STREAMS).push(streamEntity).write();
 
     return streamEntity;
   }
 
-  public deleteStream(streamEntity: StreamEntity): void {
-    this._database.get("streams").remove(streamEntity).write();
+  public deleteStreamEntity(id: string): void {
+    this._database.get(DBSchema.STREAMS).remove({ id }).write();
   }
 
   public getSettings(): SettingsEntity {
-    const settings = this._database.get("settings").value() as SettingsEntity;
-
-    return settings;
+    return this._database.get(DBSchema.SETTINGS).value() as SettingsEntity;
   }
 
   public async updateSettings(settings: SettingsEntity): Promise<SettingsEntity> {
-    const updated = await this._database.update("settings", () => settings).write();
+    const updated = await this._database.update(DBSchema.SETTINGS, () => settings).write();
 
     return updated.settings;
   }
 
   public getUsers(): UserEntity[] {
-    const users = this._database.get("users").value() as UserEntity[];
-    this._logger.debug(`Read ${users.length} user entities from database.`);
-
-    return users;
+    return this._database.get(DBSchema.USERS).value() as UserEntity[];
   }
 
   private createNewId(): string {

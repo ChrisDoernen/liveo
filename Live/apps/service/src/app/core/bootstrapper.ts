@@ -41,11 +41,9 @@ export class Bootstrapper {
 
     Ffmpeg.setFfmpegPath(config.ffmpegPath);
 
-    await this._dataService.initializeDatabase();
+    this._dataService.initializeDatabase();
     await this._deviceDetector.runDetection();
-
-    this._streamService.loadStreams();
-    this._sessionService.loadSessions();
+    
     const server = this._webServer.initializeAndListen(container);
     this._websocketServer.initializeAndListen(server);
     this._systemMonitoringServcie.startMonitoring();

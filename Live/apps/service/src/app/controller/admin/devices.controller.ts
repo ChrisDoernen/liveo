@@ -6,6 +6,7 @@ import { DeviceDetector } from "../../services/devices/device-detector";
 
 @controller(`/${ROUTES.admin}/devices`)
 export class DevicesController {
+  
   constructor(
     @inject("DeviceDetector") private _deviceDetector: DeviceDetector) {
   }

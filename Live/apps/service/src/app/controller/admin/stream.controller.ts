@@ -7,6 +7,7 @@ import { StreamService } from "../../services/streams/stream-service";
 
 @controller(`/${ROUTES.admin}/streams`)
 export class StreamController {
+  
   constructor(
     @inject("StreamService") private _streamService: StreamService) {
   }

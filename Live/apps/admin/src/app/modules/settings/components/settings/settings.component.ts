@@ -14,9 +14,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   public sessions: SessionEntity[];
   public settings: SettingsEntity;
+  public bitrateOptions = [64, 96, 128, 192, 224];
   private _sessionsSubscription: Subscription;
 
-  constructor(
+  public constructor(
     private _sessionService: SessionService,
     private _settingsService: SettingsService) {
   }
@@ -40,14 +41,26 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this._settingsService.updateSettings(updatedSettings);
   }
 
-  public setSelectedSession(change: MatSelectChange): void {
+  public setDefaultSession(defaultSessionChange: MatSelectChange): void {
     // Check if the state really changed, otherwise it was the update
-    if (change.value === this.settings.defaultSession) {
+    if (defaultSessionChange.value === this.settings.defaultSession) {
       return;
     }
 
     const updatedSettings = this.settings;
-    updatedSettings.defaultSession = change.value;
+    updatedSettings.defaultSession = defaultSessionChange.value;
+
+    this._settingsService.updateSettings(updatedSettings);
+  }
+
+  public setBitrate(bitrateChange: MatSelectChange): void {
+    // Check if the state really changed, otherwise it was the update
+    if (bitrateChange.value === this.settings.bitrate) {
+      return;
+    }
+
+    const updatedSettings = this.settings;
+    updatedSettings.bitrate = bitrateChange.value;
 
     this._settingsService.updateSettings(updatedSettings);
   }

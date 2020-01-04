@@ -236,6 +236,42 @@
 			"response": []
 		},
 		{
+			"name": "/api/admin/sessions",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"title\": \"NEU\",\n        \"description\": \"Live stream of the sunday service\",\n        \"streams\": [\n            \"tx331xqq\"\n        ]\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/admin/sessions",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"admin",
+						"sessions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "/api/admin/sessions/gfxbi7xe",
 			"request": {
 				"method": "DELETE",
@@ -465,6 +501,26 @@
 						"api",
 						"client",
 						"application-state"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/devices",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/admin/streams",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"admin",
+						"streams"
 					]
 				}
 			},
