@@ -4,7 +4,6 @@ import { environment } from "../../../environments/environment";
 import { ActivationService } from "../../services/activation/activation.service";
 import { NotificationService } from "../../services/notification/notification.service";
 import { SessionService } from "../../services/session/session.service";
-import { SystemMonitoringService } from "../../services/system-monitoring/system-monitoring.service";
 import { WebsocketService } from "../../services/websocket/websocket.service";
 
 @Component({
@@ -23,8 +22,7 @@ export class NavigationComponent implements OnInit {
     private _activationService: ActivationService,
     private _websocketService: WebsocketService,
     private _notificationService: NotificationService,
-    private _sessionService: SessionService,
-    private _systemMonitoringService: SystemMonitoringService) {
+    private _sessionService: SessionService) {
   }
 
   public ngOnInit(): void {
@@ -34,6 +32,5 @@ export class NavigationComponent implements OnInit {
 
     // These are actually subscriptions on events from the websocket client
     this._notificationService.subscribeServerNotifications();
-    this._systemMonitoringService.subscribeCpuUsage();
   }
 }
