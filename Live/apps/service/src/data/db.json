@@ -82,7 +82,9 @@
   "settings": {
     "defaultSession": "gfxbi7xe",
     "enableAutoActivation": false,
-    "bitrate": 192
+    "bitrate": 192,
+    "shareSessionReports": false,
+    "shareErrorReports": false
   },
   "users": [
     {
