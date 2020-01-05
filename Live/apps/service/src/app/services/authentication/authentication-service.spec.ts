@@ -35,7 +35,7 @@ describe("AuthenticationService", () => {
   });
 
   it("should authenticate user if in database and password is correct", () => {
-    const username = "Chris";    
+    const username = "Chris";
     const password = "password";
 
     const userInDatabase = new UserEntityBuilder().withUsername(username).withPassword(password).build();
