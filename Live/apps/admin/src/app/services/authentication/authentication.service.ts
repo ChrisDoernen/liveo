@@ -5,19 +5,20 @@ import { EndpointService } from "@live/services";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 
-
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {
+
   private readonly _currentUserKey = "current-user";
 
   constructor(
     private _endpointService: EndpointService,
-    private _http: HttpClient) {
+    private _httpClient: HttpClient) {
   }
 
   public login(username: string, password: string): Observable<UserEntity> {
     const endpoint = this._endpointService.getEndpoint("authentication");
-    return this._http.post<any>(endpoint, { username, password })
+    return this._httpClient
+      .post<any>(endpoint, { username, password })
       .pipe(map((user) => {
         if (user) {
           user.authdata = window.btoa(username + ":" + password);

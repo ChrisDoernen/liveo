@@ -9,11 +9,12 @@ import { AuthenticationService } from "../../services/authentication/authenticat
   styleUrls: ["./login.component.scss"]
 })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
-  loading = false;
-  submitted = false;
-  returnUrl: string;
-  error = "";
+
+  public loginForm: FormGroup;
+  public loading = false;
+  public submitted = false;
+  public returnUrl: string;
+  public error = "";
 
   public get form() {
     return this.loginForm.controls;
@@ -48,7 +49,8 @@ export class LoginComponent implements OnInit {
     }
 
     this.loading = true;
-    this._authenticationService.login(this.form.username.value, this.form.password.value)
+    this._authenticationService
+      .login(this.form.username.value, this.form.password.value)
       .subscribe(
         data => {
           this._router.navigate([this.returnUrl]);

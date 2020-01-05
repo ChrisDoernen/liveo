@@ -6,7 +6,7 @@ import { controller, httpDelete, httpGet, httpPost } from "inversify-express-uti
 import { AuthenticationMiddleware } from "../../middleware/authentication/authentication.middleware";
 import { ActivationService } from "../../services/activation/activation-service";
 
-@controller(`/${ROUTES.admin}/activation`)
+@controller(`/${ROUTES.admin}/activation`, AuthenticationMiddleware)
 export class ActivationController {
   constructor(
     @inject("ActivationService") private _activationService: ActivationService) {

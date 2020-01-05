@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { ReplaySubject } from "rxjs";
 import { EVENTS } from "@live/constants";
+import { ReplaySubject } from "rxjs";
 import { WebsocketService } from "../websocket/websocket.service";
 
 @Injectable({
@@ -9,7 +9,6 @@ import { WebsocketService } from "../websocket/websocket.service";
 export class SystemMonitoringService {
 
   private _cpuUsage = new ReplaySubject<string>();
-
   public cpuUsage$ = this._cpuUsage.asObservable();
 
   constructor(

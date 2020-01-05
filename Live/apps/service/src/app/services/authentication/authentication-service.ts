@@ -1,38 +1,30 @@
 import { UserEntity } from "@live/entities";
 import { inject, injectable } from "inversify";
-import { DataService } from "../data/data-service";
 import { Logger } from "../logging/logger";
+import { IUserProvider } from "./i-user-provider";
 
 @injectable()
 export class AuthenticationService {
-  private _userCache = [];
+
+  /* 
+   * Username to user entity 
+   */
+  private _userCache = new Map<string, UserEntity>();
 
   constructor(
     @inject("Logger") private _logger: Logger,
-    @inject("DataService") private _dataService: DataService) {
+    @inject("IUserProvider") private _userProvider: IUserProvider) {
   }
 
-  public authenticateUser(userToAuthenticate: UserEntity): UserEntity {
-    const users = this._dataService.getUsers();
+  public authenticate(username: string, password: string): UserEntity {
+    const user = this._userCache.get(username) || this._userProvider.getUser(username);
 
-    const matchingUser = users.find((user) => user.username === userToAuthenticate.username);
-
-    if (!matchingUser || matchingUser.password !== userToAuthenticate.password) {
-      this._logger.warn(`User ${userToAuthenticate.username} could not be authenticated.`);
-      throw new Error("Error authenticating user.");
-    }
-
-    this._userCache.push(matchingUser);
-    return matchingUser;
-  }
-
-  public getUser(userToAuthenticate: UserEntity): UserEntity {
-    const matchingUser = this._userCache.find((user) => user.username === userToAuthenticate.username);
-
-    if (!matchingUser || matchingUser.password !== userToAuthenticate.password) {
+    if (!user || user.password !== password) {
       throw new Error("Wrong credentials, user is unauthorized.");
+    } else {
+      this._userCache.set(username, user);
     }
 
-    return matchingUser;
+    return user;
   }
 }

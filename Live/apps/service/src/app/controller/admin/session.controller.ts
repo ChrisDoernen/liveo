@@ -3,9 +3,10 @@ import { SessionEntity } from "@live/entities";
 import { Request, Response } from "express";
 import { inject } from "inversify";
 import { controller, httpDelete, httpGet, httpPost } from "inversify-express-utils";
+import { AuthenticationMiddleware } from "../../middleware/authentication/authentication.middleware";
 import { SessionService } from "../../services/sessions/session-service";
 
-@controller(`/${ROUTES.admin}/sessions`)
+@controller(`/${ROUTES.admin}/sessions`, AuthenticationMiddleware)
 export class SessionController {
 
   constructor(

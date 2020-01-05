@@ -38,9 +38,10 @@ export class SessionService {
       .get<SessionEntity>(this._endpointService.getEndpoint(`sessions/${id}`));
   }
 
-  public getSessions(): Observable<SessionEntity[]> {
+  public getSessions(): Promise<SessionEntity[]> {
     return this._httpClient
-      .get<SessionEntity[]>(this._endpointService.getEndpoint(`sessions`));
+      .get<SessionEntity[]>(this._endpointService.getEndpoint(`sessions`))
+      .toPromise();
   }
 
   public deleteSession(session: SessionEntity): Promise<void> {

@@ -1,7 +1,6 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { MatSelectChange, MatSlideToggleChange } from "@angular/material";
 import { SessionEntity, SettingsEntity } from "@live/entities";
-import { Subscription } from "rxjs";
 import { SessionService } from "../../../../services/session/session.service";
 import { SettingsService } from "../../../../services/settings/settings.service";
 
@@ -10,12 +9,11 @@ import { SettingsService } from "../../../../services/settings/settings.service"
   templateUrl: "./settings.component.html",
   styleUrls: ["./settings.component.scss"]
 })
-export class SettingsComponent implements OnInit, OnDestroy {
+export class SettingsComponent implements OnInit {
 
   public sessions: SessionEntity[];
   public settings: SettingsEntity;
   public bitrateOptions = [64, 96, 128, 192, 224];
-  private _sessionsSubscription: Subscription;
 
   public constructor(
     private _sessionService: SessionService,
@@ -23,8 +21,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this._settingsService.settings$.subscribe((settings) => this.settings = settings);
-    this._sessionsSubscription = this._sessionService.getSessions().subscribe((sessions) => this.sessions = sessions);
+    this._settingsService.getSettings().then((settings) => this.settings = settings);
+    this._sessionService.getSessions().then((sessions) => this.sessions = sessions);
     // Maybe get default session from settings and preselect in dropdown
 
   }
@@ -63,9 +61,5 @@ export class SettingsComponent implements OnInit, OnDestroy {
     updatedSettings.bitrate = bitrateChange.value;
 
     this._settingsService.updateSettings(updatedSettings);
-  }
-
-  public ngOnDestroy(): void {
-    this._sessionsSubscription.unsubscribe();
   }
 }

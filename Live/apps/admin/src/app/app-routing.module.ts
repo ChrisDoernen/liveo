@@ -28,6 +28,7 @@ const routes: Routes = [
   {
     path: "home",
     component: NavigationComponent,
+    canActivate: [ConnectionStateGuard, AuthenticationGuard],
     children: [
       {
         path: "",
@@ -37,22 +38,18 @@ const routes: Routes = [
       {
         path: "dashboard",
         loadChildren: () => import("./modules/dashboard/dashboard.module").then((m) => m.DashboardModule),
-        canActivate: [ConnectionStateGuard, AuthenticationGuard]
       },
       {
         path: "streams",
         loadChildren: () => import("./modules/streams/streams.module").then((m) => m.StreamsModule),
-        canActivate: [AuthenticationGuard]
       },
       {
         path: "sessions",
         loadChildren: () => import("./modules/sessions/sessions.module").then((m) => m.SessionsModule),
-        canActivate: [AuthenticationGuard]
       },
       {
         path: "settings",
         loadChildren: () => import("./modules/settings/settings.module").then((m) => m.SettingsModule),
-        canActivate: [ConnectionStateGuard, AuthenticationGuard]
       }
     ]
   }

@@ -3,9 +3,10 @@ import { StreamEntity } from "@live/entities";
 import { Request, Response } from "express";
 import { inject } from "inversify";
 import { controller, httpDelete, httpGet, httpPost } from "inversify-express-utils";
+import { AuthenticationMiddleware } from "../../middleware/authentication/authentication.middleware";
 import { StreamService } from "../../services/streams/stream-service";
 
-@controller(`/${ROUTES.admin}/streams`)
+@controller(`/${ROUTES.admin}/streams`, AuthenticationMiddleware)
 export class StreamController {
   
   constructor(

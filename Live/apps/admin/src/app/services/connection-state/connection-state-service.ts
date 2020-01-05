@@ -23,7 +23,9 @@ export class ConnectionStateService {
 
   public checkConnectionState(): Promise<boolean> {
     this._currentConnectionState =
-      this._httpClient.get(this._endpointService.getEndpoint(`connection`), { responseType: "text" }).toPromise()
+      this._httpClient
+        .get(this._endpointService.getEndpoint(`connection`), { responseType: "text" })
+        .toPromise()
         .then(() => true);
 
     return this._currentConnectionState;

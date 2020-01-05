@@ -1,22 +1,12 @@
-import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { EndpointService, Logger } from "@live/services";
+import { Injectable } from "@angular/core";
 import { SettingsEntity } from "@live/entities";
-import { ReplaySubject } from "rxjs";
+import { EndpointService, Logger } from "@live/services";
 
 @Injectable({
   providedIn: "root"
 })
 export class SettingsService {
-
-  private _settings = new ReplaySubject<SettingsEntity>();
-
-  public settings$ = this._settings.asObservable();
-
-  private set settings(settings: SettingsEntity) {
-    this._logger.info(`Emitting settings: ${JSON.stringify(settings)}.`);
-    this._settings.next(settings);
-  }
 
   constructor(
     private _logger: Logger,
@@ -24,13 +14,15 @@ export class SettingsService {
     private _endpointService: EndpointService) {
   }
 
-  public getSettings(): void {
-    this._httpClient.get<SettingsEntity>(this._endpointService.getEndpoint(`settings`))
-      .subscribe((settings) => this.settings = settings);
+  public getSettings(): Promise<SettingsEntity> {
+    return this._httpClient
+      .get<SettingsEntity>(this._endpointService.getEndpoint(`settings`))
+      .toPromise();
   }
 
-  public updateSettings(settings: SettingsEntity): void {
-    this._httpClient.put<SettingsEntity>(this._endpointService.getEndpoint(`settings`), settings)
-      .subscribe((updatedSettings) => this.settings = updatedSettings);
+  public updateSettings(settings: SettingsEntity): Promise<SettingsEntity> {
+    return this._httpClient
+      .put<SettingsEntity>(this._endpointService.getEndpoint(`settings`), settings)
+      .toPromise();
   }
 }

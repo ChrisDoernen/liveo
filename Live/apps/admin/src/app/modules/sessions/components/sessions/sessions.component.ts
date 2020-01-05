@@ -22,10 +22,9 @@ export class SessionsComponent implements OnInit {
     public readonly sessionDeletionDialog: MatDialog) {
   }
 
-  public ngOnInit() {
+  public ngOnInit():void {
     this._sessionService
       .getSessions()
-      .toPromise()
       .then((sessions) => this.sessions = sessions);
     this._streamService.
       getStreams()

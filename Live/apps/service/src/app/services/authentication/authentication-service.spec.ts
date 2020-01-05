@@ -19,30 +19,29 @@ describe("AuthenticationService", () => {
   });
 
   it("should throw if user was not found in the database", () => {
-    const user = new UserEntityBuilder().build();
-    dataService.getUsers.mockReturnValue([]);
+    dataService.getUser.mockReturnValue(null);
 
-    expect(() => authenticationService.authenticateUser(user)).toThrowError();
+    expect(() => authenticationService.authenticate("someUsername", "password")).toThrowError();
   });
 
-  it("should throw if use was not found in the database but password is not correct", () => {
-    const usernameChris = "Chris";
-    const passwordChris = "password";
-    const passwordDatabase = "Password";
-    const userInDatabase = new UserEntityBuilder().withUsername(usernameChris).withPassword(passwordDatabase).build();
-    const userToAuthenticate = new UserEntityBuilder().withUsername(usernameChris).withPassword(passwordChris).build();
-    dataService.getUsers.mockReturnValue([userInDatabase]);
+  it("should throw if user was found in the database but password is not correct", () => {
+    const username = "Chris";
+    const invalidPassword = "password";
+    const validPassword = "Password";
+    const userInDatabase = new UserEntityBuilder().withUsername(username).withPassword(validPassword).build();
+    dataService.getUser.mockReturnValue(userInDatabase);
 
-    expect(() => authenticationService.authenticateUser(userToAuthenticate)).toThrowError();
+    expect(() => authenticationService.authenticate(username, invalidPassword)).toThrowError();
   });
 
   it("should authenticate user if in database and password is correct", () => {
-    const usernameChris = "Chris";
-    const userInDatabase = new UserEntityBuilder().withUsername(usernameChris).build();
-    const userToAuthenticate = userInDatabase;
-    dataService.getUsers.mockReturnValue([userInDatabase]);
+    const username = "Chris";    
+    const password = "password";
 
-    const returnedUser = authenticationService.authenticateUser(userToAuthenticate)
+    const userInDatabase = new UserEntityBuilder().withUsername(username).withPassword(password).build();
+    dataService.getUser.mockReturnValue(userInDatabase);
+
+    const returnedUser = authenticationService.authenticate(username, password);
 
     expect(returnedUser).toBe(userInDatabase);
   });

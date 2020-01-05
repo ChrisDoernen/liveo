@@ -9,6 +9,7 @@ import { ApplicationStateService } from "../services/application-state/applicati
 import { AudioSystem } from "../services/audio-system/audio-system";
 import { AudioSystems } from "../services/audio-system/audio-systems";
 import { AuthenticationService } from "../services/authentication/authentication-service";
+import { IUserProvider } from "../services/authentication/i-user-provider";
 import { DataService } from "../services/data/data-service";
 import { Device } from "../services/devices/device";
 import { DeviceDetector } from "../services/devices/device-detector";
@@ -96,10 +97,12 @@ container.bind<interfaces.Factory<Session>>("SessionFactory").toFactory(SessionF
 
 const dataService = new DataService(new Logger(ServiceLogger));
 container.bind<DataService>("DataService").toConstantValue(dataService);
-container.bind<string>("FfmpegPath").toConstantValue(config.ffmpegPath);
+
 container.bind<ISessionRepository>("ISessionRepository").toConstantValue(dataService);
 container.bind<IStreamRepository>("IStreamRepository").toConstantValue(dataService);
 container.bind<ISettingsProvider>("ISettingsProvider").toConstantValue(dataService);
+container.bind<IUserProvider>("IUserProvider").toConstantValue(dataService);
+
 container.bind<Bootstrapper>("Bootstrapper").to(Bootstrapper);
 container.bind<ApplicationStateService>("ActivityService").to(ApplicationStateService);
 container.bind<ProcessExecutionService>("ProcessExecutionService").to(ProcessExecutionService);
@@ -108,6 +111,7 @@ container.bind<NotificationService>("NotificationService").to(NotificationServic
 
 container.bind<Logger>("Logger").toConstantValue(new Logger(ServiceLogger));
 container.bind<Logger>("FfmpegLogger").toConstantValue(new Logger(FfmpegLogger));
+container.bind<string>("FfmpegPath").toConstantValue(config.ffmpegPath);
 
 container.bind<StreamService>("StreamService").to(StreamService).inSingletonScope();
 container.bind<SessionService>("SessionService").to(SessionService).inSingletonScope();

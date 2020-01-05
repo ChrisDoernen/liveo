@@ -6,8 +6,9 @@ import { controller, httpGet, httpPut } from "inversify-express-utils";
 import { AuthenticationMiddleware } from "../../middleware/authentication/authentication.middleware";
 import { SettingsService } from "../../services/settings/settings-service";
 
-@controller(`/${ROUTES.admin}/settings`)
+@controller(`/${ROUTES.admin}/settings`, AuthenticationMiddleware)
 export class SettingsController {
+
   constructor(
     @inject("SettingsService") private _settingsService: SettingsService) {
   }

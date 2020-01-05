@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { injectable, inject } from "inversify";
+import { inject, injectable } from "inversify";
 import { BaseMiddleware } from "inversify-express-utils";
-import { Logger } from '../../services/logging/logger';
+import { Logger } from "../../services/logging/logger";
 
 const logger = inject("Logger");
 
@@ -10,11 +10,11 @@ export class AuthenticationMiddleware extends BaseMiddleware {
 
   @logger private readonly _logger: Logger;
 
-  public async handler(req: Request, res: Response, next: NextFunction) {
+  public async handler(request: Request, response: Response, next: NextFunction) {
     const isAuthenticated = await this.httpContext.user.isAuthenticated();
     if (!isAuthenticated) {
-      res.sendStatus(401);
-      this._logger.warn(`Unauthorized request to ${req.url}`)
+      this._logger.warn(`Unauthorized request to ${request.url}`)
+      response.status(401).send("Unauthorized");
       return;
     }
 

@@ -4,6 +4,7 @@ import * as low from "lowdb";
 import * as FileSync from "lowdb/adapters/FileSync";
 import generate from "nanoid/non-secure/generate";
 import { config } from "../../config/service.config";
+import { IUserProvider } from "../authentication/i-user-provider";
 import { Logger } from "../logging/logger";
 import { ISessionRepository } from "../sessions/i-session-repository";
 import { ISettingsProvider } from "../settings/i-settings-provider";
@@ -14,7 +15,7 @@ import { DBSchema } from "./data-schema.enum";
  * Provides access to a file based data source
  */
 @injectable()
-export class DataService implements IStreamRepository, ISessionRepository, ISettingsProvider {
+export class DataService implements IStreamRepository, ISessionRepository, ISettingsProvider, IUserProvider {
 
   private _database: any;
 
@@ -79,8 +80,8 @@ export class DataService implements IStreamRepository, ISessionRepository, ISett
     return updated.settings;
   }
 
-  public getUsers(): UserEntity[] {
-    return this._database.get(DBSchema.USERS).value() as UserEntity[];
+  public getUser(username: string): UserEntity {
+    return this._database.get(DBSchema.USERS).find({ username }).value() as UserEntity;
   }
 
   private createNewId(): string {
