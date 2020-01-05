@@ -4,8 +4,6 @@ install:
   - nvm install 10.16.3
   - nvm use 10.16.3
 script:
-  - nuget restore $TRAVIS_BUILD_DIR/Integration/WindowsApp/Live.sln
-  - msbuild /p:Configuration=Release $TRAVIS_BUILD_DIR/Integration/WindowsApp/Live.sln
   - cd $TRAVIS_BUILD_DIR/Live
   - yarn install
   - npm run test

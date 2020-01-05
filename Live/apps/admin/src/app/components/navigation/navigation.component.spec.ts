@@ -5,6 +5,7 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { EndpointService, Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
 import { AngularMaterialModule } from "../../modules/angular-material/angular-material.module";
+import { ActivationService } from "../../services/activation/activation.service";
 import { LogoMockModule } from "../../test-utilities/mocks/logo-mock.module";
 import { OfflineMessageComponent } from "../offline-message/offline-message.component";
 import { ShutdownComponent } from "../shutdown/shutdown.component";
@@ -14,9 +15,11 @@ describe("NavigationComponent", () => {
   let component: NavigationComponent;
   let fixture: ComponentFixture<NavigationComponent>;
   let endpointService: jest.Mocked<EndpointService>;
+  let activationService: jest.Mocked<ActivationService>;
 
   beforeEach(() => {
     endpointService = createMockInstance(EndpointService);
+    activationService = createMockInstance(ActivationService);
 
     TestBed.configureTestingModule({
       imports: [
@@ -33,13 +36,13 @@ describe("NavigationComponent", () => {
       ],
       providers: [
         { provide: EndpointService, useValue: endpointService },
+        { provide: ActivationService, useValue: activationService },
         { provide: Logger, useValue: jest.fn() }
       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(NavigationComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it("should create", () => {

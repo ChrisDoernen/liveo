@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivationEntity, SessionEntity } from "@live/entities";
 import { TimeService } from "@live/services";
@@ -11,7 +11,7 @@ import { SettingsService } from "../../../../services/settings/settings.service"
   templateUrl: "./activation-dialog.component.html",
   styleUrls: ["./activation-dialog.component.scss"]
 })
-export class ActivationDialogComponent implements OnInit, OnDestroy {
+export class ActivationDialogComponent implements OnInit {
 
   public isLinear = true;
   public sessionFormGroup: FormGroup;
@@ -28,7 +28,7 @@ export class ActivationDialogComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this._sessionsSubscription = this._sessionService.getSessions().subscribe((sessions) => this.sessions = sessions);
+    this._sessionService.getSessions().then((sessions) => this.sessions = sessions);
     // Maybe get default session from settings and preselect in dropdown
 
     this.sessionFormGroup = this._formBuilder.group({
@@ -59,9 +59,5 @@ export class ActivationDialogComponent implements OnInit, OnDestroy {
     const now = this._timeService.now();
     const timeSplit = time.split(":");
     return new Date(now.getFullYear(), now.getMonth(), now.getDate(), +timeSplit[0], +timeSplit[1]).toISOString();
-  }
-
-  public ngOnDestroy(): void {
-    this._sessionsSubscription.unsubscribe();
   }
 }
