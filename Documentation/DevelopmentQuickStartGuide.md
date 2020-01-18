@@ -1,11 +1,11 @@
 # Development Quick Start Guide
 
 ## 1. Install required software
-[Node.js](https://nodejs.org/en/) is the Javascript runtime environmen with its package manager npm. [Git](https://git-scm.com/download/win) is used as source control management system.
+[Node.js](https://nodejs.org/en/) is the Javascript runtime environment with the package manager yarn. [Git](https://git-scm.com/download/win) is used as source control management system.
 
 Download and install the tools if you are on Windows or run the following commands if you are on Linux/Ubuntu/Debian. Make sure to add them to the path variables on Windows.
 ```
-apt install nodejs npm
+apt install nodejs
 apt install git-core
 ```
 
