@@ -11,7 +11,7 @@ import { WindowsDeviceDetector } from "./windows-device-detector";
 describe("WindowsDeviceDetector", () => {
   let windowsDeviceDetector: WindowsDeviceDetector;
   let processExecutionService: jest.Mocked<ProcessExecutionService>;
-  const audioSystem: AudioSystem = { audioSystem: "dshow", devicePrefix: "audio=" };
+  const audioSystem: AudioSystem = { audioModule: "dshow", devicePrefix: "audio=" };
   let deviceFactory: any;
   const ffmpegPath = "ffmpeg";
 
@@ -30,7 +30,7 @@ describe("WindowsDeviceDetector", () => {
   it("should parse devices correctly", async () => {
     jest.spyOn(processExecutionService, "execute")
       .mockImplementation((command: string, callback: any) => callback(null, null, output));
-    const expectedCommand = `${ffmpegPath} -f ${audioSystem.audioSystem} -list_devices true -i '' -hide_banner`;
+    const expectedCommand = `${ffmpegPath} -f ${audioSystem.audioModule} -list_devices true -i '' -hide_banner`;
 
     await windowsDeviceDetector.runDetection();
 

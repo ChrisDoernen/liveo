@@ -1,4 +1,4 @@
 export interface AudioSystem {
-  audioSystem: string;
+  audioModule: string;
   devicePrefix: string;
 }

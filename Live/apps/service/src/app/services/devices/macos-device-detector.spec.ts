@@ -11,7 +11,7 @@ import { MacOSDeviceDetector } from "./macos-device-detector";
 describe("MacOSDeviceDetector", () => {
   let macOsDeviceDetector: MacOSDeviceDetector;
   let processExecutionService;
-  const audioSystem: AudioSystem = { audioSystem: "avfoundation", devicePrefix: ":" };
+  const audioSystem: AudioSystem = { audioModule: "avfoundation", devicePrefix: ":" };
   let deviceFactory: any;
   const ffmpegPath = "ffmpeg";
 
@@ -30,7 +30,7 @@ describe("MacOSDeviceDetector", () => {
   it("should parse devices correctly", async () => {
     jest.spyOn(processExecutionService, "execute")
       .mockImplementation((command: string, callback: any) => callback(null, null, output));
-    const expectedCommand = `${ffmpegPath} -f ${audioSystem.audioSystem} -list_devices true -i '' -hide_banner`;
+    const expectedCommand = `${ffmpegPath} -f ${audioSystem.audioModule} -list_devices true -i '' -hide_banner`;
 
     await macOsDeviceDetector.runDetection();
 

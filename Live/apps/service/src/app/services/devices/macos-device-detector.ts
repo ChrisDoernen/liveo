@@ -21,18 +21,18 @@ export class MacOSDeviceDetector extends DeviceDetector {
     @inject("ProcessExecutionService") processExecutionService: ProcessExecutionService,
     @inject("DeviceFactory") deviceFactory: (deviceData: DeviceEntity, deviceState: DeviceState) => Device) {
     super(logger, processExecutionService, deviceFactory);
-    this.listDevicesCommand = `${ffmpegPath} -f ${audioSystem.audioSystem} -list_devices true -i '' -hide_banner`;
+    this.listDevicesCommand = `${ffmpegPath} -f ${audioSystem.audioModule} -list_devices true -i '' -hide_banner`;
   }
 
   protected parseResponse(response: string): Device[] {
+    const devices = [];
+    let isVideo = true;
+
     const prefix = /^\[AVFoundation/;
     const audioSeparator = /AVFoundation\saudio\sdevices/;
     const deviceParams = /^\[AVFoundation.*?\]\s\[(\d*?)\]\s(.*)$/;
     const searchPrefix = (line: string) => (line.search(prefix) > -1);
     const searchAudioSeparator = (line: string) => isVideo && (line.search(audioSeparator) > -1);
-
-    const devices = [];
-    let isVideo = true;
 
     response.split(EOL)
       .filter(searchPrefix)

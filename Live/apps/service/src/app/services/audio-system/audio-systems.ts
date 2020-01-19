@@ -1,14 +1,14 @@
 export const AudioSystems = {
   win32: {
-    audioSystem: "dshow",
+    audioModule: "dshow",
     devicePrefix: "audio="
   },
   linux: {
-    audioSystem: "alsa",
+    audioModule: "alsa",
     devicePrefix: "hw:"
   },
   darwin: {
-    audioSystem: "avfoundation",
+    audioModule: "avfoundation",
     devicePrefix: ":"
   }
 };

@@ -18,7 +18,7 @@ export class WindowsDeviceDetector extends DeviceDetector {
     @inject("ProcessExecutionService") processExecutionService: ProcessExecutionService,
     @inject("DeviceFactory") deviceFactory: (deviceData: DeviceEntity, deviceState: DeviceState) => Device) {
     super(logger, processExecutionService, deviceFactory);
-    this.listDevicesCommand = `${ffmpegPath} -f ${audioSystem.audioSystem} -list_devices true -i '' -hide_banner`;
+    this.listDevicesCommand = `${ffmpegPath} -f ${audioSystem.audioModule} -list_devices true -i '' -hide_banner`;
   }
 
   protected parseResponse(response: string): Device[] {
