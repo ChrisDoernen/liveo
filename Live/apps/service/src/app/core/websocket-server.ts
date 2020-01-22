@@ -2,6 +2,7 @@ import { ENDPOINTS, EVENTS } from "@live/constants";
 import { NotificationEntity } from "@live/entities";
 import { inject, injectable } from "inversify";
 import socketio, { Socket } from "socket.io";
+import { AdminService } from "../services/admin/admin.service";
 import { Logger } from "../services/logging/logger";
 import { ClientInfo } from "../services/statistics/client-info";
 import { ConnectionHistoryService } from "../services/statistics/connection-history-service";
@@ -15,7 +16,8 @@ export class WebsocketServer {
 
   constructor(
     @inject("Logger") private _logger: Logger,
-    @inject("ConnectionHistoryService") private _connectionHistoryService: ConnectionHistoryService) {
+    @inject("ConnectionHistoryService") private _connectionHistoryService: ConnectionHistoryService,
+    @inject("AdminService") private readonly _adminService: AdminService) {
   }
 
   public initializeAndListen(server: any): void {
@@ -72,12 +74,12 @@ export class WebsocketServer {
 
   private onSubscribeAdmin(socket: Socket): void {
     socket.join("admin");
-    this._logger.debug("Admin subscribed.");
+    this._adminService.adminSubscribed(this.getClientIpAddress(socket));
   }
 
   private onUnsubscribeAdmin(socket: Socket): void {
     socket.leave("admin");
-    this._logger.debug("Admin unsubscribed.");
+    this._adminService.adminUnsubscribed(this.getClientIpAddress(socket));
   }
 
   private onConnect(socket: Socket): void {
@@ -88,6 +90,7 @@ export class WebsocketServer {
   private onDisconnect(socket: Socket): void {
     const clientInfo = this.getClientInfo(socket);
     this._connectionHistoryService.clientDisconnected(clientInfo);
+    this._adminService.clientDisconnected(this.getClientIpAddress(socket));
   }
 
   public addStream(id: string): void {
@@ -114,13 +117,18 @@ export class WebsocketServer {
   }
 
   private getClientInfo(socket: Socket, streamId?: string): ClientInfo {
-    const clientIpAddress = socket.handshake.headers["x-real-ip"] || socket.handshake.address;
-    const userAgent = socket.request.headers["user-agent"];
-
     return {
-      ipAddress: clientIpAddress,
-      userAgent: userAgent,
+      ipAddress: this.getClientIpAddress(socket),
+      userAgent: this.getClientUserAgent(socket),
       streamId: streamId
     }
+  }
+
+  private getClientUserAgent(socket: Socket): string {
+    return socket.request.headers["user-agent"];
+  }
+
+  private getClientIpAddress(socket: Socket): string {
+    return socket.handshake.headers["x-real-ip"] || socket.handshake.address;
   }
 }

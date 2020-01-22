@@ -4,7 +4,7 @@ import { environment } from "../../environments/environment";
 import { config } from "../config/service.config";
 import { AutoActivationService } from "../services/activation/auto-activation-service";
 import { DataService } from "../services/data/data-service";
-import { DeviceDetector } from "../services/devices/device-detector";
+import { DeviceService } from "../services/devices/device.service";
 import { Logger } from "../services/logging/logger";
 import { SessionService } from "../services/sessions/session-service";
 import { StreamService } from "../services/streams/stream-service";
@@ -16,7 +16,7 @@ import { WebsocketServer } from "./websocket-server";
 export class Bootstrapper {
   constructor(
     @inject("Logger") private _logger: Logger,
-    @inject("DeviceDetector") private _deviceDetector: DeviceDetector,
+    @inject("DeviceService") private _deviceService: DeviceService,
     @inject("StreamService") private _streamService: StreamService,
     @inject("SessionService") private _sessionService: SessionService,
     @inject("AutoActivationService") private _autoActivationService: AutoActivationService,
@@ -42,7 +42,7 @@ export class Bootstrapper {
     Ffmpeg.setFfmpegPath(config.ffmpegPath);
 
     this._dataService.initializeDatabase();
-    await this._deviceDetector.runDetection();
+    await this._deviceService.initialize();
     
     const server = this._webServer.initializeAndListen(container);
     this._websocketServer.initializeAndListen(server);

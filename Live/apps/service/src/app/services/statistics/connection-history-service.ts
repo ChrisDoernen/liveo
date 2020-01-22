@@ -33,12 +33,12 @@ export class ConnectionHistoryService {
 
   public clientSubscribed(clientInfo: ClientInfo): void {
     this._currentListeners.set(clientInfo.ipAddress, clientInfo.streamId);
-    this.clientListens(clientInfo);
+    this.clientStartsListening(clientInfo);
   }
 
   public clientUnsubscribed(clientInfo: ClientInfo): void {
     this._currentListeners.delete(clientInfo.ipAddress);
-    this.clientStopesListening(clientInfo);
+    this.clientStopsListening(clientInfo);
   }
 
   public clientConnected(clientInfo: ClientInfo): void {
@@ -51,13 +51,13 @@ export class ConnectionHistoryService {
     if (this._currentListeners.has(clientInfo.ipAddress)) {
       clientInfo.streamId = this._currentListeners.get(clientInfo.ipAddress);
 
-      this.clientStopesListening(clientInfo);
+      this.clientStopsListening(clientInfo);
 
       this._currentListeners.delete(clientInfo.ipAddress);
     }
   }
 
-  private clientListens(clientInfo: ClientInfo): void {
+  private clientStartsListening(clientInfo: ClientInfo): void {
     this._listeningCounter++;
 
     this._logger.debug(`Client ${clientInfo.ipAddress} subscribed to stream ${clientInfo.streamId}.`);
@@ -73,7 +73,7 @@ export class ConnectionHistoryService {
     this._connectionHistory.push(connectionInfo);
   }
 
-  private clientStopesListening(clientInfo: ClientInfo): void {
+  private clientStopsListening(clientInfo: ClientInfo): void {
     this._listeningCounter--;
 
     this._logger.debug(`Client ${clientInfo.ipAddress} unsubscribed.`);

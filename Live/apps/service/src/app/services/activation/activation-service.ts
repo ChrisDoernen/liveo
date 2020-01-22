@@ -1,5 +1,6 @@
 import { ActivationEntity, Shutdown } from "@live/entities";
 import { inject, injectable } from "inversify";
+import { Subject } from "rxjs";
 import { Logger } from "../logging/logger";
 import { Scheduler } from "../scheduling/scheduler";
 import { Session } from "../sessions/session";
@@ -14,6 +15,7 @@ export class ActivationService {
   private _activeSession: Session;
   private _sessionStartJobId = "SESSION_START_JOB";
   private _sessionStopJobId = "SESSION_STOP_JOB";
+  public acitavtion$ = new Subject<ActivationEntity>();
 
   constructor(
     @inject("Logger") private _logger: Logger,
@@ -54,6 +56,7 @@ export class ActivationService {
     }
 
     this._activation = activation;
+    this.acitavtion$.next(activation);
     this._activeSession = session;
     this._logger.debug("Activation set");
 
@@ -100,6 +103,7 @@ export class ActivationService {
     }
 
     this._activation = null;
+    this.acitavtion$.next(null);
     this._activeSession = null;
     this._logger.debug("Activation deleted");
 

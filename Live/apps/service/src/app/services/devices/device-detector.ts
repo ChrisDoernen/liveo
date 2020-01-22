@@ -13,31 +13,23 @@ export abstract class DeviceDetector {
 
   protected listDevicesCommand: string;
 
-  public devices: Device[];
-
-  public getDevices(): Device[] {
-    return this.devices;
-  }
-
-  public getDeviceEntities(): DeviceEntity[] {
-    return this.devices.map((device) => device.entity);
-  }
-
   constructor(
     protected logger: Logger,
     protected processExecutionService: ProcessExecutionService,
     private _deviceFactory: (deviceData: DeviceEntity, deviceState: DeviceState) => Device) {
   }
 
-  public async runDetection(): Promise<void> {
+  public async runDetection(): Promise<Device[]> {
     const response = await this.executeListDevicesCommand()
 
     this.logger.debug("Detecting audio inputs.");
-    this.devices = this.parseResponse(response);
+    const devices = this.parseResponse(response);
 
-    if (this.devices.length === 0) {
+    if (devices.length === 0) {
       this.logger.warn("No devices detected. Please check your sound cards.");
     }
+
+    return devices;
   }
 
   private async executeListDevicesCommand(): Promise<string> {
@@ -53,12 +45,6 @@ export abstract class DeviceDetector {
   }
 
   protected abstract parseResponse(output: string): Device[];
-
-  public getDevice(id: string): Device {
-    const matchingDevice = this.devices.find((device) => device.id === id);
-
-    return matchingDevice || this.instantiateDevice(id, null, DeviceType.Unknown, DeviceState.UnknownDevice);
-  }
 
   protected instantiateDevice(id: string, description: string, deviceType: DeviceType, deviceState: DeviceState): Device {
     return this._deviceFactory(new DeviceEntity(id, description, deviceType), deviceState);
