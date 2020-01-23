@@ -18,12 +18,11 @@ export class StreamingSource implements IStreamingSource {
     @inject("Logger") private _logger: Logger,
     @inject("FfmpegLogger") private _ffmpegLogger: Logger,
     @inject("WebsocketServer") private _websocketServer: WebsocketServer,
-    @inject("AudioSystem") audioSystem: AudioSystem,
+    @inject("AudioSystem") private _audioSystem: AudioSystem,
     public deviceId: string,
     public streamingSourceId: string,
-    bitrate: number,
-    onError: (error: Error) => void) {
-    this._command = this.initialize(audioSystem, deviceId, bitrate, onError);
+    private _bitrate: number,
+    private _onError: (error: Error) => void) {
   }
 
   private initialize(audioSystem: AudioSystem, deviceId: string, bitrate: number, onError: (error: Error) => void): Ffmpeg.FfmpegCommand {
@@ -60,6 +59,7 @@ export class StreamingSource implements IStreamingSource {
   public startStreaming(): void {
     this._logger.debug(`Start streaming for device ${this.deviceId}.`);
     this._websocketServer.addStream(this.streamingSourceId);
+    this._command = this.initialize(this._audioSystem, this.deviceId, this._bitrate, this._onError);
     this._command.pipe()
       .on("data", (data: Buffer) => this._websocketServer.emitStreamData(this.streamingSourceId, data));
     this.isStreaming = true;
@@ -68,6 +68,7 @@ export class StreamingSource implements IStreamingSource {
   public stopStreaming(): void {
     this._logger.debug(`Killing child process for device ${this.deviceId}.`);
     this._command.kill("SIGKILL");
+    this._command = null;
     this._websocketServer.removeStream(this.streamingSourceId);
     this._websocketServer.emitStreamEventMessage(this.streamingSourceId, EVENTS.streamEnded, "The stream ended.");
     this.isStreaming = false;

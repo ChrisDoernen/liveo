@@ -3,17 +3,17 @@ import { DeviceEntity } from "@live/entities";
 import { inject } from "inversify";
 import { controller, httpGet } from "inversify-express-utils";
 import { AuthenticationMiddleware } from "../../middleware/authentication/authentication.middleware";
-import { DeviceDetector } from "../../services/devices/device-detector";
+import { DeviceService } from "../../services/devices/device.service";
 
 @controller(`/${ROUTES.admin}/devices`, AuthenticationMiddleware)
 export class DevicesController {
   
   constructor(
-    @inject("DeviceDetector") private _deviceDetector: DeviceDetector) {
+    @inject("DeviceService") private _deviceService: DeviceService) {
   }
 
   @httpGet("/")
   public getDevices(): DeviceEntity[] {
-    return this._deviceDetector.getDeviceEntities();
+    return this._deviceService.getDeviceEntities();
   }
 }

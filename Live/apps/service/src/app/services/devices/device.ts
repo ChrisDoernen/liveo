@@ -41,6 +41,7 @@ export class Device {
   public startStreaming(): void {
     if (this._deviceState === DeviceState.Available) {
         this._source.startStreaming();
+        this._deviceState = DeviceState.InUse;
     } else {
       this._logger.warn(`Device ${this.id} is not available for streaming`);
     }
@@ -49,6 +50,7 @@ export class Device {
   public stopStreaming(): void {
     if (this._deviceState === DeviceState.InUse) {
       this._source.stopStreaming();
+      this._deviceState = DeviceState.Available;
     } else {
       this._logger.warn(`Device ${this.id} already stopped streaming`);
     }

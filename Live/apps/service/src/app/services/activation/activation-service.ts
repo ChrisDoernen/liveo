@@ -1,6 +1,6 @@
 import { ActivationEntity, Shutdown } from "@live/entities";
 import { inject, injectable } from "inversify";
-import { Subject } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 import { Logger } from "../logging/logger";
 import { Scheduler } from "../scheduling/scheduler";
 import { Session } from "../sessions/session";
@@ -15,7 +15,7 @@ export class ActivationService {
   private _activeSession: Session;
   private _sessionStartJobId = "SESSION_START_JOB";
   private _sessionStopJobId = "SESSION_STOP_JOB";
-  public acitavtion$ = new Subject<ActivationEntity>();
+  public acitavtion$ = new BehaviorSubject<ActivationEntity>(null);
 
   constructor(
     @inject("Logger") private _logger: Logger,
@@ -35,10 +35,6 @@ export class ActivationService {
     this.validateActivation(activation);
 
     const session = this._sessionService.getSession(activation.sessionId);
-
-    if (!session.hasValidStreams) {
-      throw new Error(`Can not set activation: All streams of session ${session.id} have invalid devices.`);
-    }
 
     if (activation.startTime) {
       this._scheduler.schedule(this._sessionStartJobId, new Date(activation.startTime), () => session.start());

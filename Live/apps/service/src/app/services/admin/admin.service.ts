@@ -6,7 +6,7 @@ import { Logger } from "../logging/logger";
 export class AdminService {
 
   private connectedAdmins = [];
-  public adminConnected$ = new BehaviorSubject(false);
+  public adminConnected$ = new BehaviorSubject<boolean>(false);
 
   constructor(
     @inject("Logger") private _logger: Logger) {
@@ -19,7 +19,7 @@ export class AdminService {
   }
 
   public adminUnsubscribed(ip: string): void {
-    const matchingIp = this.connectedAdmins.find(() => ip);
+    const matchingIp = this.connectedAdmins.find((ipAddress) => ip === ipAddress);
     if (matchingIp) {
       this.connectedAdmins.splice(this.connectedAdmins.indexOf(matchingIp), 1);
       if (this.connectedAdmins.length === 0) {

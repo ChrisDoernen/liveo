@@ -1,7 +1,5 @@
 import { inject, injectable } from "inversify";
 import { WebsocketServer } from "../../core/websocket-server";
-import { Device } from "../devices/device";
-import { DeviceState } from "../devices/device-state";
 import { Logger } from "../logging/logger";
 import { IStreamingSource } from "./i-streaming-source";
 
@@ -15,13 +13,9 @@ export class StreamingSimulationSource implements IStreamingSource {
   constructor(
     @inject("Logger") private _logger: Logger,
     @inject("WebsocketServer") private _websocketServer: WebsocketServer,
-    private _device: Device,
+    private _deviceId: string,
     private _streamId: string) {
     this._logger.debug("Instantiating StreamingSimulationSource");
-  }
-
-  public get hasValidDevice(): boolean {
-    return this._device.state !== DeviceState.UnknownDevice;
   }
 
   public startStreaming(): void {

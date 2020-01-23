@@ -1,4 +1,7 @@
+import { DeviceEntity } from "@live/entities";
 import { inject, injectable } from "inversify";
+import { combineLatest } from "rxjs";
+import { map } from "rxjs/operators";
 import { ActivationService } from "../activation/activation-service";
 import { AdminService } from "../admin/admin.service";
 import { Device } from "./device";
@@ -18,12 +21,20 @@ export class DeviceService {
   public async initialize(): Promise<void> {
     this._devices = await this._deviceDetector.runDetection();
 
-    this._adminService.adminConnected$.subscribe((adminConnected) => {
-      if (adminConnected) {
-        this._devices.forEach((device) => device.startStreaming());
-      } else {
-        this._devices.forEach((device) => device.stopStreaming());
-      }
-    });
+    const admin$ = this._adminService.adminConnected$;
+    const activation$ = this._activationService.acitavtion$;
+    combineLatest([admin$, activation$])
+      .pipe(map(([admin, activation]) => !!admin || !!activation))
+      .subscribe((shouldStream) => {
+        if (shouldStream) {
+          this._devices.forEach((device) => device.startStreaming());
+        } else {
+          this._devices.forEach((device) => device.stopStreaming());
+        }
+      });
+  }
+
+  public getDeviceEntities(): DeviceEntity[] {
+    return this._devices.map((device) => device.entity);
   }
 }
