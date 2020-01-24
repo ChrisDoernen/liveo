@@ -1,11 +1,12 @@
-import { ActivationState, ActivationEntity } from "@live/entities";
-import { TimeService } from "../time/time.service";
 import { Injectable } from "@angular/core";
+import { ActivationEntity, ActivationState } from "@live/entities";
+import { TimeService } from "../time/time.service";
 
 @Injectable({
   providedIn: "root"
 })
 export class ActivationStateService {
+  
   constructor(
     private _timeService: TimeService) {
   }

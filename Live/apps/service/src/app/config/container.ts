@@ -20,6 +20,7 @@ import { LinuxDeviceDetector } from "../services/devices/linux-device-detector";
 import { MacOSDeviceDetector } from "../services/devices/macos-device-detector";
 import { SimulationDeviceDetector } from "../services/devices/simulation-device-detector";
 import { WindowsDeviceDetector } from "../services/devices/windows-device-detector";
+import { IdGenerator } from "../services/id-generation/id-generator";
 import { Logger } from "../services/logging/logger";
 import { NotificationService } from "../services/notifications/notification-service";
 import { ProcessExecutionService } from "../services/process-execution/process-execution-service";
@@ -97,7 +98,8 @@ container.bind<interfaces.Factory<Device>>("DeviceFactory").toFactory(DeviceFact
 container.bind<interfaces.Factory<Stream>>("StreamFactory").toFactory(StreamFactory);
 container.bind<interfaces.Factory<Session>>("SessionFactory").toFactory(SessionFactory);
 
-const dataService = new DataService(new Logger(ServiceLogger));
+container.bind<IdGenerator>("IdGenerator").to(IdGenerator);
+const dataService = new DataService(new Logger(ServiceLogger), new IdGenerator());
 container.bind<DataService>("DataService").toConstantValue(dataService);
 
 container.bind<ISessionRepository>("ISessionRepository").toConstantValue(dataService);

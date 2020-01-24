@@ -1,6 +1,7 @@
 import { inject, injectable } from "inversify";
-import { Logger } from "../logging/logger";
 import { Job, scheduleJob } from "node-schedule";
+import { IdGenerator } from "../id-generation/id-generator";
+import { Logger } from "../logging/logger";
 
 /**
  * Proxy class for node-schedule scheduler
@@ -8,16 +9,17 @@ import { Job, scheduleJob } from "node-schedule";
 @injectable()
 export class Scheduler {
 
-  private _jobs: Map<string, Job> = new Map<string, Job>();
+  private readonly _jobs: Map<string, Job> = new Map<string, Job>();
 
   constructor(
-    @inject("Logger") private _logger: Logger) {
+    @inject("Logger") private readonly _logger: Logger,
+    @inject("IdGenerator") private readonly _idGenerator: IdGenerator) {
   }
 
-  public schedule(id: string, date: Date, callback: () => void): void {
-    this.checkIfJobWithIdAlreadyExists(id);
+  public schedule(dueDate: Date, callback: () => void): string {
+    const id = this._idGenerator.generateId();
 
-    const job = scheduleJob(id, date, (fireDate) => {
+    const job = scheduleJob(id, dueDate, (fireDate) => {
       this._logger.debug(`Running scheduled job. Scheduled time was: ${fireDate}.`);
       callback();
       this.removeJob(id);
@@ -25,16 +27,12 @@ export class Scheduler {
 
     if (job) {
       this._jobs.set(id, job);
-      this._logger.debug(`Scheduled job with id ${id} to be executed on ${date}.`);
+      this._logger.debug(`Scheduled job with id ${id} to be executed on ${dueDate}.`);
     } else {
       this._logger.warn("Can not schedule job: Date is in the past.");
     }
-  }
 
-  private checkIfJobWithIdAlreadyExists(id: string): any {
-    if (this._jobs.get(id)) {
-      throw new Error(`A job with id ${id} is already existing.`);
-    }
+    return id;
   }
 
   public cancelJob(id: string): void {

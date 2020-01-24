@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { L3asService, UserAgentService, Logger } from "@live/services";
+import { L3asService, Logger, UserAgentService } from "@live/services";
 import { Options } from "ng5-slider";
 
 @Component({
@@ -13,21 +13,19 @@ export class AudioPlayerComponent {
     private _logger: Logger,
     private _l3asService: L3asService,
     userAgentService: UserAgentService) {
-    this._l3asService.initialize(userAgentService.userAgentInfo,
-      this.onStreamEndedExpected.bind(this),
-      this.onStreamEndedUnxpected.bind(this));
+    this._l3asService.initialize(userAgentService.userAgentInfo, this.onStreamEndedExpected.bind(this), this.onStreamEndedUnxpected.bind(this));
     this._l3asService.setVolume(this._volume);
     this._l3asService.mute();
   }
 
   @Input()
-  public set selectedStream(streamId: string) {
+  public set selectedStream(streamingId: string) {
     if (this._l3asService) {
-      this._logger.info(`Selected stream id: ${streamId}.`);
-      this.selectedStreamId = streamId;
+      this._logger.info(`Selected stream id: ${streamingId}.`);
+      this.selectedStreamId = streamingId;
 
-      if (streamId) {
-        this._l3asService.play(streamId);
+      if (streamingId) {
+        this._l3asService.play(streamingId);
         this._l3asService.mute();
       } else {
         if (this._l3asService.isPlaying) {

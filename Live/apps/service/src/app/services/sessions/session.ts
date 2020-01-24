@@ -1,4 +1,4 @@
-import { SessionEntity } from "@live/entities";
+import { NotificationEntity, NotificationType, SessionEntity } from "@live/entities";
 import { inject } from "inversify";
 import { Logger } from "../logging/logger";
 import { NotificationService } from "../notifications/notification-service";
@@ -19,18 +19,22 @@ export class Session {
   }
 
   constructor(
-    @inject("Logger") private _logger: Logger,
-    @inject("NotificationService") private _notificationService: NotificationService,
-    private _sessionEntity: SessionEntity,
+    @inject("Logger") private readonly _logger: Logger,
+    @inject("NotificationService") private readonly _notificationService: NotificationService,
+    private readonly _sessionEntity: SessionEntity,
     private _streams: Stream[]) {
     this._logger.debug(`Instantiated session ${JSON.stringify(_sessionEntity)}`);
   }
 
   public start(): void {
     this._isStarted = true;
+    const notification = new NotificationEntity("Session started", NotificationType.Info);
+    this._notificationService.sendNotification(notification);
   }
 
   public stop(): void {
     this._isStarted = false;
+    const notification = new NotificationEntity("Session ended", NotificationType.Info);
+    this._notificationService.sendNotification(notification);
   }
 }

@@ -12,7 +12,7 @@ export class WebsocketServer {
   private _websocketServer: socketio.Server;
 
   /** The currently available streams that are represented as rooms in socket.io */
-  private _streams: string[] = [];
+  private _streamingIds: string[] = [];
 
   constructor(
     @inject("Logger") private _logger: Logger,
@@ -53,7 +53,7 @@ export class WebsocketServer {
   }
 
   private onSubscribeToStream(socket: Socket, streamId: any): void {
-    const id = this._streams.find(stream => stream === streamId);
+    const id = this._streamingIds.find(stream => stream === streamId);
 
     if (!id) {
       this._logger.info(`Subscription for stream ${id} not possible, stream is not started.`);
@@ -94,13 +94,13 @@ export class WebsocketServer {
   }
 
   public addStream(id: string): void {
-    this._streams.push(id);
+    this._streamingIds.push(id);
   }
 
   public removeStream(id: string): void {
-    const index = this._streams.indexOf(id);
+    const index = this._streamingIds.indexOf(id);
     if (index > -1) {
-      this._streams.slice(index, 1);
+      this._streamingIds.slice(index, 1);
     }
   }
 

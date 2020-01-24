@@ -2,9 +2,9 @@ import { SessionEntity, SettingsEntity, StreamEntity, UserEntity } from "@live/e
 import { inject, injectable } from "inversify";
 import * as low from "lowdb";
 import * as FileSync from "lowdb/adapters/FileSync";
-import generate from "nanoid/non-secure/generate";
 import { config } from "../../config/service.config";
 import { IUserProvider } from "../authentication/i-user-provider";
+import { IdGenerator } from "../id-generation/id-generator";
 import { Logger } from "../logging/logger";
 import { ISessionRepository } from "../sessions/i-session-repository";
 import { ISettingsProvider } from "../settings/i-settings-provider";
@@ -20,7 +20,8 @@ export class DataService implements IStreamRepository, ISessionRepository, ISett
   private _database: any;
 
   constructor(
-    @inject("Logger") private _logger: Logger) {
+    @inject("Logger") private readonly _logger: Logger,
+    @inject("IdGenerator") private readonly _idGenerator: IdGenerator) {
   }
 
   public initializeDatabase(): void {
@@ -85,9 +86,6 @@ export class DataService implements IStreamRepository, ISessionRepository, ISett
   }
 
   private createNewId(): string {
-    const alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
-    const id = generate(alphabet, 10);
-
-    return id;
+    return this._idGenerator.generateId();
   }
 }
