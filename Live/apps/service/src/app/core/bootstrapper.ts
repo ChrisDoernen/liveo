@@ -29,15 +29,16 @@ export class Bootstrapper {
   public async startServer(container: Container): Promise<void> {
     this._logger.info("STARTING LIVE SERVER");
     this._logger.info(`Version: v${environment.version}/${environment.revision}`);
-    this._logger.debug(`Production: ${config.production}.`);
-    this._logger.debug(`Executable: ${config.executable}.`);
-    this._logger.debug(`Operating system: ${config.os}.`);
-    this._logger.debug(`Architecture: ${config.arch}.`);
-    this._logger.debug(`Simulate streaming: ${config.simulate}.`);
-    this._logger.debug(`Filesource: ${config.filesource}.`);
-    this._logger.debug(`Standalone: ${config.standalone}.`);
-    this._logger.debug(`Database: ${config.database}.`);
-    this._logger.debug(`Ffmpeg: ${config.ffmpegPath}.`);
+    this._logger.debug(`Production: ${config.production}`);
+    this._logger.debug(`Executable: ${config.executable}`);
+    this._logger.debug(`Operating system: ${config.os}`);
+    this._logger.debug(`Architecture: ${config.arch}`);
+    this._logger.debug(`Simulate streaming: ${config.simulate}`);
+    this._logger.debug(`Filesource: ${config.filesource}`);
+    this._logger.debug(`Standalone: ${config.standalone}`);
+    this._logger.debug(`Database: ${config.database}`);
+    this._logger.debug(`Ffmpeg: ${config.ffmpegPath}`);
+    this._logger.debug(`Working directory: ${config.workingDirectory}`);
 
     Ffmpeg.setFfmpegPath(config.ffmpegPath);
 

@@ -41,5 +41,6 @@ export const config = {
   loglevel: process.env.LOGLEVEL ? process.env.LOGLEVEL : "debug",
   logfilename: process.env.LOGFILE ? process.env.LOGFILE : `${workingDirectory}/logs/live-service.log`,
   ffmpeglogfilename: process.env.FFMPEGLOGFILE ? process.env.FFMPEGLOGFILE : `${workingDirectory}/logs/live-ffmpeg.log`,
-  ffmpegPath: process.env.FFMPEGPATH ? process.env.FFMPEGPATH : ffmpegExePath
+  ffmpegPath: process.env.FFMPEGPATH ? process.env.FFMPEGPATH : ffmpegExePath,
+  workingDirectory
 };
