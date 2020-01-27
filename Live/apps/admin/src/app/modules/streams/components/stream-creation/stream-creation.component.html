@@ -24,14 +24,11 @@
     <mat-step [stepControl]="deviceIdFormGroup">
       <form [formGroup]="deviceIdFormGroup">
         <ng-template matStepLabel>Select input device</ng-template>
-        <mat-form-field>
+        <!-- <mat-form-field> -->
           <mat-label>Device</mat-label>
-          <mat-select formControlName="deviceIdCtrl" required>
-            <mat-option *ngFor="let device of devices" [value]="device.id">
-              {{device.id}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+          <simple-volume-meter *ngFor="let device of devices" [streamingId]=device.id></simple-volume-meter>
+
+        <!-- </mat-form-field> -->
         <div>
           <button mat-button matStepperNext>Next</button>
         </div>

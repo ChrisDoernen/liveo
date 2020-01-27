@@ -6,6 +6,7 @@ import { AutoActivationService } from "../services/activation/auto-activation-se
 import { DataService } from "../services/data/data-service";
 import { DeviceService } from "../services/devices/device.service";
 import { Logger } from "../services/logging/logger";
+import { ProcessExecutionService } from "../services/process-execution/process-execution-service";
 import { SessionService } from "../services/sessions/session-service";
 import { StreamService } from "../services/streams/stream-service";
 import { SystemMonitoringService } from "../services/system-monitoring/system-monitoring-service";
@@ -23,7 +24,8 @@ export class Bootstrapper {
     @inject("WebServer") private _webServer: WebServer,
     @inject("WebsocketServer") private _websocketServer: WebsocketServer,
     @inject("DataService") private _dataService: DataService,
-    @inject("SystemMonitoringService") private _systemMonitoringServcie: SystemMonitoringService) {
+    @inject("SystemMonitoringService") private _systemMonitoringServcie: SystemMonitoringService,
+    @inject("ProcessExecutionService") private readonly _processExecutionService: ProcessExecutionService) {
   }
 
   public async startServer(container: Container): Promise<void> {
@@ -39,6 +41,9 @@ export class Bootstrapper {
     this._logger.debug(`Database: ${config.database}`);
     this._logger.debug(`Ffmpeg: ${config.ffmpegPath}`);
     this._logger.debug(`Working directory: ${config.workingDirectory}`);
+
+    const ffmpegVersion = await this._processExecutionService.executeAsync(`${config.ffmpegPath} -version`);
+    this._logger.debug(`Ffmpeg version: ${ffmpegVersion}`);
 
     Ffmpeg.setFfmpegPath(config.ffmpegPath);
 

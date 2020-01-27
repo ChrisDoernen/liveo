@@ -9,6 +9,7 @@ import { ConfirmationDialogComponent } from "./components/confirmation-dialog/co
 import { ContentComponent } from "./components/content/content.component";
 import { LogoHeaderComponent } from "./components/logo-header/logo-header.component";
 import { LogoComponent } from "./components/logo/logo.component";
+import { SimpleVolumeMeterComponent } from "./components/simple-volume-meter/simple-volume-meter.component";
 import { TitleBarComponent } from "./components/title-bar/title-bar.component";
 
 @NgModule({
@@ -26,7 +27,8 @@ import { TitleBarComponent } from "./components/title-bar/title-bar.component";
     TitleBarComponent,
     LogoHeaderComponent,
     LogoComponent,
-    ContentComponent
+    ContentComponent,
+    SimpleVolumeMeterComponent
   ],
   exports: [
     CommonModule,
@@ -40,7 +42,8 @@ import { TitleBarComponent } from "./components/title-bar/title-bar.component";
     TitleBarComponent,
     LogoHeaderComponent,
     LogoComponent,
-    ContentComponent
+    ContentComponent,
+    SimpleVolumeMeterComponent
   ]
 })
 export class SharedModule { }

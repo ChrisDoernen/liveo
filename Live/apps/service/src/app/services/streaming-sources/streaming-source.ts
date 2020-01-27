@@ -3,6 +3,7 @@ import * as Ffmpeg from "fluent-ffmpeg";
 import * as fs from "fs";
 import { inject, injectable } from "inversify";
 import * as net from "net";
+import { EOL } from "os";
 import { config } from "../../config/service.config";
 import { WebsocketServer } from "../../core/websocket-server";
 import { AudioSystem } from "../audio-system/audio-system";
@@ -34,10 +35,7 @@ export class StreamingSource implements IStreamingSource {
       .input(this._audioSystem.devicePrefix + this.deviceId)
       .inputOptions("-y")
       .inputOptions(`-f ${this._audioSystem.audioModule}`)
-      .complexFilter([
-        "asplit=[out][stats]",
-        `[stats]ebur128=metadata=1,ametadata=print:key=lavfi.r128.M:file='unix\:${socket}':direct=1,anullsink`
-      ])
+      .complexFilter(`asplit=[out][stats];[stats]ebur128=metadata=1,ametadata=print:key=lavfi.r128.M:file='unix\\:${socket}':direct=1,anullsink`)
       .outputOptions("-map [out]")
       .outputOptions("-ac 2")
       .outputOptions(`-b:a ${this._bitrate}k`)
@@ -73,11 +71,19 @@ export class StreamingSource implements IStreamingSource {
 
     if (!fs.existsSync(socketDir)) {
       fs.mkdirSync(socketDir);
+    } else if (fs.existsSync(socket)) {
+      fs.unlinkSync(socket);
     }
-
+    
     const server = net.createServer((stream) => {
-      stream.on("data", (data) => {
-        // do stuff
+      stream.on("data", (data: Buffer) => {
+        const lines = data.toString().split(EOL);
+        lines.forEach((line) => {
+          if (line.startsWith("lavfi.")) {
+            const value = line.substr(13);
+            this._websocketServer.emitAdminEventMessage(`${EVENTS.streamVolume}-${this.deviceId}`, value);
+          }
+        });
       });
     });
 

@@ -9,6 +9,7 @@ import { ConnectionHistoryService } from "../services/statistics/connection-hist
 
 @injectable()
 export class WebsocketServer {
+  
   private _websocketServer: socketio.Server;
 
   /** The currently available streams that are represented as rooms in socket.io */
