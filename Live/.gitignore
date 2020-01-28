@@ -4,6 +4,8 @@
 /dist
 /tmp
 /out-tsc
+/pkg
+/bundle
 
 # dependencies
 /node_modules
@@ -32,6 +34,7 @@
 /connect.lock
 /coverage
 /libpeerconnection.log
+pkg-debug.log
 npm-debug.log
 yarn-error.log
 testem.log

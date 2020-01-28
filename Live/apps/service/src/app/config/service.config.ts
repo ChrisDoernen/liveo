@@ -1,6 +1,33 @@
-import * as appRoot from "app-root-path";
+import os from "os";
+import path from "path";
 import { environment } from "../../environments/environment";
-import * as ffmpeg from "ffmpeg-static";
+
+// This secion is copied from ffmpeg-static npm package
+// We dont want do have that dependency as pkg will include the binaries
+// of all OSes and bloat the bundle.
+const platform = os.platform()
+if (platform !== "linux" && platform !== "darwin" && platform !== "win32") {
+  console.error("Unsupported platform.")
+  process.exit(1)
+}
+
+const arch = os.arch()
+if (platform === "darwin" && arch !== "x64") {
+  console.error("Unsupported architecture.")
+  process.exit(1)
+}
+
+const ffmpegPath = path.join(
+  "node_modules",
+  "ffmpeg-static",
+  "bin",
+  platform,
+  arch,
+  platform === "win32" ? "ffmpeg.exe" : "ffmpeg"
+)
+
+const workingDirectory = process.env.EXECUTABLE ? process.cwd() : __dirname;
+const ffmpegExePath = process.env.EXECUTABLE ? path.join(process.cwd(), "ffmpeg/ffmpeg.exe") : ffmpegPath;
 
 export const config = {
   os: process.platform,
@@ -10,9 +37,10 @@ export const config = {
   simulate: process.env.SIMULATE ? process.env.SIMULATE === "true" : environment.simulate,
   filesource: process.env.FILESOURCE ? process.env.FILESOURCE === "true" : environment.filesource,
   standalone: process.env.STANDALONE ? process.env.STANDALONE === "true" : environment.standalone,
-  environment: process.env.ENVIRONMENT ? process.env.ENVIRONMENT : environment.environment,
-  database: process.env.DBFILE ? process.env.DBFILE : `${appRoot}/dist/apps/service/assets/data/db.json`,
-  logfilename: process.env.LOGFILE ? process.env.LOGFILE : `${appRoot}/dist/apps/service/logs/live-service.log`,
-  ffmpeglogfilename: process.env.FFMPEGLOGFILE ? process.env.FFMPEGLOGFILE : `${appRoot}/dist/apps/service/logs/live-ffmpeg.log`,
-  ffmpegPath: process.env.FFMPEGPATH ? process.env.FFMPEGPATH : ffmpeg.path
+  executable: process.env.EXECUTABLE ? process.env.EXECUTABLE === "true" : environment.executable,
+  database: process.env.DBFILE ? process.env.DBFILE : `${workingDirectory}/data/db.json`,
+  loglevel: process.env.LOGLEVEL ? process.env.LOGLEVEL : "debug",
+  logfilename: process.env.LOGFILE ? process.env.LOGFILE : `${workingDirectory}/logs/live-service.log`,
+  ffmpeglogfilename: process.env.FFMPEGLOGFILE ? process.env.FFMPEGLOGFILE : `${workingDirectory}/logs/live-ffmpeg.log`,
+  ffmpegPath: process.env.FFMPEGPATH ? process.env.FFMPEGPATH : ffmpegExePath
 };
