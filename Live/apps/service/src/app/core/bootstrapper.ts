@@ -42,7 +42,7 @@ export class Bootstrapper {
     this._logger.debug(`Ffmpeg: ${config.ffmpegPath}`);
     this._logger.debug(`Working directory: ${config.workingDirectory}`);
 
-    const ffmpegVersion = await this._processExecutionService.executeAsync(`${config.ffmpegPath} -version`);
+    const ffmpegVersion = await this._processExecutionService.executeAsync(`"${config.ffmpegPath}" -version`);
     this._logger.debug(`Ffmpeg version: ${ffmpegVersion}`);
 
     Ffmpeg.setFfmpegPath(config.ffmpegPath);

@@ -3,12 +3,12 @@ import * as Ffmpeg from "fluent-ffmpeg";
 import * as fs from "fs";
 import { inject, injectable } from "inversify";
 import * as net from "net";
-import { EOL } from "os";
 import { config } from "../../config/service.config";
 import { WebsocketServer } from "../../core/websocket-server";
-import { AudioSystem } from "../audio-system/audio-system";
+import { PlatformConstants } from "../plattform-constants/i-platform-constants";
 import { Logger } from "../logging/logger";
 import { IStreamingSource } from "./i-streaming-source";
+import * as path from 'path';
 
 /**
  * Class responsible for opening a child process and passing the data to the websocket server
@@ -23,19 +23,21 @@ export class StreamingSource implements IStreamingSource {
     @inject("Logger") private _logger: Logger,
     @inject("FfmpegLogger") private _ffmpegLogger: Logger,
     @inject("WebsocketServer") private _websocketServer: WebsocketServer,
-    @inject("AudioSystem") private _audioSystem: AudioSystem,
+    @inject("AudioSystem") private _plattformConstants: PlatformConstants,
     public deviceId: string,
     public streamingSourceId: string,
     private _bitrate: number,
     private _onError: (error: Error) => void) {
   }
 
-  private initialize(socket: string): Ffmpeg.FfmpegCommand {
+  private initialize(socketAddress: string): Ffmpeg.FfmpegCommand {
     return Ffmpeg()
-      .input(this._audioSystem.devicePrefix + this.deviceId)
+      .input(this._plattformConstants.devicePrefix + this.deviceId)
       .inputOptions("-y")
-      .inputOptions(`-f ${this._audioSystem.audioModule}`)
-      .complexFilter(`asplit=[out][stats];[stats]ebur128=metadata=1,ametadata=print:key=lavfi.r128.M:file='unix\\:${socket}':direct=1,anullsink`)
+      .inputOptions(`-f ${this._plattformConstants.audioModule}`)
+      .complexFilter(
+        `asplit=[out][stats];[stats]ebur128=metadata=1,ametadata=print:key=lavfi.r128.M:file='${socketAddress}':direct=1,anullsink`
+      )
       .outputOptions("-map [out]")
       .outputOptions("-ac 2")
       .outputOptions(`-b:a ${this._bitrate}k`)
@@ -65,32 +67,47 @@ export class StreamingSource implements IStreamingSource {
   }
 
   private createSocket(): string {
-    const socketDir = `${config.workingDirectory}/sockets`;
+    const socketDir = path.join(config.workingDirectory, "sockets");
     const socketId = `${this.streamingSourceId}.sock`;
-    const socket = `${socketDir}/${socketId}`;
+    const socketPath = path.join(socketDir, socketId);
 
-    if (!fs.existsSync(socketDir)) {
-      fs.mkdirSync(socketDir);
-    } else if (fs.existsSync(socket)) {
-      fs.unlinkSync(socket);
+    let socket: string;
+    let socketAddress: string;
+    if (config.os === "win32") {
+      socket = path.join(this._plattformConstants.ipcProtocol, socketId);
+      socketAddress = socket.replace(/\\/g, "\\\\").replace(":", "\\\\\\:");
+    } else {
+      socket = socketPath;
+      socketAddress = socket;
     }
-    
+
+    // Remove existing sockets before opening a new one. Windows removes named pipes automatically.
+    if (config.os !== "win32") {
+      if (!fs.existsSync(socketDir)) {
+        fs.mkdirSync(socketDir);
+      } else if (fs.existsSync(socket)) {
+        fs.unlinkSync(socket);
+      }
+    }
+
     const server = net.createServer((stream) => {
       stream.on("data", (data: Buffer) => {
-        const lines = data.toString().split(EOL);
+        const lines = data.toString().split("\n");
         lines.forEach((line) => {
           if (line.startsWith("lavfi.")) {
             const value = line.substr(13);
+            
             this._websocketServer.emitAdminEventMessage(`${EVENTS.streamVolume}-${this.deviceId}`, value);
           }
         });
       });
     });
 
+    this._logger.debug(`Listening on socket or pipe ${socket}`);
     server.listen(socket);
     this._socketServer = server;
 
-    return socket;
+    return socketAddress;
   }
 
   private closeSocket(): void {

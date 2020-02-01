@@ -1,7 +1,7 @@
 import { DeviceEntity } from "@live/entities";
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
-import { AudioSystem } from "../audio-system/audio-system";
+import { PlatformConstants } from "../plattform-constants/i-platform-constants";
 import { Logger } from "../logging/logger";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { Device } from "./device";
@@ -11,7 +11,7 @@ import { MacOSDeviceDetector } from "./macos-device-detector";
 describe("MacOSDeviceDetector", () => {
   let macOsDeviceDetector: MacOSDeviceDetector;
   let processExecutionService;
-  const audioSystem: AudioSystem = { audioModule: "avfoundation", devicePrefix: ":" };
+  const audioSystem: PlatformConstants = { audioModule: "avfoundation", devicePrefix: ":", ipcPrefix: "" };
   let deviceFactory: any;
   const ffmpegPath = "ffmpeg";
 

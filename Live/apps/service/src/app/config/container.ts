@@ -7,8 +7,8 @@ import { ActivationService } from "../services/activation/activation-service";
 import { AutoActivationService } from "../services/activation/auto-activation-service";
 import { AdminService } from "../services/admin/admin.service";
 import { ApplicationStateService } from "../services/application-state/application-state.service";
-import { AudioSystem } from "../services/audio-system/audio-system";
-import { AudioSystems } from "../services/audio-system/audio-systems";
+import { PlatformConstants } from "../services/plattform-constants/i-platform-constants";
+import { plattformConstants } from "../services/plattform-constants/plattformConstants";
 import { AuthenticationService } from "../services/authentication/authentication-service";
 import { IUserProvider } from "../services/authentication/i-user-provider";
 import { DataService } from "../services/data/data-service";
@@ -56,19 +56,19 @@ switch (config.os) {
   case "linux": {
     container.bind<ShutdownService>("ShutdownService").to(UnixShutdownService);
     container.bind<DeviceDetector>("DeviceDetector").to(LinuxDeviceDetector).inSingletonScope();
-    container.bind<AudioSystem>("AudioSystem").toConstantValue(AudioSystems.linux);
+    container.bind<PlatformConstants>("AudioSystem").toConstantValue(plattformConstants.linux);
     break;
   }
   case "darwin": {
     container.bind<ShutdownService>("ShutdownService").to(UnixShutdownService);
     container.bind<DeviceDetector>("DeviceDetector").to(MacOSDeviceDetector).inSingletonScope();
-    container.bind<AudioSystem>("AudioSystem").toConstantValue(AudioSystems.darwin);
+    container.bind<PlatformConstants>("AudioSystem").toConstantValue(plattformConstants.darwin);
     break;
   }
   case "win32": {
     container.bind<ShutdownService>("ShutdownService").to(WindowsShutdownService);
     container.bind<DeviceDetector>("DeviceDetector").to(WindowsDeviceDetector).inSingletonScope();
-    container.bind<AudioSystem>("AudioSystem").toConstantValue(AudioSystems.win32);
+    container.bind<PlatformConstants>("AudioSystem").toConstantValue(plattformConstants.win32);
     break;
   }
   default: {

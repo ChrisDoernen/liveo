@@ -1,7 +1,7 @@
 import { DeviceEntity, DeviceType } from "@live/entities";
 import { inject, injectable } from "inversify";
 import { EOL } from "os";
-import { AudioSystem } from "../audio-system/audio-system";
+import { PlatformConstants } from "../plattform-constants/i-platform-constants";
 import { Logger } from "../logging/logger";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { Device } from "./device";
@@ -16,7 +16,7 @@ export class LinuxDeviceDetector extends DeviceDetector {
 
   constructor(
     @inject("Logger") logger: Logger,
-    @inject("AudioSystem") private _audioSystem: AudioSystem,
+    @inject("AudioSystem") private _audioSystem: PlatformConstants,
     @inject("ProcessExecutionService") processExecutionService: ProcessExecutionService,
     @inject("DeviceFactory") deviceFactory: (deviceData: DeviceEntity, deviceState: DeviceState) => Device) {
     super(logger, processExecutionService, deviceFactory);

@@ -1,7 +1,7 @@
 import { DeviceEntity } from "@live/entities";
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
-import { AudioSystem } from "../audio-system/audio-system";
+import { PlatformConstants } from "../plattform-constants/i-platform-constants";
 import { Logger } from "../logging/logger";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { Device } from "./device";
@@ -11,7 +11,7 @@ import { WindowsDeviceDetector } from "./windows-device-detector";
 describe("WindowsDeviceDetector", () => {
   let windowsDeviceDetector: WindowsDeviceDetector;
   let processExecutionService: jest.Mocked<ProcessExecutionService>;
-  const audioSystem: AudioSystem = { audioModule: "dshow", devicePrefix: "audio=" };
+  const audioSystem: PlatformConstants = { audioModule: "dshow", devicePrefix: "audio=", ipcPrefix: "" };
   let deviceFactory: any;
   const ffmpegPath = "ffmpeg";
 

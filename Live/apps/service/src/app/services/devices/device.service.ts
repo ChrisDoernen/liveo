@@ -1,4 +1,4 @@
-import { DeviceEntity } from "@live/entities";
+import { DeviceEntity, DeviceType } from "@live/entities";
 import { inject, injectable } from "inversify";
 import { combineLatest } from "rxjs";
 import { map } from "rxjs/operators";
@@ -26,10 +26,11 @@ export class DeviceService {
     combineLatest([admin$, activation$])
       .pipe(map(([admin, activation]) => !!admin || !!activation))
       .subscribe((shouldStream) => {
+        const audioDevices = this._devices.filter((device) => device.entity.deviceType === DeviceType.Audio);
         if (shouldStream) {
-          this._devices.forEach((device) => device.startStreaming());
+          audioDevices.forEach((device) => device.startStreaming());
         } else {
-          this._devices.forEach((device) => device.stopStreaming());
+          audioDevices.forEach((device) => device.stopStreaming());
         }
       });
   }
