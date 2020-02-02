@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { MatDialogRef } from "@angular/material";
+import ConfirmationDialogData from "../../../shared/components/confirmation-dialog/confirmation-dialog.data";
 
 @Component({
   selector: "session-deletion-dialog",
@@ -7,7 +8,7 @@ import { MatDialogRef } from "@angular/material";
 })
 export class SessionDeletionDialogComponent {
 
-  public confirmationDialogData = {
+  public confirmationDialogData: ConfirmationDialogData = {
     title: "Delete Session"
   }
 

@@ -11,6 +11,7 @@ import { LogoHeaderComponent } from "./components/logo-header/logo-header.compon
 import { LogoComponent } from "./components/logo/logo.component";
 import { SimpleVolumeMeterComponent } from "./components/simple-volume-meter/simple-volume-meter.component";
 import { TitleBarComponent } from "./components/title-bar/title-bar.component";
+import { VolumeMeterService } from "./services/volume-meter/volume-meter.service";
 
 @NgModule({
   imports: [
@@ -44,6 +45,9 @@ import { TitleBarComponent } from "./components/title-bar/title-bar.component";
     LogoComponent,
     ContentComponent,
     SimpleVolumeMeterComponent
+  ],
+  providers: [
+    VolumeMeterService
   ]
 })
 export class SharedModule { }
