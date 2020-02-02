@@ -2,7 +2,6 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { UserEntity } from "@live/entities";
 import { EndpointService } from "@live/services";
-import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 
 @Injectable({ providedIn: "root" })
@@ -15,7 +14,7 @@ export class AuthenticationService {
     private _httpClient: HttpClient) {
   }
 
-  public login(username: string, password: string): Observable<UserEntity> {
+  public login(username: string, password: string): Promise<UserEntity> {
     const endpoint = this._endpointService.getEndpoint("authentication");
     return this._httpClient
       .post<any>(endpoint, { username, password })
@@ -26,7 +25,7 @@ export class AuthenticationService {
         }
 
         return user;
-      }));
+      })).toPromise();
   }
 
   public logout(): void {

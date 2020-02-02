@@ -3,7 +3,7 @@ import { EVENTS } from "@live/constants";
 import { NotificationEntity } from "@live/entities";
 import { Logger } from "@live/services";
 import { Observable, Subject } from "rxjs";
-import { WebsocketService } from "../../modules/shared/services/websocket/websocket.service";
+import { WebsocketService } from "../websocket/websocket.service";
 
 @Injectable({
   providedIn: "root"

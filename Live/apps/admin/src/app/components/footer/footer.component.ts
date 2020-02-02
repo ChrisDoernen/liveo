@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { EVENTS } from "@live/constants";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { WebsocketService } from "../../modules/shared/services/websocket/websocket.service";
+import { WebsocketService } from "../../services/websocket/websocket.service";
 
 @Component({
   selector: "footer",

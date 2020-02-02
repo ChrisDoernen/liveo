@@ -18,7 +18,6 @@ import { DevicesService } from "./services/devices/devices.service";
 import { SessionService } from "./services/session/session.service";
 import { StreamService } from "./services/stream/stream.service";
 import { VolumeMeterService } from "./services/volume-meter/volume-meter.service";
-import { WebsocketService } from "./services/websocket/websocket.service";
 
 @NgModule({
   imports: [
@@ -59,7 +58,6 @@ import { WebsocketService } from "./services/websocket/websocket.service";
     VolumeMeterService,
     SessionService,
     StreamService,
-    WebsocketService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthenticationInterceptor,

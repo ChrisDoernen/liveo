@@ -2,9 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { environment } from "../../../environments/environment";
 import { SessionService } from "../../modules/shared/services/session/session.service";
-import { WebsocketService } from "../../modules/shared/services/websocket/websocket.service";
 import { ActivationService } from "../../services/activation/activation.service";
 import { NotificationService } from "../../services/notification/notification.service";
+import { WebsocketService } from "../../services/websocket/websocket.service";
 
 @Component({
   selector: "navigation",

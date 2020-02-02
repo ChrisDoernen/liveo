@@ -4,7 +4,7 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { EndpointService, Logger } from "@live/services";
 import { LoggerMock } from "@live/test-utilities";
 import createMockInstance from "jest-create-mock-instance";
-import { WebsocketService } from "../../modules/shared/services/websocket/websocket.service";
+import { WebsocketService } from "../websocket/websocket.service";
 import { ConnectionStateService } from "./connection-state-service";
 
 describe("ConnectionStateService", () => {

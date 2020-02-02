@@ -22,7 +22,7 @@ export class SessionListComponent implements OnInit {
     public readonly sessionDeletionDialog: MatDialog) {
   }
 
-  public ngOnInit():void {
+  public ngOnInit(): void {
     this._sessionService
       .getSessions()
       .then((sessions) => this.sessions = sessions);
