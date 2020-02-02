@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivationEntity, SessionEntity } from "@live/entities";
 import { TimeService } from "@live/services";
 import { Subscription } from "rxjs";
-import { SessionService } from "../../../../services/session/session.service";
 import { SettingsService } from "../../../../services/settings/settings.service";
+import { SessionService } from "../../../shared/services/session/session.service";
 
 @Component({
   selector: "activation-dialog",

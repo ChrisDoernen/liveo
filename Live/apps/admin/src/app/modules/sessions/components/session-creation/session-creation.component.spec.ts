@@ -1,17 +1,20 @@
 import { HttpClientModule } from "@angular/common/http";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MatButtonModule, MatDialog, MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatStepperModule } from "@angular/material";
+import { MatDialog } from "@angular/material";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { ActivatedRoute } from "@angular/router";
+import { RouterTestingModule } from "@angular/router/testing";
 import { EndpointService, Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
 import { AngularMaterialModule } from "../../../angular-material/angular-material.module";
+import { TitleBarComponent } from "../../../shared/components/title-bar/title-bar.component";
 import { SessionService } from "../../../shared/services/session/session.service";
-import { ActivationDialogComponent } from "./activation-dialog.component";
+import { StreamCreationComponent } from "./session-creation.component";
 
-describe("ActivationDialogComponent", () => {
-  let component: ActivationDialogComponent;
-  let fixture: ComponentFixture<ActivationDialogComponent>;
+describe("StreamCreationComponent", () => {
+  let component: StreamCreationComponent;
+  let fixture: ComponentFixture<StreamCreationComponent>;
   let endpointService: jest.Mocked<EndpointService>;
   let sessionService: SessionService;
 
@@ -23,26 +26,26 @@ describe("ActivationDialogComponent", () => {
       imports: [
         HttpClientModule,
         AngularMaterialModule,
+        RouterTestingModule,
         FormsModule,
         ReactiveFormsModule,
         NoopAnimationsModule,
-        MatInputModule,
-        MatFormFieldModule,
-        MatSelectModule,
-        MatButtonModule,
-        MatDialogModule,
-        MatStepperModule
+        AngularMaterialModule
       ],
-      declarations: [ActivationDialogComponent],
+      declarations: [
+        StreamCreationComponent,
+        TitleBarComponent
+      ],
       providers: [
         { provide: MatDialog, useValue: jest.fn() },
         { provide: SessionService, useValue: sessionService },
         { provide: EndpointService, useValue: endpointService },
-        { provide: Logger, useValue: jest.fn() }
+        { provide: Logger, useValue: jest.fn() },
+        { provide: ActivatedRoute, useValue: createMockInstance(ActivatedRoute) }
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ActivationDialogComponent);
+    fixture = TestBed.createComponent(StreamCreationComponent);
     component = fixture.componentInstance;
   });
 

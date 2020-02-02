@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { SessionEntity, SettingsEntity } from "@live/entities";
-import { SessionService } from "../../../../services/session/session.service";
 import { SettingsService } from "../../../../services/settings/settings.service";
+import { SessionService } from "../../../shared/services/session/session.service";
 
 @Component({
   selector: "settings",

@@ -4,11 +4,11 @@ import { EndpointService, Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
 import { AngularMaterialModule } from "../../../angular-material/angular-material.module";
 import { TitleBarComponent } from "../../../shared/components/title-bar/title-bar.component";
-import { SessionsComponent } from "./sessions.component";
+import { SessionListComponent } from "./session-list.component";
 
-describe("SessionsComponent", () => {
-  let component: SessionsComponent;
-  let fixture: ComponentFixture<SessionsComponent>;
+describe("SessionListComponent", () => {
+  let component: SessionListComponent;
+  let fixture: ComponentFixture<SessionListComponent>;
   let endpointService: jest.Mocked<EndpointService>;
 
   beforeEach(() => {
@@ -20,7 +20,7 @@ describe("SessionsComponent", () => {
         AngularMaterialModule
       ],
       declarations: [
-        SessionsComponent,
+        SessionListComponent,
         TitleBarComponent
       ],
       providers: [
@@ -29,7 +29,7 @@ describe("SessionsComponent", () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SessionsComponent);
+    fixture = TestBed.createComponent(SessionListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

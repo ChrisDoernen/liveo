@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy
 import { EVENTS } from "@live/constants";
 import { Subscription } from "rxjs";
 import { map } from "rxjs/operators";
-import { WebsocketService } from "../../../../services/websocket/websocket.service";
 import { VolumeMeterService } from "../../services/volume-meter/volume-meter.service";
+import { WebsocketService } from "../../services/websocket/websocket.service";
 
 @Component({
   selector: "simple-volume-meter",

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import createMockInstance from "jest-create-mock-instance";
-import { SessionService } from "../../../../services/session/session.service";
+import { SessionService } from "../../../shared/services/session/session.service";
 import { ActivatedSessionTileComponent } from "./activated-session-tile.component";
 
 describe("ActivatedSessionTileComponent", () => {

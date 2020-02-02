@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { ActivationEntity, SessionEntity } from "@live/entities";
 import { EndpointService } from "@live/services";
 import { Observable, Subject } from "rxjs";
-import { ActivationService } from "../activation/activation.service";
+import { ActivationService } from "../../../../services/activation/activation.service";
 
 @Injectable({
   providedIn: "root"
@@ -41,6 +41,12 @@ export class SessionService {
   public getSessions(): Promise<SessionEntity[]> {
     return this._httpClient
       .get<SessionEntity[]>(this._endpointService.getEndpoint(`sessions`))
+      .toPromise();
+  }
+
+  public createSession(streamEntity: SessionEntity): Promise<SessionEntity> {
+    return this._httpClient
+      .post<SessionEntity>(this._endpointService.getEndpoint("sessions"), streamEntity)
       .toPromise();
   }
 

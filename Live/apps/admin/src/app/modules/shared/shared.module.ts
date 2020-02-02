@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatNativeDateModule } from "@angular/material";
@@ -11,7 +11,14 @@ import { LogoHeaderComponent } from "./components/logo-header/logo-header.compon
 import { LogoComponent } from "./components/logo/logo.component";
 import { SimpleVolumeMeterComponent } from "./components/simple-volume-meter/simple-volume-meter.component";
 import { TitleBarComponent } from "./components/title-bar/title-bar.component";
+import { AuthenticationInterceptor } from "./interceptors/authentication.interceptor";
+import { ErrorInterceptor } from "./interceptors/error.interceptor";
+import { AuthenticationService } from "./services/authentication/authentication.service";
+import { DevicesService } from "./services/devices/devices.service";
+import { SessionService } from "./services/session/session.service";
+import { StreamService } from "./services/stream/stream.service";
 import { VolumeMeterService } from "./services/volume-meter/volume-meter.service";
+import { WebsocketService } from "./services/websocket/websocket.service";
 
 @NgModule({
   imports: [
@@ -47,7 +54,22 @@ import { VolumeMeterService } from "./services/volume-meter/volume-meter.service
     SimpleVolumeMeterComponent
   ],
   providers: [
-    VolumeMeterService
+    AuthenticationService,
+    DevicesService,
+    VolumeMeterService,
+    SessionService,
+    StreamService,
+    WebsocketService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthenticationInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    },
   ]
 })
 export class SharedModule { }

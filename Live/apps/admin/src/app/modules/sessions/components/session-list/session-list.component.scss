@@ -4,3 +4,7 @@
   align-items: center;
   padding-left: 10px;
 }
+
+.stream:not(:last-child)::after {
+  content: ', ';
+}

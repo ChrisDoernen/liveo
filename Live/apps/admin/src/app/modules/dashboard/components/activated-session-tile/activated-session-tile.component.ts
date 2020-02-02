@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { SessionService } from "../../../../services/session/session.service";
+import { SessionService } from "../../../shared/services/session/session.service";
 
 @Component({
   selector: "activated-session-tile",

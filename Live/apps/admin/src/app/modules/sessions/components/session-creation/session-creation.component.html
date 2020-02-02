@@ -1,0 +1,55 @@
+<title-bar>
+  <h2>New Session</h2>
+  <div>
+    <button mat-stroked-button color="primary" routerLink="..">
+      Cancel
+    </button>
+  </div>
+</title-bar>
+<content>
+  <mat-vertical-stepper [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="titleFormGroup">
+      <form [formGroup]="titleFormGroup">
+        <ng-template matStepLabel>Enter a title</ng-template>
+        <p>The title will be displayed to listeners in the app.</p>
+        <mat-form-field class="example-full-width">
+          <mat-label>Session title</mat-label>
+          <input matInput formControlName="titleCtrl" required>
+        </mat-form-field>
+      </form>
+      <button class="next-btn" mat-button matStepperNext>Next</button>
+    </mat-step>
+    <mat-step [stepControl]="descriptionFormGroup">
+      <form [formGroup]="descriptionFormGroup">
+        <ng-template matStepLabel>Enter a description</ng-template>
+        <p>The description is only shown in the admin page.</p>
+        <mat-form-field class="example-full-width">
+          <mat-label>Description</mat-label>
+          <input matInput formControlName="descriptionCtrl" required>
+        </mat-form-field>
+      </form>
+      <button class="next-btn" mat-button matStepperNext>Next</button>
+    </mat-step>
+    <mat-step [stepControl]="streamsFormGroup">
+      <form [formGroup]="streamsFormGroup">
+        <ng-template matStepLabel>Select streams</ng-template>
+        <mat-form-field class="example-medium-width">
+          <mat-select matInput multiple formControlName="streamsCtrl" required>
+            <mat-option *ngFor="let stream of streams" [value]="stream.id">
+              {{stream.title}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+      <button class="next-btn" mat-button matStepperNext>Next</button>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done.</p>
+      <div mat-dialog-actions>
+        <button mat-button mat-raised-button color="primary" (click)="saveSession()">Save</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</content>

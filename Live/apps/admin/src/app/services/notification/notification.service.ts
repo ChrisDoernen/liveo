@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
-import { Observable, Subject } from "rxjs";
 import { EVENTS } from "@live/constants";
-import { WebsocketService } from "../websocket/websocket.service";
 import { NotificationEntity } from "@live/entities";
 import { Logger } from "@live/services";
+import { Observable, Subject } from "rxjs";
+import { WebsocketService } from "../../modules/shared/services/websocket/websocket.service";
 
 @Injectable({
   providedIn: "root"
