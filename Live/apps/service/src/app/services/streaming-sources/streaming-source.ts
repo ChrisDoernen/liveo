@@ -3,12 +3,12 @@ import * as Ffmpeg from "fluent-ffmpeg";
 import * as fs from "fs";
 import { inject, injectable } from "inversify";
 import * as net from "net";
+import * as path from 'path';
 import { config } from "../../config/service.config";
 import { WebsocketServer } from "../../core/websocket-server";
-import { PlatformConstants } from "../plattform-constants/i-platform-constants";
 import { Logger } from "../logging/logger";
+import { PlatformConstants } from "../plattform-constants/i-platform-constants";
 import { IStreamingSource } from "./i-streaming-source";
-import * as path from 'path';
 
 /**
  * Class responsible for opening a child process and passing the data to the websocket server
@@ -78,7 +78,7 @@ export class StreamingSource implements IStreamingSource {
       socketAddress = socket.replace(/\\/g, "\\\\").replace(":", "\\\\\\:");
     } else {
       socket = socketPath;
-      socketAddress = socket;
+      socketAddress = path.join(this._plattformConstants.ipcProtocol, socket);;
     }
 
     // Remove existing sockets before opening a new one. Windows removes named pipes automatically.
