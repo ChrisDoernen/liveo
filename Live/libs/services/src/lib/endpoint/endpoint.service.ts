@@ -1,4 +1,4 @@
-import { Injectable, Inject, InjectionToken } from "@angular/core";
+import { Inject, Injectable, InjectionToken } from "@angular/core";
 import { ENDPOINTS } from "@live/constants";
 import { Logger } from "../logging/logger";
 
@@ -13,8 +13,12 @@ export class EndpointService {
     @Inject(ROUTE) private _route: string) {
   }
 
-  public getEndpoint(path: string): string {
-    const url = `${ENDPOINTS.api}/${this._route}/${path}`;
+  public getEndpoint(path: string, queryParams: string[] = null): string {
+    let url = `${ENDPOINTS.api}/${this._route}/${path}`;
+    if(queryParams) {
+      url += `?${queryParams.join("&")}`;
+    }
+
     this._logger.info(`Returned url ${url}.`);
     return url;
   }

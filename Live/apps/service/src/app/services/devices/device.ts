@@ -58,5 +58,6 @@ export class Device {
 
   public onStreamingSourceError(error: Error): void {
     this._logger.error(`Streaming source error: ${error.message}`);
+    this._deviceState = DeviceState.Available;
   }
 }

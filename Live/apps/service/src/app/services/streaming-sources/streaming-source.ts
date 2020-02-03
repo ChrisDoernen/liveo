@@ -56,14 +56,17 @@ export class StreamingSource implements IStreamingSource {
       .on("error", (error: Error) => {
         // We terminated the stream manually to stop streaming, no real error
         if (!error.message.includes("SIGKILL")) {
-          this._logger.error(`Error ffmpeg command for device ${this.deviceId}: ${error}.`);
-          this._onError(error);
+
         }
       })
       .on("stderr", (data: string) => {
         this._ffmpegLogger.info(`${data}`);
       })
-      .on("end", () => { });
+      .on("end", () => {
+        this._logger.error(`Error ffmpeg command for device ${this.deviceId}`);
+        this._onError(new Error("Stream ended unexpectedly"));
+        this.isStreaming = false;
+      });
   }
 
   private createSocket(): string {
@@ -96,7 +99,7 @@ export class StreamingSource implements IStreamingSource {
         lines.forEach((line) => {
           if (line.startsWith("lavfi.")) {
             const value = line.substr(13);
-            
+
             this._websocketServer.emitAdminEventMessage(`${EVENTS.streamVolume}-${this.deviceId}`, value);
           }
         });

@@ -24,12 +24,14 @@
         <ng-template matStepLabel>Select input device</ng-template>
         <mat-radio-group class="example-radio-group" formControlName="deviceIdCtrl">
           <mat-radio-button class="example-radio-button" *ngFor="let device of devices" [value]="device.id">
-            <div class="device-radio-btn">{{device.id}} <simple-volume-meter [streamingId]=device.id>
-              </simple-volume-meter>
+            <div class="device-radio-btn">{{device.id}}
+              <simple-volume-meter [streamingId]=device.id> </simple-volume-meter>
             </div>
           </mat-radio-button>
         </mat-radio-group>
       </form>
+      <button class="refresh-btn" mat-button (click)="refresh()">Refresh device list</button>
+      <br>
       <button class="next-btn" mat-button matStepperNext>Next</button>
     </mat-step>
     <mat-step>

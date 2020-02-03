@@ -10,7 +10,7 @@ import { DeviceDetector } from "./device-detector";
 @injectable()
 export class DeviceService {
 
-  private _devices: Device[];
+  private _devices: Device[] = [];
 
   constructor(
     @inject("ActivationService") private readonly _activationService: ActivationService,
@@ -19,7 +19,7 @@ export class DeviceService {
   }
 
   public async initialize(): Promise<void> {
-    this._devices = await this._deviceDetector.runDetection();
+    this._devices = await this.detectDevices();
 
     const admin$ = this._adminService.adminConnected$;
     const activation$ = this._activationService.acitavtion$;
@@ -35,7 +35,22 @@ export class DeviceService {
       });
   }
 
-  public getDeviceEntities(): DeviceEntity[] {
+  private async detectDevices(): Promise<Device[]> {
+    return await this._deviceDetector.runDetection();
+  }
+
+  public async getDeviceEntities(redetect: boolean = false): Promise<DeviceEntity[]> {
+    if (redetect) {
+      const devices = await this.detectDevices();
+
+      // Find new devices, start them
+      const existingDeviceIds = this._devices.map((device) => device.id);
+      const newDevices = devices.filter((device) => existingDeviceIds.indexOf(device.id) === -1);
+      const newAudioDevices = newDevices.filter((device) => device.entity.deviceType === DeviceType.Audio);
+      newAudioDevices.forEach((device) => device.startStreaming());
+      this._devices = devices;
+    }
+
     return this._devices.map((device) => device.entity);
   }
 }

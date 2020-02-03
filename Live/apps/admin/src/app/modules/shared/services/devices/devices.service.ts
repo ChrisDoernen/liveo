@@ -12,9 +12,15 @@ export class DevicesService {
     private _endpointService: EndpointService) {
   }
 
-  public getDevices(): Promise<DeviceEntity[]> {
+  public getDevices(redetect: boolean = false): Promise<DeviceEntity[]> {
+    let queryParams: string[];
+
+    if (redetect) {
+      queryParams = ["refresh=true"];
+    }
+
     return this._httpClient
-      .get<DeviceEntity[]>(this._endpointService.getEndpoint("devices"))
+      .get<DeviceEntity[]>(this._endpointService.getEndpoint("devices", queryParams))
       .toPromise();
   }
 }
