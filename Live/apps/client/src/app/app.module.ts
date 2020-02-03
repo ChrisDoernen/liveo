@@ -1,21 +1,20 @@
+import { HttpClientModule } from "@angular/common/http";
+import { APP_BOOTSTRAP_LISTENER, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { NgModule, APP_BOOTSTRAP_LISTENER } from "@angular/core";
-import { AppComponent } from "./app.component";
-import { HttpClientModule } from "@angular/common/http";
-import { HomeComponent } from "./components/home/home.component";
-import { AudioPlayerComponent } from "./components/audio-player/audio-player.component";
-import { AppRoutingModule } from "./app-routing.module";
+import { ServiceWorkerModule } from "@angular/service-worker";
+import { ROUTES } from "@live/constants";
+import { ENABLECONSOLELOGGING, ROUTE, UserAgentService } from "@live/services";
 import { InlineSVGModule } from "ng-inline-svg";
 import { Ng5SliderModule } from "ng5-slider";
-import { HeaderComponent } from "./components/header/header.component";
-import { WelcomeComponent } from "./components/welcome/welcome.component";
-import { AboutComponent } from "./components/about/about.component";
-import { UserAgentService, ROUTE, ENABLECONSOLELOGGING } from "@live/services";
-import { ApplicationStateService } from "./services/application-state/application-state.service";
-import { ROUTES } from "@live/constants";
-import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from "../environments/environment";
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { AboutComponent } from "./components/about/about.component";
+import { AudioPlayerComponent } from "./components/audio-player/audio-player.component";
+import { HeaderComponent } from "./components/header/header.component";
+import { HomeComponent } from "./components/home/home.component";
+import { WelcomeComponent } from "./components/welcome/welcome.component";
 
 @NgModule({
   declarations: [
@@ -37,14 +36,6 @@ import { environment } from "../environments/environment";
     ServiceWorkerModule.register("ngsw-worker.js", { enabled: environment.production })
   ],
   providers: [
-    {
-      provide: APP_BOOTSTRAP_LISTENER,
-      useFactory: (applicationStateService: ApplicationStateService) => {
-        return () => applicationStateService.loadApplicationState();
-      },
-      deps: [ApplicationStateService],
-      multi: true
-    },
     UserAgentService,
     {
       provide: APP_BOOTSTRAP_LISTENER,

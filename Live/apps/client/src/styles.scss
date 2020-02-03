@@ -1,7 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
 :root {
-  --container-spacing: 35px;
   --primary-text-color: #424242;
   --primary-elements-color: #424242;
   --inverse-text-color: whitesmoke;
@@ -28,22 +27,11 @@ body {
   box-sizing: border-box;
 }
 
-.container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  padding: 0 var(--container-spacing);
-}
-
-.content {
-  width: 100%;
-  text-align: center;
-  max-width: 300px;
-}
-
 .icon {
   color: lightgray;
   margin: 10px 0;
+}
+
+.clickable {
+  cursor: pointer;
 }

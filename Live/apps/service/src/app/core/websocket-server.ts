@@ -53,16 +53,16 @@ export class WebsocketServer {
     });
   }
 
-  private onSubscribeToStream(socket: Socket, streamId: any): void {
-    const id = this._streamingIds.find(stream => stream === streamId);
+  private onSubscribeToStream(socket: Socket, streamingSourceId: any): void {
+    const id = this._streamingIds.find(stream => stream === streamingSourceId);
 
     if (!id) {
-      this._logger.info(`Subscription for stream ${id} not possible, stream is not started.`);
+      this._logger.info(`Subscription for streaming source ${streamingSourceId} not possible, stream is not started`);
       socket.emit(EVENTS.subscriptionError, "The stream is not started.");
     } else {
       socket.join(id);
 
-      const clientInfo = this.getClientInfo(socket, streamId);
+      const clientInfo = this.getClientInfo(socket, streamingSourceId);
       this._connectionHistoryService.clientSubscribed(clientInfo);
     }
   }

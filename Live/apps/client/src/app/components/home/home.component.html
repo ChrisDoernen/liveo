@@ -1,28 +1,31 @@
 <header></header>
-<div class="container">
-  <div class="content">
-    <ng-container *ngIf="applicationStateService.connectionError$ | async; else activityretrieved">
+<div class="content">
+  <div *ngIf="loading; else loadingDone">
+    Connecting...
+  </div>
+  <ng-template #loadingDone>
+    <ng-container *ngIf="isInErrorState; else activityretrieved">
       <div>
         There seems to be a problem with the WiFi connection. Please make sure
         you are connected to the right network.
       </div>
     </ng-container>
     <ng-template #activityretrieved>
-      <div *ngIf="(applicationStateService.activationState$ | async) === activationState.NoActivation">
+      <div *ngIf="activationState === ActivationState.NoActivation">
         There is no session scheduled right now. We're happy to see you later.
       </div>
-      <div *ngIf="(applicationStateService.activationState$ | async) === activationState.Scheduled">
-        Session {{ (applicationStateService.session$ | async)?.title }} is scheduled to start at
-        {{ (applicationStateService.activation$ | async)?.startTime | date:'H:mm'}} Uhr. Stay tuned!
+      <div *ngIf="activationState === ActivationState.Scheduled">
+        Session {{ applicationState?.session.title }} is scheduled to start at
+        {{ applicationState?.activation.startTime | date:'H:mm'}} Uhr. Stay tuned!
       </div>
-      <div *ngIf="(applicationStateService.activationState$ | async) === activationState.Ended">
+      <div *ngIf="activationState === ActivationState.Ended">
         The session has ended. Thanks for joining us.
       </div>
-      <div *ngIf="(applicationStateService.activationState$ | async) === activationState.Started">
+      <div *ngIf="activationState === ActivationState.Started">
         <div>Live now:</div>
-        <div class="session-title">{{ (applicationStateService.session$ | async)?.title }}</div>
+        <div class="session-title">{{ applicationState?.session.title }}</div>
         <div class="stream-list">
-          <div *ngFor="let stream of (applicationStateService.streams$ | async)" class="stream-list-item">
+          <div *ngFor="let stream of applicationState?.streams" class="stream-list-item">
             <i *ngIf="selectedStream == stream" class="fa fa-check" aria-hidden="true">
             </i>
             <a class="stream-link" (click)="selectStream(stream)" [ngClass]="{selected: selectedStream == stream,
@@ -33,12 +36,11 @@
         </div>
       </div>
     </ng-template>
-    <div *ngIf="(applicationStateService.activationState$ | async) !== activationState.Started" class="refresh-btn"
-      (click)="refresh()">Refresh</div>
-  </div>
-  <div *ngIf="(applicationStateService.activationState$ | async) === activationState.Started" class="content">
-    <audio-player [selectedStream]="selectedStream?.streamingSourceId"></audio-player>
+  </ng-template>
+  <div *ngIf="activationState !== ActivationState.Started" class="refresh-btn clickable" (click)="refresh()">Refresh
   </div>
 </div>
-<div class="about-link"><a (click)="showAboutOverlay()">Info/About</a></div>
+<audio-player *ngIf="activationState === ActivationState.Started" [selectedStream]="selectedStream?.streamingSourceId">
+</audio-player>
+<div class="about-link clickable"><a (click)="showAboutOverlay()">Info/About</a></div>
 <about [(isHidden)]="isAboutOverlayHidden"></about>

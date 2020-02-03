@@ -21,9 +21,9 @@ export declare class L3asPlayer {
 
   /**
    * Establishes a websocket connection to a audio stream and starts playing
-   * @param streamId The id of the stream to connect to
+   * @param streamingSourceId The id of the streaming source to connect to
    */
-  play(streamId: string): void;
+  play(streamingSourceId: string): void;
 
   /**
    * Stops playback and disconnects from the stream

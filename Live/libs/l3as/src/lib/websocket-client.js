@@ -1,11 +1,11 @@
-import io from 'socket.io-client';
 import { ENDPOINTS, EVENTS } from "@live/constants";
+import io from 'socket.io-client';
 
 /*
 	Socket-Client is part of 3LAS (Low Latency Live Audio Streaming)
 	https://github.com/JoJoBond/3LAS
 */
-function WebSocketClient(StreamId, ErrorCallback, ConnectCallback,
+function WebSocketClient(StreamingSourceId, ErrorCallback, ConnectCallback,
   DataReadyCallback, DisconnectCallback, StreamEndedExpectedCallback, StreamEndedUnexpectedCallback) {
   // Check callback argument
   if (typeof ErrorCallback !== 'function')
@@ -41,8 +41,8 @@ function WebSocketClient(StreamId, ErrorCallback, ConnectCallback,
   this._Socket.on(EVENTS.streamEndedUnexpected, this.__Socket_StreamEndedUnexpected.bind(this));
   this._Socket.on("reconnect_failed", this.__Socket_OnClose.bind(this));
 
-  this._Socket.on(StreamId, this.__Socket_OnMessage.bind(this));
-  this._Socket.emit(EVENTS.subscribe, StreamId);
+  this._Socket.on(StreamingSourceId, this.__Socket_OnMessage.bind(this));
+  this._Socket.emit(EVENTS.subscribe, StreamingSourceId);
 }
 
 

@@ -3,7 +3,7 @@ import * as Ffmpeg from "fluent-ffmpeg";
 import * as fs from "fs";
 import { inject, injectable } from "inversify";
 import * as net from "net";
-import * as path from 'path';
+import * as path from "path";
 import { config } from "../../config/service.config";
 import { WebsocketServer } from "../../core/websocket-server";
 import { Logger } from "../logging/logger";
@@ -65,7 +65,7 @@ export class StreamingSource implements IStreamingSource {
       .on("end", () => {
         this._logger.error(`Error ffmpeg command for device ${this.deviceId}`);
         this._onError(new Error("Stream ended unexpectedly"));
-        this.isStreaming = false;
+        this.cleanUp();
       });
   }
 
@@ -99,7 +99,6 @@ export class StreamingSource implements IStreamingSource {
         lines.forEach((line) => {
           if (line.startsWith("lavfi.")) {
             const value = line.substr(13);
-
             this._websocketServer.emitAdminEventMessage(`${EVENTS.streamVolume}-${this.deviceId}`, value);
           }
         });
@@ -118,7 +117,7 @@ export class StreamingSource implements IStreamingSource {
   }
 
   public startStreaming(): void {
-    this._logger.debug(`Start streaming for device ${this.deviceId}.`);
+    this._logger.debug(`Start streaming for device ${this.deviceId} with streaming source id ${this.streamingSourceId}`);
     this._websocketServer.addStream(this.streamingSourceId);
     const socket = this.createSocket();
     this._command = this.initialize(socket);
@@ -127,8 +126,12 @@ export class StreamingSource implements IStreamingSource {
   }
 
   public stopStreaming(): void {
-    this._logger.debug(`Killing child process for device ${this.deviceId}.`);
+    this._logger.debug(`Killing child process for device ${this.deviceId} with streaming source id ${this.streamingSourceId}`);
     this._command.kill("SIGKILL");
+    this.cleanUp();
+  }
+
+  private cleanUp(): void {
     this.closeSocket();
     this._command = null;
     this._websocketServer.removeStream(this.streamingSourceId);

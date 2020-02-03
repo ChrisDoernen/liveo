@@ -14,7 +14,8 @@ export class L3asService {
     private _logger: Logger) {
   }
 
-  public initialize(userAgentInfo: UserAgentInfo,
+  public initialize(
+    userAgentInfo: UserAgentInfo,
     onStreamEndedExpected: () => void,
     onStreamEndedUnexpected: () => void): void {
     this._l3asPlayer = new L3asPlayer(userAgentInfo, onStreamEndedExpected, onStreamEndedUnexpected);
@@ -24,9 +25,9 @@ export class L3asService {
     return this._l3asPlayer.isPlaying;
   }
 
-  public play(streamId: string): void {
+  public play(streamingSourceId: string): void {
     this._logger.info("play");
-    this._l3asPlayer.play(streamId);
+    this._l3asPlayer.play(streamingSourceId);
   }
 
   public stop(): void {

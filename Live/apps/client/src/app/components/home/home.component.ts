@@ -1,18 +1,23 @@
-import { Component } from "@angular/core";
-import { StreamEntity, ActivationState } from "@live/entities";
-import { ApplicationStateEntity } from "@live/entities";
+import { Component, OnInit } from "@angular/core";
+import { ActivationState, ApplicationStateEntity, StreamEntity } from "@live/entities";
+import { ActivationStateService, Logger } from "@live/services";
 import { ApplicationStateService } from "../../services/application-state/application-state.service";
-import { Logger } from "@live/services";
 
 @Component({
   selector: "home",
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.scss"]
 })
-export class HomeComponent {
-  public activationState = ActivationState;
-  public selectedStream: StreamEntity = null;
+export class HomeComponent implements OnInit {
+  public activationState: ActivationState;
   public applicationState: ApplicationStateEntity;
+
+  public loading: boolean;
+  public isInErrorState: boolean;
+
+  public selectedStream: StreamEntity = null;
+
+  public ActivationState = ActivationState;
   private _isAboutOverlayHidden = true;
 
   public set isAboutOverlayHidden(value: boolean) {
@@ -24,8 +29,29 @@ export class HomeComponent {
   }
 
   constructor(
-    private _logger: Logger,
-    public applicationStateService: ApplicationStateService) {
+    private readonly _logger: Logger,
+    private readonly _applicationStateService: ApplicationStateService,
+    private readonly _activationStateService: ActivationStateService) {
+  }
+
+  public ngOnInit(): void {
+    this.getApplicationState();
+  }
+
+  private getApplicationState(): void {
+    this.loading = true;
+    this._logger.info("Loading application state");
+    this._applicationStateService.loadApplicationState()
+      .then((applicationState) => {
+        this.applicationState = applicationState;
+        this.activationState = this._activationStateService.determineActivationState(applicationState.activation);
+        this.loading = false;
+        this.isInErrorState = false;
+      })
+      .catch((error) => {
+        this.loading = false;
+        this.isInErrorState = true;
+      });
   }
 
   public selectStream(stream: StreamEntity): void {
@@ -39,7 +65,7 @@ export class HomeComponent {
   }
 
   public refresh(): void {
-    this.applicationStateService.loadApplicationState();
+    this.getApplicationState();
   }
 
   public showAboutOverlay(): void {
