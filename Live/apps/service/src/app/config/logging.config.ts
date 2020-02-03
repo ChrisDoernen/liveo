@@ -1,55 +1,58 @@
 import * as winston from "winston";
 import { Logger } from "winston";
+import DailyRotateFile from "winston-daily-rotate-file";
 import { config } from "./service.config";
 
 const timeLevelMessage = winston.format.combine(
   winston.format.timestamp(),
   winston.format.align(),
-  winston.format.printf(
-    info => `${info.timestamp} ${info.level} ${info.message}`
-  )
+  winston.format.printf((info) => `${info.timestamp} ${info.level} ${info.message}`)
 );
 
-const options = {
-  serviceLogFile: {
-    level: "debug",
-    filename: config.logfilename,
-    handleExceptions: true,
-    json: true,
-    maxsize: 5242880, // 5MB
-    maxFiles: 5,
-    colorize: false,
-    format: timeLevelMessage
-  },
-  ffmpegLogFile: {
-    level: "debug",
-    filename: config.ffmpeglogfilename,
-    handleExceptions: true,
-    json: true,
-    maxsize: 5242880, // 5MB
-    maxFiles: 5,
-    colorize: false,
-    format: timeLevelMessage
-  },
-  console: {
-    level: config.loglevel,
-    handleExceptions: true,
-    json: false,
-    colorize: true,
-    format: timeLevelMessage
-  }
+const serviceLogFileTransport = new DailyRotateFile({
+  filename: "live-service-%DATE%.log",
+  dirname: config.logdirectory,
+  datePattern: "YYYY-MM-DD",
+  zippedArchive: false,
+  maxFiles: "30d",
+  level: "debug",
+  handleExceptions: true,
+  json: true,
+  format: timeLevelMessage
+});
+
+const ffmpegLogFileTransport = new DailyRotateFile({
+  filename: "live-ffmpeg-%DATE%.log",
+  dirname: config.logdirectory,
+  datePattern: "YYYY-MM-DD",
+  zippedArchive: false,
+  maxFiles: "10d",
+  level: "debug",
+  handleExceptions: true,
+  json: true,
+  format: timeLevelMessage
+});
+
+const consoleTransportOptions = {
+  level: config.loglevel,
+  handleExceptions: true,
+  json: false,
+  colorize: true,
+  format: timeLevelMessage
 };
+
+const consoleTransport = new winston.transports.Console(consoleTransportOptions);
 
 export const ServiceLogger: Logger = winston.createLogger({
   transports: [
-    new winston.transports.Console(options.console),
-    new winston.transports.File(options.serviceLogFile)
+    consoleTransport,
+    serviceLogFileTransport
   ]
 });
 
 export const FfmpegLogger: Logger = winston.createLogger({
   transports: [
-    new winston.transports.Console(options.console),
-    new winston.transports.File(options.ffmpegLogFile)
+    consoleTransport,
+    ffmpegLogFileTransport
   ]
 });

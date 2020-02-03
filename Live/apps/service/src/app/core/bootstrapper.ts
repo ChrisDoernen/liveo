@@ -1,5 +1,6 @@
 import * as Ffmpeg from "fluent-ffmpeg";
 import { Container, inject, injectable } from "inversify";
+import { EOL } from "os";
 import { environment } from "../../environments/environment";
 import { config } from "../config/service.config";
 import { AutoActivationService } from "../services/activation/auto-activation-service";
@@ -38,14 +39,15 @@ export class Bootstrapper {
     this._logger.debug(`Ffmpeg: ${config.ffmpegPath}`);
     this._logger.debug(`Working directory: ${config.workingDirectory}`);
 
-    const ffmpegVersion = await this._processExecutionService.executeAsync(`"${config.ffmpegPath}" -version`);
+    const ffmpegVersionOutput = await this._processExecutionService.executeAsync(`"${config.ffmpegPath}" -version`);
+    const ffmpegVersion = ffmpegVersionOutput.split(EOL)[0];
     this._logger.debug(`Ffmpeg version: ${ffmpegVersion}`);
 
     Ffmpeg.setFfmpegPath(config.ffmpegPath);
 
     this._dataService.initializeDatabase();
     await this._deviceService.initialize();
-    
+
     const server = this._webServer.initializeAndListen(container);
     this._websocketServer.initializeAndListen(server);
     this._systemMonitoringServcie.startMonitoring();
