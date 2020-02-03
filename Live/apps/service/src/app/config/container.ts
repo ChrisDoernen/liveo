@@ -7,8 +7,6 @@ import { ActivationService } from "../services/activation/activation-service";
 import { AutoActivationService } from "../services/activation/auto-activation-service";
 import { AdminService } from "../services/admin/admin.service";
 import { ApplicationStateService } from "../services/application-state/application-state.service";
-import { PlatformConstants } from "../services/plattform-constants/i-platform-constants";
-import { plattformConstants } from "../services/plattform-constants/plattformConstants";
 import { AuthenticationService } from "../services/authentication/authentication-service";
 import { IUserProvider } from "../services/authentication/i-user-provider";
 import { DataService } from "../services/data/data-service";
@@ -23,6 +21,8 @@ import { WindowsDeviceDetector } from "../services/devices/windows-device-detect
 import { IdGenerator } from "../services/id-generation/id-generator";
 import { Logger } from "../services/logging/logger";
 import { NotificationService } from "../services/notifications/notification-service";
+import { PlatformConstants } from "../services/platform-constants/i-platform-constants";
+import { PLATFORM_CONSTANTS } from "../services/platform-constants/platformConstants";
 import { ProcessExecutionService } from "../services/process-execution/process-execution-service";
 import { Scheduler } from "../services/scheduling/scheduler";
 import { ISessionRepository } from "../services/sessions/i-session-repository";
@@ -56,19 +56,19 @@ switch (config.os) {
   case "linux": {
     container.bind<ShutdownService>("ShutdownService").to(UnixShutdownService);
     container.bind<DeviceDetector>("DeviceDetector").to(LinuxDeviceDetector).inSingletonScope();
-    container.bind<PlatformConstants>("AudioSystem").toConstantValue(plattformConstants.linux);
+    container.bind<PlatformConstants>("PlattformConstants").toConstantValue(PLATFORM_CONSTANTS.linux);
     break;
   }
   case "darwin": {
     container.bind<ShutdownService>("ShutdownService").to(UnixShutdownService);
     container.bind<DeviceDetector>("DeviceDetector").to(MacOSDeviceDetector).inSingletonScope();
-    container.bind<PlatformConstants>("AudioSystem").toConstantValue(plattformConstants.darwin);
+    container.bind<PlatformConstants>("PlattformConstants").toConstantValue(PLATFORM_CONSTANTS.darwin);
     break;
   }
   case "win32": {
     container.bind<ShutdownService>("ShutdownService").to(WindowsShutdownService);
     container.bind<DeviceDetector>("DeviceDetector").to(WindowsDeviceDetector).inSingletonScope();
-    container.bind<PlatformConstants>("AudioSystem").toConstantValue(plattformConstants.win32);
+    container.bind<PlatformConstants>("PlattformConstants").toConstantValue(PLATFORM_CONSTANTS.win32);
     break;
   }
   default: {

@@ -1,8 +1,9 @@
 import { DeviceEntity, DeviceType } from "@live/entities";
 import { inject, injectable } from "inversify";
 import { EOL } from "os";
-import { PlatformConstants } from "../plattform-constants/i-platform-constants";
+import { IdGenerator } from "../id-generation/id-generator";
 import { Logger } from "../logging/logger";
+import { PlatformConstants } from "../platform-constants/i-platform-constants";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { Device } from "./device";
 import { DeviceDetector } from "./device-detector";
@@ -16,10 +17,11 @@ export class LinuxDeviceDetector extends DeviceDetector {
 
   constructor(
     @inject("Logger") logger: Logger,
-    @inject("AudioSystem") private _audioSystem: PlatformConstants,
+    @inject("PlattformConstants") private _plattformConstants: PlatformConstants,
     @inject("ProcessExecutionService") processExecutionService: ProcessExecutionService,
+    @inject("IdGenerator") idGenerator: IdGenerator,
     @inject("DeviceFactory") deviceFactory: (deviceData: DeviceEntity, deviceState: DeviceState) => Device) {
-    super(logger, processExecutionService, deviceFactory);
+    super(logger, processExecutionService, idGenerator, deviceFactory);
     this.listDevicesCommand = "arecord -L";
   }
 
@@ -27,12 +29,12 @@ export class LinuxDeviceDetector extends DeviceDetector {
     const lines = response.split(EOL);
 
     return lines
-      .filter((line) => line.startsWith(this._audioSystem.devicePrefix))
+      .filter((line) => line.startsWith(this._plattformConstants.devicePrefix))
       .map((line) => this.parseDevice(line));
   }
 
   private parseDevice(line: string): Device {
-    const id = line.replace(this._audioSystem.devicePrefix, "");
+    const id = line.replace(this._plattformConstants.devicePrefix, "");
     const description = line;
 
     return this.instantiateDevice(id, description, DeviceType.Audio, DeviceState.Available);

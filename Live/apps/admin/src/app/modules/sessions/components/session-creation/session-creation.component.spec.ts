@@ -10,11 +10,11 @@ import createMockInstance from "jest-create-mock-instance";
 import { AngularMaterialModule } from "../../../angular-material/angular-material.module";
 import { TitleBarComponent } from "../../../shared/components/title-bar/title-bar.component";
 import { SessionService } from "../../../shared/services/session/session.service";
-import { StreamCreationComponent } from "./session-creation.component";
+import { SessionCreationComponent } from "./session-creation.component";
 
-describe("StreamCreationComponent", () => {
-  let component: StreamCreationComponent;
-  let fixture: ComponentFixture<StreamCreationComponent>;
+describe("SessionCreationComponent", () => {
+  let component: SessionCreationComponent;
+  let fixture: ComponentFixture<SessionCreationComponent>;
   let endpointService: jest.Mocked<EndpointService>;
   let sessionService: SessionService;
 
@@ -33,7 +33,7 @@ describe("StreamCreationComponent", () => {
         AngularMaterialModule
       ],
       declarations: [
-        StreamCreationComponent,
+        SessionCreationComponent,
         TitleBarComponent
       ],
       providers: [
@@ -45,7 +45,7 @@ describe("StreamCreationComponent", () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(StreamCreationComponent);
+    fixture = TestBed.createComponent(SessionCreationComponent);
     component = fixture.componentInstance;
   });
 

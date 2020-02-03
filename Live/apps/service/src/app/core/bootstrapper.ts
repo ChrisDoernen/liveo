@@ -7,8 +7,6 @@ import { DataService } from "../services/data/data-service";
 import { DeviceService } from "../services/devices/device.service";
 import { Logger } from "../services/logging/logger";
 import { ProcessExecutionService } from "../services/process-execution/process-execution-service";
-import { SessionService } from "../services/sessions/session-service";
-import { StreamService } from "../services/streams/stream-service";
 import { SystemMonitoringService } from "../services/system-monitoring/system-monitoring-service";
 import { WebServer } from "./web-server";
 import { WebsocketServer } from "./websocket-server";
@@ -18,8 +16,6 @@ export class Bootstrapper {
   constructor(
     @inject("Logger") private _logger: Logger,
     @inject("DeviceService") private _deviceService: DeviceService,
-    @inject("StreamService") private _streamService: StreamService,
-    @inject("SessionService") private _sessionService: SessionService,
     @inject("AutoActivationService") private _autoActivationService: AutoActivationService,
     @inject("WebServer") private _webServer: WebServer,
     @inject("WebsocketServer") private _websocketServer: WebsocketServer,
