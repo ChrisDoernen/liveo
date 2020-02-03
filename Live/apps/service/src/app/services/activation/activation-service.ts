@@ -1,5 +1,6 @@
 import { ActivationEntity, Shutdown } from "@live/entities";
 import { inject, injectable } from "inversify";
+import { BehaviorSubject } from "rxjs";
 import { Logger } from "../logging/logger";
 import { Scheduler } from "../scheduling/scheduler";
 import { Session } from "../sessions/session";
@@ -12,15 +13,16 @@ export class ActivationService {
 
   private _activation: ActivationEntity;
   private _activeSession: Session;
-  private _sessionStartJobId = "SESSION_START_JOB";
-  private _sessionStopJobId = "SESSION_STOP_JOB";
+  private _sessionStartJobId: string;
+  private _sessionStopJobId: string;
+  public acitavtion$ = new BehaviorSubject<ActivationEntity>(null);
 
   constructor(
-    @inject("Logger") private _logger: Logger,
-    @inject("SessionService") private _sessionService: SessionService,
-    @inject("Scheduler") private _scheduler: Scheduler,
-    @inject("ShutdownService") private _shutdownService: ShutdownService,
-    @inject("TimeService") private _timeService: TimeService) {
+    @inject("Logger") private readonly _logger: Logger,
+    @inject("SessionService") private readonly _sessionService: SessionService,
+    @inject("Scheduler") private readonly _scheduler: Scheduler,
+    @inject("ShutdownService") private readonly _shutdownService: ShutdownService,
+    @inject("TimeService") private readonly _timeService: TimeService) {
   }
 
   public setActivation(activation: ActivationEntity): ActivationEntity {
@@ -34,19 +36,15 @@ export class ActivationService {
 
     const session = this._sessionService.getSession(activation.sessionId);
 
-    if (!session.hasValidStreams) {
-      throw new Error(`Can not set activation: All streams of session ${session.id} have invalid devices.`);
-    }
-
     if (activation.startTime) {
-      this._scheduler.schedule(this._sessionStartJobId, new Date(activation.startTime), () => session.start());
+      this._sessionStartJobId = this._scheduler.schedule(new Date(activation.startTime), () => session.start());
     } else {
       session.start();
       activation.startTime = new Date(this._timeService.now()).toISOString();
     }
 
     if (activation.endTime) {
-      this._scheduler.schedule(this._sessionStopJobId, new Date(activation.endTime), () => session.stop());
+      this._sessionStopJobId = this._scheduler.schedule(new Date(activation.endTime), () => session.stop());
     }
 
     if (activation.shutdownTime) {
@@ -54,6 +52,7 @@ export class ActivationService {
     }
 
     this._activation = activation;
+    this.acitavtion$.next(activation);
     this._activeSession = session;
     this._logger.debug("Activation set");
 
@@ -100,6 +99,7 @@ export class ActivationService {
     }
 
     this._activation = null;
+    this.acitavtion$.next(null);
     this._activeSession = null;
     this._logger.debug("Activation deleted");
 

@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Shutdown } from "@live/entities";
 import { EndpointService } from "@live/services";
-import { AuthenticationService } from "../authentication/authentication.service";
+import { AuthenticationService } from "../../modules/shared/services/authentication/authentication.service";
 import { ConnectionStateService } from "../connection-state/connection-state-service";
 
 @Injectable({

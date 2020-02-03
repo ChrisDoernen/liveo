@@ -7,6 +7,7 @@ export class StreamEntity {
     public description: string,
     public countryCode: string,
     public deviceId: string,
+    public streamingSourceId: string,
     public streamType: StreamType) {
   }
 }

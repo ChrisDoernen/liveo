@@ -2,8 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DeviceEntity, StreamEntity, StreamType } from "@live/entities";
-import { DevicesService } from "../../../../services/devices/devices.service";
-import { StreamService } from "../../../../services/stream/stream.service";
+import { DevicesService } from "../../../shared/services/devices/devices.service";
+import { StreamService } from "../../../shared/services/stream/stream.service";
 
 @Component({
   selector: "stream-creation",
@@ -39,8 +39,9 @@ export class StreamCreationComponent implements OnInit {
   private getStream(): StreamEntity {
     const title = this.titleFormGroup.value.titleCtrl;
     const deviceId = this.deviceIdFormGroup.value.deviceIdCtrl;
+    const streamingSourceId = this.devices.find((device) => device.id === deviceId).streamingSourceId;
 
-    return new StreamEntity(null, title, null, null, deviceId, StreamType.Audio);
+    return new StreamEntity(null, title, null, null, deviceId, streamingSourceId, StreamType.Audio);
   }
 
   public saveStream(): void {

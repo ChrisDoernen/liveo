@@ -1,7 +1,7 @@
+import { Shutdown } from "@live/entities";
 import { inject, injectable } from "inversify";
 import { Logger } from "../logging/logger";
 import { Scheduler } from "../scheduling/scheduler";
-import { Shutdown } from "@live/entities";
 
 /**
  * Base class for machine shutdown
@@ -10,11 +10,11 @@ import { Shutdown } from "@live/entities";
 export abstract class ShutdownService {
 
   private _shutdown: Shutdown = null;
-  private _shutdownJobId = "SHUTDOWN_JOB";
+  private _shutdownJobId: string;
 
   constructor(
     @inject("Logger") protected logger: Logger,
-    @inject("Scheduler") private _scheduler: Scheduler) {
+    @inject("Scheduler") private readonly _scheduler: Scheduler) {
   }
 
   public setShutdown(shutdown: Shutdown): void {
@@ -25,7 +25,7 @@ export abstract class ShutdownService {
     }
 
     if (shutdown.shutdownTime) {
-      this._scheduler.schedule(this._shutdownJobId, new Date(shutdown.shutdownTime), this.shutdown.bind(this));
+      this._shutdownJobId = this._scheduler.schedule(new Date(shutdown.shutdownTime), this.shutdown.bind(this));
       this._shutdown = shutdown;
     } else {
       this.executeShutdown();

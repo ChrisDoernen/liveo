@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { AuthenticationService } from "../../services/authentication/authentication.service";
+import { AuthenticationService } from "../../modules/shared/services/authentication/authentication.service";
 
 @Component({
   selector: "login",
@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   public loading = false;
   public submitted = false;
   public returnUrl: string;
-  public error = "";
+  public error: any;
 
   public get form() {
     return this.loginForm.controls;
@@ -51,13 +51,11 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this._authenticationService
       .login(this.form.username.value, this.form.password.value)
-      .subscribe(
-        data => {
-          this._router.navigate([this.returnUrl]);
-        },
-        error => {
-          this.error = error;
-          this.loading = false;
-        });
+      .then((data) => {
+        this._router.navigate([this.returnUrl]);
+      }).catch((error) => {
+        this.error = error;
+        this.loading = false;
+      });
   }
 }

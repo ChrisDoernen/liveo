@@ -1,8 +1,10 @@
+// tslint:disable: no-use-before-declare
 import { DeviceEntity } from "@live/entities";
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
-import { AudioSystem } from "../audio-system/audio-system";
+import { IdGenerator } from "../id-generation/id-generator";
 import { Logger } from "../logging/logger";
+import { PLATFORM_CONSTANTS } from "../platform-constants/platformConstants";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { Device } from "./device";
 import { DeviceState } from "./device-state";
@@ -11,16 +13,18 @@ import { WindowsDeviceDetector } from "./windows-device-detector";
 describe("WindowsDeviceDetector", () => {
   let windowsDeviceDetector: WindowsDeviceDetector;
   let processExecutionService: jest.Mocked<ProcessExecutionService>;
-  const audioSystem: AudioSystem = { audioSystem: "dshow", devicePrefix: "audio=" };
+  let idGenerator: jest.Mocked<IdGenerator>;
+  const platformConstants = PLATFORM_CONSTANTS.win32;
   let deviceFactory: any;
   const ffmpegPath = "ffmpeg";
 
   beforeEach(() => {
     const logger = createMockInstance(Logger);
+    idGenerator = createMockInstance(IdGenerator);
     processExecutionService = createMockInstance(ProcessExecutionService);
-    deviceFactory = jest.fn((deviceData: DeviceEntity, deviceState: DeviceState) => new Device(logger, deviceData, deviceState));
+    deviceFactory = jest.fn((deviceData: DeviceEntity, deviceState: DeviceState) => new Device(logger, jest.fn(), deviceData, deviceState));
 
-    windowsDeviceDetector = new WindowsDeviceDetector(logger, audioSystem, ffmpegPath, processExecutionService, deviceFactory);
+    windowsDeviceDetector = new WindowsDeviceDetector(logger, platformConstants, ffmpegPath, processExecutionService, idGenerator, deviceFactory);
   });
 
   it("should construct", async () => {
@@ -28,13 +32,10 @@ describe("WindowsDeviceDetector", () => {
   });
 
   it("should parse devices correctly", async () => {
-    jest.spyOn(processExecutionService, "execute")
-      .mockImplementation((command: string, callback: any) => callback(null, null, output));
-    const expectedCommand = `${ffmpegPath} -f ${audioSystem.audioSystem} -list_devices true -i '' -hide_banner`;
+    jest.spyOn(processExecutionService, "execute").mockImplementation((command: string, callback: any) => callback(null, null, output));
 
-    await windowsDeviceDetector.runDetection();
+    const devices = await windowsDeviceDetector.runDetection();
 
-    const devices = windowsDeviceDetector.devices;
     expect(devices.length).toBe(3);
     expect(devices[0].entity.id).toBe("USB Boot");
     expect(devices[1].entity.id).toBe("Mikrofon (USB Audio Device)");

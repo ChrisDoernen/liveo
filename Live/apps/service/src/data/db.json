@@ -4,37 +4,43 @@
       "id": "tx331xqq",
       "title": "Originalton",
       "countryCode": "en",
-      "deviceId": "CARD=PCH,DEV=0"
+      "deviceId": "CARD=PCH,DEV=0",
+      "streamingSourceId": "7cb7bfa9"
     },
     {
       "id": "paxdnp3r",
       "title": "Deutsch",
       "countryCode": "de",
-      "deviceId": "CARD=USB1,DEV=0"
+      "deviceId": "CARD=USB1,DEV=0",
+      "streamingSourceId": "8bca2e65"
     },
     {
       "id": "vqq7ajgb",
       "title": "Deutsch",
       "countryCode": "de",
-      "deviceId": "Mikrofon (USB Audio Device)"
+      "deviceId": "Mikrofon (USB Audio Device)",
+      "streamingSourceId": "6f70ccd7"
     },
     {
       "id": "lc5wzbl6",
       "title": "Englisch",
       "countryCode": "de",
-      "deviceId": "Mikrofonarray (Realtek High Definition Audio)"
+      "deviceId": "Mikrofonarray (Realtek High Definition Audio)",
+      "streamingSourceId": "ad3fb65e"
     },
     {
       "id": "6t3y5cew",
       "title": "Made to Love",
       "countryCode": "de",
-      "deviceId": "/home/chris/Music/MadeToLove.mp3"
+      "deviceId": "/home/chris/Music/MadeToLove.mp3",
+      "streamingSourceId": "b525eec8"
     },
     {
       "id": "5vo7au6q",
       "title": "Made to Love",
       "countryCode": "de",
-      "deviceId": "/Users/christiandoernen/Music/MadeToLove.mp3"
+      "deviceId": "/Users/christiandoernen/Music/MadeToLove.mp3",
+      "streamingSourceId": "01c45d6d"
     }
   ],
   "sessions": [

@@ -1,5 +1,6 @@
 import { DeviceEntity, DeviceType } from "@live/entities";
 import { inject, injectable } from "inversify";
+import { IdGenerator } from "../id-generation/id-generator";
 import { Logger } from "../logging/logger";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { Device } from "./device";
@@ -15,9 +16,10 @@ export class SimulationDeviceDetector extends DeviceDetector {
   constructor(
     @inject("Logger") logger: Logger,
     @inject("ProcessExecutionService") processExecutionService: ProcessExecutionService,
+    @inject("IdGenerator") idGenerator: IdGenerator,
     @inject("DeviceFactory") deviceFactory: (deviceData: DeviceEntity, deviceState: DeviceState) => Device) {
     logger.warn("Instantiating simulation device detector.");
-    super(logger, processExecutionService, deviceFactory);
+    super(logger, processExecutionService, idGenerator, deviceFactory);
     this.listDevicesCommand = "echo simulation";
   }
 

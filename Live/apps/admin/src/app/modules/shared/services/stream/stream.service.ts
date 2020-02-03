@@ -7,6 +7,7 @@ import { EndpointService } from "@live/services";
   providedIn: "root"
 })
 export class StreamService {
+
   constructor(
     private _httpClient: HttpClient,
     private _endpointService: EndpointService) {

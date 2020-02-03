@@ -1,5 +1,5 @@
+import { ChildProcess, exec, spawn } from "child_process";
 import { injectable } from "inversify";
-import { exec, spawn, ChildProcess } from "child_process";
 
 /**
  * Wrapper for child_process
@@ -13,6 +13,18 @@ export class ProcessExecutionService {
    */
   public execute(command: string, callback?: (error: any, stdout: string, stderr: string) => void): void {
     exec(command, callback);
+  }
+
+  public executeAsync(command: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      exec(command, (error, stdout, stderr) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(stdout);
+        }
+      });
+    })
   }
 
   public spawn(command: string, args: string[]): ChildProcess {

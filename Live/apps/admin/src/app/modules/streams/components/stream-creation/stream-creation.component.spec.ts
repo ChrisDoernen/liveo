@@ -7,9 +7,9 @@ import { ActivatedRoute } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { EndpointService, Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
-import { SessionService } from "../../../../services/session/session.service";
 import { AngularMaterialModule } from "../../../angular-material/angular-material.module";
-import { TitleBarComponent } from "../../../shared/components/title-bar/title-bar.component";
+import { SessionService } from "../../../shared/services/session/session.service";
+import { SharedModule } from "../../../shared/shared.module";
 import { StreamCreationComponent } from "./stream-creation.component";
 
 describe("StreamCreationComponent", () => {
@@ -30,11 +30,11 @@ describe("StreamCreationComponent", () => {
         FormsModule,
         ReactiveFormsModule,
         NoopAnimationsModule,
-        AngularMaterialModule
+        AngularMaterialModule,
+        SharedModule
       ],
       declarations: [
-        StreamCreationComponent,
-        TitleBarComponent
+        StreamCreationComponent
       ],
       providers: [
         { provide: MatDialog, useValue: jest.fn() },

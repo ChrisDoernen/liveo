@@ -1,3 +1,4 @@
+// Path has to be required, otherwise Jest can not cope
 const path = require("path");
 import { environment } from "../../environments/environment";
 
@@ -39,7 +40,7 @@ export const config = {
   executable: process.env.EXECUTABLE ? process.env.EXECUTABLE === "true" : environment.executable,
   database: process.env.DBFILE ? process.env.DBFILE : `${workingDirectory}/data/db.json`,
   loglevel: process.env.LOGLEVEL ? process.env.LOGLEVEL : "debug",
-  logfilename: process.env.LOGFILE ? process.env.LOGFILE : `${workingDirectory}/logs/live-service.log`,
-  ffmpeglogfilename: process.env.FFMPEGLOGFILE ? process.env.FFMPEGLOGFILE : `${workingDirectory}/logs/live-ffmpeg.log`,
-  ffmpegPath: process.env.FFMPEGPATH ? process.env.FFMPEGPATH : ffmpegExePath
+  logdirectory: process.env.LOGDIRECTORY ? process.env.LOGDIRECTORY : path.join(workingDirectory, "logs"),
+  ffmpegPath: process.env.FFMPEGPATH ? process.env.FFMPEGPATH : ffmpegExePath,
+  workingDirectory
 };

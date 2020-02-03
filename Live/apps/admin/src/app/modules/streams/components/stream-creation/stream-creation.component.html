@@ -16,26 +16,21 @@
           <mat-label>Stream title</mat-label>
           <input matInput placeholder="English" formControlName="titleCtrl" required>
         </mat-form-field>
-        <div>
-          <button mat-button matStepperNext>Next</button>
-        </div>
       </form>
+      <button class="next-btn" mat-button matStepperNext>Next</button>
     </mat-step>
     <mat-step [stepControl]="deviceIdFormGroup">
       <form [formGroup]="deviceIdFormGroup">
         <ng-template matStepLabel>Select input device</ng-template>
-        <mat-form-field>
-          <mat-label>Device</mat-label>
-          <mat-select formControlName="deviceIdCtrl" required>
-            <mat-option *ngFor="let device of devices" [value]="device.id">
-              {{device.id}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperNext>Next</button>
-        </div>
+        <mat-radio-group class="example-radio-group" formControlName="deviceIdCtrl">
+          <mat-radio-button class="example-radio-button" *ngFor="let device of devices" [value]="device.id">
+            <div class="device-radio-btn">{{device.id}} <simple-volume-meter [streamingId]=device.id>
+              </simple-volume-meter>
+            </div>
+          </mat-radio-button>
+        </mat-radio-group>
       </form>
+      <button class="next-btn" mat-button matStepperNext>Next</button>
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Done</ng-template>

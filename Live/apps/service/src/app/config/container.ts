@@ -5,21 +5,24 @@ import { WebsocketServer } from "../core/websocket-server";
 import { AuthenticationMiddleware } from "../middleware/authentication/authentication.middleware";
 import { ActivationService } from "../services/activation/activation-service";
 import { AutoActivationService } from "../services/activation/auto-activation-service";
+import { AdminService } from "../services/admin/admin.service";
 import { ApplicationStateService } from "../services/application-state/application-state.service";
-import { AudioSystem } from "../services/audio-system/audio-system";
-import { AudioSystems } from "../services/audio-system/audio-systems";
 import { AuthenticationService } from "../services/authentication/authentication-service";
 import { IUserProvider } from "../services/authentication/i-user-provider";
 import { DataService } from "../services/data/data-service";
 import { Device } from "../services/devices/device";
 import { DeviceDetector } from "../services/devices/device-detector";
 import { DeviceFactory } from "../services/devices/device-factory";
+import { DeviceService } from "../services/devices/device.service";
 import { LinuxDeviceDetector } from "../services/devices/linux-device-detector";
 import { MacOSDeviceDetector } from "../services/devices/macos-device-detector";
 import { SimulationDeviceDetector } from "../services/devices/simulation-device-detector";
 import { WindowsDeviceDetector } from "../services/devices/windows-device-detector";
+import { IdGenerator } from "../services/id-generation/id-generator";
 import { Logger } from "../services/logging/logger";
 import { NotificationService } from "../services/notifications/notification-service";
+import { PlatformConstants } from "../services/platform-constants/i-platform-constants";
+import { PLATFORM_CONSTANTS } from "../services/platform-constants/platformConstants";
 import { ProcessExecutionService } from "../services/process-execution/process-execution-service";
 import { Scheduler } from "../services/scheduling/scheduler";
 import { ISessionRepository } from "../services/sessions/i-session-repository";
@@ -53,19 +56,19 @@ switch (config.os) {
   case "linux": {
     container.bind<ShutdownService>("ShutdownService").to(UnixShutdownService);
     container.bind<DeviceDetector>("DeviceDetector").to(LinuxDeviceDetector).inSingletonScope();
-    container.bind<AudioSystem>("AudioSystem").toConstantValue(AudioSystems.linux);
+    container.bind<PlatformConstants>("PlattformConstants").toConstantValue(PLATFORM_CONSTANTS.linux);
     break;
   }
   case "darwin": {
     container.bind<ShutdownService>("ShutdownService").to(UnixShutdownService);
     container.bind<DeviceDetector>("DeviceDetector").to(MacOSDeviceDetector).inSingletonScope();
-    container.bind<AudioSystem>("AudioSystem").toConstantValue(AudioSystems.darwin);
+    container.bind<PlatformConstants>("PlattformConstants").toConstantValue(PLATFORM_CONSTANTS.darwin);
     break;
   }
   case "win32": {
     container.bind<ShutdownService>("ShutdownService").to(WindowsShutdownService);
     container.bind<DeviceDetector>("DeviceDetector").to(WindowsDeviceDetector).inSingletonScope();
-    container.bind<AudioSystem>("AudioSystem").toConstantValue(AudioSystems.win32);
+    container.bind<PlatformConstants>("PlattformConstants").toConstantValue(PLATFORM_CONSTANTS.win32);
     break;
   }
   default: {
@@ -95,7 +98,8 @@ container.bind<interfaces.Factory<Device>>("DeviceFactory").toFactory(DeviceFact
 container.bind<interfaces.Factory<Stream>>("StreamFactory").toFactory(StreamFactory);
 container.bind<interfaces.Factory<Session>>("SessionFactory").toFactory(SessionFactory);
 
-const dataService = new DataService(new Logger(ServiceLogger));
+container.bind<IdGenerator>("IdGenerator").to(IdGenerator);
+const dataService = new DataService(new Logger(ServiceLogger), new IdGenerator());
 container.bind<DataService>("DataService").toConstantValue(dataService);
 
 container.bind<ISessionRepository>("ISessionRepository").toConstantValue(dataService);
@@ -113,7 +117,9 @@ container.bind<Logger>("Logger").toConstantValue(new Logger(ServiceLogger));
 container.bind<Logger>("FfmpegLogger").toConstantValue(new Logger(FfmpegLogger));
 container.bind<string>("FfmpegPath").toConstantValue(config.ffmpegPath);
 
+container.bind<AdminService>("AdminService").to(AdminService).inSingletonScope();
 container.bind<StreamService>("StreamService").to(StreamService).inSingletonScope();
+container.bind<DeviceService>("DeviceService").to(DeviceService).inSingletonScope();
 container.bind<SessionService>("SessionService").to(SessionService).inSingletonScope();
 container.bind<SettingsService>("SettingsService").to(SettingsService);
 container.bind<WebServer>("WebServer").to(WebServer).inSingletonScope();

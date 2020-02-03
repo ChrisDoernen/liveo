@@ -1,11 +1,12 @@
-import "reflect-metadata";
-import { AutoActivationService } from "./auto-activation-service";
-import { ActivationService } from "./activation-service";
-import { Logger } from "../logging/logger";
-import { SettingsService } from "../settings/settings-service";
+import { ActivationEntity } from "@live/entities";
+import { SettingsEntityBuilder } from "@live/test-utilities";
 import { Container } from "inversify";
 import createMockInstance from "jest-create-mock-instance";
-import { SettingsEntity, ActivationEntity } from "@live/entities";
+import "reflect-metadata";
+import { Logger } from "../logging/logger";
+import { SettingsService } from "../settings/settings-service";
+import { ActivationService } from "./activation-service";
+import { AutoActivationService } from "./auto-activation-service";
 
 describe("AutoActivationService", () => {
   let autoActivationService: AutoActivationService;
@@ -32,7 +33,8 @@ describe("AutoActivationService", () => {
   });
 
   it("should not do auto activation when auto activation is disabled", () => {
-    settingsService.getSettings.mockReturnValue(new SettingsEntity("act5", false));
+    const settings = new SettingsEntityBuilder().withdefaultSession("act5pnsh").withAutoActivationEnabled(false).build();
+    settingsService.getSettings.mockReturnValue(settings);
 
     autoActivationService.performAutoActivation();
 
@@ -40,9 +42,11 @@ describe("AutoActivationService", () => {
   });
 
   it("should do auto activation when auto activation is enabled", () => {
-    const defaultSession = "act5";
+    const defaultSession = "act5b672";
     const expectedActivation = new ActivationEntity(defaultSession);
-    settingsService.getSettings.mockReturnValue(new SettingsEntity(defaultSession, true));
+    const settings = new SettingsEntityBuilder().withdefaultSession(defaultSession).withAutoActivationEnabled(true).build();
+
+    settingsService.getSettings.mockReturnValue(settings);
 
     autoActivationService.performAutoActivation();
 

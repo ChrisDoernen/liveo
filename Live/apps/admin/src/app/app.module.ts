@@ -1,4 +1,3 @@
-import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { APP_BOOTSTRAP_LISTENER, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -18,8 +17,6 @@ import { OfflineMessageComponent } from "./components/offline-message/offline-me
 import { ShutdownDialogComponent } from "./components/shutdown-dialog/shutdown-dialog.component";
 import { ShutdownComponent } from "./components/shutdown/shutdown.component";
 import { WelcomeComponent } from "./components/welcome/welcome.component";
-import { AuthenticationInterceptor } from "./interceptors/authentication.interceptor";
-import { ErrorInterceptor } from "./interceptors/error.interceptor";
 import { SharedModule } from "./modules/shared/shared.module";
 import { InitializationService } from "./services/initialization/initialization.service";
 
@@ -48,14 +45,6 @@ import { InitializationService } from "./services/initialization/initialization.
     ShutdownDialogComponent
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthenticationInterceptor, multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ErrorInterceptor, multi: true
-    },
     {
       provide: APP_BOOTSTRAP_LISTENER,
       useFactory: (initializationService: InitializationService) => {

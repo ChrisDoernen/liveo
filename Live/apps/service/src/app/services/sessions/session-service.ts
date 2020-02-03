@@ -13,9 +13,9 @@ import { Session } from "./session";
 export class SessionService {
 
   constructor(
-    @inject("Logger") private _logger: Logger,
-    @inject("ISessionRepository") private _sessionRepository: ISessionRepository,
-    @inject("StreamService") private _streamService: StreamService,
+    @inject("Logger") private readonly _logger: Logger,
+    @inject("ISessionRepository") private readonly _sessionRepository: ISessionRepository,
+    @inject("StreamService") private readonly _streamService: StreamService,
     @inject("SessionFactory") private sessionFactory: (sessionEntity: SessionEntity, streams: Stream[]) => Session) {
   }
 
@@ -29,6 +29,7 @@ export class SessionService {
 
     return this.sessionFactory(sessionEntity, streams);
   }
+  
   public validateSessionExists(id: string): void {
     const sessionEntity = this.getSessionEntity(id);
     if (!sessionEntity) {

@@ -65,7 +65,6 @@ describe("ActivationService", () => {
   it("should set and delete activation correctly when only session id is given", () => {
     timeService.now.mockReturnValue(new Date("2019-08-18T12:27:13+02:00"));
     const session = createMockInstance(Session);
-    Object.defineProperty(session, "hasValidStreams", { get: () => true });
     sessionService.getSession.mockReturnValue(session);
     const activation = new ActivationEntity("b8s6");
 
@@ -81,9 +80,11 @@ describe("ActivationService", () => {
   });
 
   it("should set and delete activation correctly when session id and time starting are given", () => {
+    const jobId = "id";
+    scheduler.schedule.mockReturnValue(jobId);
+
     timeService.now.mockReturnValue(new Date("2019-08-18T12:26:13+02:00"));
     const session = createMockInstance(Session);
-    Object.defineProperty(session, "hasValidStreams", { get: () => true });
     sessionService.getSession.mockReturnValue(session);
     const activation = new ActivationEntity("b8s6", "2019-08-18T12:27:13+02:00");
 
@@ -94,7 +95,7 @@ describe("ActivationService", () => {
     expect(activationService.getActivationEntity()).toBe(activation);
 
     activationService.deleteActivation();
-    expect(scheduler.cancelJob).toBeCalledWith("SESSION_START_JOB");
+    expect(scheduler.cancelJob).toBeCalledWith(jobId);
     expect(activationService.getActivationEntity()).toBe(null);
   });
 });

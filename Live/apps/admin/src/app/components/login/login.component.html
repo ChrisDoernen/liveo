@@ -11,6 +11,7 @@
         <input matInput placeholder="Password" formControlName="password" type="password" name="password"
           autocomplete="current-password" required>
       </mat-form-field>
+      <div *ngIf="error">Login failed. Please try again.</div>
       <mat-card-actions>
         <button type="submit" mat-raised-button (click)="login()" color="primary"
           [disabled]="loginForm.invalid">Login</button>

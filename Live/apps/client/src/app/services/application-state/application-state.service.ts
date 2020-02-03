@@ -1,8 +1,8 @@
-import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { ActivationEntity, ActivationState, ApplicationStateEntity, SessionEntity, StreamEntity } from "@live/entities";
+import { ActivationStateService, EndpointService, Logger } from "@live/services";
 import { ReplaySubject } from "rxjs";
-import { EndpointService, ActivationStateService, Logger } from "@live/services";
-import { ApplicationStateEntity, ActivationState, ActivationEntity, SessionEntity, StreamEntity } from "@live/entities";
 
 /**
  * Service that hols the application state.
@@ -11,6 +11,7 @@ import { ApplicationStateEntity, ActivationState, ActivationEntity, SessionEntit
   providedIn: "root"
 })
 export class ApplicationStateService {
+
   private _activationState = new ReplaySubject<ActivationState>();
   private _activation = new ReplaySubject<ActivationEntity>();
   private _session = new ReplaySubject<SessionEntity>();
@@ -32,7 +33,8 @@ export class ApplicationStateService {
 
   public loadApplicationState(): void {
     this._httpClient
-      .get<ApplicationStateEntity>(this._endpointService.getEndpoint("application-state")).toPromise()
+      .get<ApplicationStateEntity>(this._endpointService.getEndpoint("application-state"))
+      .toPromise()
       .then((applicationState: ApplicationStateEntity) => {
         const activationState = this._activationStateService.determineActivationState(applicationState.activation);
         this._activationState.next(activationState);

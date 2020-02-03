@@ -1,8 +1,9 @@
 import { DeviceEntity, DeviceType } from "@live/entities";
 import { inject, injectable } from "inversify";
 import { EOL } from "os";
-import { AudioSystem } from "../audio-system/audio-system";
+import { IdGenerator } from "../id-generation/id-generator";
 import { Logger } from "../logging/logger";
+import { PlatformConstants } from "../platform-constants/i-platform-constants";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { Device } from "./device";
 import { DeviceDetector } from "./device-detector";
@@ -16,23 +17,24 @@ export class MacOSDeviceDetector extends DeviceDetector {
 
   constructor(
     @inject("Logger") logger: Logger,
-    @inject("AudioSystem") audioSystem: AudioSystem,
+    @inject("AudioSystem") audioSystem: PlatformConstants,
     @inject("FfmpegPath") ffmpegPath: string,
     @inject("ProcessExecutionService") processExecutionService: ProcessExecutionService,
+    @inject("IdGenerator") idGenerator: IdGenerator,
     @inject("DeviceFactory") deviceFactory: (deviceData: DeviceEntity, deviceState: DeviceState) => Device) {
-    super(logger, processExecutionService, deviceFactory);
-    this.listDevicesCommand = `${ffmpegPath} -f ${audioSystem.audioSystem} -list_devices true -i '' -hide_banner`;
+    super(logger, processExecutionService, idGenerator, deviceFactory);
+    this.listDevicesCommand = `${ffmpegPath} -f ${audioSystem.audioModule} -list_devices true -i '' -hide_banner`;
   }
 
   protected parseResponse(response: string): Device[] {
+    const devices = [];
+    let isVideo = true;
+
     const prefix = /^\[AVFoundation/;
     const audioSeparator = /AVFoundation\saudio\sdevices/;
     const deviceParams = /^\[AVFoundation.*?\]\s\[(\d*?)\]\s(.*)$/;
     const searchPrefix = (line: string) => (line.search(prefix) > -1);
     const searchAudioSeparator = (line: string) => isVideo && (line.search(audioSeparator) > -1);
-
-    const devices = [];
-    let isVideo = true;
 
     response.split(EOL)
       .filter(searchPrefix)

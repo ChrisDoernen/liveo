@@ -1,8 +1,9 @@
 import { DeviceEntity } from "@live/entities";
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
-import { AudioSystem } from "../audio-system/audio-system";
+import { IdGenerator } from "../id-generation/id-generator";
 import { Logger } from "../logging/logger";
+import { PLATFORM_CONSTANTS } from "../platform-constants/platformConstants";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { Device } from "./device";
 import { DeviceState } from "./device-state";
@@ -10,17 +11,19 @@ import { MacOSDeviceDetector } from "./macos-device-detector";
 
 describe("MacOSDeviceDetector", () => {
   let macOsDeviceDetector: MacOSDeviceDetector;
-  let processExecutionService;
-  const audioSystem: AudioSystem = { audioSystem: "avfoundation", devicePrefix: ":" };
+  let processExecutionService: jest.Mocked<ProcessExecutionService>;
+  let idGenerator: jest.Mocked<IdGenerator>;
+  const platformConstants = PLATFORM_CONSTANTS.darwin;
   let deviceFactory: any;
   const ffmpegPath = "ffmpeg";
 
   beforeEach(() => {
     const logger = createMockInstance(Logger);
+    idGenerator = createMockInstance(IdGenerator);
     processExecutionService = createMockInstance(ProcessExecutionService);
-    deviceFactory = jest.fn((deviceData: DeviceEntity, deviceState: DeviceState) => new Device(logger, deviceData, deviceState));
+    deviceFactory = jest.fn((deviceData: DeviceEntity, deviceState: DeviceState) => new Device(logger, jest.fn(), deviceData, deviceState));
 
-    macOsDeviceDetector = new MacOSDeviceDetector(logger, audioSystem, ffmpegPath, processExecutionService, deviceFactory);
+    macOsDeviceDetector = new MacOSDeviceDetector(logger, platformConstants, ffmpegPath, processExecutionService, idGenerator, deviceFactory);
   });
 
   it("should construct", async () => {
@@ -28,13 +31,10 @@ describe("MacOSDeviceDetector", () => {
   });
 
   it("should parse devices correctly", async () => {
-    jest.spyOn(processExecutionService, "execute")
-      .mockImplementation((command: string, callback: any) => callback(null, null, output));
-    const expectedCommand = `${ffmpegPath} -f ${audioSystem.audioSystem} -list_devices true -i '' -hide_banner`;
+    jest.spyOn(processExecutionService, "execute").mockImplementation((command: string, callback: any) => callback(null, null, output));
 
-    await macOsDeviceDetector.runDetection();
+    const devices = await macOsDeviceDetector.runDetection();
 
-    const devices = macOsDeviceDetector.devices;
     expect(devices.length).toBe(3);
     expect(devices[0].id).toBe("0");
     expect(devices[0].entity.description).toBe("FaceTime HD Camera");

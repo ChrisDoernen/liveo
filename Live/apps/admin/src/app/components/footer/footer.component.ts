@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { EVENTS } from "@live/constants";
 import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 import { WebsocketService } from "../../services/websocket/websocket.service";
 
 @Component({
@@ -18,5 +19,6 @@ export class FooterComponent implements OnInit {
 
   public ngOnInit(): void {
     this.cpuUsage$ = this._websocketService.fromEvent<string>(EVENTS.cpuUsage)
+      .pipe(map((data) => (+data * 100).toFixed(0)));
   }
 }

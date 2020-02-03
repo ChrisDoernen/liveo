@@ -37,7 +37,7 @@
       (click)="refresh()">Refresh</div>
   </div>
   <div *ngIf="(applicationStateService.activationState$ | async) === activationState.Started" class="content">
-    <audio-player [selectedStream]="selectedStream?.id"></audio-player>
+    <audio-player [selectedStream]="selectedStream?.streamingSourceId"></audio-player>
   </div>
 </div>
 <div class="about-link"><a (click)="showAboutOverlay()">Info/About</a></div>

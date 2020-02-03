@@ -1,8 +1,9 @@
 import { DeviceEntity, DeviceType } from "@live/entities";
 import { inject, injectable } from "inversify";
 import { EOL } from "os";
-import { AudioSystem } from "../audio-system/audio-system";
+import { IdGenerator } from "../id-generation/id-generator";
 import { Logger } from "../logging/logger";
+import { PlatformConstants } from "../platform-constants/i-platform-constants";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { Device } from "./device";
 import { DeviceDetector } from "./device-detector";
@@ -13,12 +14,13 @@ export class WindowsDeviceDetector extends DeviceDetector {
 
   constructor(
     @inject("Logger") logger: Logger,
-    @inject("AudioSystem") audioSystem: AudioSystem,
+    @inject("PlattformConstants") _plattformConstants: PlatformConstants,
     @inject("FfmpegPath") ffmpegPath: string,
     @inject("ProcessExecutionService") processExecutionService: ProcessExecutionService,
+    @inject("IdGenerator") idGenerator: IdGenerator,
     @inject("DeviceFactory") deviceFactory: (deviceData: DeviceEntity, deviceState: DeviceState) => Device) {
-    super(logger, processExecutionService, deviceFactory);
-    this.listDevicesCommand = `${ffmpegPath} -f ${audioSystem.audioSystem} -list_devices true -i '' -hide_banner`;
+    super(logger, processExecutionService, idGenerator, deviceFactory);
+    this.listDevicesCommand = `"${ffmpegPath}" -f ${_plattformConstants.audioModule} -list_devices true -i '' -hide_banner`;
   }
 
   protected parseResponse(response: string): Device[] {
