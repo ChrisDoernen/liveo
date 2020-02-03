@@ -19,13 +19,13 @@ export class AudioPlayerComponent {
   }
 
   @Input()
-  public set selectedStream(streamingId: string) {
+  public set selectedStream(streamingSourceId: string) {
     if (this._l3asService) {
-      this._logger.info(`Selected stream id: ${streamingId}.`);
-      this.selectedStreamId = streamingId;
+      this._logger.info(`Selected stream id: ${streamingSourceId}.`);
+      this.selectedStreamId = streamingSourceId;
 
-      if (streamingId) {
-        this._l3asService.play(streamingId);
+      if (streamingSourceId) {
+        this._l3asService.play(streamingSourceId);
         this._l3asService.mute();
       } else {
         if (this._l3asService.isPlaying) {

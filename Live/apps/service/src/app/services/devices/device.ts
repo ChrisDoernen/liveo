@@ -27,7 +27,7 @@ export class Device {
     @inject("StreamingSourceFactory") streamingSourceFactory: (deviceId: string, streamingSourceId: string, onError: (error: Error) => void) => IStreamingSource,
     private _deviceData: DeviceEntity,
     private _deviceState: DeviceState) {
-    this._source = streamingSourceFactory(this.id, "1234abc", this.onStreamingSourceError.bind(this));
+    this._source = streamingSourceFactory(this.id, this.entity.streamingSourceId, this.onStreamingSourceError.bind(this));
 
     if (this._deviceState === DeviceState.Available) {
       this._logger.debug(`Detected device ${JSON.stringify(this._deviceData)}.`);

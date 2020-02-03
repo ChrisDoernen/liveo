@@ -6,6 +6,7 @@ import { DeviceType } from "./device-type";
 export class DeviceEntity {
   constructor(
     public id: string,
+    public streamingSourceId: string,
     public description: string,
     public deviceType: DeviceType) {
   }

@@ -1,4 +1,5 @@
 import { DeviceEntity, DeviceType } from "@live/entities";
+import crypto from "crypto";
 import { injectable } from "inversify";
 import { Logger } from "../logging/logger";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
@@ -47,6 +48,9 @@ export abstract class DeviceDetector {
   protected abstract parseResponse(output: string): Device[];
 
   protected instantiateDevice(id: string, description: string, deviceType: DeviceType, deviceState: DeviceState): Device {
-    return this._deviceFactory(new DeviceEntity(id, description, deviceType), deviceState);
+    const hash = crypto.createHash("md5").update(id).digest("hex");
+    const streamingSourceId = hash.substr(0, 7);
+    
+    return this._deviceFactory(new DeviceEntity(id, streamingSourceId, description, deviceType), deviceState);
   }
 }
