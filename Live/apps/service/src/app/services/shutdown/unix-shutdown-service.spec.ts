@@ -38,16 +38,19 @@ describe("UnixShutdownService", () => {
   it("should set shutdown correctly when shutdown has shutdown time", () => {
     const shutdown = new Shutdown("2019-08-18T12:27:13+02:00");
     unixShutdownService.setShutdown(shutdown);
-    expect(scheduler.schedule).toHaveBeenCalledWith("SHUTDOWN_JOB", new Date("2019-08-18T12:27:13+02:00"), expect.any(Function));
+    expect(scheduler.schedule).toHaveBeenCalledWith(new Date("2019-08-18T12:27:13+02:00"), expect.any(Function));
     expect(unixShutdownService.getShutdown()).toBe(shutdown);
   });
 
-  it("should cancel previously set shutdown correctly", async () => {
+  it("should cancel previously set shutdown correctly", () => {
+    const jobId = "id";
+    scheduler.schedule.mockReturnValue(jobId);
+
     const shutdown = new Shutdown("2019-08-18T12:27:13+02:00");
     unixShutdownService.setShutdown(shutdown);
     expect(unixShutdownService.getShutdown()).toBe(shutdown);
     unixShutdownService.cancelShutdown();
-    expect(scheduler.cancelJob).toHaveBeenCalledWith("SHUTDOWN_JOB");
+    expect(scheduler.cancelJob).toHaveBeenCalledWith(jobId);
     expect(unixShutdownService.getShutdown()).toBe(null);
   });
 

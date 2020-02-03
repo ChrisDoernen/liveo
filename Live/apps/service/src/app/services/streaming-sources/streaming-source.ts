@@ -7,7 +7,7 @@ import * as path from 'path';
 import { config } from "../../config/service.config";
 import { WebsocketServer } from "../../core/websocket-server";
 import { Logger } from "../logging/logger";
-import { PlatformConstants } from "../plattform-constants/i-platform-constants";
+import { PlatformConstants } from "../platform-constants/i-platform-constants";
 import { IStreamingSource } from "./i-streaming-source";
 
 /**
@@ -23,7 +23,7 @@ export class StreamingSource implements IStreamingSource {
     @inject("Logger") private _logger: Logger,
     @inject("FfmpegLogger") private _ffmpegLogger: Logger,
     @inject("WebsocketServer") private _websocketServer: WebsocketServer,
-    @inject("AudioSystem") private _plattformConstants: PlatformConstants,
+    @inject("PlattformConstants") private _plattformConstants: PlatformConstants,
     public deviceId: string,
     public streamingSourceId: string,
     private _bitrate: number,

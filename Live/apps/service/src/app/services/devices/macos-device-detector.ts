@@ -1,8 +1,9 @@
 import { DeviceEntity, DeviceType } from "@live/entities";
 import { inject, injectable } from "inversify";
 import { EOL } from "os";
-import { PlatformConstants } from "../plattform-constants/i-platform-constants";
+import { IdGenerator } from "../id-generation/id-generator";
 import { Logger } from "../logging/logger";
+import { PlatformConstants } from "../platform-constants/i-platform-constants";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { Device } from "./device";
 import { DeviceDetector } from "./device-detector";
@@ -19,8 +20,9 @@ export class MacOSDeviceDetector extends DeviceDetector {
     @inject("AudioSystem") audioSystem: PlatformConstants,
     @inject("FfmpegPath") ffmpegPath: string,
     @inject("ProcessExecutionService") processExecutionService: ProcessExecutionService,
+    @inject("IdGenerator") idGenerator: IdGenerator,
     @inject("DeviceFactory") deviceFactory: (deviceData: DeviceEntity, deviceState: DeviceState) => Device) {
-    super(logger, processExecutionService, deviceFactory);
+    super(logger, processExecutionService, idGenerator, deviceFactory);
     this.listDevicesCommand = `${ffmpegPath} -f ${audioSystem.audioModule} -list_devices true -i '' -hide_banner`;
   }
 

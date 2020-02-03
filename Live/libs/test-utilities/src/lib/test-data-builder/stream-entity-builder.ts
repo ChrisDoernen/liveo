@@ -11,6 +11,7 @@ export class StreamEntityBuilder {
       faker.random.words(),
       faker.random.locale(),
       faker.random.word(),
+      faker.random.word(),
       StreamType.Audio
     )
   }

@@ -1,4 +1,4 @@
-export const plattformConstants = {
+export const PLATFORM_CONSTANTS = {
   win32: {
     audioModule: "dshow",
     devicePrefix: "audio=",
