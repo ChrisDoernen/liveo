@@ -1,4 +1,5 @@
-import path from "path";
+// Path has to be required, otherwise Jest can not cope
+const path = require("path");
 import { environment } from "../../environments/environment";
 
 // This secion is copied from ffmpeg-static npm package
