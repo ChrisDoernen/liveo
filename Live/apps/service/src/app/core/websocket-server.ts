@@ -9,11 +9,11 @@ import { ConnectionHistoryService } from "../services/statistics/connection-hist
 
 @injectable()
 export class WebsocketServer {
-  
+
   private _websocketServer: socketio.Server;
 
   /** The currently available streams that are represented as rooms in socket.io */
-  private _streamingIds: string[] = [];
+  private _streamingSourceIds: string[] = [];
 
   constructor(
     @inject("Logger") private _logger: Logger,
@@ -32,12 +32,12 @@ export class WebsocketServer {
   private onConnection(socket: Socket): void {
     this.onConnect(socket);
 
-    socket.on(EVENTS.subscribe, streamId => {
-      this.onSubscribeToStream(socket, streamId);
+    socket.on(EVENTS.subscribe, streamingSourceId => {
+      this.onSubscribeToStream(socket, streamingSourceId);
     });
 
-    socket.on(EVENTS.unsubscribe, streamId => {
-      this.onUnsubscribeFromStream(socket, streamId);
+    socket.on(EVENTS.unsubscribe, streamingSourceId => {
+      this.onUnsubscribeFromStream(socket, streamingSourceId);
     });
 
     socket.on(EVENTS.subscribeAdmin, () => {
@@ -53,8 +53,8 @@ export class WebsocketServer {
     });
   }
 
-  private onSubscribeToStream(socket: Socket, streamingSourceId: any): void {
-    const id = this._streamingIds.find(stream => stream === streamingSourceId);
+  private onSubscribeToStream(socket: Socket, streamingSourceId: string): void {
+    const id = this._streamingSourceIds.find((stream) => stream === streamingSourceId);
 
     if (!id) {
       this._logger.info(`Subscription for streaming source ${streamingSourceId} not possible, stream is not started`);
@@ -95,13 +95,13 @@ export class WebsocketServer {
   }
 
   public addStream(id: string): void {
-    this._streamingIds.push(id);
+    this._streamingSourceIds.push(id);
   }
 
   public removeStream(id: string): void {
-    const index = this._streamingIds.indexOf(id);
+    const index = this._streamingSourceIds.indexOf(id);
     if (index > -1) {
-      this._streamingIds.slice(index, 1);
+      this._streamingSourceIds.slice(index, 1);
     }
   }
 

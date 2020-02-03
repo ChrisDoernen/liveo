@@ -13,6 +13,6 @@ export class IdGenerator {
 
   public getMd5Hash(value: string, length: number): string {
     const hash = crypto.createHash("md5").update(value).digest("hex");
-    return hash.substr(0, length - 1);
+    return hash.substr(0, length);
   }
 }
