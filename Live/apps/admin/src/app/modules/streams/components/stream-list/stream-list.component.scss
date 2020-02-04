@@ -1,8 +1,13 @@
 @import "../../../../variables.scss";
 
-.stream-row {
-  display: grid;
-  grid-template-columns: 25% auto 40px 40px;
-  align-items: center;
-  padding-left: 10px;
+.mat-column-title {
+  flex: 0 0 27%;
+}
+
+.mat-column-delete {
+  flex: 0 0 65px;
+}
+
+.mat-column-valid {
+  flex: 0 0 45px;
 }

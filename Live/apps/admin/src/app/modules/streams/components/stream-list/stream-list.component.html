@@ -7,28 +7,45 @@
     </button>
   </div>
 </title-bar>
-<content>
+<content *ngIf="!loading">
   <div class="no-content-message" *ngIf="streams.length === 0; else streamsAvailable">
     There are no Streams created yet. <br>
     Click <span class="no-content-action clickable" routerLink="new">here</span> to start.
   </div>
   <ng-template #streamsAvailable>
-    <div class="table-border">
-      <div class="stream-row table-head">
-        <div>TITLE</div>
-        <div>DEVICE ID</div>
-      </div>
-      <div class="stream-row table-row-border table-row" *ngFor="let stream of streams">
-        <div class="title">{{stream.title}}</div>
-        <div>{{stream.deviceId}}</div>
-        <button mat-icon-button>
-          <i *ngIf="!isDeviceAvailable(stream.deviceId)" class="material-icons">error_outline</i>
+    <mat-table [dataSource]="streams" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="title">
+        <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.title}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="deviceId">
+        <mat-header-cell *matHeaderCellDef> Device Id </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.deviceId}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="valid">
+        <mat-header-cell *matHeaderCellDef > </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button mat-icon-button>
+          <i *ngIf="!isDeviceAvailable(element.deviceId)" class="material-icons">error_outline</i>
         </button>
-        <button mat-icon-button matTooltip="Delete" [matTooltipPosition]="'left'"
-          (click)="openStreamDeletionDialog(stream)">
-          <i class="material-icons">delete_outline</i>
-        </button>
-      </div>
-    </div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef > </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button mat-icon-button matTooltip="Delete" [matTooltipPosition]="'left'"
+            (click)="openStreamDeletionDialog(element)">
+            <i class="material-icons">delete_outline</i>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
   </ng-template>
 </content>

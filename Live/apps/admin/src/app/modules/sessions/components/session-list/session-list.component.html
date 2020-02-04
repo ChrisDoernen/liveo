@@ -13,23 +13,36 @@
     Click <span class="no-content-action clickable" routerLink="new">here</span> to start.
   </div>
   <ng-template #sessionsAvailable>
-    <div class="table-border">
-      <div class="session-row table-head">
-        <div>TITLE</div>
-        <div>DESCRIPTION</div>
-        <div>STREAMS</div>
-      </div>
-      <div class="session-row table-row table-row-border" *ngFor="let session of sessions">
-        <div class="title">{{session.title}}</div>
-        <div>{{session.description}}</div>
-        <div class="streams">
-          <span class="stream" *ngFor="let stream of session.streams">{{getStream(stream)?.title}}</span>
-        </div>
-        <button mat-icon-button matTooltip="Delete" [matTooltipPosition]="'left'"
-          (click)="openSessionDeletionDialog(session)">
-          <i class="material-icons">delete_outline</i>
-        </button>
-      </div>
-    </div>
+    <mat-table [dataSource]="sessions" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="title">
+        <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+        <mat-cell *matCellDef="let session"> {{session.title}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+        <mat-cell *matCellDef="let session"> {{session.description}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="streams">
+        <mat-header-cell *matHeaderCellDef> Streams </mat-header-cell>
+        <mat-cell *matCellDef="let session"> {{getStreamTitles(session.streams)}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+        <mat-cell *matCellDef="let session">
+          <button mat-icon-button matTooltip="Delete" [matTooltipPosition]="'left'"
+            (click)="openSessionDeletionDialog(session)">
+            <i class="material-icons">delete_outline</i>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
   </ng-template>
 </div>
