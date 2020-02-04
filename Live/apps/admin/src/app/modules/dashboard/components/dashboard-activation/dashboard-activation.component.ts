@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { Logger } from "@live/services";
 import { ActivationService } from "../../../../services/activation/activation.service";
+import { SessionService } from "../../../../services/session/session.service";
 import { ActivationDeletionDialogComponent } from "../activation-deletion-dialog/activation-deletion-dialog.component";
 
 @Component({
@@ -12,9 +13,10 @@ import { ActivationDeletionDialogComponent } from "../activation-deletion-dialog
 export class DashboardActivationComponent {
 
   constructor(
-    private _logger: Logger,
-    public activationService: ActivationService,
-    public activationDeletionDialog: MatDialog) {
+    private readonly _logger: Logger,
+    public readonly activationService: ActivationService,
+    public readonly activationDeletionDialog: MatDialog,
+    public readonly sessionService: SessionService) {
   }
 
   public openActivationDeletionDialog(): void {

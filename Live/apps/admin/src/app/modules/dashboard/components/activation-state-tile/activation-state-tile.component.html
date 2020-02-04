@@ -1,8 +1,8 @@
 <div>Status</div>
-<h3>{{(activationService.activationState$ | async)}}</h3>
+<h3>{{activationState}}</h3>
 <div>Start time</div>
-<div>{{(activationService.activation$ | async)?.startTime | date:'H:mm'}}</div>
+<div>{{activation?.startTime | date:'H:mm'}}</div>
 <div>End time</div>
-<div>{{(activationService.activation$ | async)?.endTime | date:'H:mm'}}</div>
+<div>{{activation?.endTime | date:'H:mm'}}</div>
 <div>Shutdowm time</div>
-<div>{{(activationService.activation$ | async)?.shutdownTime | date:'H:mm'}}</div>
+<div>{{activation?.shutdownTime | date:'H:mm'}}</div>

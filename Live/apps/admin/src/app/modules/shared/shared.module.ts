@@ -15,8 +15,6 @@ import { AuthenticationInterceptor } from "./interceptors/authentication.interce
 import { ErrorInterceptor } from "./interceptors/error.interceptor";
 import { AuthenticationService } from "./services/authentication/authentication.service";
 import { DevicesService } from "./services/devices/devices.service";
-import { SessionService } from "./services/session/session.service";
-import { StreamService } from "./services/stream/stream.service";
 import { VolumeMeterService } from "./services/volume-meter/volume-meter.service";
 
 @NgModule({
@@ -56,8 +54,6 @@ import { VolumeMeterService } from "./services/volume-meter/volume-meter.service
     AuthenticationService,
     DevicesService,
     VolumeMeterService,
-    SessionService,
-    StreamService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthenticationInterceptor,

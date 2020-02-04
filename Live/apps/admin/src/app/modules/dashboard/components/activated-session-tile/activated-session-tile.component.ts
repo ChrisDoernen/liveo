@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { SessionService } from "../../../shared/services/session/session.service";
+import { Component, Input } from "@angular/core";
+import { SessionEntity } from "@live/entities";
 
 @Component({
   selector: "activated-session-tile",
@@ -8,7 +8,6 @@ import { SessionService } from "../../../shared/services/session/session.service
 })
 export class ActivatedSessionTileComponent {
 
-  constructor(
-    public sessionService: SessionService) {
-  }
+  @Input()
+  public session: SessionEntity;
 }

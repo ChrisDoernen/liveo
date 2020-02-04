@@ -1,11 +1,8 @@
-<mat-card>
-  <activated-session-tile></activated-session-tile>
-</mat-card>
-<mat-card>
-  <activation-state-tile></activation-state-tile>
-</mat-card>
-<mat-card class="activation-details">
-  <button mat-raised-button class="delete-activation" (click)="openActivationDeletionDialog()">
-    Deactivate session
-  </button>
-</mat-card>
+<content>
+  <activated-session-tile [session]="sessionService.activatedSession$ | async">
+  </activated-session-tile>
+  <mat-divider></mat-divider>
+  <activation-state-tile [activation]="activationService.activation$ | async"
+    [activationState]="activationService.activationState$ | async">
+  </activation-state-tile>
+</content>

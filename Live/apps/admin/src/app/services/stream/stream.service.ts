@@ -9,8 +9,8 @@ import { EndpointService } from "@live/services";
 export class StreamService {
 
   constructor(
-    private _httpClient: HttpClient,
-    private _endpointService: EndpointService) {
+    private readonly _httpClient: HttpClient,
+    private readonly _endpointService: EndpointService) {
   }
 
   public getStream(id: string): Promise<StreamEntity> {

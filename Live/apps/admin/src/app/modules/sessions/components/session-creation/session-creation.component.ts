@@ -2,8 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SessionEntity, StreamEntity } from "@live/entities";
-import { SessionService } from "../../../shared/services/session/session.service";
-import { StreamService } from "../../../shared/services/stream/stream.service";
+import { SessionService } from "../../../../services/session/session.service";
+import { StreamService } from "../../../../services/stream/stream.service";
 
 @Component({
   selector: "session-creation",

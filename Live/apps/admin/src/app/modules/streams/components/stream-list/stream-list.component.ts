@@ -3,8 +3,8 @@ import { MatDialog } from "@angular/material";
 import { DeviceEntity, StreamEntity } from "@live/entities";
 import { Logger } from "@live/services";
 import { DIALOG_CONFIG_SMALL } from "../../../../constants/mat-dialog-config-small";
-import { DevicesService } from "../../../shared/services/devices/devices.service";
-import { StreamService } from "../../../shared/services/stream/stream.service";
+import { DevicesService } from "../../../../modules/shared/services/devices/devices.service";
+import { StreamService } from "../../../../services/stream/stream.service";
 import { StreamDeletionDialogComponent } from "../stream-deletion-dialog/stream-deletion-dialog.component";
 
 @Component({

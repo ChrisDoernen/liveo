@@ -5,8 +5,8 @@ import { MatButtonModule, MatDialog, MatDialogModule, MatFormFieldModule, MatInp
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { EndpointService, Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
+import { SessionService } from "../../../../services/session/session.service";
 import { AngularMaterialModule } from "../../../angular-material/angular-material.module";
-import { SessionService } from "../../../shared/services/session/session.service";
 import { ActivationDialogComponent } from "./activation-dialog.component";
 
 describe("ActivationDialogComponent", () => {

@@ -7,9 +7,9 @@ import { ActivatedRoute } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { EndpointService, Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
-import { AngularMaterialModule } from "../../../angular-material/angular-material.module";
-import { SessionService } from "../../../shared/services/session/session.service";
-import { SharedModule } from "../../../shared/shared.module";
+import { AngularMaterialModule } from "../../../../modules/angular-material/angular-material.module";
+import { SharedModule } from "../../../../modules/shared/shared.module";
+import { SessionService } from "../../../session/session.service";
 import { StreamCreationComponent } from "./stream-creation.component";
 
 describe("StreamCreationComponent", () => {

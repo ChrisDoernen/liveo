@@ -8,8 +8,8 @@ import { EndpointService } from "@live/services";
 })
 export class DevicesService {
   constructor(
-    private _httpClient: HttpClient,
-    private _endpointService: EndpointService) {
+    private readonly _httpClient: HttpClient,
+    private readonly _endpointService: EndpointService) {
   }
 
   public getDevices(redetect: boolean = false): Promise<DeviceEntity[]> {

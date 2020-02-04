@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@
 import { MatDialog } from "@angular/material";
 import { SessionEntity, StreamEntity } from "@live/entities";
 import { DIALOG_CONFIG_SMALL } from "../../../../constants/mat-dialog-config-small";
-import { SessionService } from "../../../shared/services/session/session.service";
-import { StreamService } from "../../../shared/services/stream/stream.service";
+import { SessionService } from "../../../../services/session/session.service";
+import { StreamService } from "../../../../services/stream/stream.service";
 import { SessionDeletionDialogComponent } from "../session-deletion-dialog/session-deletion-dialog.component";
 
 @Component({

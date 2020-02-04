@@ -1,23 +1,24 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ActivationEntity, SessionEntity } from "@live/entities";
-import { EndpointService } from "@live/services";
-import { Observable, Subject } from "rxjs";
-import { ActivationService } from "../../../../services/activation/activation.service";
+import { EndpointService, Logger } from "@live/services";
+import { Observable, ReplaySubject } from "rxjs";
+import { ActivationService } from "../activation/activation.service";
 
 @Injectable({
   providedIn: "root"
 })
 export class SessionService {
 
-  private _activatedSession = new Subject<SessionEntity>();
+  private _activatedSession = new ReplaySubject<SessionEntity>();
 
   public activatedSession$ = this._activatedSession.asObservable();
 
   constructor(
-    private _httpClient: HttpClient,
-    private _endpointService: EndpointService,
-    private _activationService: ActivationService) {
+    private readonly _logger: Logger,
+    private readonly _httpClient: HttpClient,
+    private readonly _endpointService: EndpointService,
+    private readonly _activationService: ActivationService) {
   }
 
   public subscribeToActivations(): void {
@@ -27,7 +28,10 @@ export class SessionService {
   private actualizeActivatedSession(activation: ActivationEntity): void {
     if (activation) {
       this.getSession(activation.sessionId)
-        .subscribe((session) => this._activatedSession.next(session));
+        .subscribe((session) => {
+          this._activatedSession.next(session);
+          this._logger.info(`Emitting new session ${JSON.stringify(session)}`);
+        });
     } else {
       this._activatedSession.next(null);
     }

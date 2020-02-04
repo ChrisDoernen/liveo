@@ -4,14 +4,16 @@ import { UserEntity } from "@live/entities";
 import { EndpointService } from "@live/services";
 import { map } from "rxjs/operators";
 
-@Injectable({ providedIn: "root" })
+@Injectable({
+  providedIn: "root"
+})
 export class AuthenticationService {
 
   private readonly _currentUserKey = "current-user";
 
   constructor(
-    private _endpointService: EndpointService,
-    private _httpClient: HttpClient) {
+    private readonly _endpointService: EndpointService,
+    private readonly _httpClient: HttpClient) {
   }
 
   public login(username: string, password: string): Promise<UserEntity> {

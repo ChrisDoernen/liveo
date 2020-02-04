@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DeviceEntity, StreamEntity, StreamType } from "@live/entities";
-import { DevicesService } from "../../../shared/services/devices/devices.service";
-import { StreamService } from "../../../shared/services/stream/stream.service";
+import { DevicesService } from "../../../../modules/shared/services/devices/devices.service";
+import { StreamService } from "../../../../services/stream/stream.service";
 
 @Component({
   selector: "stream-creation",
