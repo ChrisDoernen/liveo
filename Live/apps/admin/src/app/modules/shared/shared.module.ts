@@ -13,6 +13,7 @@ import { SimpleVolumeMeterComponent } from "./components/simple-volume-meter/sim
 import { TitleBarComponent } from "./components/title-bar/title-bar.component";
 import { AuthenticationInterceptor } from "./interceptors/authentication.interceptor";
 import { ErrorInterceptor } from "./interceptors/error.interceptor";
+import { HoursMinutesSecondsPipe } from "./pipes/hours-minutes-seconds.pipe";
 import { AuthenticationService } from "./services/authentication/authentication.service";
 import { DevicesService } from "./services/devices/devices.service";
 import { VolumeMeterService } from "./services/volume-meter/volume-meter.service";
@@ -33,7 +34,8 @@ import { VolumeMeterService } from "./services/volume-meter/volume-meter.service
     LogoHeaderComponent,
     LogoComponent,
     ContentComponent,
-    SimpleVolumeMeterComponent
+    SimpleVolumeMeterComponent,
+    HoursMinutesSecondsPipe
   ],
   exports: [
     CommonModule,
@@ -48,7 +50,8 @@ import { VolumeMeterService } from "./services/volume-meter/volume-meter.service
     LogoHeaderComponent,
     LogoComponent,
     ContentComponent,
-    SimpleVolumeMeterComponent
+    SimpleVolumeMeterComponent,
+    HoursMinutesSecondsPipe
   ],
   providers: [
     AuthenticationService,

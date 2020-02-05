@@ -1,8 +1,24 @@
-<div>Status</div>
-<h3>{{activationState}}</h3>
-<div>Start time</div>
-<div>{{activation?.startTime | date:'H:mm'}}</div>
-<div>End time</div>
-<div>{{activation?.endTime | date:'H:mm'}}</div>
-<div>Shutdowm time</div>
-<div>{{activation?.shutdownTime | date:'H:mm'}}</div>
+<div class="activation-state" [class.active]="activationState == ActivationState.Scheduled">
+  <div>Scheduled</div>
+  <div></div>
+</div>
+<div class="activation-state">
+  <div>Start</div>
+  <div>{{(activation?.startTime | date:'H:mm') + " Uhr"}}</div>
+</div>
+<div class="activation-state" [class.active]="activationState == ActivationState.Started">
+  <div>Live</div>
+  <div>{{ time ? (time | HoursMinutesSeconds) : ""}}</div>
+</div>
+<div class="activation-state">
+  <div>End</div>
+  <div>{{ activation?.endTime ? ((activation?.endTime | date:'H:mm')) + " Uhr" : ""}}</div>
+</div>
+<div class="activation-state" [class.active]="activationState == ActivationState.Ended">
+  <div>Ended</div>
+  <div></div>
+</div>
+<div class="activation-state">
+  <div>Shutdown</div>
+  <div>{{ activation?.shutdownTime ? ((activation?.shutdownTime | date:'H:mm')) + " Uhr" : ""}}</div>
+</div>

@@ -9,7 +9,7 @@ import { EndpointService, Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
 import { AngularMaterialModule } from "../../../../modules/angular-material/angular-material.module";
 import { SharedModule } from "../../../../modules/shared/shared.module";
-import { SessionService } from "../../../session/session.service";
+import { SessionService } from "../../../../services/session/session.service";
 import { StreamCreationComponent } from "./stream-creation.component";
 
 describe("StreamCreationComponent", () => {

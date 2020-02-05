@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
 import { ActivationEntity, ActivationState } from "@live/entities";
 
 @Component({
@@ -7,11 +7,53 @@ import { ActivationEntity, ActivationState } from "@live/entities";
   styleUrls: ["./activation-state-tile.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ActivationStateTileComponent {
+export class ActivationStateTileComponent implements OnInit, OnChanges {
 
   @Input()
   public activationState: ActivationState;
 
   @Input()
   public activation: ActivationEntity;
+
+  public ActivationState = ActivationState;
+
+  public time: any;
+
+  private _timer: any;
+
+  constructor(
+    private readonly _changeDetectorRef: ChangeDetectorRef) {
+  }
+
+  ngOnInit(): void {
+    this.checkCounting();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.checkCounting();
+  }
+
+  private checkCounting(): void {
+    if (this.activationState === ActivationState.Started) {
+      this.startCountingLiveTime();
+    } else {
+      this.stopCountingLiveTime();
+    }
+  }
+
+  private startCountingLiveTime(): void {
+    this._timer = setInterval(() => {
+      const timeDifference = Date.now() - new Date(this.activation.startTime).getTime();
+      this.time = timeDifference;
+
+      this._changeDetectorRef.detectChanges();
+    }, 1000);
+  }
+
+  private stopCountingLiveTime(): void {
+    if (!this._timer) {
+      return;
+    }
+    clearTimeout(this._timer);
+  }
 }

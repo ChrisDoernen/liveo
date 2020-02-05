@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import createMockInstance from "jest-create-mock-instance";
 import { ActivationService } from "../../../../services/activation/activation.service";
+import { SharedModule } from "../../../shared/shared.module";
 import { ActivationStateTileComponent } from "./activation-state-tile.component";
 
 describe("ActivationStateTileComponent", () => {
@@ -12,7 +13,12 @@ describe("ActivationStateTileComponent", () => {
     activationService = createMockInstance(ActivationService);
 
     TestBed.configureTestingModule({
-      declarations: [ActivationStateTileComponent],
+      imports: [
+        SharedModule
+      ],
+      declarations: [
+        ActivationStateTileComponent
+      ],
       providers: [
         { provide: ActivationService, useValue: activationService }
       ]

@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
-import { EndpointService } from "@live/services";
+import { EndpointService, Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
 import { ActivationService } from "../activation/activation.service";
 import { SessionService } from "./session.service";
@@ -21,7 +21,8 @@ describe("SessionService", () => {
       providers: [
         SessionService,
         { provide: EndpointService, useValue: endpointService },
-        { provide: ActivationService, useValue: activationService }
+        { provide: ActivationService, useValue: activationService },
+        { provide: Logger, useValue: createMockInstance(Logger) }
       ]
     });
 

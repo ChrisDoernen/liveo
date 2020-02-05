@@ -4,6 +4,7 @@ import createMockInstance from "jest-create-mock-instance";
 import { ActivationService } from "../../../../services/activation/activation.service";
 import { SessionService } from "../../../../services/session/session.service";
 import { AngularMaterialModule } from "../../../angular-material/angular-material.module";
+import { SharedModule } from "../../../shared/shared.module";
 import { ActivatedSessionTileComponent } from "../activated-session-tile/activated-session-tile.component";
 import { ActivationStateTileComponent } from "../activation-state-tile/activation-state-tile.component";
 import { DashboardActivationComponent } from "./dashboard-activation.component";
@@ -20,7 +21,8 @@ describe("DashboardActivationComponent", () => {
 
     TestBed.configureTestingModule({
       imports: [
-        AngularMaterialModule
+        AngularMaterialModule,
+        SharedModule
       ],
       declarations: [
         DashboardActivationComponent,

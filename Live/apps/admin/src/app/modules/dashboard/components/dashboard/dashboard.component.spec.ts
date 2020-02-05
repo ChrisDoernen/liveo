@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import createMockInstance from "jest-create-mock-instance";
 import { ActivationService } from "../../../../services/activation/activation.service";
 import { AngularMaterialModule } from "../../../angular-material/angular-material.module";
-import { TitleBarComponent } from "../../../shared/components/title-bar/title-bar.component";
+import { SharedModule } from "../../../shared/shared.module";
 import { ActivatedSessionTileComponent } from "../activated-session-tile/activated-session-tile.component";
 import { ActivationStateTileComponent } from "../activation-state-tile/activation-state-tile.component";
 import { DashboardActivationComponent } from "../dashboard-activation/dashboard-activation.component";
@@ -19,15 +19,15 @@ describe("DashboardComponent", () => {
 
     TestBed.configureTestingModule({
       imports: [
-        AngularMaterialModule
+        AngularMaterialModule,
+        SharedModule
       ],
       declarations: [
         DashboardComponent,
         ActivatedSessionTileComponent,
         ActivationStateTileComponent,
         DashboardActivationComponent,
-        DashboardNoActivationComponent,
-        TitleBarComponent
+        DashboardNoActivationComponent
       ],
       providers: [
         { provide: ActivationService, useValue: activationService }
