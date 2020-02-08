@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from "@angular/core";
 import { ActivationEntity, ActivationState } from "@live/entities";
 
 @Component({
@@ -7,7 +7,7 @@ import { ActivationEntity, ActivationState } from "@live/entities";
   styleUrls: ["./activation-state-tile.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ActivationStateTileComponent implements OnInit, OnChanges {
+export class ActivationStateTileComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input()
   public activationState: ActivationState;
@@ -46,7 +46,7 @@ export class ActivationStateTileComponent implements OnInit, OnChanges {
       const timeDifference = Date.now() - new Date(this.activation.startTime).getTime();
       this.time = timeDifference;
 
-      this._changeDetectorRef.detectChanges();
+      this._changeDetectorRef.markForCheck();
     }, 1000);
   }
 
@@ -55,5 +55,9 @@ export class ActivationStateTileComponent implements OnInit, OnChanges {
       return;
     }
     clearTimeout(this._timer);
+  }
+
+  public ngOnDestroy(): void {
+    this.stopCountingLiveTime();
   }
 }

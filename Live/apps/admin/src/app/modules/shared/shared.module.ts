@@ -9,7 +9,6 @@ import { ConfirmationDialogComponent } from "./components/confirmation-dialog/co
 import { ContentComponent } from "./components/content/content.component";
 import { LogoHeaderComponent } from "./components/logo-header/logo-header.component";
 import { LogoComponent } from "./components/logo/logo.component";
-import { SimpleVolumeMeterComponent } from "./components/simple-volume-meter/simple-volume-meter.component";
 import { TitleBarComponent } from "./components/title-bar/title-bar.component";
 import { VolumeMeterComponent } from "./components/volume-meter/volume-meter.component";
 import { AuthenticationInterceptor } from "./interceptors/authentication.interceptor";
@@ -17,7 +16,6 @@ import { ErrorInterceptor } from "./interceptors/error.interceptor";
 import { HoursMinutesSecondsPipe } from "./pipes/hours-minutes-seconds.pipe";
 import { AuthenticationService } from "./services/authentication/authentication.service";
 import { DevicesService } from "./services/devices/devices.service";
-import { VolumeMeterService } from "./services/volume-meter/volume-meter.service";
 
 @NgModule({
   imports: [
@@ -35,7 +33,6 @@ import { VolumeMeterService } from "./services/volume-meter/volume-meter.service
     LogoHeaderComponent,
     LogoComponent,
     ContentComponent,
-    SimpleVolumeMeterComponent,
     VolumeMeterComponent,
     HoursMinutesSecondsPipe
   ],
@@ -52,14 +49,12 @@ import { VolumeMeterService } from "./services/volume-meter/volume-meter.service
     LogoHeaderComponent,
     LogoComponent,
     ContentComponent,
-    SimpleVolumeMeterComponent,
     VolumeMeterComponent,
     HoursMinutesSecondsPipe
   ],
   providers: [
     AuthenticationService,
     DevicesService,
-    VolumeMeterService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthenticationInterceptor,

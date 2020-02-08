@@ -12,7 +12,7 @@
       <form [formGroup]="titleFormGroup">
         <ng-template matStepLabel>Enter a title</ng-template>
         <p>The title will be displayed to listeners in the app.</p>
-        <mat-form-field class="example-full-width">
+        <mat-form-field>
           <mat-label>Stream title</mat-label>
           <input matInput placeholder="English" formControlName="titleCtrl" required>
         </mat-form-field>
@@ -22,11 +22,10 @@
     <mat-step [stepControl]="deviceIdFormGroup">
       <form [formGroup]="deviceIdFormGroup">
         <ng-template matStepLabel>Select input device</ng-template>
-        <mat-radio-group class="example-radio-group" formControlName="deviceIdCtrl">
-          <mat-radio-button class="example-radio-button" *ngFor="let device of devices" [value]="device.id">
-            <div class="device-radio-btn">{{device.id}}
-              <simple-volume-meter [streamingId]=device.streamingId> </simple-volume-meter>
-            </div>
+        <mat-radio-group formControlName="deviceIdCtrl">
+          <mat-radio-button *ngFor="let device of devices" [value]="device.id">
+            <div class="device-radio-btn">{{device.id}}</div>
+            <volume-meter [simpleDesign]="true" [streamingId]="device.streamingId"> </volume-meter>
           </mat-radio-button>
         </mat-radio-group>
       </form>

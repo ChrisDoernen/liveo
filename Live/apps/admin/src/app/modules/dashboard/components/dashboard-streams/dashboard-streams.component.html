@@ -1,8 +1,9 @@
 <ng-container
   *ngIf="streams.length > 0">
   <div
+    class="streams"
     *ngFor="let stream of streams">
-    {{stream.title}}
+    <div class="stream-title">{{stream.title}}</div>
     <volume-meter
       [streamingId]="stream.streamingSourceId">
     </volume-meter>

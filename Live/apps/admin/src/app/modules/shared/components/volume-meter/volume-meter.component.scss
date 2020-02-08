@@ -1,11 +1,43 @@
 :host {
-  display: block;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   width: 100%;
-  height:20px;
+  height: 20px;
 }
 
-div {
+.value {
+  width: 110px;
+}
+
+.background {
+  height: 10px;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#145c66+0,17911b+55,f7ed2e+78,ff5000+100 */
+  background: #145c66; /* Old browsers */
+  background: -moz-linear-gradient(left, #145c66 0%, #17911b 55%, #f7ed2e 78%, #ff5000 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(
+    left,
+    #145c66 0%,
+    #17911b 55%,
+    #f7ed2e 78%,
+    #ff5000 100%
+  ); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(
+    to right,
+    #145c66 0%,
+    #17911b 55%,
+    #f7ed2e 78%,
+    #ff5000 100%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+.inner {
   display: block;
-  width: 20px;
-  height: 20px;
+  width: 100%;
+  height: inherit;
+  // ToDo: Take theme backgound color
+  background-color: #303030;
 }

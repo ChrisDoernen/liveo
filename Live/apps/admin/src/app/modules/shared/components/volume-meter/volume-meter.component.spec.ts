@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
-import { VolumeMeterService } from "../../services/volume-meter/volume-meter.service";
 import { VolumeMeterComponent } from "./volume-meter.component";
 
 describe("VolumeMeterComponent", () => {
@@ -17,10 +16,6 @@ describe("VolumeMeterComponent", () => {
         {
           provide: Logger,
           useValue: createMockInstance(Logger)
-        },
-        {
-          provide: VolumeMeterService,
-          useValue: createMockInstance(VolumeMeterService)
         }
       ]
     }).compileComponents();
