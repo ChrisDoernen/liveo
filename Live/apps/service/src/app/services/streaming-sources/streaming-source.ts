@@ -25,7 +25,7 @@ export class StreamingSource implements IStreamingSource {
     @inject("WebsocketServer") private _websocketServer: WebsocketServer,
     @inject("PlattformConstants") private _plattformConstants: PlatformConstants,
     public deviceId: string,
-    public streamingSourceId: string,
+    public streamingId: string,
     private _bitrate: number,
     private _onError: (error: Error) => void) {
   }
@@ -71,7 +71,7 @@ export class StreamingSource implements IStreamingSource {
 
   private createSocket(): string {
     const socketDir = path.join(config.workingDirectory, "sockets");
-    const socketId = `${this.streamingSourceId}.sock`;
+    const socketId = `${this.streamingId}.sock`;
     const socketPath = path.join(socketDir, socketId);
 
     let socket: string;
@@ -99,7 +99,7 @@ export class StreamingSource implements IStreamingSource {
         lines.forEach((line) => {
           if (line.startsWith("lavfi.")) {
             const value = line.substr(13);
-            this._websocketServer.emitAdminEventMessage(`${EVENTS.streamVolume}-${this.deviceId}`, value);
+            this._websocketServer.emitAdminEventMessage(`${EVENTS.streamVolume}-${this.streamingId}`, value);
           }
         });
       });
@@ -117,16 +117,16 @@ export class StreamingSource implements IStreamingSource {
   }
 
   public startStreaming(): void {
-    this._logger.debug(`Start streaming for device ${this.deviceId} with streaming source id ${this.streamingSourceId}`);
-    this._websocketServer.addStream(this.streamingSourceId);
+    this._logger.debug(`Start streaming for device ${this.deviceId} with streaming source id ${this.streamingId}`);
+    this._websocketServer.addStream(this.streamingId);
     const socket = this.createSocket();
     this._command = this.initialize(socket);
-    this._command.pipe().on("data", (data: Buffer) => this._websocketServer.emitStreamData(this.streamingSourceId, data));
+    this._command.pipe().on("data", (data: Buffer) => this._websocketServer.emitStreamData(this.streamingId, data));
     this.isStreaming = true;
   }
 
   public stopStreaming(): void {
-    this._logger.debug(`Killing child process for device ${this.deviceId} with streaming source id ${this.streamingSourceId}`);
+    this._logger.debug(`Killing child process for device ${this.deviceId} with streaming source id ${this.streamingId}`);
     this._command.kill("SIGKILL");
     this.cleanUp();
   }
@@ -134,8 +134,8 @@ export class StreamingSource implements IStreamingSource {
   private cleanUp(): void {
     this.closeSocket();
     this._command = null;
-    this._websocketServer.removeStream(this.streamingSourceId);
-    this._websocketServer.emitStreamEventMessage(this.streamingSourceId, EVENTS.streamEnded, "The stream ended.");
+    this._websocketServer.removeStream(this.streamingId);
+    this._websocketServer.emitStreamEventMessage(this.streamingId, EVENTS.streamEnded, "The stream ended.");
     this.isStreaming = false;
   }
 }

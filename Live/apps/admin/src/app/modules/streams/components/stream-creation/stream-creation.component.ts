@@ -49,7 +49,7 @@ export class StreamCreationComponent implements OnInit {
   private getStream(): StreamEntity {
     const title = this.titleFormGroup.value.titleCtrl;
     const deviceId = this.deviceIdFormGroup.value.deviceIdCtrl;
-    const streamingSourceId = this.devices.find((device) => device.id === deviceId).streamingSourceId;
+    const streamingSourceId = this.devices.find((device) => device.id === deviceId).streamingId;
 
     return new StreamEntity(null, title, null, null, deviceId, streamingSourceId, StreamType.Audio);
   }

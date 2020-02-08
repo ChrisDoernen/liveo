@@ -25,7 +25,7 @@
         <mat-radio-group class="example-radio-group" formControlName="deviceIdCtrl">
           <mat-radio-button class="example-radio-button" *ngFor="let device of devices" [value]="device.id">
             <div class="device-radio-btn">{{device.id}}
-              <simple-volume-meter [streamingId]=device.id> </simple-volume-meter>
+              <simple-volume-meter [streamingId]=device.streamingId> </simple-volume-meter>
             </div>
           </mat-radio-button>
         </mat-radio-group>

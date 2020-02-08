@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import createMockInstance from "jest-create-mock-instance";
+import { MockComponent } from "ng-mocks";
 import { ActivationService } from "../../../../services/activation/activation.service";
 import { AngularMaterialModule } from "../../../angular-material/angular-material.module";
 import { SharedModule } from "../../../shared/shared.module";
@@ -26,8 +27,8 @@ describe("DashboardComponent", () => {
         DashboardComponent,
         ActivatedSessionTileComponent,
         ActivationStateTileComponent,
-        DashboardActivationComponent,
-        DashboardNoActivationComponent
+        MockComponent(DashboardActivationComponent),
+        MockComponent(DashboardNoActivationComponent)
       ],
       providers: [
         { provide: ActivationService, useValue: activationService }

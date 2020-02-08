@@ -11,6 +11,7 @@ import { LogoHeaderComponent } from "./components/logo-header/logo-header.compon
 import { LogoComponent } from "./components/logo/logo.component";
 import { SimpleVolumeMeterComponent } from "./components/simple-volume-meter/simple-volume-meter.component";
 import { TitleBarComponent } from "./components/title-bar/title-bar.component";
+import { VolumeMeterComponent } from "./components/volume-meter/volume-meter.component";
 import { AuthenticationInterceptor } from "./interceptors/authentication.interceptor";
 import { ErrorInterceptor } from "./interceptors/error.interceptor";
 import { HoursMinutesSecondsPipe } from "./pipes/hours-minutes-seconds.pipe";
@@ -35,6 +36,7 @@ import { VolumeMeterService } from "./services/volume-meter/volume-meter.service
     LogoComponent,
     ContentComponent,
     SimpleVolumeMeterComponent,
+    VolumeMeterComponent,
     HoursMinutesSecondsPipe
   ],
   exports: [
@@ -51,6 +53,7 @@ import { VolumeMeterService } from "./services/volume-meter/volume-meter.service
     LogoComponent,
     ContentComponent,
     SimpleVolumeMeterComponent,
+    VolumeMeterComponent,
     HoursMinutesSecondsPipe
   ],
   providers: [

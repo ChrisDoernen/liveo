@@ -7962,6 +7962,11 @@ ng-inline-svg@^8.1.0:
   resolved "https://registry.yarnpkg.com/ng-inline-svg/-/ng-inline-svg-8.6.0.tgz#3e9b0fedf159e46237a96dd82ade879b510ed196"
   integrity sha512-DkJ9C7OXRbMzaqztckubrDMrH8tshU+wcs7PYpa+PUF3VewX/fxxUU36UHettDhWmeQhYyb6VL3T/ZuMBTbkCA==
 
+ng-mocks@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/ng-mocks/-/ng-mocks-8.1.0.tgz#d00a5e53ae53587f35c68147826590fab71a1658"
+  integrity sha512-/314nyU6UrONCUKfvFRuJPLpNBxqocwJmQBlPy4he5Vueu6gObXjy+KLUlbbENuA7zTeBjp//RA6w/Fa1yQ4Fw==
+
 ng5-slider@^1.1.14:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/ng5-slider/-/ng5-slider-1.2.4.tgz#2bbc110b73fbc00991e4ec73ac064a7b2efe4094"

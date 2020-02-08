@@ -8,7 +8,7 @@
 </div>
 <div class="activation-state" [class.active]="activationState == ActivationState.Started">
   <div>Live</div>
-  <div>{{ time ? (time | HoursMinutesSeconds) : ""}}</div>
+  <div>{{ time ? (time | HoursMinutesSeconds) : "00:00:00"}}</div>
 </div>
 <div class="activation-state">
   <div>End</div>

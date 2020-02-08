@@ -2,16 +2,16 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
 import { VolumeMeterService } from "../../services/volume-meter/volume-meter.service";
-import { SimpleVolumeMeterComponent } from "./simple-volume-meter.component";
+import { VolumeMeterComponent } from "./volume-meter.component";
 
-describe("SimpleVolumeMeterComponent", () => {
-  let component: SimpleVolumeMeterComponent;
-  let fixture: ComponentFixture<SimpleVolumeMeterComponent>;
+describe("VolumeMeterComponent", () => {
+  let component: VolumeMeterComponent;
+  let fixture: ComponentFixture<VolumeMeterComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
-        SimpleVolumeMeterComponent
+        VolumeMeterComponent
       ],
       providers: [
         {
@@ -25,7 +25,7 @@ describe("SimpleVolumeMeterComponent", () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SimpleVolumeMeterComponent);
+    fixture = TestBed.createComponent(VolumeMeterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

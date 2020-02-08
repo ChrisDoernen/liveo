@@ -1,0 +1,10 @@
+<ng-container
+  *ngIf="streams.length > 0">
+  <div
+    *ngFor="let stream of streams">
+    {{stream.title}}
+    <volume-meter
+      [streamingId]="stream.streamingSourceId">
+    </volume-meter>
+  </div>
+</ng-container>

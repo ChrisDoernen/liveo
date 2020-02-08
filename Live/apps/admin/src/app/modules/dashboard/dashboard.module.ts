@@ -8,6 +8,7 @@ import { DashboardActivationComponent } from "./components/dashboard-activation/
 import { DashboardNoActivationComponent } from "./components/dashboard-no-activation/dashboard-no-activation.component";
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { DashboardRoutingModule } from "./dashboard-routing.module";
+import { DashboardStreamsComponent } from "./components/dashboard-streams/dashboard-streams.component";
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { DashboardRoutingModule } from "./dashboard-routing.module";
     DashboardActivationComponent,
     DashboardNoActivationComponent,
     ActivatedSessionTileComponent,
-    ActivationStateTileComponent
+    ActivationStateTileComponent,
+    DashboardStreamsComponent
   ],
   entryComponents: [
     ActivationDialogComponent,
