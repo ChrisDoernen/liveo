@@ -4,6 +4,12 @@
   justify-content: space-between;
 }
 
-.activation-state:not(.active) {
-  color: grey;
+.activation-state {
+  &.active {
+    font-weight: 600;
+  }
+
+  &:not(.active) {
+    color: grey;
+  }
 }

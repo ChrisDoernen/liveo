@@ -4,4 +4,12 @@
   position: fixed;
   padding-bottom: $padding-bottom;
   bottom: 0;
+  width: 100%;
 }
+
+.footer-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
