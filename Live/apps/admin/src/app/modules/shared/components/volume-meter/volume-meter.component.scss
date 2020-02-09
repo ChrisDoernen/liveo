@@ -12,6 +12,7 @@
 
 .background {
   height: 10px;
+  position: relative;
   display: flex;
   justify-content: flex-end;
   width: 100%;
@@ -38,6 +39,11 @@
   display: block;
   width: 100%;
   height: inherit;
-  // ToDo: Take theme backgound color
-  background-color: #303030;
+  background-color: #3c3c3c;
+}
+
+.target-loudness {
+  position: absolute;
+  height: inherit;
+  border: 1px solid green;
 }

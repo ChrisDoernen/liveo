@@ -1,4 +1,5 @@
 <div class="value" *ngIf="!simpleDesign">{{loudness}} LUFS</div>
 <div class="background">
   <div class="inner" [ngStyle]="{'width': inverseMeterWidth}"></div>
+  <div class="target-loudness" [ngStyle]="{'width': targetWidth, 'right': targetRight}"></div>
 </div>

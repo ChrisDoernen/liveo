@@ -17,6 +17,7 @@ export class VolumeMeterComponent implements OnInit, OnDestroy {
 
   public color: string;
   public inverseMeterWidth: string;
+  public targetRight: string;
   public loudness: string;
   private _volumeSubscription: Subscription;
 
@@ -34,9 +35,13 @@ export class VolumeMeterComponent implements OnInit, OnDestroy {
     const scaleHighEnd = -5;
     const scaleLowEnd = -68;
     this._scaleLowEnd = scaleLowEnd;
+    const target = -16;
 
     this._m = (100 - 0) / (scaleLowEnd - scaleHighEnd);
     this._t = 100 - (this._m * scaleLowEnd);
+
+    const targetRight = (this._m * target) + this._t;
+    this.targetRight = targetRight + "%";
   }
 
   public ngOnInit(): void {
