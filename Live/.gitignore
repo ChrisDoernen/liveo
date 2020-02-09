@@ -12,6 +12,7 @@
 
 # environment
 .env
+live.env
 
 # IDEs and editors
 /.idea
