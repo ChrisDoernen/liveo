@@ -99,7 +99,8 @@ export class StreamingSource implements IStreamingSource {
         lines.forEach((line) => {
           if (line.startsWith("lavfi.")) {
             const value = line.substr(13);
-            this._websocketServer.emitAdminEventMessage(`${EVENTS.streamVolume}-${this.streamingId}`, value);
+            const loudness = this.convertLUScale9ToLUFSScal18(value).toFixed(1);
+            this._websocketServer.emitAdminEventMessage(`${EVENTS.streamVolume}-${this.streamingId}`, loudness);
           }
         });
       });
@@ -110,6 +111,25 @@ export class StreamingSource implements IStreamingSource {
     this._socketServer = server;
 
     return socketAddress;
+  }
+
+  /**
+   * Converts relative LU value to absolute LUFS value.
+   * The input on the linux version of ffmpeg is based on a EBU R128 +9 scale, having a target of -23 LUFS as default.
+   * To be able to adjust scale and target, we have to normalize to the absolute +18 scale.
+   * @param value Loudness in LU (relative) 
+   */
+  private convertLUScale9ToLUFSScal18(value: string): number {
+    const valueNumber = parseFloat(value);
+
+    let mLUFSScale18: number;
+    if (config.os === "linux") {
+      mLUFSScale18 = (valueNumber * 2) - 23;
+    } else {
+      mLUFSScale18 = valueNumber;
+    }
+
+    return mLUFSScale18;
   }
 
   private closeSocket(): void {

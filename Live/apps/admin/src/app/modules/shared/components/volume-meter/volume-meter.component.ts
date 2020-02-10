@@ -48,27 +48,12 @@ export class VolumeMeterComponent implements OnInit, OnDestroy {
     if (this.streamingId) {
       this._volumeSubscription =
         this._websocketService.fromEvent<string>(`${EVENTS.streamVolume}-${this.streamingId}`)
-          .pipe(map((value) => this.scaleLoudnessValue(value)))
           .subscribe((loudness) => {
-            this.loudness = loudness.toFixed(1);
-            this.inverseMeterWidth = this.getInverseBarWidth(loudness);
+            this.loudness = loudness;
+            this.inverseMeterWidth = this.getInverseBarWidth(parseFloat(loudness));
             this._changeDetectorRef.markForCheck();
           });
     }
-  }
-
-  /**
-   * Converts relative LU value to absolute LUFS value.
-   * The input is based on a EBU R128 +9 scale, having a target of -23 LUFS as default.
-   * To be able to adjust scale and target, we have to normalize to the absolute +18 scale.
-   * @param value Momentary loudness (M) in LU (relative) 
-   */
-  private scaleLoudnessValue(value: string): number {
-    const mLUScale9 = parseFloat(value);
-    const mLUScale18 = mLUScale9 * 2;
-    const mLUFSScale18 = mLUScale18 - 23;
-
-    return mLUFSScale18;
   }
 
   public ngOnDestroy(): void {
