@@ -11,3 +11,15 @@
   justify-content: space-between;
   align-items: flex-end;
 }
+
+mat-icon {
+  &.inactive {
+    display: none;
+  }
+}
+
+shutdown-button {
+  &.inactive {
+    display: none;
+  }
+}
