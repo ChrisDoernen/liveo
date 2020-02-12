@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { ActivationEntity, ActivationState } from "@live/entities";
 import { ActivationStateService, EndpointService, Logger } from "@live/services";
 import { ReplaySubject } from "rxjs";
+import { NotificationService } from '../notification/notification.service';
 
 @Injectable({
   providedIn: "root"
@@ -27,7 +28,9 @@ export class ActivationService {
     private readonly _logger: Logger,
     private readonly _httpClient: HttpClient,
     private readonly _endpointService: EndpointService,
+    private readonly _notificationService: NotificationService,
     private readonly _activationStateService: ActivationStateService) {
+    this._notificationService.notifications$.subscribe(() => this.getActivation());
   }
 
   public getActivation(): void {

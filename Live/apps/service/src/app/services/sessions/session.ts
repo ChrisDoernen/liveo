@@ -27,12 +27,20 @@ export class Session {
   }
 
   public start(): void {
+    if (this._isStarted) {
+      return;
+    }
+
     this._isStarted = true;
     const notification = new NotificationEntity("Session started", NotificationType.Info);
     this._notificationService.sendNotification(notification);
   }
 
   public stop(): void {
+    if (!this._isStarted) {
+      return;
+    }
+
     this._isStarted = false;
     const notification = new NotificationEntity("Session ended", NotificationType.Info);
     this._notificationService.sendNotification(notification);
