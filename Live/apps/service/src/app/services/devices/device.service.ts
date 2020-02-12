@@ -1,7 +1,7 @@
 import { DeviceEntity, DeviceType } from "@live/entities";
 import { inject, injectable } from "inversify";
-import { combineLatest } from "rxjs";
-import { map } from "rxjs/operators";
+import { combineLatest, Subscription } from "rxjs";
+import { map, distinctUntilChanged, skip } from "rxjs/operators";
 import { ActivationService } from "../activation/activation-service";
 import { AdminService } from "../admin/admin.service";
 import { Device } from "./device";
@@ -11,6 +11,7 @@ import { DeviceDetector } from "./device-detector";
 export class DeviceService {
 
   private _devices: Device[] = [];
+  private _subscription: Subscription;
 
   constructor(
     @inject("ActivationService") private readonly _activationService: ActivationService,
@@ -22,9 +23,13 @@ export class DeviceService {
     this._devices = await this.detectDevices();
 
     const admin$ = this._adminService.adminConnected$;
-    const activation$ = this._activationService.acitavtion$;
-    combineLatest([admin$, activation$])
-      .pipe(map(([admin, activation]) => !!admin || !!activation))
+    const activation$ = this._activationService.activation$;
+    this._subscription = combineLatest([admin$, activation$])
+      .pipe(
+        map(([admin, activation]) => admin || !!activation),
+        distinctUntilChanged(),
+        skip(1)
+      )
       .subscribe((shouldStream) => {
         const audioDevices = this._devices.filter((device) => device.entity.deviceType === DeviceType.Audio);
         if (shouldStream) {

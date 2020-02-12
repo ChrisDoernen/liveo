@@ -15,7 +15,7 @@ export class ActivationService {
   private _activeSession: Session;
   private _sessionStartJobId: string;
   private _sessionStopJobId: string;
-  public acitavtion$ = new BehaviorSubject<ActivationEntity>(null);
+  public activation$ = new BehaviorSubject<ActivationEntity>(null);
 
   constructor(
     @inject("Logger") private readonly _logger: Logger,
@@ -52,7 +52,7 @@ export class ActivationService {
     }
 
     this._activation = activation;
-    this.acitavtion$.next(activation);
+    this.activation$.next(activation);
     this._activeSession = session;
     this._logger.debug("Activation set");
 
@@ -99,7 +99,7 @@ export class ActivationService {
     }
 
     this._activation = null;
-    this.acitavtion$.next(null);
+    this.activation$.next(null);
     this._activeSession = null;
     this._logger.debug("Activation deleted");
 
