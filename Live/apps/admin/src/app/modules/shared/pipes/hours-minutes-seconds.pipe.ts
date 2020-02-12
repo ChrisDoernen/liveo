@@ -10,7 +10,7 @@ export class HoursMinutesSecondsPipe implements PipeTransform {
     const hoursNum = Math.floor(temp / 3600);
     const hours = this.prefixZeroIfNecessary(hoursNum);
 
-    const minutesNum = Math.floor(temp / 60);
+    const minutesNum = Math.floor((temp / 60) % 60);
     const minutes = this.prefixZeroIfNecessary(minutesNum);
 
     const secondsNum = Math.floor(temp % 3600 % 60);

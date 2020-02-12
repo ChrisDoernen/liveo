@@ -11,14 +11,17 @@ import { LogoComponent } from "../../modules/shared/components/logo/logo.compone
 import { ShutdownService } from "../../services/shutdown/shutdown.service";
 import { ShutdownComponent } from "../shutdown/shutdown.component";
 import { HeaderComponent } from "./header.component";
+import { ActivationService } from '../../services/activation/activation.service';
 
 describe("HeaderComponent", () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
   let shutdownService: jest.Mocked<ShutdownService>;
+  let activationService: jest.Mocked<ActivationService>;
 
   beforeEach(() => {
     shutdownService = createMockInstance(ShutdownService);
+    activationService = createMockInstance(ActivationService);
 
     TestBed.configureTestingModule({
       imports: [
@@ -36,7 +39,8 @@ describe("HeaderComponent", () => {
         { provide: HttpClient, useValue: jest.fn() },
         { provide: ShutdownService, useValue: shutdownService },
         { provide: InlineSVGService, useValue: jest.fn() },
-        { provide: Logger, useValue: jest.fn() }
+        { provide: Logger, useValue: jest.fn() },
+        { provide: ActivationService, useValue: activationService }
       ]
     }).compileComponents();
 
