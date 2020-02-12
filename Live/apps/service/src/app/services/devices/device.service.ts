@@ -56,6 +56,8 @@ export class DeviceService {
       this._devices = devices;
     }
 
-    return this._devices.map((device) => device.entity);
+    return this._devices
+      .filter((device) => device.entity.deviceType === DeviceType.Audio)
+      .map((device) => device.entity);
   }
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, NgZone } from "@angular/core";
 import { EVENTS } from "@live/constants";
 import { Subscription } from "rxjs";
 import { map } from "rxjs/operators";
@@ -27,7 +27,8 @@ export class VolumeMeterComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly _websocketService: WebsocketService,
-    private readonly _changeDetectorRef: ChangeDetectorRef) {
+    private readonly _changeDetectorRef: ChangeDetectorRef,
+    private readonly _ngZone: NgZone) {
     this.initializeScale();
   }
 
@@ -46,13 +47,15 @@ export class VolumeMeterComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     if (this.streamingId) {
-      this._volumeSubscription =
-        this._websocketService.fromEvent<string>(`${EVENTS.streamVolume}-${this.streamingId}`)
-          .subscribe((loudness) => {
-            this.loudness = loudness;
-            this.inverseMeterWidth = this.getInverseBarWidth(parseFloat(loudness));
-            this._changeDetectorRef.markForCheck();
-          });
+      this._ngZone.runOutsideAngular(() => {
+        this._volumeSubscription =
+          this._websocketService.fromEvent<string>(`${EVENTS.streamVolume}-${this.streamingId}`)
+            .subscribe((loudness) => {
+              this.loudness = loudness;
+              this.inverseMeterWidth = this.getInverseBarWidth(parseFloat(loudness));
+              this._changeDetectorRef.markForCheck();
+            });
+      });
     }
   }
 
