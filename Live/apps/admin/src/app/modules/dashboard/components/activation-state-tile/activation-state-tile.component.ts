@@ -52,7 +52,6 @@ export class ActivationStateTileComponent implements OnInit, OnDestroy, OnChange
     if (!this._timer) {
       return;
     }
-    debugger;
     clearTimeout(this._timer);
   }
 

@@ -1,5 +1,6 @@
 :host {
   display: flex;
+  align-items: center;
   flex-direction: row;
   justify-content: space-between;
 }
@@ -12,4 +13,19 @@
   &:not(.active) {
     color: grey;
   }
+}
+
+.dot {
+  display: inline-block;
+  margin-right: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: white;
+
+  animation: blink 2s ease-in infinite;
+}
+
+@keyframes blink {  
+  50% { opacity: 0; }
 }

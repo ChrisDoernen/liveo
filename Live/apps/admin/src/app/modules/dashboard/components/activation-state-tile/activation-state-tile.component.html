@@ -7,7 +7,7 @@
   <div>{{(activation?.startTime | date:'H:mm') + " Uhr"}}</div>
 </div>
 <div class="activation-state" [class.active]="activationState == 'Started'">
-  <div>Live</div>
+  <div><span class="dot"></span>Live</div>
   <div>{{ time ? (time | HoursMinutesSeconds) : "00:00:00"}}</div>
 </div>
 <div class="activation-state">

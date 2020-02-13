@@ -53,22 +53,12 @@ h2 {
   justify-content: flex-end;
 }
 
-.table-border {
-  border: solid 1px $table-grey;
-  border-radius: 3px;
+.mat-header-cell {
+  font-size: 14px;
 }
 
-.table-row-border {
-  border-top: solid 1px $table-grey;
-}
-
-.table-head {
-  height: 50px;
-  font-weight: 600;
-}
-
-.table-row {
-  height: 41px;
+.delete-icon {
+  color: mat-color($live-theme-warn, 300);
 }
 
 .no-content-message {
