@@ -1,6 +1,7 @@
 import { ActivationEntity } from "@live/entities";
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
+import { WebsocketServer } from "../../core/websocket-server";
 import { Logger } from "../logging/logger";
 import { Scheduler } from "../scheduling/scheduler";
 import { Session } from "../sessions/session";
@@ -16,6 +17,7 @@ describe("ActivationService", () => {
   let scheduler: jest.Mocked<Scheduler>;
   let timeService: jest.Mocked<TimeService>;
   let linuxShutdownService: jest.Mocked<UnixShutdownService>;
+  let websocketServer: jest.Mocked<WebsocketServer>;
 
   beforeEach(() => {
     logger = createMockInstance(Logger);
@@ -23,8 +25,9 @@ describe("ActivationService", () => {
     scheduler = createMockInstance(Scheduler);
     timeService = createMockInstance(TimeService);
     linuxShutdownService = createMockInstance(UnixShutdownService);
+    websocketServer = createMockInstance(WebsocketServer);
 
-    activationService = new ActivationService(logger, sessionService, scheduler, linuxShutdownService, timeService);
+    activationService = new ActivationService(logger, sessionService, scheduler, linuxShutdownService, timeService, websocketServer);
   });
 
   it("should construct", () => {

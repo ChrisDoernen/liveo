@@ -17,7 +17,6 @@ export class HomeComponent implements OnInit {
 
   public selectedStream: StreamEntity = null;
 
-  public ActivationState = ActivationState;
   private _isAboutOverlayHidden = true;
 
   public set isAboutOverlayHidden(value: boolean) {
