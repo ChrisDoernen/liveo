@@ -17,26 +17,20 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-      
     - name: Install dependencies
       working-directory: Live
       run: yarn install
-
     - name: Test
       working-directory: Live
       run: npm run test
-
     - name: Build
       working-directory: Live
     - run: npm run build-prod
-
     - name: Install executable dependecies
       working-directory: Live/dist/apps/service
       run: yarn install
-      
     - name: Build executable
       working-directory: Live
       run: npm run build-exe
-
       env:
         CI: true
