@@ -1,6 +1,8 @@
-import { ActivationEntity, Shutdown } from "@live/entities";
+import { EVENTS } from "@live/constants";
+import { ActivationEntity, ActivationState, Shutdown } from "@live/entities";
 import { inject, injectable } from "inversify";
 import { BehaviorSubject } from "rxjs";
+import { WebsocketServer } from "../../core/websocket-server";
 import { Logger } from "../logging/logger";
 import { Scheduler } from "../scheduling/scheduler";
 import { Session } from "../sessions/session";
@@ -22,7 +24,8 @@ export class ActivationService {
     @inject("SessionService") private readonly _sessionService: SessionService,
     @inject("Scheduler") private readonly _scheduler: Scheduler,
     @inject("ShutdownService") private readonly _shutdownService: ShutdownService,
-    @inject("TimeService") private readonly _timeService: TimeService) {
+    @inject("TimeService") private readonly _timeService: TimeService,
+    @inject("WebsocketServer") private readonly _weboscketServer: WebsocketServer) {
   }
 
   public setActivation(activation: ActivationEntity): ActivationEntity {
@@ -37,14 +40,20 @@ export class ActivationService {
     const session = this._sessionService.getSession(activation.sessionId);
 
     if (activation.startTime) {
-      this._sessionStartJobId = this._scheduler.schedule(new Date(activation.startTime), () => session.start());
+      this._sessionStartJobId = this._scheduler.schedule(new Date(activation.startTime), () => {
+        session.start();
+        this.sendActivationStateUpdate("Started");
+      });
     } else {
       session.start();
       activation.startTime = new Date(this._timeService.now()).toISOString();
     }
 
     if (activation.endTime) {
-      this._sessionStopJobId = this._scheduler.schedule(new Date(activation.endTime), () => session.stop());
+      this._sessionStopJobId = this._scheduler.schedule(new Date(activation.endTime), () => {
+        session.stop();
+        this.sendActivationStateUpdate("Ended");
+      });
     }
 
     if (activation.shutdownTime) {
@@ -101,6 +110,7 @@ export class ActivationService {
     this._activation = null;
     this.activation$.next(null);
     this._activeSession = null;
+    this.sendActivationStateUpdate("NoActivation");
     this._logger.debug("Activation deleted");
 
     return this._activation;
@@ -108,5 +118,10 @@ export class ActivationService {
 
   public getActivationEntity(): ActivationEntity {
     return this._activation;
+  }
+
+  private sendActivationStateUpdate(activationState: ActivationState): void {
+    this._weboscketServer.emitAdminEventMessage(EVENTS.adminActivationStateUodate, activationState);
+    this._logger.info(`Sent activation state update to admin, new state: ${activationState}`);
   }
 }

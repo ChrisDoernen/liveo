@@ -9,5 +9,6 @@ export const EVENTS = {
   unsubscribeAdmin: "unsubscribe_admin",
   cpuUsage: "cpu_usage",
   adminNotification: "admin_notification",
+  adminActivationStateUodate: "admin_activationstate_update",
   streamVolume: "stream_volume"
 }

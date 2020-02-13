@@ -6,7 +6,7 @@ import { TimeService } from "../time/time.service";
   providedIn: "root"
 })
 export class ActivationStateService {
-  
+
   constructor(
     private _timeService: TimeService) {
   }
@@ -17,14 +17,14 @@ export class ActivationStateService {
 
     if (activation) {
       if (new Date(activation.startTime) > now && (!activation.endTime || new Date(activation.endTime) > now)) {
-        activationState = ActivationState.Scheduled;
+        activationState = "Scheduled";
       } else if (new Date(activation.startTime) < now && (!activation.endTime || new Date(activation.endTime) > now)) {
-        activationState = ActivationState.Started;
+        activationState = "Started";
       } else if (new Date(activation.startTime) < now && (!activation.endTime || new Date(activation.endTime) < now)) {
-        activationState = ActivationState.Ended;
+        activationState = "Ended";
       }
     } else {
-      activationState = ActivationState.NoActivation;
+      activationState = "NoActivation";
     }
 
     return activationState;

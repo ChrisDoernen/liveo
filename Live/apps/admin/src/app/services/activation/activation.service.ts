@@ -1,9 +1,10 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { EVENTS } from "@live/constants";
 import { ActivationEntity, ActivationState } from "@live/entities";
 import { ActivationStateService, EndpointService, Logger } from "@live/services";
 import { ReplaySubject } from "rxjs";
-import { NotificationService } from '../notification/notification.service';
+import { WebsocketService } from "../websocket/websocket.service";
 
 @Injectable({
   providedIn: "root"
@@ -28,9 +29,17 @@ export class ActivationService {
     private readonly _logger: Logger,
     private readonly _httpClient: HttpClient,
     private readonly _endpointService: EndpointService,
-    private readonly _notificationService: NotificationService,
-    private readonly _activationStateService: ActivationStateService) {
-    this._notificationService.notifications$.subscribe(() => this.getActivation());
+    private readonly _activationStateService: ActivationStateService,
+    private readonly _websocketService: WebsocketService) {
+    this.subscribeActivationStateUpdates();
+  }
+
+  public subscribeActivationStateUpdates(): void {
+    this._logger.info("Subscribe actiation state updates");
+    this._websocketService.fromEvent<ActivationState>(EVENTS.adminActivationStateUodate)
+      .subscribe((activationState: ActivationState) => {
+        this._activationState.next(activationState);
+      });
   }
 
   public getActivation(): void {

@@ -15,8 +15,6 @@ export class ActivationStateTileComponent implements OnInit, OnDestroy, OnChange
   @Input()
   public activation: ActivationEntity;
 
-  public ActivationState = ActivationState;
-
   public time: any;
 
   private _timer: any;
@@ -34,7 +32,7 @@ export class ActivationStateTileComponent implements OnInit, OnDestroy, OnChange
   }
 
   private checkCounting(): void {
-    if (this.activationState === ActivationState.Started) {
+    if (this.activationState === "Started") {
       this.startCountingLiveTime();
     } else {
       this.stopCountingLiveTime();
@@ -54,6 +52,7 @@ export class ActivationStateTileComponent implements OnInit, OnDestroy, OnChange
     if (!this._timer) {
       return;
     }
+    debugger;
     clearTimeout(this._timer);
   }
 

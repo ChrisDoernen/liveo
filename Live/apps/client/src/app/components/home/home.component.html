@@ -11,17 +11,17 @@
       </div>
     </ng-container>
     <ng-template #activityretrieved>
-      <div *ngIf="activationState === ActivationState.NoActivation">
+      <div *ngIf="activationState === 'NoActivation'">
         There is no session scheduled right now. We're happy to see you later.
       </div>
-      <div *ngIf="activationState === ActivationState.Scheduled">
+      <div *ngIf="activationState === 'Scheduled'">
         Session {{ applicationState?.session.title }} is scheduled to start at
         {{ applicationState?.activation.startTime | date:'H:mm'}} Uhr. Stay tuned!
       </div>
-      <div *ngIf="activationState === ActivationState.Ended">
+      <div *ngIf="activationState === 'Ended'">
         The session has ended. Thanks for joining us.
       </div>
-      <div *ngIf="activationState === ActivationState.Started">
+      <div *ngIf="activationState === 'Started'">
         <div>Live now:</div>
         <div class="session-title">{{ applicationState?.session.title }}</div>
         <div class="stream-list">
@@ -37,10 +37,10 @@
       </div>
     </ng-template>
   </ng-template>
-  <div *ngIf="activationState !== ActivationState.Started" class="refresh-btn clickable" (click)="refresh()">Refresh
+  <div *ngIf="activationState !== 'Started'" class="refresh-btn clickable" (click)="refresh()">Refresh
   </div>
 </div>
-<audio-player *ngIf="activationState === ActivationState.Started" [selectedStream]="selectedStream?.streamingSourceId">
+<audio-player *ngIf="activationState === 'Started'" [selectedStream]="selectedStream?.streamingSourceId">
 </audio-player>
 <div class="about-link clickable"><a (click)="showAboutOverlay()">Info/About</a></div>
 <about [(isHidden)]="isAboutOverlayHidden"></about>
