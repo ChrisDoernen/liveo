@@ -2,9 +2,6 @@
 const path = require("path");
 import { environment } from "../../environments/environment";
 
-// This secion is copied from ffmpeg-static npm package
-// We dont want do have that dependency as pkg will include the binaries
-// of all OSes and bloat the bundle.
 const platform = process.platform;
 if (platform !== "linux" && platform !== "darwin" && platform !== "win32") {
   console.error("Unsupported platform.")
@@ -17,17 +14,7 @@ if (platform === "darwin" && architecture !== "x64") {
   process.exit(1)
 }
 
-const ffmpegPath = path.join(
-  "node_modules",
-  "ffmpeg-static",
-  "bin",
-  platform,
-  architecture,
-  platform === "win32" ? "ffmpeg.exe" : "ffmpeg"
-)
-
 const workingDirectory = process.env.EXECUTABLE ? process.cwd() : __dirname;
-const ffmpegExePath = process.env.EXECUTABLE ? path.join(process.cwd(), "ffmpeg/ffmpeg.exe") : ffmpegPath;
 
 export const config = {
   os: platform,
@@ -41,6 +28,6 @@ export const config = {
   database: process.env.DBFILE ? process.env.DBFILE : `${workingDirectory}/data/db.json`,
   loglevel: process.env.LOGLEVEL ? process.env.LOGLEVEL : "debug",
   logdirectory: process.env.LOGDIRECTORY ? process.env.LOGDIRECTORY : path.join(workingDirectory, "logs"),
-  ffmpegPath: process.env.FFMPEGPATH ? process.env.FFMPEGPATH : ffmpegExePath,
+  ffmpegPath: process.env.FFMPEGPATH ? process.env.FFMPEGPATH : "ffmpeg",
   workingDirectory
 };

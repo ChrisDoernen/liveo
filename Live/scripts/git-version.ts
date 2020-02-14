@@ -1,7 +1,7 @@
+import * as childProcess from "child_process";
 import { writeFileSync } from "fs";
 import { dedent } from "tslint/lib/utils";
 import * as util from "util";
-import * as childProcess from "child_process";
 
 const exec = util.promisify(childProcess.exec);
 
