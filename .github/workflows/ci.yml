@@ -30,6 +30,10 @@ jobs:
       working-directory: Live
       run: npm run build-prod
 
+    - name: Download Ffmpeg static files
+      working-directory: Live
+      run: npm run download-ffmpeg
+
     - name: Install executable dependecies
       working-directory: Live/dist/apps/service
       run: yarn install
