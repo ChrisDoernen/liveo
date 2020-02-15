@@ -29,7 +29,7 @@
     "pkg": "pkg ./dist/apps/service/package.json -t node10-win --out-path pkg --debug > pkg-debug.log",
     "bundle": "ncp pkg bundle && ncp dist/apps/client bundle/client && ncp dist/apps/admin bundle/admin && ncp misc/bundle-structure bundle",
     "copy-ffmpeg": "ncp downloads/ffmpeg.exe bundle/ffmpeg/ffmpeg.exe",
-    "build-exe": "npm-run-all pkg bundle download-ffmpeg copy-ffmpeg",
+    "build-exe": "npm-run-all pkg bundle copy-ffmpeg",
     "affected:apps": "./node_modules/.bin/nx affected:apps",
     "affected:libs": "./node_modules/.bin/nx affected:libs",
     "affected:build": "./node_modules/.bin/nx affected:build",
