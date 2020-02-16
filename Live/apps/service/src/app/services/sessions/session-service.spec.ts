@@ -7,7 +7,7 @@ import { Logger } from "../logging/logger";
 import { NotificationService } from "../notifications/notification-service";
 import { StreamService } from "../streams/stream-service";
 import { Session } from "./session";
-import { SessionFactory } from "./session-factory";
+import { sessionFactory } from "./session-factory";
 import { SessionService } from "./session-service";
 
 describe("SessionService", () => {
@@ -39,7 +39,7 @@ describe("SessionService", () => {
     container.bind<Logger>("Logger").toConstantValue(logger);
     container.bind<DataService>("ISessionRepository").toConstantValue(sessionRepository);
     container.bind<StreamService>("StreamService").toConstantValue(streamService);
-    container.bind<interfaces.Factory<Session>>("SessionFactory").toFactory(SessionFactory);
+    container.bind<interfaces.Factory<Session>>("SessionFactory").toFactory(sessionFactory);
     container.bind<SessionService>("SessionService").to(SessionService).inSingletonScope();
     container.bind<NotificationService>("NotificationService").toConstantValue(notificationService);
 

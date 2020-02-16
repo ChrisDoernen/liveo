@@ -3,9 +3,12 @@ import { WebsocketServer } from "../../core/websocket-server";
 import { Logger } from "../logging/logger";
 import { PlatformConstants } from "../platform-constants/i-platform-constants";
 import { SettingsService } from "../settings/settings-service";
+import { IStreamingSource } from "./i-streaming-source";
 import { StreamingSource } from "./streaming-source";
 
-export const StreamingSourceFactory = (context: interfaces.Context) =>
+export type StreamingSourceFactory = (deviceId: string, streamingSourceId: string, onError: (error: Error) => void) => IStreamingSource;
+
+export const streamingSourceFactory = (context: interfaces.Context) =>
   (deviceId: string, streamingId: string, onError: (error: Error) => void) => {
     const logger = context.container.get<Logger>("Logger");
     const ffmpegLogger = context.container.get<Logger>("FfmpegLogger");

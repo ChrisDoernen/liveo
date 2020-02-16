@@ -1,11 +1,13 @@
-import { Stream } from "../streams/stream";
+import { SessionEntity } from "@live/entities";
 import { interfaces } from "inversify";
 import { Logger } from "../logging/logger";
-import { Session } from "./session";
-import { SessionEntity } from "@live/entities";
 import { NotificationService } from "../notifications/notification-service";
+import { Stream } from "../streams/stream";
+import { Session } from "./session";
 
-export const SessionFactory = (context: interfaces.Context) => (
+export type SessionFactory = (sessionEntity: SessionEntity, streams: Stream[]) => Session;
+
+export const sessionFactory = (context: interfaces.Context) => (
   sessionEntity: SessionEntity, streams: Stream[]) => {
   const logger = context.container.get<Logger>("Logger");
   const notificationService = context.container.get<NotificationService>("NotificationService");

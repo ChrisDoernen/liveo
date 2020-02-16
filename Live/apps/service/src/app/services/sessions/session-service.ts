@@ -1,10 +1,10 @@
 import { SessionEntity } from "@live/entities";
 import { inject, injectable } from "inversify";
 import { Logger } from "../logging/logger";
-import { Stream } from "../streams/stream";
 import { StreamService } from "../streams/stream-service";
 import { ISessionRepository } from "./i-session-repository";
 import { Session } from "./session";
+import { SessionFactory } from "./session-factory";
 
 /**
  * A class providing methods to manage streaming sessions
@@ -16,7 +16,7 @@ export class SessionService {
     @inject("Logger") private readonly _logger: Logger,
     @inject("ISessionRepository") private readonly _sessionRepository: ISessionRepository,
     @inject("StreamService") private readonly _streamService: StreamService,
-    @inject("SessionFactory") private sessionFactory: (sessionEntity: SessionEntity, streams: Stream[]) => Session) {
+    @inject("SessionFactory") private sessionFactory: SessionFactory) {
   }
 
   public getSession(id: string): Session {

@@ -17,7 +17,7 @@ export class StreamService {
   }
 
   public getStream(id: string): Stream {
-    const streamEntity = this._streamRepository.getStreamEntity(id);
+    const streamEntity = this.getStreamEntity(id);
     return this.convertStream(streamEntity);
   }
   

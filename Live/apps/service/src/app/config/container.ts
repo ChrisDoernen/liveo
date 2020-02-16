@@ -27,7 +27,7 @@ import { ProcessExecutionService } from "../services/process-execution/process-e
 import { Scheduler } from "../services/scheduling/scheduler";
 import { ISessionRepository } from "../services/sessions/i-session-repository";
 import { Session } from "../services/sessions/session";
-import { SessionFactory } from "../services/sessions/session-factory";
+import { sessionFactory } from "../services/sessions/session-factory";
 import { SessionService } from "../services/sessions/session-service";
 import { ISettingsProvider } from "../services/settings/i-settings-provider";
 import { SettingsService } from "../services/settings/settings-service";
@@ -40,7 +40,7 @@ import { ConnectionHistoryService } from "../services/statistics/connection-hist
 import { FileStreamingSourceFactory } from "../services/streaming-sources/file-streaming-source-factory";
 import { IStreamingSource } from "../services/streaming-sources/i-streaming-source";
 import { StreamingSimulationSourceFactory } from "../services/streaming-sources/streaming-simulation-source-factory";
-import { StreamingSourceFactory } from "../services/streaming-sources/streaming-source-factory";
+import { streamingSourceFactory } from "../services/streaming-sources/streaming-source-factory";
 import { IStreamRepository } from "../services/streams/i-stream-repository";
 import { Stream } from "../services/streams/stream";
 import { StreamFactory } from "../services/streams/stream-factory";
@@ -91,12 +91,12 @@ if (config.simulate) {
   container.rebind<DeviceDetector>("DeviceDetector").to(SimulationDeviceDetector).inSingletonScope();
   container.bind<interfaces.Factory<IStreamingSource>>("StreamingSourceFactory").toFactory(FileStreamingSourceFactory);
 } else {
-  container.bind<interfaces.Factory<IStreamingSource>>("StreamingSourceFactory").toFactory(StreamingSourceFactory);
+  container.bind<interfaces.Factory<IStreamingSource>>("StreamingSourceFactory").toFactory(streamingSourceFactory);
 }
 
 container.bind<interfaces.Factory<Device>>("DeviceFactory").toFactory(DeviceFactory);
 container.bind<interfaces.Factory<Stream>>("StreamFactory").toFactory(StreamFactory);
-container.bind<interfaces.Factory<Session>>("SessionFactory").toFactory(SessionFactory);
+container.bind<interfaces.Factory<Session>>("SessionFactory").toFactory(sessionFactory);
 
 container.bind<IdGenerator>("IdGenerator").to(IdGenerator);
 const dataService = new DataService(new Logger(ServiceLogger), new IdGenerator());

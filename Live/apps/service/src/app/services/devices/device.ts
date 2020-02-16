@@ -2,6 +2,7 @@ import { DeviceEntity } from "@live/entities";
 import { inject } from "inversify";
 import { Logger } from "../logging/logger";
 import { IStreamingSource } from "../streaming-sources/i-streaming-source";
+import { StreamingSourceFactory } from "../streaming-sources/streaming-source-factory";
 import { DeviceState } from "./device-state";
 
 /**
@@ -24,7 +25,7 @@ export class Device {
 
   constructor(
     @inject("Logger") private _logger: Logger,
-    @inject("StreamingSourceFactory") streamingSourceFactory: (deviceId: string, streamingSourceId: string, onError: (error: Error) => void) => IStreamingSource,
+    @inject("StreamingSourceFactory") streamingSourceFactory: StreamingSourceFactory,
     private _deviceData: DeviceEntity,
     private _deviceState: DeviceState) {
     this._source = streamingSourceFactory(this.id, this.entity.streamingId, this.onStreamingSourceError.bind(this));
