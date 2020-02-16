@@ -76,7 +76,7 @@ export class StreamingSource implements IStreamingSource {
 
     let socket: string;
     let socketAddress: string;
-    if (config.os === "win32") {
+    if (config.platform === "win32") {
       socket = path.join(this._plattformConstants.ipcProtocol, socketId);
       socketAddress = socket.replace(/\\/g, "\\\\").replace(":", "\\\\\\:");
     } else {
@@ -85,7 +85,7 @@ export class StreamingSource implements IStreamingSource {
     }
 
     // Remove existing sockets before opening a new one. Windows removes named pipes automatically.
-    if (config.os !== "win32") {
+    if (config.platform !== "win32") {
       if (!fs.existsSync(socketDir)) {
         fs.mkdirSync(socketDir);
       } else if (fs.existsSync(socket)) {
@@ -123,7 +123,7 @@ export class StreamingSource implements IStreamingSource {
     const valueNumber = parseFloat(value);
 
     let mLUFSScale18: number;
-    if (config.os === "linux") {
+    if (config.platform === "linux") {
       mLUFSScale18 = (valueNumber * 2) - 23;
     } else {
       mLUFSScale18 = valueNumber;

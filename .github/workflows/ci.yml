@@ -32,7 +32,7 @@ jobs:
 
     - name: Download Ffmpeg static files
       working-directory: Live
-      run: npm run download-ffmpeg
+      run: npm run download-ffmpeg -- --ci
 
     - name: Install executable dependecies
       working-directory: Live/dist/apps/service
@@ -40,7 +40,7 @@ jobs:
 
     - name: Build executable
       working-directory: Live
-      run: npm run build-exe
+      run: npm run build-bundle-win32
 
       env:
         CI: true

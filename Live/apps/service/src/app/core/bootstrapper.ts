@@ -30,15 +30,19 @@ export class Bootstrapper {
     this._logger.info(`Version: v${environment.version}/${environment.revision}`);
     this._logger.debug(`Production: ${config.production}`);
     this._logger.debug(`Executable: ${config.executable}`);
-    this._logger.debug(`Operating system: ${config.os}`);
+    this._logger.debug(`Platform/OS: ${config.platform}`);
     this._logger.debug(`Architecture: ${config.arch}`);
     this._logger.debug(`Simulate streaming: ${config.simulate}`);
     this._logger.debug(`Filesource: ${config.filesource}`);
     this._logger.debug(`Standalone: ${config.standalone}`);
     this._logger.debug(`Database: ${config.database}`);
-    this._logger.debug(`Ffmpeg: ${config.ffmpegPath}`);
     this._logger.debug(`Working directory: ${config.workingDirectory}`);
-
+    this._logger.debug(`Ffmpeg path: ${config.ffmpegPath}`);
+    if (config.ffmpegPath === "ffmpeg") {
+      this._logger.warn("Using fallback for ffmpeg path. Did you run 'npm run download-ffmpeg'?");
+      this._logger.warn("Plase make sure the path to ffmpeg is in your PATH environment variable");
+      this._logger.warn("Minimal required ffmpeg version is f15007afa9.");
+    }
     const ffmpegVersionOutput = await this._processExecutionService.executeAsync(`"${config.ffmpegPath}" -version`);
     const ffmpegVersion = ffmpegVersionOutput.split(EOL)[0];
     this._logger.debug(`Ffmpeg version: ${ffmpegVersion}`);

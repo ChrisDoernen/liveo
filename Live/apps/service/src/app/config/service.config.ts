@@ -1,23 +1,46 @@
 // Path has to be required, otherwise Jest can not cope
 const path = require("path");
+import { existsSync } from "fs";
+import { join } from "path";
 import { environment } from "../../environments/environment";
 
 const platform = process.platform;
-if (platform !== "linux" && platform !== "darwin" && platform !== "win32") {
-  console.error("Unsupported platform.")
+if (platform !== "linux" && platform !== "win32") {
+  console.error(`Unsupported platform: ${platform}`);
   process.exit(1)
 }
 
 const architecture = process.arch;
-if (platform === "darwin" && architecture !== "x64") {
-  console.error("Unsupported architecture.")
+if (architecture !== "x64") {
+  console.error(`Unsupported architecture: ${architecture}`);
   process.exit(1)
 }
 
 const workingDirectory = process.env.EXECUTABLE ? process.cwd() : __dirname;
 
+// Ffmpeg paths to look at for environment and platform
+const ffmpegPaths = {
+  executable: {
+    win32: "ffmpeg/ffmpeg.exe"
+  },
+  standard: {
+    win32: "../../../ffmpeg-downloads/win32/ffmpeg.exe",
+    linux: "../../../ffmpeg-downloads/linux/ffmpeg"
+  },
+  fallback: "ffmpeg"
+};
+
+const findFfmpegPath = () => {
+  const relativeFfmpegPath = process.env.EXECUTABLE ? ffmpegPaths.executable[platform] : ffmpegPaths.standard[platform];
+  const ffmpegPath = join(workingDirectory, relativeFfmpegPath);
+  if (existsSync(ffmpegPath)) {
+    return ffmpegPath;
+  }
+  return ffmpegPaths.fallback;
+};
+
 export const config = {
-  os: platform,
+  platform: platform,
   arch: architecture,
   port: process.env.PORT ? process.env.PORT : environment.port,
   production: process.env.PRODUCTION ? process.env.PRODUCTION === "true" : environment.production,
@@ -28,6 +51,6 @@ export const config = {
   database: process.env.DBFILE ? process.env.DBFILE : `${workingDirectory}/data/db.json`,
   loglevel: process.env.LOGLEVEL ? process.env.LOGLEVEL : "debug",
   logdirectory: process.env.LOGDIRECTORY ? process.env.LOGDIRECTORY : path.join(workingDirectory, "logs"),
-  ffmpegPath: process.env.FFMPEGPATH ? process.env.FFMPEGPATH : "ffmpeg",
+  ffmpegPath: process.env.FFMPEGPATH ? process.env.FFMPEGPATH : findFfmpegPath(),
   workingDirectory
 };

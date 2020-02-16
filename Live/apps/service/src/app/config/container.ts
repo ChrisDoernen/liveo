@@ -52,7 +52,7 @@ import { config } from "./service.config";
 
 export const container = new Container();
 
-switch (config.os) {
+switch (config.platform) {
   case "linux": {
     container.bind<ShutdownService>("ShutdownService").to(UnixShutdownService);
     container.bind<DeviceDetector>("DeviceDetector").to(LinuxDeviceDetector).inSingletonScope();
@@ -72,7 +72,7 @@ switch (config.os) {
     break;
   }
   default: {
-    throw new Error(`OS ${config.os} is unsupported.`);
+    throw new Error(`OS ${config.platform} is unsupported.`);
   }
 }
 
