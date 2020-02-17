@@ -1,25 +1,12 @@
 {
-  "streams": [
-    {
-      "id": "ge1r",
-      "title": "Deutsch",
-      "countryCode": "de",
-      "deviceId": "Mikrofon (USB Audio Device)"
-    }
-  ],
-  "sessions": [
-    {
-      "id": "bd35",
-      "title": "Gottesdienst Windows",
-      "description": "Live stream of the sunday service",
-      "streams": [
-        "ge1r"
-      ]
-    }
-  ],
+  "streams": [],
+  "sessions": [],
   "settings": {
-    "defaultSession": "bd34",
-    "enableAutoActivation": false
+    "defaultSession": null,
+    "enableAutoActivation": false,
+    "bitrate": 192,
+    "shareSessionReports": false,
+    "shareErrorReports": false
   },
   "users": [
     {

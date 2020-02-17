@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "ng": "ng",
-    "start": "ng build l3as && ng serve",
+    "start": "node dist/apps/service/main.js",
     "start:app:admin": "ng serve admin --port 4200 --host 0.0.0.0",
     "start:app:client": "ng serve client --port 4200 --host 0.0.0.0",
     "start:app:service": "ng serve service",

@@ -16,9 +16,10 @@ git clone https://github.com/ChrisDoernen/Livestream-App.git
 ```
 followed by
 ```
-npm install
+yarn install
+npm run download-ffmpeg
 ```
-in the shell or cmd.
+in the shell or cmd. 
 
 ## 3. Start coding
 The project relies on [Angular CLI](https://cli.angular.io/) and [Nrwl Nx](https://nx.dev/getting-started/what-is-nx). Make sure to check out the getting started guides.
