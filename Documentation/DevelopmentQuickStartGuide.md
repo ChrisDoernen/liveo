@@ -21,8 +21,19 @@ npm run download-ffmpeg
 ```
 in the shell or cmd. 
 
-## 3. Start coding
-The project relies on [Angular CLI](https://cli.angular.io/) and [Nrwl Nx](https://nx.dev/getting-started/what-is-nx). Make sure to check out the getting started guides.
+## 3. Just run the app
+
+### Run the app
+To run the app, type
+```
+npm run build
+npm start
+```
+
+Open your browser at `localhost:3000` for the client app and `localhost:3000/admin` for the admin interface.
+
+### Coding
+The project relies on [Angular CLI](https://cli.angular.io/) and [Nrwl Nx](https://nx.dev/getting-started/what-is-nx). Make sure to check out their getting started guides.
 
 To start the app run 
 ```
@@ -33,7 +44,7 @@ Switch environments with the `configuration` flag, e.g. run
 ```
 ng serve service --configuration=simulation
 ```
-to start the service in the simulation environment.
+to start the service in the simulation environment. Also check out the available [configuration options](ConfigurationOptions.md)
 
 To work on the client or admin sites, run
 ```
