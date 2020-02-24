@@ -2,7 +2,6 @@ import { StreamEntity } from "@live/entities";
 import { inject, injectable } from "inversify";
 import { Logger } from "../logging/logger";
 import { IStreamRepository } from "./i-stream-repository";
-import { Stream } from "./stream";
 
 /**
  * A class providing methods to manage streams
@@ -12,17 +11,7 @@ export class StreamService {
 
   constructor(
     @inject("Logger") private _logger: Logger,
-    @inject("IStreamRepository") private _streamRepository: IStreamRepository,
-    @inject("StreamFactory") private _streamFactory: (streamEntity: StreamEntity) => Stream) {
-  }
-
-  public getStream(id: string): Stream {
-    const streamEntity = this.getStreamEntity(id);
-    return this.convertStream(streamEntity);
-  }
-  
-  private convertStream(streamEntity: StreamEntity): Stream {
-    return this._streamFactory(streamEntity);
+    @inject("IStreamRepository") private _streamRepository: IStreamRepository) {
   }
 
   public getStreamEntities(): StreamEntity[] {

@@ -1,9 +1,9 @@
 import { DeviceEntity, DeviceType } from "@live/entities";
 import { inject, injectable } from "inversify";
-import { combineLatest, Subscription } from "rxjs";
-import { map, distinctUntilChanged, skip } from "rxjs/operators";
-import { ActivationService } from "../activation/activation-service";
+import { distinctUntilChanged } from "rxjs/operators";
 import { AdminService } from "../admin/admin.service";
+import { ActivationStateService } from "../application-state/activation-state.service";
+import { Logger } from "../logging/logger";
 import { Device } from "./device";
 import { DeviceDetector } from "./device-detector";
 
@@ -11,10 +11,10 @@ import { DeviceDetector } from "./device-detector";
 export class DeviceService {
 
   private _devices: Device[] = [];
-  private _subscription: Subscription;
 
   constructor(
-    @inject("ActivationService") private readonly _activationService: ActivationService,
+    @inject("Logger") private readonly _logger: Logger,
+    @inject("ActivationStateService") private readonly _activationStateService: ActivationStateService,
     @inject("AdminService") private readonly _adminService: AdminService,
     @inject("DeviceDetector") private readonly _deviceDetector: DeviceDetector) {
   }
@@ -22,20 +22,28 @@ export class DeviceService {
   public async initialize(): Promise<void> {
     this._devices = await this.detectDevices();
 
-    const admin$ = this._adminService.adminConnected$;
-    const activation$ = this._activationService.activation$;
-    this._subscription = combineLatest([admin$, activation$])
-      .pipe(
-        map(([admin, activation]) => admin || !!activation),
-        distinctUntilChanged(),
-        skip(1)
-      )
-      .subscribe((shouldStream) => {
-        const audioDevices = this._devices.filter((device) => device.entity.deviceType === DeviceType.Audio);
-        if (shouldStream) {
-          audioDevices.forEach((device) => device.startStreaming());
+    this._activationStateService.activationState$
+      .subscribe((activationState) => {
+        if (activationState.state !== "NoActivation") {
+          const streamingIds = activationState.streams.map((stream) => stream.streamingId);
+          this._devices
+            .filter((device) => this.isAudioDevice(device))
+            .filter((device) => !!streamingIds.find((streamingId) => streamingId === device.entity.streamingId))
+            .forEach((device) => device.startStreaming());
         } else {
-          audioDevices.forEach((device) => device.stopStreaming());
+          this._devices.forEach((device) => device.stopStreaming());
+        }
+      });
+
+    this._adminService.adminStreamCreation$
+      .pipe(distinctUntilChanged())
+      .subscribe((streamCreation) => {
+        if (streamCreation) {
+          this._devices
+            .filter((device) => this.isAudioDevice(device))
+            .forEach((device) => device.startStreaming());
+        } else {
+          this._devices.forEach((device) => device.stopStreaming());
         }
       });
   }
@@ -50,14 +58,18 @@ export class DeviceService {
 
       // Find new devices, start them
       const existingDeviceIds = this._devices.map((device) => device.id);
-      const newDevices = devices.filter((device) => existingDeviceIds.indexOf(device.id) === -1);
-      const newAudioDevices = newDevices.filter((device) => device.entity.deviceType === DeviceType.Audio);
+      const newDevices = devices.filter((device) => !existingDeviceIds.find((id) => id === device.id));
+      const newAudioDevices = newDevices.filter((device) => this.isAudioDevice(device));
       newAudioDevices.forEach((device) => device.startStreaming());
-      this._devices = devices;
+      this._devices.push(...newDevices);
     }
 
     return this._devices
-      .filter((device) => device.entity.deviceType === DeviceType.Audio)
+      .filter((device) => this.isAudioDevice(device))
       .map((device) => device.entity);
+  }
+
+  private isAudioDevice(device: Device): boolean {
+    return device.entity.deviceType === DeviceType.Audio
   }
 }

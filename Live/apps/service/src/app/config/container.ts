@@ -6,7 +6,7 @@ import { AuthenticationMiddleware } from "../middleware/authentication/authentic
 import { ActivationService } from "../services/activation/activation-service";
 import { AutoActivationService } from "../services/activation/auto-activation-service";
 import { AdminService } from "../services/admin/admin.service";
-import { ApplicationStateService } from "../services/application-state/application-state.service";
+import { ActivationStateService } from "../services/application-state/activation-state.service";
 import { AuthenticationService } from "../services/authentication/authentication-service";
 import { IUserProvider } from "../services/authentication/i-user-provider";
 import { DataService } from "../services/data/data-service";
@@ -26,8 +26,6 @@ import { PLATFORM_CONSTANTS } from "../services/platform-constants/platformConst
 import { ProcessExecutionService } from "../services/process-execution/process-execution-service";
 import { Scheduler } from "../services/scheduling/scheduler";
 import { ISessionRepository } from "../services/sessions/i-session-repository";
-import { Session } from "../services/sessions/session";
-import { sessionFactory } from "../services/sessions/session-factory";
 import { SessionService } from "../services/sessions/session-service";
 import { ISettingsProvider } from "../services/settings/i-settings-provider";
 import { SettingsService } from "../services/settings/settings-service";
@@ -42,8 +40,6 @@ import { IStreamingSource } from "../services/streaming-sources/i-streaming-sour
 import { StreamingSimulationSourceFactory } from "../services/streaming-sources/streaming-simulation-source-factory";
 import { streamingSourceFactory } from "../services/streaming-sources/streaming-source-factory";
 import { IStreamRepository } from "../services/streams/i-stream-repository";
-import { Stream } from "../services/streams/stream";
-import { StreamFactory } from "../services/streams/stream-factory";
 import { StreamService } from "../services/streams/stream-service";
 import { SystemMonitoringService } from "../services/system-monitoring/system-monitoring-service";
 import { TimeService } from "../services/time/time.service";
@@ -95,8 +91,6 @@ if (config.simulate) {
 }
 
 container.bind<interfaces.Factory<Device>>("DeviceFactory").toFactory(DeviceFactory);
-container.bind<interfaces.Factory<Stream>>("StreamFactory").toFactory(StreamFactory);
-container.bind<interfaces.Factory<Session>>("SessionFactory").toFactory(sessionFactory);
 
 container.bind<IdGenerator>("IdGenerator").to(IdGenerator);
 const dataService = new DataService(new Logger(ServiceLogger), new IdGenerator());
@@ -108,7 +102,6 @@ container.bind<ISettingsProvider>("ISettingsProvider").toConstantValue(dataServi
 container.bind<IUserProvider>("IUserProvider").toConstantValue(dataService);
 
 container.bind<Bootstrapper>("Bootstrapper").to(Bootstrapper);
-container.bind<ApplicationStateService>("ActivityService").to(ApplicationStateService);
 container.bind<ProcessExecutionService>("ProcessExecutionService").to(ProcessExecutionService);
 container.bind<TimeService>("TimeService").to(TimeService);
 container.bind<NotificationService>("NotificationService").to(NotificationService);
@@ -125,6 +118,7 @@ container.bind<SettingsService>("SettingsService").to(SettingsService);
 container.bind<WebServer>("WebServer").to(WebServer).inSingletonScope();
 container.bind<WebsocketServer>("WebsocketServer").to(WebsocketServer).inSingletonScope();
 container.bind<ActivationService>("ActivationService").to(ActivationService).inSingletonScope();
+container.bind<ActivationStateService>("ActivationStateService").to(ActivationStateService).inSingletonScope();
 container.bind<Scheduler>("Scheduler").to(Scheduler).inSingletonScope();
 container.bind<ConnectionHistoryService>("ConnectionHistoryService").to(ConnectionHistoryService).inSingletonScope();
 container.bind<SystemMonitoringService>("SystemMonitoringService").to(SystemMonitoringService);

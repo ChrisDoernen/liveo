@@ -1,18 +1,19 @@
-import "reflect-metadata";
-import { DeviceService } from "./device.service";
-import { ActivationService } from "../activation/activation-service";
-import { DeviceDetector } from "./device-detector";
-import { AdminService } from "../admin/admin.service";
-import createMockInstance from "jest-create-mock-instance";
-import { LinuxDeviceDetector } from "./linux-device-detector";
-import { BehaviorSubject } from "rxjs";
 import { ActivationEntity, DeviceEntity, DeviceType } from "@live/entities";
+import { ActivationEntityBuilder } from "@live/test-utilities";
+import createMockInstance from "jest-create-mock-instance";
+import "reflect-metadata";
+import { BehaviorSubject } from "rxjs";
+import { AdminService } from "../admin/admin.service";
+import { ActivationStateService } from "../application-state/activation-state.service";
+import { Logger } from "../logging/logger";
 import { Device } from "./device";
-import { ActivationEntityBuilder } from '@live/test-utilities';
+import { DeviceDetector } from "./device-detector";
+import { DeviceService } from "./device.service";
+import { LinuxDeviceDetector } from "./linux-device-detector";
 
 describe("DeviecService", () => {
   let deviceService: DeviceService;
-  let activationService: jest.Mocked<ActivationService>;
+  let activationStateService: jest.Mocked<ActivationStateService>;
   let deviceDetector: jest.Mocked<DeviceDetector>;
   let adminService: jest.Mocked<AdminService>;
 
@@ -25,13 +26,13 @@ describe("DeviecService", () => {
   beforeEach(() => {
     jest.useFakeTimers();
 
-    activationService = createMockInstance(ActivationService);
-    Object.defineProperty(activationService, "activation$", { value: activation$.asObservable() });
+    activationStateService = createMockInstance(ActivationStateService);
+    Object.defineProperty(activationStateService, "activation$", { value: activation$.asObservable() });
     adminService = createMockInstance(AdminService);
     Object.defineProperty(adminService, "adminConnected$", { value: adminConnected$.asObservable() });
     deviceDetector = createMockInstance(LinuxDeviceDetector);
 
-    deviceService = new DeviceService(activationService, adminService, deviceDetector);
+    deviceService = new DeviceService(createMockInstance(Logger), activationStateService, adminService, deviceDetector);
   });
 
   afterEach(() => {

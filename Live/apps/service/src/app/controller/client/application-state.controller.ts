@@ -1,17 +1,18 @@
 import { ROUTES } from "@live/constants";
-import { ApplicationStateEntity } from "@live/entities";
+import { ActivationStateEntity } from "@live/entities";
 import { inject } from "inversify";
 import { controller, httpGet } from "inversify-express-utils";
-import { ApplicationStateService } from "../../services/application-state/application-state.service";
+import { ActivationStateService } from "../../services/application-state/activation-state.service";
 
 @controller(`/${ROUTES.client}/application-state`)
 export class ApplicationStateController {
+
   constructor(
-    @inject("ActivityService") private _activityService: ApplicationStateService) {
+    @inject("ActivationStateService") private _activationStateService: ActivationStateService) {
   }
 
   @httpGet("/")
-  public getActivationExtended(): ApplicationStateEntity {
-    return this._activityService.getApplicationState();
+  public getActivationExtended(): ActivationStateEntity {
+    return this._activationStateService.getActivationState();
   }
 }

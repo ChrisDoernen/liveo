@@ -1,9 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { EVENTS } from "@live/constants";
 import { DeviceEntity, StreamEntity, StreamType } from "@live/entities";
 import { DevicesService } from "../../../../modules/shared/services/devices/devices.service";
 import { StreamService } from "../../../../services/stream/stream.service";
+import { WebsocketService } from "../../../../services/websocket/websocket.service";
 
 @Component({
   selector: "stream-creation",
@@ -11,7 +13,7 @@ import { StreamService } from "../../../../services/stream/stream.service";
   styleUrls: ["./stream-creation.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class StreamCreationComponent implements OnInit {
+export class StreamCreationComponent implements OnInit, OnDestroy {
 
   public isLinear = true;
   public titleFormGroup: FormGroup;
@@ -23,11 +25,13 @@ export class StreamCreationComponent implements OnInit {
     private readonly _devicesService: DevicesService,
     private readonly _formBuilder: FormBuilder,
     private readonly _activatedRoute: ActivatedRoute,
+    private readonly _websocketService: WebsocketService,
     private readonly _router: Router,
     private readonly _changeDetectorRef: ChangeDetectorRef) {
   }
 
   public ngOnInit(): void {
+    this._websocketService.emit(EVENTS.adminStreamCreationEnter);
     this.getDevices();
 
     this.titleFormGroup = this._formBuilder.group({
@@ -63,5 +67,9 @@ export class StreamCreationComponent implements OnInit {
 
   public refresh(): void {
     this.getDevices(true);
+  }
+
+  public ngOnDestroy(): void {
+    this._websocketService.emit(EVENTS.adminStreamCreationLeave);
   }
 }

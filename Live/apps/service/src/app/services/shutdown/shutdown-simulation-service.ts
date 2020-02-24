@@ -1,7 +1,6 @@
-import { injectable, inject } from "inversify";
+import { inject, injectable } from "inversify";
 import { Logger } from "../logging/logger";
 import { ShutdownService } from "./shutdown-service";
-import { Scheduler } from "../scheduling/scheduler";
 
 /**
  * Implementation for shutdown simulation
@@ -9,9 +8,8 @@ import { Scheduler } from "../scheduling/scheduler";
 @injectable()
 export class ShutdownSimulationService extends ShutdownService {
 
-  constructor(@inject("Logger") logger: Logger,
-    @inject("Scheduler") scheduler: Scheduler) {
-    super(logger, scheduler);
+  constructor(@inject("Logger") logger: Logger) {
+    super(logger);
     logger.debug("Instantiating shutdown simulation service.");
   }
 

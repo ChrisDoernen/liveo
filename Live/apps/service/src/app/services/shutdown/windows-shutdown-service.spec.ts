@@ -1,9 +1,9 @@
-import "reflect-metadata";
 import createMockInstance from "jest-create-mock-instance";
+import "reflect-metadata";
 import { Logger } from "../logging/logger";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { Scheduler } from "../scheduling/scheduler";
-import { WindowsShutdownService } from './windows-shutdown-service';
+import { WindowsShutdownService } from "./windows-shutdown-service";
 
 describe("WindowsShutdownService", () => {
   let logger;
@@ -15,7 +15,7 @@ describe("WindowsShutdownService", () => {
     logger = createMockInstance(Logger);
     scheduler = createMockInstance(Scheduler);
     processExecutionService = createMockInstance(ProcessExecutionService);
-    windowsShutdownService = new WindowsShutdownService(logger, processExecutionService, scheduler);
+    windowsShutdownService = new WindowsShutdownService(logger, processExecutionService);
   });
 
   it("should construct", () => {

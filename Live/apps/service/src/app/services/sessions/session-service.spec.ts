@@ -1,13 +1,11 @@
 import { SessionEntityBuilder } from "@live/test-utilities";
-import { Container, interfaces } from "inversify";
+import { Container } from "inversify";
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
 import { DataService } from "../data/data-service";
 import { Logger } from "../logging/logger";
 import { NotificationService } from "../notifications/notification-service";
 import { StreamService } from "../streams/stream-service";
-import { Session } from "./session";
-import { sessionFactory } from "./session-factory";
 import { SessionService } from "./session-service";
 
 describe("SessionService", () => {
@@ -39,7 +37,6 @@ describe("SessionService", () => {
     container.bind<Logger>("Logger").toConstantValue(logger);
     container.bind<DataService>("ISessionRepository").toConstantValue(sessionRepository);
     container.bind<StreamService>("StreamService").toConstantValue(streamService);
-    container.bind<interfaces.Factory<Session>>("SessionFactory").toFactory(sessionFactory);
     container.bind<SessionService>("SessionService").to(SessionService).inSingletonScope();
     container.bind<NotificationService>("NotificationService").toConstantValue(notificationService);
 

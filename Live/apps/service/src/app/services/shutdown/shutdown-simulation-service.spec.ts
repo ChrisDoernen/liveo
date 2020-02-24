@@ -15,7 +15,7 @@ describe("ShutdownSimulationService", () => {
     logger = createMockInstance(Logger);
     scheduler = createMockInstance(Scheduler);
     processExecutionService = createMockInstance(ProcessExecutionService);
-    shutdownSimulationService = new ShutdownSimulationService(logger, scheduler);
+    shutdownSimulationService = new ShutdownSimulationService(logger);
   });
 
   it("should construct", async () => {

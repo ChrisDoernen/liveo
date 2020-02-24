@@ -1,6 +1,6 @@
 export { ActivationState } from "./lib/activation-state";
+export { ActivationStateEntity } from "./lib/activation-state.entity";
 export { ActivationEntity } from "./lib/activation.entity";
-export { ApplicationStateEntity } from "./lib/application-state.entity";
 export { DeviceType } from "./lib/device-type";
 export { DeviceEntity } from "./lib/device.entity";
 export { NotificationType } from "./lib/notification-type";

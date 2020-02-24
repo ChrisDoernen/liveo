@@ -76,6 +76,14 @@ export class WebsocketServer {
   private onSubscribeAdmin(socket: Socket): void {
     socket.join("admin");
     this._adminService.adminSubscribed(this.getClientIpAddress(socket));
+
+    socket.on(EVENTS.adminStreamCreationEnter, ()=> {
+      this._adminService.onAdminStreamCreationEnter();
+    });
+
+    socket.on(EVENTS.adminStreamCreationLeave, ()=> {
+      this._adminService.onAdminStreamCreationLeave();
+    });
   }
 
   private onUnsubscribeAdmin(socket: Socket): void {
@@ -115,6 +123,10 @@ export class WebsocketServer {
 
   public emitAdminEventMessage(event: string, message: string | NotificationEntity): void {
     this._websocketServer.to("admin").emit(event, message);
+  }
+
+  public emit(event: string, message: any): void {
+    this._websocketServer.emit(event, message);
   }
 
   private getClientInfo(socket: Socket, streamId?: string): ClientInfo {

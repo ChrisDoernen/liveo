@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, NgZone } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, NgZone, OnDestroy, OnInit } from "@angular/core";
 import { EVENTS } from "@live/constants";
 import { Subscription } from "rxjs";
-import { map } from "rxjs/operators";
 import { WebsocketService } from "../../../../services/websocket/websocket.service";
 
 @Component({
@@ -21,7 +20,6 @@ export class VolumeMeterComponent implements OnInit, OnDestroy {
   public loudness: string;
   private _volumeSubscription: Subscription;
 
-  private _scaleLowEnd: number;
   private _m: number;
   private _t: number;
 
@@ -35,7 +33,6 @@ export class VolumeMeterComponent implements OnInit, OnDestroy {
   private initializeScale(): void {
     const scaleHighEnd = -5;
     const scaleLowEnd = -68;
-    this._scaleLowEnd = scaleLowEnd;
     const target = -16;
 
     this._m = (100 - 0) / (scaleLowEnd - scaleHighEnd);
@@ -53,7 +50,7 @@ export class VolumeMeterComponent implements OnInit, OnDestroy {
             .subscribe((loudness) => {
               this.loudness = loudness;
               this.inverseMeterWidth = this.getInverseBarWidth(parseFloat(loudness));
-              this._changeDetectorRef.markForCheck();
+              this._changeDetectorRef.detectChanges();
             });
       });
     }

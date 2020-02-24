@@ -1,3 +1,4 @@
+
 export class ActivationEntity {
   constructor(
     public sessionId: string,
