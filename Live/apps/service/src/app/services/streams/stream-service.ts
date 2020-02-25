@@ -24,7 +24,7 @@ export class StreamService {
 
   public createStream(streamEntity: StreamEntity): StreamEntity {
     const createdStreamEntity = this._streamRepository.createStreamEntity(streamEntity);
-    this._logger.info(`Created stream ${JSON.stringify(streamEntity)}`);
+    this._logger.debug(`Created stream ${JSON.stringify(streamEntity)}`);
 
     return createdStreamEntity;
   }

@@ -95,7 +95,7 @@ export class ActivationStateService {
     this._activationState$.next(newActivationState);
 
     this._weboscketServer.emit(EVENTS.adminActivationStateUodate, newActivationState);
-    this._logger.info(`Emitting new activation state: ${newActivationState.state}`);
+    this._logger.debug(`Emitting new activation state: ${newActivationState.state}`);
   }
 
   public getActivationState(): ActivationStateEntity {

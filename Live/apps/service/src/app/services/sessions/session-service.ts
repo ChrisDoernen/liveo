@@ -31,7 +31,7 @@ export class SessionService {
 
   public createSession(sessionEntity: SessionEntity): SessionEntity {
     const createdSessionEntity = this._sessionRepository.createSessionEntity(sessionEntity);
-    this._logger.info(`Created session ${JSON.stringify(createdSessionEntity)}`);
+    this._logger.debug(`Created session ${JSON.stringify(createdSessionEntity)}`);
 
     return createdSessionEntity;
   }

@@ -18,7 +18,7 @@ export class ActivationService {
   }
 
   public setActivation(activation: ActivationEntity): ActivationEntity {
-    this._logger.info(`Received new activation: ${JSON.stringify(activation)}.`);
+    this._logger.debug(`Received new activation: ${JSON.stringify(activation)}.`);
 
     if (this._activation) {
       throw new Error("Can not set new activation before deleting the current.");

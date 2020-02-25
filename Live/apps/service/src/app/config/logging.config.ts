@@ -52,7 +52,6 @@ export const ServiceLogger: Logger = winston.createLogger({
 
 export const FfmpegLogger: Logger = winston.createLogger({
   transports: [
-    consoleTransport,
     ffmpegLogFileTransport
   ]
 });

@@ -17,7 +17,7 @@ export class SettingsService {
   }
 
   public async updateSettings(settings: SettingsEntity): Promise<SettingsEntity> {
-    this._logger.info(`Received new settings: ${JSON.stringify(settings)}.`);
+    this._logger.debug(`Received new settings: ${JSON.stringify(settings)}.`);
     this.validateSettings(settings);
 
     return await this._settingsProvider.updateSettings(settings);

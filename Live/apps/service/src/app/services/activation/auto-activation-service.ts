@@ -19,7 +19,7 @@ export class AutoActivationService {
     if (settings.enableAutoActivation) {
       try {
         const activation = new ActivationEntity(settings.defaultSession);
-        this._logger.info(`Auto activation enabled, activating default session.`);
+        this._logger.debug(`Auto activation enabled, activating default session.`);
         this._activationService.setActivation(activation);
       } catch (error) {
         this._logger.error(`Auto activation failed: ${error.message}.`);

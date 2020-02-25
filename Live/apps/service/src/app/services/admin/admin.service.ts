@@ -18,12 +18,12 @@ export class AdminService {
   }
 
   public onAdminStreamCreationEnter(): void {
-    this._logger.info("Admin entered stream creation");
+    this._logger.debug("Admin entered stream creation");
     this.streamCreation.next(true);
   }
 
   public onAdminStreamCreationLeave() {
-    this._logger.info("Admin left stream creation");
+    this._logger.debug("Admin left stream creation");
     this.streamCreation.next(false);
   }
 
