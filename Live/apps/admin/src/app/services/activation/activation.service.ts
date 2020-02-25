@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { EVENTS } from "@live/constants";
-import { ActivationEntity, ActivationState } from "@live/entities";
+import { ActivationEntity, ActivationState, ActivationStateEntity } from "@live/entities";
 import { ActivationStateService, EndpointService, Logger } from "@live/services";
 import { ReplaySubject } from "rxjs";
 import { WebsocketService } from "../websocket/websocket.service";
@@ -14,7 +14,7 @@ export class ActivationService {
   private _activation = new ReplaySubject<ActivationEntity>();
   private _activationState = new ReplaySubject<ActivationState>();
 
-  public activation$ = this._activation.asObservable();
+  public activation$ = this._activationState.asObservable();
   public activationState$ = this._activationState.asObservable();
 
   private set activation(activation: ActivationEntity) {
@@ -36,9 +36,9 @@ export class ActivationService {
 
   public subscribeActivationStateUpdates(): void {
     this._logger.info("Subscribe actiation state updates");
-    this._websocketService.fromEvent<ActivationState>(EVENTS.adminActivationStateUodate)
-      .subscribe((activationState: ActivationState) => {
-        this._activationState.next(activationState);
+    this._websocketService.fromEvent<ActivationStateEntity>(EVENTS.adminActivationStateUodate)
+      .subscribe((activationState: ActivationStateEntity) => {
+        this._activationState.next(activationState.state);
       });
   }
 

@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { ApplicationStateEntity } from "@live/entities";
+import { ActivationStateEntity } from "@live/entities";
 import { EndpointService } from "@live/services";
 import { delay } from "rxjs/operators";
 
@@ -17,9 +17,9 @@ export class ApplicationStateService {
     private readonly _endpointService: EndpointService) {
   }
 
-  public loadApplicationState(): Promise<ApplicationStateEntity> {
+  public loadApplicationState(): Promise<ActivationStateEntity> {
     return this._httpClient
-      .get<ApplicationStateEntity>(this._endpointService.getEndpoint("application-state"))
+      .get<ActivationStateEntity>(this._endpointService.getEndpoint("application-state"))
       .pipe(delay(1000))
       .toPromise();
   }

@@ -14,7 +14,7 @@ export class SystemMonitoringService {
   public startMonitoring(): void {
     setInterval(() => {
       os.cpuUsage(this.logCPUUsage.bind(this));
-    }, 2000);
+    }, 1000);
   }
 
   private logCPUUsage(cpuUsage: number): void {
