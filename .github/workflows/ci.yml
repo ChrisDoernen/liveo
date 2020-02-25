@@ -42,5 +42,11 @@ jobs:
       working-directory: Live
       run: npm run build-bundle-win32
 
+    - name: Upload artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: LiveWindows
+          path: bundle
+
       env:
         CI: true
