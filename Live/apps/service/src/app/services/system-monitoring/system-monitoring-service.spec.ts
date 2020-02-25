@@ -27,15 +27,15 @@ describe("SystemMonitoringService", () => {
 
     // I dont know why the test does not pass with 4000ms...
     jest.advanceTimersByTime(5000);
-    expect(spy).toBeCalledTimes(2);
+    expect(spy).toBeCalledTimes(4);
 
     jest.advanceTimersByTime(2000);
-    expect(spy).toBeCalledTimes(3);
+    expect(spy).toBeCalledTimes(6);
 
     jest.advanceTimersByTime(1999);
-    expect(spy).toBeCalledTimes(3);
+    expect(spy).toBeCalledTimes(7);
 
     jest.advanceTimersByTime(1);
-    expect(spy).toBeCalledTimes(4);
+    expect(spy).toBeCalledTimes(8);
   });
 });
