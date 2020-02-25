@@ -46,7 +46,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: LiveWindows
-        path: bundle
+        path: Live/bundle
 
       env:
         CI: true
