@@ -1,6 +1,5 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Shutdown } from "@live/entities";
 import { EndpointService } from "@live/services";
 import { AuthenticationService } from "../../modules/shared/services/authentication/authentication.service";
 import { ConnectionStateService } from "../connection-state/connection-state-service";
@@ -16,9 +15,9 @@ export class ShutdownService {
     private _authenticationService: AuthenticationService) {
   }
 
-  public async setShutdown(shutdown: Shutdown): Promise<any> {
+  public async shutdown(): Promise<any> {
     this._httpClient
-      .post(this._endpointService.getEndpoint("shutdown"), shutdown)
+      .post(this._endpointService.getEndpoint("shutdown"), null)
       .toPromise();
     this._authenticationService.logout();
     this._connectionStateService.checkOfflineAndNavigate("Shutdown");

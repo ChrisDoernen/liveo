@@ -1,23 +1,24 @@
-import { Shutdown } from "@live/entities";
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
+import { Subject } from "rxjs";
+import { ActivationStateService } from "../application-state/activation-state.service";
 import { Logger } from "../logging/logger";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
-import { Scheduler } from "../scheduling/scheduler";
 import { UnixShutdownService } from "./unix-shutdown-service";
 
 describe("UnixShutdownService", () => {
   let logger: jest.Mocked<Logger>;
   let unixShutdownService: UnixShutdownService;
-  let scheduler: jest.Mocked<Scheduler>;
+  let activationStateService: jest.Mocked<ActivationStateService>;
   let processExecutionService: jest.Mocked<ProcessExecutionService>;
 
   beforeEach(() => {
     logger = createMockInstance(Logger);
-    scheduler = createMockInstance(Scheduler);
     processExecutionService = createMockInstance(ProcessExecutionService);
+    activationStateService = createMockInstance(ActivationStateService);
+    Object.defineProperty(activationStateService, "activationState$", { value: new Subject() });
 
-    unixShutdownService = new UnixShutdownService(logger, processExecutionService, scheduler);
+    unixShutdownService = new UnixShutdownService(logger, processExecutionService, activationStateService);
   });
 
   it("should construct", () => {
@@ -27,36 +28,5 @@ describe("UnixShutdownService", () => {
   it("should call command executor on shutdown correctly", () => {
     unixShutdownService.executeShutdown();
     expect(processExecutionService.execute).toHaveBeenCalledWith("sudo shutdown -h now");
-  });
-
-  it("should set shutdown correctly when shutdown has no shutdown time", () => {
-    const shutdown = new Shutdown(null);
-    unixShutdownService.setShutdown(shutdown);
-    expect(processExecutionService.execute).toHaveBeenCalledWith("sudo shutdown -h now");
-  });
-
-  it("should set shutdown correctly when shutdown has shutdown time", () => {
-    const shutdown = new Shutdown("2019-08-18T12:27:13+02:00");
-    unixShutdownService.setShutdown(shutdown);
-    expect(scheduler.schedule).toHaveBeenCalledWith(new Date("2019-08-18T12:27:13+02:00"), expect.any(Function));
-    expect(unixShutdownService.getShutdown()).toBe(shutdown);
-  });
-
-  it("should cancel previously set shutdown correctly", () => {
-    const jobId = "id";
-    scheduler.schedule.mockReturnValue(jobId);
-
-    const shutdown = new Shutdown("2019-08-18T12:27:13+02:00");
-    unixShutdownService.setShutdown(shutdown);
-    expect(unixShutdownService.getShutdown()).toBe(shutdown);
-    unixShutdownService.cancelShutdown();
-    expect(scheduler.cancelJob).toHaveBeenCalledWith(jobId);
-    expect(unixShutdownService.getShutdown()).toBe(null);
-  });
-
-  it("should cancel shutdown correctly when no shutdown is set", async () => {
-    expect(unixShutdownService.getShutdown()).toBe(null);
-    unixShutdownService.cancelShutdown();
-    expect(logger.warn).toHaveBeenCalled();
   });
 });

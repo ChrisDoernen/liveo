@@ -8,7 +8,6 @@ export { NotificationEntity } from "./lib/notification.entity";
 export { Roles } from "./lib/roles";
 export { SessionEntity } from "./lib/session.entity";
 export { SettingsEntity } from "./lib/settings.entity";
-export { Shutdown } from "./lib/shutdown";
 export { StreamType } from "./lib/stream-type";
 export { StreamEntity } from "./lib/stream.entity";
 export { UserEntity } from "./lib/user.entity";

@@ -1,6 +1,7 @@
 import { DeviceEntity, DeviceType } from "@live/entities";
 import { inject, injectable } from "inversify";
-import { distinctUntilChanged } from "rxjs/operators";
+import { combineLatest } from "rxjs";
+import { distinctUntilChanged, map } from "rxjs/operators";
 import { AdminService } from "../admin/admin.service";
 import { ActivationStateService } from "../application-state/activation-state.service";
 import { Logger } from "../logging/logger";
@@ -22,25 +23,26 @@ export class DeviceService {
   public async initialize(): Promise<void> {
     this._devices = await this.detectDevices();
 
-    this._activationStateService.activationState$
-      .subscribe((activationState) => {
-        if (activationState.state !== "NoActivation") {
-          const streamingIds = activationState.streams.map((stream) => stream.streamingId);
+    const activationState$ = this._activationStateService.activationState$;
+    const streamCreation$ = this._adminService.streamCreation;
+
+    combineLatest([activationState$, streamCreation$])
+      .pipe(
+        map(([activationState, streamCreation]) => {
+          if (activationState.state !== "NoActivation") {
+            return activationState.streams.map((stream) => stream.streamingId);
+          } else if (streamCreation) {
+            return this._devices.map((device) => device.entity.streamingId);
+          } else {
+            return null;
+          }
+        }),
+        distinctUntilChanged()
+      ).subscribe((streamingIds) => {
+        if (streamingIds) {
           this._devices
             .filter((device) => this.isAudioDevice(device))
             .filter((device) => !!streamingIds.find((streamingId) => streamingId === device.entity.streamingId))
-            .forEach((device) => device.startStreaming());
-        } else {
-          this._devices.forEach((device) => device.stopStreaming());
-        }
-      });
-
-    this._adminService.adminStreamCreation$
-      .pipe(distinctUntilChanged())
-      .subscribe((streamCreation) => {
-        if (streamCreation) {
-          this._devices
-            .filter((device) => this.isAudioDevice(device))
             .forEach((device) => device.startStreaming());
         } else {
           this._devices.forEach((device) => device.stopStreaming());

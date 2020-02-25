@@ -1,5 +1,6 @@
-import { Shutdown } from "@live/entities";
 import { inject, injectable } from "inversify";
+import { filter } from "rxjs/operators";
+import { ActivationStateService } from "../application-state/activation-state.service";
 import { Logger } from "../logging/logger";
 
 /**
@@ -8,29 +9,18 @@ import { Logger } from "../logging/logger";
 @injectable()
 export abstract class ShutdownService {
 
-  private _shutdown: Shutdown = null;
-
   constructor(
-    @inject("Logger") protected logger: Logger) {
+    @inject("Logger") protected logger: Logger,
+    @inject("ActivationStateService") private readonly _activationStateService: ActivationStateService) {
+    this._activationStateService.activationState$
+      .pipe(filter((activationState) => activationState.state === "Shutdown"))
+      .subscribe(() => this.shutdown());
   }
 
-  public setShutdown(shutdown: Shutdown): void {
-    this.logger.debug(`Receiving new shutdown: ${JSON.stringify(shutdown)}.`);
+  public shutdown(): void {
+    this.logger.debug(`Set shutdown`);
     this.executeShutdown();
   }
 
-  public getShutdown(): Shutdown {
-    return this._shutdown;
-  }
-
   protected abstract executeShutdown(): void;
-
-  public cancelShutdown(): void {
-    if (!this._shutdown) {
-      this.logger.warn("Can not cancel shutdown, no shutdown existing.");
-    }
-
-    this._shutdown = null;
-    this.logger.debug("Shutdown canceled.");
-  }
 }

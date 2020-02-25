@@ -1,1 +1,1 @@
-export type ActivationState = "NoActivation" | "Scheduled" | "Started" | "Ended";
+export type ActivationState = "NoActivation" | "Scheduled" | "Started" | "Ended" | "Shutdown";

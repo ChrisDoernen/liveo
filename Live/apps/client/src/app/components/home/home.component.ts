@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivationState, ApplicationStateEntity, StreamEntity } from "@live/entities";
+import { ActivationStateEntity, StreamEntity } from "@live/entities";
 import { ActivationStateService, Logger } from "@live/services";
 import { ApplicationStateService } from "../../services/application-state/application-state.service";
 
@@ -9,8 +9,7 @@ import { ApplicationStateService } from "../../services/application-state/applic
   styleUrls: ["./home.component.scss"]
 })
 export class HomeComponent implements OnInit {
-  public activationState: ActivationState;
-  public applicationState: ApplicationStateEntity;
+  public activationState: ActivationStateEntity;
 
   public loading: boolean;
   public isInErrorState: boolean;
@@ -41,9 +40,8 @@ export class HomeComponent implements OnInit {
     this.loading = true;
     this._logger.info("Loading application state");
     this._applicationStateService.loadApplicationState()
-      .then((applicationState) => {
-        this.applicationState = applicationState;
-        this.activationState = this._activationStateService.determineActivationState(applicationState.activation);
+      .then((activationState) => {
+        this.activationState = activationState;
         this.loading = false;
         this.isInErrorState = false;
       })

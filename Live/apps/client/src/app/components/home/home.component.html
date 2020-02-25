@@ -11,21 +11,21 @@
       </div>
     </ng-container>
     <ng-template #activityretrieved>
-      <div *ngIf="activationState === 'NoActivation'">
+      <div *ngIf="activationState.state === 'NoActivation'">
         There is no session scheduled right now. We're happy to see you later.
       </div>
-      <div *ngIf="activationState === 'Scheduled'">
-        Session {{ applicationState?.session.title }} is scheduled to start at
-        {{ applicationState?.activation.startTime | date:'H:mm'}} Uhr. Stay tuned!
+      <div *ngIf="activationState.state === 'Scheduled'">
+        Session {{ activationState?.session.title }} is scheduled to start at
+        {{ activationState?.activation.startTime | date:'H:mm'}} Uhr. Stay tuned!
       </div>
-      <div *ngIf="activationState === 'Ended'">
+      <div *ngIf="activationState.state === 'Ended'">
         The session has ended. Thanks for joining us.
       </div>
-      <div *ngIf="activationState === 'Started'">
+      <div *ngIf="activationState.state === 'Started'">
         <div>Live now:</div>
-        <div class="session-title">{{ applicationState?.session.title }}</div>
+        <div class="session-title">{{ activationState?.session.title }}</div>
         <div class="stream-list">
-          <div *ngFor="let stream of applicationState?.streams" class="stream-list-item">
+          <div *ngFor="let stream of activationState?.streams" class="stream-list-item">
             <i *ngIf="selectedStream == stream" class="fa fa-check" aria-hidden="true">
             </i>
             <a class="stream-link" (click)="selectStream(stream)" [ngClass]="{selected: selectedStream == stream,
@@ -37,10 +37,10 @@
       </div>
     </ng-template>
   </ng-template>
-  <div *ngIf="activationState !== 'Started'" class="refresh-btn clickable" (click)="refresh()">Refresh
+  <div *ngIf="activationState.state !== 'Started'" class="refresh-btn clickable" (click)="refresh()">Refresh
   </div>
 </div>
-<audio-player *ngIf="activationState === 'Started'" [selectedStream]="selectedStream?.streamingSourceId">
+<audio-player *ngIf="activationState.state === 'Started'" [selectedStream]="selectedStream?.streamingId">
 </audio-player>
 <div class="about-link clickable"><a (click)="showAboutOverlay()">Info/About</a></div>
 <about [(isHidden)]="isAboutOverlayHidden"></about>

@@ -6,7 +6,7 @@ import { Logger } from "../logging/logger";
 export class AdminService {
 
   private connectedAdmins = [];
-  public adminStreamCreation$ = new BehaviorSubject<boolean>(false);
+  public streamCreation = new BehaviorSubject<boolean>(false);
 
   constructor(
     @inject("Logger") private _logger: Logger) {
@@ -19,12 +19,12 @@ export class AdminService {
 
   public onAdminStreamCreationEnter(): void {
     this._logger.info("Admin entered stream creation");
-    this.adminStreamCreation$.next(true);
+    this.streamCreation.next(true);
   }
 
   public onAdminStreamCreationLeave() {
     this._logger.info("Admin left stream creation");
-    this.adminStreamCreation$.next(false);
+    this.streamCreation.next(false);
   }
 
   public adminUnsubscribed(ip: string): void {
@@ -32,7 +32,7 @@ export class AdminService {
     if (matchingIp) {
       this.connectedAdmins.splice(this.connectedAdmins.indexOf(matchingIp), 1);
       if (this.connectedAdmins.length === 0) {
-        this.adminStreamCreation$.next(false);
+        this.streamCreation.next(false);
       }
       this._logger.debug(`Admin unsubscribed, ${this.connectedAdmins.length} admins connected`);
     }

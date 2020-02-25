@@ -1,4 +1,5 @@
 import { inject, injectable } from "inversify";
+import { ActivationStateService } from "../application-state/activation-state.service";
 import { Logger } from "../logging/logger";
 import { ShutdownService } from "./shutdown-service";
 
@@ -9,8 +10,9 @@ import { ShutdownService } from "./shutdown-service";
 export class ProcessShutdownService extends ShutdownService {
 
   constructor(
-    @inject("Logger") logger: Logger) {
-    super(logger);
+    @inject("Logger") logger: Logger,
+    @inject("ActivationStateService") _activationStateService: ActivationStateService) {
+    super(logger, _activationStateService);
     logger.debug("Instantiating process shutdown service.");
   }
 

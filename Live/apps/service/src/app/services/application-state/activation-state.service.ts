@@ -1,12 +1,11 @@
 import { EVENTS } from "@live/constants";
-import { ActivationEntity, ActivationState, ActivationStateEntity, SessionEntity, Shutdown, StreamEntity } from "@live/entities";
+import { ActivationEntity, ActivationState, ActivationStateEntity, SessionEntity, StreamEntity } from "@live/entities";
 import { inject, injectable } from "inversify";
 import { BehaviorSubject } from "rxjs";
 import { WebsocketServer } from "../../core/websocket-server";
 import { Logger } from "../logging/logger";
 import { Scheduler } from "../scheduling/scheduler";
 import { SessionService } from "../sessions/session-service";
-import { ShutdownService } from "../shutdown/shutdown-service";
 import { StreamService } from "../streams/stream-service";
 import { TimeService } from "../time/time.service";
 
@@ -30,7 +29,6 @@ export class ActivationStateService {
     @inject("StreamService") private _streamService: StreamService,
     @inject("Scheduler") private readonly _scheduler: Scheduler,
     @inject("TimeService") private readonly _timeService: TimeService,
-    @inject("ShutdownService") private readonly _shutdownService: ShutdownService,
     @inject("WebsocketServer") private readonly _weboscketServer: WebsocketServer) {
   }
 
@@ -39,9 +37,7 @@ export class ActivationStateService {
 
     if (activation.startTime) {
       this._activationStateSessionStartedJobId =
-        this._scheduler.schedule(new Date(activation.startTime), () => {
-          this.activationStateChange("Started");
-        });
+        this._scheduler.schedule(new Date(activation.startTime), () => this.activationStateChange("Started"));
       this.activationStateChange("Scheduled");
     } else {
       activation.startTime = new Date(this._timeService.now()).toISOString();
@@ -50,15 +46,12 @@ export class ActivationStateService {
 
     if (activation.endTime) {
       this._activationStateSessionEndedJobId =
-        this._scheduler.schedule(new Date(activation.endTime), () => {
-          this.activationStateChange("Ended");
-        });
+        this._scheduler.schedule(new Date(activation.endTime), () => this.activationStateChange("Ended"));
     }
 
     if (activation.shutdownTime) {
-      this._activationStateShutdownJobId = this._scheduler.schedule(new Date(activation.shutdownTime), () => {
-        this._shutdownService.setShutdown(new Shutdown(null))
-      });
+      this._activationStateShutdownJobId =
+        this._scheduler.schedule(new Date(activation.shutdownTime), () => this.activationStateChange("Ended"));
     }
   }
 
