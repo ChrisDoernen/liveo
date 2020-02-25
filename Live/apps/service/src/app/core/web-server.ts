@@ -61,7 +61,7 @@ export class WebServer {
 
     if (config.executable) {
       const port = config.port === "80" ? "" : `:${config.port}`;
-      this._logger.info(`You can open yout browser at localhost${port} and localhost${port}/admin`);
+      this._logger.info(`You can open your browser at localhost${port} and localhost${port}/admin`);
       this._logger.info("Press CTRL+C to exit...");
     }
 
