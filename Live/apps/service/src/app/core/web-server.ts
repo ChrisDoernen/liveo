@@ -60,7 +60,7 @@ export class WebServer {
     this._logger.info("LIVE SERVER STARTED");
 
     if (config.executable) {
-      const port = config.port === 80 ? "" : `:${config.port}`;
+      const port = config.port === "80" ? "" : `:${config.port}`;
       this._logger.info(`You can open yout browser at localhost${port} and localhost${port}/admin`);
       this._logger.info("Press CTRL+C to exit...");
     }
