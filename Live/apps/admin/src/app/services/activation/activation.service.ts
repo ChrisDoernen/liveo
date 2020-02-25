@@ -14,7 +14,7 @@ export class ActivationService {
   private _activation = new ReplaySubject<ActivationEntity>();
   private _activationState = new ReplaySubject<ActivationState>();
 
-  public activation$ = this._activationState.asObservable();
+  public activation$ = this._activation.asObservable();
   public activationState$ = this._activationState.asObservable();
 
   private set activation(activation: ActivationEntity) {
