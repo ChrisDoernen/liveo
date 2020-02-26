@@ -40,6 +40,10 @@
     .ng5-slider {
       width: 90%;
       margin: 9px auto;
+
+      span {
+        outline: none;
+      }
     }
 
     .ng5-slider .ng5-slider-bar {

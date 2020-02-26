@@ -1,8 +1,8 @@
 <div [ngClass]="{'disabled': !selectedStreamId}" id="playercontrols" class="player">
-  <div (click)="onPlayPauseClick()" class="player-controls">
+  <div class="player-controls clickable" (click)="onPlayPauseClick()">
     <i [ngClass]="{'fa-play': !_isPlaying, 'fa-stop': _isPlaying}" class="fa fa-2x" aria-hidden="true"> </i>
   </div>
-  <div class="volume-control">
+  <div class="volume-control clickable">
     <i class="fa fa-volume-off" aria-hidden="true"> </i>
     <ng5-slider [(value)]="volume" [options]="options"></ng5-slider>
     <i class="fa fa-volume-up" aria-hidden="true"> </i>

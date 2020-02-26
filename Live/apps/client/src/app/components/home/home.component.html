@@ -28,7 +28,7 @@
           <div *ngFor="let stream of activationState?.streams" class="stream-list-item">
             <i *ngIf="selectedStream == stream" class="fa fa-check" aria-hidden="true">
             </i>
-            <a class="stream-link" (click)="selectStream(stream)" [ngClass]="{selected: selectedStream == stream,
+            <a class="stream-link clickable" (click)="selectStream(stream)" [ngClass]="{selected: selectedStream == stream,
                 'other-selected': selectedStream && selectedStream != stream}">
               {{ stream.title }}
             </a>

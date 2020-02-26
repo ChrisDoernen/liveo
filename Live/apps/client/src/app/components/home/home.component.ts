@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, HostBinding } from "@angular/core";
 import { ActivationStateEntity, StreamEntity } from "@live/entities";
 import { ActivationStateService, Logger } from "@live/services";
 import { ApplicationStateService } from "../../services/application-state/application-state.service";
@@ -9,6 +9,10 @@ import { ApplicationStateService } from "../../services/application-state/applic
   styleUrls: ["./home.component.scss"]
 })
 export class HomeComponent implements OnInit {
+  
+  @HostBinding('style.height')
+  public innerHeight: string;
+
   public activationState: ActivationStateEntity;
 
   public loading: boolean;
@@ -28,12 +32,12 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private readonly _logger: Logger,
-    private readonly _applicationStateService: ApplicationStateService,
-    private readonly _activationStateService: ActivationStateService) {
+    private readonly _applicationStateService: ApplicationStateService) {
   }
 
   public ngOnInit(): void {
     this.getApplicationState();
+    this.innerHeight = window.innerHeight + "px";
   }
 
   private getApplicationState(): void {
