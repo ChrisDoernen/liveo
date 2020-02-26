@@ -33,7 +33,7 @@ export class VolumeMeterComponent implements OnInit, OnDestroy {
   private initializeScale(): void {
     const scaleHighEnd = -5;
     const scaleLowEnd = -68;
-    const target = -16;
+    const target = -23;
 
     this._m = (100 - 0) / (scaleLowEnd - scaleHighEnd);
     this._t = 100 - (this._m * scaleLowEnd);
