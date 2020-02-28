@@ -21,11 +21,12 @@ const workingDirectory = process.env.EXECUTABLE ? process.cwd() : __dirname;
 // Ffmpeg paths to look at for environment and platform
 const ffmpegPaths = {
   executable: {
-    win32: "ffmpeg/ffmpeg.exe"
+    win32: "ffmpeg/ffmpeg.exe",
+    linux: "ffmpeg/ffmpeg"
   },
   standard: {
-    win32: "../../../ffmpeg-downloads/win32/ffmpeg.exe",
-    linux: "../../../ffmpeg-downloads/linux/ffmpeg"
+    win32: "../../../ffmpeg-downloads/win-x64/ffmpeg.exe",
+    linux: "../../../ffmpeg-downloads/linux-x64/ffmpeg"
   },
   fallback: "ffmpeg"
 };

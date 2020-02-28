@@ -6,6 +6,7 @@
 /out-tsc
 /pkg
 /bundle
+/bin
 
 # dependencies
 /node_modules
@@ -44,6 +45,7 @@ yarn-error.log
 testem.log
 /typings
 version.ts
+logs
 
 # System Files
 .DS_Store
