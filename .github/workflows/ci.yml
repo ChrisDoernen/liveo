@@ -1,4 +1,4 @@
-name: LIVE CI
+name: CI
 
 on: [push]
 
@@ -29,24 +29,6 @@ jobs:
     - name: Build
       working-directory: Live
       run: npm run build-prod
-
-    - name: Download Ffmpeg static files
-      working-directory: Live
-      run: npm run download-ffmpeg -- --ci
-
-    - name: Install executable dependecies
-      working-directory: Live/dist/apps/service
-      run: yarn install
-
-    - name: Build executable
-      working-directory: Live
-      run: npm run build-bundle-win32
-
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v1
-      with:
-        name: LiveWindows
-        path: Live/bundle
 
       env:
         CI: true
