@@ -1,0 +1,46 @@
+name: NIGHTLY BUILD
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies
+      working-directory: Live
+      run: yarn install
+
+    - name: Test
+      working-directory: Live
+      run: npm run test
+
+    - name: Build
+      working-directory: Live
+      run: npm run build-prod
+
+    - name: Download Ffmpeg static files
+      working-directory: Live
+      run: npm run download-ffmpeg -- --ci
+
+    - name: Install executable dependecies
+      working-directory: Live/dist/apps/service
+      run: yarn install
+
+    - name: Build executable
+      working-directory: Live
+      run: npm run build-bundle-win32
+
+      env:
+        CI: true
