@@ -43,7 +43,7 @@ jobs:
 
     - name: Build executable
       working-directory: Live
-      run: npm run build-bundle-win32
+      run: npm run build-bin-win-x64
 
       env:
         CI: true

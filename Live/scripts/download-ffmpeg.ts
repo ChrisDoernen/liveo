@@ -14,6 +14,7 @@ async function asyncForEach(array, callback) {
 
 declare interface IFfmpegDownload {
   platform: string;
+  destination: string;
   link: string;
   searchString: string;
   files: string[];
@@ -22,6 +23,7 @@ declare interface IFfmpegDownload {
 const ffmpegDownloads: IFfmpegDownload[] = [
   {
     platform: "win32",
+    destination: "win-x64",
     link: "https://ffmpeg.zeranoe.com/builds/win64/static/ffmpeg-20200213-6d37ca8-win64-static.zip",
     searchString: "win64",
     files: [
@@ -31,6 +33,7 @@ const ffmpegDownloads: IFfmpegDownload[] = [
   },
   {
     platform: "linux",
+    destination: "linux-x64",
     link: "https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-amd64-static.tar.xz",
     searchString: "amd64",
     files: [
@@ -89,7 +92,7 @@ const copyStaticFiles = () => {
   directories.forEach((directory) => {
     ffmpegDownloads.forEach((download) => {
       if (directory.includes(download.searchString)) {
-        const plattFormPath = join(downloadDirectory, download.platform);
+        const plattFormPath = join(downloadDirectory, download.destination);
         if (!existsSync(plattFormPath)) {
           mkdirSync(plattFormPath);
         }
