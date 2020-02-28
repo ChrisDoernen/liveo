@@ -1,6 +1,9 @@
 name: NIGHTLY BUILD
 
-on: [push]
+on: 
+  push:
+    branches:
+      - integration
 
 jobs:
   build:
