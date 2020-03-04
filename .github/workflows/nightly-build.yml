@@ -45,5 +45,14 @@ jobs:
       working-directory: Live
       run: npm run build-bin-win-x64
 
+    - name: Deploy
+      uses: SamKirkland/FTP-Deploy-Action@3.0.0
+      with:
+        ftp-server: '${{ secrets.FTP_SERVER }}nightlies'
+        ftp-username: ${{ secrets.FTP_USERNAME }}
+        ftp-password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: deployment/*
+        git-ftp-args: --insecure --dry-run
+
       env:
         CI: true
