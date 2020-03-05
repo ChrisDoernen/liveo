@@ -55,12 +55,11 @@ jobs:
 
     - name: Deploy
       uses: SamKirkland/FTP-Deploy-Action@3.0.0
-      working-directory: Live
       with:
         ftp-server: ${{ secrets.FTP_SERVER }}
         ftp-username: ${{ secrets.FTP_USERNAME }}
         ftp-password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ${{steps.artifacts.outputs.dir}}
+        local-dir: Live/${{steps.artifacts.outputs.dir}}
         git-ftp-args: --insecure --remote-root nightlies --dry-run
 
       env:
