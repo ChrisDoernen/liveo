@@ -11,11 +11,19 @@ interface ArtifactInfo {
   version: string;
 }
 
-const createDirectoryIfNotExisting = (directory: string): void => {
+const createDirectoryIfNotExisting = (directory: string): string => {
+  const artifacts = "artifacts";
   const artifactDirectory = join("artifacts", directory);
+
+  if (!existsSync(artifacts)) {
+    mkdirSync(artifacts);
+  }
+
   if (!existsSync(artifactDirectory)) {
     mkdirSync(artifactDirectory);
   }
+
+  return artifactDirectory;
 }
 
 const checkArguments = (): string => {
@@ -55,7 +63,7 @@ const writeArtifactInfo = (directory: string, artifactInfo: ArtifactInfo) => {
 }
 
 const artifactDirectory = checkArguments();
-createDirectoryIfNotExisting(artifactDirectory);
+const artifactsDirectory = createDirectoryIfNotExisting(artifactDirectory);
 const artifactInfo = getArtifactInfoJson();
-writeArtifactInfo(artifactDirectory, artifactInfo);
-zipWinX64Build(artifactDirectory);
+writeArtifactInfo(artifactsDirectory, artifactInfo);
+zipWinX64Build(artifactsDirectory);
