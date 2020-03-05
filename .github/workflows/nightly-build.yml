@@ -54,13 +54,10 @@ jobs:
       run: npm run collect-artifacts -- ${{steps.artifacts.outputs.dir}}
 
     - name: Deploy
-      uses: SamKirkland/FTP-Deploy-Action@3.0.0
+      uses: sebastianpopp/ftp-action@releases/v1
       with:
-        ftp-server: ${{ secrets.FTP_SERVER }}
-        ftp-username: ${{ secrets.FTP_USERNAME }}
-        ftp-password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: Live/${{steps.artifacts.outputs.dir}}
-        git-ftp-args: --insecure --remote-root nightlies --dry-run
-
-      env:
-        CI: true
+        host: ${{ secrets.FTP_SERVER }}
+        user: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        localDir: Live/${{steps.artifacts.outputs.dir}}
+        remoteDir: nightlies
