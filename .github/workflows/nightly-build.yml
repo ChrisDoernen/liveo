@@ -45,13 +45,21 @@ jobs:
       working-directory: Live
       run: npm run build-bin-win-x64
 
+    - name: Build artifact directory
+      id: artifacts
+      run: echo "::set-output name=dir::live-$(date +'%Y-%m-%d')-${{ github.run_number }}"
+
+    - name: Collect artifacts
+      working-directory: Live
+      run: npm run collect-artifacts -- ${{steps.artifacts.outputs.dir}}
+
     - name: Deploy
       uses: SamKirkland/FTP-Deploy-Action@3.0.0
       with:
         ftp-server: ${{ secrets.FTP_SERVER }}
         ftp-username: ${{ secrets.FTP_USERNAME }}
         ftp-password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: deployment/*
+        local-dir: ${{steps.artifacts.outputs.dir}}
         git-ftp-args: --insecure --remote-root nightlies --dry-run
 
       env:

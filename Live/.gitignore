@@ -7,7 +7,7 @@
 /pkg
 /bundle
 /bin
-/deployment
+/artifact*
 
 # dependencies
 /node_modules

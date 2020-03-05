@@ -12,7 +12,7 @@
     "clean": "rimraf dist",
     "get-version": "ts-node -O \"{\\\"module\\\": \\\"commonjs\\\"}\" scripts/git-version.ts",
     "download-ffmpeg": "ts-node -O \"{\\\"module\\\": \\\"commonjs\\\"}\" scripts/download-ffmpeg.ts",
-    "prepare-deployment": "ts-node -O \"{\\\"module\\\": \\\"commonjs\\\"}\" scripts/prepare-deployment.ts",
+    "collect-artifacts": "ts-node -O \"{\\\"module\\\": \\\"commonjs\\\"}\" scripts/collect-artifacts.ts",
     "build": "npm-run-all clean get-version build:**",
     "build-prod": "npm-run-all clean get-version \"build:** -- --prod\"",
     "build:lib:l3as": "ng build l3as",
