@@ -45,13 +45,9 @@ jobs:
       working-directory: Live
       run: npm run build-bin-win-x64
 
-    - name: Build artifact directory
-      id: artifacts
-      run: echo "::set-output name=dir::live-$(date +'%Y-%m-%d')-${{ github.run_number }}"
-
     - name: Collect artifacts
       working-directory: Live
-      run: npm run collect-artifacts -- ${{steps.artifacts.outputs.dir}}
+      run: npm run collect-artifacts -- live-$(date +'%Y-%m-%d')-${{ github.run_number }}
 
     - name: Deploy
       uses: sebastianpopp/ftp-action@releases/v1
@@ -59,5 +55,5 @@ jobs:
         host: ${{ secrets.FTP_SERVER }}
         user: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        localDir: Live/${{steps.artifacts.outputs.dir}}
+        localDir: Live/artifacts
         remoteDir: nightlies

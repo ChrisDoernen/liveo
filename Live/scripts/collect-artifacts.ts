@@ -12,8 +12,9 @@ interface ArtifactInfo {
 }
 
 const createDirectoryIfNotExisting = (directory: string): void => {
-  if (!existsSync(directory)) {
-    mkdirSync(directory);
+  const artifactDirectory = join("artifacts", directory);
+  if (!existsSync(artifactDirectory)) {
+    mkdirSync(artifactDirectory);
   }
 }
 
@@ -27,7 +28,6 @@ const checkArguments = (): string => {
 
   return artifactDirectory;
 }
-
 
 const zipWinX64Build = (directory: string) => {
   const zip = new JSZip();
