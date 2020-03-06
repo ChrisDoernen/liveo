@@ -1,9 +1,8 @@
 name: NIGHTLY BUILD
 
-on: 
-  push:
-    branches:
-      - integration
+on:
+  schedule:
+    - cron: '0 2 * * *' # run at 2 AM UTC
 
 jobs:
   build:
@@ -15,7 +14,11 @@ jobs:
         node-version: [10.x]
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
+        with:
+          ref: integration
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
@@ -47,7 +50,7 @@ jobs:
 
     - name: Collect artifacts
       working-directory: Live
-      run: npm run collect-artifacts -- live-$(date +'%Y-%m-%d')-${{ github.run_number }}
+      run: npm run collect-artifacts -- ${{ github.run_number }}-${{ github.run_id }}
 
     - name: Deploy
       uses: sebastianpopp/ftp-action@releases/v1
