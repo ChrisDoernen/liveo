@@ -31,10 +31,17 @@ export class StreamingSource implements IStreamingSource {
   }
 
   private initialize(socketAddress: string): Ffmpeg.FfmpegCommand {
-    return Ffmpeg()
+    let ffmpeg = Ffmpeg()
       .input(this._plattformConstants.devicePrefix + this.deviceId)
       .inputOptions("-y")
-      .inputOptions(`-f ${this._plattformConstants.audioModule}`)
+      .inputOptions(`-f ${this._plattformConstants.audioModule}`);
+
+    if (config.platform === "win32") {
+      ffmpeg = ffmpeg
+        .inputOptions("-audio_buffer_size 10")
+    }
+
+    return ffmpeg
       .complexFilter(
         `asplit=[out][stats];[stats]ebur128=metadata=1,ametadata=print:key=lavfi.r128.M:file='${socketAddress}':direct=1,anullsink`
       )
