@@ -9,11 +9,18 @@ interface ArtifactInfo {
   branch: string;
   revision: string;
   version: string;
+  artifacts: string[];
+}
+
+interface ArtifactCompressionAction {
+  sourceDirectory: string;
+  targetFilename: string;
+  actionMethod: (sourceDirectory: string, targetFileName: string, directory: string) => void;
 }
 
 const createDirectoryIfNotExisting = (directory: string): string => {
   const artifacts = "artifacts";
-  const artifactDirectory = join("artifacts", directory);
+  const artifactDirectory = join(artifacts, directory);
 
   if (!existsSync(artifacts)) {
     mkdirSync(artifacts);
@@ -37,22 +44,37 @@ const checkArguments = (): string => {
   return artifactDirectory;
 }
 
-const zipWinX64Build = (directory: string) => {
+const zip = (sourceDirectory: string, targetFilename: string, targetDirectory: string) => {
   const zip = new JSZip();
-  zip.folder("bin/win-x64").generateAsync({ type: "uint8array" }).then((content) => {
-    const fileName = join(directory, "win-x64.zip");
-    writeFile(fileName, content, () => {
-      console.log(`Wrote file ${fileName}`);
+  zip.folder(sourceDirectory).generateAsync({ type: "uint8array" }).then((content) => {
+    const filename = join(targetDirectory, targetFilename);
+    writeFile(filename, content, () => {
+      console.log(`Wrote file ${filename}`);
     });
   });
 }
 
-const getArtifactInfoJson = (): ArtifactInfo => {
+const artifacts: ArtifactCompressionAction[] = [
+  {
+    sourceDirectory: "bin/win-x64",
+    targetFilename: "win-x64.zip",
+    actionMethod: zip
+  }
+];
+
+const compressArtifacts = (artifacts: ArtifactCompressionAction[], targetDirectory: string) => {
+  artifacts.forEach((artifact) => {
+    artifact.actionMethod(artifact.sourceDirectory, artifact.targetFilename, targetDirectory);
+  });
+}
+
+const getArtifactInfoJson = (artifacts: ArtifactCompressionAction[]): ArtifactInfo => {
   return {
     date: new Date().toISOString(),
     branch: version.branch,
     revision: version.revision,
-    version: version.version
+    version: version.version,
+    artifacts: artifacts.map((artifact) => artifact.targetFilename)
   };
 }
 
@@ -64,6 +86,6 @@ const writeArtifactInfo = (directory: string, artifactInfo: ArtifactInfo) => {
 
 const artifactDirectory = checkArguments();
 const artifactsDirectory = createDirectoryIfNotExisting(artifactDirectory);
-const artifactInfo = getArtifactInfoJson();
+const artifactInfo = getArtifactInfoJson(artifacts);
 writeArtifactInfo(artifactsDirectory, artifactInfo);
-zipWinX64Build(artifactsDirectory);
+compressArtifacts(artifacts, artifactsDirectory);
