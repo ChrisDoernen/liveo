@@ -68,6 +68,9 @@ function generatePackageJson() {
     "version": packageJson.version,
     "main": "./main.js",
     "bin": "./main.js",
+    "scripts": {
+      "start": "node ./main.js"
+    },
     dependencies
   };
   const pathToPackageJson = path.join(__dirname, pathToRootPackageJson);

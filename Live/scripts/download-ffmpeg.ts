@@ -4,11 +4,12 @@ const decompressUnzip = require("decompress-unzip");
 import * as download from "download";
 import { existsSync, lstatSync, mkdirSync, PathLike, readdirSync } from "fs";
 import { basename, join } from "path";
+const rimraf = require("rimraf");
 const ncp = require("ncp").ncp;
 
 async function asyncForEach(array, callback) {
   for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array);
+    await callback(array[index]);
   }
 }
 
@@ -43,7 +44,7 @@ const ffmpegDownloads: IFfmpegDownload[] = [
   }
 ];
 
-const downloadDirectory = "ffmpeg-downloads";
+const downloadDirectory = "ffmpeg";
 
 const options: download.DownloadOptions = {
   extract: true,
@@ -72,7 +73,7 @@ const getDownloads: () => IFfmpegDownload[] = () => {
     process.exit(1);
   }
 
-  console.log(`Downloading Ffmpeg for platform ${platform}`);
+  console.log(`Downloading Ffmpeg for platform ${platform}...`);
   return downloads;
 }
 
@@ -84,36 +85,52 @@ const downloadFfmpeg = async () => {
   });
 }
 
-const copyStaticFiles = () => {
+const copySync = async (source: string, destination: string): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    console.log(`Copying ${source} to ${destination}`);
+    ncp(source, destination, (error) => {
+      if (error) {
+        console.error(`Error while ncp: ${error}`);
+        reject(error);
+      } else {
+        resolve();
+      }
+    });
+  });
+}
+
+const copyStaticFilesAndCleanUp = async () => {
   const isDirectory = (source: PathLike) => lstatSync(source).isDirectory();
   const downloadsDirectoryAbsolute = join(__dirname, "..", downloadDirectory);
   const directories = readdirSync(downloadsDirectoryAbsolute).map(name => join(downloadDirectory, name)).filter(isDirectory);
 
-  directories.forEach((directory) => {
-    ffmpegDownloads.forEach((download) => {
+  for (let directoriesIndex = 0; directoriesIndex < directories.length; directoriesIndex++) {
+    const directory = directories[directoriesIndex];
+    for (let downloadsIndex = 0; downloadsIndex < ffmpegDownloads.length; downloadsIndex++) {
+      const download = ffmpegDownloads[downloadsIndex];
       if (directory.includes(download.searchString)) {
         const plattFormPath = join(downloadDirectory, download.destination);
         if (!existsSync(plattFormPath)) {
           mkdirSync(plattFormPath);
         }
 
-        download.files.forEach((file) => {
+        for (let fileIndex = 0; fileIndex < download.files.length; fileIndex++) {
+          const file = download.files[fileIndex];
           const source = join(directory, file);
           const destination = join(plattFormPath, basename(file));
 
-          ncp(source, destination, (error: any) => {
-            if (error) {
-              console.error(`Error while copying file ${source} to ${destination}: ${error}`);
-            }
-          });
-        });
+          await copySync(source, destination);
+        }
+
+        console.log(`Deleting temporary directory ${directory}`);
+        rimraf.sync(directory);
       }
-    });
-  });
+    }
+  }
 }
 
 downloadFfmpeg()
-  .then(() => copyStaticFiles())
+  .then(() => copyStaticFilesAndCleanUp())
   .then(() => console.log("Downloading ffmpeg static files succeeded"))
   .catch((error) => {
     console.error(`Error while downloading, extracting and copying ffmpeg: ${error}`);

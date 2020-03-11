@@ -13,7 +13,7 @@
 /node_modules
 
 # custom downloads
-/ffmpeg-downloads
+/ffmpeg
 
 # environment
 .env

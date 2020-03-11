@@ -21,13 +21,16 @@ const ncpOptions = {
 }
 
 const copySync = async (source: string, destination: string): Promise<void> => {
-  console.log(`Copying ${source} to ${destination}`);
-  ncp(source, destination, ncpOptions, (error) => {
-    if (error) {
-      console.error(`Error while ncp: ${error}`);
-      process.exit(1);
-    }
-    return Promise.resolve();
+  return new Promise((resolve, reject) => {
+    console.log(`Copying ${source} to ${destination}`);
+    ncp(source, destination, (error) => {
+      if (error) {
+        console.error(`Error while ncp: ${error}`);
+        reject(error);
+      } else {
+        resolve();
+      }
+    });
   });
 }
 
@@ -89,7 +92,7 @@ const artifacts: Artifact[] = [
         destination: "bin/linux-x64"
       },
       {
-        source: "ffmpeg-downloads/linux-x64",
+        source: "ffmpeg/linux-x64",
         destination: "bin/linux-x64/ffmpeg"
       }
     ],
@@ -113,7 +116,7 @@ const artifacts: Artifact[] = [
         destination: "bin/win-x64"
       },
       {
-        source: "ffmpeg-downloads/win-x64",
+        source: "ffmpeg/win-x64",
         destination: "bin/win-x64/ffmpeg"
       }
     ],
@@ -156,5 +159,6 @@ const createArtifacts = async (artifacts: Artifact[]) => {
   }
 }
 
-createArtifacts(artifacts);
-console.log("Creating artifacts successful");
+createArtifacts(artifacts).then(() => {
+  console.log("Creating artifacts successful");
+});
