@@ -44,9 +44,9 @@ jobs:
       working-directory: Live/dist/apps/service
       run: yarn install
 
-    - name: Build executable
+    - name: Create artifacts
       working-directory: Live
-      run: npm run build-bin-win-x64
+      run: npm run create-artifacts
 
     - name: Collect artifacts
       working-directory: Live
