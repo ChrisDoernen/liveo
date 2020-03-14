@@ -18,25 +18,30 @@ if (architecture !== "x64") {
 
 const workingDirectory = process.env.EXECUTABLE ? process.cwd() : __dirname;
 
-// Ffmpeg paths to look at for environment and platform
+// FFmpeg paths to look at for environment and platform
 const ffmpegPaths = {
-  executable: {
-    win32: "ffmpeg/ffmpeg.exe",
-    linux: "ffmpeg/ffmpeg"
-  },
-  standard: {
-    win32: "../../../ffmpeg-downloads/win-x64/ffmpeg.exe",
-    linux: "../../../ffmpeg-downloads/linux-x64/ffmpeg"
-  },
+  win32: [
+    "ffmpeg/ffmpeg.exe",
+    "ffmpeg/win-x64/ffmpeg.exe",
+    "../../../ffmpeg/win-x64/ffmpeg.exe"
+  ],
+  linux: [
+    "ffmpeg/ffmpeg",
+    "ffmpeg/linux-x64/ffmpeg",
+    "../../../ffmpeg/linux-x64/ffmpeg"
+  ],
   fallback: "ffmpeg"
 };
 
 const findFfmpegPath = () => {
-  const relativeFfmpegPath = process.env.EXECUTABLE ? ffmpegPaths.executable[platform] : ffmpegPaths.standard[platform];
-  const ffmpegPath = join(workingDirectory, relativeFfmpegPath);
-  if (existsSync(ffmpegPath)) {
-    return ffmpegPath;
+  for (let index = 0; ffmpegPaths[platform].length; index++) {
+    const currentRelativePath = ffmpegPaths[platform][index];
+    const currentAbsolutePath = join(workingDirectory, currentRelativePath);
+    if (existsSync(currentAbsolutePath)) {
+      return currentAbsolutePath;
+    }
   }
+
   return ffmpegPaths.fallback;
 };
 

@@ -28,8 +28,12 @@
               "apps/client/src/assets",
               "apps/client/src/manifest.json"
             ],
-            "styles": ["apps/client/src/styles.scss"],
-            "scripts": ["apps/client/src/assets/js/pwacompat.min.js"],
+            "styles": [
+              "apps/client/src/styles.scss"
+            ],
+            "scripts": [
+              "apps/client/src/assets/js/pwacompat.min.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {
@@ -85,7 +89,10 @@
               "apps/client/tsconfig.app.json",
               "apps/client/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/client/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/client/**"
+            ]
           }
         },
         "test": {
@@ -120,7 +127,10 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "apps/client-e2e/tsconfig.e2e.json",
-            "exclude": ["**/node_modules/**", "!apps/client-e2e/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/client-e2e/**"
+            ]
           }
         }
       }
@@ -137,9 +147,12 @@
           "options": {
             "webpackConfig": "apps/service/webpack.config.js",
             "outputPath": "dist/apps/service",
-            "main": "apps/service/src/main.ts",
+            "filename": "live.js",
+            "main": "apps/service/src/live.ts",
             "tsConfig": "apps/service/tsconfig.app.json",
-            "assets": ["apps/service/src/data"]
+            "assets": [
+              "apps/service/src/data"
+            ]
           },
           "configurations": {
             "production": {
@@ -197,7 +210,10 @@
               "apps/service/tsconfig.app.json",
               "apps/service/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/service/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/service/**"
+            ]
           }
         },
         "test": {
@@ -222,7 +238,10 @@
               "libs/entities/tsconfig.lib.json",
               "libs/entities/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/entities/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/entities/**"
+            ]
           }
         },
         "test": {
@@ -267,7 +286,10 @@
               "libs/l3as/tsconfig.lib.json",
               "libs/l3as/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/l3as/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/l3as/**"
+            ]
           }
         },
         "test": {
@@ -297,7 +319,10 @@
               "libs/services/tsconfig.lib.json",
               "libs/services/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/services/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/services/**"
+            ]
           }
         },
         "test": {
@@ -346,7 +371,9 @@
                 "output": "./assets/iconfont"
               }
             ],
-            "styles": ["apps/admin/src/styles.scss"],
+            "styles": [
+              "apps/admin/src/styles.scss"
+            ],
             "scripts": [],
             "es5BrowserSupport": true
           },
@@ -403,7 +430,10 @@
               "apps/admin/tsconfig.app.json",
               "apps/admin/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/admin/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/admin/**"
+            ]
           }
         },
         "test": {
@@ -438,7 +468,10 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "apps/admin-e2e/tsconfig.e2e.json",
-            "exclude": ["**/node_modules/**", "!apps/admin-e2e/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/admin-e2e/**"
+            ]
           }
         }
       }
@@ -456,7 +489,10 @@
               "libs/constants/tsconfig.lib.json",
               "libs/constants/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/constants/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/constants/**"
+            ]
           }
         },
         "test": {
@@ -486,7 +522,10 @@
               "libs/test-utilities/tsconfig.lib.json",
               "libs/test-utilities/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/test-utilities/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/test-utilities/**"
+            ]
           }
         }
       },

@@ -11,13 +11,16 @@ const packageJson = require(pathToRootPackageJson);
 module.exports = (config, context) => {
   // Extract output path from context
   const {
-    options: { outputPath },
+    options: { outputPath, filename },
   } = context;
 
   // Install additional plugins
   config.plugins = config.plugins || [];
-  config.plugins.push(...extractRelevantNodeModules(outputPath));
-
+  config.plugins.push(generatePackageJson());
+  config.output = {
+    filename: filename,
+    path: outputPath
+  }
   return config;
 };
 
@@ -35,7 +38,7 @@ module.exports = (config, context) => {
  * @returns {Array} An array of Webpack plugins
  */
 function extractRelevantNodeModules(outputPath) {
-  return [copyYarnLockFile(outputPath), generatePackageJson()];
+  return [generatePackageJson()];
 }
 
 /**
@@ -66,12 +69,20 @@ function generatePackageJson() {
   const basePackageJson = {
     "name": packageJson.name,
     "version": packageJson.version,
-    "main": "./main.js",
-    "bin": "./main.js",
+    "main": "./live.js",
+    "bin": "./live.js",
     "scripts": {
-      "start": "node ./main.js"
+      "start": "node ./live.js",
+      "download-ffmpeg": "node scripts/download-ffmpeg.js"
     },
-    dependencies
+    dependencies,
+    "devDependencies": {
+      "decompress-tarxz": "^3.0.0",
+      "decompress-unzip": "^4.0.1",
+      "download": "^7.1.0",
+      "ncp": "^2.0.0",
+      "rimraf": "^2.6.3",
+    }
   };
   const pathToPackageJson = path.join(__dirname, pathToRootPackageJson);
   return new GeneratePackageJsonPlugin(basePackageJson, pathToPackageJson);

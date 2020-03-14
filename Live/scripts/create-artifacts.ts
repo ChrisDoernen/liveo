@@ -16,14 +16,26 @@ declare interface Artifact {
   action: (artifact: Artifact) => Promise<void>
 }
 
+const filter = (fileName: string): boolean => {
+  const copyBlacklist = [
+    "node_modules",
+    "yarn.lock"
+  ];
+  const blacklistEvalutation = copyBlacklist.map((item) => fileName.includes(item));
+  const containsBlacklistedItem = blacklistEvalutation.indexOf(true) > -1;
+
+  return !containsBlacklistedItem;
+}
+
 const ncpOptions = {
+  filter: filter,
   stopOnErr: true
 }
 
 const copySync = async (source: string, destination: string): Promise<void> => {
   return new Promise((resolve, reject) => {
     console.log(`Copying ${source} to ${destination}`);
-    ncp(source, destination, (error) => {
+    ncp(source, destination, ncpOptions, (error) => {
       if (error) {
         console.error(`Error while ncp: ${error}`);
         reject(error);
@@ -138,6 +150,14 @@ const artifacts: Artifact[] = [
       {
         source: "dist/apps/admin",
         destination: "bin/nodejs/admin"
+      },
+      {
+        source: "dist/scripts",
+        destination: "bin/nodejs/scripts"
+      },
+      {
+        source: "misc/bundle-structure/live.env",
+        destination: "bin/nodejs/live.env"
       }
     ],
     action: null
