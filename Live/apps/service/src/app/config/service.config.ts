@@ -34,7 +34,7 @@ const ffmpegPaths = {
 };
 
 const findFfmpegPath = () => {
-  for (let index = 0; ffmpegPaths[platform].length; index++) {
+  for (let index = 0; index < ffmpegPaths[platform].length; index++) {
     const currentRelativePath = ffmpegPaths[platform][index];
     const currentAbsolutePath = join(workingDirectory, currentRelativePath);
     if (existsSync(currentAbsolutePath)) {
