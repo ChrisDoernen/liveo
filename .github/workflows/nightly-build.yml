@@ -60,3 +60,4 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
         localDir: Live/artifacts
         remoteDir: nightlies
+        forceSsl: true
