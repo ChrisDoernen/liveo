@@ -80,7 +80,7 @@ const getArtifactInfoJson = (artifacts: ArtifactCompressionAction[]): ArtifactIn
     artifacts: artifacts.map((artifact) => {
       return {
         artifact: artifact.artifact,
-        fileName: artifact.targetFilename
+        filename: artifact.targetFilename
       }
     })
   };
