@@ -5,19 +5,21 @@ include("config.php");
 $nightliesDirectories = scandir($nightlyBuildsDirectory, 1);
 array_splice($nightliesDirectories, -2);
 
-$getArtifactInfoFiles = function($buildDirectory) use ($nightlyBuildsDirectory, $artifactInfoFileName) { 
-    return $nightlyBuildsDirectory . "/" . $buildDirectory . "/" . $artifactInfoFileName; 
-};
+$artifactInfosJson = array();
 
-$nightlyBuildsJson = array_map($getArtifactInfoFiles, $nightliesDirectories);
-
-$decodeArtifactInfo = function($artifactInfo) { 
+foreach($nightliesDirectories as $nightlyDirectory) {
+    $artifactDirectory = $nightlyBuildsDirectory . "/" . $nightlyDirectory;
+    $artifactInfo = $artifactDirectory . "/" . $artifactInfoFileName;
     $artifactInfoContent = file_get_contents($artifactInfo);
-    return json_decode($artifactInfoContent); 
-};
+    $artifactInfoJson = json_decode($artifactInfoContent);
 
-$artifactInfoJson = array_map($decodeArtifactInfo, $nightlyBuildsJson);
+    foreach($artifactInfoJson->artifacts as $artifact) {
+        $artifact->link = $baseUrl . "/" . $artifactDirectory . "/" . $artifact->filename;
+    }
 
-echo json_encode($artifactInfoJson, JSON_PRETTY_PRINT);
+    $artifactInfosJson[] = $artifactInfoJson;
+}
+
+echo json_encode($artifactInfosJson, JSON_PRETTY_PRINT);
 
 ?>
