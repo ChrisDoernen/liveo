@@ -64,6 +64,7 @@ const artifacts: ArtifactCompressionAction[] = [
     actionMethod: zip
   },
   {
+    artifact: "nodejs",
     sourceDirectory: "bin/nodejs",
     targetFilename: "nodejs.zip",
     actionMethod: zip
