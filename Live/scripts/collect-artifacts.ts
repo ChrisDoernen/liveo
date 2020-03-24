@@ -59,6 +59,11 @@ const artifacts: ArtifactCompressionAction[] = [
     sourceDirectory: "bin/win-x64",
     targetFilename: "win-x64.zip",
     actionMethod: zip
+  },
+  {
+    sourceDirectory: "bin/nodejs",
+    targetFilename: "nodejs.zip",
+    actionMethod: zip
   }
 ];
 
