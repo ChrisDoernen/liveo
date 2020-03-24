@@ -1,7 +1,7 @@
 // tslint:disable: no-shadowed-variable
-import { existsSync, mkdirSync, writeFile, writeFileSync } from "fs";
-import * as JSZip from "jszip";
+import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
+import * as zipdir from "zip-dir";
 import { version } from "../version";
 
 interface ArtifactInfo {
@@ -9,10 +9,11 @@ interface ArtifactInfo {
   branch: string;
   revision: string;
   version: string;
-  artifacts: string[];
+  artifacts: any[];
 }
 
 interface ArtifactCompressionAction {
+  artifact: string;
   sourceDirectory: string;
   targetFilename: string;
   actionMethod: (sourceDirectory: string, targetFileName: string, directory: string) => void;
@@ -45,17 +46,19 @@ const checkArguments = (): string => {
 }
 
 const zip = (sourceDirectory: string, targetFilename: string, targetDirectory: string) => {
-  const zip = new JSZip();
-  zip.folder(sourceDirectory).generateAsync({ type: "uint8array" }).then((content) => {
-    const filename = join(targetDirectory, targetFilename);
-    writeFile(filename, content, () => {
-      console.log(`Wrote file ${filename}`);
-    });
+  const filename = join(targetDirectory, targetFilename);
+  zipdir(sourceDirectory, { saveTo: filename }, (err, buffer) => {
+    if (err) {
+      console.error(`Error while zipping: ${err}`);
+      process.exit(1);
+    }
+    console.log(`Wrote file ${filename}`);
   });
 }
 
 const artifacts: ArtifactCompressionAction[] = [
   {
+    artifact: "win-x64",
     sourceDirectory: "bin/win-x64",
     targetFilename: "win-x64.zip",
     actionMethod: zip
@@ -74,7 +77,12 @@ const getArtifactInfoJson = (artifacts: ArtifactCompressionAction[]): ArtifactIn
     branch: version.branch,
     revision: version.revision,
     version: version.version,
-    artifacts: artifacts.map((artifact) => artifact.targetFilename)
+    artifacts: artifacts.map((artifact) => {
+      return {
+        artifact: artifact.artifact,
+        fileName: artifact.targetFilename
+      }
+    })
   };
 }
 

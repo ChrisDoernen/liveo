@@ -104,7 +104,6 @@
     "@types/fluent-ffmpeg": "^2.1.10",
     "@types/jest": "24.0.9",
     "@types/jquery": "3.3.6",
-    "@types/jszip": "^3.1.7",
     "@types/logform": "^1.2.0",
     "@types/lowdb": "^1.0.9",
     "@types/nanoid": "^2.1.0",
@@ -123,7 +122,6 @@
     "jest": "^24.8.0",
     "jest-create-mock-instance": "^1.1.0",
     "jest-preset-angular": "^7.1.0",
-    "jszip": "^3.2.2",
     "material-icons": "^0.3.1",
     "ncp": "^2.0.0",
     "newman": "^4.5.5",
@@ -133,6 +131,7 @@
     "ts-jest": "^24.0.2",
     "ts-node": "^7.0.1",
     "tslint": "~5.11.0",
-    "typescript": "3.4.5"
+    "typescript": "3.4.5",
+    "zip-dir": "^1.0.2"
   }
 }
