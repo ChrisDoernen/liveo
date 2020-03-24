@@ -26,7 +26,7 @@ jobs:
 
     - name: Install dependencies
       working-directory: Live
-      run: yarn install
+      run: npm install
 
     - name: Test
       working-directory: Live
@@ -34,23 +34,23 @@ jobs:
 
     - name: Build
       working-directory: Live
-      run: yarn run build-prod
+      run: npm run build-prod
 
     - name: Download Ffmpeg static files
       working-directory: Live
-      run: yarn run download-ffmpeg -- --ci
+      run: npm run download-ffmpeg -- --ci
 
     - name: Install executable dependecies
       working-directory: Live/dist/apps/service
-      run: yarn install --production
+      run: npm install --production
 
     - name: Create artifacts
       working-directory: Live
-      run: yarn run create-artifacts
+      run: npm run create-artifacts
 
     - name: Collect artifacts
       working-directory: Live
-      run: yarn run collect-artifacts -- ${{ github.run_number }}-${{ github.run_id }}
+      run: npm run collect-artifacts -- ${{ github.run_number }}-${{ github.run_id }}
 
     - name: Deploy
       uses: sebastianpopp/ftp-action@releases/v2

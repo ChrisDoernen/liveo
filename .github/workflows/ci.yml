@@ -20,7 +20,7 @@ jobs:
 
     - name: Install dependencies
       working-directory: Live
-      run: yarn install
+      run: npm install
 
     - name: Test
       working-directory: Live
