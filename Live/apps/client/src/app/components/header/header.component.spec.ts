@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { HeaderComponent } from "./header.component";
-import { InlineSVGDirective } from "ng-inline-svg";
 import { HttpClient } from "@angular/common/http";
-import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { InlineSVGDirective } from "ng-inline-svg";
+import { MockDirective } from "ng-mocks";
+import { HeaderComponent } from "./header.component";
 
 describe("HeaderComponent", () => {
   let component: HeaderComponent;
@@ -10,13 +10,14 @@ describe("HeaderComponent", () => {
 
   beforeEach(async(() => {
     const httpClient = jest.fn();
-    const inlineSVGService = jest.fn();
 
     TestBed.configureTestingModule({
-      declarations: [HeaderComponent, InlineSVGDirective],
+      declarations: [
+        HeaderComponent,
+        MockDirective(InlineSVGDirective)
+      ],
       providers: [
-        { provide: HttpClient, useValue: httpClient },
-        { provide: InlineSVGService, useValue: inlineSVGService }
+        { provide: HttpClient, useValue: httpClient }
       ]
     })
       .compileComponents();

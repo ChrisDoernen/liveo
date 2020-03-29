@@ -2,8 +2,9 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { ActivatedRoute } from "@angular/router";
 import { Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
+import { MockComponent } from "ng-mocks";
+import { LogoHeaderComponent } from "../../modules/shared/components/logo-header/logo-header.component";
 import { ConnectionStateService } from "../../services/connection-state/connection-state-service";
-import { LogoMockModule } from "../../test-utilities/mocks/logo-mock.module";
 import { ActivatedRouteBuilder } from "../../test-utilities/test-data-builder/activated-route-builder";
 import { OfflineMessageComponent } from "./offline-message.component";
 
@@ -18,10 +19,8 @@ describe("OfflineComponent", () => {
     connectionStateService = createMockInstance(ConnectionStateService);
 
     TestBed.configureTestingModule({
-      imports: [
-        LogoMockModule
-      ],
       declarations: [
+        MockComponent(LogoHeaderComponent),
         OfflineMessageComponent
       ],
       providers: [

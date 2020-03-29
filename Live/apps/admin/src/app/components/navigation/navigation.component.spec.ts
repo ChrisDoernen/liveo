@@ -4,9 +4,10 @@ import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { EndpointService, Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
+import { MockComponent } from "ng-mocks";
 import { AngularMaterialModule } from "../../modules/angular-material/angular-material.module";
+import { LogoHeaderComponent } from "../../modules/shared/components/logo-header/logo-header.component";
 import { ActivationService } from "../../services/activation/activation.service";
-import { LogoMockModule } from "../../test-utilities/mocks/logo-mock.module";
 import { OfflineMessageComponent } from "../offline-message/offline-message.component";
 import { ShutdownComponent } from "../shutdown/shutdown.component";
 import { NavigationComponent } from "./navigation.component";
@@ -26,13 +27,13 @@ describe("NavigationComponent", () => {
         AngularMaterialModule,
         NoopAnimationsModule,
         HttpClientTestingModule,
-        RouterTestingModule,
-        LogoMockModule
+        RouterTestingModule
       ],
       declarations: [
         NavigationComponent,
         ShutdownComponent,
-        OfflineMessageComponent
+        OfflineMessageComponent,
+        MockComponent(LogoHeaderComponent)
       ],
       providers: [
         { provide: EndpointService, useValue: endpointService },

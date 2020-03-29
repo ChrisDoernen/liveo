@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { InlineSVGDirective, SVGCacheService } from "ng-inline-svg";
-import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
+import { InlineSVGService } from "ng-inline-svg/lib_commonjs/inline-svg.service";
 import { LogoHeaderComponent } from "../../modules/shared/components/logo-header/logo-header.component";
 import { LogoComponent } from "../../modules/shared/components/logo/logo.component";
 

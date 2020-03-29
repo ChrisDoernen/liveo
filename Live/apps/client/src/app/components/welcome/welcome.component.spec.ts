@@ -1,24 +1,24 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { WelcomeComponent } from "./welcome.component";
 import { Router } from "@angular/router";
-import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
+import createMockInstance from "jest-create-mock-instance";
 import { InlineSVGDirective } from "ng-inline-svg";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { MockDirective } from "ng-mocks";
+import { WelcomeComponent } from "./welcome.component";
 
 describe("WelcomeComponent", () => {
   let component: WelcomeComponent;
   let fixture: ComponentFixture<WelcomeComponent>;
 
   beforeEach(() => {
-    const router = jest.fn();
-    const inlineSVGService = jest.fn();
+    const router = createMockInstance(Router);
 
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      declarations: [WelcomeComponent, InlineSVGDirective],
+      declarations: [
+        WelcomeComponent,
+        MockDirective(InlineSVGDirective)
+      ],
       providers: [
-        { provide: Router, useValue: router },
-        { provide: InlineSVGService, useValue: inlineSVGService }
+        { provide: Router, useValue: router }
       ]
     });
 

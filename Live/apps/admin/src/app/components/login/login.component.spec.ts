@@ -4,9 +4,10 @@ import { ActivatedRoute } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
+import { MockComponent } from "ng-mocks";
 import { AngularMaterialModule } from "../../modules/angular-material/angular-material.module";
+import { LogoHeaderComponent } from "../../modules/shared/components/logo-header/logo-header.component";
 import { AuthenticationService } from "../../modules/shared/services/authentication/authentication.service";
-import { LogoMockModule } from "../../test-utilities/mocks/logo-mock.module";
 import { ActivatedRouteBuilder } from "../../test-utilities/test-data-builder/activated-route-builder";
 import { LoginComponent } from "./login.component";
 
@@ -25,11 +26,11 @@ describe("LoginComponent", () => {
         AngularMaterialModule,
         FormsModule,
         ReactiveFormsModule,
-        LogoMockModule,
         RouterTestingModule
       ],
       declarations: [
-        LoginComponent
+        LoginComponent,
+        MockComponent(LogoHeaderComponent)
       ],
       providers: [
         { provide: Logger, useValue: jest.fn() },

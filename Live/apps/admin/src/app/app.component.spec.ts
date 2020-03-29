@@ -4,8 +4,7 @@ import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { EndpointService, Logger } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
-import { InlineSVGDirective } from "ng-inline-svg";
-import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
+import { MockComponent } from "ng-mocks";
 import { AppComponent } from "./app.component";
 import { NavigationComponent } from "./components/navigation/navigation.component";
 import { NotficationsComponent } from "./components/notfications/notfications.component";
@@ -32,15 +31,13 @@ describe("AppComponent", () => {
         AppComponent,
         NavigationComponent,
         ShutdownComponent,
-        LogoComponent,
-        InlineSVGDirective,
+        MockComponent(LogoComponent),
         NotficationsComponent,
         OfflineMessageComponent,
         LogoHeaderComponent
       ],
       providers: [
         { provide: EndpointService, useValue: endpointService },
-        { provide: InlineSVGService, useValue: jest.fn() },
         { provide: Logger, useValue: jest.fn() }
       ]
     }).compileComponents();
