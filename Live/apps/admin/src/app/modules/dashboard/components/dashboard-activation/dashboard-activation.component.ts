@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
-import { MatDialog } from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
 import { ActivationEntity, ActivationState, SessionEntity, StreamEntity } from "@live/entities";
 import { Logger } from "@live/services";
 import { Subject } from "rxjs";

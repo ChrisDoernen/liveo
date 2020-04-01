@@ -2,7 +2,7 @@ import { CommonModule } from "@angular/common";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MatNativeDateModule } from "@angular/material";
+import { MatNativeDateModule } from "@angular/material/core";
 import { InlineSVGModule } from "ng-inline-svg";
 import { AngularMaterialModule } from "../angular-material/angular-material.module";
 import { ConfirmationDialogComponent } from "./components/confirmation-dialog/confirmation-dialog.component";

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@angular/core";
-import { MatDialog } from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
 import { SessionEntity, StreamEntity } from "@live/entities";
 import { DIALOG_CONFIG_SMALL } from "../../../../constants/mat-dialog-config-small";
 import { SessionService } from "../../../../services/session/session.service";

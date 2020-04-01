@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@angular/core";
-import { MatDialog } from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
 import { DeviceEntity, StreamEntity } from "@live/entities";
 import { Logger } from "@live/services";
 import { DIALOG_CONFIG_SMALL } from "../../../../constants/mat-dialog-config-small";

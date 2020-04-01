@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { MatDialog } from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
 import { DIALOG_CONFIG_STEPPER } from "../../../../constants/mat-dialog-config-stepper";
 import { ActivationService } from "../../../../services/activation/activation.service";
 import { ActivationDialogComponent } from "../activation-dialog/activation-dialog.component";
