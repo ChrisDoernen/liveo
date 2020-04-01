@@ -1,7 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { InlineSVGDirective } from "ng-inline-svg";
-import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
+import { MockComponent } from "ng-mocks";
 import { LogoComponent } from "../../../shared/components/logo/logo.component";
 import { LogoHeaderComponent } from "./logo-header.component";
 
@@ -12,13 +11,11 @@ describe("LogoHeaderComponent", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
-        LogoComponent,
-        LogoHeaderComponent,
-        InlineSVGDirective
+        MockComponent(LogoComponent),
+        LogoHeaderComponent
       ],
       providers: [
-        { provide: HttpClient, useValue: jest.fn() },
-        { provide: InlineSVGService, useValue: jest.fn() }
+        { provide: HttpClient, useValue: jest.fn() }
       ]
     }).compileComponents();
 

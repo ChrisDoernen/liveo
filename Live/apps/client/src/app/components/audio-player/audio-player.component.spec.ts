@@ -1,15 +1,11 @@
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { AudioPlayerComponent } from "./audio-player.component";
-import { L3asService, UserAgentService, Logger } from "@live/services";
 import { ActivatedRoute, convertToParamMap } from "@angular/router";
-import { HeaderComponent } from "../header/header.component";
-import { InlineSVGDirective } from "ng-inline-svg";
-import { HttpClient } from "@angular/common/http";
-import { InlineSVGService } from "ng-inline-svg/lib/inline-svg.service";
+import { L3asService, Logger, UserAgentService } from "@live/services";
+import { LoggerMock } from "@live/test-utilities";
 import createMockInstance from "jest-create-mock-instance";
 import { Ng5SliderModule } from "ng5-slider";
-import { LoggerMock } from "@live/test-utilities";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { AudioPlayerComponent } from "./audio-player.component";
 
 describe("StreamComponent", () => {
   let component: AudioPlayerComponent;
@@ -17,7 +13,6 @@ describe("StreamComponent", () => {
   let l3asService;
 
   beforeEach(() => {
-    const inlineSVGService = jest.fn();
     l3asService = createMockInstance(L3asService);
 
     const activatedRoute = {
@@ -35,12 +30,9 @@ describe("StreamComponent", () => {
       ],
       declarations: [
         AudioPlayerComponent,
-        HeaderComponent,
-        InlineSVGDirective
       ],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRoute },
-        { provide: InlineSVGService, useValue: inlineSVGService },
         { provide: L3asService, useValue: l3asService },
         { provide: Logger, useClass: LoggerMock },
         UserAgentService

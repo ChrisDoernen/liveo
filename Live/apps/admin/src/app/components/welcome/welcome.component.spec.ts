@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
-import { LogoMockModule } from "../../test-utilities/mocks/logo-mock.module";
+import { MockComponent } from "ng-mocks";
+import { LogoComponent } from "../../modules/shared/components/logo/logo.component";
 import { WelcomeComponent } from "./welcome.component";
 
 describe("WelcomeComponent", () => {
@@ -10,11 +11,11 @@ describe("WelcomeComponent", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
-        LogoMockModule
+        RouterTestingModule
       ],
       declarations: [
-        WelcomeComponent
+        WelcomeComponent,
+        MockComponent(LogoComponent)
       ]
     }).compileComponents();
 
