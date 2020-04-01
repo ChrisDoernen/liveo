@@ -8626,10 +8626,10 @@ ng-inline-svg@^10.0.0:
   resolved "https://registry.yarnpkg.com/ng-inline-svg/-/ng-inline-svg-10.0.0.tgz#f8211ed04073a61ffd8428d811924446597b4921"
   integrity sha512-gyTOWmVT2F/l6vBMEcqVwebd9dTdGTxdiyVhmo9omRA2PuCjpfdeiNDM6txGEMfMElZy5zygxgTQJzpbJk4GPA==
 
-ng-mocks@^8.1.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/ng-mocks/-/ng-mocks-8.1.0.tgz#d00a5e53ae53587f35c68147826590fab71a1658"
-  integrity sha512-/314nyU6UrONCUKfvFRuJPLpNBxqocwJmQBlPy4he5Vueu6gObXjy+KLUlbbENuA7zTeBjp//RA6w/Fa1yQ4Fw==
+ng-mocks@^9.2.0:
+  version "9.2.0"
+  resolved "https://registry.yarnpkg.com/ng-mocks/-/ng-mocks-9.2.0.tgz#693fda98b8b6c59a92d95cb72422ddaf22f7e46d"
+  integrity sha512-k2/FoYDW2Izjsl7LKz3L9obfJUvLb7dG5B5p7Bgtqt6mM76lJ8wpPxC5GuINdoI6wGbDfcF+va5kE3clLlSVpA==
 
 ng5-slider@^1.1.14:
   version "1.2.4"
