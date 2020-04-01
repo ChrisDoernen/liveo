@@ -1,9 +1,8 @@
-import { TestBed } from "@angular/core/testing";
-import { ApplicationStateService } from "./application-state.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { EndpointService, Logger } from "@live/services";
+import { TestBed } from "@angular/core/testing";
+import { EndpointService } from "@live/services";
 import createMockInstance from "jest-create-mock-instance";
-import { LoggerMock } from "@live/test-utilities";
+import { ApplicationStateService } from "./application-state.service";
 
 describe("ApplicationStateService", () => {
   let applicationStateService: ApplicationStateService;
@@ -16,12 +15,11 @@ describe("ApplicationStateService", () => {
       imports: [HttpClientTestingModule],
       providers: [
         ApplicationStateService,
-        { provide: EndpointService, useValue: endpointService },
-        { provide: Logger, useClass: LoggerMock }
+        { provide: EndpointService, useValue: endpointService }
       ]
     });
 
-    applicationStateService = TestBed.get(ApplicationStateService);
+    applicationStateService = TestBed.inject(ApplicationStateService);
   });
 
   it("should be created", () => {

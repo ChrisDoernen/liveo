@@ -4,9 +4,7 @@ import { RouterModule } from "@angular/router";
 import { EndpointService, L3asService, Logger } from "@live/services";
 import { LoggerMock } from "@live/test-utilities";
 import createMockInstance from "jest-create-mock-instance";
-import { InlineSVGDirective } from "ng-inline-svg";
 import { MockComponent } from "ng-mocks";
-import { Ng5SliderModule } from "ng5-slider";
 import { ApplicationStateService } from "../../services/application-state/application-state.service";
 import { AboutComponent } from "../about/about.component";
 import { AudioPlayerComponent } from "../audio-player/audio-player.component";
@@ -28,15 +26,13 @@ describe("HomeComponent", () => {
     TestBed.configureTestingModule({
       imports: [
         RouterModule,
-        Ng5SliderModule,
         HttpClientTestingModule
       ],
       declarations: [
         HomeComponent,
         MockComponent(HeaderComponent),
-        InlineSVGDirective,
-        AudioPlayerComponent,
-        AboutComponent
+        MockComponent(AudioPlayerComponent),
+        MockComponent(AboutComponent)
       ],
       providers: [
         { provide: ApplicationStateService, useValue: applicationStateService },

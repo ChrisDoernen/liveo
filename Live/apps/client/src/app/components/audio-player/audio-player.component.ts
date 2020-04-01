@@ -10,8 +10,8 @@ import { Options } from "ng5-slider";
 export class AudioPlayerComponent {
 
   constructor(
-    private _logger: Logger,
-    private _l3asService: L3asService,
+    private readonly _logger: Logger,
+    private readonly _l3asService: L3asService,
     userAgentService: UserAgentService) {
     this._l3asService.initialize(userAgentService.userAgentInfo, this.onStreamEndedExpected.bind(this), this.onStreamEndedUnxpected.bind(this));
     this._l3asService.setVolume(this._volume);
