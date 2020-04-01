@@ -105,7 +105,7 @@
           "options": {
             "jestConfig": "apps/client/jest.config.js",
             "tsConfig": "apps/client/tsconfig.spec.json",
-            "setupFile": "apps/client/src/test-setup.ts",
+            "setupFile": "apps/client/test-setup.ts",
             "passWithNoTests": true
           }
         }
@@ -341,7 +341,7 @@
           "options": {
             "jestConfig": "libs/services/jest.config.js",
             "tsConfig": "libs/services/tsconfig.spec.json",
-            "setupFile": "libs/services/src/test-setup.ts",
+            "setupFile": "libs/services/test-setup.ts",
             "passWithNoTests": true
           }
         }
@@ -458,7 +458,7 @@
           "options": {
             "jestConfig": "apps/admin/jest.config.js",
             "tsConfig": "apps/admin/tsconfig.spec.json",
-            "setupFile": "apps/admin/src/test-setup.ts",
+            "setupFile": "apps/admin/test-setup.ts",
             "passWithNoTests": true
           }
         }
