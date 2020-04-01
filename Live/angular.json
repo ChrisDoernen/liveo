@@ -17,6 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/apps/client",
             "index": "apps/client/src/index.html",
             "main": "apps/client/src/main.ts",
@@ -58,6 +59,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ],
               "serviceWorker": true
@@ -100,7 +105,8 @@
           "options": {
             "jestConfig": "apps/client/jest.config.js",
             "tsConfig": "apps/client/tsconfig.spec.json",
-            "setupFile": "apps/client/src/test-setup.ts"
+            "setupFile": "apps/client/src/test-setup.ts",
+            "passWithNoTests": true
           }
         }
       }
@@ -152,7 +158,8 @@
             "tsConfig": "apps/service/tsconfig.app.json",
             "assets": [
               "apps/service/src/data"
-            ]
+            ],
+            "buildLibsFromSource": true
           },
           "configurations": {
             "production": {
@@ -220,7 +227,8 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/service/jest.config.js",
-            "tsConfig": "apps/service/tsconfig.spec.json"
+            "tsConfig": "apps/service/tsconfig.spec.json",
+            "passWithNoTests": true
           }
         }
       }
@@ -248,7 +256,8 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/entities/jest.config.js",
-            "tsConfig": "libs/entities/tsconfig.spec.json"
+            "tsConfig": "libs/entities/tsconfig.spec.json",
+            "passWithNoTests": true
           }
         }
       },
@@ -270,7 +279,8 @@
             "outputPath": "dist/libs/l3as",
             "main": "libs/l3as/src/index.js",
             "tsConfig": "libs/l3as/tsconfig.lib.json",
-            "project": "libs/l3as/package.json"
+            "project": "libs/l3as/package.json",
+            "buildLibsFromSource": true
           },
           "configurations": {
             "production": {
@@ -296,7 +306,8 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/l3as/jest.config.js",
-            "tsConfig": "libs/l3as/tsconfig.spec.json"
+            "tsConfig": "libs/l3as/tsconfig.spec.json",
+            "passWithNoTests": true
           }
         }
       },
@@ -330,7 +341,8 @@
           "options": {
             "jestConfig": "libs/services/jest.config.js",
             "tsConfig": "libs/services/tsconfig.spec.json",
-            "setupFile": "libs/services/src/test-setup.ts"
+            "setupFile": "libs/services/src/test-setup.ts",
+            "passWithNoTests": true
           }
         }
       },
@@ -354,6 +366,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/apps/admin",
             "index": "apps/admin/src/index.html",
             "baseHref": "/admin/",
@@ -399,6 +412,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ],
               "serviceWorker": true
@@ -441,7 +458,8 @@
           "options": {
             "jestConfig": "apps/admin/jest.config.js",
             "tsConfig": "apps/admin/tsconfig.spec.json",
-            "setupFile": "apps/admin/src/test-setup.ts"
+            "setupFile": "apps/admin/src/test-setup.ts",
+            "passWithNoTests": true
           }
         }
       }
@@ -499,7 +517,8 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/constants/jest.config.js",
-            "tsConfig": "libs/constants/tsconfig.spec.json"
+            "tsConfig": "libs/constants/tsconfig.spec.json",
+            "passWithNoTests": true
           }
         }
       },

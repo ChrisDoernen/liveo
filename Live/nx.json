@@ -12,7 +12,10 @@
       "tags": []
     },
     "client-e2e": {
-      "tags": []
+      "tags": [],
+      "implicitDependencies": [
+        "client"
+      ]
     },
     "service": {
       "tags": []
@@ -30,13 +33,29 @@
       "tags": []
     },
     "admin-e2e": {
-      "tags": []
+      "tags": [],
+      "implicitDependencies": [
+        "admin"
+      ]
     },
     "constants": {
       "tags": []
     },
     "test-utilities": {
       "tags": []
+    }
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ]
+      }
     }
   }
 }

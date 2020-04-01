@@ -4,12 +4,11 @@
     "outDir": "../../dist/out-tsc",
     "types": []
   },
-  "exclude": [
-    "src/test-setup.ts",
-    "**/*.spec.ts",
-    "src/app/test-utilities/**"
+  "files": [
+    "src/main.ts",
+    "src/polyfills.ts"
   ],
   "include": [
-    "**/*.ts"
+    "**/*.d.ts"
   ]
 }
