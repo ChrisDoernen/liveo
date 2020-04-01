@@ -15,7 +15,6 @@ import { DeviceDetector } from "../services/devices/device-detector";
 import { DeviceFactory } from "../services/devices/device-factory";
 import { DeviceService } from "../services/devices/device.service";
 import { LinuxDeviceDetector } from "../services/devices/linux-device-detector";
-import { MacOSDeviceDetector } from "../services/devices/macos-device-detector";
 import { SimulationDeviceDetector } from "../services/devices/simulation-device-detector";
 import { WindowsDeviceDetector } from "../services/devices/windows-device-detector";
 import { IdGenerator } from "../services/id-generation/id-generator";
@@ -53,12 +52,6 @@ switch (config.platform) {
     container.bind<ShutdownService>("ShutdownService").to(UnixShutdownService);
     container.bind<DeviceDetector>("DeviceDetector").to(LinuxDeviceDetector).inSingletonScope();
     container.bind<PlatformConstants>("PlattformConstants").toConstantValue(PLATFORM_CONSTANTS.linux);
-    break;
-  }
-  case "darwin": {
-    container.bind<ShutdownService>("ShutdownService").to(UnixShutdownService);
-    container.bind<DeviceDetector>("DeviceDetector").to(MacOSDeviceDetector).inSingletonScope();
-    container.bind<PlatformConstants>("PlattformConstants").toConstantValue(PLATFORM_CONSTANTS.darwin);
     break;
   }
   case "win32": {

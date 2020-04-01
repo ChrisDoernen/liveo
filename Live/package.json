@@ -20,7 +20,7 @@
     "build:app:admin": "ng build admin",
     "build:app:client": "ng build client",
     "build:app:service": "ng build service",
-    "compile:scripts": "npx tsc --lib es2015,DOM --sourceMap false scripts/download-ffmpeg.ts --outDir dist/scripts",
+    "compile:scripts": "npx tsc --types node --sourceMap false scripts/download-ffmpeg.ts --outDir dist/scripts",
     "test": "npm-run-all get-version test:**",
     "test:lib:l3as": "ng test l3as",
     "test:app:admin": "ng test admin",
