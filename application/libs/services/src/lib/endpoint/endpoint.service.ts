@@ -1,5 +1,5 @@
 import { Inject, Injectable, InjectionToken } from "@angular/core";
-import { ENDPOINTS } from "@live/constants";
+import { ENDPOINTS } from "@liveo/constants";
 import { Logger } from "../logging/logger";
 
 export const ROUTE = new InjectionToken<string>("ROUTE");
@@ -15,7 +15,7 @@ export class EndpointService {
 
   public getEndpoint(path: string, queryParams: string[] = null): string {
     let url = `${ENDPOINTS.api}/${this._route}/${path}`;
-    if(queryParams) {
+    if (queryParams) {
       url += `?${queryParams.join("&")}`;
     }
 

@@ -1,4 +1,4 @@
-import { UserEntity } from "@live/entities";
+import { UserEntity } from "@liveo/entities";
 import * as faker from "faker";
 
 export class UserEntityBuilder {

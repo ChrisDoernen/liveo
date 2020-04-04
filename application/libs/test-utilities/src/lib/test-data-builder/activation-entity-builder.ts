@@ -1,4 +1,4 @@
-import { ActivationEntity } from "@live/entities";
+import { ActivationEntity } from "@liveo/entities";
 import * as faker from "faker";
 
 export class ActivationEntityBuilder {

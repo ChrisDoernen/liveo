@@ -1,4 +1,4 @@
-import { DeviceEntity, DeviceType } from "@live/entities";
+import { DeviceEntity, DeviceType } from "@liveo/entities";
 import { inject, injectable } from "inversify";
 import { EOL } from "os";
 import { IdGenerator } from "../id-generation/id-generator";

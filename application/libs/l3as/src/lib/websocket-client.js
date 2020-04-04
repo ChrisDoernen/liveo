@@ -1,4 +1,4 @@
-import { ENDPOINTS, EVENTS } from "@live/constants";
+import { ENDPOINTS, EVENTS } from "@liveo/constants";
 import io from 'socket.io-client';
 
 /*

@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { EndpointService, Logger } from "@live/services";
+import { EndpointService, Logger } from "@liveo/services";
 import createMockInstance from "jest-create-mock-instance";
 import { SessionService } from "../../../../services/session/session.service";
 import { AngularMaterialModule } from "../../../angular-material/angular-material.module";

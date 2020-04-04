@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { SessionEntity, SettingsEntity } from "@live/entities";
+import { SessionEntity, SettingsEntity } from "@liveo/entities";
 import { SessionService } from "../../../../services/session/session.service";
 import { SettingsService } from "../../../../services/settings/settings.service";
 

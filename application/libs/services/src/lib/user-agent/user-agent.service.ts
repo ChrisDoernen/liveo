@@ -1,5 +1,5 @@
-import { UserAgentInfo, UserAgentDetector } from "@live/l3as";
 import { Injectable } from "@angular/core";
+import { UserAgentDetector, UserAgentInfo } from "@liveo/l3as";
 
 @Injectable()
 export class UserAgentService {

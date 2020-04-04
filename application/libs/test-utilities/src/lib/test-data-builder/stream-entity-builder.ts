@@ -1,4 +1,4 @@
-import { StreamEntity, StreamType } from "@live/entities";
+import { StreamEntity, StreamType } from "@liveo/entities";
 import * as faker from "faker";
 
 export class StreamEntityBuilder {

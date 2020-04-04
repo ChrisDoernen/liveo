@@ -1,4 +1,4 @@
-import { SessionEntity } from "@live/entities";
+import { SessionEntity } from "@liveo/entities";
 import * as faker from "faker";
 
 export class SessionEntityBuilder {

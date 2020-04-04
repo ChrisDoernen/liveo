@@ -1,5 +1,5 @@
-import { ENDPOINTS, EVENTS } from "@live/constants";
-import { NotificationEntity } from "@live/entities";
+import { ENDPOINTS, EVENTS } from "@liveo/constants";
+import { NotificationEntity } from "@liveo/entities";
 import { inject, injectable } from "inversify";
 import socketio, { Socket } from "socket.io";
 import { AdminService } from "../services/admin/admin.service";
@@ -77,11 +77,11 @@ export class WebsocketServer {
     socket.join("admin");
     this._adminService.adminSubscribed(this.getClientIpAddress(socket));
 
-    socket.on(EVENTS.adminStreamCreationEnter, ()=> {
+    socket.on(EVENTS.adminStreamCreationEnter, () => {
       this._adminService.onAdminStreamCreationEnter();
     });
 
-    socket.on(EVENTS.adminStreamCreationLeave, ()=> {
+    socket.on(EVENTS.adminStreamCreationLeave, () => {
       this._adminService.onAdminStreamCreationLeave();
     });
   }

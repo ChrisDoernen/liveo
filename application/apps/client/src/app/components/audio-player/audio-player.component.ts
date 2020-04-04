@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { L3asService, Logger, UserAgentService } from "@live/services";
+import { L3asService, Logger, UserAgentService } from "@liveo/services";
 import { Options } from "ng5-slider";
 
 @Component({

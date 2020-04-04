@@ -1,8 +1,8 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { RouterModule } from "@angular/router";
-import { EndpointService, L3asService, Logger } from "@live/services";
-import { LoggerMock } from "@live/test-utilities";
+import { EndpointService, L3asService, Logger } from "@liveo/services";
+import { LoggerMock } from "@liveo/test-utilities";
 import createMockInstance from "jest-create-mock-instance";
 import { MockComponent } from "ng-mocks";
 import { ApplicationStateService } from "../../services/application-state/application-state.service";

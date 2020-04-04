@@ -1,4 +1,4 @@
-import { UserEntityBuilder } from "@live/test-utilities";
+import { UserEntityBuilder } from "@liveo/test-utilities";
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
 import { DataService } from "../data/data-service";

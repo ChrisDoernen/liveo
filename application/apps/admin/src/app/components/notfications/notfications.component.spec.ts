@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { Logger } from "@live/services";
+import { Logger } from "@liveo/services";
 import { AngularMaterialModule } from "../../modules/angular-material/angular-material.module";
 import { NotficationsComponent } from "./notfications.component";
 

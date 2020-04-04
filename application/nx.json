@@ -1,5 +1,5 @@
 {
-  "npmScope": "live",
+  "npmScope": "liveo",
   "implicitDependencies": {
     "angular.json": "*",
     "package.json": "*",

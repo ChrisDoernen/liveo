@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { TestBed } from "@angular/core/testing";
-import { EndpointService, Logger } from "@live/services";
+import { EndpointService, Logger } from "@liveo/services";
 import createMockInstance from "jest-create-mock-instance";
 import { ConnectionStateService } from "../connection-state/connection-state-service";
 import { ShutdownService } from "./shutdown.service";

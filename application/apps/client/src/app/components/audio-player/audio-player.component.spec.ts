@@ -1,8 +1,8 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { ActivatedRoute, convertToParamMap } from "@angular/router";
-import { L3asService, Logger, UserAgentService } from "@live/services";
-import { LoggerMock } from "@live/test-utilities";
+import { L3asService, Logger, UserAgentService } from "@liveo/services";
+import { LoggerMock } from "@liveo/test-utilities";
 import createMockInstance from "jest-create-mock-instance";
 import { Ng5SliderModule } from "ng5-slider";
 import { AudioPlayerComponent } from "./audio-player.component";

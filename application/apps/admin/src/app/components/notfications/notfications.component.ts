@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { NotificationEntity } from "@live/entities";
+import { NotificationEntity } from "@liveo/entities";
 import { Subscription } from "rxjs";
 import { NotificationService } from "../../services/notification/notification.service";
 

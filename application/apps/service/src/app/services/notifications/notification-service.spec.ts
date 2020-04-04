@@ -1,5 +1,5 @@
-import { EVENTS } from "@live/constants";
-import { NotificationEntity, NotificationType } from "@live/entities";
+import { EVENTS } from "@liveo/constants";
+import { NotificationEntity, NotificationType } from "@liveo/entities";
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
 import { WebsocketServer } from "../../core/websocket-server";

@@ -5,7 +5,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { ActivatedRoute } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
-import { EndpointService, Logger } from "@live/services";
+import { EndpointService, Logger } from "@liveo/services";
 import createMockInstance from "jest-create-mock-instance";
 import { SessionService } from "../../../../services/session/session.service";
 import { AngularMaterialModule } from "../../../angular-material/angular-material.module";

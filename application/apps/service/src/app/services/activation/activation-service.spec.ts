@@ -1,4 +1,4 @@
-import { ActivationEntity } from "@live/entities";
+import { ActivationEntity } from "@liveo/entities";
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
 import { ActivationStateService } from "../application-state/activation-state.service";

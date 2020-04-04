@@ -1,5 +1,5 @@
-import { ActivationEntity, DeviceEntity, DeviceType } from "@live/entities";
-import { ActivationEntityBuilder } from "@live/test-utilities";
+import { ActivationEntity, DeviceEntity, DeviceType } from "@liveo/entities";
+import { ActivationEntityBuilder } from "@liveo/test-utilities";
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
 import { BehaviorSubject } from "rxjs";

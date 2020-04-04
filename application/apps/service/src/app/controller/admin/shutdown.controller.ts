@@ -1,4 +1,4 @@
-import { ROUTES } from "@live/constants";
+import { ROUTES } from "@liveo/constants";
 import { inject } from "inversify";
 import { controller, httpPost } from "inversify-express-utils";
 import { AuthenticationMiddleware } from "../../middleware/authentication/authentication.middleware";

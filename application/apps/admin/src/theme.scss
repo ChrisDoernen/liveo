@@ -1,4 +1,4 @@
-$arche-blue: (
+$liveo-blue: (
   50: #82afb5,
   100: #6da2a9,
   200: #568389,
@@ -27,25 +27,25 @@ $arche-blue: (
     A100: white,
     A200: white,
     A400: white,
-    A700: white
-  )
+    A700: white,
+  ),
 );
 
-$arche-warn: (
+$liveo-warn: (
   300: #981717,
   700: #981717,
   900: #981717,
   contrast: (
     300: #981717,
     700: #981717,
-    900: #981717
-  )
+    900: #981717,
+  ),
 );
 
 // Define 3 theme color, mat-palette accepts $palette-name, main, lighter and darker variants
-$live-theme-primary: mat-palette($arche-blue, 100, 50, 200);
-$live-theme-accent: mat-palette($mat-blue-grey, 700, 300, 900);
-$live-theme-warn: mat-palette($arche-warn, 700, 300, 900);
+$liveo-theme-primary: mat-palette($liveo-blue, 100, 50, 200);
+$liveo-theme-accent: mat-palette($mat-blue-grey, 700, 300, 900);
+$liveo-theme-warn: mat-palette($liveo-warn, 700, 300, 900);
 
 // Create theme (use mat-dark-theme for themes with dark backgrounds)
-$live-theme: mat-dark-theme($live-theme-primary, $live-theme-accent, $live-theme-warn);
+$liveo-theme: mat-dark-theme($liveo-theme-primary, $liveo-theme-accent, $liveo-theme-warn);

@@ -1,5 +1,5 @@
-import { ROUTES } from "@live/constants";
-import { SessionEntity } from "@live/entities";
+import { ROUTES } from "@liveo/constants";
+import { SessionEntity } from "@liveo/entities";
 import { Request, Response } from "express";
 import { inject } from "inversify";
 import { controller, httpDelete, httpGet, httpPost } from "inversify-express-utils";
@@ -35,7 +35,7 @@ export class SessionController {
 
     return this._sessionService.createSession(session);
   }
-  
+
   @httpDelete("/:id")
   public deleteStream(request: Request): void {
     const sessionId = request.params.id;

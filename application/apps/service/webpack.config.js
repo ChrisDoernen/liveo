@@ -69,10 +69,10 @@ function generatePackageJson() {
   const basePackageJson = {
     "name": packageJson.name,
     "version": packageJson.version,
-    "main": "./live.js",
-    "bin": "./live.js",
+    "main": "./liveo-server.js",
+    "bin": "./liveo-server.js",
     "scripts": {
-      "start": "node ./live.js",
+      "start": "node ./liveo-server.js",
       "download-ffmpeg": "node scripts/download-ffmpeg.js"
     },
     dependencies,

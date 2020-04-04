@@ -1,8 +1,8 @@
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
-import { EndpointService, Logger } from "@live/services";
-import { LoggerMock } from "@live/test-utilities";
+import { EndpointService, Logger } from "@liveo/services";
+import { LoggerMock } from "@liveo/test-utilities";
 import createMockInstance from "jest-create-mock-instance";
 import { WebsocketService } from "../websocket/websocket.service";
 import { ConnectionStateService } from "./connection-state-service";

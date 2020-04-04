@@ -1,11 +1,11 @@
 {
-  "name": "live",
+  "name": "liveo",
   "version": "1.0.0",
   "license": "MIT",
   "private": true,
   "scripts": {
     "ng": "ng",
-    "start": "node dist/apps/service/live.js",
+    "start": "node dist/apps/service/liveo-server.js",
     "start:app:admin": "ng serve admin --port 4200 --host 0.0.0.0",
     "start:app:client": "ng serve client --port 4200 --host 0.0.0.0",
     "start:app:service": "ng serve service",
@@ -26,7 +26,7 @@
     "test:app:admin": "ng test admin",
     "test:app:client": "ng test client",
     "test:app:service": "ng test service",
-    "apitests": "node_modules/.bin/newman run apps/service-apitests/live-server-apitests-postman-collection.json -e apps/service-apitests/localhost-3000.postman-environment.json",
+    "apitests": "node_modules/.bin/newman run apps/service-apitests/liveo-server-apitests-postman-collection.json -e apps/service-apitests/localhost-3000.postman-environment.json",
     "lint": "./node_modules/.bin/nx workspace-lint && ng lint",
     "e2e": "ng e2e",
     "affected:apps": "./node_modules/.bin/nx affected:apps",

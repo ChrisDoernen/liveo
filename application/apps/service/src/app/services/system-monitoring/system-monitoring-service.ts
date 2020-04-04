@@ -1,4 +1,4 @@
-import { EVENTS } from "@live/constants";
+import { EVENTS } from "@liveo/constants";
 import { inject, injectable } from "inversify";
 import * as os from "os-utils";
 import { WebsocketServer } from "../../core/websocket-server";

@@ -1,5 +1,5 @@
 import { TestBed } from "@angular/core/testing";
-import { ENDPOINTS, ROUTES } from "@live/constants";
+import { ENDPOINTS, ROUTES } from "@liveo/constants";
 import { ENABLECONSOLELOGGING } from "../logging/logger";
 import { EndpointService, ROUTE } from "./endpoint.service";
 

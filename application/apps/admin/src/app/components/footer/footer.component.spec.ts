@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { Logger } from "@liveo/services";
 import { FooterComponent } from "./footer.component";
-import { Logger } from "@live/services";
 
 describe("FooterComponent", () => {
   let component: FooterComponent;

@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
-import { EndpointService } from "@live/services";
+import { EndpointService } from "@liveo/services";
 import createMockInstance from "jest-create-mock-instance";
 import { ApplicationStateService } from "./application-state.service";
 

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { Logger } from "@live/services";
+import { Logger } from "@liveo/services";
 import createMockInstance from "jest-create-mock-instance";
 import { VolumeMeterComponent } from "./volume-meter.component";
 

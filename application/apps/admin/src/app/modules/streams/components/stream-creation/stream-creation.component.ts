@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { EVENTS } from "@live/constants";
-import { DeviceEntity, StreamEntity, StreamType } from "@live/entities";
+import { EVENTS } from "@liveo/constants";
+import { DeviceEntity, StreamEntity, StreamType } from "@liveo/entities";
 import { DevicesService } from "../../../../modules/shared/services/devices/devices.service";
 import { StreamService } from "../../../../services/stream/stream.service";
 import { WebsocketService } from "../../../../services/websocket/websocket.service";

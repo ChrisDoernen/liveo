@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "2f6f0c76-b268-443b-b6d4-91eb98e973eb",
-		"name": "Live Service API Systemtests",
+		"name": "liveo server API tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [

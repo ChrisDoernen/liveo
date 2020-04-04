@@ -1,4 +1,4 @@
-import { UserEntity } from "@live/entities";
+import { UserEntity } from "@liveo/entities";
 import { inject, injectable } from "inversify";
 import { Logger } from "../logging/logger";
 import { IUserProvider } from "./i-user-provider";

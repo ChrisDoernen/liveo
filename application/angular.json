@@ -7,7 +7,7 @@
       "root": "apps/client/",
       "sourceRoot": "apps/client/src",
       "projectType": "application",
-      "prefix": "live",
+      "prefix": "liveo",
       "schematics": {
         "@nrwl/schematics:component": {
           "style": "scss"
@@ -153,8 +153,8 @@
           "options": {
             "webpackConfig": "apps/service/webpack.config.js",
             "outputPath": "dist/apps/service",
-            "filename": "live.js",
-            "main": "apps/service/src/live.ts",
+            "filename": "liveo-server.js",
+            "main": "apps/service/src/liveo-server.ts",
             "tsConfig": "apps/service/tsconfig.app.json",
             "assets": [
               "apps/service/src/data"
@@ -237,7 +237,7 @@
       "root": "libs/entities",
       "sourceRoot": "libs/entities/src",
       "projectType": "library",
-      "prefix": "live",
+      "prefix": "liveo",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -271,7 +271,7 @@
       "root": "libs/l3as",
       "sourceRoot": "libs/l3as/src",
       "projectType": "library",
-      "prefix": "live",
+      "prefix": "liveo",
       "architect": {
         "build": {
           "builder": "@nrwl/node:build",
@@ -321,7 +321,7 @@
       "root": "libs/services",
       "sourceRoot": "libs/services/src",
       "projectType": "library",
-      "prefix": "live",
+      "prefix": "liveo",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -356,7 +356,7 @@
       "root": "apps/admin/",
       "sourceRoot": "apps/admin/src",
       "projectType": "application",
-      "prefix": "live",
+      "prefix": "liveo",
       "schematics": {
         "@nrwl/schematics:component": {
           "style": "scss"
@@ -498,7 +498,7 @@
       "root": "libs/constants",
       "sourceRoot": "libs/constants/src",
       "projectType": "library",
-      "prefix": "live",
+      "prefix": "liveo",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -532,7 +532,7 @@
       "root": "libs/test-utilities",
       "sourceRoot": "libs/test-utilities/src",
       "projectType": "library",
-      "prefix": "live",
+      "prefix": "liveo",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",

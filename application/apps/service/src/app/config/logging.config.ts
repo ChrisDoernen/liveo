@@ -10,7 +10,7 @@ const timeLevelMessage = winston.format.combine(
 );
 
 const serviceLogFileTransport = new DailyRotateFile({
-  filename: "live-service-%DATE%.log",
+  filename: "liveo-server-%DATE%.log",
   dirname: config.logdirectory,
   datePattern: "YYYY-MM-DD",
   zippedArchive: false,
@@ -22,7 +22,7 @@ const serviceLogFileTransport = new DailyRotateFile({
 });
 
 const ffmpegLogFileTransport = new DailyRotateFile({
-  filename: "live-ffmpeg-%DATE%.log",
+  filename: "liveo-ffmpeg-%DATE%.log",
   dirname: config.logdirectory,
   datePattern: "YYYY-MM-DD",
   zippedArchive: false,

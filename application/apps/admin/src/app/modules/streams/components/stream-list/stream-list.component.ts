@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { DeviceEntity, StreamEntity } from "@live/entities";
-import { Logger } from "@live/services";
+import { DeviceEntity, StreamEntity } from "@liveo/entities";
+import { Logger } from "@liveo/services";
 import { DIALOG_CONFIG_SMALL } from "../../../../constants/mat-dialog-config-small";
 import { DevicesService } from "../../../../modules/shared/services/devices/devices.service";
 import { StreamService } from "../../../../services/stream/stream.service";

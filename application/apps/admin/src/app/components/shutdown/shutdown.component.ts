@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { Logger } from "@live/services";
+import { Logger } from "@liveo/services";
 import { DIALOG_CONFIG_SMALL } from "../../constants/mat-dialog-config-small";
 import { ShutdownService } from "../../services/shutdown/shutdown.service";
 import { ShutdownDialogComponent } from "../shutdown-dialog/shutdown-dialog.component";

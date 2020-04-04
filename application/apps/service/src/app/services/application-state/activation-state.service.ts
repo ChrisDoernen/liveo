@@ -1,5 +1,5 @@
-import { EVENTS } from "@live/constants";
-import { ActivationEntity, ActivationState, ActivationStateEntity, SessionEntity, StreamEntity } from "@live/entities";
+import { EVENTS } from "@liveo/constants";
+import { ActivationEntity, ActivationState, ActivationStateEntity, SessionEntity, StreamEntity } from "@liveo/entities";
 import { inject, injectable } from "inversify";
 import { BehaviorSubject } from "rxjs";
 import { WebsocketServer } from "../../core/websocket-server";

@@ -25,32 +25,32 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Install dependencies
-      working-directory: Live
-      run: npm install
+      working-directory: application
+      run: yarn install
 
     - name: Test
-      working-directory: Live
-      run: npm run test
+      working-directory: application
+      run: yarn run test
 
     - name: Build
-      working-directory: Live
-      run: npm run build-prod
+      working-directory: application
+      run: yarn run build-prod
 
     - name: Download Ffmpeg static files
-      working-directory: Live
-      run: npm run download-ffmpeg -- --ci
+      working-directory: application
+      run: yarn run download-ffmpeg -- --ci
 
     - name: Install executable dependecies
-      working-directory: Live/dist/apps/service
-      run: npm install --production
+      working-directory: application/dist/apps/service
+      run: yarn install --production
 
     - name: Create artifacts
-      working-directory: Live
-      run: npm run create-artifacts
+      working-directory: application
+      run: yarn run create-artifacts
 
     - name: Collect artifacts
-      working-directory: Live
-      run: npm run collect-artifacts -- ${{ github.run_number }}-${{ github.run_id }}
+      working-directory: application
+      run: yarn run collect-artifacts -- ${{ github.run_number }}-${{ github.run_id }}
 
     - name: Deploy
       uses: sebastianpopp/ftp-action@releases/v2
@@ -58,6 +58,6 @@ jobs:
         host: ${{ secrets.FTP_SERVER }}
         user: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        localDir: Live/artifacts
+        localDir: application/artifacts
         remoteDir: nightlies
         forceSsl: true

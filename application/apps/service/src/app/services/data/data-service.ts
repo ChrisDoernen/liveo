@@ -1,4 +1,4 @@
-import { SessionEntity, SettingsEntity, StreamEntity, UserEntity } from "@live/entities";
+import { SessionEntity, SettingsEntity, StreamEntity, UserEntity } from "@liveo/entities";
 import { inject, injectable } from "inversify";
 import * as low from "lowdb";
 import * as FileSync from "lowdb/adapters/FileSync";

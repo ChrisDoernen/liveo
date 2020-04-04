@@ -11,9 +11,9 @@
 @import "theme.scss";
 
 // Specify theme class eg: <body class="my-theme"> ... </body>
-.live-theme {
+.liveo-theme {
   // Use our theme with angular-material-theme mixin
-  @include angular-material-theme($live-theme);
+  @include angular-material-theme($liveo-theme);
 }
 
 body {
@@ -58,7 +58,7 @@ h2 {
 }
 
 .delete-icon {
-  color: mat-color($live-theme-warn, 300);
+  color: mat-color($liveo-theme-warn, 300);
 }
 
 .no-content-message {

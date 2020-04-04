@@ -1,4 +1,4 @@
-import { DeviceEntity } from "@live/entities";
+import { DeviceEntity } from "@liveo/entities";
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
 import { IdGenerator } from "../id-generation/id-generator";

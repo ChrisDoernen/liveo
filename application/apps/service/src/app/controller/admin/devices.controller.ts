@@ -1,5 +1,5 @@
-import { ROUTES } from "@live/constants";
-import { DeviceEntity } from "@live/entities";
+import { ROUTES } from "@liveo/constants";
+import { DeviceEntity } from "@liveo/entities";
 import { Request } from "express";
 import { inject } from "inversify";
 import { controller, httpGet } from "inversify-express-utils";

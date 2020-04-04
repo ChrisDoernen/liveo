@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { L3asPlayer, UserAgentInfo } from "@live/l3as";
+import { L3asPlayer, UserAgentInfo } from "@liveo/l3as";
 import { Logger } from "../logging/logger";
 
 @Injectable({

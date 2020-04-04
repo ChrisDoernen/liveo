@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { SettingsEntity } from "@live/entities";
-import { EndpointService, Logger } from "@live/services";
+import { SettingsEntity } from "@liveo/entities";
+import { EndpointService, Logger } from "@liveo/services";
 
 @Injectable({
   providedIn: "root"

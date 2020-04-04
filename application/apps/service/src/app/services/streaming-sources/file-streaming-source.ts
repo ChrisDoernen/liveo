@@ -1,4 +1,4 @@
-import { EVENTS } from "@live/constants";
+import { EVENTS } from "@liveo/constants";
 import * as Ffmpeg from "fluent-ffmpeg";
 import { inject, injectable } from "inversify";
 import { WebsocketServer } from "../../core/websocket-server";
@@ -20,7 +20,7 @@ export class FileStreamingSource implements IStreamingSource {
     private _bitrate: number,
     private _deviceId: string,
     private _streamId: string) {
-      this._command = this.initializeFfmpegCommand(this._deviceId);
+    this._command = this.initializeFfmpegCommand(this._deviceId);
   }
 
   private initializeFfmpegCommand(deviceId: string): Ffmpeg.FfmpegCommand {

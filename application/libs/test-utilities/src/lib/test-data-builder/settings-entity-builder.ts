@@ -1,4 +1,4 @@
-import { SettingsEntity } from "@live/entities";
+import { SettingsEntity } from "@liveo/entities";
 import * as faker from "faker";
 
 export class SettingsEntityBuilder {

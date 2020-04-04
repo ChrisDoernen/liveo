@@ -1,4 +1,4 @@
-import { ENDPOINTS } from "@live/constants";
+import { ENDPOINTS } from "@liveo/constants";
 import * as bodyParser from "body-parser";
 import * as express from "express";
 import { Server } from "http";

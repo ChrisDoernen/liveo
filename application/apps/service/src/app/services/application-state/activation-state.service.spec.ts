@@ -1,4 +1,4 @@
-import { ActivationEntityBuilder, SessionEntityBuilder, StreamEntityBuilder } from "@live/test-utilities";
+import { ActivationEntityBuilder, SessionEntityBuilder, StreamEntityBuilder } from "@liveo/test-utilities";
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
 import { ActivationService } from "../activation/activation-service";

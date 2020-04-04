@@ -1,5 +1,5 @@
-import { ActivationEntity } from "@live/entities";
-import { SettingsEntityBuilder } from "@live/test-utilities";
+import { ActivationEntity } from "@liveo/entities";
+import { SettingsEntityBuilder } from "@liveo/test-utilities";
 import { Container } from "inversify";
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";

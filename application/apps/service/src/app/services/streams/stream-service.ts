@@ -1,4 +1,4 @@
-import { StreamEntity } from "@live/entities";
+import { StreamEntity } from "@liveo/entities";
 import { inject, injectable } from "inversify";
 import { Logger } from "../logging/logger";
 import { IStreamRepository } from "./i-stream-repository";

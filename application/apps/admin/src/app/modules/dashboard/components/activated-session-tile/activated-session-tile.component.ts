@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { SessionEntity } from "@live/entities";
+import { SessionEntity } from "@liveo/entities";
 
 @Component({
   selector: "activated-session-tile",

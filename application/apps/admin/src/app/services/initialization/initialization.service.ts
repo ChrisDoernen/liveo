@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Logger } from "@live/services";
+import { Logger } from "@liveo/services";
 import { ConnectionStateService } from "../connection-state/connection-state-service";
 
 @Injectable({

@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { SessionEntity, StreamEntity } from "@live/entities";
+import { SessionEntity, StreamEntity } from "@liveo/entities";
 import { SessionService } from "../../../../services/session/session.service";
 import { StreamService } from "../../../../services/stream/stream.service";
 

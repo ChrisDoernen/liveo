@@ -1,21 +1,21 @@
 [Unit]
-Description=Live - Server for live streaming
+Description=liveo - Server for live streaming
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/nodejs /home/chris/Projects/Livestream-App/Live/dist/apps/service/main.js
+ExecStart=/usr/bin/nodejs /home/chris/Projects/Livestream-App/application/dist/apps/service/main.js
 Restart=always
 RestartSec=1
 StandardOutput=syslog
 StandardError=syslog
-SyslogIdentifier=live
+SyslogIdentifier=liveo
 User=chris
 # Use 'nogroup' group for Ubuntu/Debian
 # use 'nobody' group for Fedora
 Group=nogroup
 Environment=PATH=/usr/bin:/usr/local/bin
 Environment=NODE_ENV=production PRODUCTION=true PORT=8080 SIMULATE=false
-WorkingDirectory=/home/chris/Projects/Livestream-App/Live/dist/apps/service
+WorkingDirectory=/home/chris/Projects/liveo/application/dist/apps/service
 
 [Install]
 WantedBy=multi-user.target

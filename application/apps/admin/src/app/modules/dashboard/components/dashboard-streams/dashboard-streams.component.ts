@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core";
-import { StreamEntity } from "@live/entities";
+import { StreamEntity } from "@liveo/entities";
 
 @Component({
   selector: "dashboard-streams",

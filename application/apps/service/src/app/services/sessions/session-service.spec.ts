@@ -1,4 +1,4 @@
-import { SessionEntityBuilder } from "@live/test-utilities";
+import { SessionEntityBuilder } from "@liveo/test-utilities";
 import { Container } from "inversify";
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
@@ -53,10 +53,10 @@ describe("SessionService", () => {
     sessionRepository.getSessionEntity.mockReturnValue(sessions[1]);
 
     const sessionEntiy = sessionService.getSessionEntity(firstSessionId);
-    
+
     expect(sessionEntiy).toBe(sessions[1]);
   });
-  
+
   it("should validate session existence correctly when session exists", () => {
     sessionRepository.getSessionEntity.mockReturnValue(sessions[1]);
 
@@ -65,7 +65,7 @@ describe("SessionService", () => {
 
   it("should validate session existence correctly when session does not exist", () => {
     sessionRepository.getSessionEntity.mockReturnValue(null);
-    
+
     expect(() => sessionService.validateSessionExists("5vo7ax6q")).toThrowError();
   });
 });

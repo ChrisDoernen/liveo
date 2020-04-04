@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from "@angular/core";
-import { ActivationEntity, ActivationState } from "@live/entities";
+import { ActivationEntity, ActivationState } from "@liveo/entities";
 
 @Component({
   selector: "activation-state-tile",

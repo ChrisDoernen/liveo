@@ -1,4 +1,4 @@
-import { ActivationEntity } from "@live/entities";
+import { ActivationEntity } from "@liveo/entities";
 import { inject, injectable } from "inversify";
 import { BehaviorSubject } from "rxjs";
 import { ActivationStateService } from "../application-state/activation-state.service";

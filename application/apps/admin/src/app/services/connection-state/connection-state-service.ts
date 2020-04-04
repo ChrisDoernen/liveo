@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Params, Router } from "@angular/router";
-import { EndpointService, Logger } from "@live/services";
+import { EndpointService, Logger } from "@liveo/services";
 import { WebsocketService } from "../websocket/websocket.service";
 
 export type ConnectionStateCheckContext = "Shutdown" | "Navigation";

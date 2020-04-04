@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { ActivationStateEntity } from "@live/entities";
-import { EndpointService } from "@live/services";
+import { ActivationStateEntity } from "@liveo/entities";
+import { EndpointService } from "@liveo/services";
 import { delay } from "rxjs/operators";
 
 /**

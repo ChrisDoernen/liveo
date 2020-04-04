@@ -1,4 +1,4 @@
-import { DeviceEntity } from "@live/entities";
+import { DeviceEntity } from "@liveo/entities";
 import { interfaces } from "inversify";
 import { Logger } from "../logging/logger";
 import { IStreamingSource } from "../streaming-sources/i-streaming-source";

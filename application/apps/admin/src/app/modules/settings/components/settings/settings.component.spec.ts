@@ -2,7 +2,7 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { FormsModule } from "@angular/forms";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
-import { EndpointService, Logger } from "@live/services";
+import { EndpointService, Logger } from "@liveo/services";
 import { SessionService } from "apps/admin/src/app/services/session/session.service";
 import createMockInstance from "jest-create-mock-instance";
 import { AngularMaterialModule } from "../../../angular-material/angular-material.module";

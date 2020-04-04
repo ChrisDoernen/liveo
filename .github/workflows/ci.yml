@@ -19,16 +19,16 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Install dependencies
-      working-directory: Live
-      run: npm install
+      working-directory: application
+      run: yarn install
 
     - name: Test
-      working-directory: Live
-      run: npm run test
+      working-directory: application
+      run: yarn run test
 
     - name: Build
-      working-directory: Live
-      run: npm run build-prod
+      working-directory: application
+      run: yarn run build-prod
 
       env:
         CI: true

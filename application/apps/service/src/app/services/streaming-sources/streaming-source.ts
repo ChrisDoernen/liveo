@@ -1,4 +1,4 @@
-import { EVENTS } from "@live/constants";
+import { EVENTS } from "@liveo/constants";
 import * as Ffmpeg from "fluent-ffmpeg";
 import * as fs from "fs";
 import { inject, injectable } from "inversify";

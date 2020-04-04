@@ -1,4 +1,4 @@
-import { SettingsEntity } from "@live/entities";
+import { SettingsEntity } from "@liveo/entities";
 
 export interface ISettingsProvider {
   getSettings(): SettingsEntity;

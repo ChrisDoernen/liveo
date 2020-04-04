@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
-import { Logger } from "@live/services";
+import { Logger } from "@liveo/services";
 import createMockInstance from "jest-create-mock-instance";
 import { MockComponent } from "ng-mocks";
 import { AngularMaterialModule } from "../../modules/angular-material/angular-material.module";

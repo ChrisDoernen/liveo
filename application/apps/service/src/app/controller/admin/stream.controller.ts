@@ -1,5 +1,5 @@
-import { ROUTES } from "@live/constants";
-import { StreamEntity } from "@live/entities";
+import { ROUTES } from "@liveo/constants";
+import { StreamEntity } from "@liveo/entities";
 import { Request, Response } from "express";
 import { inject } from "inversify";
 import { controller, httpDelete, httpGet, httpPost } from "inversify-express-utils";
@@ -8,7 +8,7 @@ import { StreamService } from "../../services/streams/stream-service";
 
 @controller(`/${ROUTES.admin}/streams`, AuthenticationMiddleware)
 export class StreamController {
-  
+
   constructor(
     @inject("StreamService") private _streamService: StreamService) {
   }

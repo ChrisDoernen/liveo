@@ -1,8 +1,8 @@
+import { ActivationState } from "@liveo/entities";
+import { ActivationEntityBuilder } from "@liveo/test-utilities";
+import createMockInstance from "jest-create-mock-instance";
 import { TimeService } from "../time/time.service";
 import { ActivationStateService } from "./activation-state.service";
-import { ActivationEntityBuilder } from "@live/test-utilities";
-import createMockInstance from "jest-create-mock-instance";
-import { ActivationState } from "@live/entities";
 
 describe("ActivationStateService", () => {
   let activationStateService: ActivationStateService;

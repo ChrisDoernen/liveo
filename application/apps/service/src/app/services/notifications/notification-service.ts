@@ -1,5 +1,5 @@
-import { EVENTS } from "@live/constants";
-import { NotificationEntity } from "@live/entities";
+import { EVENTS } from "@liveo/constants";
+import { NotificationEntity } from "@liveo/entities";
 import { inject, injectable } from "inversify";
 import { WebsocketServer } from "../../core/websocket-server";
 

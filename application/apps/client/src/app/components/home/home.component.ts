@@ -1,6 +1,6 @@
-import { Component, OnInit, HostBinding } from "@angular/core";
-import { ActivationStateEntity, StreamEntity } from "@live/entities";
-import { ActivationStateService, Logger } from "@live/services";
+import { Component, HostBinding, OnInit } from "@angular/core";
+import { ActivationStateEntity, StreamEntity } from "@liveo/entities";
+import { Logger } from "@liveo/services";
 import { ApplicationStateService } from "../../services/application-state/application-state.service";
 
 @Component({
@@ -9,7 +9,7 @@ import { ApplicationStateService } from "../../services/application-state/applic
   styleUrls: ["./home.component.scss"]
 })
 export class HomeComponent implements OnInit {
-  
+
   @HostBinding('style.height')
   public innerHeight: string;
 

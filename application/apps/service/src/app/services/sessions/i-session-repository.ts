@@ -1,4 +1,4 @@
-import { SessionEntity } from "@live/entities";
+import { SessionEntity } from "@liveo/entities";
 
 export interface ISessionRepository {
   getSessionEntities(): SessionEntity[];

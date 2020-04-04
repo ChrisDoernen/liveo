@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { ActivationEntity, SessionEntity } from "@live/entities";
-import { EndpointService, Logger } from "@live/services";
+import { ActivationEntity, SessionEntity } from "@liveo/entities";
+import { EndpointService, Logger } from "@liveo/services";
 import { Observable, ReplaySubject } from "rxjs";
 import { ActivationService } from "../activation/activation.service";
 

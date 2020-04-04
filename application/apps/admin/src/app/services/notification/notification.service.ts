@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { EVENTS } from "@live/constants";
-import { NotificationEntity } from "@live/entities";
-import { Logger } from "@live/services";
+import { EVENTS } from "@liveo/constants";
+import { NotificationEntity } from "@liveo/entities";
+import { Logger } from "@liveo/services";
 import { Observable, Subject } from "rxjs";
 import { WebsocketService } from "../websocket/websocket.service";
 

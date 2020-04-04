@@ -1,4 +1,4 @@
-import { DeviceEntity, DeviceType } from "@live/entities";
+import { DeviceEntity, DeviceType } from "@liveo/entities";
 import { inject, injectable } from "inversify";
 import { combineLatest } from "rxjs";
 import { distinctUntilChanged, map } from "rxjs/operators";

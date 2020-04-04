@@ -1,8 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { EVENTS } from "@live/constants";
-import { ActivationEntity, ActivationState, ActivationStateEntity } from "@live/entities";
-import { ActivationStateService, EndpointService, Logger } from "@live/services";
+import { EVENTS } from "@liveo/constants";
+import { ActivationEntity, ActivationState, ActivationStateEntity } from "@liveo/entities";
+import { ActivationStateService, EndpointService, Logger } from "@liveo/services";
 import { ReplaySubject } from "rxjs";
 import { WebsocketService } from "../websocket/websocket.service";
 

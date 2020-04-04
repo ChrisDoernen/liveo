@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { Logger } from "@live/services";
+import { Logger } from "@liveo/services";
 import createMockInstance from "jest-create-mock-instance";
 import { Subject } from "rxjs";
 import { ActivationService } from "../../../../services/activation/activation.service";

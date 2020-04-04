@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { ActivationEntity, ActivationState, SessionEntity, StreamEntity } from "@live/entities";
-import { Logger } from "@live/services";
+import { ActivationEntity, ActivationState, SessionEntity, StreamEntity } from "@liveo/entities";
+import { Logger } from "@liveo/services";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { ActivationService } from "../../../../services/activation/activation.service";

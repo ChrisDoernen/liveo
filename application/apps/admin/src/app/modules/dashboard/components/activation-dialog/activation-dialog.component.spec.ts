@@ -8,7 +8,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { MatStepperModule } from "@angular/material/stepper";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
-import { EndpointService, Logger } from "@live/services";
+import { EndpointService, Logger } from "@liveo/services";
 import createMockInstance from "jest-create-mock-instance";
 import { SessionService } from "../../../../services/session/session.service";
 import { AngularMaterialModule } from "../../../angular-material/angular-material.module";

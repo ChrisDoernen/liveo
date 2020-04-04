@@ -1,4 +1,4 @@
-import { StreamEntity } from "@live/entities";
+import { StreamEntity } from "@liveo/entities";
 
 export interface IStreamRepository {
   getStreamEntities(): StreamEntity[];

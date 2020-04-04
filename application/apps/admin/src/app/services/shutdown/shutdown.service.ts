@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { EndpointService } from "@live/services";
+import { EndpointService } from "@liveo/services";
 import { AuthenticationService } from "../../modules/shared/services/authentication/authentication.service";
 import { ConnectionStateService } from "../connection-state/connection-state-service";
 

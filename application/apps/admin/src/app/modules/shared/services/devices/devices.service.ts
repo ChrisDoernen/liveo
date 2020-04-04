@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { DeviceEntity } from "@live/entities";
-import { EndpointService } from "@live/services";
+import { DeviceEntity } from "@liveo/entities";
+import { EndpointService } from "@liveo/services";
 
 @Injectable({
   providedIn: "root"

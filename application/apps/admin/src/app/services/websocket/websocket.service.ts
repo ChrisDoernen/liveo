@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from "@angular/core";
-import { ENDPOINTS, EVENTS } from "@live/constants";
-import { Logger } from "@live/services";
+import { ENDPOINTS, EVENTS } from "@liveo/constants";
+import { Logger } from "@liveo/services";
 import { Socket } from "ngx-socket-io";
 
 @Injectable({

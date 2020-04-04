@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ActivationEntity, ActivationState } from "@live/entities";
+import { ActivationEntity, ActivationState } from "@liveo/entities";
 import { TimeService } from "../time/time.service";
 
 @Injectable({

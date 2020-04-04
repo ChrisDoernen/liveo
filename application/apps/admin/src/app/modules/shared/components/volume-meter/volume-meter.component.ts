@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, NgZone, OnDestroy, OnInit } from "@angular/core";
-import { EVENTS } from "@live/constants";
+import { EVENTS } from "@liveo/constants";
 import { Subscription } from "rxjs";
 import { WebsocketService } from "../../../../services/websocket/websocket.service";
 

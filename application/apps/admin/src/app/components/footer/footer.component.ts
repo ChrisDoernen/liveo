@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { EVENTS } from "@live/constants";
+import { EVENTS } from "@liveo/constants";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { WebsocketService } from "../../services/websocket/websocket.service";

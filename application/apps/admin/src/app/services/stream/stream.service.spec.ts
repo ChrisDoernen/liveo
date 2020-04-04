@@ -1,7 +1,7 @@
-import { TestBed } from "@angular/core/testing";
 import { HttpClient } from "@angular/common/http";
+import { TestBed } from "@angular/core/testing";
+import { EndpointService } from "@liveo/services";
 import { StreamService } from "./stream.service";
-import { EndpointService } from "@live/services";
 
 describe("StreamService", () => {
   let streamService: StreamService;

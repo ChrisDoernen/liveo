@@ -1,4 +1,4 @@
 import { config } from "dotenv";
 import { resolve } from "path";
 
-config({ path: resolve(process.cwd(), "live.env") });
+config({ path: resolve(process.cwd(), "liveo.env") });

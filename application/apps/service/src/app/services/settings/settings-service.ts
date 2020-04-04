@@ -1,8 +1,8 @@
-import { injectable, inject } from "inversify";
+import { SettingsEntity } from "@liveo/entities";
+import { inject, injectable } from "inversify";
 import { Logger } from "../logging/logger";
-import { SettingsEntity } from "@live/entities";
-import { ISettingsProvider } from "./i-settings-provider";
 import { SessionService } from "../sessions/session-service";
+import { ISettingsProvider } from "./i-settings-provider";
 
 @injectable()
 export class SettingsService {

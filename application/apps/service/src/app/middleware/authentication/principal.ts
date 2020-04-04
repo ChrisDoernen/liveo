@@ -1,4 +1,4 @@
-import { UserEntity } from "@live/entities";
+import { UserEntity } from "@liveo/entities";
 import { interfaces } from "inversify-express-utils";
 
 export class Principal implements interfaces.Principal {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ActivationEntity, SessionEntity } from "@live/entities";
-import { TimeService } from "@live/services";
+import { ActivationEntity, SessionEntity } from "@liveo/entities";
+import { TimeService } from "@liveo/services";
 import { Subscription } from "rxjs";
 import { SessionService } from "../../../../services/session/session.service";
 import { SettingsService } from "../../../../services/settings/settings.service";
