@@ -58,6 +58,6 @@ jobs:
         host: ${{ secrets.FTP_SERVER }}
         user: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
+        remoteDir: ${{ secrets.FTP_DIRECTORY }}
         localDir: application/artifacts
-        remoteDir: nightlies
         forceSsl: true
