@@ -151,9 +151,7 @@
         "build": {
           "builder": "@nrwl/node:build",
           "options": {
-            "webpackConfig": "apps/service/webpack.config.js",
             "outputPath": "dist/apps/service",
-            "filename": "liveo-server.js",
             "main": "apps/service/src/liveo-server.ts",
             "tsConfig": "apps/service/tsconfig.app.json",
             "assets": [
@@ -163,6 +161,8 @@
           },
           "configurations": {
             "production": {
+              "webpackConfig": "apps/service/webpack.config.js",
+              "filename": "liveo-server.js",
               "optimization": true,
               "extractLicenses": true,
               "inspect": false,
