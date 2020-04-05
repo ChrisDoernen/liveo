@@ -1,7 +1,7 @@
 {
   "name": "liveo",
   "short_name": "liveo",
-  "theme_color": "#56838a",
+  "theme_color": "#FFFFFF",
   "background_color": "#FFFFFF",
   "display": "standalone",
   "scope": "/",

@@ -1,7 +1,7 @@
 <header></header>
 <div class="content">
-  <div *ngIf="loading; else loadingDone">
-    Connecting...
+  <div *ngIf="loading; else loadingDone" class="loading">
+    <span class="pulse"></span> Connecting...
   </div>
   <ng-template #loadingDone>
     <ng-container *ngIf="isInErrorState; else activation">
@@ -37,7 +37,8 @@
       </div>
     </ng-template>
   </ng-template>
-  <div *ngIf="activationState?.state !== 'Started'" class="refresh-btn clickable" (click)="refresh()">Refresh
+  <div *ngIf="!loading && activationState?.state !== 'Started'" class="refresh-btn clickable" (click)="refresh()">
+    Refresh
   </div>
 </div>
 <audio-player *ngIf="activationState?.state === 'Started'" [selectedStream]="selectedStream?.streamingId">

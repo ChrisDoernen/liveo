@@ -2,12 +2,10 @@
   width: 100vw;
 }
 
-::ng-deep .header-logo.primary .live-logo {
-  fill: var(--primary-color);
-}
-
-::ng-deep .header-logo.white .live-logo {
-  fill: whitesmoke;
+::ng-deep {
+  .header-logo.white #liveo-logo {
+    fill: whitesmoke;
+  }
 }
 
 .header-logo {

@@ -371,7 +371,7 @@
             "index": "apps/admin/src/index.html",
             "baseHref": "/admin/",
             "deployUrl": "/admin/",
-            "main": "apps/admin/src/main.ts",
+            "main": "apps/admin/src/liveo-server.ts",
             "polyfills": "apps/admin/src/polyfills.ts",
             "tsConfig": "apps/admin/tsconfig.app.json",
             "assets": [

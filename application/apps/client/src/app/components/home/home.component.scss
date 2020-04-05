@@ -1,3 +1,5 @@
+@import "./../../../variables.scss";
+
 :host {
   display: grid;
   grid-template-columns: 100%;
@@ -79,5 +81,45 @@ audio-player {
     background: var(--primary-color);
     color: white;
     border: 1px solid white;
+  }
+}
+
+$pulse-color: $primary-color;
+
+.pulse {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+  border-radius: 50%;
+  background: $pulse-color;
+  box-shadow: 0 0 0 rgba($pulse-color, 0.4);
+  animation: pulse 1.5s infinite;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 rgba($pulse-color, 0.4);
+  }
+  70% {
+    -webkit-box-shadow: 0 0 0 10px rgba($pulse-color, 0);
+  }
+  100% {
+    -webkit-box-shadow: 0 0 0 0 rgba($pulse-color, 0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    -moz-box-shadow: 0 0 0 0 rgba($pulse-color, 0.4);
+    box-shadow: 0 0 0 0 rgba($pulse-color, 0.4);
+  }
+  70% {
+    -moz-box-shadow: 0 0 0 10px rgba($pulse-color, 0);
+    box-shadow: 0 0 0 10px rgba($pulse-color, 0);
+  }
+  100% {
+    -moz-box-shadow: 0 0 0 0 rgba($pulse-color, 0);
+    box-shadow: 0 0 0 0 rgba($pulse-color, 0);
   }
 }
