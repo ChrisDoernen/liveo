@@ -1,27 +1,25 @@
 import { SessionEntity, SettingsEntity, StreamEntity, UserEntity } from "@liveo/entities";
-import { inject, injectable } from "inversify";
+import { Injectable } from "@nestjs/common";
 import * as low from "lowdb";
 import * as FileSync from "lowdb/adapters/FileSync";
+import { IUserProvider } from "../../../../../service/src/app/services/authentication/i-user-provider";
+import { ISessionRepository } from "../../../../../service/src/app/services/sessions/i-session-repository";
+import { ISettingsProvider } from "../../../../../service/src/app/services/settings/i-settings-provider";
+import { IStreamRepository } from "../../../../../service/src/app/services/streams/i-stream-repository";
 import { config } from "../../config/service.config";
-import { IUserProvider } from "../authentication/i-user-provider";
 import { IdGenerator } from "../id-generation/id-generator";
-import { Logger } from "../logging/logger";
-import { ISessionRepository } from "../sessions/i-session-repository";
-import { ISettingsProvider } from "../settings/i-settings-provider";
-import { IStreamRepository } from "../streams/i-stream-repository";
 import { DBSchema } from "./data-schema.enum";
 
 /**
  * Provides access to a file based data source
  */
-@injectable()
+@Injectable()
 export class DataService implements IStreamRepository, ISessionRepository, ISettingsProvider, IUserProvider {
 
   private _database: any;
 
   constructor(
-    @inject("Logger") private readonly _logger: Logger,
-    @inject("IdGenerator") private readonly _idGenerator: IdGenerator) {
+    private readonly _idGenerator: IdGenerator) {
   }
 
   public initializeDatabase(): void {
@@ -29,7 +27,7 @@ export class DataService implements IStreamRepository, ISessionRepository, ISett
     try {
       this._database = low(adapter);
     } catch (error) {
-      this._logger.error(`Error reading database: ${error}.`);
+      // this._logger.error(`Error reading database: ${error}.`);
     }
   }
 

@@ -1,6 +1,6 @@
 import { SessionEntity } from "@liveo/entities";
 import { inject, injectable } from "inversify";
-import { Logger } from "../logging/logger";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { ISessionRepository } from "./i-session-repository";
 
 /**

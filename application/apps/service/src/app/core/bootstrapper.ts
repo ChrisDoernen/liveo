@@ -1,12 +1,9 @@
-import * as Ffmpeg from "fluent-ffmpeg";
+
 import { Container, inject, injectable } from "inversify";
-import { EOL } from "os";
-import { environment } from "../../environments/environment";
-import { config } from "../config/service.config";
+import { Logger } from "../../../../server/src/app/services/logging/logger";
 import { AutoActivationService } from "../services/activation/auto-activation-service";
 import { DataService } from "../services/data/data-service";
 import { DeviceService } from "../services/devices/device.service";
-import { Logger } from "../services/logging/logger";
 import { ProcessExecutionService } from "../services/process-execution/process-execution-service";
 import { SystemMonitoringService } from "../services/system-monitoring/system-monitoring-service";
 import { WebServer } from "./web-server";
@@ -26,28 +23,7 @@ export class Bootstrapper {
   }
 
   public async startServer(container: Container): Promise<void> {
-    this._logger.info("STARTING LIVE SERVER");
-    this._logger.info(`Version: v${environment.version}/${environment.revision}`);
-    this._logger.debug(`Production: ${config.production}`);
-    this._logger.debug(`Executable: ${config.executable}`);
-    this._logger.debug(`Platform/OS: ${config.platform}`);
-    this._logger.debug(`Architecture: ${config.arch}`);
-    this._logger.debug(`Simulate streaming: ${config.simulate}`);
-    this._logger.debug(`Filesource: ${config.filesource}`);
-    this._logger.debug(`Standalone: ${config.standalone}`);
-    this._logger.debug(`Database: ${config.database}`);
-    this._logger.debug(`Working directory: ${config.workingDirectory}`);
-    this._logger.debug(`Ffmpeg path: ${config.ffmpegPath}`);
-    if (config.ffmpegPath === "ffmpeg") {
-      this._logger.warn("Using fallback for ffmpeg path. Did you run 'npm run download-ffmpeg'?");
-      this._logger.warn("Plase make sure the path to ffmpeg is in your PATH environment variable");
-      this._logger.warn("Minimal required ffmpeg version is f15007afa9.");
-    }
-    const ffmpegVersionOutput = await this._processExecutionService.executeAsync(`"${config.ffmpegPath}" -version`);
-    const ffmpegVersion = ffmpegVersionOutput.split(EOL)[0];
-    this._logger.debug(`Ffmpeg version: ${ffmpegVersion}`);
 
-    Ffmpeg.setFfmpegPath(config.ffmpegPath);
 
     this._dataService.initializeDatabase();
     await this._deviceService.initialize();

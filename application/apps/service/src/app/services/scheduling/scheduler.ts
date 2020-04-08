@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
 import { Job, scheduleJob } from "node-schedule";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { IdGenerator } from "../id-generation/id-generator";
-import { Logger } from "../logging/logger";
 
 /**
  * Proxy class for node-schedule scheduler

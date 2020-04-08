@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
 import { filter } from "rxjs/operators";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { ActivationStateService } from "../application-state/activation-state.service";
-import { Logger } from "../logging/logger";
 
 /**
  * Base class for live server shutdown

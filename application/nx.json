@@ -43,6 +43,9 @@
     },
     "test-utilities": {
       "tags": []
+    },
+    "server": {
+      "tags": []
     }
   },
   "tasksRunnerOptions": {

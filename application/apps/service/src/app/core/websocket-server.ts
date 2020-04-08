@@ -2,8 +2,8 @@ import { ENDPOINTS, EVENTS } from "@liveo/constants";
 import { NotificationEntity } from "@liveo/entities";
 import { inject, injectable } from "inversify";
 import socketio, { Socket } from "socket.io";
+import { Logger } from "../../../../server/src/app/services/logging/logger";
 import { AdminService } from "../services/admin/admin.service";
-import { Logger } from "../services/logging/logger";
 import { ClientInfo } from "../services/statistics/client-info";
 import { ConnectionHistoryService } from "../services/statistics/connection-history-service";
 

@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
 import { BehaviorSubject } from "rxjs";
-import { Logger } from "../logging/logger";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 
 @injectable()
 export class AdminService {

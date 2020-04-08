@@ -2,9 +2,9 @@ import { DeviceEntity, DeviceType } from "@liveo/entities";
 import { inject, injectable } from "inversify";
 import { combineLatest } from "rxjs";
 import { distinctUntilChanged, map } from "rxjs/operators";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { AdminService } from "../admin/admin.service";
 import { ActivationStateService } from "../application-state/activation-state.service";
-import { Logger } from "../logging/logger";
 import { Device } from "./device";
 import { DeviceDetector } from "./device-detector";
 

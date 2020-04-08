@@ -60,3 +60,5 @@ export const config = {
   ffmpegPath: process.env.FFMPEGPATH ? process.env.FFMPEGPATH : findFfmpegPath(),
   workingDirectory
 };
+
+export const CONFIG_INJECTION_TOKEN = "CONFIG";

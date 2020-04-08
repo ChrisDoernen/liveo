@@ -1,7 +1,7 @@
 import { createMockInstance } from "jest-create-mock-instance";
 import "reflect-metadata";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { IdGenerator } from "../id-generation/id-generator";
-import { Logger } from "../logging/logger";
 import { Scheduler } from "./scheduler";
 
 describe("Scheduler", () => {

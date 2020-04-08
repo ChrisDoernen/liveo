@@ -1,8 +1,8 @@
 import { EVENTS } from "@liveo/constants";
 import { inject, injectable } from "inversify";
 import * as os from "os-utils";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { WebsocketServer } from "../../core/websocket-server";
-import { Logger } from "../logging/logger";
 
 @injectable()
 export class SystemMonitoringService {

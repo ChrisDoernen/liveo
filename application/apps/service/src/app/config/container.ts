@@ -1,4 +1,6 @@
 import { Container, interfaces } from "inversify";
+import { config } from "../../../../server/src/app/config/service.config";
+import { Logger } from "../../../../server/src/app/services/logging/logger";
 import { Bootstrapper } from "../core/bootstrapper";
 import { WebServer } from "../core/web-server";
 import { WebsocketServer } from "../core/websocket-server";
@@ -18,7 +20,6 @@ import { LinuxDeviceDetector } from "../services/devices/linux-device-detector";
 import { SimulationDeviceDetector } from "../services/devices/simulation-device-detector";
 import { WindowsDeviceDetector } from "../services/devices/windows-device-detector";
 import { IdGenerator } from "../services/id-generation/id-generator";
-import { Logger } from "../services/logging/logger";
 import { NotificationService } from "../services/notifications/notification-service";
 import { PlatformConstants } from "../services/platform-constants/i-platform-constants";
 import { PLATFORM_CONSTANTS } from "../services/platform-constants/platformConstants";
@@ -43,7 +44,6 @@ import { StreamService } from "../services/streams/stream-service";
 import { SystemMonitoringService } from "../services/system-monitoring/system-monitoring-service";
 import { TimeService } from "../services/time/time.service";
 import { FfmpegLogger, ServiceLogger } from "./logging.config";
-import { config } from "./service.config";
 
 export const container = new Container();
 

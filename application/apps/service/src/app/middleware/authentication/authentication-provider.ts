@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { inject, injectable } from "inversify";
 import { interfaces } from "inversify-express-utils";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { AuthenticationService } from "../../services/authentication/authentication-service";
-import { Logger } from "../../services/logging/logger";
 import { Principal } from "./principal";
 
 const authService = inject("AuthenticationService");

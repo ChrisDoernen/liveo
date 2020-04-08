@@ -4,9 +4,9 @@ import * as fs from "fs";
 import { inject, injectable } from "inversify";
 import * as net from "net";
 import * as path from "path";
-import { config } from "../../config/service.config";
+import { config } from "../../../../../server/src/app/config/service.config";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { WebsocketServer } from "../../core/websocket-server";
-import { Logger } from "../logging/logger";
 import { PlatformConstants } from "../platform-constants/i-platform-constants";
 import { IStreamingSource } from "./i-streaming-source";
 

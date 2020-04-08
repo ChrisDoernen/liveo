@@ -1,7 +1,7 @@
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { WebsocketServer } from "../../core/websocket-server";
-import { Logger } from "../logging/logger";
 import { SystemMonitoringService } from "./system-monitoring-service";
 
 jest.useFakeTimers();

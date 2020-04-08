@@ -3,8 +3,8 @@ import { UserEntity } from "@liveo/entities";
 import { Request, Response } from "express";
 import { inject } from "inversify";
 import { controller, httpPost } from "inversify-express-utils";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { AuthenticationService } from "../../services/authentication/authentication-service";
-import { Logger } from "../../services/logging/logger";
 
 @controller(`/${ROUTES.admin}/authentication`)
 export class AuthenticationController {

@@ -1,5 +1,5 @@
 import { inject, injectable } from "inversify";
-import { Logger } from "../logging/logger";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { TimeService } from "../time/time.service";
 import { ClientInfo } from "./client-info";
 import { ConnectionInfo } from "./connection-info";

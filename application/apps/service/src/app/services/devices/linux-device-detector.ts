@@ -1,8 +1,8 @@
 import { DeviceEntity, DeviceType } from "@liveo/entities";
 import { inject, injectable } from "inversify";
 import { EOL } from "os";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { IdGenerator } from "../id-generation/id-generator";
-import { Logger } from "../logging/logger";
 import { PlatformConstants } from "../platform-constants/i-platform-constants";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { Device } from "./device";

@@ -5,9 +5,9 @@ import { Server } from "http";
 import { inject, injectable } from "inversify";
 import { InversifyExpressServer } from "inversify-express-utils";
 import * as path from "path";
-import { config } from "../config/service.config";
+import { config } from "../../../../server/src/app/config/service.config";
+import { Logger } from "../../../../server/src/app/services/logging/logger";
 import { AuthenticationProvider } from "../middleware/authentication/authentication-provider";
-import { Logger } from "../services/logging/logger";
 import "./../controller/index";
 
 @injectable()

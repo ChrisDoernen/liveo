@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { inject, injectable } from "inversify";
 import { BaseMiddleware } from "inversify-express-utils";
-import { Logger } from "../../services/logging/logger";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 
 const logger = inject("Logger");
 

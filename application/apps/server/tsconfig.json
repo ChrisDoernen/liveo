@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "types": [
+      "node",
+      "jest"
+    ],
+    "emitDecoratorMetadata": true,
+    "target": "es2015"
+  },
+  "include": [
+    "**/*.ts"
+  ]
+}

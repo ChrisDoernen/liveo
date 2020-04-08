@@ -1,0 +1,32 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "types": [
+      "node"
+    ],
+    "paths": {
+      "@liveo/entities": [
+        "libs/entities/src/index.ts"
+      ],
+      "@liveo/l3as": [
+        "libs/l3as"
+      ],
+      "@liveo/services": [
+        "libs/services/src/index.ts"
+      ],
+      "@liveo/constants": [
+        "libs/constants/src/index.ts"
+      ],
+      "@liveo/test-utilities": [
+        "libs/test-utilities/src/index.ts"
+      ]
+    }
+  },
+  "exclude": [
+    "**/*.spec.ts"
+  ],
+  "include": [
+    "**/*.ts"
+  ]
+}

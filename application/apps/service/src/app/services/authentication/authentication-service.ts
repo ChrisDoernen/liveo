@@ -1,6 +1,6 @@
 import { UserEntity } from "@liveo/entities";
 import { inject, injectable } from "inversify";
-import { Logger } from "../logging/logger";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { IUserProvider } from "./i-user-provider";
 
 @injectable()

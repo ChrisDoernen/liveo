@@ -1,7 +1,7 @@
 import { interfaces } from "inversify";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { WebsocketServer } from "../../core/websocket-server";
 import { DeviceDetector } from "../devices/device-detector";
-import { Logger } from "../logging/logger";
 import { StreamingSimulationSource } from "./streaming-simulation-source";
 
 export const StreamingSimulationSourceFactory = (context: interfaces.Context) =>

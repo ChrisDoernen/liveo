@@ -8,6 +8,11 @@
     ]
   },
   "include": [
-    "**/*.ts"
+    "**/*.ts",
+    "../server/src/app/config/service.config.ts",
+    "../server/src/environments/environment.prod.ts",
+    "../server/src/environments/environment.simulation.ts",
+    "../server/src/environments/environment.ts",
+    "../server/src/environments/environment.filesource.ts"
   ]
 }

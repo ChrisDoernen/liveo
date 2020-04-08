@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { WebsocketServer } from "../../core/websocket-server";
-import { Logger } from "../logging/logger";
 import { IStreamingSource } from "./i-streaming-source";
 
 /**

@@ -1,8 +1,8 @@
+import { Injectable } from "@nestjs/common";
 import crypto from "crypto";
-import { injectable } from "inversify";
 import generate from "nanoid/non-secure/generate";
 
-@injectable()
+@Injectable()
 export class IdGenerator {
 
   private readonly alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";

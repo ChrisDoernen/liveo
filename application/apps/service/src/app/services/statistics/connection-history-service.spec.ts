@@ -1,10 +1,10 @@
-import "reflect-metadata";
-import { ConnectionHistoryService } from "./connection-history-service";
-import { Logger } from "../logging/logger";
-import { TimeService } from "../time/time.service";
-import createMockInstance from "jest-create-mock-instance";
 import { Container } from "inversify";
+import createMockInstance from "jest-create-mock-instance";
+import "reflect-metadata";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { ClientInfoBuilder } from "../../test-utilities/test-data-builder/client-info-builder";
+import { TimeService } from "../time/time.service";
+import { ConnectionHistoryService } from "./connection-history-service";
 
 describe("ConnectionHistoryService", () => {
   let connectionHistoryService: ConnectionHistoryService;

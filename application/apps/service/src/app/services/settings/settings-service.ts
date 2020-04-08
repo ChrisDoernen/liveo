@@ -1,6 +1,6 @@
 import { SettingsEntity } from "@liveo/entities";
 import { inject, injectable } from "inversify";
-import { Logger } from "../logging/logger";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { SessionService } from "../sessions/session-service";
 import { ISettingsProvider } from "./i-settings-provider";
 

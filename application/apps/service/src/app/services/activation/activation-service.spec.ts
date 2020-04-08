@@ -1,8 +1,8 @@
 import { ActivationEntity } from "@liveo/entities";
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { ActivationStateService } from "../application-state/activation-state.service";
-import { Logger } from "../logging/logger";
 import { TimeService } from "../time/time.service";
 import { ActivationService } from "./activation-service";
 

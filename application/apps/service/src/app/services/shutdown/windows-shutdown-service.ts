@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { ActivationStateService } from "../application-state/activation-state.service";
-import { Logger } from "../logging/logger";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { ShutdownService } from "./shutdown-service";
 

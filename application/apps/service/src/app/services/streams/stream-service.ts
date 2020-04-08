@@ -1,6 +1,6 @@
 import { StreamEntity } from "@liveo/entities";
 import { inject, injectable } from "inversify";
-import { Logger } from "../logging/logger";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { IStreamRepository } from "./i-stream-repository";
 
 /**

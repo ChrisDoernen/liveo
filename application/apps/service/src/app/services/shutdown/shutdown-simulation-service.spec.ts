@@ -1,8 +1,8 @@
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
 import { Subject } from "rxjs";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { ActivationStateService } from "../application-state/activation-state.service";
-import { Logger } from "../logging/logger";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { ShutdownSimulationService } from "./shutdown-simulation-service";
 

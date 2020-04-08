@@ -1,6 +1,6 @@
 import { DeviceEntity } from "@liveo/entities";
 import { inject } from "inversify";
-import { Logger } from "../logging/logger";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { IStreamingSource } from "../streaming-sources/i-streaming-source";
 import { StreamingSourceFactory } from "../streaming-sources/streaming-source-factory";
 import { DeviceState } from "./device-state";

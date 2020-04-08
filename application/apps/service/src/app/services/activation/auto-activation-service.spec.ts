@@ -3,7 +3,7 @@ import { SettingsEntityBuilder } from "@liveo/test-utilities";
 import { Container } from "inversify";
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
-import { Logger } from "../logging/logger";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { SettingsService } from "../settings/settings-service";
 import { ActivationService } from "./activation-service";
 import { AutoActivationService } from "./auto-activation-service";

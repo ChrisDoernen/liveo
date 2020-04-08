@@ -1,10 +1,10 @@
-import "reflect-metadata";
-import { ISettingsProvider } from "./i-settings-provider";
 import createMockInstance from "jest-create-mock-instance";
+import "reflect-metadata";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { DataService } from "../data/data-service";
-import { Logger } from "../logging/logger";
-import { SettingsService } from "./settings-service";
 import { SessionService } from "../sessions/session-service";
+import { ISettingsProvider } from "./i-settings-provider";
+import { SettingsService } from "./settings-service";
 
 describe("SettingsService", () => {
   let settingsProvider: jest.Mocked<ISettingsProvider>;

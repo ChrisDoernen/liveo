@@ -1,8 +1,8 @@
 import { ActivationEntityBuilder, SessionEntityBuilder, StreamEntityBuilder } from "@liveo/test-utilities";
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { ActivationService } from "../activation/activation-service";
-import { Logger } from "../logging/logger";
 import { SessionService } from "../sessions/session-service";
 import { StreamService } from "../streams/stream-service";
 import { ActivationStateService } from "./activation-state.service";
