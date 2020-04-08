@@ -8,8 +8,8 @@
   </div>
 </title-bar>
 <div class="content-container">
-  <div class="no-content-message" *ngIf="sessions.length === 0; else sessionsAvailable">
-    There are no Sessions created yet. <br>
+  <div class="no-content-message" *ngIf="!loading && sessions.length === 0; else sessionsAvailable">
+    There are no sessions created yet. <br>
     Click <span class="no-content-action clickable" routerLink="new">here</span> to start.
   </div>
   <ng-template #sessionsAvailable>
