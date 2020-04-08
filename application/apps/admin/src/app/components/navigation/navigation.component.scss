@@ -1,4 +1,4 @@
-@import "../../variables.scss";
+@import "../../../variables.scss";
 
 $nav-padding: 20px;
 
@@ -23,7 +23,7 @@ $nav-padding: 20px;
       padding-left: $nav-padding;
 
       &.is-active {
-        color: var(--primary-color);
+        color: $primary-color;
         background: $dark-background;
       }
 

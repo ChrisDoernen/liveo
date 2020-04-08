@@ -54,13 +54,13 @@ audio-player {
 }
 
 .stream-link {
-  color: var(--primary-text-color);
+  color: $primary-text-color;
   text-decoration: none;
   font-size: 25px;
 }
 
 .about-link a {
-  color: var(--primary-text-color);
+  color: $primary-text-color;
   text-decoration: none;
 }
 
@@ -78,7 +78,7 @@ audio-player {
   margin: 21px 0;
 
   &:hover {
-    background: var(--primary-color);
+    background: $primary-color;
     color: white;
     border: 1px solid white;
   }

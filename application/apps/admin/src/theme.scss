@@ -1,18 +1,18 @@
-$liveo-blue: (
-  50: #82afb5,
-  100: #6da2a9,
-  200: #568389,
-  300: #568389,
-  400: #568389,
-  500: #568389,
-  600: #568389,
-  700: #568389,
-  800: #568389,
-  900: #568389,
-  A100: #568389,
-  A200: #568389,
-  A400: #568389,
-  A700: #568389,
+$liveo-primary: (
+  50: #ff5064,
+  100: #ff5064,
+  200: #ff5064,
+  300: #ff5064,
+  400: #ff5064,
+  500: #ff5064,
+  600: #ff5064,
+  700: #ff5064,
+  800: #ff5064,
+  900: #ff5064,
+  A100: #ff5064,
+  A200: #ff5064,
+  A400: #ff5064,
+  A700: #ff5064,
   contrast: (
     50: white,
     100: white,
@@ -32,18 +32,18 @@ $liveo-blue: (
 );
 
 $liveo-warn: (
-  300: #981717,
-  700: #981717,
-  900: #981717,
+  300: #ff5064,
+  700: #ff5064,
+  900: #ff5064,
   contrast: (
-    300: #981717,
-    700: #981717,
-    900: #981717,
+    300: #ff5064,
+    700: #ff5064,
+    900: #ff5064,
   ),
 );
 
 // Define 3 theme color, mat-palette accepts $palette-name, main, lighter and darker variants
-$liveo-theme-primary: mat-palette($liveo-blue, 100, 50, 200);
+$liveo-theme-primary: mat-palette($liveo-primary, 100, 50, 200);
 $liveo-theme-accent: mat-palette($mat-blue-grey, 700, 300, 900);
 $liveo-theme-warn: mat-palette($liveo-warn, 700, 300, 900);
 

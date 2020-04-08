@@ -1,7 +1,7 @@
 <title-bar>
   <h2>New Stream</h2>
   <div>
-    <button mat-stroked-button color="primary" routerLink="..">
+    <button mat-stroked-button routerLink="..">
       Cancel
     </button>
   </div>
@@ -23,7 +23,7 @@
       <form [formGroup]="deviceIdFormGroup">
         <ng-template matStepLabel>Select input device</ng-template>
         <mat-radio-group formControlName="deviceIdCtrl">
-          <mat-radio-button *ngFor="let device of devices" [value]="device.id">
+          <mat-radio-button *ngFor="let device of devices" [value]="device.id" color="primary">
             <div class="device-radio-btn">{{device.id}}</div>
             <volume-meter [simpleDesign]="true" [streamingId]="device.streamingId"> </volume-meter>
           </mat-radio-button>

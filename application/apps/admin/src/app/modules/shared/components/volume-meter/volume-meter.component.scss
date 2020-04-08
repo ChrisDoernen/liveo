@@ -11,27 +11,21 @@
 }
 
 .background {
-  height: 10px;
+  height: 5px;
   position: relative;
   display: flex;
   justify-content: flex-end;
   width: 100%;
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#145c66+0,17911b+55,f7ed2e+78,ff5000+100 */
-  background: #145c66; /* Old browsers */
-  background: -moz-linear-gradient(left, #145c66 0%, #17911b 55%, #f7ed2e 78%, #ff5000 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(
-    left,
-    #145c66 0%,
-    #17911b 55%,
-    #f7ed2e 78%,
-    #ff5000 100%
-  ); /* Chrome10-25,Safari5.1-6 */
+  background: #ffffff; /* Old browsers */
+  background: -moz-linear-gradient(left, #303030 0%, #949494 55%, #ffffff 68%, #ff5064 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, #303030 0%, #949494 55%, #ffffff 68%, #ff5064 100%); /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(
     to right,
-    #145c66 0%,
-    #17911b 55%,
-    #f7ed2e 78%,
-    #ff5000 100%
+    #303030 0%,
+    #949494 55%,
+    #ffffff 68%,
+    #ff5064 100%
   ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 }
 
@@ -45,5 +39,5 @@
 .target-loudness {
   position: absolute;
   height: inherit;
-  border: 1px solid green;
+  border: 1px solid white;
 }

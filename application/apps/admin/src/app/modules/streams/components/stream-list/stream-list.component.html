@@ -1,7 +1,7 @@
 <title-bar>
   <h2>Streams</h2>
   <div>
-    <button mat-stroked-button color="primary" routerLink="new">
+    <button mat-stroked-button routerLink="new">
       <i class="material-icons">add</i>
       New Stream
     </button>
@@ -26,16 +26,16 @@
       </ng-container>
 
       <ng-container matColumnDef="valid">
-        <mat-header-cell *matHeaderCellDef > </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
         <mat-cell *matCellDef="let element">
           <button mat-icon-button>
-          <i *ngIf="!isDeviceAvailable(element.deviceId)" class="material-icons">error_outline</i>
-        </button>
+            <i *ngIf="!isDeviceAvailable(element.deviceId)" class="material-icons">error_outline</i>
+          </button>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="delete">
-        <mat-header-cell *matHeaderCellDef > </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
         <mat-cell *matCellDef="let element">
           <button mat-icon-button matTooltip="Delete" [matTooltipPosition]="'left'"
             (click)="openStreamDeletionDialog(element)">

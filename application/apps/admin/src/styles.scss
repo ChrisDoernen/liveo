@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import "./app/variables.scss";
+@import "./variables.scss";
 
 /* Add application styles & imports to this file! */
 @import "~@angular/material/theming";
@@ -40,6 +40,10 @@ h2 {
 
 .clickable {
   cursor: pointer;
+}
+
+button {
+  border-radius: 25px !important;
 }
 
 .content-container {

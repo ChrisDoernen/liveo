@@ -1,6 +1,6 @@
 :host {
   display: block;
-  color: var(--primary-elements-color);
+  color: $primary-elements-color;
   -webkit-transition: all 1s linear;
   -moz-transition: all 1s linear;
   -o-transition: all 1s linear;
@@ -47,7 +47,7 @@
     }
 
     .ng5-slider .ng5-slider-bar {
-      background: var(--primary-elements-color);
+      background: $primary-elements-color;
       height: 1px;
     }
 
@@ -60,7 +60,7 @@
       height: 15px;
       border-radius: 50%;
       top: -8px;
-      background-color: var(--primary-elements-color);
+      background-color: $primary-elements-color;
     }
   }
 }
