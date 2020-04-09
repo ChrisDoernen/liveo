@@ -17,6 +17,7 @@ if (architecture !== "x64") {
 }
 
 const workingDirectory = process.env.EXECUTABLE ? process.cwd() : __dirname;
+const staticFilesBaseDirectory = process.env.EXECUTABLE ? process.cwd() : path.resolve(__dirname, "..");
 
 // FFmpeg paths to look at for environment and platform
 const ffmpegPaths = {
@@ -58,7 +59,6 @@ export const config = {
   loglevel: process.env.LOGLEVEL ? process.env.LOGLEVEL : "debug",
   logdirectory: process.env.LOGDIRECTORY ? process.env.LOGDIRECTORY : path.join(workingDirectory, "logs"),
   ffmpegPath: process.env.FFMPEGPATH ? process.env.FFMPEGPATH : findFfmpegPath(),
+  staticFilesBaseDirectory,
   workingDirectory
 };
-
-export const CONFIG_INJECTION_TOKEN = "CONFIG";

@@ -59,6 +59,10 @@
     "@angular/platform-browser-dynamic": "^9.1.0",
     "@angular/router": "^9.1.0",
     "@angular/service-worker": "^9.1.0",
+    "@nestjs/common": "^6.8.3",
+    "@nestjs/core": "^6.8.3",
+    "@nestjs/platform-express": "^7.0.7",
+    "@nestjs/serve-static": "^2.1.0",
     "@nrwl/angular": "9.2.1",
     "core-js": "^3.6.0",
     "cors": "^2.8.5",
@@ -83,19 +87,20 @@
     "tslib": "^1.10.0",
     "winston": "^3.2.0",
     "winston-daily-rotate-file": "^4.4.2",
-    "zone.js": "~0.10.2",
-    "@nestjs/common": "^6.8.3",
-    "@nestjs/core": "^6.8.3",
-    "@nestjs/platform-express": "^6.8.3"
+    "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.0",
     "@angular/cli": "~9.1.0",
     "@angular/compiler-cli": "^9.1.0",
     "@angular/language-service": "^9.1.0",
+    "@nestjs/cli": "^7.1.2",
+    "@nestjs/schematics": "^6.7.0",
+    "@nestjs/testing": "^6.8.3",
     "@nrwl/cypress": "9.2.1",
     "@nrwl/express": "9.2.1",
     "@nrwl/jest": "9.2.1",
+    "@nrwl/nest": "9.2.1",
     "@nrwl/node": "9.2.1",
     "@nrwl/workspace": "9.2.1",
     "@types/app-root-path": "^1.2.4",
@@ -135,9 +140,6 @@
     "ts-node": "^7.0.1",
     "tslint": "6.0.0",
     "typescript": "~3.8.3",
-    "zip-dir": "^1.0.2",
-    "@nestjs/schematics": "^6.7.0",
-    "@nestjs/testing": "^6.8.3",
-    "@nrwl/nest": "9.2.1"
+    "zip-dir": "^1.0.2"
   }
 }
