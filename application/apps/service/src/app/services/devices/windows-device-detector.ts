@@ -1,22 +1,24 @@
 import { DeviceEntity, DeviceType } from "@liveo/entities";
+import { inject, injectable } from "inversify";
 import { EOL } from "os";
 import { Logger } from "../../../../../server/src/app/services/logging/logger";
+import { PlatformConstants } from "../../../../../server/src/app/services/platform-constants/platform-constants";
+import { ProcessExecutionService } from "../../../../../server/src/app/services/process-execution/process-execution-service";
 import { IdGenerator } from "../id-generation/id-generator";
-import { PlatformConstants } from "../platform-constants/platform-constants";
-import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { Device } from "./device";
 import { DeviceDetector } from "./device-detector";
 import { DeviceState } from "./device-state";
 
+@injectable()
 export class WindowsDeviceDetector extends DeviceDetector {
 
   constructor(
-    logger: Logger,
-    _plattformConstants: PlatformConstants,
-    ffmpegPath: string,
-    processExecutionService: ProcessExecutionService,
-    idGenerator: IdGenerator,
-    deviceFactory: (deviceData: DeviceEntity, deviceState: DeviceState) => Device) {
+    @inject("Logger") logger: Logger,
+    @inject("PlattformConstants") _plattformConstants: PlatformConstants,
+    @inject("FfmpegPath") ffmpegPath: string,
+    @inject("ProcessExecutionService") processExecutionService: ProcessExecutionService,
+    @inject("IdGenerator") idGenerator: IdGenerator,
+    @inject("DeviceFactory") deviceFactory: (deviceData: DeviceEntity, deviceState: DeviceState) => Device) {
     super(logger, processExecutionService, idGenerator, deviceFactory);
     this.listDevicesCommand = `"${ffmpegPath}" -f ${_plattformConstants.audioModule} -list_devices true -i '' -hide_banner`;
   }

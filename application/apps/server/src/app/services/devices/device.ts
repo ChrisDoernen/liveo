@@ -1,5 +1,4 @@
 import { DeviceEntity } from "@liveo/entities";
-import { inject } from "inversify";
 import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { IStreamingSource } from "../streaming-sources/i-streaming-source";
 import { StreamingSourceFactory } from "../streaming-sources/streaming-source-factory";
@@ -24,10 +23,11 @@ export class Device {
   }
 
   constructor(
-    @inject("Logger") private _logger: Logger,
-    @inject("StreamingSourceFactory") streamingSourceFactory: StreamingSourceFactory,
-    private _deviceData: DeviceEntity,
-    private _deviceState: DeviceState) {
+    private readonly _logger: Logger,
+    streamingSourceFactory: StreamingSourceFactory,
+    private readonly _deviceData: DeviceEntity,
+    private _deviceState: DeviceState
+  ) {
     this._source = streamingSourceFactory(this.id, this.entity.streamingId, this.onStreamingSourceError.bind(this));
 
     if (this._deviceState === DeviceState.Available) {

@@ -1,5 +1,5 @@
 // tslint:disable: no-shadowed-variable
-import { ROUTES } from "@liveo/constants";
+import { ENDPOINTS, ROUTES } from "@liveo/constants";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import * as express from "express";
@@ -11,7 +11,6 @@ import { environment } from "./environments/environment";
 
 export async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
   const config = app.get(ConfigService).get<AppConfig>(APP_CONFIG_TOKEN);
   const logger = app.get(Logger);
   app.useLogger(logger);
@@ -47,7 +46,7 @@ export async function bootstrap() {
     app.use(`/${ROUTES.admin}`, express.static(`${config.staticFilesBaseDirectory}/${ROUTES.admin}`));
   }
 
-  app.setGlobalPrefix(ROUTES.api);
+  app.setGlobalPrefix(ENDPOINTS.api);
   await app.listen(config.port, () => {
     logger.debug(`Web server started, listening on port ${config.port}.`);
     if (config.executable) {

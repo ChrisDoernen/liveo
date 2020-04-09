@@ -1,15 +1,16 @@
-import { inject, injectable } from "inversify";
+import { Injectable } from "@nestjs/common";
 import { BehaviorSubject } from "rxjs";
-import { Logger } from "../../../../../server/src/app/services/logging/logger";
+import { Logger } from "../logging/logger";
 
-@injectable()
+@Injectable()
 export class AdminService {
 
   private connectedAdmins = [];
   public streamCreation = new BehaviorSubject<boolean>(false);
 
   constructor(
-    @inject("Logger") private _logger: Logger) {
+    private readonly _logger: Logger
+  ) {
   }
 
   public adminSubscribed(ip: string): void {

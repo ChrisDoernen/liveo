@@ -1,15 +1,13 @@
 import { DeviceEntity, DeviceType } from "@liveo/entities";
-import { injectable } from "inversify";
-import { Logger } from "../../../../../server/src/app/services/logging/logger";
-import { ProcessExecutionService } from "../../../../../server/src/app/services/process-execution/process-execution-service";
 import { IdGenerator } from "../id-generation/id-generator";
+import { Logger } from "../logging/logger";
+import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { Device } from "./device";
 import { DeviceState } from "./device-state";
 
 /**
  * A abstract class for device detection
  */
-@injectable()
 export abstract class DeviceDetector {
 
   protected listDevicesCommand: string;
@@ -17,8 +15,9 @@ export abstract class DeviceDetector {
   constructor(
     protected logger: Logger,
     protected processExecutionService: ProcessExecutionService,
-    private _idGenerator: IdGenerator,
-    private _deviceFactory: (deviceData: DeviceEntity, deviceState: DeviceState) => Device) {
+    private readonly _idGenerator: IdGenerator,
+    private readonly _deviceFactory: (deviceData: DeviceEntity, deviceState: DeviceState) => Device
+  ) {
   }
 
   public async runDetection(): Promise<Device[]> {

@@ -2,8 +2,10 @@
 import { DeviceEntity } from "@liveo/entities";
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
+import { Logger } from "../../../../../server/src/app/services/logging/logger";
+import { PLATFORM_CONSTANTS } from "../../../../../server/src/app/services/platform-constants/platform-constants";
+import { ProcessExecutionService } from "../../../../../server/src/app/services/process-execution/process-execution-service";
 import { IdGenerator } from "../id-generation/id-generator";
-import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { Device } from "./device";
 import { DeviceState } from "./device-state";
 import { WindowsDeviceDetector } from "./windows-device-detector";

@@ -1,14 +1,16 @@
 import { EVENTS } from "@liveo/constants";
-import { inject, injectable } from "inversify";
+import { Injectable } from "@nestjs/common";
 import * as os from "os-utils";
-import { WebsocketServer } from "../../../../../service/src/app/core/websocket-server";
+import { AdminGateway } from "../../gateways/admin.gateway";
 import { Logger } from "../logging/logger";
 
-@injectable()
+@Injectable()
 export class SystemMonitoringService {
+
   constructor(
-    @inject("Logger") private _logger: Logger,
-    @inject("WebsocketServer") private _websocketServer: WebsocketServer) {
+    private readonly _logger: Logger,
+    private readonly _adminGateway: AdminGateway
+  ) {
   }
 
   public startMonitoring(): void {
@@ -22,6 +24,6 @@ export class SystemMonitoringService {
       this._logger.warn("High CPU usage.");
     }
     const cpuUsageRounded = cpuUsage.toFixed(2)
-    this._websocketServer.emitAdminEventMessage(EVENTS.cpuUsage, cpuUsageRounded);
+    this._adminGateway.emit(EVENTS.cpuUsage, cpuUsageRounded);
   }
 }

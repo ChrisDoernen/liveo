@@ -1,7 +1,7 @@
 import { Container, interfaces } from "inversify";
 import { config } from "../../../../server/src/app/config/service.config";
 import { Logger } from "../../../../server/src/app/services/logging/logger";
-import { PlatformConstants } from "../../../../server/src/app/services/platform-constants/i-platform-constants";
+import { PlatformConstants } from "../../../../server/src/app/services/platform-constants/platform-constants";
 import { PLATFORM_CONSTANTS } from "../../../../server/src/app/services/platform-constants/platformConstants";
 import { ProcessExecutionService } from "../../../../server/src/app/services/process-execution/process-execution-service";
 import { ISettingsProvider } from "../../../../server/src/app/services/settings/settings-provider";
@@ -30,9 +30,7 @@ import { NotificationService } from "../services/notifications/notification-serv
 import { Scheduler } from "../services/scheduling/scheduler";
 import { ISessionRepository } from "../services/sessions/i-session-repository";
 import { SessionService } from "../services/sessions/session-service";
-import { ProcessShutdownService } from "../services/shutdown/process-shutdown-service";
 import { ShutdownService } from "../services/shutdown/shutdown-service";
-import { ShutdownSimulationService } from "../services/shutdown/shutdown-simulation-service";
 import { UnixShutdownService } from "../services/shutdown/unix-shutdown-service";
 import { WindowsShutdownService } from "../services/shutdown/windows-shutdown-service";
 import { ConnectionHistoryService } from "../services/statistics/connection-history-service";
@@ -65,13 +63,6 @@ switch (config.platform) {
   }
 }
 
-if (config.executable) {
-  container.rebind<ShutdownService>("ShutdownService").to(ProcessShutdownService).inSingletonScope();
-}
-
-if (!config.production) {
-  container.rebind<ShutdownService>("ShutdownService").to(ShutdownSimulationService);
-}
 
 if (config.simulate) {
   container.rebind<DeviceDetector>("DeviceDetector").to(SimulationDeviceDetector).inSingletonScope();

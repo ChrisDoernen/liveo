@@ -1,33 +1,33 @@
 import { EVENTS } from "@liveo/constants";
 import * as Ffmpeg from "fluent-ffmpeg";
 import * as fs from "fs";
+import { inject, injectable } from "inversify";
 import * as net from "net";
 import * as path from "path";
+import { config } from "../../../../../server/src/app/config/service.config";
 import { Logger } from "../../../../../server/src/app/services/logging/logger";
-import { AppConfig } from "../../config/configuration";
+import { PlatformConstants } from "../../../../../server/src/app/services/platform-constants/platform-constants";
 import { WebsocketServer } from "../../core/websocket-server";
-import { PlatformConstants } from "../platform-constants/platform-constants";
 import { IStreamingSource } from "./i-streaming-source";
 
 /**
  * Class responsible for opening a child process and passing the data to the websocket server
  */
+@injectable()
 export class StreamingSource implements IStreamingSource {
   private _command: Ffmpeg.FfmpegCommand;
   public isStreaming: boolean;
   private _socketServer: net.Server;
 
   constructor(
-    private readonly _logger: Logger,
-    private readonly _appConfig: AppConfig,
-    private readonly _ffmpegLogger: Logger,
-    private readonly _websocketServer: WebsocketServer,
-    private readonly _plattformConstants: PlatformConstants,
-    public readonly deviceId: string,
-    public readonly streamingId: string,
-    private readonly _bitrate: number,
-    private readonly _onError: (error: Error) => void
-  ) {
+    @inject("Logger") private _logger: Logger,
+    @inject("FfmpegLogger") private _ffmpegLogger: Logger,
+    @inject("WebsocketServer") private _websocketServer: WebsocketServer,
+    @inject("PlattformConstants") private _plattformConstants: PlatformConstants,
+    public deviceId: string,
+    public streamingId: string,
+    private _bitrate: number,
+    private _onError: (error: Error) => void) {
   }
 
   private initialize(socketAddress: string): Ffmpeg.FfmpegCommand {
@@ -36,8 +36,9 @@ export class StreamingSource implements IStreamingSource {
       .inputOptions("-y")
       .inputOptions(`-f ${this._plattformConstants.audioModule}`);
 
-    if (this._appConfig.platform === "win32") {
-      ffmpeg = ffmpeg.inputOptions("-audio_buffer_size 10")
+    if (config.platform === "win32") {
+      ffmpeg = ffmpeg
+        .inputOptions("-audio_buffer_size 10")
     }
 
     return ffmpeg
@@ -76,13 +77,13 @@ export class StreamingSource implements IStreamingSource {
   }
 
   private createSocket(): string {
-    const socketDir = path.join(this._appConfig.workingDirectory, "sockets");
+    const socketDir = path.join(config.workingDirectory, "sockets");
     const socketId = `${this.streamingId}.sock`;
     const socketPath = path.join(socketDir, socketId);
 
     let socket: string;
     let socketAddress: string;
-    if (this._appConfig.platform === "win32") {
+    if (config.platform === "win32") {
       socket = path.join(this._plattformConstants.ipcProtocol, socketId);
       socketAddress = socket.replace(/\\/g, "\\\\").replace(":", "\\\\\\:");
     } else {
@@ -91,7 +92,7 @@ export class StreamingSource implements IStreamingSource {
     }
 
     // Remove existing sockets before opening a new one. Windows removes named pipes automatically.
-    if (this._appConfig.platform !== "win32") {
+    if (config.platform !== "win32") {
       if (!fs.existsSync(socketDir)) {
         fs.mkdirSync(socketDir);
       } else if (fs.existsSync(socket)) {
@@ -129,7 +130,7 @@ export class StreamingSource implements IStreamingSource {
     const valueNumber = parseFloat(value);
 
     let mLUFSScale18: number;
-    if (this._appConfig.platform === "linux") {
+    if (config.platform === "linux") {
       mLUFSScale18 = (valueNumber * 2) - 23;
     } else {
       mLUFSScale18 = valueNumber;
