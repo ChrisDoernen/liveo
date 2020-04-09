@@ -1,7 +1,7 @@
 import { UserEntity } from "@liveo/entities";
 import { Injectable } from "@nestjs/common";
 import { Logger } from "../logging/logger";
-import { IUserProvider } from "./i-user-provider";
+import { UserProvider } from "./user-provider";
 
 @Injectable()
 export class AuthenticationService {
@@ -13,7 +13,7 @@ export class AuthenticationService {
 
   constructor(
     private readonly _logger: Logger,
-    private readonly _userProvider: IUserProvider) {
+    private readonly _userProvider: UserProvider) {
   }
 
   public authenticate(username: string, password: string): UserEntity {

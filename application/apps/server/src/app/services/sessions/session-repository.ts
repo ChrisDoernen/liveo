@@ -1,6 +1,8 @@
 import { SessionEntity } from "@liveo/entities";
+import { Injectable } from "@nestjs/common";
 import { DataService } from "../data/data-service";
 
+@Injectable()
 export class SessionRepository {
 
   constructor(

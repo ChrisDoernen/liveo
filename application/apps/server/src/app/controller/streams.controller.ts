@@ -7,7 +7,8 @@ import { StreamService } from "../services/streams/stream-service";
 export class StreamsController {
 
   constructor(
-    private readonly _streamService: StreamService) {
+    private readonly _streamService: StreamService
+  ) {
   }
 
   @Get()

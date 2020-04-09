@@ -1,14 +1,14 @@
 import { NextFunction, Request, Response } from "express";
-import { inject, injectable } from "inversify";
+import { inject } from "inversify";
 import { interfaces } from "inversify-express-utils";
+import { AuthenticationService } from "../../../../../server/src/app/services/authentication/authentication-service";
 import { Logger } from "../../../../../server/src/app/services/logging/logger";
-import { AuthenticationService } from "../../services/authentication/authentication-service";
 import { Principal } from "./principal";
 
 const authService = inject("AuthenticationService");
 const logger = inject("Logger");
 
-@injectable()
+@Injectable()
 export class AuthenticationProvider implements interfaces.AuthProvider {
 
   @authService private readonly _authenticationService: AuthenticationService;

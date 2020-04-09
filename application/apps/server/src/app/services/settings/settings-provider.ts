@@ -1,6 +1,8 @@
 import { SettingsEntity } from "@liveo/entities";
+import { Injectable } from "@nestjs/common";
 import { DataService } from "../data/data-service";
 
+@Injectable()
 export class SettingsProvider {
 
   constructor(
@@ -16,4 +18,3 @@ export class SettingsProvider {
     return this._dataService.updateSettings(settings);
   }
 }
-

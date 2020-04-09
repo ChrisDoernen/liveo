@@ -1,11 +1,11 @@
 
 import { Container, inject, injectable } from "inversify";
 import { Logger } from "../../../../server/src/app/services/logging/logger";
+import { ProcessExecutionService } from "../../../../server/src/app/services/process-execution/process-execution-service";
+import { SystemMonitoringService } from "../../../../server/src/app/services/system-monitoring/system-monitoring-service";
 import { AutoActivationService } from "../services/activation/auto-activation-service";
 import { DataService } from "../services/data/data-service";
 import { DeviceService } from "../services/devices/device.service";
-import { ProcessExecutionService } from "../services/process-execution/process-execution-service";
-import { SystemMonitoringService } from "../services/system-monitoring/system-monitoring-service";
 import { WebServer } from "./web-server";
 import { WebsocketServer } from "./websocket-server";
 

@@ -1,8 +1,12 @@
 import { Container, interfaces } from "inversify";
 import { config } from "../../../../server/src/app/config/service.config";
 import { Logger } from "../../../../server/src/app/services/logging/logger";
+import { PlatformConstants } from "../../../../server/src/app/services/platform-constants/i-platform-constants";
+import { PLATFORM_CONSTANTS } from "../../../../server/src/app/services/platform-constants/platformConstants";
+import { ProcessExecutionService } from "../../../../server/src/app/services/process-execution/process-execution-service";
 import { ISettingsProvider } from "../../../../server/src/app/services/settings/settings-provider";
 import { SettingsService } from "../../../../server/src/app/services/settings/settings-service";
+import { SystemMonitoringService } from "../../../../server/src/app/services/system-monitoring/system-monitoring-service";
 import { Bootstrapper } from "../core/bootstrapper";
 import { WebServer } from "../core/web-server";
 import { WebsocketServer } from "../core/websocket-server";
@@ -23,9 +27,6 @@ import { SimulationDeviceDetector } from "../services/devices/simulation-device-
 import { WindowsDeviceDetector } from "../services/devices/windows-device-detector";
 import { IdGenerator } from "../services/id-generation/id-generator";
 import { NotificationService } from "../services/notifications/notification-service";
-import { PlatformConstants } from "../services/platform-constants/i-platform-constants";
-import { PLATFORM_CONSTANTS } from "../services/platform-constants/platformConstants";
-import { ProcessExecutionService } from "../services/process-execution/process-execution-service";
 import { Scheduler } from "../services/scheduling/scheduler";
 import { ISessionRepository } from "../services/sessions/i-session-repository";
 import { SessionService } from "../services/sessions/session-service";
@@ -41,7 +42,6 @@ import { StreamingSimulationSourceFactory } from "../services/streaming-sources/
 import { streamingSourceFactory } from "../services/streaming-sources/streaming-source-factory";
 import { IStreamRepository } from "../services/streams/i-stream-repository";
 import { StreamService } from "../services/streams/stream-service";
-import { SystemMonitoringService } from "../services/system-monitoring/system-monitoring-service";
 import { TimeService } from "../services/time/time.service";
 import { FfmpegLogger, ServiceLogger } from "./logging.config";
 
