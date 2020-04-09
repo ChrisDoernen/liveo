@@ -6,7 +6,6 @@ import { PlatformConstants } from "../platform-constants/platform-constants";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { Device } from "./device";
 import { DeviceDetector } from "./device-detector";
-import { DeviceState } from "./device-state";
 
 /**
  * Implementation of device detection on mac os
@@ -19,7 +18,7 @@ export class MacOSDeviceDetector extends DeviceDetector {
     ffmpegPath: string,
     processExecutionService: ProcessExecutionService,
     idGenerator: IdGenerator,
-    deviceFactory: (deviceData: DeviceEntity, deviceState: DeviceState) => Device
+    deviceFactory: (deviceData: DeviceEntity) => Device
   ) {
     super(logger, processExecutionService, idGenerator, deviceFactory);
     this.listDevicesCommand = `${ffmpegPath} -f ${audioSystem.audioModule} -list_devices true -i '' -hide_banner`;
@@ -47,7 +46,7 @@ export class MacOSDeviceDetector extends DeviceDetector {
           const id = params[1];
           const name = params[2]
           const deviceType = isVideo ? DeviceType.Video : DeviceType.Audio
-          devices.push(this.instantiateDevice(id, name, deviceType, DeviceState.Available));
+          devices.push(this.instantiateDevice(id, name, deviceType));
         }
       });
 

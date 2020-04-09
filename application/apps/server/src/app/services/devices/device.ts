@@ -1,7 +1,7 @@
 import { DeviceEntity } from "@liveo/entities";
 import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { IStreamingSource } from "../streaming-sources/i-streaming-source";
-import { StreamingSourceFactory } from "../streaming-sources/streaming-source-factory";
+import { StreamingSourceFactory } from "../streaming-sources/streaming-source-factory.old";
 import { DeviceState } from "./device-state";
 
 /**
@@ -9,6 +9,7 @@ import { DeviceState } from "./device-state";
  */
 export class Device {
   private _source: IStreamingSource;
+  private _deviceState: DeviceState = DeviceState.Available;
 
   public get entity(): DeviceEntity {
     return this._deviceData;
@@ -24,9 +25,8 @@ export class Device {
 
   constructor(
     private readonly _logger: Logger,
-    streamingSourceFactory: StreamingSourceFactory,
     private readonly _deviceData: DeviceEntity,
-    private _deviceState: DeviceState
+    streamingSourceFactory: StreamingSourceFactory
   ) {
     this._source = streamingSourceFactory(this.id, this.entity.streamingId, this.onStreamingSourceError.bind(this));
 

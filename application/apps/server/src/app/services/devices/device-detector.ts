@@ -3,7 +3,6 @@ import { IdGenerator } from "../id-generation/id-generator";
 import { Logger } from "../logging/logger";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { Device } from "./device";
-import { DeviceState } from "./device-state";
 
 /**
  * A abstract class for device detection
@@ -16,7 +15,7 @@ export abstract class DeviceDetector {
     protected logger: Logger,
     protected processExecutionService: ProcessExecutionService,
     private readonly _idGenerator: IdGenerator,
-    private readonly _deviceFactory: (deviceData: DeviceEntity, deviceState: DeviceState) => Device
+    private readonly _deviceFactory: (deviceData: DeviceEntity) => Device
   ) {
   }
 
@@ -47,9 +46,9 @@ export abstract class DeviceDetector {
 
   protected abstract parseResponse(output: string): Device[];
 
-  protected instantiateDevice(id: string, description: string, deviceType: DeviceType, deviceState: DeviceState): Device {
+  protected instantiateDevice(id: string, description: string, deviceType: DeviceType): Device {
     const streamingSourceId = this._idGenerator.getMd5Hash(id, 8);
 
-    return this._deviceFactory(new DeviceEntity(id, streamingSourceId, description, deviceType), deviceState);
+    return this._deviceFactory(new DeviceEntity(id, streamingSourceId, description, deviceType));
   }
 }

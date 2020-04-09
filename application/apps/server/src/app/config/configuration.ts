@@ -54,7 +54,6 @@ export const configuration = () => {
       port: process.env.PORT ? process.env.PORT : environment.port,
       production: process.env.PRODUCTION ? process.env.PRODUCTION === "true" : environment.production,
       simulate: process.env.SIMULATE ? process.env.SIMULATE === "true" : environment.simulate,
-      filesource: process.env.FILESOURCE ? process.env.FILESOURCE === "true" : environment.filesource,
       standalone: process.env.STANDALONE ? process.env.STANDALONE === "true" : environment.standalone,
       executable: process.env.EXECUTABLE ? process.env.EXECUTABLE === "true" : environment.executable,
       database: process.env.DATABASE ? process.env.DATABASE : `${workingDirectory}/data/db.json`,
@@ -67,7 +66,7 @@ export const configuration = () => {
   };
 }
 
-export const APP_CONFIG_TOKEN = "appConfig";
+export const AppConfigToken = "AppConfig";
 
 export class AppConfig {
   platform: string;
@@ -75,7 +74,6 @@ export class AppConfig {
   port: string;
   production: string;
   simulate: string;
-  filesource: string;
   standalone: string;
   executable: string;
   database: string;

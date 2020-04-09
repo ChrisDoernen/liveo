@@ -1,11 +1,11 @@
 import { ConfigService } from "@nestjs/config";
-import { AppConfig, APP_CONFIG_TOKEN } from "../../config/configuration";
+import { AppConfig, AppConfigToken } from "../../config/configuration";
 import { PlatformConstants, PLATFORM_CONSTANTS } from "./platform-constants";
 
-export const PlatformConstantsFactory = {
+export const PlatformConstantsProvider = {
   provide: PlatformConstants,
   useFactory: (configService: ConfigService) => {
-    const appConfig = configService.get<AppConfig>(APP_CONFIG_TOKEN);
+    const appConfig = configService.get<AppConfig>(AppConfigToken);
 
     switch (appConfig.platform) {
       case "linux": {

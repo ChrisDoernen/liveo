@@ -4,7 +4,7 @@ import { ConfigService } from "@nestjs/config";
 import { existsSync } from "fs";
 import * as low from "lowdb";
 import * as FileSync from "lowdb/adapters/FileSync";
-import { AppConfig, APP_CONFIG_TOKEN } from "../../config/configuration";
+import { AppConfig, AppConfigToken } from "../../config/configuration";
 import { IdGenerator } from "../id-generation/id-generator";
 import { DBSchema } from "./data-schema.enum";
 
@@ -25,7 +25,7 @@ export class DataService {
   }
 
   public initializeDatabase(): void {
-    const db = this._configService.get<AppConfig>(APP_CONFIG_TOKEN).database;
+    const db = this._configService.get<AppConfig>(AppConfigToken).database;
 
     if (!existsSync(db)) {
       const error = new Error(`Database file does not exist: ${db}.`);

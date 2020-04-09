@@ -2,7 +2,7 @@ import { ROUTES } from "@liveo/constants";
 import { Injectable, NestMiddleware } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Request, Response } from "express";
-import { AppConfig, APP_CONFIG_TOKEN } from "../../config/configuration";
+import { AppConfig, AppConfigToken } from "../../config/configuration";
 
 @Injectable()
 export class FallbackRoutesMiddleware implements NestMiddleware {
@@ -12,7 +12,7 @@ export class FallbackRoutesMiddleware implements NestMiddleware {
   }
 
   use(req: Request, res: Response, next: () => void) {
-    const appConfig = this._configService.get<AppConfig>(APP_CONFIG_TOKEN);
+    const appConfig = this._configService.get<AppConfig>(AppConfigToken);
     const staticFilesBaseDirectory = appConfig.staticFilesBaseDirectory;
 
     if (req.path.includes(ROUTES.api)) {

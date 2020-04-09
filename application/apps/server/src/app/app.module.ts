@@ -16,15 +16,18 @@ import { AutoActivationService } from "./services/activation/auto-activation-ser
 import { ActivationStateService } from "./services/application-state/activation-state.service";
 import { AuthenticationService } from "./services/authentication/authentication-service";
 import { DataService } from "./services/data/data-service";
-import { DeviceDetectorFactory } from "./services/devices/device-detector.factory";
+import { DeviceDetectorProvider } from "./services/devices/device-detector.provider";
+import { DeviceFactoryProvider } from "./services/devices/device-factory.provider";
 import { IdGenerator } from "./services/id-generation/id-generator";
 import { Logger } from "./services/logging/logger";
-import { PlatformConstantsFactory } from "./services/platform-constants/platform-constants.factory";
+import { PlatformConstantsProvider } from "./services/platform-constants/platform-constants.provider";
 import { SessionRepository } from "./services/sessions/session-repository";
 import { SessionService } from "./services/sessions/session-service";
 import { SettingsProvider } from "./services/settings/settings-provider";
 import { SettingsService } from "./services/settings/settings-service";
 import { ShutdownService } from "./services/shutdown/shutdown-service";
+import { StreamingSimulationSourceFactoryProvider } from "./services/streaming-sources/streaming-simulation-source-factory.provider";
+import { StreamingSourceFactoryProvider } from "./services/streaming-sources/streaming-source-factory.provider";
 import { StreamRepository } from "./services/streams/stream-repository";
 import { StreamService } from "./services/streams/stream-service";
 import { SystemMonitoringService } from "./services/system-monitoring/system-monitoring-service";
@@ -53,10 +56,11 @@ import { TimeService } from "./services/time/time.service";
     AuthenticationService,
     AutoActivationService,
     DataService,
-    DeviceDetectorFactory,
+    DeviceDetectorProvider,
+    DeviceFactoryProvider,
     IdGenerator,
     Logger,
-    PlatformConstantsFactory,
+    PlatformConstantsProvider,
     SessionRepository,
     SessionService,
     SettingsProvider,
@@ -65,6 +69,8 @@ import { TimeService } from "./services/time/time.service";
     StreamRepository,
     StreamService,
     StreamingGateway,
+    StreamingSourceFactoryProvider,
+    StreamingSimulationSourceFactoryProvider,
     SystemMonitoringService,
     TimeService
   ],

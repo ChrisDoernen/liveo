@@ -1,7 +1,7 @@
 import { ConfigService } from "@nestjs/config";
 import { injectable } from "inversify";
 import { filter } from "rxjs/operators";
-import { AppConfig, APP_CONFIG_TOKEN } from "../../config/configuration";
+import { AppConfig, AppConfigToken } from "../../config/configuration";
 import { ActivationStateService } from "../application-state/activation-state.service";
 import { Logger } from "../logging/logger";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
@@ -29,7 +29,7 @@ export class ShutdownService {
   }
 
   private executeShutdown(): void {
-    const appConfig = this._configService.get<AppConfig>(APP_CONFIG_TOKEN);
+    const appConfig = this._configService.get<AppConfig>(AppConfigToken);
 
     if (!appConfig.production) {
       this._logger.debug("Simulating server shutdown in development environment");

@@ -6,7 +6,6 @@ import { PlatformConstants } from "../platform-constants/platform-constants";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { Device } from "./device";
 import { DeviceDetector } from "./device-detector";
-import { DeviceState } from "./device-state";
 
 /**
  * Implementation of device detection on linux machines
@@ -18,7 +17,7 @@ export class LinuxDeviceDetector extends DeviceDetector {
     private _plattformConstants: PlatformConstants,
     processExecutionService: ProcessExecutionService,
     idGenerator: IdGenerator,
-    deviceFactory: (deviceData: DeviceEntity, deviceState: DeviceState) => Device) {
+    deviceFactory: (deviceData: DeviceEntity) => Device) {
     super(logger, processExecutionService, idGenerator, deviceFactory);
     this.listDevicesCommand = "arecord -L";
   }
@@ -35,6 +34,6 @@ export class LinuxDeviceDetector extends DeviceDetector {
     const id = line.replace(this._plattformConstants.devicePrefix, "");
     const description = line;
 
-    return this.instantiateDevice(id, description, DeviceType.Audio, DeviceState.Available);
+    return this.instantiateDevice(id, description, DeviceType.Audio);
   }
 }

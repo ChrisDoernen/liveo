@@ -3,7 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import * as winston from "winston";
 import { Logger as WinstonLogger } from "winston";
 import DailyRotateFile from "winston-daily-rotate-file";
-import { AppConfig, APP_CONFIG_TOKEN } from "../../config/configuration";
+import { AppConfig, AppConfigToken } from "../../config/configuration";
 
 /**
  * Wrapper class for logging
@@ -16,7 +16,7 @@ export class Logger {
   constructor(
     private readonly _configService: ConfigService
   ) {
-    const appConfig = this._configService.get<AppConfig>(APP_CONFIG_TOKEN);
+    const appConfig = this._configService.get<AppConfig>(AppConfigToken);
     this.initialize(appConfig);
   }
 

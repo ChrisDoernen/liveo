@@ -5,13 +5,13 @@ import { NestFactory } from "@nestjs/core";
 import * as express from "express";
 import * as Ffmpeg from "fluent-ffmpeg";
 import { AppModule } from "./app/app.module";
-import { AppConfig, APP_CONFIG_TOKEN } from "./app/config/configuration";
+import { AppConfig, AppConfigToken } from "./app/config/configuration";
 import { Logger } from "./app/services/logging/logger";
 import { environment } from "./environments/environment";
 
 export async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const config = app.get(ConfigService).get<AppConfig>(APP_CONFIG_TOKEN);
+  const config = app.get(ConfigService).get<AppConfig>(AppConfigToken);
   const logger = app.get(Logger);
   app.useLogger(logger);
 

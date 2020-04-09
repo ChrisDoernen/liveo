@@ -5,7 +5,8 @@ import * as net from "net";
 import * as path from "path";
 import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { AppConfig } from "../../config/configuration";
-import { WebsocketServer } from "../../core/websocket-server";
+import { AdminGateway } from "../../gateways/admin.gateway";
+import { StreamingGateway } from "../../gateways/streaming.gateway";
 import { PlatformConstants } from "../platform-constants/platform-constants";
 import { IStreamingSource } from "./i-streaming-source";
 
@@ -21,7 +22,8 @@ export class StreamingSource implements IStreamingSource {
     private readonly _logger: Logger,
     private readonly _appConfig: AppConfig,
     private readonly _ffmpegLogger: Logger,
-    private readonly _websocketServer: WebsocketServer,
+    private readonly _streamingGateway: StreamingGateway,
+    private readonly _adminGateway: AdminGateway,
     private readonly _plattformConstants: PlatformConstants,
     public readonly deviceId: string,
     public readonly streamingId: string,
@@ -106,7 +108,7 @@ export class StreamingSource implements IStreamingSource {
           if (line.startsWith("lavfi.")) {
             const value = line.substr(13);
             const loudness = this.convertLUScale9ToLUFSScal18(value).toFixed(1);
-            this._websocketServer.emitAdminEventMessage(`${EVENTS.streamVolume}-${this.streamingId}`, loudness);
+            this._adminGateway.emit(`${EVENTS.streamVolume}-${this.streamingId}`, loudness);
           }
         });
       });
@@ -144,10 +146,10 @@ export class StreamingSource implements IStreamingSource {
 
   public startStreaming(): void {
     this._logger.debug(`Start streaming for device ${this.deviceId} with streaming source id ${this.streamingId}`);
-    this._websocketServer.addStream(this.streamingId);
+    this._streamingGateway.addStream(this.streamingId);
     const socket = this.createSocket();
     this._command = this.initialize(socket);
-    this._command.pipe().on("data", (data: Buffer) => this._websocketServer.emitStreamData(this.streamingId, data));
+    this._command.pipe().on("data", (data: Buffer) => this._streamingGateway.emitStreamData(this.streamingId, data));
     this.isStreaming = true;
   }
 
@@ -160,8 +162,8 @@ export class StreamingSource implements IStreamingSource {
   private cleanUp(): void {
     this.closeSocket();
     this._command = null;
-    this._websocketServer.removeStream(this.streamingId);
-    this._websocketServer.emitStreamEventMessage(this.streamingId, EVENTS.streamEnded, "The stream ended.");
+    this._streamingGateway.removeStream(this.streamingId);
+    this._streamingGateway.emitStreamEventMessage(this.streamingId, EVENTS.streamEnded, "The stream ended.");
     this.isStreaming = false;
   }
 }
