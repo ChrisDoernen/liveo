@@ -1,9 +1,9 @@
 import { UserEntity } from "@liveo/entities";
-import { inject, injectable } from "inversify";
-import { Logger } from "../../../../../server/src/app/services/logging/logger";
+import { Injectable } from "@nestjs/common";
+import { Logger } from "../logging/logger";
 import { IUserProvider } from "./i-user-provider";
 
-@injectable()
+@Injectable()
 export class AuthenticationService {
 
   /* 
@@ -12,8 +12,8 @@ export class AuthenticationService {
   private _userCache = new Map<string, UserEntity>();
 
   constructor(
-    @inject("Logger") private _logger: Logger,
-    @inject("IUserProvider") private _userProvider: IUserProvider) {
+    private readonly _logger: Logger,
+    private readonly _userProvider: IUserProvider) {
   }
 
   public authenticate(username: string, password: string): UserEntity {

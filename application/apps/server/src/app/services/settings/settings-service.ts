@@ -1,15 +1,16 @@
 import { SettingsEntity } from "@liveo/entities";
-import { inject, injectable } from "inversify";
-import { Logger } from "../../../../../server/src/app/services/logging/logger";
+import { Injectable } from "@nestjs/common";
+import { Logger } from "../logging/logger";
 import { SessionService } from "../sessions/session-service";
-import { ISettingsProvider } from "./i-settings-provider";
+import { SettingsProvider } from "./settings-provider";
 
-@injectable()
+@Injectable()
 export class SettingsService {
   constructor(
-    @inject("Logger") private _logger: Logger,
-    @inject("ISettingsProvider") private _settingsProvider: ISettingsProvider,
-    @inject("SessionService") private _sessionService: SessionService) {
+    private readonly _logger: Logger,
+    private readonly _settingsProvider: SettingsProvider,
+    private readonly _sessionService: SessionService
+  ) {
   }
 
   public getSettings(): SettingsEntity {

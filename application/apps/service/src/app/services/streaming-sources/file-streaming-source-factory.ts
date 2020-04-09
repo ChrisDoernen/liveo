@@ -1,7 +1,7 @@
 import { interfaces } from "inversify";
 import { Logger } from "../../../../../server/src/app/services/logging/logger";
+import { SettingsService } from "../../../../../server/src/app/services/settings/settings-service";
 import { WebsocketServer } from "../../core/websocket-server";
-import { SettingsService } from "../settings/settings-service";
 import { FileStreamingSource } from "./file-streaming-source";
 
 export const FileStreamingSourceFactory = (context: interfaces.Context) =>

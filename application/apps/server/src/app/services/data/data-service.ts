@@ -1,12 +1,10 @@
 import { SessionEntity, SettingsEntity, StreamEntity, UserEntity } from "@liveo/entities";
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { existsSync } from "fs";
 import * as low from "lowdb";
 import * as FileSync from "lowdb/adapters/FileSync";
-import { IUserProvider } from "../../../../../service/src/app/services/authentication/i-user-provider";
-import { ISessionRepository } from "../../../../../service/src/app/services/sessions/i-session-repository";
-import { ISettingsProvider } from "../../../../../service/src/app/services/settings/i-settings-provider";
-import { IStreamRepository } from "../../../../../service/src/app/services/streams/i-stream-repository";
-import { config } from "../../config/service.config";
+import { AppConfig, APP_CONFIG_TOKEN } from "../../config/configuration";
 import { IdGenerator } from "../id-generation/id-generator";
 import { DBSchema } from "./data-schema.enum";
 
@@ -14,21 +12,30 @@ import { DBSchema } from "./data-schema.enum";
  * Provides access to a file based data source
  */
 @Injectable()
-export class DataService implements IStreamRepository, ISessionRepository, ISettingsProvider, IUserProvider {
+export class DataService {
 
   private _database: any;
 
   constructor(
-    private readonly _idGenerator: IdGenerator) {
+    private readonly _configService: ConfigService,
+    private readonly _logger: Logger,
+    private readonly _idGenerator: IdGenerator
+  ) {
+    this.initializeDatabase();
   }
 
   public initializeDatabase(): void {
-    const adapter = new FileSync(config.database);
-    try {
-      this._database = low(adapter);
-    } catch (error) {
-      // this._logger.error(`Error reading database: ${error}.`);
+    const db = this._configService.get<AppConfig>(APP_CONFIG_TOKEN).database;
+
+    if (!existsSync(db)) {
+      const error = new Error(`Database file does not exist: ${db}.`);
+      this._logger.error(error.message);
+      throw error;
     }
+
+    const adapter = new FileSync(db);
+    this._database = low(adapter);
+    this._logger.debug("Database initialized");
   }
 
   public getSessionEntities(): SessionEntity[] {

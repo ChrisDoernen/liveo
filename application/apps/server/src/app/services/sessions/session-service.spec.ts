@@ -1,19 +1,13 @@
 import { SessionEntityBuilder } from "@liveo/test-utilities";
-import { Container } from "inversify";
 import createMockInstance from "jest-create-mock-instance";
-import "reflect-metadata";
-import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { DataService } from "../data/data-service";
-import { NotificationService } from "../notifications/notification-service";
-import { StreamService } from "../streams/stream-service";
+import { Logger } from "../logging/logger";
 import { SessionService } from "./session-service";
 
 describe("SessionService", () => {
   let sessionService: SessionService;
   let logger: jest.Mocked<Logger>;
   let sessionRepository: jest.Mocked<DataService>;
-  let streamService: jest.Mocked<StreamService>;
-  let notificationService: jest.Mocked<NotificationService>;
 
   const firstSessionId = "tx331xqq";
   const secondSessionId = "6t3y5cew";
@@ -27,20 +21,8 @@ describe("SessionService", () => {
   ];
 
   beforeEach(() => {
-    const container = new Container();
-
     logger = createMockInstance(Logger);
     sessionRepository = createMockInstance(DataService);
-    streamService = createMockInstance(StreamService);
-    notificationService = createMockInstance(NotificationService);
-
-    container.bind<Logger>("Logger").toConstantValue(logger);
-    container.bind<DataService>("ISessionRepository").toConstantValue(sessionRepository);
-    container.bind<StreamService>("StreamService").toConstantValue(streamService);
-    container.bind<SessionService>("SessionService").to(SessionService).inSingletonScope();
-    container.bind<NotificationService>("NotificationService").toConstantValue(notificationService);
-
-    sessionService = container.get<SessionService>("SessionService");
 
     sessionRepository.getSessionEntities.mockReturnValue(sessions);
   });

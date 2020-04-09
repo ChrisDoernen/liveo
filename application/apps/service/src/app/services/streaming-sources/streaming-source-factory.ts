@@ -1,8 +1,8 @@
 import { interfaces } from "inversify";
 import { Logger } from "../../../../../server/src/app/services/logging/logger";
+import { SettingsService } from "../../../../../server/src/app/services/settings/settings-service";
 import { WebsocketServer } from "../../core/websocket-server";
 import { PlatformConstants } from "../platform-constants/i-platform-constants";
-import { SettingsService } from "../settings/settings-service";
 import { IStreamingSource } from "./i-streaming-source";
 import { StreamingSource } from "./streaming-source";
 

@@ -1,7 +1,9 @@
 import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import * as winston from "winston";
 import { Logger as WinstonLogger } from "winston";
 import DailyRotateFile from "winston-daily-rotate-file";
+import { AppConfig, APP_CONFIG_TOKEN } from "../../config/configuration";
 
 /**
  * Wrapper class for logging
@@ -11,11 +13,14 @@ export class Logger {
 
   private _logger: WinstonLogger;
 
-  constructor(config: any) {
-    this.initialize(config);
+  constructor(
+    private readonly _configService: ConfigService
+  ) {
+    const appConfig = this._configService.get<AppConfig>(APP_CONFIG_TOKEN);
+    this.initialize(appConfig);
   }
 
-  private initialize(config: any): void {
+  private initialize(appConfig: AppConfig): void {
     const timeLevelMessage = winston.format.combine(
       winston.format.timestamp(),
       winston.format.align(),
@@ -24,7 +29,7 @@ export class Logger {
 
     const serviceLogFileTransport = new DailyRotateFile({
       filename: "liveo-server-%DATE%.log",
-      dirname: config.logdirectory,
+      dirname: appConfig.logdirectory,
       datePattern: "YYYY-MM-DD",
       zippedArchive: false,
       maxFiles: "30d",
@@ -36,7 +41,7 @@ export class Logger {
 
     const ffmpegLogFileTransport = new DailyRotateFile({
       filename: "liveo-ffmpeg-%DATE%.log",
-      dirname: config.logdirectory,
+      dirname: appConfig.logdirectory,
       datePattern: "YYYY-MM-DD",
       zippedArchive: false,
       maxFiles: "10d",
@@ -47,7 +52,7 @@ export class Logger {
     });
 
     const consoleTransportOptions = {
-      level: config.loglevel,
+      level: appConfig.loglevel,
       handleExceptions: true,
       json: false,
       colorize: true,

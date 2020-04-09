@@ -1,22 +1,19 @@
 // tslint:disable: no-shadowed-variable
 import { ROUTES } from "@liveo/constants";
+import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
-import { NestExpressApplication } from "@nestjs/platform-express";
-import { config } from "dotenv";
+import * as express from "express";
 import * as Ffmpeg from "fluent-ffmpeg";
-import { resolve } from "path";
 import { AppModule } from "./app/app.module";
-import { Config } from "./app/config/config";
+import { AppConfig, APP_CONFIG_TOKEN } from "./app/config/configuration";
 import { Logger } from "./app/services/logging/logger";
 import { environment } from "./environments/environment";
 
-config({ path: resolve(process.cwd(), "liveo.env") });
+export async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
 
-async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, { logger: false, });
-
-  const config = app.get(Config);
-  const logger = new Logger(config);
+  const config = app.get(ConfigService).get<AppConfig>(APP_CONFIG_TOKEN);
+  const logger = app.get(Logger);
   app.useLogger(logger);
 
   logger.info("Starting liveo server...");
@@ -46,11 +43,11 @@ async function bootstrap() {
   if (config.standalone) {
     logger.debug(`Serving static files in standalone mode.`);
 
-    app.useStaticAssets(`${config.staticFilesBaseDirectory}/${ROUTES.client}`);
-    app.useStaticAssets(`${config.staticFilesBaseDirectory}/${ROUTES.admin}`, { prefix: `/${ROUTES.admin}` });
+    app.use("/", express.static(`${config.staticFilesBaseDirectory}/${ROUTES.client}`));
+    app.use(`/${ROUTES.admin}`, express.static(`${config.staticFilesBaseDirectory}/${ROUTES.admin}`));
   }
 
-  // app.setGlobalPrefix(ENDPOINTS.api);
+  app.setGlobalPrefix(ROUTES.api);
   await app.listen(config.port, () => {
     logger.debug(`Web server started, listening on port ${config.port}.`);
     if (config.executable) {

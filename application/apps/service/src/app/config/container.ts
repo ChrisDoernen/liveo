@@ -1,6 +1,8 @@
 import { Container, interfaces } from "inversify";
 import { config } from "../../../../server/src/app/config/service.config";
 import { Logger } from "../../../../server/src/app/services/logging/logger";
+import { ISettingsProvider } from "../../../../server/src/app/services/settings/settings-provider";
+import { SettingsService } from "../../../../server/src/app/services/settings/settings-service";
 import { Bootstrapper } from "../core/bootstrapper";
 import { WebServer } from "../core/web-server";
 import { WebsocketServer } from "../core/websocket-server";
@@ -27,8 +29,6 @@ import { ProcessExecutionService } from "../services/process-execution/process-e
 import { Scheduler } from "../services/scheduling/scheduler";
 import { ISessionRepository } from "../services/sessions/i-session-repository";
 import { SessionService } from "../services/sessions/session-service";
-import { ISettingsProvider } from "../services/settings/i-settings-provider";
-import { SettingsService } from "../services/settings/settings-service";
 import { ProcessShutdownService } from "../services/shutdown/process-shutdown-service";
 import { ShutdownService } from "../services/shutdown/shutdown-service";
 import { ShutdownSimulationService } from "../services/shutdown/shutdown-simulation-service";

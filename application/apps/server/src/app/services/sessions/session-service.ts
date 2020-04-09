@@ -1,17 +1,18 @@
 import { SessionEntity } from "@liveo/entities";
-import { inject, injectable } from "inversify";
-import { Logger } from "../../../../../server/src/app/services/logging/logger";
-import { ISessionRepository } from "./i-session-repository";
+import { Injectable } from "@nestjs/common";
+import { Logger } from "../logging/logger";
+import { SessionRepository } from "./session-repository";
 
 /**
  * A class providing methods to manage streaming sessions
  */
-@injectable()
+@Injectable()
 export class SessionService {
 
   constructor(
-    @inject("Logger") private readonly _logger: Logger,
-    @inject("ISessionRepository") private readonly _sessionRepository: ISessionRepository) {
+    private readonly _logger: Logger,
+    private readonly _sessionRepository: SessionRepository
+  ) {
   }
 
   public validateSessionExists(id: string): void {

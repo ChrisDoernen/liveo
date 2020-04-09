@@ -3,8 +3,8 @@ import { SettingsEntity } from "@liveo/entities";
 import { Request } from "express";
 import { inject } from "inversify";
 import { controller, httpGet, httpPut } from "inversify-express-utils";
+import { SettingsService } from "../../../../../server/src/app/services/settings/settings-service";
 import { AuthenticationMiddleware } from "../../middleware/authentication/authentication.middleware";
-import { SettingsService } from "../../services/settings/settings-service";
 
 @controller(`/${ROUTES.admin}/settings`, AuthenticationMiddleware)
 export class SettingsController {

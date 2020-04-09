@@ -1,7 +1,7 @@
 import { ActivationEntity } from "@liveo/entities";
 import { inject, injectable } from "inversify";
 import { Logger } from "../../../../../server/src/app/services/logging/logger";
-import { SettingsService } from "../settings/settings-service";
+import { SettingsService } from "../../../../../server/src/app/services/settings/settings-service";
 import { ActivationService } from "./activation-service";
 
 @injectable()

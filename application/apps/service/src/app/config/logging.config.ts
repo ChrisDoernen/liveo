@@ -1,7 +1,7 @@
 import * as winston from "winston";
 import { Logger } from "winston";
 import DailyRotateFile from "winston-daily-rotate-file";
-import { config } from "./service.config";
+import { config } from "../../../../server/src/app/config/service.config";
 
 const timeLevelMessage = winston.format.combine(
   winston.format.timestamp(),
