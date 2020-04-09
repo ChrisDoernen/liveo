@@ -1,6 +1,6 @@
-import { injectable } from "inversify";
+import { Injectable } from "@nestjs/common";
 
-@injectable()
+@Injectable()
 export class TimeService {
   public now(): Date {
     return new Date();

@@ -1,15 +1,15 @@
 import { EVENTS } from "@liveo/constants";
 import { NotificationEntity } from "@liveo/entities";
-import { inject, injectable } from "inversify";
-import { WebsocketServer } from "../../core/websocket-server";
+import { Injectable } from "@nestjs/common";
+import { AdminGateway } from "../../gateways/admin.gateway";
 
-@injectable()
+@Injectable()
 export class NotificationService {
   constructor(
-    @inject("WebsocketServer") private _websocketServer: WebsocketServer) {
+    private _adminGateway: AdminGateway) {
   }
 
   public sendNotification(notification: NotificationEntity): void {
-    this._websocketServer.emitAdminEventMessage(EVENTS.adminNotification, notification);
+    this._adminGateway.emit(EVENTS.adminNotification, notification);
   }
 }

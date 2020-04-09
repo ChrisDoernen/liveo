@@ -1,12 +1,12 @@
-import { inject, injectable } from "inversify";
-import { Logger } from "../../../../../server/src/app/services/logging/logger";
+import { Injectable } from "@nestjs/common";
+import { Logger } from "../logging/logger";
 import { TimeService } from "../time/time.service";
 import { ClientInfo } from "./client-info";
 import { ConnectionInfo } from "./connection-info";
 import { ConnectionInfoType } from "./connection-info-type";
 import { ConnectionReport } from "./connection-report";
 
-@injectable()
+@Injectable()
 export class ConnectionHistoryService {
 
   private _connectionHistory: ConnectionInfo[] = [];
@@ -27,8 +27,9 @@ export class ConnectionHistoryService {
   }
 
   constructor(
-    @inject("Logger") private _logger: Logger,
-    @inject("TimeService") private _timeService: TimeService) {
+    private readonly _logger: Logger,
+    private readonly _timeService: TimeService
+  ) {
   }
 
   public clientSubscribed(clientInfo: ClientInfo): void {

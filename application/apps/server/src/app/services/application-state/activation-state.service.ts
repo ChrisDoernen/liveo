@@ -2,7 +2,7 @@ import { EVENTS } from "@liveo/constants";
 import { ActivationEntity, ActivationState, ActivationStateEntity, SessionEntity, StreamEntity } from "@liveo/entities";
 import { Injectable } from "@nestjs/common";
 import { BehaviorSubject } from "rxjs";
-import { WebsocketServer } from "../../../../../service/src/app/core/websocket-server";
+import { AdminGateway } from "../../gateways/admin.gateway";
 import { Logger } from "../logging/logger";
 import { Scheduler } from "../scheduling/scheduler";
 import { SessionService } from "../sessions/session-service";
@@ -29,7 +29,7 @@ export class ActivationStateService {
     private readonly _streamService: StreamService,
     private readonly _scheduler: Scheduler,
     private readonly _timeService: TimeService,
-    private readonly _weboscketServer: WebsocketServer) {
+    private readonly _adminGateway: AdminGateway) {
   }
 
   public newActivation(activation: ActivationEntity) {
@@ -94,7 +94,7 @@ export class ActivationStateService {
     }
     this._activationState$.next(newActivationState);
 
-    this._weboscketServer.emit(EVENTS.adminActivationStateUodate, newActivationState);
+    this._adminGateway.emit(EVENTS.adminActivationStateUpdate, newActivationState);
     this._logger.debug(`Emitting new activation state: ${newActivationState.state}`);
   }
 

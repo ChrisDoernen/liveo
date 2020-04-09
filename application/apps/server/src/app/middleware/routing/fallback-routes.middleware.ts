@@ -1,4 +1,4 @@
-import { ROUTES } from "@liveo/constants";
+import { ENDPOINTS, ROUTES } from "@liveo/constants";
 import { Injectable, NestMiddleware } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Request, Response } from "express";
@@ -11,11 +11,11 @@ export class FallbackRoutesMiddleware implements NestMiddleware {
     private readonly _configService: ConfigService) {
   }
 
-  use(req: Request, res: Response, next: () => void) {
+  public use(req: Request, res: Response, next: () => void) {
     const appConfig = this._configService.get<AppConfig>(AppConfigToken);
     const staticFilesBaseDirectory = appConfig.staticFilesBaseDirectory;
 
-    if (req.path.includes(ROUTES.api)) {
+    if (req.path.includes(ENDPOINTS.api)) {
       return next();
     } else if (req.path.includes(ROUTES.admin)) {
       const adminIndex = `${staticFilesBaseDirectory}/${ROUTES.admin}/index.html`;

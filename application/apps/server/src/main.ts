@@ -22,7 +22,6 @@ export async function bootstrap() {
   logger.debug(`Platform/OS: ${config.platform}`);
   logger.debug(`Architecture: ${config.arch}`);
   logger.debug(`Simulate streaming: ${config.simulate}`);
-  logger.debug(`Filesource: ${config.filesource}`);
   logger.debug(`Standalone: ${config.standalone}`);
   logger.debug(`Database: ${config.database}`);
   logger.debug(`Working directory: ${config.workingDirectory}`);

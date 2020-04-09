@@ -4,7 +4,7 @@ import { Logger } from "../logging/logger";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";
 import { Device } from "./device";
 import { DeviceDetector } from "./device-detector";
-import { DeviceFactory } from "./device-factory.provider";
+import { DeviceFactory } from "./device-factory";
 
 /**
  * Implementation of device detection that always returnes valid devices

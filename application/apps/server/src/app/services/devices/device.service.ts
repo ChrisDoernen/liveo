@@ -1,5 +1,5 @@
 import { DeviceEntity, DeviceType } from "@liveo/entities";
-import { inject, injectable } from "inversify";
+import { Injectable } from "@nestjs/common";
 import { combineLatest } from "rxjs";
 import { distinctUntilChanged, map } from "rxjs/operators";
 import { Logger } from "../../../../../server/src/app/services/logging/logger";
@@ -8,16 +8,17 @@ import { ActivationStateService } from "../application-state/activation-state.se
 import { Device } from "./device";
 import { DeviceDetector } from "./device-detector";
 
-@injectable()
+@Injectable()
 export class DeviceService {
 
   private _devices: Device[] = [];
 
   constructor(
-    @inject("Logger") private readonly _logger: Logger,
-    @inject("ActivationStateService") private readonly _activationStateService: ActivationStateService,
-    @inject("AdminService") private readonly _adminService: AdminService,
-    @inject("DeviceDetector") private readonly _deviceDetector: DeviceDetector) {
+    private readonly _logger: Logger,
+    private readonly _activationStateService: ActivationStateService,
+    private readonly _adminService: AdminService,
+    private readonly _deviceDetector: DeviceDetector
+  ) {
   }
 
   public async initialize(): Promise<void> {

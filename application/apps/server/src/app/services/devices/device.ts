@@ -1,7 +1,7 @@
 import { DeviceEntity } from "@liveo/entities";
 import { Logger } from "../../../../../server/src/app/services/logging/logger";
 import { IStreamingSource } from "../streaming-sources/i-streaming-source";
-import { StreamingSourceFactory } from "../streaming-sources/streaming-source-factory.old";
+import { IStreamingSourceFactory } from "../streaming-sources/i-streaming-source-factory";
 import { DeviceState } from "./device-state";
 
 /**
@@ -26,7 +26,7 @@ export class Device {
   constructor(
     private readonly _logger: Logger,
     private readonly _deviceData: DeviceEntity,
-    streamingSourceFactory: StreamingSourceFactory
+    streamingSourceFactory: IStreamingSourceFactory
   ) {
     this._source = streamingSourceFactory(this.id, this.entity.streamingId, this.onStreamingSourceError.bind(this));
 

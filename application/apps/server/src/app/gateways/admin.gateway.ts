@@ -1,5 +1,4 @@
 import { ENDPOINTS, EVENTS } from "@liveo/constants";
-import { NotificationEntity } from "@liveo/entities";
 import { ConnectedSocket, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
 import { Server, Socket } from "socket.io";
 import { AdminService } from "../services/admin/admin.service";
@@ -40,7 +39,7 @@ export class AdminGateway implements OnGatewayDisconnect {
     this._adminService.onAdminStreamCreationLeave();
   }
 
-  public emit(event: string, message: string | NotificationEntity): void {
+  public emit(event: string, message: any): void {
     this.server.to(this._adminRoom).emit(event, message);
   }
 

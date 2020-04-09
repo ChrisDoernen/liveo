@@ -10,7 +10,6 @@
     "target": "es2015"
   },
   "include": [
-    "**/*.ts",
-    "../service/src/app/config/logging.config.ts"
+    "**/*.ts"
   ]
 }

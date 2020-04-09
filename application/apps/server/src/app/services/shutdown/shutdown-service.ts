@@ -1,5 +1,5 @@
+import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { injectable } from "inversify";
 import { filter } from "rxjs/operators";
 import { AppConfig, AppConfigToken } from "../../config/configuration";
 import { ActivationStateService } from "../application-state/activation-state.service";
@@ -9,7 +9,7 @@ import { ProcessExecutionService } from "../process-execution/process-execution-
 /**
  * Class for server shutdown
  */
-@injectable()
+@Injectable()
 export class ShutdownService {
 
   constructor(
