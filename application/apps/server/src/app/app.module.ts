@@ -13,19 +13,25 @@ import { StreamingGateway } from "./gateways/streaming.gateway";
 import { FallbackRoutesMiddleware } from "./middleware/routing/fallback-routes.middleware";
 import { ActivationService } from "./services/activation/activation-service";
 import { AutoActivationService } from "./services/activation/auto-activation-service";
+import { AdminService } from "./services/admin/admin.service";
 import { ActivationStateService } from "./services/application-state/activation-state.service";
 import { AuthenticationService } from "./services/authentication/authentication-service";
+import { UserProvider } from "./services/authentication/user-provider";
 import { DataService } from "./services/data/data-service";
 import { DeviceDetectorProvider } from "./services/devices/device-detector.provider";
 import { DeviceFactoryProvider } from "./services/devices/device-factory.provider";
 import { IdGenerator } from "./services/id-generation/id-generator";
 import { Logger } from "./services/logging/logger";
 import { PlatformConstantsProvider } from "./services/platform-constants/platform-constants.provider";
+import { ProcessExecutionService } from "./services/process-execution/process-execution-service";
+import { Scheduler } from "./services/scheduling/scheduler";
 import { SessionRepository } from "./services/sessions/session-repository";
 import { SessionService } from "./services/sessions/session-service";
 import { SettingsProvider } from "./services/settings/settings-provider";
 import { SettingsService } from "./services/settings/settings-service";
 import { ShutdownService } from "./services/shutdown/shutdown-service";
+import { ConnectionHistoryService } from "./services/statistics/connection-history-service";
+import { IStreamingSourceFactoryProvider } from "./services/streaming-sources/i-streaming-source-factory.provider";
 import { StreamingSimulationSourceFactoryProvider } from "./services/streaming-sources/streaming-simulation-source-factory.provider";
 import { StreamingSourceFactoryProvider } from "./services/streaming-sources/streaming-source-factory.provider";
 import { StreamRepository } from "./services/streams/stream-repository";
@@ -52,15 +58,20 @@ import { TimeService } from "./services/time/time.service";
     ActivationService,
     ActivationStateService,
     AdminGateway,
+    AdminService,
     AppService,
     AuthenticationService,
     AutoActivationService,
+    ConnectionHistoryService,
     DataService,
     DeviceDetectorProvider,
     DeviceFactoryProvider,
+    IStreamingSourceFactoryProvider,
     IdGenerator,
     Logger,
     PlatformConstantsProvider,
+    ProcessExecutionService,
+    Scheduler,
     SessionRepository,
     SessionService,
     SettingsProvider,
@@ -69,10 +80,11 @@ import { TimeService } from "./services/time/time.service";
     StreamRepository,
     StreamService,
     StreamingGateway,
-    StreamingSourceFactoryProvider,
     StreamingSimulationSourceFactoryProvider,
+    StreamingSourceFactoryProvider,
     SystemMonitoringService,
-    TimeService
+    TimeService,
+    UserProvider
   ],
 })
 export class AppModule implements NestModule {

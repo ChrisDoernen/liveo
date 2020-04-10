@@ -14,9 +14,9 @@ export class Logger {
   private _logger: WinstonLogger;
 
   constructor(
-    private readonly _configService: ConfigService
+    configService: ConfigService
   ) {
-    const appConfig = this._configService.get<AppConfig>(AppConfigToken);
+    const appConfig = configService.get<AppConfig>(AppConfigToken);
     this.initialize(appConfig);
   }
 

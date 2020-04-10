@@ -8,7 +8,8 @@ import { AppConfig, AppConfigToken } from "../../config/configuration";
 export class FallbackRoutesMiddleware implements NestMiddleware {
 
   constructor(
-    private readonly _configService: ConfigService) {
+    private readonly _configService: ConfigService
+  ) {
   }
 
   public use(req: Request, res: Response, next: () => void) {

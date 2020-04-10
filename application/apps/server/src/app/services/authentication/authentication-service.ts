@@ -13,7 +13,8 @@ export class AuthenticationService {
 
   constructor(
     private readonly _logger: Logger,
-    private readonly _userProvider: UserProvider) {
+    private readonly _userProvider: UserProvider
+  ) {
   }
 
   public authenticate(username: string, password: string): UserEntity {

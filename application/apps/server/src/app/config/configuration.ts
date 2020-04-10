@@ -66,7 +66,7 @@ export const configuration = () => {
   };
 }
 
-export const AppConfigToken = "AppConfig";
+export const AppConfigToken = "appConfig";
 
 export class AppConfig {
   platform: string;
