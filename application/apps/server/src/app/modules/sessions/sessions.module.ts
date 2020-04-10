@@ -14,6 +14,9 @@ import { SessionService } from "./services/sessions/session.service";
   providers: [
     SessionService,
     SessionRepository
+  ],
+  exports: [
+    SessionService
   ]
 })
 export class SessionsModule { }

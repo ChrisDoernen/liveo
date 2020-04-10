@@ -2,12 +2,12 @@ import { EVENTS } from "@liveo/constants";
 import { ActivationEntity, ActivationState, ActivationStateEntity, SessionEntity, StreamEntity } from "@liveo/entities";
 import { Injectable } from "@nestjs/common";
 import { BehaviorSubject } from "rxjs";
+import { Logger } from "../../../core/services/logging/logger";
+import { SessionService } from "../../../sessions/services/sessions/session.service";
+import { Scheduler } from "../../../shared/services/scheduling/scheduler";
+import { TimeService } from "../../../shared/services/time/time.service";
+import { StreamsService } from "../../../streams/services/streams/streams.service";
 import { AdminGateway } from "../../gateways/admin.gateway";
-import { Logger } from "../../modules/core/services/logging/logger";
-import { SessionService } from "../../modules/sessions/services/sessions/session.service";
-import { Scheduler } from "../../modules/shared/services/scheduling/scheduler";
-import { TimeService } from "../../modules/shared/services/time/time.service";
-import { StreamsService } from "../../modules/streams/services/streams/streams.service";
 
 /**
  * Provides the activation state, e.g. the activation, session entity and streams entities

@@ -1,9 +1,9 @@
 import { ConfigService } from "@nestjs/config";
-import { AdminGateway } from "../../../gateways/admin.gateway";
 import { AppConfig, AppConfigToken } from "../../core/configuration/app-config";
 import { Logger } from "../../core/services/logging/logger";
 import { SettingsService } from "../../settings/services/settings/settings-service";
 import { PlatformConstants } from "../../shared/platform-constants/platform-constants";
+import { AdminGateway } from "../../state/gateways/admin.gateway";
 import { StreamingGateway } from "../gateways/streaming.gateway";
 import { StreamingSource } from "./streaming-source";
 import { StreamingSourceFactoryToken } from "./streaming-source-factory";

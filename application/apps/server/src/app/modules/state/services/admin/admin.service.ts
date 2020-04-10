@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { BehaviorSubject } from "rxjs";
-import { Logger } from "../../modules/core/services/logging/logger";
+import { Logger } from "../../../core/services/logging/logger";
 
 @Injectable()
 export class AdminService {

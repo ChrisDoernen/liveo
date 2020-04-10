@@ -7,18 +7,18 @@ import { TimeService } from "./services/time/time.service";
 
 @Module({
   providers: [
-    TimeService,
-    PlatformConstantsProvider,
     IdGenerator,
+    PlatformConstantsProvider,
+    ProcessExecutionService,
     Scheduler,
-    ProcessExecutionService
+    TimeService
   ],
   exports: [
-    TimeService,
-    PlatformConstantsProvider,
     IdGenerator,
+    PlatformConstantsProvider,
+    ProcessExecutionService,
     Scheduler,
-    ProcessExecutionService
+    TimeService
   ]
 })
 export class SharedModule { }

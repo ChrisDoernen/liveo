@@ -1,6 +1,6 @@
 import { ActivationEntity } from "@liveo/entities";
 import { Injectable, Logger } from "@nestjs/common";
-import { SettingsService } from "../../modules/settings/services/settings/settings-service";
+import { SettingsService } from "../../../settings/services/settings/settings-service";
 import { ActivationService } from "./activation-service";
 
 @Injectable()

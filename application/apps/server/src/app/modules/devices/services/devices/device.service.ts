@@ -1,7 +1,7 @@
 import { DeviceEntity, DeviceType } from "@liveo/entities";
 import { Injectable } from "@nestjs/common";
-import { AdminService } from "apps/server/src/app/services/admin/admin.service";
-import { ActivationStateService } from "apps/server/src/app/services/application-state/activation-state.service";
+import { ActivationStateService } from "apps/server/src/app/modules/state/services/activation-state/activation-state.service";
+import { AdminService } from "apps/server/src/app/modules/state/services/admin/admin.service";
 import { combineLatest } from "rxjs";
 import { distinctUntilChanged, map } from "rxjs/operators";
 import { Logger } from "../../../core/services/logging/logger";

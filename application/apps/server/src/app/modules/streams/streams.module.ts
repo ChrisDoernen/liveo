@@ -14,6 +14,9 @@ import { StreamsService } from "./services/streams/streams.service";
   providers: [
     StreamsService,
     StreamsRepository
+  ],
+  exports: [
+    StreamsService
   ]
 })
 export class StreamsModule { }

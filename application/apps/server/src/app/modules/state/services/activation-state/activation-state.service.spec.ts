@@ -2,9 +2,9 @@ import { ActivationEntityBuilder, SessionEntityBuilder, StreamEntityBuilder } fr
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
 import { ActivationService } from "../../../../../service/src/app/services/activation/activation-service";
-import { Logger } from "../../modules/core/services/logging/logger";
-import { SessionService } from "../../modules/sessions/services/sessions/session.service";
-import { StreamsService } from "../../modules/streams/services/streams/streams.service";
+import { Logger } from "../../../core/services/logging/logger";
+import { SessionService } from "../../../sessions/services/sessions/session.service";
+import { StreamsService } from "../../../streams/services/streams/streams.service";
 import { ActivationStateService } from "./activation-state.service";
 
 xdescribe("ActivationStateService", () => {

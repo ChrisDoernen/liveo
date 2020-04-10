@@ -6,7 +6,8 @@ import { AdminGateway } from "../../gateways/admin.gateway";
 @Injectable()
 export class NotificationService {
   constructor(
-    private _adminGateway: AdminGateway) {
+    private _adminGateway: AdminGateway
+  ) {
   }
 
   public sendNotification(notification: NotificationEntity): void {

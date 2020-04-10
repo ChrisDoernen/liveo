@@ -1,7 +1,6 @@
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
-import { WebsocketServer } from "../../../../../service/src/app/core/websocket-server";
-import { Logger } from "../../modules/core/services/logging/logger";
+import { Logger } from "../../../core/services/logging/logger";
 import { SystemMonitoringService } from "./system-monitoring-service";
 
 jest.useFakeTimers();
@@ -9,12 +8,9 @@ jest.useFakeTimers();
 describe("SystemMonitoringService", () => {
   let systemMonitoringService: SystemMonitoringService;
   let logger: jest.Mocked<Logger>;
-  let websocketServer: jest.Mocked<WebsocketServer>;
 
   beforeEach(() => {
     logger = createMockInstance(Logger);
-    websocketServer = createMockInstance(WebsocketServer);
-    systemMonitoringService = new SystemMonitoringService(logger, websocketServer);
   });
 
   it("should be defined", () => {
