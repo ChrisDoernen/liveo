@@ -1,5 +1,5 @@
 import { ConfigService } from "@nestjs/config";
-import { AppConfig, AppConfigToken } from "../../config/configuration";
+import { AppConfig, AppConfigToken } from "../../config/app-config";
 import { IStreamingSourceFactory, IStreamingSourceFactoryToken } from "./i-streaming-source-factory";
 import { StreamingSimulationSourceFactoryToken } from "./streaming-simulation-source-factory";
 import { StreamingSourceFactoryToken } from "./streaming-source-factory";

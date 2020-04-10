@@ -8,6 +8,5 @@ export const environment = {
   standalone: false,
   executable: false,
   revision: version.revision,
-  version: version.version,
-  environment: "executable"
+  version: version.version
 };

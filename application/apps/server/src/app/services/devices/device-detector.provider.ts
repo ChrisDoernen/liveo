@@ -1,5 +1,5 @@
 import { ConfigService } from "@nestjs/config";
-import { AppConfig, AppConfigToken } from "../../config/configuration";
+import { AppConfig, AppConfigToken } from "../../config/app-config";
 import { IdGenerator } from "../id-generation/id-generator";
 import { Logger } from "../logging/logger";
 import { PlatformConstants } from "../platform-constants/platform-constants";

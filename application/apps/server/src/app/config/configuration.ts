@@ -1,22 +1,9 @@
-// Path has to be required, otherwise Jest can not cope
-const path = require("path");
 import { existsSync } from "fs";
-import { join } from "path";
+import path, { join } from "path";
 import { environment } from "../../environments/environment";
+import { AppConfig } from "./app-config";
 
 export const configuration = () => {
-  const platform = process.platform;
-  if (platform !== "linux" && platform !== "win32") {
-    console.error(`Unsupported platform: ${platform}`);
-    process.exit(1)
-  }
-
-  const architecture = process.arch;
-  if (architecture !== "x64") {
-    console.error(`Unsupported architecture: ${architecture}`);
-    process.exit(1)
-  }
-
   const workingDirectory = process.env.EXECUTABLE ? process.cwd() : __dirname;
   const staticFilesBaseDirectory = process.env.EXECUTABLE ? process.cwd() : path.resolve(__dirname, "..");
 
@@ -35,6 +22,8 @@ export const configuration = () => {
     fallback: "ffmpeg"
   };
 
+  const platform = process.platform;
+  const architecture = process.arch;
   const findFfmpegPath = () => {
     for (let index = 0; index < ffmpegPaths[platform].length; index++) {
       const currentRelativePath = ffmpegPaths[platform][index];
@@ -47,39 +36,23 @@ export const configuration = () => {
     return ffmpegPaths.fallback;
   };
 
+  const appConfig: AppConfig = {
+    platform: platform,
+    architecture: architecture,
+    port: process.env.PORT ? process.env.PORT : environment.port.toString(),
+    production: process.env.PRODUCTION ? process.env.PRODUCTION === "true" : environment.production,
+    simulate: process.env.SIMULATE ? process.env.SIMULATE === "true" : environment.simulate,
+    standalone: process.env.STANDALONE ? process.env.STANDALONE === "true" : environment.standalone,
+    executable: process.env.EXECUTABLE ? process.env.EXECUTABLE === "true" : environment.executable,
+    database: process.env.DATABASE ? process.env.DATABASE : `${workingDirectory}/database/db.json`,
+    loglevel: process.env.LOGLEVEL ? process.env.LOGLEVEL : "debug",
+    logdirectory: process.env.LOGDIRECTORY ? process.env.LOGDIRECTORY : path.join(workingDirectory, "logs"),
+    ffmpegPath: process.env.FFMPEGPATH ? process.env.FFMPEGPATH : findFfmpegPath(),
+    staticFilesBaseDirectory,
+    workingDirectory
+  }
+
   return {
-    appConfig: {
-      platform: platform,
-      arch: architecture,
-      port: process.env.PORT ? process.env.PORT : environment.port,
-      production: process.env.PRODUCTION ? process.env.PRODUCTION === "true" : environment.production,
-      simulate: process.env.SIMULATE ? process.env.SIMULATE === "true" : environment.simulate,
-      standalone: process.env.STANDALONE ? process.env.STANDALONE === "true" : environment.standalone,
-      executable: process.env.EXECUTABLE ? process.env.EXECUTABLE === "true" : environment.executable,
-      database: process.env.DATABASE ? process.env.DATABASE : `${workingDirectory}/data/db.json`,
-      loglevel: process.env.LOGLEVEL ? process.env.LOGLEVEL : "debug",
-      logdirectory: process.env.LOGDIRECTORY ? process.env.LOGDIRECTORY : path.join(workingDirectory, "logs"),
-      ffmpegPath: process.env.FFMPEGPATH ? process.env.FFMPEGPATH : findFfmpegPath(),
-      staticFilesBaseDirectory,
-      workingDirectory
-    }
+    appConfig
   };
 }
-
-export const AppConfigToken = "appConfig";
-
-export class AppConfig {
-  platform: string;
-  arch: string;
-  port: string;
-  production: string;
-  simulate: string;
-  standalone: string;
-  executable: string;
-  database: string;
-  loglevel: string;
-  logdirectory: string;
-  ffmpegPath: string;
-  staticFilesBaseDirectory: string;
-  workingDirectory: string;
-};

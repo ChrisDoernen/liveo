@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { filter } from "rxjs/operators";
-import { AppConfig, AppConfigToken } from "../../config/configuration";
+import { AppConfig, AppConfigToken } from "../../config/app-config";
 import { ActivationStateService } from "../application-state/activation-state.service";
 import { Logger } from "../logging/logger";
 import { ProcessExecutionService } from "../process-execution/process-execution-service";

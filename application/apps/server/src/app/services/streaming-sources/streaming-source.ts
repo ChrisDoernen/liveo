@@ -3,10 +3,10 @@ import * as Ffmpeg from "fluent-ffmpeg";
 import * as fs from "fs";
 import * as net from "net";
 import * as path from "path";
-import { Logger } from "../../../../../server/src/app/services/logging/logger";
-import { AppConfig } from "../../config/configuration";
+import { AppConfig } from "../../config/app-config";
 import { AdminGateway } from "../../gateways/admin.gateway";
 import { StreamingGateway } from "../../gateways/streaming.gateway";
+import { Logger } from "../logging/logger";
 import { PlatformConstants } from "../platform-constants/platform-constants";
 import { IStreamingSource } from "./i-streaming-source";
 

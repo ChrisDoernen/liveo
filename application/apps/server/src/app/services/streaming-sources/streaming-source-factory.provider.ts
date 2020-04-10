@@ -1,5 +1,5 @@
 import { ConfigService } from "@nestjs/config";
-import { AppConfig, AppConfigToken } from "../../config/configuration";
+import { AppConfig, AppConfigToken } from "../../config/app-config";
 import { AdminGateway } from "../../gateways/admin.gateway";
 import { StreamingGateway } from "../../gateways/streaming.gateway";
 import { Logger } from "../logging/logger";

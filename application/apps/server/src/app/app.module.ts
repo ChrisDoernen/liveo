@@ -1,9 +1,9 @@
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
 import { configuration } from "./config/configuration";
+import { ApplicationStateController } from "./controller/application-state.controller";
 import { ConnectionController } from "./controller/connection.controller";
+import { DevicesController } from "./controller/devices.controller";
 import { SessionsController } from "./controller/sessions.controller";
 import { SettingsController } from "./controller/settings.controller";
 import { ShutdownController } from "./controller/shutdown.controller";
@@ -20,6 +20,7 @@ import { UserProvider } from "./services/authentication/user-provider";
 import { DataService } from "./services/data/data-service";
 import { DeviceDetectorProvider } from "./services/devices/device-detector.provider";
 import { DeviceFactoryProvider } from "./services/devices/device-factory.provider";
+import { DeviceService } from "./services/devices/device.service";
 import { IdGenerator } from "./services/id-generation/id-generator";
 import { Logger } from "./services/logging/logger";
 import { PlatformConstantsProvider } from "./services/platform-constants/platform-constants.provider";
@@ -47,9 +48,10 @@ import { TimeService } from "./services/time/time.service";
     })
   ],
   controllers: [
-    AppController,
+    ApplicationStateController,
     ConnectionController,
     SessionsController,
+    DevicesController,
     SettingsController,
     ShutdownController,
     StreamsController
@@ -59,11 +61,11 @@ import { TimeService } from "./services/time/time.service";
     ActivationStateService,
     AdminGateway,
     AdminService,
-    AppService,
     AuthenticationService,
     AutoActivationService,
     ConnectionHistoryService,
     DataService,
+    DeviceService,
     DeviceDetectorProvider,
     DeviceFactoryProvider,
     IStreamingSourceFactoryProvider,

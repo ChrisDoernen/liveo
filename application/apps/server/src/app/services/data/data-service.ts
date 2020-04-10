@@ -4,7 +4,7 @@ import { ConfigService } from "@nestjs/config";
 import { existsSync } from "fs";
 import * as low from "lowdb";
 import * as FileSync from "lowdb/adapters/FileSync";
-import { AppConfig, AppConfigToken } from "../../config/configuration";
+import { AppConfig, AppConfigToken } from "../../config/app-config";
 import { IdGenerator } from "../id-generation/id-generator";
 import { DBSchema } from "./data-schema.enum";
 
@@ -35,7 +35,6 @@ export class DataService {
 
     const adapter = new FileSync(db);
     this._database = low(adapter);
-    this._logger.debug("Database initialized");
   }
 
   public getSessionEntities(): SessionEntity[] {

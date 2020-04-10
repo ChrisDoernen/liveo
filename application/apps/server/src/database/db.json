@@ -1,0 +1,17 @@
+{
+  "streams": [],
+  "sessions": [],
+  "settings": {
+    "defaultSession": null,
+    "enableAutoActivation": false,
+    "bitrate": 192,
+    "shareSessionReports": false,
+    "shareErrorReports": false
+  },
+  "users": [
+    {
+      "username": "admin",
+      "password": "admin"
+    }
+  ]
+}

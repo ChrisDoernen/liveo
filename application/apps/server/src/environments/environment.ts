@@ -12,6 +12,5 @@ export const environment = {
   standalone: true,
   executable: false,
   revision: version.revision,
-  version: version.version,
-  environment: "executable"
+  version: version.version
 };

@@ -3,7 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import * as winston from "winston";
 import { Logger as WinstonLogger } from "winston";
 import DailyRotateFile from "winston-daily-rotate-file";
-import { AppConfig, AppConfigToken } from "../../config/configuration";
+import { AppConfig, AppConfigToken } from "../../config/app-config";
 
 /**
  * Wrapper class for logging

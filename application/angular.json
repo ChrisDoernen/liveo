@@ -141,35 +141,35 @@
         }
       }
     },
-    "service": {
-      "root": "apps/service",
-      "sourceRoot": "apps/service/src",
+    "server": {
+      "root": "apps/server",
+      "sourceRoot": "apps/server/src",
       "projectType": "application",
-      "prefix": "service",
+      "prefix": "server",
       "schematics": {},
       "architect": {
         "build": {
           "builder": "@nrwl/node:build",
           "options": {
-            "outputPath": "dist/apps/service",
-            "main": "apps/service/src/liveo-server.ts",
-            "tsConfig": "apps/service/tsconfig.app.json",
+            "outputPath": "dist/apps/server",
+            "main": "apps/server/src/liveo-server.ts",
+            "tsConfig": "apps/server/tsconfig.app.json",
             "assets": [
-              "apps/service/src/data"
+              "apps/server/src/database"
             ],
             "buildLibsFromSource": true
           },
           "configurations": {
             "production": {
-              "webpackConfig": "apps/service/webpack.config.js",
+              "webpackConfig": "apps/server/webpack.config.js",
               "filename": "liveo-server.js",
               "optimization": true,
               "extractLicenses": true,
               "inspect": false,
               "fileReplacements": [
                 {
-                  "replace": "apps/service/src/environments/environment.ts",
-                  "with": "apps/service/src/environments/environment.prod.ts"
+                  "replace": "apps/server/src/environments/environment.ts",
+                  "with": "apps/server/src/environments/environment.prod.ts"
                 }
               ],
               "externalDependencies": "all",
@@ -182,21 +182,13 @@
                   "with": "apps/service/src/environments/environment.simulation.ts"
                 }
               ]
-            },
-            "filesource": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/service/src/environments/environment.ts",
-                  "with": "apps/service/src/environments/environment.filesource.ts"
-                }
-              ]
             }
           }
         },
         "serve": {
           "builder": "@nrwl/node:execute",
           "options": {
-            "buildTarget": "service:build"
+            "buildTarget": "server:build"
           },
           "configurations": {
             "production": {
@@ -204,9 +196,6 @@
             },
             "simulation": {
               "buildTarget": "service:build:simulation"
-            },
-            "filesource": {
-              "buildTarget": "service:build:filesource"
             }
           }
         },
@@ -214,20 +203,20 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "apps/service/tsconfig.app.json",
-              "apps/service/tsconfig.spec.json"
+              "apps/server/tsconfig.app.json",
+              "apps/server/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**",
-              "!apps/service/**"
+              "!apps/server/**"
             ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/service/jest.config.js",
-            "tsConfig": "apps/service/tsconfig.spec.json",
+            "jestConfig": "apps/server/jest.config.js",
+            "tsConfig": "apps/server/tsconfig.spec.json",
             "passWithNoTests": true
           }
         }
@@ -551,66 +540,6 @@
       "schematics": {
         "@nrwl/schematics:component": {
           "styleext": "scss"
-        }
-      }
-    },
-    "server": {
-      "root": "apps/server",
-      "sourceRoot": "apps/server/src",
-      "projectType": "application",
-      "prefix": "server",
-      "schematics": {},
-      "architect": {
-        "build": {
-          "builder": "@nrwl/node:build",
-          "options": {
-            "outputPath": "dist/apps/server",
-            "main": "apps/server/src/main.ts",
-            "tsConfig": "apps/server/tsconfig.app.json",
-            "assets": [
-              "apps/server/src/assets"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "extractLicenses": true,
-              "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/server/src/environments/environment.ts",
-                  "with": "apps/server/src/environments/environment.prod.ts"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "server:build"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "apps/server/tsconfig.app.json",
-              "apps/server/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/server/**"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "apps/server/jest.config.js",
-            "tsConfig": "apps/server/tsconfig.spec.json",
-            "passWithNoTests": true
-          }
         }
       }
     }
