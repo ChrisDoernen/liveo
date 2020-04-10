@@ -3,11 +3,11 @@ import { ActivationEntity, ActivationState, ActivationStateEntity, SessionEntity
 import { Injectable } from "@nestjs/common";
 import { BehaviorSubject } from "rxjs";
 import { AdminGateway } from "../../gateways/admin.gateway";
-import { Logger } from "../logging/logger";
-import { Scheduler } from "../scheduling/scheduler";
-import { SessionService } from "../sessions/session-service";
-import { StreamService } from "../streams/stream-service";
-import { TimeService } from "../time/time.service";
+import { Logger } from "../../modules/core/services/logging/logger";
+import { SessionService } from "../../modules/sessions/services/sessions/session.service";
+import { Scheduler } from "../../modules/shared/services/scheduling/scheduler";
+import { TimeService } from "../../modules/shared/services/time/time.service";
+import { StreamsService } from "../../modules/streams/services/streams/streams.service";
 
 /**
  * Provides the activation state, e.g. the activation, session entity and streams entities
@@ -26,7 +26,7 @@ export class ActivationStateService {
   constructor(
     private readonly _logger: Logger,
     private readonly _sessionService: SessionService,
-    private readonly _streamService: StreamService,
+    private readonly _streamService: StreamsService,
     private readonly _scheduler: Scheduler,
     private readonly _timeService: TimeService,
     private readonly _adminGateway: AdminGateway) {

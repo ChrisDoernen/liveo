@@ -1,5 +1,5 @@
 import * as faker from "faker";
-import { ClientInfo } from "../../services/statistics/client-info";
+import { ClientInfo } from "../../modules/statistics/connections/client-info";
 
 export class ClientInfoBuilder {
 

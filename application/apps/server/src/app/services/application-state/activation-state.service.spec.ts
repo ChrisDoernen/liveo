@@ -2,16 +2,16 @@ import { ActivationEntityBuilder, SessionEntityBuilder, StreamEntityBuilder } fr
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
 import { ActivationService } from "../../../../../service/src/app/services/activation/activation-service";
-import { Logger } from "../logging/logger";
-import { SessionService } from "../sessions/session-service";
-import { StreamService } from "../streams/stream-service";
+import { Logger } from "../../modules/core/services/logging/logger";
+import { SessionService } from "../../modules/sessions/services/sessions/session.service";
+import { StreamsService } from "../../modules/streams/services/streams/streams.service";
 import { ActivationStateService } from "./activation-state.service";
 
 xdescribe("ActivationStateService", () => {
   let activationStateService: ActivationStateService;
   let logger: jest.Mocked<Logger>;
   let sessionService: jest.Mocked<SessionService>;
-  let streamService: jest.Mocked<StreamService>;
+  let streamService: jest.Mocked<StreamsService>;
   let activationService: jest.Mocked<ActivationService>;
 
   const activation = new ActivationEntityBuilder().withSessionId("3edf").build();
@@ -21,7 +21,7 @@ xdescribe("ActivationStateService", () => {
   beforeEach(() => {
     logger = createMockInstance(Logger);
     sessionService = createMockInstance(SessionService);
-    streamService = createMockInstance(StreamService);
+    streamService = createMockInstance(StreamsService);
     activationService = createMockInstance(ActivationService);
 
   });

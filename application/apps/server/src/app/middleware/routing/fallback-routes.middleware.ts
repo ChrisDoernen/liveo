@@ -2,7 +2,7 @@ import { ENDPOINTS, ROUTES } from "@liveo/constants";
 import { Injectable, NestMiddleware } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Request, Response } from "express";
-import { AppConfig, AppConfigToken } from "../../config/app-config";
+import { AppConfig, AppConfigToken } from "../../modules/core/configuration/app-config";
 
 @Injectable()
 export class FallbackRoutesMiddleware implements NestMiddleware {

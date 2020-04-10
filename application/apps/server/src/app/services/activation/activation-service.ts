@@ -1,9 +1,9 @@
 import { ActivationEntity } from "@liveo/entities";
 import { Injectable } from "@nestjs/common";
 import { BehaviorSubject } from "rxjs";
-import { Logger } from "../../../../../server/src/app/services/logging/logger";
+import { Logger } from "../../modules/core/services/logging/logger";
+import { TimeService } from "../../modules/shared/services/time/time.service";
 import { ActivationStateService } from "../application-state/activation-state.service";
-import { TimeService } from "../time/time.service";
 
 @Injectable()
 export class ActivationService {

@@ -7,8 +7,8 @@ import * as express from "express";
 import * as Ffmpeg from "fluent-ffmpeg";
 import { EOL } from "os";
 import { AppModule } from "./app/app.module";
-import { AppConfig, AppConfigToken } from "./app/config/app-config";
-import { Logger } from "./app/services/logging/logger";
+import { AppConfig, AppConfigToken } from "./app/modules/core/configuration/app-config";
+import { Logger } from "./app/modules/core/services/logging/logger";
 import { environment } from "./environments/environment";
 
 const checkRequirements = (appConfig: AppConfig) => {

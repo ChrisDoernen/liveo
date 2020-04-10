@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { filter } from "rxjs/operators";
-import { AppConfig, AppConfigToken } from "../../config/app-config";
+import { AppConfig, AppConfigToken } from "../../modules/core/configuration/app-config";
+import { Logger } from "../../modules/core/services/logging/logger";
+import { ProcessExecutionService } from "../../modules/shared/services/process-execution/process-execution-service";
 import { ActivationStateService } from "../application-state/activation-state.service";
-import { Logger } from "../logging/logger";
-import { ProcessExecutionService } from "../process-execution/process-execution-service";
 
 /**
  * Class for server shutdown

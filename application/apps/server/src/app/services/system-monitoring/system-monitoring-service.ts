@@ -2,7 +2,7 @@ import { EVENTS } from "@liveo/constants";
 import { Injectable } from "@nestjs/common";
 import * as os from "os-utils";
 import { AdminGateway } from "../../gateways/admin.gateway";
-import { Logger } from "../logging/logger";
+import { Logger } from "../../modules/core/services/logging/logger";
 
 @Injectable()
 export class SystemMonitoringService {
