@@ -4,6 +4,7 @@ import { SettingsService } from "../../settings/services/settings/settings-servi
 import { PlatformConstants } from "../../shared/platform-constants/platform-constants";
 import { AdminGateway } from "../../state/gateways/admin.gateway";
 import { StreamingGateway } from "../gateways/streaming.gateway";
+import { FFmpegLogger } from "../services/ffmpeg-logger";
 import { StreamingSource } from "./streaming-source";
 import { StreamingSourceFactoryToken } from "./streaming-source-factory";
 
@@ -15,12 +16,13 @@ export const StreamingSourceFactoryProvider = {
     platformConstants: PlatformConstants,
     settingsService: SettingsService,
     adminGateway: AdminGateway,
-    streamingGateway: StreamingGateway
+    streamingGateway: StreamingGateway,
+    ffmpegLogger: FFmpegLogger
   ) {
     return (deviceId: string, streamingId: string, onError: (error: Error) => void) => {
       const bitrate = settingsService.getSettings().bitrate;
 
-      return new StreamingSource(logger, appConfig, null, streamingGateway, adminGateway,
+      return new StreamingSource(logger, appConfig, ffmpegLogger, streamingGateway, adminGateway,
         platformConstants, deviceId, streamingId, bitrate, onError);
     };
   },
@@ -30,6 +32,7 @@ export const StreamingSourceFactoryProvider = {
     PlatformConstants,
     SettingsService,
     AdminGateway,
-    StreamingGateway
+    StreamingGateway,
+    FFmpegLogger
   ]
 }

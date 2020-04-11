@@ -1,8 +1,8 @@
-import { ROUTES } from "@liveo/constants";
+import { ENDPOINTS, ROUTES } from "@liveo/constants";
 import { Controller, Post } from "@nestjs/common";
 import { ShutdownService } from "../services/shutdown/shutdown-service";
 
-@Controller(`/${ROUTES.admin}/shutdown`)
+@Controller(`${ENDPOINTS.api}/${ROUTES.admin}/shutdown`)
 export class ShutdownController {
 
   constructor(

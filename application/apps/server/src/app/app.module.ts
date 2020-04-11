@@ -22,6 +22,9 @@ import { StreamsModule } from "./modules/streams/streams.module";
     StatisticsModule,
     StreamingModule,
     StreamsModule
+  ],
+  providers: [
+    FallbackRoutesMiddleware
   ]
 })
 export class AppModule implements NestModule {

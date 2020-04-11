@@ -10,9 +10,7 @@ export const IStreamingSourceFactoryProvider = {
     streamingSourceFactory: IStreamingSourceFactory,
     streamingSimulationSourceFactory: IStreamingSourceFactory
   ) {
-    return () => {
-      return appConfig.simulate ? streamingSimulationSourceFactory : streamingSourceFactory;
-    };
+    return appConfig.simulate ? streamingSimulationSourceFactory : streamingSourceFactory;
   },
   inject: [
     AppConfig,

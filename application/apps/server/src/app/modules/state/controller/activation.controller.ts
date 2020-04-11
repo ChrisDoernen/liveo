@@ -1,9 +1,9 @@
-import { ROUTES } from "@liveo/constants";
+import { ENDPOINTS, ROUTES } from "@liveo/constants";
 import { ActivationEntity } from "@liveo/entities";
 import { Body, Controller, Delete, Get, Post } from "@nestjs/common";
 import { ActivationService } from "../services/activation/activation-service";
 
-@Controller(`/${ROUTES.admin}/activation`)
+@Controller(`${ENDPOINTS.api}/${ROUTES.admin}/activation`)
 export class ActivationController {
   constructor(
     private readonly _activationService: ActivationService

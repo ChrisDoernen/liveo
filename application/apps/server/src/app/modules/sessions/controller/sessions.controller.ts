@@ -1,9 +1,9 @@
-import { ROUTES } from "@liveo/constants";
+import { ENDPOINTS, ROUTES } from "@liveo/constants";
 import { SessionEntity } from "@liveo/entities";
 import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { SessionService } from "../services/sessions/session.service";
 
-@Controller(`/${ROUTES.admin}/sessions`)
+@Controller(`${ENDPOINTS.api}/${ROUTES.admin}/sessions`)
 export class SessionsController {
 
   constructor(

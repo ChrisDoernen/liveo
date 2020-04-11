@@ -1,9 +1,9 @@
-import { ROUTES } from "@liveo/constants";
+import { ENDPOINTS, ROUTES } from "@liveo/constants";
 import { DeviceEntity } from "@liveo/entities";
 import { Controller, Get, Query } from "@nestjs/common";
 import { DevicesService } from "../services/devices/device.service";
 
-@Controller(`/${ROUTES.admin}/devices`)
+@Controller(`${ENDPOINTS.api}/${ROUTES.admin}/devices`)
 export class DevicesController {
 
   constructor(

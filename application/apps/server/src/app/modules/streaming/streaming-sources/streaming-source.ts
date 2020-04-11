@@ -8,6 +8,7 @@ import { Logger } from "../../core/services/logging/logger";
 import { PlatformConstants } from "../../shared/platform-constants/platform-constants";
 import { AdminGateway } from "../../state/gateways/admin.gateway";
 import { StreamingGateway } from "../gateways/streaming.gateway";
+import { FFmpegLogger } from "../services/ffmpeg-logger";
 import { IStreamingSource } from "./i-streaming-source";
 
 /**
@@ -21,7 +22,7 @@ export class StreamingSource implements IStreamingSource {
   constructor(
     private readonly _logger: Logger,
     private readonly _appConfig: AppConfig,
-    private readonly _ffmpegLogger: Logger,
+    private readonly _ffmpegLogger: FFmpegLogger,
     private readonly _streamingGateway: StreamingGateway,
     private readonly _adminGateway: AdminGateway,
     private readonly _plattformConstants: PlatformConstants,

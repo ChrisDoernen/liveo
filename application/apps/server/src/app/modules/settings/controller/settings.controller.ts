@@ -1,9 +1,9 @@
-import { ROUTES } from "@liveo/constants";
+import { ENDPOINTS, ROUTES } from "@liveo/constants";
 import { SettingsEntity } from "@liveo/entities";
 import { Body, Controller, Get, Put } from "@nestjs/common";
 import { SettingsService } from "../services/settings/settings-service";
 
-@Controller(`/${ROUTES.admin}/settings`)
+@Controller(`${ENDPOINTS.api}/${ROUTES.admin}/settings`)
 export class SettingsController {
 
   constructor(

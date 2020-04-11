@@ -1,9 +1,9 @@
-import { ROUTES } from "@liveo/constants";
+import { ENDPOINTS, ROUTES } from "@liveo/constants";
 import { StreamEntity } from "@liveo/entities";
 import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { StreamsService } from "../services/streams/streams.service";
 
-@Controller(`/${ROUTES.admin}/streams`)
+@Controller(`${ENDPOINTS.api}/${ROUTES.admin}/streams`)
 export class StreamsController {
 
   constructor(
