@@ -1,5 +1,6 @@
 import { ActivationEntity } from "@liveo/entities";
-import { Injectable, Logger } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
+import { Logger } from "../../../core/services/logging/logger";
 import { SettingsService } from "../../../settings/services/settings/settings-service";
 import { ActivationService } from "./activation-service";
 

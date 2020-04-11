@@ -1,13 +1,14 @@
 import { SessionEntityBuilder } from "@liveo/test-utilities";
+import { Test } from "@nestjs/testing";
 import createMockInstance from "jest-create-mock-instance";
 import { Logger } from "../../../core/services/logging/logger";
-import { DataService } from "../../modules/core/services/data/data.service";
+import { SessionRepository } from "./session-repository";
 import { SessionService } from "./session.service";
 
 describe("SessionService", () => {
   let sessionService: SessionService;
   let logger: jest.Mocked<Logger>;
-  let sessionRepository: jest.Mocked<DataService>;
+  let sessionRepository: jest.Mocked<SessionRepository>;
 
   const firstSessionId = "tx331xqq";
   const secondSessionId = "6t3y5cew";
@@ -20,11 +21,26 @@ describe("SessionService", () => {
     new SessionEntityBuilder().withId(secondSessionId).withStreams([secondStreamId]).build()
   ];
 
-  beforeEach(() => {
+  beforeEach(async () => {
     logger = createMockInstance(Logger);
-    sessionRepository = createMockInstance(DataService);
-
+    sessionRepository = createMockInstance(SessionRepository);
     sessionRepository.getSessionEntities.mockReturnValue(sessions);
+
+    const moduleRef = await Test.createTestingModule({
+      providers: [
+        SessionService,
+        {
+          provide: SessionRepository,
+          useValue: sessionRepository
+        },
+        {
+          provide: Logger,
+          useValue: logger
+        }
+      ]
+    }).compile();
+
+    sessionService = moduleRef.get<SessionService>(SessionService);
   });
 
   it("should construct", () => {

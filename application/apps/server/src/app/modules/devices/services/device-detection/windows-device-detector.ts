@@ -11,14 +11,14 @@ export class WindowsDeviceDetector extends DeviceDetector {
 
   constructor(
     logger: Logger,
-    _plattformConstants: PlatformConstants,
+    plattformConstants: PlatformConstants,
     ffmpegPath: string,
     processExecutionService: ProcessExecutionService,
     idGenerator: IdGenerator,
-    deviceFactory: (deviceData: DeviceEntity) => Device
+    deviceFactory: (deviceEntity: DeviceEntity) => Device
   ) {
     super(logger, processExecutionService, idGenerator, deviceFactory);
-    this.listDevicesCommand = `"${ffmpegPath}" -f ${_plattformConstants.audioModule} -list_devices true -i '' -hide_banner`;
+    this.listDevicesCommand = `"${ffmpegPath}" -f ${plattformConstants.audioModule} -list_devices true -i '' -hide_banner`;
   }
 
   protected parseResponse(response: string): Device[] {
@@ -49,7 +49,7 @@ export class WindowsDeviceDetector extends DeviceDetector {
         if (params) {
           const id = params[1];
           const name = params[2]
-          const deviceType = isVideo ? DeviceType.Video : DeviceType.Audio
+          const deviceType = isVideo ? DeviceType.Video : DeviceType.Audio;
           devices.push(this.instantiateDevice(id, name, deviceType));
         }
       });

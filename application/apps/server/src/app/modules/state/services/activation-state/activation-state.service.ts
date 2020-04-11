@@ -29,7 +29,8 @@ export class ActivationStateService {
     private readonly _streamService: StreamsService,
     private readonly _scheduler: Scheduler,
     private readonly _timeService: TimeService,
-    private readonly _adminGateway: AdminGateway) {
+    private readonly _adminGateway: AdminGateway
+  ) {
   }
 
   public newActivation(activation: ActivationEntity) {

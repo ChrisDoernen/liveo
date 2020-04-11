@@ -11,11 +11,12 @@ import { DeviceDetector } from "../device-detection/device-detector";
 import { LinuxDeviceDetector } from "../device-detection/linux-device-detector";
 import { DevicesService } from "./device.service";
 
-describe("DeviecService", () => {
+xdescribe("DeviecService", () => {
   let deviceService: DevicesService;
   let activationStateService: jest.Mocked<ActivationStateService>;
   let deviceDetector: jest.Mocked<DeviceDetector>;
   let adminService: jest.Mocked<AdminService>;
+  let logger: jest.Mocked<Logger>;
 
   const activationState$ = new BehaviorSubject<ActivationEntity>(null);
   const streamCreation$ = new BehaviorSubject<boolean>(false);
@@ -24,6 +25,7 @@ describe("DeviecService", () => {
   const activation = new ActivationEntityBuilder().build();
 
   beforeEach(() => {
+    logger = createMockInstance(Logger);
     jest.useFakeTimers();
 
     activationStateService = createMockInstance(ActivationStateService);
@@ -32,7 +34,7 @@ describe("DeviecService", () => {
     Object.defineProperty(adminService, "streamCreation$", { value: streamCreation$.asObservable() });
     deviceDetector = createMockInstance(LinuxDeviceDetector);
 
-    deviceService = new DevicesService(createMockInstance(Logger), activationStateService, adminService, deviceDetector);
+    deviceService = new DevicesService(logger, activationStateService, adminService, deviceDetector);
   });
 
   afterEach(() => {
@@ -54,7 +56,7 @@ describe("DeviecService", () => {
     expect(deviceEntities).toEqual([deviceEntity]);
   });
 
-  xit("should start streaming when admin connects", async () => {
+  it("should start streaming when admin connects", async () => {
     const device = createMockInstance(Device);
     Object.defineProperty(device, "entity", { get: () => deviceEntity });
     deviceDetector.runDetection.mockResolvedValue([device]);
@@ -67,7 +69,7 @@ describe("DeviecService", () => {
     expect(startStreamingSpy).toHaveBeenCalledTimes(1);
   });
 
-  xit("should call start streaming only once when admin connects and activation is set", async () => {
+  it("should call start streaming only once when admin connects and activation is set", async () => {
     const device = createMockInstance(Device);
     Object.defineProperty(device, "entity", { get: () => deviceEntity });
     deviceDetector.runDetection.mockResolvedValue([device]);
@@ -81,7 +83,7 @@ describe("DeviecService", () => {
     expect(startStreamingSpy).toHaveBeenCalledTimes(1);
   });
 
-  xit("should start streaming when activation is set", async () => {
+  it("should start streaming when activation is set", async () => {
     const device = createMockInstance(Device);
     Object.defineProperty(device, "entity", { get: () => deviceEntity });
     deviceDetector.runDetection.mockResolvedValue([device]);
@@ -94,7 +96,7 @@ describe("DeviecService", () => {
     expect(startStreamingSpy).toHaveBeenCalledTimes(1);
   });
 
-  xit("should start streaming when admin is in stream creation and stop when leaving", async () => {
+  it("should start streaming when admin is in stream creation and stop when leaving", async () => {
     const device = createMockInstance(Device);
     Object.defineProperty(device, "entity", { get: () => deviceEntity });
     deviceDetector.runDetection.mockResolvedValue([device]);

@@ -37,18 +37,6 @@ export class Logger {
       format: timeLevelMessage
     });
 
-    const ffmpegLogFileTransport = new DailyRotateFile({
-      filename: "liveo-ffmpeg-%DATE%.log",
-      dirname: appConfig.logdirectory,
-      datePattern: "YYYY-MM-DD",
-      zippedArchive: false,
-      maxFiles: "10d",
-      level: "debug",
-      handleExceptions: true,
-      json: true,
-      format: timeLevelMessage
-    });
-
     const consoleTransportOptions = {
       level: appConfig.loglevel,
       handleExceptions: true,

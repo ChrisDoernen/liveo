@@ -1,9 +1,10 @@
 import { SessionEntity, SettingsEntity, StreamEntity, UserEntity } from "@liveo/entities";
-import { Injectable, Logger } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { existsSync } from "fs";
 import * as low from "lowdb";
 import * as FileSync from "lowdb/adapters/FileSync";
 import { AppConfig } from "../../../core/configuration/app-config";
+import { Logger } from "../../../core/services/logging/logger";
 import { IdGenerator } from "../../../shared/services/id-generation/id-generator";
 import { DBSchema } from "./data-schema.enum";
 

@@ -1,29 +1,37 @@
+import { UserEntityBuilder } from "@liveo/test-utilities";
 import { Test, TestingModule } from "@nestjs/testing";
+import createMockInstance from "jest-create-mock-instance";
+import { UsersService } from "../../../users/services/users/users.service";
 import { AuthenticationService } from "./authentication.service";
 
-describe("AuthService", () => {
-  let service: AuthenticationService;
+describe("AuthenticationService", () => {
+  let authenticationService: AuthenticationService;
+  let usersService: jest.Mocked<UsersService>;
 
   beforeEach(async () => {
+    usersService = createMockInstance(UsersService);
+
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AuthenticationService],
+      providers: [
+        AuthenticationService,
+        {
+          provide: UsersService,
+          useValue: usersService
+        }
+      ]
     }).compile();
 
-    service = module.get<AuthenticationService>(AuthenticationService);
+    authenticationService = module.get<AuthenticationService>(AuthenticationService);
   });
 
   it("should be defined", () => {
-    expect(service).toBeDefined();
-  });
-
-  it("should construct", () => {
-    expect(authenticationService).toBeTruthy();
+    expect(authenticationService).toBeDefined();
   });
 
   it("should throw if user was not found in the database", () => {
-    service.getUser.mockReturnValue(null);
+    usersService.getUser.mockReturnValue(null);
 
-    expect(() => service.authenticate("someUsername", "password")).toThrowError();
+    expect(() => authenticationService.authenticate("someUsername", "password")).toThrowError();
   });
 
   it("should throw if user was found in the database but password is not correct", () => {
@@ -31,9 +39,9 @@ describe("AuthService", () => {
     const invalidPassword = "password";
     const validPassword = "Password";
     const userInDatabase = new UserEntityBuilder().withUsername(username).withPassword(validPassword).build();
-    service.getUser.mockReturnValue(userInDatabase);
+    usersService.getUser.mockReturnValue(userInDatabase);
 
-    expect(() => service.authenticate(username, invalidPassword)).toThrowError();
+    expect(() => authenticationService.authenticate(username, invalidPassword)).toThrowError();
   });
 
   it("should authenticate user if in database and password is correct", () => {
@@ -41,7 +49,7 @@ describe("AuthService", () => {
     const password = "password";
 
     const userInDatabase = new UserEntityBuilder().withUsername(username).withPassword(password).build();
-    dataService.getUser.mockReturnValue(userInDatabase);
+    usersService.getUser.mockReturnValue(userInDatabase);
 
     const returnedUser = authenticationService.authenticate(username, password);
 

@@ -20,7 +20,7 @@ export abstract class DeviceDetector {
   }
 
   public async runDetection(): Promise<Device[]> {
-    const response = await this.executeListDevicesCommand()
+    const response = await this.executeListDevicesCommand();
 
     this.logger.debug("Detecting audio inputs.");
     const devices = this.parseResponse(response);
@@ -47,8 +47,8 @@ export abstract class DeviceDetector {
   protected abstract parseResponse(output: string): Device[];
 
   protected instantiateDevice(id: string, description: string, deviceType: DeviceType): Device {
-    const streamingSourceId = this._idGenerator.getMd5Hash(id, 8);
+    const streamingId = this._idGenerator.getMd5Hash(id, 8);
 
-    return this._deviceFactory(new DeviceEntity(id, streamingSourceId, description, deviceType));
+    return this._deviceFactory(new DeviceEntity(id, streamingId, description, deviceType));
   }
 }

@@ -13,8 +13,9 @@ describe("ConnectionHistoryService", () => {
   beforeEach(() => {
     logger = createMockInstance(Logger);
     timeService = createMockInstance(TimeService);
-
     timeService.now.mockImplementation(() => new Date());
+
+    connectionHistoryService = new ConnectionHistoryService(logger, timeService);
   });
 
   it("should construct", () => {

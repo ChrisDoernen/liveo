@@ -9,7 +9,7 @@ import { Device } from "../../device/device";
 import { DeviceState } from "../../device/device-state";
 import { MacOSDeviceDetector } from "./macos-device-detector";
 
-describe("MacOSDeviceDetector", () => {
+xdescribe("MacOSDeviceDetector", () => {
   let macOsDeviceDetector: MacOSDeviceDetector;
   let processExecutionService: jest.Mocked<ProcessExecutionService>;
   let idGenerator: jest.Mocked<IdGenerator>;

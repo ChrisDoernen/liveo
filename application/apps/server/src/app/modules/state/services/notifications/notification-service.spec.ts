@@ -1,24 +1,23 @@
 import { EVENTS } from "@liveo/constants";
 import { NotificationEntity, NotificationType } from "@liveo/entities";
 import createMockInstance from "jest-create-mock-instance";
-import "reflect-metadata";
-import { WebsocketServer } from "../../core/websocket-server";
+import { AdminGateway } from "../../gateways/admin.gateway";
 import { NotificationService } from "./notification-service";
 
 describe("NotificationService", () => {
-  let websocketServer: jest.Mocked<WebsocketServer>;
+  let adminGateway: jest.Mocked<AdminGateway>;
   let notificationService: NotificationService;
 
   beforeEach(() => {
-    websocketServer = createMockInstance(WebsocketServer);
+    adminGateway = createMockInstance(AdminGateway);
 
-    notificationService = new NotificationService(websocketServer);
+    notificationService = new NotificationService(adminGateway);
   });
 
   it("should call websocket server on send notification", () => {
     const notification = new NotificationEntity("Some message", NotificationType.Info);
     notificationService.sendNotification(notification);
 
-    expect(websocketServer.emitAdminEventMessage).toBeCalledWith(EVENTS.adminNotification, notification);
+    expect(adminGateway.emit).toBeCalledWith(EVENTS.adminNotification, notification);
   });
 });

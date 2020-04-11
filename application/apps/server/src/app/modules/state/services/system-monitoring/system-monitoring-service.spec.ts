@@ -1,6 +1,7 @@
 import createMockInstance from "jest-create-mock-instance";
 import "reflect-metadata";
 import { Logger } from "../../../core/services/logging/logger";
+import { AdminGateway } from "../../gateways/admin.gateway";
 import { SystemMonitoringService } from "./system-monitoring-service";
 
 jest.useFakeTimers();
@@ -8,9 +9,13 @@ jest.useFakeTimers();
 describe("SystemMonitoringService", () => {
   let systemMonitoringService: SystemMonitoringService;
   let logger: jest.Mocked<Logger>;
+  let adminGateway: jest.Mocked<AdminGateway>;
 
   beforeEach(() => {
     logger = createMockInstance(Logger);
+    adminGateway = createMockInstance(AdminGateway);
+
+    systemMonitoringService = new SystemMonitoringService(logger, adminGateway);
   });
 
   it("should be defined", () => {
@@ -18,7 +23,7 @@ describe("SystemMonitoringService", () => {
   });
 
   it("should have emit cpu usage every 2 seconds", () => {
-    const spy = jest.spyOn(websocketServer, "emitAdminEventMessage");
+    const spy = jest.spyOn(adminGateway, "emit");
     systemMonitoringService.startMonitoring();
 
     // I dont know why the test does not pass with 4000ms...

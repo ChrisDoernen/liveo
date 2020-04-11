@@ -1,12 +1,11 @@
 import { ActivationEntity } from "@liveo/entities";
 import { SettingsEntityBuilder } from "@liveo/test-utilities";
-import { Container } from "inversify";
 import createMockInstance from "jest-create-mock-instance";
-import "reflect-metadata";
 import { Logger } from "../../../core/services/logging/logger";
 import { SettingsService } from "../../../settings/services/settings/settings-service";
 import { ActivationService } from "./activation-service";
 import { AutoActivationService } from "./auto-activation-service";
+
 
 describe("AutoActivationService", () => {
   let autoActivationService: AutoActivationService;
@@ -19,13 +18,7 @@ describe("AutoActivationService", () => {
     settingsService = createMockInstance(SettingsService);
     activationService = createMockInstance(ActivationService);
 
-    const container = new Container();
-    container.bind<Logger>("Logger").toConstantValue(logger);
-    container.bind<SettingsService>("SettingsService").toConstantValue(settingsService);
-    container.bind<ActivationService>("ActivationService").toConstantValue(activationService);
-    container.bind<AutoActivationService>("AutoActivationService").to(AutoActivationService);
-
-    autoActivationService = container.get<AutoActivationService>("AutoActivationService");
+    autoActivationService = new AutoActivationService(logger, settingsService, activationService);
   });
 
   it("should construct", () => {
