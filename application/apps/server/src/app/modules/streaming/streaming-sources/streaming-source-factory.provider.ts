@@ -1,5 +1,4 @@
-import { ConfigService } from "@nestjs/config";
-import { AppConfig, AppConfigToken } from "../../core/configuration/app-config";
+import { AppConfig } from "../../core/configuration/app-config";
 import { Logger } from "../../core/services/logging/logger";
 import { SettingsService } from "../../settings/services/settings/settings-service";
 import { PlatformConstants } from "../../shared/platform-constants/platform-constants";
@@ -12,14 +11,13 @@ export const StreamingSourceFactoryProvider = {
   provide: StreamingSourceFactoryToken,
   useFactory(
     logger: Logger,
-    configService: ConfigService,
+    appConfig: AppConfig,
     platformConstants: PlatformConstants,
     settingsService: SettingsService,
     adminGateway: AdminGateway,
     streamingGateway: StreamingGateway
   ) {
     return (deviceId: string, streamingId: string, onError: (error: Error) => void) => {
-      const appConfig = configService.get<AppConfig>(AppConfigToken);
       const bitrate = settingsService.getSettings().bitrate;
 
       return new StreamingSource(logger, appConfig, null, streamingGateway, adminGateway,
@@ -28,7 +26,7 @@ export const StreamingSourceFactoryProvider = {
   },
   inject: [
     Logger,
-    ConfigService,
+    AppConfig,
     PlatformConstants,
     SettingsService,
     AdminGateway,

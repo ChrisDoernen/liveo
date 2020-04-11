@@ -1,10 +1,9 @@
 import { SessionEntity, SettingsEntity, StreamEntity, UserEntity } from "@liveo/entities";
 import { Injectable, Logger } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import { existsSync } from "fs";
 import * as low from "lowdb";
 import * as FileSync from "lowdb/adapters/FileSync";
-import { AppConfig, AppConfigToken } from "../../../core/configuration/app-config";
+import { AppConfig } from "../../../core/configuration/app-config";
 import { IdGenerator } from "../../../shared/services/id-generation/id-generator";
 import { DBSchema } from "./data-schema.enum";
 
@@ -17,15 +16,15 @@ export class DataService {
   private _database: any;
 
   constructor(
-    private readonly _configService: ConfigService,
+    appConfig: AppConfig,
     private readonly _logger: Logger,
     private readonly _idGenerator: IdGenerator
   ) {
-    this.initializeDatabase();
+    this.initializeDatabase(appConfig);
   }
 
-  public initializeDatabase(): void {
-    const db = this._configService.get<AppConfig>(AppConfigToken).database;
+  public initializeDatabase(appConfig: AppConfig): void {
+    const db = appConfig.database;
 
     if (!existsSync(db)) {
       const error = new Error(`Database file does not exist: ${db}.`);

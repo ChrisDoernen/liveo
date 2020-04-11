@@ -1,5 +1,4 @@
-import { ConfigService } from "@nestjs/config";
-import { AppConfig, AppConfigToken } from "../../../core/configuration/app-config";
+import { AppConfig } from "../../../core/configuration/app-config";
 import { Logger } from "../../../core/services/logging/logger";
 import { PlatformConstants } from "../../../shared/platform-constants/platform-constants";
 import { IdGenerator } from "../../../shared/services/id-generation/id-generator";
@@ -14,15 +13,13 @@ import { WindowsDeviceDetector } from "./windows-device-detector";
 export const DeviceDetectorProvider = {
   provide: DeviceDetector,
   useFactory: (
-    configService: ConfigService,
+    appConfig: AppConfig,
     logger: Logger,
     devicefactory: DeviceFactory,
     platformConstants: PlatformConstants,
     processExecutionService: ProcessExecutionService,
     idGenerator: IdGenerator
   ) => {
-    const appConfig = configService.get<AppConfig>(AppConfigToken);
-
     if (appConfig.simulate) {
       return new SimulationDeviceDetector(logger, processExecutionService, idGenerator, devicefactory);
     }
@@ -43,7 +40,7 @@ export const DeviceDetectorProvider = {
     }
   },
   inject: [
-    ConfigService,
+    AppConfig,
     Logger,
     PlatformConstants,
     ProcessExecutionService,

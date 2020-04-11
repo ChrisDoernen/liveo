@@ -1,5 +1,6 @@
 import { Global, Module } from "@nestjs/common";
-import { ConfigModule, ConfigService } from "@nestjs/config";
+import { ConfigModule } from "@nestjs/config";
+import { AppConfigProvider } from "./configuration/app-config.provider";
 import { configuration } from "./configuration/configuration";
 import { Logger } from "./services/logging/logger";
 
@@ -12,12 +13,12 @@ import { Logger } from "./services/logging/logger";
     }),
   ],
   providers: [
-    Logger,
-    ConfigService
+    AppConfigProvider,
+    Logger
   ],
   exports: [
-    Logger,
-    ConfigService
+    AppConfigProvider,
+    Logger
   ]
 })
 export class CoreModule { }

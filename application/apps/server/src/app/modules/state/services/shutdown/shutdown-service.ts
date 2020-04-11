@@ -1,7 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import { filter } from "rxjs/operators";
-import { AppConfig, AppConfigToken } from "../../../core/configuration/app-config";
+import { AppConfig } from "../../../core/configuration/app-config";
 import { Logger } from "../../../core/services/logging/logger";
 import { ProcessExecutionService } from "../../../shared/services/process-execution/process-execution-service";
 import { ActivationStateService } from "../activation-state/activation-state.service";
@@ -14,7 +13,7 @@ export class ShutdownService {
 
   constructor(
     private readonly _logger: Logger,
-    private readonly _configService: ConfigService,
+    private readonly _appConfig: AppConfig,
     private readonly _processExecutionService: ProcessExecutionService,
     private readonly _activationStateService: ActivationStateService
   ) {
@@ -29,21 +28,19 @@ export class ShutdownService {
   }
 
   private executeShutdown(): void {
-    const appConfig = this._configService.get<AppConfig>(AppConfigToken);
-
-    if (!appConfig.production) {
+    if (!this._appConfig.production) {
       this._logger.debug("Simulating server shutdown in development environment");
       return;
     }
 
-    if (appConfig.executable) {
+    if (this._appConfig.executable) {
       this._logger.info("Shutting down, killing process.");
       process.exit(0);
     }
 
     let shutdownCommand: string;
 
-    switch (appConfig.platform) {
+    switch (this._appConfig.platform) {
       case "linux": {
         shutdownCommand = "sudo shutdown -h now";
         break;
@@ -53,7 +50,7 @@ export class ShutdownService {
         break;
       }
       default: {
-        throw new Error(`OS ${appConfig.platform} is unsupported.`);
+        throw new Error(`OS ${this._appConfig.platform} is unsupported.`);
       }
     }
 

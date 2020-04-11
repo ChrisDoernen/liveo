@@ -1,13 +1,12 @@
 // tslint:disable: no-shadowed-variable
 import { ENDPOINTS, ROUTES } from "@liveo/constants";
-import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { execSync } from "child_process";
 import * as express from "express";
 import * as Ffmpeg from "fluent-ffmpeg";
 import { EOL } from "os";
 import { AppModule } from "./app/app.module";
-import { AppConfig, AppConfigToken } from "./app/modules/core/configuration/app-config";
+import { AppConfig } from "./app/modules/core/configuration/app-config";
 import { Logger } from "./app/modules/core/services/logging/logger";
 import { environment } from "./environments/environment";
 
@@ -47,7 +46,7 @@ const logAppConfig = (logger: Logger, appConfig: AppConfig) => {
 
 export async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const appConfig = app.get(ConfigService).get<AppConfig>(AppConfigToken);
+  const appConfig = app.get(AppConfig);
   const logger = app.get(Logger);
   app.useLogger(logger);
 

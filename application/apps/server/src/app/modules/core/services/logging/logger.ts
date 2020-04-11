@@ -1,9 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import * as winston from "winston";
 import { Logger as WinstonLogger } from "winston";
 import DailyRotateFile from "winston-daily-rotate-file";
-import { AppConfig, AppConfigToken } from "../../configuration/app-config";
+import { AppConfig } from "../../configuration/app-config";
 
 /**
  * Wrapper class for logging
@@ -14,9 +13,8 @@ export class Logger {
   private _logger: WinstonLogger;
 
   constructor(
-    configService: ConfigService
+    appConfig: AppConfig
   ) {
-    const appConfig = configService.get<AppConfig>(AppConfigToken);
     this.initialize(appConfig);
   }
 

@@ -1,5 +1,3 @@
-export const AppConfigToken = "appConfig";
-
 export class AppConfig {
     platform: string;
     architecture: string;
