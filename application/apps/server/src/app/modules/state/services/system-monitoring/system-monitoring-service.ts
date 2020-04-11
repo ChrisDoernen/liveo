@@ -11,9 +11,10 @@ export class SystemMonitoringService {
     private readonly _logger: Logger,
     private readonly _adminGateway: AdminGateway
   ) {
+    this.startMonitoring();
   }
 
-  public startMonitoring(): void {
+  private startMonitoring(): void {
     setInterval(() => {
       os.cpuUsage(this.logCPUUsage.bind(this));
     }, 1000);

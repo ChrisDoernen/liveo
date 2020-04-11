@@ -18,7 +18,8 @@ export class SessionService {
     private readonly _logger: Logger,
     private readonly _httpClient: HttpClient,
     private readonly _endpointService: EndpointService,
-    private readonly _activationService: ActivationService) {
+    private readonly _activationService: ActivationService
+  ) {
   }
 
   public subscribeToActivations(): void {

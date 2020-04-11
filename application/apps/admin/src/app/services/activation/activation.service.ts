@@ -30,13 +30,14 @@ export class ActivationService {
     private readonly _httpClient: HttpClient,
     private readonly _endpointService: EndpointService,
     private readonly _activationStateService: ActivationStateService,
-    private readonly _websocketService: WebsocketService) {
+    private readonly _websocketService: WebsocketService
+  ) {
     this.subscribeActivationStateUpdates();
   }
 
   public subscribeActivationStateUpdates(): void {
     this._logger.info("Subscribe actiation state updates");
-    this._websocketService.fromEvent<ActivationStateEntity>(EVENTS.adminActivationStateUodate)
+    this._websocketService.fromEvent<ActivationStateEntity>(EVENTS.adminActivationStateUpdate)
       .subscribe((activationState: ActivationStateEntity) => {
         this._activationState.next(activationState.state);
       });

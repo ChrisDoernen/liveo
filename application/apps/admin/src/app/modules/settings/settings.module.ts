@@ -10,8 +10,6 @@ import { SettingsRoutingModule } from "./settings-routing.module";
   ],
   declarations: [
     SettingsComponent
-  ],
-  entryComponents: [
   ]
 })
 export class SettingsModule { }

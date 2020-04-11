@@ -1,4 +1,4 @@
-import { Injectable, InjectionToken, Inject } from "@angular/core";
+import { Inject, Injectable, InjectionToken } from "@angular/core";
 
 export const ENABLECONSOLELOGGING = new InjectionToken<string>("ENABLECONSOLELOGGING");
 
@@ -10,7 +10,8 @@ const noop = (message: string) => undefined;
 export class Logger {
 
   constructor(
-    @Inject(ENABLECONSOLELOGGING) private _enableConsoleLogging: boolean) {
+    @Inject(ENABLECONSOLELOGGING) private _enableConsoleLogging: boolean
+  ) {
   }
 
   get info(): (message: string) => void {

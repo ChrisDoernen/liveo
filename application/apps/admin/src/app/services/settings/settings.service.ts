@@ -9,9 +9,10 @@ import { EndpointService, Logger } from "@liveo/services";
 export class SettingsService {
 
   constructor(
-    private _logger: Logger,
-    private _httpClient: HttpClient,
-    private _endpointService: EndpointService) {
+    private readonly _logger: Logger,
+    private readonly _httpClient: HttpClient,
+    private readonly _endpointService: EndpointService
+  ) {
   }
 
   public getSettings(): Promise<SettingsEntity> {

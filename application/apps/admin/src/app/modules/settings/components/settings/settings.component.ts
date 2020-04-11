@@ -16,7 +16,8 @@ export class SettingsComponent implements OnInit {
 
   public constructor(
     private readonly _sessionService: SessionService,
-    private readonly _settingsService: SettingsService) {
+    private readonly _settingsService: SettingsService
+  ) {
   }
 
   public ngOnInit(): void {

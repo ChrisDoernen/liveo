@@ -31,7 +31,6 @@ export class AdminGateway implements OnGatewayDisconnect {
   @SubscribeMessage(EVENTS.adminStreamCreationEnter)
   public onAdminStreamCreationEnter(): void {
     this._adminService.onAdminStreamCreationEnter();
-
   }
 
   @SubscribeMessage(EVENTS.adminStreamCreationLeave)

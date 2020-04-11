@@ -17,7 +17,7 @@ export class AuthenticationService {
   }
 
   public login(username: string, password: string): Promise<UserEntity> {
-    const endpoint = this._endpointService.getEndpoint("authentication");
+    const endpoint = this._endpointService.getEndpoint("authentication/login");
     return this._httpClient
       .post<any>(endpoint, { username, password })
       .pipe(map((user) => {
