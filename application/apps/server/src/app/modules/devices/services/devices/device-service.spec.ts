@@ -9,10 +9,10 @@ import { AdminService } from "../../../state/services/admin/admin.service";
 import { Device } from "../../device/device";
 import { DeviceDetector } from "../device-detection/device-detector";
 import { LinuxDeviceDetector } from "../device-detection/linux-device-detector";
-import { DeviceService } from "./device.service";
+import { DevicesService } from "./device.service";
 
 describe("DeviecService", () => {
-  let deviceService: DeviceService;
+  let deviceService: DevicesService;
   let activationStateService: jest.Mocked<ActivationStateService>;
   let deviceDetector: jest.Mocked<DeviceDetector>;
   let adminService: jest.Mocked<AdminService>;
@@ -32,7 +32,7 @@ describe("DeviecService", () => {
     Object.defineProperty(adminService, "streamCreation$", { value: streamCreation$.asObservable() });
     deviceDetector = createMockInstance(LinuxDeviceDetector);
 
-    deviceService = new DeviceService(createMockInstance(Logger), activationStateService, adminService, deviceDetector);
+    deviceService = new DevicesService(createMockInstance(Logger), activationStateService, adminService, deviceDetector);
   });
 
   afterEach(() => {

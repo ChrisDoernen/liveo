@@ -27,7 +27,12 @@ export class SessionService {
   }
 
   public getSessionEntity(id: string): SessionEntity {
-    return this._sessionRepository.getSessionEntity(id);
+    const session = this._sessionRepository.getSessionEntity(id);
+    if (session) {
+      return session;
+    }
+
+    throw new Error(`Session ${id} not found`);
   }
 
   public createSession(sessionEntity: SessionEntity): SessionEntity {

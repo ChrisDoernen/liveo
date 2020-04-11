@@ -3,6 +3,7 @@ import { SessionsModule } from "../sessions/sessions.module";
 import { SettingsModule } from "../settings/settings.module";
 import { SharedModule } from "../shared/shared.module";
 import { StreamsModule } from "../streams/streams.module";
+import { ActivationController } from "./controller/activation.controller";
 import { ApplicationStateController } from "./controller/application-state.controller";
 import { ConnectionController } from "./controller/connection.controller";
 import { ShutdownController } from "./controller/shutdown.controller";
@@ -23,6 +24,7 @@ import { SystemMonitoringService } from "./services/system-monitoring/system-mon
     SettingsModule
   ],
   controllers: [
+    ActivationController,
     ApplicationStateController,
     ConnectionController,
     ShutdownController

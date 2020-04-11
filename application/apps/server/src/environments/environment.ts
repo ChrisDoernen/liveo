@@ -7,7 +7,6 @@ import { version } from "../../../../version";
 export const environment = {
   production: false,
   simulate: false,
-  filesource: false,
   port: 3000,
   standalone: true,
   executable: false,

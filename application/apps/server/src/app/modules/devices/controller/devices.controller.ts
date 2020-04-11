@@ -1,13 +1,13 @@
 import { ROUTES } from "@liveo/constants";
 import { DeviceEntity } from "@liveo/entities";
 import { Controller, Get, Query } from "@nestjs/common";
-import { DeviceService } from "../services/devices/device.service";
+import { DevicesService } from "../services/devices/device.service";
 
 @Controller(`/${ROUTES.admin}/devices`)
 export class DevicesController {
 
   constructor(
-    private readonly _deviceService: DeviceService
+    private readonly _deviceService: DevicesService
   ) {
   }
 

@@ -5,7 +5,7 @@ import { StreamingModule } from "../streaming/streaming.module";
 import { DevicesController } from "./controller/devices.controller";
 import { DeviceDetectorProvider } from "./services/device-detection/device-detector.provider";
 import { DeviceFactoryProvider } from "./services/device-detection/device-factory.provider";
-import { DeviceService } from "./services/devices/device.service";
+import { DevicesService } from "./services/devices/device.service";
 
 @Global()
 @Module({
@@ -18,7 +18,7 @@ import { DeviceService } from "./services/devices/device.service";
     DevicesController
   ],
   providers: [
-    DeviceService,
+    DevicesService,
     DeviceDetectorProvider,
     DeviceFactoryProvider,
   ]

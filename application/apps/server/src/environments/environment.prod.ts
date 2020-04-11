@@ -3,10 +3,9 @@ import { version } from "../../../../version";
 export const environment = {
   production: true,
   simulate: false,
-  filesource: false,
-  port: 3000,
-  standalone: false,
-  executable: false,
+  port: 80,
+  standalone: true,
+  executable: true,
   revision: version.revision,
   version: version.version
 };

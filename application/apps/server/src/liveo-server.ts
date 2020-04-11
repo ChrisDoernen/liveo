@@ -8,6 +8,7 @@ import { EOL } from "os";
 import { AppModule } from "./app/app.module";
 import { AppConfig } from "./app/modules/core/configuration/app-config";
 import { Logger } from "./app/modules/core/services/logging/logger";
+import { DevicesService } from "./app/modules/devices/services/devices/device.service";
 import { environment } from "./environments/environment";
 
 const checkRequirements = (appConfig: AppConfig) => {
@@ -48,11 +49,15 @@ export async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const appConfig = app.get(AppConfig);
   const logger = app.get(Logger);
+  const devicesService = app.get(DevicesService);
+
   app.useLogger(logger);
 
   checkRequirements(appConfig);
   logAppConfig(logger, appConfig);
   Ffmpeg.setFfmpegPath(appConfig.ffmpegPath);
+
+  await devicesService.initialize();
 
   if (appConfig.standalone) {
     logger.debug(`Serving static files in standalone mode.`);

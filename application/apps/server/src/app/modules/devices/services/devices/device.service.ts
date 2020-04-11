@@ -9,7 +9,7 @@ import { Device } from "../../device/device";
 import { DeviceDetector } from "../device-detection/device-detector";
 
 @Injectable()
-export class DeviceService {
+export class DevicesService {
 
   private _devices: Device[] = [];
 

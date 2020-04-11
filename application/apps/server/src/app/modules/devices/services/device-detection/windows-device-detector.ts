@@ -15,7 +15,8 @@ export class WindowsDeviceDetector extends DeviceDetector {
     ffmpegPath: string,
     processExecutionService: ProcessExecutionService,
     idGenerator: IdGenerator,
-    deviceFactory: (deviceData: DeviceEntity) => Device) {
+    deviceFactory: (deviceData: DeviceEntity) => Device
+  ) {
     super(logger, processExecutionService, idGenerator, deviceFactory);
     this.listDevicesCommand = `"${ffmpegPath}" -f ${_plattformConstants.audioModule} -list_devices true -i '' -hide_banner`;
   }

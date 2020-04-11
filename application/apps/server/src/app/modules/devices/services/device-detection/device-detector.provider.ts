@@ -3,7 +3,7 @@ import { Logger } from "../../../core/services/logging/logger";
 import { PlatformConstants } from "../../../shared/platform-constants/platform-constants";
 import { IdGenerator } from "../../../shared/services/id-generation/id-generator";
 import { ProcessExecutionService } from "../../../shared/services/process-execution/process-execution-service";
-import { DeviceFactory } from "../../device/device-factory";
+import { DeviceFactory, DeviceFactoryToken } from "../../device/device-factory";
 import { DeviceDetector } from "./device-detector";
 import { LinuxDeviceDetector } from "./linux-device-detector";
 import { MacOSDeviceDetector } from "./macos-device-detector";
@@ -42,6 +42,7 @@ export const DeviceDetectorProvider = {
   inject: [
     AppConfig,
     Logger,
+    DeviceFactoryToken,
     PlatformConstants,
     ProcessExecutionService,
     IdGenerator
