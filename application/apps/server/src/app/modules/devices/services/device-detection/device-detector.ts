@@ -12,8 +12,8 @@ export abstract class DeviceDetector {
   protected listDevicesCommand: string;
 
   constructor(
-    protected logger: Logger,
-    protected processExecutionService: ProcessExecutionService,
+    protected readonly logger: Logger,
+    protected readonly processExecutionService: ProcessExecutionService,
     private readonly _idGenerator: IdGenerator,
     private readonly _deviceFactory: (deviceData: DeviceEntity) => Device
   ) {

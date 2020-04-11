@@ -15,24 +15,24 @@ export const DeviceDetectorProvider = {
   useFactory: (
     appConfig: AppConfig,
     logger: Logger,
-    devicefactory: DeviceFactory,
+    deviceFactory: DeviceFactory,
     platformConstants: PlatformConstants,
     processExecutionService: ProcessExecutionService,
     idGenerator: IdGenerator
   ) => {
     if (appConfig.simulate) {
-      return new SimulationDeviceDetector(logger, processExecutionService, idGenerator, devicefactory);
+      return new SimulationDeviceDetector(logger, processExecutionService, idGenerator, deviceFactory);
     }
 
     switch (appConfig.platform) {
       case "linux": {
-        return new LinuxDeviceDetector(logger, platformConstants, processExecutionService, idGenerator, devicefactory);
+        return new LinuxDeviceDetector(logger, platformConstants, processExecutionService, idGenerator, deviceFactory);
       }
       case "win32": {
-        return new WindowsDeviceDetector(logger, platformConstants, appConfig.ffmpegPath, processExecutionService, idGenerator, devicefactory);
+        return new WindowsDeviceDetector(logger, platformConstants, appConfig.ffmpegPath, processExecutionService, idGenerator, deviceFactory);
       }
       case "darwin": {
-        return new MacOSDeviceDetector(logger, platformConstants, appConfig.ffmpegPath, processExecutionService, idGenerator, devicefactory);
+        return new MacOSDeviceDetector(logger, platformConstants, appConfig.ffmpegPath, processExecutionService, idGenerator, deviceFactory);
       }
       default: {
         throw new Error(`OS ${appConfig.platform} is unsupported.`);

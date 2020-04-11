@@ -1,8 +1,8 @@
 import { DeviceEntity } from "@liveo/entities";
 import { IStreamingSourceFactory, IStreamingSourceFactoryToken } from "apps/server/src/app/modules/streaming/streaming-source-factory/i-streaming-source-factory";
-import { Logger } from "../../../core/services/logging/logger";
-import { Device } from "../../device/device";
-import { DeviceFactoryToken } from "../../device/device-factory";
+import { Logger } from "../../core/services/logging/logger";
+import { Device } from "./device";
+import { DeviceFactoryToken } from "./device-factory";
 
 export const DeviceFactoryProvider = {
   provide: DeviceFactoryToken,

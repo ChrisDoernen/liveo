@@ -8,10 +8,10 @@ export const PlatformConstantsProvider = {
   ) => {
     switch (appConfig.platform) {
       case "linux": {
-        return PLATFORM_CONSTANTS.win32;
+        return PLATFORM_CONSTANTS.linux;
       }
       case "win32": {
-        return PLATFORM_CONSTANTS.linux;
+        return PLATFORM_CONSTANTS.win32;
       }
       case "darwin": {
         return PLATFORM_CONSTANTS.darwin;
