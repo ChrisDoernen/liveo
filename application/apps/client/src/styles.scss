@@ -15,11 +15,15 @@ body {
   font-family: "Lato", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-size: 16px;
   line-height: 1.4285em;
-  color: $primary-color;
+  color: $primary-text-color;
 }
 
 * {
   box-sizing: border-box;
+}
+
+.hidden {
+  display: none !important;
 }
 
 .icon {

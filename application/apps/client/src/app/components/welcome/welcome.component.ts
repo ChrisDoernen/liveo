@@ -7,8 +7,10 @@ import { Router } from "@angular/router";
   styleUrls: ["./welcome.component.scss"]
 })
 export class WelcomeComponent implements OnInit {
+
   constructor(
-    private _router: Router) {
+    private _router: Router
+  ) {
   }
 
   public ngOnInit(): void {

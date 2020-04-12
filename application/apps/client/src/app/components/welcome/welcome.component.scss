@@ -1,7 +1,6 @@
 @import "../../../variables.scss";
 
 :host {
-  background-image: linear-gradient(135deg, $secondary-color 0%, $primary-color 100%);
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -13,13 +12,7 @@
   }
 
   .welcome-logo {
-    width: 130px;
+    width: 100px;
     margin: 0 auto;
-  }
-}
-
-::ng-deep {
-  .welcome-logo #liveo-logo path {
-    fill: white;
   }
 }

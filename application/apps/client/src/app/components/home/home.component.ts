@@ -32,7 +32,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private readonly _logger: Logger,
-    private readonly _applicationStateService: ApplicationStateService) {
+    private readonly _applicationStateService: ApplicationStateService
+  ) {
   }
 
   public ngOnInit(): void {

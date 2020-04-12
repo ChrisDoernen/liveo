@@ -1,76 +1,9 @@
 @import "./../../../variables.scss";
 
-.navigation {
+:host {
   position: absolute;
-  top: 0;
-  width: 100vw;
-  text-align: right;
-  padding: var(--container-spacing);
-}
-
-.navigation a {
-  color: $primary-text-color;
-  text-decoration: none;
-}
-
-.close {
-  position: absolute;
-  right: 32px;
-  top: 32px;
-  width: 32px;
-  height: 32px;
-  opacity: 0.7;
-}
-
-.close:hover {
-  opacity: 1;
-}
-
-.close:before,
-.close:after {
-  position: absolute;
-  left: 15px;
-  content: " ";
-  height: 27px;
-  width: 1px;
-  background-color: black;
-}
-
-.close:before {
-  transform: rotate(45deg);
-}
-
-.close:after {
-  transform: rotate(-45deg);
-}
-
-.about {
-  padding: 0 var(--container-spacing);
-  text-align: center;
-  margin: 80px auto;
-  max-width: 300px;
-}
-
-.about h1 {
-  font-size: 25px;
-  margin-bottom: 40px;
-}
-
-.about p {
-  font-size: 16px;
-}
-
-.version-info {
-  position: absolute;
-  bottom: 0;
-  color: #a9a9a9;
-  text-align: center;
-  margin-bottom: 10px;
-  width: 100%;
-}
-
-.about-overlay {
-  position: absolute;
+  display: grid;
+  grid-template-rows: 65px 1fr 56px;
   top: 0;
   bottom: 0;
   left: 0;
@@ -81,6 +14,62 @@
   background-color: white;
 }
 
-.hidden {
-  display: none;
+a {
+  color: $primary-color;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.about {
+  align-self: center;
+  padding: 0 var(--container-spacing);
+  text-align: center;
+  margin: 80px auto;
+  max-width: 300px;
+}
+
+.about p {
+  font-size: 16px;
+}
+
+.version-info {
+  color: #a9a9a9;
+}
+
+.close {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.close-icon {
+  position: relative;
+  display: inline-block;
+  height: 13px;
+  opacity: 0.7;
+}
+
+.close-icon:hover {
+  opacity: 1;
+}
+
+.close-icon:before,
+.close-icon:after {
+  position: absolute;
+  left: 15px;
+  content: " ";
+  height: 16px;
+  width: 1px;
+  background-color: black;
+}
+
+.close-icon:before {
+  transform: rotate(45deg);
+}
+
+.close-icon:after {
+  transform: rotate(-45deg);
 }

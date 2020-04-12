@@ -9,7 +9,8 @@ import { Router } from "@angular/router";
 export class WelcomeComponent implements OnInit {
 
   constructor(
-    private _router: Router) {
+    private _router: Router
+  ) {
   }
 
   public ngOnInit(): void {

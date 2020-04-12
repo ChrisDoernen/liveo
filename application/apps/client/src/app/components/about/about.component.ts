@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output } from "@angular/core";
+import { Component, EventEmitter, HostBinding, Input, Output } from "@angular/core";
 import { environment } from "../../../../src/environments/environment";
 
 @Component({
@@ -13,6 +13,7 @@ export class AboutComponent {
   private _isHidden = true;
 
   @Input()
+  @HostBinding("class.hidden")
   public set isHidden(value: boolean) {
     this._isHidden = value;
     this.isHiddenChange.emit(value);
