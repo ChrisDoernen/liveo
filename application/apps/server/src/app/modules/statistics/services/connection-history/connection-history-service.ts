@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { BehaviorSubject } from "rxjs";
 import { Logger } from "../../../core/services/logging/logger";
 import { TimeService } from "../../../shared/services/time/time.service";
 import { ClientInfo } from "../../connections/client-info";
@@ -15,11 +16,23 @@ export class ConnectionHistoryService {
    * Stores the current listeners as map of client ip address and stream id
    */
   private _currentListeners = new Map<string, string>();
+
   private _connectionCounter = 0;
   private _listeningCounter = 0;
+  private _listeningCounterSubject = new BehaviorSubject(this._listeningCounter);
+  public listentingCounter$ = this._listeningCounterSubject.asObservable();
 
   public get connectionCounter(): number {
     return this._connectionCounter;
+  }
+
+  public set connectionCounter(value: number) {
+    this._connectionCounter = value;
+  }
+
+  public set listeningCounter(value: number) {
+    this._listeningCounter = value;
+    this._listeningCounterSubject.next(value);
   }
 
   public get listeningCounter(): number {
@@ -43,11 +56,11 @@ export class ConnectionHistoryService {
   }
 
   public clientConnected(clientInfo: ClientInfo): void {
-    this._connectionCounter++;
+    this.connectionCounter++;
   }
 
   public clientDisconnected(clientInfo: ClientInfo): void {
-    this._connectionCounter--;
+    this.connectionCounter--;
 
     if (this._currentListeners.has(clientInfo.ipAddress)) {
       clientInfo.streamId = this._currentListeners.get(clientInfo.ipAddress);
@@ -59,7 +72,7 @@ export class ConnectionHistoryService {
   }
 
   private clientStartsListening(clientInfo: ClientInfo): void {
-    this._listeningCounter++;
+    this.listeningCounter++;
 
     this._logger.debug(`Client ${clientInfo.ipAddress} subscribed to stream ${clientInfo.streamId}.`);
     this._logger.debug(`Number of clients listening: ${this._listeningCounter}.`);
@@ -75,7 +88,7 @@ export class ConnectionHistoryService {
   }
 
   private clientStopsListening(clientInfo: ClientInfo): void {
-    this._listeningCounter--;
+    this.listeningCounter--;
 
     this._logger.debug(`Client ${clientInfo.ipAddress} unsubscribed.`);
     this._logger.debug(`Number of clients listening: ${this._listeningCounter}.`);

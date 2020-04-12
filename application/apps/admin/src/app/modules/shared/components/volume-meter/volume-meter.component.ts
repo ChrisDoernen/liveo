@@ -26,7 +26,8 @@ export class VolumeMeterComponent implements OnInit, OnDestroy {
   constructor(
     private readonly _websocketService: WebsocketService,
     private readonly _changeDetectorRef: ChangeDetectorRef,
-    private readonly _ngZone: NgZone) {
+    private readonly _ngZone: NgZone
+  ) {
     this.initializeScale();
   }
 

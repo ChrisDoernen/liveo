@@ -6,7 +6,6 @@ import * as path from "path";
 import { AppConfig } from "../../core/configuration/app-config";
 import { Logger } from "../../core/services/logging/logger";
 import { PlatformConstants } from "../../shared/platform-constants/platform-constants";
-import { AdminGateway } from "../../state/gateways/admin.gateway";
 import { StreamingGateway } from "../gateways/streaming.gateway";
 import { FFmpegLogger } from "../services/ffmpeg-logger";
 import { IStreamingSource } from "./i-streaming-source";
@@ -24,7 +23,6 @@ export class StreamingSource implements IStreamingSource {
     private readonly _appConfig: AppConfig,
     private readonly _ffmpegLogger: FFmpegLogger,
     private readonly _streamingGateway: StreamingGateway,
-    private readonly _adminGateway: AdminGateway,
     private readonly _plattformConstants: PlatformConstants,
     public readonly deviceId: string,
     public readonly streamingId: string,
@@ -109,7 +107,7 @@ export class StreamingSource implements IStreamingSource {
           if (line.startsWith("lavfi.")) {
             const value = line.substr(13);
             const loudness = this.convertLUScale9ToLUFSScal18(value).toFixed(1);
-            this._adminGateway.emit(`${EVENTS.streamVolume}-${this.streamingId}`, loudness);
+            this._streamingGateway.emitMessage(`${EVENTS.streamVolume}-${this.streamingId}`, loudness);
           }
         });
       });
@@ -164,7 +162,7 @@ export class StreamingSource implements IStreamingSource {
     this.closeSocket();
     this._command = null;
     this._streamingGateway.removeStream(this.streamingId);
-    this._streamingGateway.emitStreamEventMessage(this.streamingId, EVENTS.streamEnded, "The stream ended.");
+    this._streamingGateway.emitStreamMessage(this.streamingId, EVENTS.streamEnded, "The stream ended.");
     this.isStreaming = false;
   }
 }

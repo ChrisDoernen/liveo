@@ -41,7 +41,7 @@
     Refresh
   </div>
 </div>
-<audio-player *ngIf="activationState?.state === 'Started'" [selectedStream]="selectedStream?.streamingId">
+<audio-player *ngIf="activationState?.state === 'Started'" [streamingId]="selectedStream?.streamingId">
 </audio-player>
 <div class="about-link clickable"><a (click)="showAboutOverlay()">Info/About</a></div>
 <about [(isHidden)]="isAboutOverlayHidden"></about>

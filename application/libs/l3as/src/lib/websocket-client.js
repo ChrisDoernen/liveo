@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 	Socket-Client is part of 3LAS (Low Latency Live Audio Streaming)
 	https://github.com/JoJoBond/3LAS
 */
-function WebSocketClient(StreamingSourceId, ErrorCallback, ConnectCallback,
+function WebSocketClient(StreamingId, ErrorCallback, ConnectCallback,
   DataReadyCallback, DisconnectCallback, StreamEndedExpectedCallback, StreamEndedUnexpectedCallback) {
   // Check callback argument
   if (typeof ErrorCallback !== 'function')
@@ -41,8 +41,8 @@ function WebSocketClient(StreamingSourceId, ErrorCallback, ConnectCallback,
   this._Socket.on(EVENTS.streamEndedUnexpected, this.__Socket_StreamEndedUnexpected.bind(this));
   this._Socket.on("reconnect_failed", this.__Socket_OnClose.bind(this));
 
-  this._Socket.on(StreamingSourceId, this.__Socket_OnMessage.bind(this));
-  this._Socket.emit(EVENTS.subscribe, StreamingSourceId);
+  this._Socket.on(EVENTS.streamData, this.__Socket_OnMessage.bind(this));
+  this._Socket.emit(EVENTS.subscribeToStream, StreamingId);
 }
 
 
@@ -57,7 +57,7 @@ WebSocketClient.prototype.GetStatus = function () {
 
 // Disconnect from the websocket
 WebSocketClient.prototype.Disconnect = function () {
-  this._Socket.emit(EVENTS.unsubscribe);
+  this._Socket.emit(EVENTS.unsubscribeFromStream);
   this._Socket.close();
   this._IsConnected = false;
   console.debug("Disconnecting from server.");

@@ -12,20 +12,21 @@ export class AudioPlayerComponent {
   constructor(
     private readonly _logger: Logger,
     private readonly _l3asService: L3asService,
-    userAgentService: UserAgentService) {
+    userAgentService: UserAgentService
+  ) {
     this._l3asService.initialize(userAgentService.userAgentInfo, this.onStreamEndedExpected.bind(this), this.onStreamEndedUnxpected.bind(this));
     this._l3asService.setVolume(this._volume);
     this._l3asService.mute();
   }
 
   @Input()
-  public set selectedStream(streamingSourceId: string) {
+  public set streamingId(streamingId: string) {
     if (this._l3asService) {
-      this._logger.info(`Selected stream id: ${streamingSourceId}.`);
-      this.selectedStreamId = streamingSourceId;
+      this._logger.info(`Selected stream id: ${streamingId}.`);
+      this._streamingId = streamingId;
 
-      if (streamingSourceId) {
-        this._l3asService.play(streamingSourceId);
+      if (streamingId) {
+        this._l3asService.play(streamingId);
         this._l3asService.mute();
       } else {
         if (this._l3asService.isPlaying) {
@@ -37,7 +38,11 @@ export class AudioPlayerComponent {
     }
   }
 
-  public selectedStreamId: string;
+  public get streamingId(): string {
+    return this._streamingId;
+  }
+
+  private _streamingId: string;
 
   private _volume = 0.6;
 

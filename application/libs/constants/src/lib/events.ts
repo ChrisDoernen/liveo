@@ -3,8 +3,8 @@ export const EVENTS = {
   streamEndedUnexpected: "stream_ended_unexpected",
   streamEnded: "stream_ended",
   subscriptionError: "subscription_error",
-  subscribeToStream: "subscribe_stram",
-  unsubscribeFromStream: "unubscribe",
+  subscribeToStream: "subscribe_stream",
+  unsubscribeFromStream: "unubscribe_stream",
   subscribeAdmin: "subscribe_admin",
   unsubscribeAdmin: "unsubscribe_admin",
   cpuUsage: "cpu_usage",
@@ -12,5 +12,7 @@ export const EVENTS = {
   adminActivationStateUpdate: "admin_activationstate_update",
   adminStreamCreationEnter: "admin_add_stream_enter",
   adminStreamCreationLeave: "admin_add_stream_leave",
-  streamVolume: "stream_volume"
+  streamData: "stream_data",
+  streamVolume: "stream_volume",
+  listenerCount: "listener_count"
 }

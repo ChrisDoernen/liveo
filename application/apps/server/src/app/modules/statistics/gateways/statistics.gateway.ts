@@ -1,17 +1,26 @@
 import { ENDPOINTS, EVENTS } from "@liveo/constants";
-import { ConnectedSocket, MessageBody, OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway } from "@nestjs/websockets";
-import { Socket } from "socket.io";
+import { ConnectedSocket, MessageBody, OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessage, WebSocketGateway } from "@nestjs/websockets";
+import { Server, Socket } from "socket.io";
 import { Logger } from "../../core/services/logging/logger";
 import { ClientInfo } from "../connections/client-info";
 import { ConnectionHistoryService } from "../services/connection-history/connection-history-service";
 
 @WebSocketGateway({ path: ENDPOINTS.websocket })
-export class StreamingGateway implements OnGatewayConnection, OnGatewayDisconnect {
+export class StatiaticsGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+
+  private _server: Server;
 
   constructor(
     private readonly _logger: Logger,
     private readonly _connectionHistoryService: ConnectionHistoryService
   ) {
+  }
+
+  public afterInit(server: Server) {
+    this._server = server;
+    this._connectionHistoryService.listentingCounter$.subscribe((listeners) => {
+      this.emitMessage(EVENTS.listenerCount, listeners.toString());
+    });
   }
 
   public handleConnection(client: Socket) {
@@ -51,5 +60,9 @@ export class StreamingGateway implements OnGatewayConnection, OnGatewayDisconnec
 
   private getClientIpAddress(socket: Socket): string {
     return socket.handshake.headers["x-real-ip"] || socket.handshake.address;
+  }
+
+  private emitMessage(event: string, message: string): void {
+    this._server.emit(event, message);
   }
 }

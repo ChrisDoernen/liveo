@@ -1,15 +1,14 @@
 import { ENDPOINTS, EVENTS } from "@liveo/constants";
-import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
+import { ConnectedSocket, MessageBody, OnGatewayInit, SubscribeMessage, WebSocketGateway } from "@nestjs/websockets";
 import { Server, Socket } from "socket.io";
 import { Logger } from "../../core/services/logging/logger";
 
 @WebSocketGateway({ path: ENDPOINTS.websocket })
-export class StreamingGateway {
+export class StreamingGateway implements OnGatewayInit {
 
-  @WebSocketServer()
-  server: Server;
+  private _server: Server;
 
-  /** 
+  /**
    * The currently available streams that are represented as rooms in socket.io 
    */
   private _streamingIdRooms: string[] = [];
@@ -17,6 +16,10 @@ export class StreamingGateway {
   constructor(
     private readonly _logger: Logger
   ) {
+  }
+
+  public afterInit(server: Server) {
+    this._server = server;
   }
 
   @SubscribeMessage(EVENTS.subscribeToStream)
@@ -48,10 +51,14 @@ export class StreamingGateway {
   }
 
   public emitStreamData(streamingId: string, data: Buffer): void {
-    this.server.to(streamingId).emit(streamingId, data);
+    this._server.to(streamingId).emit(EVENTS.streamData, data);
   }
 
-  public emitStreamEventMessage(streamingId: string, event: string, message: string): void {
-    this.server.to(streamingId).emit(event, message);
+  public emitStreamMessage(streamingId: string, event: string, message: string): void {
+    this._server.to(streamingId).emit(event, message);
+  }
+
+  public emitMessage(event: string, message: string): void {
+    this._server.emit(event, message);
   }
 }

@@ -1,7 +1,6 @@
 import { Module } from "@nestjs/common";
 import { SettingsModule } from "../settings/settings.module";
 import { SharedModule } from "../shared/shared.module";
-import { StateModule } from "../state/state.module";
 import { StreamingGateway } from "./gateways/streaming.gateway";
 import { FFmpegLogger } from "./services/ffmpeg-logger";
 import { IStreamingSourceFactoryToken } from "./streaming-source-factory/i-streaming-source-factory";
@@ -12,7 +11,6 @@ import { StreamingSourceFactoryProvider } from "./streaming-sources/streaming-so
 @Module({
   imports: [
     SharedModule,
-    StateModule,
     SettingsModule
   ],
   providers: [
