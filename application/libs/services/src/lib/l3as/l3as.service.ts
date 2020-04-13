@@ -11,13 +11,15 @@ export class L3asService {
   private _l3asPlayer: L3asPlayer;
 
   constructor(
-    private _logger: Logger) {
+    private _logger: Logger
+  ) {
   }
 
   public initialize(
     userAgentInfo: UserAgentInfo,
     onStreamEndedExpected: () => void,
-    onStreamEndedUnexpected: () => void): void {
+    onStreamEndedUnexpected: () => void
+  ): void {
     this._l3asPlayer = new L3asPlayer(userAgentInfo, onStreamEndedExpected, onStreamEndedUnexpected);
   }
 
@@ -25,9 +27,12 @@ export class L3asService {
     return this._l3asPlayer.isPlaying;
   }
 
-  public play(streamingSourceId: string): void {
+  public play(streamingId: string): void {
     this._logger.info("play");
-    this._l3asPlayer.play(streamingSourceId);
+    if (this._l3asPlayer.isPlaying) {
+      this._l3asPlayer.stop();
+    }
+    this._l3asPlayer.play(streamingId);
   }
 
   public stop(): void {

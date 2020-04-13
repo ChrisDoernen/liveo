@@ -19,7 +19,7 @@ export class StatiaticsGateway implements OnGatewayInit, OnGatewayConnection, On
   public afterInit(server: Server) {
     this._server = server;
     this._connectionHistoryService.listentingCounter$.subscribe((listeners) => {
-      this.emitMessage(EVENTS.listenerCount, listeners.toString());
+      this.emitMessage(EVENTS.listeningClients, listeners.toString());
     });
   }
 
@@ -39,6 +39,11 @@ export class StatiaticsGateway implements OnGatewayInit, OnGatewayConnection, On
     client.leave(streamingId);
     const clientInfo = this.getClientInfo(client);
     this._connectionHistoryService.clientUnsubscribed(clientInfo);
+  }
+
+  @SubscribeMessage(EVENTS.subscribeAdmin)
+  public onSubscibeAdmin(@ConnectedSocket() client: Socket): void {
+    client.emit(EVENTS.listeningClients, this._connectionHistoryService.listeningCounter);
   }
 
   private getClientInfo(client: Socket, streamId?: string): ClientInfo {

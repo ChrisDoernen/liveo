@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { Logger } from "@liveo/services";
 import createMockInstance from "jest-create-mock-instance";
+import { MockComponent } from "ng-mocks";
 import { Subject } from "rxjs";
 import { ActivationService } from "../../../../services/activation/activation.service";
 import { SessionService } from "../../../../services/session/session.service";
@@ -10,6 +11,7 @@ import { SharedModule } from "../../../shared/shared.module";
 import { ActivatedSessionTileComponent } from "../activated-session-tile/activated-session-tile.component";
 import { ActivationStateTileComponent } from "../activation-state-tile/activation-state-tile.component";
 import { DashboardStreamsComponent } from "../dashboard-streams/dashboard-streams.component";
+import { ListeningClientsComponent } from "../listening-clients/listening-clients.component";
 import { DashboardActivationComponent } from "./dashboard-activation.component";
 
 describe("DashboardActivationComponent", () => {
@@ -36,7 +38,8 @@ describe("DashboardActivationComponent", () => {
         DashboardActivationComponent,
         ActivatedSessionTileComponent,
         ActivationStateTileComponent,
-        DashboardStreamsComponent
+        DashboardStreamsComponent,
+        MockComponent(ListeningClientsComponent)
       ],
       providers: [
         { provide: ActivationService, useValue: activationService },

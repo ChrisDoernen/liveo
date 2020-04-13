@@ -41,7 +41,7 @@ jobs:
       run: yarn run download-ffmpeg -- --ci
 
     - name: Install executable dependecies
-      working-directory: application/dist/apps/service
+      working-directory: application/dist/apps/server
       run: yarn install --production
 
     - name: Create artifacts

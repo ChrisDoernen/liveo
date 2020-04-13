@@ -22,3 +22,8 @@ mat-divider {
 .tile-subheading {
   color: $grey-light;
 }
+
+.first-row {
+  display: flex;
+  justify-content: space-between;
+}

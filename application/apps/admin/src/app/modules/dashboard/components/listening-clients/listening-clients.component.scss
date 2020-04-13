@@ -1,0 +1,15 @@
+:host {
+  display: block;
+  font-size: 13px;
+}
+
+.counter {
+  font-size: 30px;
+  padding: 5px;
+}
+
+.listening-counter {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}

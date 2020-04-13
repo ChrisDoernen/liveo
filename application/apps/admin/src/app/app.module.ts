@@ -1,7 +1,6 @@
 import { APP_BOOTSTRAP_LISTENER, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { ServiceWorkerModule } from "@angular/service-worker";
 import { ROUTES } from "@liveo/constants";
 import { ENABLECONSOLELOGGING, ROUTE } from "@liveo/services";
 import { SocketIoModule } from "ngx-socket-io";
@@ -27,7 +26,7 @@ import { InitializationService } from "./services/initialization/initialization.
     SharedModule,
     AppRoutingModule,
     SocketIoModule,
-    ServiceWorkerModule.register("ngsw-worker.js", { enabled: environment.production })
+    // ServiceWorkerModule.register("ngsw-worker.js", { enabled: environment.production })
   ],
   declarations: [
     AppComponent,

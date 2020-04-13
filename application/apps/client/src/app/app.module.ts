@@ -2,7 +2,6 @@ import { HttpClientModule } from "@angular/common/http";
 import { APP_BOOTSTRAP_LISTENER, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { ServiceWorkerModule } from "@angular/service-worker";
 import { ROUTES } from "@liveo/constants";
 import { ENABLECONSOLELOGGING, ROUTE, UserAgentService } from "@liveo/services";
 import { InlineSVGModule } from "ng-inline-svg";
@@ -33,7 +32,7 @@ import { WelcomeComponent } from "./components/welcome/welcome.component";
     AppRoutingModule,
     Ng5SliderModule,
     InlineSVGModule.forRoot(),
-    ServiceWorkerModule.register("ngsw-worker.js", { enabled: environment.production })
+    // ServiceWorkerModule.register("ngsw-worker.js", { enabled: environment.production })
   ],
   providers: [
     UserAgentService,

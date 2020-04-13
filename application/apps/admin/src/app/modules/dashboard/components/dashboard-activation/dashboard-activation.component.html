@@ -1,7 +1,10 @@
 <content>
-  <activated-session-tile
-    [session]="activatedSession">
-  </activated-session-tile>
+  <div class="first-row">
+    <activated-session-tile
+      [session]="activatedSession">
+    </activated-session-tile>
+    <listening-clients></listening-clients>
+  </div>
   <mat-divider></mat-divider>
   <activation-state-tile
     [activation]="activation"

@@ -1,13 +1,14 @@
-import { UserAgentInfo } from "./user-agent-info";
 
 export declare class L3asPlayer {
 
   /**
    * Constructs the L3asPlayer instance
    */
-  constructor(UserAgentInfo,
+  constructor(
+    UserAgentInfo,
     streamEndedExpectedCallback: () => void,
-    streamEndedUnexpectedCallback: () => void);
+    streamEndedUnexpectedCallback: () => void
+  );
 
   /**
    * Wheter the state is playing or stopped

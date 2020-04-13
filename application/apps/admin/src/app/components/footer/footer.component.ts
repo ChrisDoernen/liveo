@@ -14,7 +14,8 @@ export class FooterComponent implements OnInit {
   public cpuUsage$: Observable<string>;
 
   constructor(
-    private _websocketService: WebsocketService) {
+    private _websocketService: WebsocketService
+  ) {
   }
 
   public ngOnInit(): void {

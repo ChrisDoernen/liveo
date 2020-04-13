@@ -6,28 +6,26 @@ import { ActivationDialogComponent } from "./components/activation-dialog/activa
 import { ActivationStateTileComponent } from "./components/activation-state-tile/activation-state-tile.component";
 import { DashboardActivationComponent } from "./components/dashboard-activation/dashboard-activation.component";
 import { DashboardNoActivationComponent } from "./components/dashboard-no-activation/dashboard-no-activation.component";
-import { DashboardComponent } from "./components/dashboard/dashboard.component";
-import { DashboardRoutingModule } from "./dashboard-routing.module";
 import { DashboardStreamsComponent } from "./components/dashboard-streams/dashboard-streams.component";
+import { DashboardComponent } from "./components/dashboard/dashboard.component";
+import { ListeningClientsComponent } from "./components/listening-clients/listening-clients.component";
+import { DashboardRoutingModule } from "./dashboard-routing.module";
 
 @NgModule({
   imports: [
-    SharedModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
+    SharedModule
   ],
   declarations: [
-    DashboardComponent,
-    ActivationDialogComponent,
-    ActivationDeletionDialogComponent,
-    DashboardActivationComponent,
-    DashboardNoActivationComponent,
     ActivatedSessionTileComponent,
-    ActivationStateTileComponent,
-    DashboardStreamsComponent
-  ],
-  entryComponents: [
+    ActivationDeletionDialogComponent,
     ActivationDialogComponent,
-    ActivationDeletionDialogComponent
+    ActivationStateTileComponent,
+    ListeningClientsComponent,
+    DashboardActivationComponent,
+    DashboardComponent,
+    DashboardNoActivationComponent,
+    DashboardStreamsComponent
   ]
 })
 export class DashboardModule { }
