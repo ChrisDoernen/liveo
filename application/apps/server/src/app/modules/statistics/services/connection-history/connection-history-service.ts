@@ -31,8 +31,9 @@ export class ConnectionHistoryService {
   }
 
   public set listeningCounter(value: number) {
-    this._listeningCounter = value;
-    this._listeningCounterSubject.next(value);
+    const listeners = Math.min(0, value);
+    this._listeningCounter = listeners;
+    this._listeningCounterSubject.next(listeners);
   }
 
   public get listeningCounter(): number {

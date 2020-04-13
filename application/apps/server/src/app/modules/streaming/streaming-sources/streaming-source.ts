@@ -107,7 +107,7 @@ export class StreamingSource implements IStreamingSource {
           if (line.startsWith("lavfi.")) {
             const value = line.substr(13);
             const loudness = this.convertLUScale9ToLUFSScal18(value).toFixed(1);
-            this._streamingGateway.emitMessage(`${EVENTS.streamVolume}-${this.streamingId}`, loudness);
+            this._streamingGateway.emitAdminMessage(`${EVENTS.streamVolume}-${this.streamingId}`, loudness);
           }
         });
       });

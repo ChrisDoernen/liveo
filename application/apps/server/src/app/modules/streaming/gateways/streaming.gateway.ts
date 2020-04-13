@@ -7,6 +7,7 @@ import { Logger } from "../../core/services/logging/logger";
 export class StreamingGateway implements OnGatewayInit {
 
   private _server: Server;
+  private readonly _adminRoom = "admin";
 
   /**
    * The currently available streams that are represented as rooms in socket.io 
@@ -56,6 +57,10 @@ export class StreamingGateway implements OnGatewayInit {
 
   public emitStreamMessage(streamingId: string, event: string, message: string): void {
     this._server.to(streamingId).emit(event, message);
+  }
+
+  public emitAdminMessage(event: string, message: string): void {
+    this._server.to(this._adminRoom).emit(event, message);
   }
 
   public emitMessage(event: string, message: string): void {

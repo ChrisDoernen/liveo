@@ -14,5 +14,5 @@ export const EVENTS = {
   adminStreamCreationLeave: "admin_add_stream_leave",
   streamData: "stream_data",
   streamVolume: "stream_volume",
-  listenerCount: "listener_count"
+  listeningClients: "listening_clients"
 }
