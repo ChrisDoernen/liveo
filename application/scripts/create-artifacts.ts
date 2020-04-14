@@ -53,7 +53,7 @@ const pkg = async (artifact: Artifact) => {
   const debugArgument = `--debug > ${logFile}`;
 
   const pkgArguments = [
-    "dist/apps/service/package.json",
+    "dist/apps/server/package.json",
     "--target",
     target,
     "--out-path",
@@ -140,7 +140,7 @@ const artifacts: Artifact[] = [
     outputDirectory: "bin",
     filesToCopy: [
       {
-        source: "dist/apps/service",
+        source: "dist/apps/server",
         destination: "bin/nodejs"
       },
       {
@@ -157,7 +157,7 @@ const artifacts: Artifact[] = [
       },
       {
         source: "misc/bundle-structure/live.env",
-        destination: "bin/nodejs/live.env"
+        destination: "bin/nodejs/liveo.env"
       }
     ],
     action: null
