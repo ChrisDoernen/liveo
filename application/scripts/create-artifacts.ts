@@ -156,7 +156,7 @@ const artifacts: Artifact[] = [
         destination: "bin/nodejs/scripts"
       },
       {
-        source: "misc/bundle-structure/live.env",
+        source: "misc/bundle-structure/liveo.env",
         destination: "bin/nodejs/liveo.env"
       }
     ],
