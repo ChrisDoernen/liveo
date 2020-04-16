@@ -17,7 +17,7 @@
 
 # environment
 .env
-liveo.env
+/liveo.env
 
 # IDEs and editors
 /.idea
