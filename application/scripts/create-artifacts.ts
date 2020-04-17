@@ -87,30 +87,6 @@ const copy = async (filesToCopy: SourceDestinationPair[]) => {
 
 const artifacts: Artifact[] = [
   {
-    name: "linux-x64",
-    nodeVersion: "node10",
-    outputDirectory: "bin",
-    filesToCopy: [
-      {
-        source: "dist/apps/client",
-        destination: "bin/linux-x64/client"
-      },
-      {
-        source: "dist/apps/admin",
-        destination: "bin/linux-x64/admin"
-      },
-      {
-        source: "misc/bundle-structure",
-        destination: "bin/linux-x64"
-      },
-      {
-        source: "ffmpeg/linux-x64",
-        destination: "bin/linux-x64/ffmpeg"
-      }
-    ],
-    action: pkg
-  },
-  {
     name: "win-x64",
     nodeVersion: "node10",
     outputDirectory: "bin",
@@ -130,6 +106,10 @@ const artifacts: Artifact[] = [
       {
         source: "ffmpeg/win-x64",
         destination: "bin/win-x64/ffmpeg"
+      },
+      {
+        source: "../license.txt",
+        destination: "bin/win-x64/license.txt"
       }
     ],
     action: pkg
@@ -158,6 +138,10 @@ const artifacts: Artifact[] = [
       {
         source: "misc/bundle-structure/liveo.env",
         destination: "bin/nodejs/liveo.env"
+      },
+      {
+        source: "../license.txt",
+        destination: "bin/nodejs/license.txt"
       }
     ],
     action: null
