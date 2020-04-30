@@ -3,6 +3,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ROUTES } from "@liveo/constants";
 import { ENABLECONSOLELOGGING, ROUTE } from "@liveo/services";
+import { NgxsModule } from "@ngxs/store";
 import { SocketIoModule } from "ngx-socket-io";
 import { environment } from "../environments/environment";
 import { AppRoutingModule } from "./app-routing.module";
@@ -17,6 +18,7 @@ import { ShutdownDialogComponent } from "./components/shutdown-dialog/shutdown-d
 import { ShutdownComponent } from "./components/shutdown/shutdown.component";
 import { WelcomeComponent } from "./components/welcome/welcome.component";
 import { SharedModule } from "./modules/shared/shared.module";
+import { ActivationStateReducer } from "./reducers/activation-state.reducer";
 import { InitializationService } from "./services/initialization/initialization.service";
 
 @NgModule({
@@ -26,6 +28,9 @@ import { InitializationService } from "./services/initialization/initialization.
     SharedModule,
     AppRoutingModule,
     SocketIoModule,
+    NgxsModule.forRoot([ActivationStateReducer], {
+      developmentMode: !environment.production
+    })
     // ServiceWorkerModule.register("ngsw-worker.js", { enabled: environment.production })
   ],
   declarations: [

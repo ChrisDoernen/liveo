@@ -8,7 +8,8 @@ import { ConnectionStateService } from "../connection-state/connection-state-ser
 export class InitializationService {
   constructor(
     private _logger: Logger,
-    private _connectionStateService: ConnectionStateService) {
+    private _connectionStateService: ConnectionStateService
+  ) {
   }
 
   public initialize(): void {

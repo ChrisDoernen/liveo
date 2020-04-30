@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { EndpointService } from "@liveo/services";
+import { NgxsModule } from "@ngxs/store";
+import { ActivationStateReducer } from "apps/admin/src/app/reducers/activation-state.reducer";
 import createMockInstance from "jest-create-mock-instance";
 import { MockComponent } from "ng-mocks";
 import { ActivationService } from "../../../../services/activation/activation.service";
@@ -21,7 +24,8 @@ describe("DashboardComponent", () => {
     TestBed.configureTestingModule({
       imports: [
         AngularMaterialModule,
-        SharedModule
+        SharedModule,
+        NgxsModule.forRoot([ActivationStateReducer])
       ],
       declarations: [
         DashboardComponent,
@@ -31,7 +35,14 @@ describe("DashboardComponent", () => {
         MockComponent(DashboardNoActivationComponent)
       ],
       providers: [
-        { provide: ActivationService, useValue: activationService }
+        {
+          provide: ActivationService,
+          useValue: activationService
+        },
+        {
+          provide: EndpointService,
+          useValue: jest.fn()
+        }
       ]
     }).compileComponents();
 

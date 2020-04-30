@@ -1,9 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { EVENTS } from "@liveo/constants";
-import { ActivationEntity, ActivationState, ActivationStateEntity } from "@liveo/entities";
-import { ActivationStateService, EndpointService, Logger } from "@liveo/services";
-import { ReplaySubject } from "rxjs";
+import { ActivationEntity, ActivationStateEntity } from "@liveo/entities";
+import { EndpointService, Logger } from "@liveo/services";
+import { Store } from "@ngxs/store";
+import { ActivationStateUpdateAction } from "../../actions/activation-state-update.action";
+import { ActivationUpdateAction } from "../../actions/activation-update.action";
 import { WebsocketService } from "../websocket/websocket.service";
 
 @Injectable({
@@ -11,35 +13,25 @@ import { WebsocketService } from "../websocket/websocket.service";
 })
 export class ActivationService {
 
-  private _activation = new ReplaySubject<ActivationEntity>();
-  private _activationState = new ReplaySubject<ActivationState>();
-
-  public activation$ = this._activation.asObservable();
-  public activationState$ = this._activationState.asObservable();
-
   private set activation(activation: ActivationEntity) {
-    const activationState = this._activationStateService.determineActivationState(activation);
-    this._logger.info(`Emitting activation ${JSON.stringify(activation)}`);
-    this._logger.info(`Emitting activation state ${activationState}`)
-    this._activationState.next(activationState);
-    this._activation.next(activation);
+    this._store.dispatch(new ActivationUpdateAction(activation));
   }
 
   constructor(
     private readonly _logger: Logger,
     private readonly _httpClient: HttpClient,
     private readonly _endpointService: EndpointService,
-    private readonly _activationStateService: ActivationStateService,
-    private readonly _websocketService: WebsocketService
+    private readonly _websocketService: WebsocketService,
+    private readonly _store: Store
   ) {
     this.subscribeActivationStateUpdates();
   }
 
   public subscribeActivationStateUpdates(): void {
-    this._logger.info("Subscribe actiation state updates");
+    this._logger.info("Subscribe activation state updates");
     this._websocketService.fromEvent<ActivationStateEntity>(EVENTS.adminActivationStateUpdate)
       .subscribe((activationState: ActivationStateEntity) => {
-        this._activationState.next(activationState.state);
+        this._store.dispatch(new ActivationStateUpdateAction(activationState))
       });
   }
 

@@ -11,6 +11,7 @@ export class ActivationStateEntity {
     public state: ActivationState,
     public activation?: ActivationEntity,
     public session?: SessionEntity,
-    public streams?: StreamEntity[]) {
+    public streams?: StreamEntity[]
+  ) {
   }
 }

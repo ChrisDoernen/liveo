@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import createMockInstance from "jest-create-mock-instance";
-import { SessionService } from "../../../../services/session/session.service";
+import { SessionClient } from "../../../../services/session/session.service";
 import { ActivatedSessionTileComponent } from "./activated-session-tile.component";
 
 describe("ActivatedSessionTileComponent", () => {
   let component: ActivatedSessionTileComponent;
   let fixture: ComponentFixture<ActivatedSessionTileComponent>;
-  let sessionService: jest.Mocked<SessionService>;
+  let sessionService: jest.Mocked<SessionClient>;
 
   beforeEach(() => {
-    sessionService = createMockInstance(SessionService);
+    sessionService = createMockInstance(SessionClient);
 
     TestBed.configureTestingModule({
       declarations: [ActivatedSessionTileComponent],
       providers: [
-        { provide: SessionService, useValue: sessionService }
+        { provide: SessionClient, useValue: sessionService }
       ]
     }).compileComponents();
 

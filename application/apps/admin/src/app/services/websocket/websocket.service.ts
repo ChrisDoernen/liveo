@@ -9,7 +9,8 @@ import { Socket } from "ngx-socket-io";
 export class WebsocketService extends Socket implements OnDestroy {
 
   constructor(
-    private readonly _logger: Logger) {
+    private readonly _logger: Logger
+  ) {
     super({ url: ENDPOINTS.root, options: { reconnectionAttempts: 3, path: ENDPOINTS.websocket } });
   }
 

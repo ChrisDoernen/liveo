@@ -7,7 +7,7 @@ import { ActivatedRoute } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { EndpointService, Logger } from "@liveo/services";
 import createMockInstance from "jest-create-mock-instance";
-import { SessionService } from "../../../../services/session/session.service";
+import { SessionClient } from "../../../../services/session/session.service";
 import { AngularMaterialModule } from "../../../angular-material/angular-material.module";
 import { TitleBarComponent } from "../../../shared/components/title-bar/title-bar.component";
 import { SessionCreationComponent } from "./session-creation.component";
@@ -16,10 +16,10 @@ describe("SessionCreationComponent", () => {
   let component: SessionCreationComponent;
   let fixture: ComponentFixture<SessionCreationComponent>;
   let endpointService: jest.Mocked<EndpointService>;
-  let sessionService: SessionService;
+  let sessionService: SessionClient;
 
   beforeEach(() => {
-    sessionService = createMockInstance(SessionService);
+    sessionService = createMockInstance(SessionClient);
     endpointService = createMockInstance(EndpointService);
 
     TestBed.configureTestingModule({
@@ -38,7 +38,7 @@ describe("SessionCreationComponent", () => {
       ],
       providers: [
         { provide: MatDialog, useValue: jest.fn() },
-        { provide: SessionService, useValue: sessionService },
+        { provide: SessionClient, useValue: sessionService },
         { provide: EndpointService, useValue: endpointService },
         { provide: Logger, useValue: jest.fn() },
         { provide: ActivatedRoute, useValue: createMockInstance(ActivatedRoute) }

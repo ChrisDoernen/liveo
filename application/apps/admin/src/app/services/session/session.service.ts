@@ -1,46 +1,23 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { ActivationEntity, SessionEntity } from "@liveo/entities";
-import { EndpointService, Logger } from "@liveo/services";
-import { Observable, ReplaySubject } from "rxjs";
-import { ActivationService } from "../activation/activation.service";
+import { SessionEntity } from "@liveo/entities";
+import { EndpointService } from "@liveo/services";
 
 @Injectable({
   providedIn: "root"
 })
-export class SessionService {
-
-  private _activatedSession = new ReplaySubject<SessionEntity>();
-
-  public activatedSession$ = this._activatedSession.asObservable();
+export class SessionClient {
 
   constructor(
-    private readonly _logger: Logger,
     private readonly _httpClient: HttpClient,
-    private readonly _endpointService: EndpointService,
-    private readonly _activationService: ActivationService
+    private readonly _endpointService: EndpointService
   ) {
   }
 
-  public subscribeToActivations(): void {
-    this._activationService.activation$.subscribe((activation) => this.actualizeActivatedSession(activation));
-  }
-
-  private actualizeActivatedSession(activation: ActivationEntity): void {
-    if (activation) {
-      this.getSession(activation.sessionId)
-        .subscribe((session) => {
-          this._activatedSession.next(session);
-          this._logger.info(`Emitting new session ${JSON.stringify(session)}`);
-        });
-    } else {
-      this._activatedSession.next(null);
-    }
-  }
-
-  public getSession(id: string): Observable<SessionEntity> {
+  public getSession(id: string): Promise<SessionEntity> {
     return this._httpClient
-      .get<SessionEntity>(this._endpointService.getEndpoint(`sessions/${id}`));
+      .get<SessionEntity>(this._endpointService.getEndpoint(`sessions/${id}`))
+      .toPromise();
   }
 
   public getSessions(): Promise<SessionEntity[]> {

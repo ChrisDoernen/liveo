@@ -1,5 +1,8 @@
 import { Component } from "@angular/core";
-import { ActivationService } from "../../../../services/activation/activation.service";
+import { ActivationStateEntity } from "@liveo/entities";
+import { Select } from "@ngxs/store";
+import { Observable } from "rxjs";
+import { filter, map } from "rxjs/operators";
 
 @Component({
   selector: "dashboard",
@@ -8,7 +11,12 @@ import { ActivationService } from "../../../../services/activation/activation.se
 })
 export class DashboardComponent {
 
-  constructor(
-    public activationService: ActivationService) {
-  }
+  @Select()
+  public activationState$: Observable<ActivationStateEntity>;
+
+  public activation$ =
+    this.activationState$.pipe(
+      filter((activationState: ActivationStateEntity) => !!activationState),
+      map((activationState: ActivationStateEntity) => activationState.state !== "NoActivation")
+    );
 }

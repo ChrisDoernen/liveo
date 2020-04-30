@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@
 import { MatDialog } from "@angular/material/dialog";
 import { SessionEntity, StreamEntity } from "@liveo/entities";
 import { DIALOG_CONFIG_SMALL } from "../../../../constants/mat-dialog-config-small";
-import { SessionService } from "../../../../services/session/session.service";
+import { SessionClient } from "../../../../services/session/session.service";
 import { StreamService } from "../../../../services/stream/stream.service";
 import { SessionDeletionDialogComponent } from "../session-deletion-dialog/session-deletion-dialog.component";
 
@@ -21,7 +21,7 @@ export class SessionListComponent implements OnInit {
   public displayedColumns: string[] = ["title", "description", "streams", "delete"];
 
   constructor(
-    private readonly _sessionService: SessionService,
+    private readonly _sessionService: SessionClient,
     private readonly _streamService: StreamService,
     public readonly sessionDeletionDialog: MatDialog,
     private readonly _changeDetectorRef: ChangeDetectorRef) {

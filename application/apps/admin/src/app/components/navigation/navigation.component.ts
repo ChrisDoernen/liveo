@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { environment } from "../../../environments/environment";
 import { ActivationService } from "../../services/activation/activation.service";
 import { NotificationService } from "../../services/notification/notification.service";
-import { SessionService } from "../../services/session/session.service";
 import { WebsocketService } from "../../services/websocket/websocket.service";
 
 @Component({
@@ -21,13 +20,12 @@ export class NavigationComponent implements OnInit {
     public router: Router,
     private _activationService: ActivationService,
     private _websocketService: WebsocketService,
-    private _notificationService: NotificationService,
-    private _sessionService: SessionService) {
+    private _notificationService: NotificationService
+  ) {
   }
 
   public ngOnInit(): void {
     this._activationService.getActivation();
-    this._sessionService.subscribeToActivations();
     this._websocketService.initializeConnection();
 
     // These are actually subscriptions on events from the websocket client

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivationEntity, SessionEntity } from "@liveo/entities";
 import { TimeService } from "@liveo/services";
 import { Subscription } from "rxjs";
-import { SessionService } from "../../../../services/session/session.service";
+import { SessionClient } from "../../../../services/session/session.service";
 import { SettingsService } from "../../../../services/settings/settings.service";
 
 @Component({
@@ -21,7 +21,7 @@ export class ActivationDialogComponent implements OnInit {
   private _sessionsSubscription: Subscription;
 
   constructor(
-    private _sessionService: SessionService,
+    private _sessionService: SessionClient,
     private _settingsService: SettingsService,
     private _formBuilder: FormBuilder,
     private _timeService: TimeService) {

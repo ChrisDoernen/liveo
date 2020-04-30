@@ -8,7 +8,8 @@ import { TimeService } from "../time/time.service";
 export class ActivationStateService {
 
   constructor(
-    private _timeService: TimeService) {
+    private _timeService: TimeService
+  ) {
   }
 
   public determineActivationState(activation: ActivationEntity): ActivationState {

@@ -18,7 +18,8 @@ export class ConnectionStateService {
     private _router: Router,
     private _websocketService: WebsocketService,
     private _httpClient: HttpClient,
-    private _endpointService: EndpointService) {
+    private _endpointService: EndpointService
+  ) {
   }
 
   public checkConnectionState(): Promise<boolean> {

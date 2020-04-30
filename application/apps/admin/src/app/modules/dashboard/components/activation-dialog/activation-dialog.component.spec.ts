@@ -10,7 +10,7 @@ import { MatStepperModule } from "@angular/material/stepper";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { EndpointService, Logger } from "@liveo/services";
 import createMockInstance from "jest-create-mock-instance";
-import { SessionService } from "../../../../services/session/session.service";
+import { SessionClient } from "../../../../services/session/session.service";
 import { AngularMaterialModule } from "../../../angular-material/angular-material.module";
 import { ActivationDialogComponent } from "./activation-dialog.component";
 
@@ -18,10 +18,10 @@ describe("ActivationDialogComponent", () => {
   let component: ActivationDialogComponent;
   let fixture: ComponentFixture<ActivationDialogComponent>;
   let endpointService: jest.Mocked<EndpointService>;
-  let sessionService: SessionService;
+  let sessionService: SessionClient;
 
   beforeEach(() => {
-    sessionService = createMockInstance(SessionService);
+    sessionService = createMockInstance(SessionClient);
     endpointService = createMockInstance(EndpointService);
 
     TestBed.configureTestingModule({
@@ -41,7 +41,7 @@ describe("ActivationDialogComponent", () => {
       declarations: [ActivationDialogComponent],
       providers: [
         { provide: MatDialog, useValue: jest.fn() },
-        { provide: SessionService, useValue: sessionService },
+        { provide: SessionClient, useValue: sessionService },
         { provide: EndpointService, useValue: endpointService },
         { provide: Logger, useValue: jest.fn() }
       ]

@@ -10,7 +10,8 @@ export const ROUTE = new InjectionToken<string>("ROUTE");
 export class EndpointService {
   constructor(
     private _logger: Logger,
-    @Inject(ROUTE) private _route: string) {
+    @Inject(ROUTE) private _route: string
+  ) {
   }
 
   public getEndpoint(path: string, queryParams: string[] = null): string {

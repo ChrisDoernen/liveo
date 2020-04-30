@@ -3,7 +3,7 @@ import { FormsModule } from "@angular/forms";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { EndpointService, Logger } from "@liveo/services";
 import { LoggerMock } from "@liveo/test-utilities";
-import { SessionService } from "apps/admin/src/app/services/session/session.service";
+import { SessionClient } from "apps/admin/src/app/services/session/session.service";
 import { SettingsService } from "apps/admin/src/app/services/settings/settings.service";
 import createMockInstance from "jest-create-mock-instance";
 import { AngularMaterialModule } from "../../../angular-material/angular-material.module";
@@ -14,7 +14,7 @@ xdescribe("SettingsComponent", () => {
   let component: SettingsComponent;
   let fixture: ComponentFixture<SettingsComponent>;
   let endpointService: jest.Mocked<EndpointService>;
-  let sessionService: jest.Mocked<SessionService>;
+  let sessionService: jest.Mocked<SessionClient>;
   let settingsService: jest.Mocked<SettingsService>;
   let logger: jest.Mocked<Logger>;
 
@@ -22,7 +22,7 @@ xdescribe("SettingsComponent", () => {
     logger = createMockInstance(Logger);
     settingsService = createMockInstance(SettingsService);
     endpointService = createMockInstance(EndpointService);
-    sessionService = createMockInstance(SessionService);
+    sessionService = createMockInstance(SessionClient);
     sessionService.getSessions.mockResolvedValue([]);
 
     TestBed.configureTestingModule({
@@ -45,7 +45,7 @@ xdescribe("SettingsComponent", () => {
           useValue: LoggerMock
         },
         {
-          provide: SessionService,
+          provide: SessionClient,
           useValue: sessionService
         },
         {
