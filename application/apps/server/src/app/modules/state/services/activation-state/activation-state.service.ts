@@ -90,6 +90,7 @@ export class ActivationStateService {
     const newActivationState = this._activationState$.value;
     newActivationState.state = newState;
     if (newState === "NoActivation") {
+      newActivationState.activation = null;
       newActivationState.session = null;
       newActivationState.streams = null;
     }

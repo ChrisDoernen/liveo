@@ -3,6 +3,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ROUTES } from "@liveo/constants";
 import { ENABLECONSOLELOGGING, ROUTE } from "@liveo/services";
+import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
 import { NgxsModule } from "@ngxs/store";
 import { SocketIoModule } from "ngx-socket-io";
 import { environment } from "../environments/environment";
@@ -30,7 +31,8 @@ import { InitializationService } from "./services/initialization/initialization.
     SocketIoModule,
     NgxsModule.forRoot([ActivationStateReducer], {
       developmentMode: !environment.production
-    })
+    }),
+    NgxsReduxDevtoolsPluginModule.forRoot()
     // ServiceWorkerModule.register("ngsw-worker.js", { enabled: environment.production })
   ],
   declarations: [

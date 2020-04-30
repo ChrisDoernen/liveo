@@ -40,7 +40,7 @@ export class ActivationStateReducer {
     let session = state?.session;
     let streams = state?.streams;
 
-    if (activation.sessionId !== state.session.id) {
+    if (activation.sessionId !== state?.session.id) {
       session = await this._sessionClient.getSession(activation.sessionId);
     }
 
