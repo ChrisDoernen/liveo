@@ -22,12 +22,12 @@ export class SessionsController {
   }
 
   @Post("/")
-  public createSession(@Body() session: SessionEntity): SessionEntity {
+  public createSession(@Body() session: SessionEntity): SessionEntity[] {
     return this._sessionService.createSession(session);
   }
 
   @Delete(":id")
-  public deleteStream(@Param("id") id: string): void {
-    this._sessionService.deleteSession(id);
+  public deleteStream(@Param("id") id: string): SessionEntity[] {
+    return this._sessionService.deleteSession(id);
   }
 }

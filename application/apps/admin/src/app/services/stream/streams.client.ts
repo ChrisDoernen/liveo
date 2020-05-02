@@ -6,11 +6,12 @@ import { EndpointService } from "@liveo/services";
 @Injectable({
   providedIn: "root"
 })
-export class StreamService {
+export class StreamsClient {
 
   constructor(
     private readonly _httpClient: HttpClient,
-    private readonly _endpointService: EndpointService) {
+    private readonly _endpointService: EndpointService
+  ) {
   }
 
   public getStream(id: string): Promise<StreamEntity> {
@@ -25,15 +26,15 @@ export class StreamService {
       .toPromise();
   }
 
-  public createStream(streamEntity: StreamEntity): Promise<StreamEntity> {
+  public createStream(streamEntity: StreamEntity): Promise<StreamEntity[]> {
     return this._httpClient
-      .post<StreamEntity>(this._endpointService.getEndpoint("streams"), streamEntity)
+      .post<StreamEntity[]>(this._endpointService.getEndpoint("streams"), streamEntity)
       .toPromise();
   }
 
-  public deleteStream(streamEntity: StreamEntity): Promise<void> {
+  public deleteStream(streamEntity: StreamEntity): Promise<StreamEntity[]> {
     return this._httpClient
-      .delete<void>(this._endpointService.getEndpoint(`streams/${streamEntity.id}`))
+      .delete<StreamEntity[]>(this._endpointService.getEndpoint(`streams/${streamEntity.id}`))
       .toPromise();
   }
 }

@@ -1,9 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { SessionEntity, StreamEntity } from "@liveo/entities";
+import { Select, Store } from "@ngxs/store";
+import { DeleteSessionAction } from "apps/admin/src/app/actions/sessions.actions";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 import { DIALOG_CONFIG_SMALL } from "../../../../constants/mat-dialog-config-small";
-import { SessionClient } from "../../../../services/session/session.service";
-import { StreamService } from "../../../../services/stream/stream.service";
+import { SessionsClient } from "../../../../services/session/session.client";
 import { SessionDeletionDialogComponent } from "../session-deletion-dialog/session-deletion-dialog.component";
 
 @Component({
@@ -12,43 +15,36 @@ import { SessionDeletionDialogComponent } from "../session-deletion-dialog/sessi
   styleUrls: ["./session-list.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SessionListComponent implements OnInit {
+export class SessionListComponent {
 
   public loading: boolean;
   public error: Error;
-  public sessions: SessionEntity[] = [];
-  private _streams: StreamEntity[] = [];
+
+  @Select()
+  public sessions$: Observable<SessionEntity[]>;
+
+  @Select()
+  public streams$: Observable<StreamEntity[]>;
+
   public displayedColumns: string[] = ["title", "description", "streams", "delete"];
 
   constructor(
-    private readonly _sessionService: SessionClient,
-    private readonly _streamService: StreamService,
+    private readonly _store: Store,
+    private readonly _sessionService: SessionsClient,
     public readonly sessionDeletionDialog: MatDialog,
-    private readonly _changeDetectorRef: ChangeDetectorRef) {
+    private readonly _changeDetectorRef: ChangeDetectorRef
+  ) {
   }
 
-  public ngOnInit(): void {
-    this.loading = true;
-    Promise.all([this._sessionService.getSessions(), this._streamService.getStreams()])
-      .then(([sessions, streams]) => {
-        this.sessions = sessions;
-        this._streams = streams;
-        this.loading = false;
-        this._changeDetectorRef.detectChanges();
-      }).catch((error) => {
-        this.error = error;
-        this.loading = false;
-        this._changeDetectorRef.detectChanges();
-      });
-  }
-
-  public getStreamTitles(streamIds: string[]): string {
-    const titles = streamIds.map((id) => {
-      const foundStream = this._streams.find((stream) => stream.id === id);
-      return foundStream ? foundStream.title : null;
-    }).filter((stream) => !!stream);
-
-    return titles.join(", ");
+  public getStreamTitles(streamIds: string[]): Observable<string> {
+    return this.streams$.pipe(
+      map((streams: StreamEntity[]) => {
+        return streams
+          .filter((stream) => streamIds.includes(stream.id))
+          .map((stream) => stream.title)
+          .join(", ");
+      })
+    )
   }
 
   public openSessionDeletionDialog(session: SessionEntity): void {
@@ -60,17 +56,8 @@ export class SessionListComponent implements OnInit {
         if (result) {
           this._sessionService
             .deleteSession(session)
-            .then(() => this.removeSession(session));
+            .then(() => this._store.dispatch(new DeleteSessionAction(session)));
         }
       });
-  }
-
-  private removeSession(session: SessionEntity): void {
-    const sessionIndex = this.sessions.indexOf(session);
-    if (sessionIndex > -1) {
-      this.sessions.splice(sessionIndex, 1);
-    }
-    this.sessions = [...this.sessions];
-    this._changeDetectorRef.detectChanges();
   }
 }

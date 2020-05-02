@@ -3,10 +3,10 @@ import { TestBed } from "@angular/core/testing";
 import { EndpointService, Logger } from "@liveo/services";
 import createMockInstance from "jest-create-mock-instance";
 import { ActivationService } from "../activation/activation.service";
-import { SessionClient } from "./session.service";
+import { SessionsClient } from "./session.client";
 
-describe("SessionService", () => {
-  let sessionService: SessionClient;
+describe("SessionsClient", () => {
+  let sessionsClient: SessionsClient;
   let endpointService: jest.Mocked<EndpointService>;
   let activationService: jest.Mocked<ActivationService>;
 
@@ -19,17 +19,26 @@ describe("SessionService", () => {
         HttpClientTestingModule
       ],
       providers: [
-        SessionClient,
-        { provide: EndpointService, useValue: endpointService },
-        { provide: ActivationService, useValue: activationService },
-        { provide: Logger, useValue: createMockInstance(Logger) }
+        SessionsClient,
+        {
+          provide: EndpointService,
+          useValue: endpointService
+        },
+        {
+          provide: ActivationService,
+          useValue: activationService
+        },
+        {
+          provide: Logger,
+          useValue: createMockInstance(Logger)
+        }
       ]
     });
 
-    sessionService = TestBed.get(SessionClient);
+    sessionsClient = TestBed.inject(SessionsClient);
   });
 
   it("should be created", () => {
-    expect(sessionService).toBeTruthy();
+    expect(sessionsClient).toBeTruthy();
   });
 });

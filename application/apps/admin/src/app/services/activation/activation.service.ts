@@ -4,8 +4,7 @@ import { EVENTS } from "@liveo/constants";
 import { ActivationEntity, ActivationStateEntity } from "@liveo/entities";
 import { EndpointService, Logger } from "@liveo/services";
 import { Store } from "@ngxs/store";
-import { ActivationStateUpdateAction } from "../../actions/activation-state-update.action";
-import { ActivationUpdateAction } from "../../actions/activation-update.action";
+import { ActivationStateUpdateAction, ActivationUpdateAction } from "../../actions/state.actions";
 import { WebsocketService } from "../websocket/websocket.service";
 
 @Injectable({

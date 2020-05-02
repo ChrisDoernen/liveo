@@ -11,8 +11,11 @@ import { WebsocketService } from "../../../../services/websocket/websocket.servi
 })
 export class VolumeMeterComponent implements OnInit, OnDestroy {
 
-  @Input() public streamingId: string;
-  @Input() public simpleDesign: boolean;
+  @Input()
+  public streamingId: string;
+
+  @Input()
+  public simpleDesign: boolean;
 
   public color: string;
   public inverseMeterWidth: string;

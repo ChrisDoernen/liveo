@@ -15,7 +15,6 @@ import { AuthenticationInterceptor } from "./interceptors/authentication.interce
 import { ErrorInterceptor } from "./interceptors/error.interceptor";
 import { HoursMinutesSecondsPipe } from "./pipes/hours-minutes-seconds.pipe";
 import { AuthenticationService } from "./services/authentication/authentication.service";
-import { DevicesService } from "./services/devices/devices.service";
 
 @NgModule({
   imports: [
@@ -54,7 +53,6 @@ import { DevicesService } from "./services/devices/devices.service";
   ],
   providers: [
     AuthenticationService,
-    DevicesService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthenticationInterceptor,

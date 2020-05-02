@@ -4,8 +4,8 @@ import createMockInstance from "jest-create-mock-instance";
 import { MockComponent } from "ng-mocks";
 import { Subject } from "rxjs";
 import { ActivationService } from "../../../../services/activation/activation.service";
-import { SessionClient } from "../../../../services/session/session.service";
-import { StreamService } from "../../../../services/stream/stream.service";
+import { SessionsClient } from "../../../../services/session/session.client";
+import { StreamsClient } from "../../../../services/stream/streams.client";
 import { AngularMaterialModule } from "../../../angular-material/angular-material.module";
 import { SharedModule } from "../../../shared/shared.module";
 import { ActivatedSessionTileComponent } from "../activated-session-tile/activated-session-tile.component";
@@ -18,16 +18,16 @@ describe("DashboardActivationComponent", () => {
   let component: DashboardActivationComponent;
   let fixture: ComponentFixture<DashboardActivationComponent>;
   let activationService: jest.Mocked<ActivationService>;
-  let sessionService: jest.Mocked<SessionClient>;
-  let streamService: jest.Mocked<StreamService>;
+  let sessionService: jest.Mocked<SessionsClient>;
+  let streamService: jest.Mocked<StreamsClient>;
 
   beforeEach(() => {
     activationService = createMockInstance(ActivationService);
     Object.defineProperty(activationService, "activationState$", { value: new Subject() });
     Object.defineProperty(activationService, "activation$", { value: new Subject() });
-    sessionService = createMockInstance(SessionClient);
+    sessionService = createMockInstance(SessionsClient);
     Object.defineProperty(sessionService, "activatedSession$", { value: new Subject() });
-    streamService = createMockInstance(StreamService);
+    streamService = createMockInstance(StreamsClient);
 
     TestBed.configureTestingModule({
       imports: [
@@ -43,8 +43,8 @@ describe("DashboardActivationComponent", () => {
       ],
       providers: [
         { provide: ActivationService, useValue: activationService },
-        { provide: SessionClient, useValue: sessionService },
-        { provide: StreamService, useValue: streamService },
+        { provide: SessionsClient, useValue: sessionService },
+        { provide: StreamsClient, useValue: streamService },
         { provide: Logger, useValue: jest.fn() }
       ]
     }).compileComponents();

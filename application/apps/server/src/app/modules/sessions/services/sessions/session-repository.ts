@@ -18,11 +18,11 @@ export class SessionRepository {
     return this._dataService.getSessionEntity(id);
   }
 
-  public createSessionEntity(sessionEntity: SessionEntity): SessionEntity {
+  public createSessionEntity(sessionEntity: SessionEntity): SessionEntity[] {
     return this._dataService.createSessionEntity(sessionEntity);
   }
 
-  public deleteSessionEntity(id: string): void {
-    this._dataService.deleteSessionEntity(id);
+  public deleteSessionEntity(id: string): SessionEntity[] {
+    return this._dataService.deleteSessionEntity(id);
   }
 }

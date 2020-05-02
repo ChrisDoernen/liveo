@@ -22,15 +22,13 @@ export class StreamsService {
     return this._streamRepository.getStreamEntity(id);
   }
 
-  public createStream(streamEntity: StreamEntity): StreamEntity {
-    const createdStreamEntity = this._streamRepository.createStreamEntity(streamEntity);
-    this._logger.debug(`Created stream ${JSON.stringify(streamEntity)}`);
-
-    return createdStreamEntity;
+  public createStream(streamEntity: StreamEntity): StreamEntity[] {
+    this._logger.debug(`Creating stream ${JSON.stringify(streamEntity)}`);
+    return this._streamRepository.createStreamEntity(streamEntity);
   }
 
-  public deleteStream(id: string): void {
-    this._streamRepository.deleteStreamEntity(id);
-    this._logger.debug(`Deleted stream ${id}`);
+  public deleteStream(id: string): StreamEntity[] {
+    this._logger.debug(`Deleting stream ${id}`);
+    return this._streamRepository.deleteStreamEntity(id);
   }
 }

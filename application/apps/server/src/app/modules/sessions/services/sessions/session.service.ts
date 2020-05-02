@@ -35,15 +35,13 @@ export class SessionService {
     throw new Error(`Session ${id} not found`);
   }
 
-  public createSession(sessionEntity: SessionEntity): SessionEntity {
-    const createdSessionEntity = this._sessionRepository.createSessionEntity(sessionEntity);
-    this._logger.debug(`Created session ${JSON.stringify(createdSessionEntity)}`);
-
-    return createdSessionEntity;
+  public createSession(sessionEntity: SessionEntity): SessionEntity[] {
+    this._logger.debug(`Creating session ${JSON.stringify(sessionEntity)}`);
+    return this._sessionRepository.createSessionEntity(sessionEntity);
   }
 
-  public deleteSession(id: string) {
-    this._sessionRepository.deleteSessionEntity(id);
-    this._logger.debug(`Deleted session ${id}`);
+  public deleteSession(id: string): SessionEntity[] {
+    this._logger.debug(`Deleting session ${id}`);
+    return this._sessionRepository.deleteSessionEntity(id);
   }
 }

@@ -22,12 +22,12 @@ export class StreamsController {
   }
 
   @Post()
-  public createStream(@Body() stream: StreamEntity): StreamEntity {
+  public createStream(@Body() stream: StreamEntity): StreamEntity[] {
     return this._streamService.createStream(stream);
   }
 
   @Delete(":id")
-  public deleteStream(@Param("id") id): void {
-    this._streamService.deleteStream(id);
+  public deleteStream(@Param("id") id): StreamEntity[] {
+    return this._streamService.deleteStream(id);
   }
 }

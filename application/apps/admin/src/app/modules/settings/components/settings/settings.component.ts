@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { SessionEntity, SettingsEntity } from "@liveo/entities";
-import { SessionClient } from "../../../../services/session/session.service";
+import { SessionsClient } from "../../../../services/session/session.client";
 import { SettingsService } from "../../../../services/settings/settings.service";
 
 @Component({
@@ -15,7 +15,7 @@ export class SettingsComponent implements OnInit {
   public bitrateOptions = [64, 96, 128, 192, 224];
 
   public constructor(
-    private readonly _sessionService: SessionClient,
+    private readonly _sessionService: SessionsClient,
     private readonly _settingsService: SettingsService
   ) {
   }

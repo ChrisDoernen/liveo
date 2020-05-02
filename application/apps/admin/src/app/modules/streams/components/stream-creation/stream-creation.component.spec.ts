@@ -9,17 +9,17 @@ import { EndpointService, Logger } from "@liveo/services";
 import createMockInstance from "jest-create-mock-instance";
 import { AngularMaterialModule } from "../../../../modules/angular-material/angular-material.module";
 import { SharedModule } from "../../../../modules/shared/shared.module";
-import { SessionClient } from "../../../../services/session/session.service";
+import { SessionsClient } from "../../../../services/session/session.client";
 import { StreamCreationComponent } from "./stream-creation.component";
 
 describe("StreamCreationComponent", () => {
   let component: StreamCreationComponent;
   let fixture: ComponentFixture<StreamCreationComponent>;
   let endpointService: jest.Mocked<EndpointService>;
-  let sessionService: SessionClient;
+  let sessionService: SessionsClient;
 
   beforeEach(() => {
-    sessionService = createMockInstance(SessionClient);
+    sessionService = createMockInstance(SessionsClient);
     endpointService = createMockInstance(EndpointService);
 
     TestBed.configureTestingModule({
@@ -38,7 +38,7 @@ describe("StreamCreationComponent", () => {
       ],
       providers: [
         { provide: MatDialog, useValue: jest.fn() },
-        { provide: SessionClient, useValue: sessionService },
+        { provide: SessionsClient, useValue: sessionService },
         { provide: EndpointService, useValue: endpointService },
         { provide: Logger, useValue: jest.fn() },
         { provide: ActivatedRoute, useValue: createMockInstance(ActivatedRoute) }

@@ -8,27 +8,26 @@
   </div>
 </title-bar>
 <div class="content-container">
-  <div class="no-content-message" *ngIf="!loading && sessions.length === 0; else sessionsAvailable">
+  <div class="no-content-message" *ngIf="!loading && (sessions$ | async)?.length === 0; else sessionsAvailable">
     There are no sessions created yet. <br>
     Click <span class="no-content-action clickable" routerLink="new">here</span> to start.
   </div>
   <ng-template #sessionsAvailable>
-    <mat-table [dataSource]="sessions" class="mat-elevation-z8">
+    <mat-table [dataSource]="sessions$ | async" class="mat-elevation-z8">
 
       <ng-container matColumnDef="title">
-        <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
-        <mat-cell *matCellDef="let session"> {{session.title}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef>Titl </mat-header-cell>
+        <mat-cell *matCellDef="let session">{{session.title}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="description">
-        <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
-        <mat-cell *matCellDef="let session"> {{session.description}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+        <mat-cell *matCellDef="let session">{{session.description}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="streams">
-        <mat-header-cell *matHeaderCellDef> Streams </mat-header-cell>
-        <mat-cell *matCellDef="let session"> {{getStreamTitles(session.streams)}}
-        </mat-cell>
+        <mat-header-cell *matHeaderCellDef>Streams</mat-header-cell>
+        <mat-cell *matCellDef="let session">{{getStreamTitles(session.streams) | async}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="delete">

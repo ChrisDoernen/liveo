@@ -2,9 +2,10 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@
 import { MatDialog } from "@angular/material/dialog";
 import { DeviceEntity, StreamEntity } from "@liveo/entities";
 import { Logger } from "@liveo/services";
+import { Select, Store } from "@ngxs/store";
+import { DeleteStreamAction, GetStreamsAction } from "apps/admin/src/app/actions/streams.actions";
+import { Observable } from "rxjs";
 import { DIALOG_CONFIG_SMALL } from "../../../../constants/mat-dialog-config-small";
-import { DevicesService } from "../../../../modules/shared/services/devices/devices.service";
-import { StreamService } from "../../../../services/stream/stream.service";
 import { StreamDeletionDialogComponent } from "../stream-deletion-dialog/stream-deletion-dialog.component";
 
 @Component({
@@ -18,35 +19,29 @@ export class StreamListComponent implements OnInit {
   public loading: boolean;
   public error: Error;
   public streams: StreamEntity[] = [];
-  public devices: DeviceEntity[] = [];
+
+  @Select()
+  public devices$: Observable<DeviceEntity[]>;
+
+  @Select()
+  public streams$: Observable<StreamEntity[]>;
   public displayedColumns: string[] = ["title", "deviceId", "valid", "delete"];
 
   constructor(
     private readonly _logger: Logger,
-    private readonly _streamService: StreamService,
-    private readonly _devicesService: DevicesService,
+    private readonly _store: Store,
     public readonly newStreamDialog: MatDialog,
     public readonly streamDeletionDialog: MatDialog,
-    private readonly _changeDetectorRef: ChangeDetectorRef) {
+    private readonly _changeDetectorRef: ChangeDetectorRef
+  ) {
   }
 
   public ngOnInit(): void {
-    this.loading = true;
-    Promise.all([this._devicesService.getDevices(), this._streamService.getStreams()])
-      .then(([devices, streams]) => {
-        this.devices = devices;
-        this.streams = streams;
-        this.loading = false;
-        this._changeDetectorRef.detectChanges();
-      }).catch((error) => {
-        this.error = error;
-        this.loading = false;
-        this._changeDetectorRef.detectChanges();
-      });
+    this._store.dispatch(new GetStreamsAction());
   }
 
   public isDeviceAvailable(deviceId: string): boolean {
-    return this.devices && !!this.devices.find((device) => device.id === deviceId);
+    return true // this.devices && !!this.devices.find((device) => device.id === deviceId);
   }
 
   public openStreamDeletionDialog(stream: StreamEntity): void {
@@ -56,19 +51,8 @@ export class StreamListComponent implements OnInit {
       .toPromise()
       .then((result) => {
         if (result) {
-          this._streamService
-            .deleteStream(stream)
-            .then(() => this.removeStream(stream));
+          this._store.dispatch(new DeleteStreamAction(stream));
         }
       });
-  }
-
-  private removeStream(streamEntity: StreamEntity): void {
-    const streamIndex = this.streams.indexOf(streamEntity);
-    if (streamIndex > -1) {
-      this.streams.splice(streamIndex, 1);
-    }
-    this.streams = [...this.streams];
-    this._changeDetectorRef.detectChanges();
   }
 }

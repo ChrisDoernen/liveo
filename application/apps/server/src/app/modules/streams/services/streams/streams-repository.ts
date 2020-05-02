@@ -17,11 +17,11 @@ export class StreamsRepository {
     return this._dataService.getStreamEntity(id);
   }
 
-  public createStreamEntity(streamEntity: StreamEntity): StreamEntity {
+  public createStreamEntity(streamEntity: StreamEntity): StreamEntity[] {
     return this._dataService.createStreamEntity(streamEntity);
   }
 
-  public deleteStreamEntity(id: string): void {
-    this._dataService.deleteStreamEntity(id);
+  public deleteStreamEntity(id: string): StreamEntity[] {
+    return this._dataService.deleteStreamEntity(id);
   }
 }

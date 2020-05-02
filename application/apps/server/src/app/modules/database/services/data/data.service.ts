@@ -45,15 +45,18 @@ export class DataService {
     return this._database.get(DBSchema.SESSIONS).find({ id }).value() as SessionEntity;
   }
 
-  public createSessionEntity(sessionEntity: SessionEntity): SessionEntity {
+  public createSessionEntity(sessionEntity: SessionEntity): SessionEntity[] {
     sessionEntity.id = this.createNewId();
     this._database.get(DBSchema.SESSIONS).push(sessionEntity).write();
 
-    return sessionEntity;
+    return this.getSessionEntities();
   }
 
-  public deleteSessionEntity(id: string): void {
+  public deleteSessionEntity(id: string): SessionEntity[] {
     this._database.get(DBSchema.SESSIONS).remove({ id }).write();
+
+    return this.getSessionEntities();
+
   }
 
   public getStreamEntities(): StreamEntity[] {
@@ -64,15 +67,17 @@ export class DataService {
     return this._database.get(DBSchema.STREAMS).find({ id }).value() as StreamEntity;
   }
 
-  public createStreamEntity(streamEntity: StreamEntity): StreamEntity {
+  public createStreamEntity(streamEntity: StreamEntity): StreamEntity[] {
     streamEntity.id = this.createNewId();
     this._database.get(DBSchema.STREAMS).push(streamEntity).write();
 
-    return streamEntity;
+    return this.getStreamEntities();
   }
 
-  public deleteStreamEntity(id: string): void {
+  public deleteStreamEntity(id: string): StreamEntity[] {
     this._database.get(DBSchema.STREAMS).remove({ id }).write();
+
+    return this.getStreamEntities();
   }
 
   public getSettings(): SettingsEntity {

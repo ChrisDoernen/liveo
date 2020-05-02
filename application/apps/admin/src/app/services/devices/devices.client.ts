@@ -6,10 +6,11 @@ import { EndpointService } from "@liveo/services";
 @Injectable({
   providedIn: "root"
 })
-export class DevicesService {
+export class DevicesClient {
   constructor(
     private readonly _httpClient: HttpClient,
-    private readonly _endpointService: EndpointService) {
+    private readonly _endpointService: EndpointService
+  ) {
   }
 
   public getDevices(redetect: boolean = false): Promise<DeviceEntity[]> {

@@ -20,6 +20,10 @@ import { ShutdownComponent } from "./components/shutdown/shutdown.component";
 import { WelcomeComponent } from "./components/welcome/welcome.component";
 import { SharedModule } from "./modules/shared/shared.module";
 import { ActivationStateReducer } from "./reducers/activation-state.reducer";
+import { DevicesReducer } from "./reducers/devices.reducer";
+import { SessionsReducer } from "./reducers/sessions.reducer";
+import { StreamsReducer } from "./reducers/streams.reducer";
+import { DevicesClient } from "./services/devices/devices.client";
 import { InitializationService } from "./services/initialization/initialization.service";
 
 @NgModule({
@@ -29,7 +33,12 @@ import { InitializationService } from "./services/initialization/initialization.
     SharedModule,
     AppRoutingModule,
     SocketIoModule,
-    NgxsModule.forRoot([ActivationStateReducer], {
+    NgxsModule.forRoot([
+      ActivationStateReducer,
+      DevicesReducer,
+      StreamsReducer,
+      SessionsReducer
+    ], {
       developmentMode: !environment.production
     }),
     NgxsReduxDevtoolsPluginModule.forRoot()
@@ -51,6 +60,7 @@ import { InitializationService } from "./services/initialization/initialization.
     ShutdownDialogComponent
   ],
   providers: [
+    DevicesClient,
     {
       provide: APP_BOOTSTRAP_LISTENER,
       useFactory: (initializationService: InitializationService) => {

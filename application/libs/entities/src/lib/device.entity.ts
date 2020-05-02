@@ -8,6 +8,7 @@ export class DeviceEntity {
     public id: string,
     public streamingId: string,
     public description: string,
-    public deviceType: DeviceType) {
+    public deviceType: DeviceType
+  ) {
   }
 }

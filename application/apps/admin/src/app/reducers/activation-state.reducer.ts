@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { ActivationStateEntity } from "@liveo/entities";
 import { ActivationStateService } from "@liveo/services";
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { ActivationStateUpdateAction } from "../actions/activation-state-update.action";
-import { ActivationUpdateAction } from "../actions/activation-update.action";
-import { SessionClient } from "../services/session/session.service";
+import { ActivationStateUpdateAction, ActivationUpdateAction } from "../actions/state.actions";
+import { SessionsClient } from "../services/session/session.client";
 
 @State<ActivationStateEntity>({
   name: "activationState",
@@ -15,7 +14,7 @@ export class ActivationStateReducer {
 
   constructor(
     private readonly _activationStateService: ActivationStateService,
-    private readonly _sessionClient: SessionClient
+    private readonly _sessionClient: SessionsClient
   ) {
   }
 

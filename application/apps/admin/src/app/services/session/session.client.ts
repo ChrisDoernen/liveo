@@ -6,7 +6,7 @@ import { EndpointService } from "@liveo/services";
 @Injectable({
   providedIn: "root"
 })
-export class SessionClient {
+export class SessionsClient {
 
   constructor(
     private readonly _httpClient: HttpClient,
@@ -26,15 +26,15 @@ export class SessionClient {
       .toPromise();
   }
 
-  public createSession(streamEntity: SessionEntity): Promise<SessionEntity> {
+  public createSession(streamEntity: SessionEntity): Promise<SessionEntity[]> {
     return this._httpClient
-      .post<SessionEntity>(this._endpointService.getEndpoint("sessions"), streamEntity)
+      .post<SessionEntity[]>(this._endpointService.getEndpoint("sessions"), streamEntity)
       .toPromise();
   }
 
-  public deleteSession(session: SessionEntity): Promise<void> {
+  public deleteSession(session: SessionEntity): Promise<SessionEntity[]> {
     return this._httpClient
-      .delete<void>(this._endpointService.getEndpoint(`sessions/${session.id}`))
+      .delete<SessionEntity[]>(this._endpointService.getEndpoint(`sessions/${session.id}`))
       .toPromise();
   }
 }
