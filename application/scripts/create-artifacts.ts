@@ -1,7 +1,9 @@
 // tslint:disable: no-shadowed-variable
-import { ncp } from "ncp";
+import { copySync, emptyDirSync } from "fs-extra";
 import { join } from "path";
 import { exec } from "pkg";
+
+const outputDirectory = "bin";
 
 declare interface SourceDestinationPair {
   source: string,
@@ -14,36 +16,6 @@ declare interface Artifact {
   outputDirectory: string,
   filesToCopy: SourceDestinationPair[],
   action: (artifact: Artifact) => Promise<void>
-}
-
-const filter = (fileName: string): boolean => {
-  const copyBlacklist = [
-    "node_modules",
-    "yarn.lock"
-  ];
-  const blacklistEvalutation = copyBlacklist.map((item) => fileName.includes(item));
-  const containsBlacklistedItem = blacklistEvalutation.indexOf(true) > -1;
-
-  return !containsBlacklistedItem;
-}
-
-const ncpOptions = {
-  filter: filter,
-  stopOnErr: true
-}
-
-const copySync = async (source: string, destination: string): Promise<void> => {
-  return new Promise((resolve, reject) => {
-    console.log(`Copying ${source} to ${destination}`);
-    ncp(source, destination, ncpOptions, (error) => {
-      if (error) {
-        console.error(`Error while ncp: ${error}`);
-        reject(error);
-      } else {
-        resolve();
-      }
-    });
-  });
 }
 
 const pkg = async (artifact: Artifact) => {
@@ -72,16 +44,15 @@ const pkg = async (artifact: Artifact) => {
   console.log(`Packaging of ${artifact.name} successful.`);
 }
 
+const cleanOutputDirectory = () => {
+  emptyDirSync(outputDirectory);
+}
+
 const copy = async (filesToCopy: SourceDestinationPair[]) => {
   for (let index = 0; index < filesToCopy.length; index++) {
     const source = filesToCopy[index].source;
     const destination = filesToCopy[index].destination;
-    try {
-      await copySync(source, destination);
-    } catch (error) {
-      console.error(`Error while copying file ${source} to ${destination}: ${error.toString()}`);
-      process.exit(1);
-    }
+    copySync(source, destination);
   }
 };
 
@@ -89,7 +60,7 @@ const artifacts: Artifact[] = [
   {
     name: "win-x64",
     nodeVersion: "node10",
-    outputDirectory: "bin",
+    outputDirectory,
     filesToCopy: [
       {
         source: "dist/apps/client",
@@ -117,7 +88,7 @@ const artifacts: Artifact[] = [
   {
     name: "nodejs",
     nodeVersion: null,
-    outputDirectory: "bin",
+    outputDirectory,
     filesToCopy: [
       {
         source: "dist/apps/server",
@@ -163,6 +134,7 @@ const createArtifacts = async (artifacts: Artifact[]) => {
   }
 }
 
+cleanOutputDirectory();
 createArtifacts(artifacts).then(() => {
   console.log("Creating artifacts successful");
 });

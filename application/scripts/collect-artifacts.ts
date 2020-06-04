@@ -1,5 +1,6 @@
 // tslint:disable: no-shadowed-variable
-import { existsSync, mkdirSync, writeFileSync } from "fs";
+import { writeFileSync } from "fs";
+import { emptyDirSync, ensureDirSync } from "fs-extra";
 import { join } from "path";
 import * as zipdir from "zip-dir";
 import { version } from "../version";
@@ -23,13 +24,10 @@ const createDirectoryIfNotExisting = (directory: string): string => {
   const artifacts = "artifacts";
   const artifactDirectory = join(artifacts, directory);
 
-  if (!existsSync(artifacts)) {
-    mkdirSync(artifacts);
-  }
-
-  if (!existsSync(artifactDirectory)) {
-    mkdirSync(artifactDirectory);
-  }
+  ensureDirSync(artifacts);
+  emptyDirSync(artifacts);
+  ensureDirSync(artifactDirectory);
+  emptyDirSync(artifactDirectory);
 
   return artifactDirectory;
 }

@@ -155,7 +155,7 @@
             "main": "apps/server/src/liveo-server.ts",
             "tsConfig": "apps/server/tsconfig.app.json",
             "assets": [
-              "apps/server/src/database"
+              "apps/server/src/data"
             ],
             "buildLibsFromSource": true
           },

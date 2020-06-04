@@ -80,8 +80,7 @@ function generatePackageJson() {
       "decompress-tarxz": "^3.0.0",
       "decompress-unzip": "^4.0.1",
       "download": "^7.1.0",
-      "ncp": "^2.0.0",
-      "rimraf": "^2.6.3",
+      "fs-extra": "^9.0.1"
     }
   };
   const pathToPackageJson = path.join(__dirname, pathToRootPackageJson);

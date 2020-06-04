@@ -2,10 +2,9 @@
 const decompressTarxz = require("decompress-tarxz");
 const decompressUnzip = require("decompress-unzip");
 import * as download from "download";
-import { existsSync, lstatSync, mkdirSync, PathLike, readdirSync } from "fs";
+import { lstatSync, PathLike, readdirSync } from "fs";
+import { copySync, emptyDir, ensureDir, remove } from "fs-extra";
 import { basename, join } from "path";
-const rimraf = require("rimraf");
-const ncp = require("ncp").ncp;
 
 async function asyncForEach(array, callback) {
   for (let index = 0; index < array.length; index++) {
@@ -85,18 +84,8 @@ const downloadFfmpeg = async () => {
   });
 }
 
-const copySync = async (source: string, destination: string): Promise<void> => {
-  return new Promise((resolve, reject) => {
-    console.log(`Copying ${source} to ${destination}`);
-    ncp(source, destination, (error) => {
-      if (error) {
-        console.error(`Error while ncp: ${error}`);
-        reject(error);
-      } else {
-        resolve();
-      }
-    });
-  });
+const cleanDownloadDirectory = () => {
+  emptyDir(downloadDirectory);
 }
 
 const copyStaticFilesAndCleanUp = async () => {
@@ -110,28 +99,27 @@ const copyStaticFilesAndCleanUp = async () => {
       const download = ffmpegDownloads[downloadsIndex];
       if (directory.includes(download.searchString)) {
         const plattFormPath = join(downloadDirectory, download.destination);
-        if (!existsSync(plattFormPath)) {
-          mkdirSync(plattFormPath);
-        }
+        ensureDir(plattFormPath);
 
         for (let fileIndex = 0; fileIndex < download.files.length; fileIndex++) {
           const file = download.files[fileIndex];
           const source = join(directory, file);
           const destination = join(plattFormPath, basename(file));
 
-          await copySync(source, destination);
+          copySync(source, destination);
         }
 
         console.log(`Deleting temporary directory ${directory}`);
-        rimraf.sync(directory);
+        remove(directory);
       }
     }
   }
 }
 
+cleanDownloadDirectory();
 downloadFfmpeg()
   .then(() => copyStaticFilesAndCleanUp())
-  .then(() => console.log("Downloading ffmpeg static files succeeded"))
+  .then(() => console.log("Downloading ffmpeg static files succeeded."))
   .catch((error) => {
     console.error(`Error while downloading, extracting and copying ffmpeg: ${error}`);
     process.exit(1);
