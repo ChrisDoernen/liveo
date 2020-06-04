@@ -44,7 +44,7 @@ export const configuration = () => {
     simulate: process.env.SIMULATE ? process.env.SIMULATE === "true" : environment.simulate,
     standalone: process.env.STANDALONE ? process.env.STANDALONE === "true" : environment.standalone,
     executable: process.env.EXECUTABLE ? process.env.EXECUTABLE === "true" : environment.executable,
-    database: process.env.DATABASE ? process.env.DATABASE : `${workingDirectory}/database/db.json`,
+    database: process.env.DATABASE ? process.env.DATABASE : `${workingDirectory}/data/db.json`,
     loglevel: process.env.LOGLEVEL ? process.env.LOGLEVEL : "debug",
     logdirectory: process.env.LOGDIRECTORY ? process.env.LOGDIRECTORY : path.join(workingDirectory, "logs"),
     ffmpegPath: process.env.FFMPEGPATH ? process.env.FFMPEGPATH : findFfmpegPath(),
