@@ -1,7 +1,7 @@
 // tslint:disable: no-shadowed-variable
-import { copySync, emptyDirSync } from "fs-extra";
+import { execSync } from "child_process";
+import { copySync, emptyDirSync, writeFileSync } from "fs-extra";
 import { join } from "path";
-import { exec } from "pkg";
 
 const outputDirectory = "bin";
 
@@ -20,27 +20,22 @@ declare interface Artifact {
 
 const pkg = async (artifact: Artifact) => {
   const target = `${artifact.nodeVersion}-${artifact.name}`;
-  const outPath = join(artifact.outputDirectory, artifact.name);
-  const logFile = join("logs", `pkg-debug-${artifact.name}.log`);
-  const debugArgument = `--debug > ${logFile}`;
+  const output = join(artifact.outputDirectory, artifact.name);
+  const logFile = join(__dirname, "..", "logs", `pkg-debug-${artifact.name}.log`);
 
   const pkgArguments = [
+    "pkg",
     "dist/apps/server/package.json",
     "--target",
     target,
-    "--out-path",
-    outPath,
-    debugArgument
+    "--output",
+    output,
+    "--debug"
   ];
 
-  try {
-    console.log(`Starting packaging of ${artifact.name} with arguments ${pkgArguments.join(" ")}...`);
-    await exec(pkgArguments);
-  } catch (error) {
-    console.error(`Error while packaging ${artifact.name}: ${error.toString()}`);
-    process.exit(1);
-  }
-
+  console.log(`Starting packaging of ${artifact.name} with arguments '${pkgArguments.join(" ")}'...`);
+  const stdout = execSync(pkgArguments.join(" "), { maxBuffer: 1024 * 1024  * 10}); // Enlarge buffer to 10MB
+  writeFileSync(logFile, stdout);
   console.log(`Packaging of ${artifact.name} successful.`);
 }
 
@@ -59,7 +54,7 @@ const copy = async (filesToCopy: SourceDestinationPair[]) => {
 const artifacts: Artifact[] = [
   {
     name: "win-x64",
-    nodeVersion: "node10",
+    nodeVersion: "node12",
     outputDirectory,
     filesToCopy: [
       {
@@ -129,7 +124,7 @@ const createArtifacts = async (artifacts: Artifact[]) => {
       await copy(artifact.filesToCopy);
     }
   } catch (error) {
-    console.error(`Error while creating artifacts: ${error.toString}`);
+    console.error(`Error while creating artifacts: ${error}`);
     process.exit(1);
   }
 }
