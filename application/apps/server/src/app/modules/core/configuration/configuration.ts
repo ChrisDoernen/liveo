@@ -1,11 +1,9 @@
 import { existsSync } from "fs";
-import path, { join } from "path";
+import { join } from "path";
 import { environment } from "../../../../environments/environment";
 import { AppConfig } from "./app-config";
 
-export const configuration = () => {
-  const workingDirectory = process.env.EXECUTABLE ? process.cwd() : __dirname;
-  const staticFilesBaseDirectory = process.env.EXECUTABLE ? process.cwd() : path.resolve(__dirname, "..");
+export const configuration = (isExecutable: boolean, applicationDirectory: string) => {
 
   // FFmpeg paths to look at for environment and platform
   const ffmpegPaths = {
@@ -27,7 +25,7 @@ export const configuration = () => {
   const findFfmpegPath = () => {
     for (let index = 0; index < ffmpegPaths[platform].length; index++) {
       const currentRelativePath = ffmpegPaths[platform][index];
-      const currentAbsolutePath = join(workingDirectory, currentRelativePath);
+      const currentAbsolutePath = join(applicationDirectory, currentRelativePath);
       if (existsSync(currentAbsolutePath)) {
         return currentAbsolutePath;
       }
@@ -43,13 +41,14 @@ export const configuration = () => {
     production: process.env.PRODUCTION ? process.env.PRODUCTION === "true" : environment.production,
     simulate: process.env.SIMULATE ? process.env.SIMULATE === "true" : environment.simulate,
     standalone: process.env.STANDALONE ? process.env.STANDALONE === "true" : environment.standalone,
-    executable: process.env.EXECUTABLE ? process.env.EXECUTABLE === "true" : environment.executable,
-    database: process.env.DATABASE ? process.env.DATABASE : `${workingDirectory}/data/db.json`,
+    executable: isExecutable,
+    repository: process.env.REPOSITORY ? process.env.REPOSITORY === "true" : false,
+    database: process.env.DATABASE ? process.env.DATABASE : `${applicationDirectory}/data/db.json`,
     loglevel: process.env.LOGLEVEL ? process.env.LOGLEVEL : "debug",
-    logdirectory: process.env.LOGDIRECTORY ? process.env.LOGDIRECTORY : path.join(workingDirectory, "logs"),
+    logdirectory: process.env.LOGDIRECTORY ? process.env.LOGDIRECTORY : join(applicationDirectory, "logs"),
     ffmpegPath: process.env.FFMPEGPATH ? process.env.FFMPEGPATH : findFfmpegPath(),
-    staticFilesBaseDirectory,
-    workingDirectory
+    staticFilesBaseDirectory: process.env.REPOSITORY ? join(applicationDirectory, "..") : applicationDirectory,
+    applicationDirectory
   }
 
   return {

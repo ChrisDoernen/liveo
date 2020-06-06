@@ -77,7 +77,7 @@ export class StreamingSource implements IStreamingSource {
   }
 
   private createSocket(): string {
-    const socketDir = path.join(this._appConfig.workingDirectory, "sockets");
+    const socketDir = path.join(this._appConfig.applicationDirectory, "sockets");
     const socketId = `${this.streamingId}.sock`;
     const socketPath = path.join(socketDir, socketId);
 
@@ -124,7 +124,7 @@ export class StreamingSource implements IStreamingSource {
    * Converts relative LU value to absolute LUFS value.
    * The input on the linux version of ffmpeg is based on a EBU R128 +9 scale, having a target of -23 LUFS as default.
    * To be able to adjust scale and target, we have to normalize to the absolute +18 scale.
-   * @param value Loudness in LU (relative) 
+   * @param value Loudness in LU (relative)
    */
   private convertLUScale9ToLUFSScal18(value: string): number {
     const valueNumber = parseFloat(value);

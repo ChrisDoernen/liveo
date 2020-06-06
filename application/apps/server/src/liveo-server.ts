@@ -25,16 +25,9 @@ const checkRequirements = (appConfig: AppConfig) => {
 const logAppConfig = (logger: Logger, appConfig: AppConfig) => {
   logger.info("Starting liveo server...");
   logger.info(`Version: v${environment.version}/${environment.revision}`);
-  logger.debug(`Production: ${appConfig.production}`);
-  logger.debug(`Executable: ${appConfig.executable}`);
-  logger.debug(`Platform/OS: ${appConfig.platform}`);
-  logger.debug(`Architecture: ${appConfig.architecture}`);
-  logger.debug(`Simulate streaming: ${appConfig.simulate}`);
-  logger.debug(`Standalone: ${appConfig.standalone}`);
-  logger.debug(`Database: ${appConfig.database}`);
-  logger.debug(`Working directory: ${appConfig.workingDirectory}`);
-  logger.debug(`Static files base directory: ${appConfig.staticFilesBaseDirectory}`);
-  logger.debug(`FFmpeg path: ${appConfig.ffmpegPath}`);
+
+  logger.debug(`AppConfig: ${JSON.stringify(appConfig)}`);
+
   if (appConfig.ffmpegPath === "ffmpeg") {
     logger.warn("Using fallback for ffmpeg path. Did you run 'npm run download-ffmpeg'?");
     logger.warn("Plase make sure the path to ffmpeg is in your PATH environment variable");
