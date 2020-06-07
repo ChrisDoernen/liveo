@@ -1,7 +1,7 @@
 # Development Quick Start Guide
 
 ## 1. Install required software
-[Node.js](https://nodejs.org/en/) is the Javascript runtime environment with the package manager yarn. [Git](https://git-scm.com/download/win) is used as source control management system.
+[Node.js](https://nodejs.org/en/) is the Javascript runtime environment with the package manager [yarn](https://classic.yarnpkg.com/en/). [Git](https://git-scm.com/download/win) is used as source control management system.
 
 Download and install the tools if you are on Windows or run the following commands if you are on Linux/Ubuntu/Debian. Make sure to add them to the path variables on Windows.
 ```
@@ -17,7 +17,7 @@ git clone https://github.com/ChrisDoernen/Livestream-App.git
 followed by
 ```
 yarn install
-npm run download-ffmpeg
+yarn run download-ffmpeg
 ```
 in the shell or cmd. 
 
@@ -26,25 +26,25 @@ in the shell or cmd.
 ### Run the app
 To run the app, type
 ```
-npm run build
-npm start
+yarn run build
+yarn start
 ```
 
 Open your browser at `localhost:3000` for the client app and `localhost:3000/admin` for the admin interface.
 
 ### Coding
-The project relies on [Angular CLI](https://cli.angular.io/) and [Nrwl Nx](https://nx.dev/getting-started/what-is-nx). Make sure to check out their getting started guides.
+The project relies on [Angular CLI](https://cli.angular.io/), [NestJs](https://https://docs.nestjs.com//) and [Nrwl Nx](https://nx.dev/getting-started/what-is-nx). Make sure to check out their getting started guides.
 
 To start the app run 
 ```
-ng serve service
+ng serve server
 ```
 
 Switch environments with the `configuration` flag, e.g. run
 ```
-ng serve service --configuration=simulation
+ng serve server --configuration=simulation
 ```
-to start the service in the simulation environment. Also check out the available [configuration options](ConfigurationOptions.md)
+to start the server in the simulation environment. Also check out the available [configuration options](ConfigurationOptions.md)
 
 To work on the client or admin sites, run
 ```
@@ -57,11 +57,11 @@ Run tests with
 ```
 ng test admin
 ng test client
-ng test service
+ng test server
 ``` 
 or
 ```
-npm run test
+yarn run test
 ``` 
 to execute all tests.
 
