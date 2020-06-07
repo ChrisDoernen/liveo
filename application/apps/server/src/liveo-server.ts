@@ -39,7 +39,7 @@ const logAppConfig = (logger: Logger, appConfig: AppConfig) => {
 }
 
 export async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { logger: ['error', 'warn'] });
   const appConfig = app.get(AppConfig);
   const logger = app.get(Logger);
   const devicesService = app.get(DevicesService);

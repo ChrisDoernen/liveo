@@ -67,7 +67,7 @@ export class StreamingSource implements IStreamingSource {
         }
       })
       .on("stderr", (data: string) => {
-        this._ffmpegLogger.info(`${data}`);
+        this._ffmpegLogger.debug(`${data}`);
       })
       .on("end", () => {
         this._logger.error(`Error ffmpeg command for device ${this.deviceId}`);
