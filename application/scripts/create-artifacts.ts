@@ -28,7 +28,7 @@ const pkg = async (artifact: Artifact) => {
     "dist/apps/server/package.json",
     "--target",
     target,
-    "--output",
+    "--out-dir",
     output,
     "--debug"
   ];
