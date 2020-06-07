@@ -164,7 +164,7 @@
               "webpackConfig": "apps/server/webpack.config.js",
               "filename": "liveo-server.js",
               "optimization": true,
-              "extractLicenses": true,
+              "extractLicenses": false,
               "inspect": false,
               "fileReplacements": [
                 {
