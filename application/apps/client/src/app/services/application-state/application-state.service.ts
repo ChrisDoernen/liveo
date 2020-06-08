@@ -14,7 +14,8 @@ export class ApplicationStateService {
 
   constructor(
     private readonly _httpClient: HttpClient,
-    private readonly _endpointService: EndpointService) {
+    private readonly _endpointService: EndpointService
+  ) {
   }
 
   public loadApplicationState(): Promise<ActivationStateEntity> {

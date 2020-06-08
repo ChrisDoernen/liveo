@@ -2,13 +2,6 @@
   width: 100vw;
 }
 
-::ng-deep {
-  .header-logo.white #liveo-logo {
-    fill: whitesmoke;
-  }
-}
-
-.header-logo {
-  width: 100px;
+logo {
   margin: 15px auto;
 }

@@ -13,13 +13,16 @@ import { AboutComponent } from "./components/about/about.component";
 import { AudioPlayerComponent } from "./components/audio-player/audio-player.component";
 import { HeaderComponent } from "./components/header/header.component";
 import { HomeComponent } from "./components/home/home.component";
+import { LogoComponent } from "./components/logo/logo.component";
 import { WelcomeComponent } from "./components/welcome/welcome.component";
+import { ThemeService } from "./services/theme/theme.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     AudioPlayerComponent,
+    LogoComponent,
     HeaderComponent,
     WelcomeComponent,
     AboutComponent
@@ -38,10 +41,13 @@ import { WelcomeComponent } from "./components/welcome/welcome.component";
     UserAgentService,
     {
       provide: APP_BOOTSTRAP_LISTENER,
-      useFactory: (userAgentService: UserAgentService) => {
-        return () => userAgentService.initialize();
+      useFactory: (userAgentService: UserAgentService, themeService: ThemeService) => {
+        return () => {
+          userAgentService.initialize();
+          themeService.initialize();
+        }
       },
-      deps: [UserAgentService],
+      deps: [UserAgentService, ThemeService],
       multi: true
     },
     {

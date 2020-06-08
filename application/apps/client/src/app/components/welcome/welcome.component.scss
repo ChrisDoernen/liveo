@@ -4,15 +4,9 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
+}
 
-  .welcome {
-    width: 300px;
-    margin: auto;
-    text-align: center;
-  }
-
-  .welcome-logo {
-    width: 100px;
-    margin: 0 auto;
-  }
+logo {
+  margin: auto;
+  text-align: center;
 }

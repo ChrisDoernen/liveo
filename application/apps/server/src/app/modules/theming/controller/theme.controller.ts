@@ -1,10 +1,10 @@
-import { ENDPOINTS } from "@liveo/constants";
+import { ENDPOINTS, ROUTES } from "@liveo/constants";
 import { ThemeEntity } from "@liveo/entities";
 import { Body, Controller, Delete, Get, Post, Res } from "@nestjs/common";
 import { Response } from "express";
 import { ThemeService } from "../services/theme.service";
 
-@Controller(`${ENDPOINTS.api}/theme`)
+@Controller(ENDPOINTS.api)
 export class ThemeController {
 
   constructor(
@@ -12,17 +12,17 @@ export class ThemeController {
   ) {
   }
 
-  @Get()
+  @Get(`${ROUTES.admin}/theme`)
   public getTheme(): ThemeEntity {
     return this._themeService.getUserTheme();
   }
 
-  @Get("color")
+  @Get(`${ROUTES.client}/theme/color`)
   public getColor(): string {
     return this._themeService.getColor();
   }
 
-  @Get("logo")
+  @Get(`${ROUTES.client}/theme/logo`)
   public getLogo(@Res() res: Response): void {
     const logo = this._themeService.getLogoAsPng();
 
@@ -34,12 +34,12 @@ export class ThemeController {
     res.end(logo);
   }
 
-  @Post()
+  @Post(`${ROUTES.admin}/theme`)
   public updateUserTheme(@Body() theme: ThemeEntity): Promise<ThemeEntity> {
     return this._themeService.updateUserTheme(theme);
   }
 
-  @Delete()
+  @Delete(`${ROUTES.admin}/theme`)
   public resetUserTheme(): Promise<ThemeEntity> {
     return this._themeService.resetUserTheme();
   }
