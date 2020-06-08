@@ -10,5 +10,6 @@ export { SessionEntity } from "./lib/session.entity";
 export { SettingsEntity } from "./lib/settings.entity";
 export { StreamType } from "./lib/stream-type";
 export { StreamEntity } from "./lib/stream.entity";
+export { ThemeEntity } from "./lib/theme.entity";
 export { UserEntity } from "./lib/user.entity";
 

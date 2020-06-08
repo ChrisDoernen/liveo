@@ -1,4 +1,4 @@
-import { SessionEntity, SettingsEntity, StreamEntity, UserEntity } from "@liveo/entities";
+import { SessionEntity, SettingsEntity, StreamEntity, ThemeEntity, UserEntity } from "@liveo/entities";
 import { Injectable } from "@nestjs/common";
 import { existsSync } from "fs";
 import * as low from "lowdb";
@@ -89,8 +89,22 @@ export class DataService {
     return this._database.get(DBSchema.USERS).find({ username }).value() as UserEntity;
   }
 
-  public getThemeColor(): string {
-    return this._database.get(`${DBSchema.THEME}.color`).value() as string;
+  public getDefaultTheme(): ThemeEntity {
+    return this._database.get(`${DBSchema.THEME}.default`).value() as ThemeEntity;
+  }
+
+  public getUserTheme(): ThemeEntity {
+    return this._database.get(`${DBSchema.THEME}.user`).value() as ThemeEntity;
+  }
+
+  public async updateUserTheme(theme: ThemeEntity): Promise<ThemeEntity> {
+    const updated = await this._database.update(`${DBSchema.THEME}.user`, () => theme).write();
+
+    return updated.theme.user;
+  }
+
+  public getThemeLogo(context: string): string {
+    return this._database.get(`${DBSchema.THEME}.logo-${context}`).value() as string;
   }
 
   private createNewId(): string {
