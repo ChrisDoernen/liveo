@@ -1,5 +1,5 @@
 // tslint:disable: no-shadowed-variable
-import { ROUTES } from "@liveo/constants";
+import { ENDPOINTS } from "@liveo/constants";
 import { NestFactory } from "@nestjs/core";
 import { execSync } from "child_process";
 import * as express from "express";
@@ -55,8 +55,20 @@ export async function bootstrap() {
   if (appConfig.standalone) {
     logger.debug(`Serving static files in standalone mode.`);
 
-    app.use("/", express.static(`${appConfig.staticFilesBaseDirectory}/${ROUTES.client}`));
-    app.use(`/${ROUTES.admin}`, express.static(`${appConfig.staticFilesBaseDirectory}/${ROUTES.admin}`));
+    const clientAppDirectory = `${appConfig.staticFilesBaseDirectory}/client`;
+    const adminAppDirectory = `${appConfig.staticFilesBaseDirectory}/admin`;
+
+    app.use(ENDPOINTS.root, express.static(clientAppDirectory));
+    app.use(ENDPOINTS.admin, express.static(adminAppDirectory));
+    app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+      if (req.originalUrl.startsWith(ENDPOINTS.api)) {
+        next();
+      } else if (req.originalUrl.startsWith(ENDPOINTS.admin)) {
+        res.sendFile(`${adminAppDirectory}/index.html`);
+      } else {
+        res.sendFile(`${clientAppDirectory}/index.html`);
+      }
+    });
   }
 
   await app.listen(appConfig.port, () => {
