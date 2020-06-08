@@ -13,5 +13,8 @@
       "username": "admin",
       "password": "admin"
     }
-  ]
+  ],
+  "theme": {
+    "color": null
+  }
 }

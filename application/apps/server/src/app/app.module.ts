@@ -8,6 +8,7 @@ import { StateModule } from "./modules/state/state.module";
 import { StatisticsModule } from "./modules/statistics/statistics.module";
 import { StreamingModule } from "./modules/streaming/streaming.module";
 import { StreamsModule } from "./modules/streams/streams.module";
+import { ThemingModule } from "./modules/theming/theming.module";
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { StreamsModule } from "./modules/streams/streams.module";
     StateModule,
     StatisticsModule,
     StreamingModule,
-    StreamsModule
+    StreamsModule,
+    ThemingModule
   ]
 })
 export class AppModule {}

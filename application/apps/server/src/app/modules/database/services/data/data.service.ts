@@ -89,6 +89,10 @@ export class DataService {
     return this._database.get(DBSchema.USERS).find({ username }).value() as UserEntity;
   }
 
+  public getThemeColor(): string {
+    return this._database.get(`${DBSchema.THEME}.color`).value() as string;
+  }
+
   private createNewId(): string {
     return this._idGenerator.generateId();
   }
