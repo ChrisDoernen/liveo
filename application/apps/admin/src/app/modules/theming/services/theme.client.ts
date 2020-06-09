@@ -4,7 +4,7 @@ import { ThemeEntity } from "@liveo/entities";
 import { EndpointService, Logger } from "@liveo/services";
 
 @Injectable()
-export class ThemingClient {
+export class ThemeClient {
 
   private readonly _themeRoute = "theme";
 
@@ -21,7 +21,7 @@ export class ThemingClient {
       .toPromise();
   }
 
-  public updateSettings(theme: ThemeEntity): Promise<ThemeEntity> {
+  public updateTheme(theme: ThemeEntity): Promise<ThemeEntity> {
     return this._httpClient
       .put<ThemeEntity>(this._endpointService.getEndpoint(this._themeRoute), theme)
       .toPromise();

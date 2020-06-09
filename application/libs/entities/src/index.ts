@@ -13,4 +13,3 @@ export { StreamType } from "./lib/stream-type";
 export { StreamEntity } from "./lib/stream.entity";
 export { ThemeEntity } from "./lib/theme.entity";
 export { UserEntity } from "./lib/user.entity";
-

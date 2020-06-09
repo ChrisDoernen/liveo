@@ -2,15 +2,16 @@
   <h2>Theme</h2>
 </title-bar>
 <div class="content-container">
-  <mat-card>
+  <mat-card *ngIf="theme">
     <div class="setting-row">
       <div>Color</div>
       <div>
-        <input [(colorPicker)]="color"
+        <input
+          [(colorPicker)]="color"
           [style.background]="color"
-          [cpOutputFormat]="'hsla'"
           [cpAlphaChannel]="'disabled'"
-          [cpPosition]="'left'"/>
+          [cpPosition]="'left'"
+          (colorPickerSelect)="saveColor($event)" />
       </div>
     </div>
     <mat-divider class="settings-divider"></mat-divider>
