@@ -48,6 +48,10 @@ const routes: Routes = [
         loadChildren: () => import("./modules/sessions/sessions.module").then((m) => m.SessionsModule),
       },
       {
+        path: "theming",
+        loadChildren: () => import("./modules/theming/theming.module").then((m) => m.ThemingModule),
+      },
+      {
         path: "settings",
         loadChildren: () => import("./modules/settings/settings.module").then((m) => m.SettingsModule),
       }
