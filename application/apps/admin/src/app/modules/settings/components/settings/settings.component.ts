@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { SessionEntity, SettingsEntity } from "@liveo/entities";
 import { SessionClient } from "../../../../services/session/session.service";
-import { SettingsService } from "../../../../services/settings/settings.service";
+import { SettingsClient } from "../../services/settings.client";
 
 @Component({
   selector: "settings",
@@ -15,14 +15,14 @@ export class SettingsComponent implements OnInit {
   public bitrateOptions = [64, 96, 128, 192, 224];
 
   public constructor(
-    private readonly _sessionService: SessionClient,
-    private readonly _settingsService: SettingsService
+    private readonly _sessionClient: SessionClient,
+    private readonly _settingsService: SettingsClient
   ) {
   }
 
   public ngOnInit(): void {
     this._settingsService.getSettings().then((settings) => this.settings = settings);
-    this._sessionService.getSessions().then((sessions) => this.sessions = sessions);
+    this._sessionClient.getSessions().then((sessions) => this.sessions = sessions);
     // Maybe get default session from settings and preselect in dropdown
   }
 

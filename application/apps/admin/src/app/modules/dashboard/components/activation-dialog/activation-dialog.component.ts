@@ -2,9 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivationEntity, SessionEntity } from "@liveo/entities";
 import { TimeService } from "@liveo/services";
-import { Subscription } from "rxjs";
 import { SessionClient } from "../../../../services/session/session.service";
-import { SettingsService } from "../../../../services/settings/settings.service";
 
 @Component({
   selector: "activation-dialog",
@@ -18,18 +16,15 @@ export class ActivationDialogComponent implements OnInit {
   public schedulingFormGroup: FormGroup;
   public sessions: SessionEntity[];
 
-  private _sessionsSubscription: Subscription;
-
   constructor(
     private _sessionService: SessionClient,
-    private _settingsService: SettingsService,
     private _formBuilder: FormBuilder,
-    private _timeService: TimeService) {
+    private _timeService: TimeService
+  ) {
   }
 
   public ngOnInit(): void {
     this._sessionService.getSessions().then((sessions) => this.sessions = sessions);
-    // Maybe get default session from settings and preselect in dropdown
 
     this.sessionFormGroup = this._formBuilder.group({
       sessionCtrl: ["", Validators.required]

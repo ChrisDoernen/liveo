@@ -1,5 +1,6 @@
 import { HslColor, ThemeEntity } from "@liveo/entities";
 import { Injectable } from "@nestjs/common";
+import { DEFAULT_THEME } from "../default-theme";
 import { ThemeRepository } from "./theme-repository";
 
 @Injectable()
@@ -13,8 +14,8 @@ export class ThemeService {
   ) {
   }
 
-  public getUserTheme(): ThemeEntity {
-    return this._themeRepository.getUserTheme();
+  public getTheme(): ThemeEntity {
+    return this._themeRepository.getTheme();
   }
 
   public getColor(): HslColor {
@@ -22,7 +23,7 @@ export class ThemeService {
       return this._colorCache;
     }
 
-    const color = this._themeRepository.getUserTheme().color || this._themeRepository.getDefaultTheme().color;
+    const color = this._themeRepository.getTheme().color;
 
     this._colorCache = color;
 
@@ -34,7 +35,7 @@ export class ThemeService {
       return this._logoCache;
     }
 
-    const logoDataUrl = this._themeRepository.getUserTheme().logo || this._themeRepository.getDefaultTheme().logo;
+    const logoDataUrl = this._themeRepository.getTheme().logo;
 
     var regex = /^data:.+\/(.+);base64,(.*)$/;
     var matches = logoDataUrl.match(regex);
@@ -45,18 +46,18 @@ export class ThemeService {
     return this._logoCache;
   }
 
-  public async updateUserTheme(theme: ThemeEntity): Promise<ThemeEntity> {
+  public async updateTheme(theme: ThemeEntity): Promise<ThemeEntity> {
     this.validateHslColor(theme.color);
 
     this.clearThemeCache();
 
-    return await this._themeRepository.updateUserTheme(theme);
+    return await this._themeRepository.updateTheme(theme);
   }
 
-  public async resetUserTheme(): Promise<ThemeEntity> {
+  public async resetTheme(): Promise<ThemeEntity> {
     this.clearThemeCache();
 
-    return await this._themeRepository.updateUserTheme(new ThemeEntity(null, null));
+    return await this._themeRepository.updateTheme(DEFAULT_THEME);
   }
 
   private clearThemeCache(): void {

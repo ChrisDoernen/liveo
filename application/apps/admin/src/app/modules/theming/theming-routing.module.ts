@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { ThemingComponent } from "./components/theming.component";
+import { ThemingComponent } from "./components/theming/theming.component";
 
 const routes: Routes = [
   {

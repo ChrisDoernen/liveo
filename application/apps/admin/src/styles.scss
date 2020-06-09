@@ -80,3 +80,24 @@ button {
   max-width: 400px;
   margin: auto;
 }
+
+.setting-row {
+  height: 45px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h4 {
+  text-transform: uppercase;
+}
+
+.setting-row-disabled {
+  color: grey;
+}
+
+settings-divider {
+  position: relative;
+  margin: 5px 0;
+}

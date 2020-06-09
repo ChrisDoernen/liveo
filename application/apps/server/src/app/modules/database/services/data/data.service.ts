@@ -93,14 +93,14 @@ export class DataService {
     return this._database.get(`${DBSchema.THEME}.default`).value() as ThemeEntity;
   }
 
-  public getUserTheme(): ThemeEntity {
-    return this._database.get(`${DBSchema.THEME}.user`).value() as ThemeEntity;
+  public getTheme(): ThemeEntity {
+    return this._database.get(DBSchema.THEME).value() as ThemeEntity;
   }
 
-  public async updateUserTheme(theme: ThemeEntity): Promise<ThemeEntity> {
-    const updated = await this._database.update(`${DBSchema.THEME}.user`, () => theme).write();
+  public async updateTheme(theme: ThemeEntity): Promise<ThemeEntity> {
+    const updated = await this._database.update(DBSchema.THEME, () => theme).write();
 
-    return updated.theme.user;
+    return updated.theme;
   }
 
   public getThemeLogo(context: string): string {

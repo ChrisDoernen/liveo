@@ -1,6 +1,6 @@
 import { ENDPOINTS, ROUTES } from "@liveo/constants";
 import { HslColor, ThemeEntity } from "@liveo/entities";
-import { Body, Controller, Delete, Get, Post, Res } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Put, Res } from "@nestjs/common";
 import { Response } from "express";
 import { ThemeService } from "../services/theme.service";
 
@@ -14,7 +14,7 @@ export class ThemeController {
 
   @Get(`${ROUTES.admin}/theme`)
   public getTheme(): ThemeEntity {
-    return this._themeService.getUserTheme();
+    return this._themeService.getTheme();
   }
 
   @Get(`${ROUTES.client}/theme/color`)
@@ -34,13 +34,13 @@ export class ThemeController {
     res.end(logo);
   }
 
-  @Post(`${ROUTES.admin}/theme`)
+  @Put(`${ROUTES.admin}/theme`)
   public updateUserTheme(@Body() theme: ThemeEntity): Promise<ThemeEntity> {
-    return this._themeService.updateUserTheme(theme);
+    return this._themeService.updateTheme(theme);
   }
 
   @Delete(`${ROUTES.admin}/theme`)
   public resetUserTheme(): Promise<ThemeEntity> {
-    return this._themeService.resetUserTheme();
+    return this._themeService.resetTheme();
   }
 }

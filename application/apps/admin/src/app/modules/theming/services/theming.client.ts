@@ -1,12 +1,12 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { SettingsEntity } from "@liveo/entities";
+import { ThemeEntity } from "@liveo/entities";
 import { EndpointService, Logger } from "@liveo/services";
 
-@Injectable({
-  providedIn: "root"
-})
-export class SettingsService {
+@Injectable()
+export class ThemingClient {
+
+  private readonly _themeRoute = "theme";
 
   constructor(
     private readonly _logger: Logger,
@@ -15,15 +15,15 @@ export class SettingsService {
   ) {
   }
 
-  public getSettings(): Promise<SettingsEntity> {
+  public getTheme(): Promise<ThemeEntity> {
     return this._httpClient
-      .get<SettingsEntity>(this._endpointService.getEndpoint(`settings`))
+      .get<ThemeEntity>(this._endpointService.getEndpoint(this._themeRoute))
       .toPromise();
   }
 
-  public updateSettings(settings: SettingsEntity): Promise<SettingsEntity> {
+  public updateSettings(theme: ThemeEntity): Promise<ThemeEntity> {
     return this._httpClient
-      .put<SettingsEntity>(this._endpointService.getEndpoint(`settings`), settings)
+      .put<ThemeEntity>(this._endpointService.getEndpoint(this._themeRoute), theme)
       .toPromise();
   }
 }
