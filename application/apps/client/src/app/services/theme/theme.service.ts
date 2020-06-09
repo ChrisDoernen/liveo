@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { HslColor } from "@liveo/entities";
 import { EndpointService } from "@liveo/services";
 
 @Injectable({
@@ -14,10 +15,12 @@ export class ThemeService {
 
   public initialize(): void {
     this._httpClient
-      .get(this._endpointService.getEndpoint("theme/color"), { responseType: "text" })
+      .get<HslColor>(this._endpointService.getEndpoint("theme/color"))
       .toPromise()
       .then((color) => {
-        document.documentElement.style.setProperty("--primary-color", color);
+        document.documentElement.style.setProperty("--color-primary-h", color.h.toString());
+        document.documentElement.style.setProperty("--color-primary-s", color.s.toString() + "%");
+        document.documentElement.style.setProperty("--color-primary-l", color.l.toString() + "%");
       })
       .catch((error) => {
         console.error("Could not set color because: ", error);

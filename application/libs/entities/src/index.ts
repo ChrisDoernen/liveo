@@ -3,6 +3,7 @@ export { ActivationStateEntity } from "./lib/activation-state.entity";
 export { ActivationEntity } from "./lib/activation.entity";
 export { DeviceType } from "./lib/device-type";
 export { DeviceEntity } from "./lib/device.entity";
+export { HslColor } from "./lib/hsl-color.entity";
 export { NotificationType } from "./lib/notification-type";
 export { NotificationEntity } from "./lib/notification.entity";
 export { Roles } from "./lib/roles";

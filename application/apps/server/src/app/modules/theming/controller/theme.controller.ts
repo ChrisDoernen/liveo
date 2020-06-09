@@ -1,5 +1,5 @@
 import { ENDPOINTS, ROUTES } from "@liveo/constants";
-import { ThemeEntity } from "@liveo/entities";
+import { HslColor, ThemeEntity } from "@liveo/entities";
 import { Body, Controller, Delete, Get, Post, Res } from "@nestjs/common";
 import { Response } from "express";
 import { ThemeService } from "../services/theme.service";
@@ -18,7 +18,7 @@ export class ThemeController {
   }
 
   @Get(`${ROUTES.client}/theme/color`)
-  public getColor(): string {
+  public getColor(): HslColor {
     return this._themeService.getColor();
   }
 

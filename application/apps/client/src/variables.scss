@@ -1,4 +1,13 @@
-$primary-color: var(--primary-color);
+:root {
+  --lightness-transform: 10%;
+  --color-primary: hsl(var(--primary-color-h), var(--primary-color-s), var(--primary-color-l));
+  --primary-color-light-l: calc(var(--primary-color-l) + var(--lightness-transform));
+  --color-primary-light: hsl(var(--primary-color-h), var(--primary-color-s), var(--primary-color-light-l));
+}
+
+$primary-color: var(--color-primary);
+$primary-color-light: var(--color-primary-light);
+
 $secondary-color: #1f4664;
 $primary-text-color: #424242;
 $primary-elements-color: #424242;

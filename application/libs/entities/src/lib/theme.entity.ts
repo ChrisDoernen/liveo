@@ -1,6 +1,8 @@
+import { HslColor } from "./hsl-color.entity";
+
 export class ThemeEntity {
   constructor(
-    public color: string,
+    public color: HslColor,
     public logo: string
   ) {
   }

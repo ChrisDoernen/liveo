@@ -1,12 +1,12 @@
-import { ThemeEntity } from "@liveo/entities";
-import { HttpException, Injectable } from "@nestjs/common";
+import { HslColor, ThemeEntity } from "@liveo/entities";
+import { Injectable } from "@nestjs/common";
 import { ThemeRepository } from "./theme-repository";
 
 @Injectable()
 export class ThemeService {
 
   private _logoCache: Buffer;
-  private _colorCache: string;
+  private _colorCache: HslColor;
 
   constructor(
     private _themeRepository: ThemeRepository
@@ -17,7 +17,7 @@ export class ThemeService {
     return this._themeRepository.getUserTheme();
   }
 
-  public getColor(): string {
+  public getColor(): HslColor {
     if (this._colorCache) {
       return this._colorCache;
     }
@@ -46,11 +46,7 @@ export class ThemeService {
   }
 
   public async updateUserTheme(theme: ThemeEntity): Promise<ThemeEntity> {
-    const hexColorRegex = /^#[0-9a-f]{6}$/i;
-
-    if (!theme.color.match(hexColorRegex)) {
-      throw new HttpException("Invalid color, must be in hex form", 400);
-    }
+    this.validateHslColor(theme.color);
 
     this.clearThemeCache();
 
@@ -66,5 +62,19 @@ export class ThemeService {
   private clearThemeCache(): void {
     this._colorCache = null;
     this._logoCache = null;
+  }
+
+  private validateHslColor(color: HslColor): void {
+    if (color.h < 0 || color.h > 360) {
+      throw new Error("Hue value is valid between 0 and 360.");
+    }
+
+    if (color.l < 0 || color.l > 100) {
+      throw new Error("Lightness value is valid between 0 and 100.");
+    }
+
+    if (color.s < 0 || color.s > 100) {
+      throw new Error("Saturation value is valid between 0 and 100.");
+    }
   }
 }
