@@ -10,7 +10,6 @@ import { ThemeClient } from "../../services/theme.client";
 export class ThemingComponent implements OnInit {
 
   public theme: ThemeEntity;
-  public color: string;
 
   constructor(
     private readonly _themeClient: ThemeClient
@@ -18,9 +17,8 @@ export class ThemingComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this._themeClient.getTheme().then((theme) => {
-      this.theme = theme;
-    });
+    this._themeClient.getTheme()
+      .then((theme) => this.theme = theme);
   }
 
   public saveColor(color: string): void {

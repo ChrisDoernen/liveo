@@ -4,11 +4,11 @@
 <div class="content-container">
   <mat-card *ngIf="theme">
     <div class="setting-row">
-      <div>Color</div>
+      <div>App color</div>
       <div>
-        <input
-          [(colorPicker)]="color"
-          [style.background]="color"
+        <input class="clickable"
+          [(colorPicker)]="theme.color"
+          [style.background]="theme.color"
           [cpAlphaChannel]="'disabled'"
           [cpPosition]="'left'"
           (colorPickerSelect)="saveColor($event)" />
@@ -16,8 +16,9 @@
     </div>
     <mat-divider class="settings-divider"></mat-divider>
     <div class="setting-row">
-      <div>Logo</div>
-      <div>
+      <div>App logo</div>
+      <div class="logo-preview clickable">
+        <img src="{{theme.logo}}">
       </div>
     </div>
   </mat-card>

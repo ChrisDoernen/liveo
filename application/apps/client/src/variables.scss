@@ -1,12 +1,12 @@
 :root {
   // --primary-color-h ,s ,l values are set during initialization in theme service
-  --color-primary: hsl(var(--primary-color-h), var(--primary-color-s), var(--primary-color-l));
+  --primary-color: hsl(var(--primary-color-h), var(--primary-color-s), var(--primary-color-l));
   --lightness-transform: 10%;
   --primary-color-light-l: calc(var(--primary-color-l) + var(--lightness-transform));
   --color-primary-light: hsl(var(--primary-color-h), var(--primary-color-s), var(--primary-color-light-l));
 }
 
-$primary-color: var(--color-primary);
+$primary-color: var(--primary-color);
 $primary-color-light: var(--color-primary-light);
 
 $secondary-color: #1f4664;

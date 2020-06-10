@@ -4,7 +4,6 @@ input {
   width: 25px;
   border-radius: 50%;
   text-align: center;
-  cursor: pointer;
   text-shadow: 0 0 0 gray;
   caret-color: transparent;
 }
@@ -13,3 +12,10 @@ input:focus {
   outline: none;
 }
 
+.logo-preview {
+  height: 40px;
+}
+
+img {
+  height: 100%;
+}
