@@ -26,4 +26,10 @@ export class ThemeClient {
       .put<ThemeEntity>(this._endpointService.getEndpoint(this._themeRoute), theme)
       .toPromise();
   }
+
+  public deleteTheme(): Promise<ThemeEntity> {
+    return this._httpClient
+      .delete<ThemeEntity>(this._endpointService.getEndpoint(this._themeRoute))
+      .toPromise();
+  }
 }

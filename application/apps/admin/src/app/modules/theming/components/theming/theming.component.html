@@ -1,5 +1,11 @@
 <title-bar>
   <h2>Theme</h2>
+  <div>
+    <button mat-stroked-button (click)="openClient()">
+      <i class="material-icons">call_made</i>
+      Open the app
+    </button>
+  </div>
 </title-bar>
 <div class="content-container">
   <mat-card *ngIf="theme">
@@ -22,4 +28,9 @@
       </div>
     </div>
   </mat-card>
+  <div class="actions">
+    <button mat-stroked-button (click)="restoreDefaults()">
+      Restore defaults
+    </button>
+  </div>
 </div>

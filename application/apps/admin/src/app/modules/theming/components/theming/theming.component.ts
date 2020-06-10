@@ -25,4 +25,13 @@ export class ThemingComponent implements OnInit {
     this._themeClient.updateTheme(new ThemeEntity(color, this.theme.logo))
       .then((theme) => this.theme = theme);
   }
+
+  public restoreDefaults(): void {
+    this._themeClient.deleteTheme()
+      .then((theme) => this.theme = theme);
+  }
+
+  public openClient(): void {
+    window.open("/", '_blank');
+  }
 }
