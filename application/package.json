@@ -75,7 +75,7 @@
     "fluent-ffmpeg": "^2.1.2",
     "logform": "^1.10.0",
     "lowdb": "^1.0.0",
-    "nanoid": "^2.1.8",
+    "nanoid": "^3.1.31",
     "ng-inline-svg": "^10.0.0",
     "ng5-slider": "^1.1.14",
     "ngx-socket-io": "^3.0.1",
